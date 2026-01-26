@@ -19,8 +19,8 @@
 │           https://analyzer-v2.onrender.com                      │
 │                                                                 │
 │  • 123 Engine Definitions (prompts, schemas) ✓                  │
-│  • Paradigm Definitions (IE 4-layer ontology) - 2 of 4 done     │
-│  • Engine chains / pipeline specs ✓                             │
+│  • 4 Paradigm Definitions (IE 4-layer ontology) ✓               │
+│  • 19 Engine Chains (pipeline specs) ✓                          │
 │  • API: GET /v1/engines, /v1/paradigms, /v1/chains              │
 └─────────────────────────────────────────────────────────────────┘
                               │
@@ -68,12 +68,31 @@
 
 ---
 
-## Phase 3: Expand Engine Chains (DEFERRED)
+## Phase 3: Expand Engine Chains ✓
 
-### Task: Create More Chain Definitions
-- **Status**: DEFERRED
-- **Description**: Add chains for argument analysis, evidence synthesis, etc.
-- **Notes**: Skip for now, can add incrementally as needed
+### Task: Create Chain Definitions ✓
+- **Status**: COMPLETE
+- **Description**: Created 19 engine chains covering all major analysis categories
+- **Chains Created**:
+  - `concept_analysis_suite` - Concept centrality, evolution, affordances (llm_selection)
+  - `critical_analysis_chain` - Argument + epistemology + power analysis (sequential)
+  - `argument_analysis_chain` - Logical architecture, assumptions, fallacies (llm_selection)
+  - `power_politics_chain` - Stakeholders, capture, resource flows (llm_selection)
+  - `epistemological_critique_chain` - Certainty, profundity, calibration (parallel)
+  - `methodology_critique_chain` - Confounds, bias, replication (llm_selection)
+  - `systems_thinking_chain` - Feedback loops, emergence, leverage (sequential)
+  - `historical_temporal_chain` - Timelines, cycles, path dependency (llm_selection)
+  - `rhetorical_analysis_chain` - Persuasion, amplification, metaphors (llm_selection)
+  - `evidence_quality_chain` - Data quality, triangulation, provenance (sequential)
+  - `scholarly_debate_chain` - Citations, genealogy, paradigm conflicts (llm_selection)
+  - `institutional_analysis_chain` - Principal-agent, bureaucracy, capture (llm_selection)
+  - `philosophical_foundations_chain` - Conditions, absent centers (sequential)
+  - `strategic_forecasting_chain` - Scenarios, early warning, escalation (sequential)
+  - `economic_financial_chain` - Financial flows, market positioning (llm_selection)
+  - `causal_mechanism_chain` - Causality, counterfactuals (sequential)
+  - `trend_emergence_chain` - Trends, anomalies, gaps (parallel)
+  - `comparative_synthesis_chain` - Thematic synthesis, cross-cultural (sequential)
+  - `adversarial_stress_test_chain` - Robustness, boundary probing (sequential)
 
 ### Task: Implement LLM Chain Recommendation
 - **Status**: DEFERRED
