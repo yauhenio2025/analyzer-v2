@@ -1,0 +1,29 @@
+{
+  "engine_key": "concept_chain_building",
+  "engine_name": "Concept Chain Building",
+  "description": "Groups arguments into inferential chains showing how conclusions build on each other",
+  "version": 1,
+  "category": "concepts",
+  "kind": "relational",
+  "reasoning_domain": "inferential structure",
+  "researcher_question": "How do arguments connect into larger inferential chains?",
+  "extraction_prompt": "You are conducting Phase 4 of a multi-pass conceptual analysis.\n\n## YOUR TASK: CHAIN BUILDING\n\nGroup the extracted arguments about \"{concept}\" into INFERENTIAL CHAINS.\n\n## WHAT IS AN INFERENTIAL CHAIN?\n\nA chain shows how arguments BUILD ON EACH OTHER:\n- Argument A's conclusion becomes Argument B's premise\n- Or multiple arguments combine to support a higher-level claim\n- Or arguments form a sequence of reasoning\n\n## ARGUMENTS FROM PHASE 3\n\n{arguments_json}\n\n## FOR EACH CHAIN\n\n1. Name the chain (its main thesis)\n2. List arguments in INFERENTIAL ORDER\n3. Show DEPENDENCY relationships\n4. Identify the ULTIMATE CONCLUSION\n5. Note any GAPS or WEAK LINKS\n\n## OUTPUT FORMAT\n\nReturn JSON with:\n- chains[]: array of chains, each with chain_id, thesis, argument_ids[], dependencies, ultimate_conclusion, weak_links[]\n- orphan_arguments[]: arguments that don't fit chains\n- master_structure: how chains relate to each other\n\nTARGET: 5-15 distinct chains.",
+  "curation_prompt": "Validate chain structure and dependency relationships.",
+  "canonical_schema": {
+    "type": "object",
+    "properties": {
+      "chains": {
+        "type": "array"
+      },
+      "orphan_arguments": {
+        "type": "array"
+      },
+      "master_structure": {
+        "type": "object"
+      }
+    }
+  },
+  "paradigm_keys": [
+    "brandomian"
+  ]
+}

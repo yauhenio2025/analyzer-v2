@@ -1,0 +1,16 @@
+{
+  "engine_key": "concept_quote_retrieval",
+  "engine_name": "Concept Quote Retrieval",
+  "description": "Extracts key illustrative quotes for each major finding",
+  "version": 1,
+  "category": "concepts",
+  "kind": "primitive",
+  "reasoning_domain": "evidence collection",
+  "researcher_question": "What are the key quotes that illustrate each finding?",
+  "extraction_prompt": "You are conducting Phase 11: QUOTE RETRIEVAL.\n\n## YOUR TASK\n\nFind KEY QUOTES that ILLUSTRATE each major finding about \"{concept}\".\n\n## FINDINGS TO ILLUSTRATE\n\n{findings_summary}\n\n## DOCUMENTS\n\n{documents_text}\n\n## FOR EACH FINDING\n\nFind 2-3 quotes that:\n- DIRECTLY illustrate the finding\n- Are SUBSTANTIVE (not just mentions)\n- Can STAND ALONE as evidence\n\n## OUTPUT FORMAT\n\nReturn JSON with quote_sets[], each containing:\n- finding_id, finding_summary, quotes[{text, source, page_approx, why_illustrative}]\n\nTARGET: 25-40 high-quality quotes total.",
+  "curation_prompt": "Validate quote selection and relevance.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": []
+}

@@ -1,0 +1,16 @@
+{
+  "engine_key": "concept_taxonomy_function",
+  "engine_name": "Concept Taxonomy: Argumentative Function",
+  "description": "Identifies the argumentative function of each chain (establishing, defending, extending, etc.)",
+  "version": 1,
+  "category": "concepts",
+  "kind": "primitive",
+  "reasoning_domain": "rhetorical analysis",
+  "researcher_question": "What argumentative work does each chain do?",
+  "extraction_prompt": "You are conducting Phase 5.3: ARGUMENTATIVE FUNCTION classification.\n\n## YOUR TASK\n\nIdentify each chain's ARGUMENTATIVE FUNCTION for \"{concept}\".\n\n## FUNCTIONS\n\n1. **Establishing**: Introduces and defines the concept\n2. **Defending**: Responds to objections/alternatives\n3. **Extending**: Applies concept to new domains\n4. **Limiting**: Specifies boundaries/exceptions\n5. **Historicizing**: Places in historical context\n6. **Politicizing**: Draws political implications\n\n## CHAINS TO CLASSIFY\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each chain: chain_id, primary_function, secondary_function, target_audience, strategic_purpose.\n\nReturn as valid JSON.",
+  "curation_prompt": "Validate function classifications.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": []
+}

@@ -1,0 +1,18 @@
+{
+  "engine_key": "concept_causal_as_cause",
+  "engine_name": "Concept Causal: As Cause",
+  "description": "Analyzes where the concept is treated as a CAUSE of other phenomena",
+  "version": 1,
+  "category": "concepts",
+  "kind": "relational",
+  "reasoning_domain": "causal analysis",
+  "researcher_question": "What effects does this concept cause?",
+  "extraction_prompt": "You are conducting Phase 6.1: CONCEPT AS CAUSE analysis.\n\n## YOUR TASK\n\nFind all places where \"{concept}\" is treated as a CAUSE of other phenomena.\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## WHAT TO LOOK FOR\n\n- \"{concept} leads to X\"\n- \"{concept} produces X\"\n- \"{concept} enables/prevents X\"\n- \"Because of {concept}, X happens\"\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with causal_claims[], each containing:\n- claim_id, concept_role: \"cause\", effect, mechanism, evidence_type, confidence, quote, source\n\nTARGET: 10-20 causal claims where concept is the cause.",
+  "curation_prompt": "Validate causal claims where concept is cause.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": [
+    "marxist"
+  ]
+}

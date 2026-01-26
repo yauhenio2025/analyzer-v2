@@ -1,0 +1,32 @@
+{
+  "engine_key": "concept_structural_landscape",
+  "engine_name": "Concept Structural Landscape",
+  "description": "Maps the argumentative terrain where a concept appears: sections, clusters, argumentative arc",
+  "version": 1,
+  "category": "concepts",
+  "kind": "relational",
+  "reasoning_domain": "structural analysis",
+  "researcher_question": "Where and how does this concept appear in the argumentative structure?",
+  "extraction_prompt": "You are conducting Phase 2 of a multi-pass conceptual analysis.\n\n## YOUR TASK: STRUCTURAL LANDSCAPE\n\nMap the ARGUMENTATIVE TERRAIN where \"{concept}\" appears.\n\n## CONTEXT: SEMANTIC FIELD FROM PHASE 1\n\n{semantic_context}\n\nUse this to catch ALL occurrences, including synonyms and related terms.\n\n## ANALYSIS TASKS\n\n1. **Section Mapping**: Where does \"{concept}\" appear?\n   - In which documents/sections?\n   - In what argumentative contexts?\n   - How prominently?\n\n2. **Cluster Identification**: Group related passages\n   - What distinct argumentative clusters use this concept?\n   - What is each cluster's role?\n\n3. **Arc Tracing**: How does the concept evolve?\n   - How does treatment differ between documents?\n   - Is there development or contradiction?\n\n4. **Strategic Positioning**: Why is it placed here?\n   - What argumentative work does it do?\n   - What comes before/after?\n\n## DOCUMENTS\n\n{documents_text}\n\nReturn your analysis as valid JSON with sections: concept_locations, argumentative_clusters, cross_document_arc, strategic_positioning.",
+  "curation_prompt": "Validate structural mapping and enhance cross-document analysis.",
+  "canonical_schema": {
+    "type": "object",
+    "properties": {
+      "concept_locations": {
+        "type": "array"
+      },
+      "argumentative_clusters": {
+        "type": "array"
+      },
+      "cross_document_arc": {
+        "type": "object"
+      },
+      "strategic_positioning": {
+        "type": "object"
+      }
+    }
+  },
+  "paradigm_keys": [
+    "marxist"
+  ]
+}

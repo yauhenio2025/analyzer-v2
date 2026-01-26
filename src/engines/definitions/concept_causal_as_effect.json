@@ -1,0 +1,18 @@
+{
+  "engine_key": "concept_causal_as_effect",
+  "engine_name": "Concept Causal: As Effect",
+  "description": "Analyzes where the concept is treated as an EFFECT of other factors",
+  "version": 1,
+  "category": "concepts",
+  "kind": "relational",
+  "reasoning_domain": "causal analysis",
+  "researcher_question": "What causes this concept to emerge or change?",
+  "extraction_prompt": "You are conducting Phase 6.2: CONCEPT AS EFFECT analysis.\n\n## YOUR TASK\n\nFind all places where \"{concept}\" is treated as an EFFECT of other factors.\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## WHAT TO LOOK FOR\n\n- \"X leads to {concept}\"\n- \"X produces {concept}\"\n- \"{concept} results from X\"\n- \"{concept} emerges due to X\"\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with causal_claims[], each containing:\n- claim_id, concept_role: \"effect\", cause, mechanism, evidence_type, confidence, quote, source\n\nTARGET: 10-20 causal claims where concept is the effect.",
+  "curation_prompt": "Validate causal claims where concept is effect.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": [
+    "marxist"
+  ]
+}
