@@ -1,0 +1,25 @@
+{
+  "chain_key": "rhetorical_analysis_chain",
+  "chain_name": "Rhetorical Analysis Chain",
+  "description": "Analyzes persuasive techniques, amplification patterns, metaphorical structures, and rhetorical strategies",
+  "version": 1,
+  "engine_keys": [
+    "rhetorical_strategy",
+    "rhetorical_amplification_detector",
+    "metaphor_analogy_network",
+    "motte_bailey_detector",
+    "tu_quoque_tracker",
+    "strategic_omission_detector"
+  ],
+  "blend_mode": "llm_selection",
+  "selection_criteria": "Select 2-3 engines: rhetorical_strategy for overall persuasive structure, rhetorical_amplification_detector for exaggeration patterns, metaphor_analogy_network for figurative language, motte_bailey_detector for argument switching, strategic_omission_detector for what's left unsaid",
+  "max_engines": 3,
+  "category": "rhetoric",
+  "recommended_for": [
+    "political speeches",
+    "opinion pieces",
+    "marketing materials",
+    "advocacy documents",
+    "persuasive essays"
+  ]
+}

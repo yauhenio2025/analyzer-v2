@@ -1,0 +1,26 @@
+{
+  "chain_key": "institutional_analysis_chain",
+  "chain_name": "Institutional Analysis Chain",
+  "description": "Analyzes organizational dynamics, incentive structures, principal-agent problems, and institutional pathologies",
+  "version": 1,
+  "engine_keys": [
+    "principal_agent_analyzer",
+    "bureaucratic_behavior_interpreter",
+    "regulatory_capture_detector",
+    "institutional_isomorphism_tracker",
+    "organizational_pathology_scanner",
+    "collective_action_problem_identifier",
+    "transaction_cost_analyzer"
+  ],
+  "blend_mode": "llm_selection",
+  "selection_criteria": "Select 3-4 engines: principal_agent_analyzer for delegation problems, bureaucratic_behavior_interpreter for organizational behavior, regulatory_capture_detector for corruption patterns, institutional_isomorphism_tracker for organizational mimicry, collective_action_problem_identifier for coordination failures",
+  "max_engines": 4,
+  "category": "institutions",
+  "recommended_for": [
+    "organizational studies",
+    "public administration",
+    "corporate governance",
+    "regulatory analysis",
+    "political institutions"
+  ]
+}

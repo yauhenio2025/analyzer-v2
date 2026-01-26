@@ -1,0 +1,26 @@
+{
+  "chain_key": "historical_temporal_chain",
+  "chain_name": "Historical & Temporal Analysis Chain",
+  "description": "Analyzes temporal dynamics - timelines, cycles, discontinuities, periodization, and path dependencies",
+  "version": 1,
+  "engine_keys": [
+    "event_timeline_causal",
+    "chronology_cycle",
+    "chronology_simultaneity",
+    "temporal_discontinuity_finder",
+    "periodization_critic",
+    "path_dependency_analyzer",
+    "temporal_multiscale"
+  ],
+  "blend_mode": "llm_selection",
+  "selection_criteria": "Select 2-3 engines: event_timeline_causal for narrative sequences, chronology_cycle for recurring patterns, temporal_discontinuity_finder for breaks and ruptures, periodization_critic for historical framing, path_dependency_analyzer for lock-in effects",
+  "max_engines": 3,
+  "category": "temporal",
+  "recommended_for": [
+    "historical analysis",
+    "institutional evolution",
+    "technology trajectories",
+    "political transitions",
+    "economic cycles"
+  ]
+}

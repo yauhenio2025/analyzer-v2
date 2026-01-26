@@ -1,0 +1,23 @@
+{
+  "chain_key": "argument_analysis_chain",
+  "chain_name": "Argument Analysis Chain",
+  "description": "Comprehensive argument structure analysis - maps logical architecture, excavates assumptions, detects rhetorical maneuvers, and steelmans positions",
+  "version": 1,
+  "engine_keys": [
+    "argument_architecture",
+    "assumption_excavation",
+    "motte_bailey_detector",
+    "charitable_reconstruction",
+    "tu_quoque_tracker"
+  ],
+  "blend_mode": "llm_selection",
+  "selection_criteria": "Select 2-3 engines based on the argument style: use argument_architecture for complex logical structures, assumption_excavation for hidden premises, motte_bailey_detector for slippery claims, charitable_reconstruction for contested positions",
+  "max_engines": 3,
+  "category": "argument",
+  "recommended_for": [
+    "philosophical arguments",
+    "op-eds and opinion pieces",
+    "policy debates",
+    "academic disputes"
+  ]
+}

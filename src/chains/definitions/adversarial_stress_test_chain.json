@@ -1,0 +1,25 @@
+{
+  "chain_key": "adversarial_stress_test_chain",
+  "chain_name": "Adversarial Stress Test Chain",
+  "description": "Stress tests arguments through adversarial probing, boundary testing, and robustness evaluation",
+  "version": 1,
+  "engine_keys": [
+    "adversarial_robustness_tester",
+    "boundary_probe",
+    "charitable_reconstruction",
+    "paradigm_departure_analyzer",
+    "reproducibility_assessor"
+  ],
+  "blend_mode": "sequential",
+  "selection_criteria": null,
+  "max_engines": 5,
+  "pass_context": true,
+  "category": "adversarial",
+  "recommended_for": [
+    "argument validation",
+    "theory testing",
+    "red teaming",
+    "peer review",
+    "robustness checks"
+  ]
+}

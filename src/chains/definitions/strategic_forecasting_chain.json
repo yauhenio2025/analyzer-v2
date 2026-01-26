@@ -1,0 +1,26 @@
+{
+  "chain_key": "strategic_forecasting_chain",
+  "chain_name": "Strategic Forecasting Chain",
+  "description": "Scenario planning, early warning detection, opportunity-vulnerability mapping, and escalation trajectory analysis",
+  "version": 1,
+  "engine_keys": [
+    "scenario_planning_framework",
+    "early_warning_tracker",
+    "opportunity_vulnerability_matrix",
+    "escalation_trajectory_analysis",
+    "velocity_acceleration_analyzer",
+    "intelligence_requirements_mapper"
+  ],
+  "blend_mode": "sequential",
+  "selection_criteria": null,
+  "max_engines": 6,
+  "pass_context": true,
+  "category": "strategic",
+  "recommended_for": [
+    "intelligence analysis",
+    "strategic planning",
+    "risk assessment",
+    "geopolitical analysis",
+    "crisis anticipation"
+  ]
+}

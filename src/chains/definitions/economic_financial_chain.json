@@ -1,0 +1,24 @@
+{
+  "chain_key": "economic_financial_chain",
+  "chain_name": "Economic & Financial Analysis Chain",
+  "description": "Analyzes market dynamics, financial flows, policy impacts, and economic positioning",
+  "version": 1,
+  "engine_keys": [
+    "financial_forensics_analyzer",
+    "market_positioning_analyzer",
+    "policy_impact_projector",
+    "deal_flow_tracker",
+    "regulatory_dynamics_analyzer"
+  ],
+  "blend_mode": "llm_selection",
+  "selection_criteria": "Select 2-3 engines: financial_forensics_analyzer for money flows, market_positioning_analyzer for competitive dynamics, policy_impact_projector for regulatory effects, deal_flow_tracker for transaction patterns",
+  "max_engines": 3,
+  "category": "economics",
+  "recommended_for": [
+    "financial documents",
+    "policy analysis",
+    "market reports",
+    "corporate filings",
+    "economic research"
+  ]
+}

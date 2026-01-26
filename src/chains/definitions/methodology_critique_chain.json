@@ -1,0 +1,27 @@
+{
+  "chain_key": "methodology_critique_chain",
+  "chain_name": "Methodology Critique Chain",
+  "description": "Evaluates research methodology - confounds, selection bias, sample issues, measurement validity, replication status",
+  "version": 1,
+  "engine_keys": [
+    "methodological_approach",
+    "confound_detector",
+    "selection_bias_scanner",
+    "sample_size_scrutinizer",
+    "sample_bias_detector",
+    "measurement_validity_checker",
+    "operationalization_critic",
+    "replication_status_assessor"
+  ],
+  "blend_mode": "llm_selection",
+  "selection_criteria": "Select 3-4 engines based on the research type: confound_detector and selection_bias_scanner for observational studies, sample_size_scrutinizer for quantitative work, measurement_validity_checker for surveys, operationalization_critic for conceptual operationalizations",
+  "max_engines": 4,
+  "category": "methodology",
+  "recommended_for": [
+    "academic papers",
+    "research reports",
+    "clinical studies",
+    "social science research",
+    "policy evaluations"
+  ]
+}

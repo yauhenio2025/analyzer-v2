@@ -1,0 +1,24 @@
+{
+  "chain_key": "epistemological_critique_chain",
+  "chain_name": "Epistemological Critique Chain",
+  "description": "Identifies epistemic weaknesses - unearned certainty, false profundity, calibration failures, and stance inconsistencies",
+  "version": 1,
+  "engine_keys": [
+    "unearned_certainty_detector",
+    "false_profundity_detector",
+    "epistemic_calibration",
+    "epistemic_stance",
+    "imagination_failure_detector"
+  ],
+  "blend_mode": "parallel",
+  "selection_criteria": null,
+  "max_engines": 5,
+  "category": "epistemology",
+  "recommended_for": [
+    "thought leadership pieces",
+    "scientific claims",
+    "expert pronouncements",
+    "futurist predictions",
+    "philosophical treatises"
+  ]
+}

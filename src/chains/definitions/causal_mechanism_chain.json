@@ -1,0 +1,25 @@
+{
+  "chain_key": "causal_mechanism_chain",
+  "chain_name": "Causal Mechanism Analysis Chain",
+  "description": "Identifies causal relationships, counterfactuals, competing explanations, and explanatory patterns",
+  "version": 1,
+  "engine_keys": [
+    "causal_inference_auditor",
+    "counterfactual_analyzer",
+    "competing_explanations_analyzer",
+    "explanatory_pattern_analysis",
+    "confound_detector"
+  ],
+  "blend_mode": "sequential",
+  "selection_criteria": null,
+  "max_engines": 5,
+  "pass_context": true,
+  "category": "causality",
+  "recommended_for": [
+    "causal claims",
+    "policy evaluation",
+    "scientific explanations",
+    "historical causation",
+    "mechanism identification"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "chain_key": "comparative_synthesis_chain",
+  "chain_name": "Comparative & Synthesis Chain",
+  "description": "Performs thematic synthesis, comparative analysis, cross-cultural variation, and interdisciplinary connections",
+  "version": 1,
+  "engine_keys": [
+    "thematic_synthesis",
+    "comparative_framework",
+    "cross_cultural_variation",
+    "interdisciplinary_connection",
+    "scale_transition_analyzer"
+  ],
+  "blend_mode": "sequential",
+  "selection_criteria": null,
+  "max_engines": 5,
+  "pass_context": true,
+  "category": "synthesis",
+  "recommended_for": [
+    "systematic reviews",
+    "meta-analysis",
+    "comparative studies",
+    "interdisciplinary research",
+    "cross-cultural analysis"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "chain_key": "scholarly_debate_chain",
+  "chain_name": "Scholarly Debate Mapping Chain",
+  "description": "Maps academic debates, citation networks, intellectual lineages, and paradigm conflicts",
+  "version": 1,
+  "engine_keys": [
+    "scholarly_debate_map",
+    "citation_network",
+    "intellectual_genealogy",
+    "citation_politics_analyzer",
+    "paradigm_boundary_mapper",
+    "reception_history"
+  ],
+  "blend_mode": "llm_selection",
+  "selection_criteria": "Select 2-3 engines: scholarly_debate_map for controversy mapping, citation_network for influence patterns, intellectual_genealogy for idea lineages, citation_politics_analyzer for strategic citations, paradigm_boundary_mapper for disciplinary conflicts",
+  "max_engines": 3,
+  "category": "scholarship",
+  "recommended_for": [
+    "literature reviews",
+    "historiography",
+    "intellectual history",
+    "field mapping",
+    "paradigm analysis"
+  ]
+}

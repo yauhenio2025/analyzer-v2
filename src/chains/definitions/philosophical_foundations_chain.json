@@ -1,0 +1,26 @@
+{
+  "chain_key": "philosophical_foundations_chain",
+  "chain_name": "Philosophical Foundations Chain",
+  "description": "Excavates conceptual conditions, paradigmatic assumptions, absent centers, and foundational frameworks",
+  "version": 1,
+  "engine_keys": [
+    "conditions_of_possibility",
+    "conceptual_framework_extraction",
+    "absent_center",
+    "paradigm_boundary_mapper",
+    "boundary_condition_analyzer",
+    "terra_incognita_mapper"
+  ],
+  "blend_mode": "sequential",
+  "selection_criteria": null,
+  "max_engines": 6,
+  "pass_context": true,
+  "category": "philosophy",
+  "recommended_for": [
+    "philosophical texts",
+    "theoretical frameworks",
+    "foundational critiques",
+    "paradigm analysis",
+    "conceptual archaeology"
+  ]
+}

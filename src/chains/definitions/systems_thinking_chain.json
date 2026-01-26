@@ -1,0 +1,27 @@
+{
+  "chain_key": "systems_thinking_chain",
+  "chain_name": "Systems Thinking Chain",
+  "description": "Analyzes complex systems - feedback loops, emergence, leverage points, boundaries, and unintended consequences",
+  "version": 1,
+  "engine_keys": [
+    "system_dynamics_modeler",
+    "feedback_loop_mapper",
+    "emergence_detector",
+    "leverage_point_identifier",
+    "complexity_threshold_detector",
+    "system_boundary_analyzer",
+    "unintended_consequence_scanner"
+  ],
+  "blend_mode": "sequential",
+  "selection_criteria": null,
+  "max_engines": 7,
+  "pass_context": true,
+  "category": "systems",
+  "recommended_for": [
+    "policy analysis",
+    "organizational studies",
+    "technology assessments",
+    "ecological systems",
+    "economic modeling"
+  ]
+}

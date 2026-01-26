@@ -1,0 +1,25 @@
+{
+  "chain_key": "power_politics_chain",
+  "chain_name": "Power & Politics Analysis Chain",
+  "description": "Maps power dynamics, stakeholder interests, resource flows, and institutional capture patterns",
+  "version": 1,
+  "engine_keys": [
+    "stakeholder_power_interest",
+    "power_interest_subtext",
+    "resource_flow_asymmetry",
+    "institutional_capture_detector",
+    "regulatory_capture_detector",
+    "influence_attribution_analysis"
+  ],
+  "blend_mode": "llm_selection",
+  "selection_criteria": "Select 2-3 engines: stakeholder_power_interest for actor mapping, power_interest_subtext for hidden agendas, resource_flow_asymmetry for material analysis, capture detectors for corruption patterns",
+  "max_engines": 3,
+  "category": "power",
+  "recommended_for": [
+    "policy documents",
+    "corporate communications",
+    "regulatory filings",
+    "political analysis",
+    "investigative journalism"
+  ]
+}

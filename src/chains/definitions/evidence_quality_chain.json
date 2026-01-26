@@ -1,0 +1,26 @@
+{
+  "chain_key": "evidence_quality_chain",
+  "chain_name": "Evidence Quality Assessment Chain",
+  "description": "Evaluates the quality, reliability, and triangulation of evidence and data sources",
+  "version": 1,
+  "engine_keys": [
+    "evidence_quality_assessment",
+    "data_quality_assessor",
+    "statistical_evidence",
+    "source_triangulation_mapper",
+    "provenance_audit",
+    "authenticity_forensics"
+  ],
+  "blend_mode": "sequential",
+  "selection_criteria": null,
+  "max_engines": 6,
+  "pass_context": true,
+  "category": "evidence",
+  "recommended_for": [
+    "investigative journalism",
+    "fact-checking",
+    "academic review",
+    "due diligence",
+    "legal discovery"
+  ]
+}
