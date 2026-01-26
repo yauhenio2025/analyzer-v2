@@ -88,7 +88,9 @@ POST /v1/chains/recommend            # LLM recommends chain
 | 2. Complete Paradigms | ✓ DONE | 4 paradigms (marxist, brandomian, hegelian_critical, pragmatist_praxis), 12 engines linked |
 | 3. Engine Chains | DEFERRED | More chains, LLM recommendation |
 | 4. Wire Current Analyzer | ✓ DONE | v2 client added, caching, prompt loading modified |
-| 5. Consumer Integration | PENDING | Critic, Visualizer MCP, IE |
+| 5. Consumer Integration | ✓ DONE | Visualizer MCP paradigm support, IE API client |
+
+**All core phases complete!** The disaggregation is operational.
 
 ## Related Projects
 - **Current Analyzer**: `/home/evgeny/projects/analyzer` - Will call this v2 API

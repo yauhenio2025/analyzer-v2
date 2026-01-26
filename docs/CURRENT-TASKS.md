@@ -118,29 +118,37 @@ Prompt resolution priority is now:
 
 ---
 
-## Phase 5: Consumer Integration (PENDING)
+## Phase 5: Consumer Integration ✓
 
 ### Task: Critic Integration
-- **Status**: PENDING
-- **Description**: Add adapter to Critic that uses Analyzer v2 engine definitions
-- **Location**: `/home/evgeny/projects/critic` (if exists)
+- **Status**: SKIPPED (project doesn't exist)
+- **Notes**: `/home/evgeny/projects/critic` does not exist
 
-### Task: Visualizer MCP Integration
-- **Status**: PENDING
-- **Description**: Add paradigm-aware analysis options to Visualizer MCP
-- **Location**: `/home/evgeny/projects/visualizer`
+### Task: Visualizer MCP Integration ✓
+- **Status**: COMPLETE
+- **Location**: `/home/evgeny/projects/visualizer/mcp_server/mcp_server.py`
 - **Changes**:
-  - Add paradigm selection to analysis requests
-  - Fetch paradigm primer from v2 and inject into prompts
+  - Added `paradigm_key` parameter to `analyze()` tool
+  - Paradigm key passed to Analyzer in context
+  - Paradigm primer injected into extraction and curation prompts
 
-### Task: IE Shared Paradigm Library
-- **Status**: PENDING
-- **Description**: Consider sharing paradigm definitions between IE and Analyzer v2
-- **Location**: `/home/evgeny/projects/ie`
-- **Options**:
-  1. IE calls Analyzer v2 API for paradigms
-  2. Extract paradigms to shared npm/pip package
-  3. Keep separate, sync manually
+### Task: Analyzer Backend Integration ✓
+- **Status**: COMPLETE
+- **Location**: `/home/evgeny/projects/analyzer`
+- **Changes**:
+  - `src/core/schemas.py` - Added `paradigm_key` to `AnalysisContext`
+  - `src/core/extraction.py` - Injects paradigm primer into extraction
+  - `src/core/curation.py` - Injects paradigm primer into curation
+
+### Task: IE API Client ✓
+- **Status**: COMPLETE
+- **Location**: `/home/evgeny/projects/ie/ie/src/services/analyzerV2Client.ts`
+- **Features**:
+  - `fetchParadigms()` - Get all paradigm summaries
+  - `fetchParadigm(key)` - Get full 4-layer ontology
+  - `fetchParadigmPrimer(key)` - Get LLM-ready primer
+  - `convertToIEFormat()` - Bridge v2 → IE format
+  - `fetchParadigmsForIE()` - Fetch + convert in one call
 
 ---
 
