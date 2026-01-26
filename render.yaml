@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: analyzer-v2
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn src.api.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.4"
+    healthCheckPath: /health
+    autoDeploy: true
