@@ -101,6 +101,9 @@
     "structured_text_report",
     "comparative_matrix_table"
   ],
-  "paradigm_keys": [],
+  "paradigm_keys": [
+    "brandomian",
+    "hegelian_critical"
+  ],
   "source_file": "analyzer/src/engines/assumption_excavation.py"
 }

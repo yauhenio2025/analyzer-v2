@@ -85,6 +85,10 @@
     "structured_text_report",
     "table"
   ],
-  "paradigm_keys": [],
+  "paradigm_keys": [
+    "marxist",
+    "hegelian_critical",
+    "pragmatist_praxis"
+  ],
   "source_file": "analyzer/src/engines/reification_detector.py"
 }

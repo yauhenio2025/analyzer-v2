@@ -96,6 +96,9 @@
     "gemini_stakeholder_matrix",
     "comparative_matrix_table"
   ],
-  "paradigm_keys": [],
+  "paradigm_keys": [
+    "marxist",
+    "pragmatist_praxis"
+  ],
   "source_file": "analyzer/src/engines/stakeholder_power_interest.py"
 }

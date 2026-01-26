@@ -128,6 +128,9 @@
     "structured_text_report",
     "table"
   ],
-  "paradigm_keys": [],
+  "paradigm_keys": [
+    "marxist",
+    "pragmatist_praxis"
+  ],
   "source_file": "analyzer/src/engines/institutional_capture_detector.py"
 }

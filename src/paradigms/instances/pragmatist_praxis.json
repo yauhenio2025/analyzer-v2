@@ -1,0 +1,176 @@
+{
+  "paradigm_key": "pragmatist_praxis",
+  "paradigm_name": "Pragmatist Praxis Theory",
+  "version": "1.0.0",
+  "guiding_thinkers": "György Márkus, Hans Joas, John Dewey, G.H. Mead",
+  "description": "Analyzes social life through creative action, technical normativity, and the constitutive role of material practice, critiquing the reduction of human activity to communication",
+  "status": "active",
+  "foundational": {
+    "assumptions": [
+      "Human beings are fundamentally makers - homo faber precedes homo loquens",
+      "Technical activity has its own normativity not reducible to communicative reason",
+      "Creativity is a dimension of all action, not just exceptional moments",
+      "Tools and artifacts mediate between humans and world constitutively",
+      "Practice is prior to theory - understanding emerges from doing",
+      "Language is one form of symbolic mediation among others, not the master key"
+    ],
+    "core_tensions": [
+      "Work vs Communication - productive activity versus linguistic interaction",
+      "Technical vs Communicative Rationality - making things work versus reaching understanding",
+      "Creativity vs Routine - novel action versus habitual reproduction",
+      "Individual vs Social - personal creativity versus collective practices"
+    ],
+    "scope_conditions": [
+      "Applies to all forms of human activity, not just discourse",
+      "Requires attention to material practices and technical competence",
+      "Focus on situated action in concrete contexts"
+    ]
+  },
+  "structural": {
+    "primary_entities": [
+      "Praxis - purposive human activity transforming both world and actor",
+      "Technical Normativity - standards of correctness internal to material practices",
+      "Creative Action - action that generates genuinely new possibilities",
+      "Habit - embodied dispositions that enable and constrain action",
+      "Situation - the concrete context that calls forth and shapes action"
+    ],
+    "relations": [
+      "Tool Mediation - artifacts enabling and shaping human capacities",
+      "Skill Acquisition - embodied learning through practice",
+      "Problem-Response - action arising from problematic situations",
+      "Expressive Completion - action realizing inchoate impulses"
+    ],
+    "levels_of_analysis": [
+      "Bodily-practical - embodied skills and material engagement",
+      "Symbolic-cultural - language, meaning, and interpretation",
+      "Institutional-social - organized practices and collective action"
+    ]
+  },
+  "dynamic": {
+    "change_mechanisms": [
+      "Creative response - novel solutions to blocked action",
+      "Tool innovation - new artifacts enabling new practices",
+      "Habit transformation - reconstruction of settled dispositions"
+    ],
+    "temporal_patterns": [
+      "Problematic situation → inquiry → resolution cycle",
+      "Skill development - from conscious effort to embodied mastery",
+      "Social learning - transmission and transformation of practices"
+    ],
+    "transformation_processes": [
+      "Reconstruction - reorganizing experience in response to problems",
+      "Democratic experimentalism - collective testing of social arrangements",
+      "Technical progress - development of productive capacities"
+    ]
+  },
+  "explanatory": {
+    "key_concepts": [
+      "Technical Normativity - standards governing whether practices achieve their aims",
+      "Creative Action - action not determined by prior conditions or rules",
+      "Situation - the problematic context calling forth inquiry and action",
+      "Objectivation - human capacities externalized in artifacts and institutions",
+      "Communicative Reification - false reduction of all reason to discourse",
+      "Means-End Holism - ends and means reciprocally constitute each other"
+    ],
+    "analytical_methods": [
+      "Genetic reconstruction - tracing how practices emerged and evolved",
+      "Situational analysis - understanding action in its concrete context",
+      "Technical critique - evaluating practices by their internal standards",
+      "Comparative pragmatics - examining different forms of practical reason"
+    ],
+    "problem_diagnosis": [
+      "Communicative reification - treating discourse as the only form of reason",
+      "Work denigration - devaluing productive activity relative to speech",
+      "Technical alienation - loss of understanding of how things work",
+      "Creativity suppression - social forms blocking novel action"
+    ],
+    "ideal_state": [
+      "Integrated praxis - unity of making, doing, and speaking",
+      "Technical democracy - shared control over productive processes",
+      "Creative society - institutions enabling rather than blocking novelty",
+      "Educated competence - widespread technical understanding"
+    ]
+  },
+  "active_traits": [
+    "praxis_trait",
+    "technical_normativity_trait",
+    "creativity_trait"
+  ],
+  "trait_definitions": [
+    {
+      "trait_name": "praxis_trait",
+      "trait_description": "Attention to purposive, transformative human activity",
+      "trait_items": [
+        "Labor and work",
+        "Material production",
+        "Skill and competence",
+        "Tool use",
+        "Embodied practice",
+        "World transformation"
+      ]
+    },
+    {
+      "trait_name": "technical_normativity_trait",
+      "trait_description": "Standards internal to practices of making and doing",
+      "trait_items": [
+        "Functional adequacy",
+        "Craft standards",
+        "Operational success",
+        "Material constraints",
+        "Design rationality",
+        "Performance criteria"
+      ]
+    },
+    {
+      "trait_name": "creativity_trait",
+      "trait_description": "Focus on genuinely novel, non-determined action",
+      "trait_items": [
+        "Emergent possibilities",
+        "Blocked action response",
+        "Expressive completion",
+        "Habit reconstruction",
+        "Novel solutions",
+        "Situational transcendence"
+      ]
+    }
+  ],
+  "critique_patterns": [
+    {
+      "pattern": "communicative_reduction",
+      "diagnostic": "Treating all rationality as reducible to discourse or communication",
+      "fix": "Identify the technical-practical rationality in {activity} irreducible to {speech_act}"
+    },
+    {
+      "pattern": "work_invisibility",
+      "diagnostic": "Ignoring or devaluing productive labor in analysis",
+      "fix": "Examine how {phenomenon} depends on {material_practice} and {technical_skill}"
+    },
+    {
+      "pattern": "creativity_neglect",
+      "diagnostic": "Explaining action solely through prior causes or rule-following",
+      "fix": "Show how {action} involves creative response to {problematic_situation}"
+    },
+    {
+      "pattern": "tool_transparency",
+      "diagnostic": "Treating tools and artifacts as neutral means",
+      "fix": "Analyze how {artifact} shapes and enables {human_capacity}"
+    }
+  ],
+  "historical_context": "Synthesizes classical pragmatism with Marxian praxis philosophy, developed particularly in Márkus's 'Language and Production'",
+  "related_paradigms": [
+    "Classical Pragmatism",
+    "Marxist Praxis Philosophy",
+    "Activity Theory",
+    "Science and Technology Studies"
+  ],
+  "primary_engines": [
+    "reification_detector",
+    "resource_flow_asymmetry"
+  ],
+  "compatible_engines": [
+    "incentive_structure_mapper",
+    "stakeholder_power_interest",
+    "institutional_capture_detector",
+    "concept_evolution"
+  ]
+}

@@ -115,6 +115,8 @@
     "gemini_network_graph",
     "table"
   ],
-  "paradigm_keys": [],
+  "paradigm_keys": [
+    "marxist"
+  ],
   "source_file": "analyzer/src/engines/power_interest_subtext.py"
 }

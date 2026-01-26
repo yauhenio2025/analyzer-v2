@@ -115,6 +115,9 @@
     "gemini_sankey_flow",
     "structured_text_report"
   ],
-  "paradigm_keys": [],
+  "paradigm_keys": [
+    "marxist",
+    "pragmatist_praxis"
+  ],
   "source_file": "analyzer/src/engines/resource_flow_asymmetry.py"
 }

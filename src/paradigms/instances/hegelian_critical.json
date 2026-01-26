@@ -1,0 +1,175 @@
+{
+  "paradigm_key": "hegelian_critical",
+  "paradigm_name": "Hegelian Critical Theory",
+  "version": "1.0.0",
+  "guiding_thinkers": "Gillian Rose, Theodor Adorno, G.W.F. Hegel, Walter Benjamin",
+  "description": "Analyzes social forms through speculative dialectics, emphasizing the broken middle, determinate negation, and the pathologies of both state and civil society",
+  "status": "active",
+  "foundational": {
+    "assumptions": [
+      "The real is rational and the rational is real - but this is a critical, not affirmative claim",
+      "Understanding requires grasping the whole, but totality is always broken and contradictory",
+      "Concepts are not merely abstract but have real social existence and power",
+      "The 'broken middle' between universal and particular cannot be overcome by theory alone",
+      "Identity thinking that subsumes particulars under universals is a form of domination",
+      "Critique must be immanent - working from within the contradictions of existing forms"
+    ],
+    "core_tensions": [
+      "Universal vs Particular - abstract law versus concrete ethical life",
+      "State vs Civil Society - political form versus social content",
+      "Concept vs Object - thought's claim to grasp reality versus non-identity",
+      "Mourning vs Melancholy - working through loss versus endless repetition"
+    ],
+    "scope_conditions": [
+      "Applies to modern societies with developed legal-political institutions",
+      "Requires attention to both institutional forms and lived experience",
+      "Focus on how concepts mediate social relations"
+    ]
+  },
+  "structural": {
+    "primary_entities": [
+      "Sittlichkeit (Ethical Life) - concrete customs, institutions, and practices of a community",
+      "Concept (Begriff) - not mere abstraction but the inner structure of reality",
+      "Broken Middle - the irreducible gap between universal and particular",
+      "Second Nature - social forms that appear natural but are historically constituted",
+      "Constellation - non-hierarchical arrangement of concepts that illuminates objects"
+    ],
+    "relations": [
+      "Determinate Negation - critique that preserves what it negates in transformed form",
+      "Mediation - how concepts relate to objects through social practice",
+      "Recognition - mutual acknowledgment constituting subjects and institutions",
+      "Sublation (Aufhebung) - simultaneous cancellation, preservation, and elevation"
+    ],
+    "levels_of_analysis": [
+      "Abstract Right - formal property and contract relations",
+      "Morality - subjective conscience and intentions",
+      "Ethical Life - family, civil society, and state as concrete totality"
+    ]
+  },
+  "dynamic": {
+    "change_mechanisms": [
+      "Dialectical development - contradictions drive transformations of social forms",
+      "Crisis of mediation - breakdown of institutions that connect universal and particular",
+      "Immanent critique - working contradictions through from within"
+    ],
+    "temporal_patterns": [
+      "Owl of Minerva - philosophy comprehends forms only as they pass",
+      "Repetition and difference - historical forms recur but transformed",
+      "Retroactive determination - meaning of events fixed by subsequent developments"
+    ],
+    "transformation_processes": [
+      "Bildung (formation) - education and self-cultivation through estrangement",
+      "Work of mourning - acknowledging loss to move beyond it",
+      "Speculative reversal - revealing the rational in what appears merely actual"
+    ]
+  },
+  "explanatory": {
+    "key_concepts": [
+      "Determinate Negation - negation that specifies what it negates and produces new content",
+      "Broken Middle - the unbridgeable gap between law and ethics, universal and particular",
+      "Non-identity - the irreducible difference between concept and object",
+      "Constellation - arrangement of concepts around an object without reducing it",
+      "Second Nature - social forms hardened into apparent naturalness",
+      "Absolute Ethical Life - the speculative unity that remains forever broken"
+    ],
+    "analytical_methods": [
+      "Immanent critique - testing claims against their own standards",
+      "Phenomenological reconstruction - tracing shapes of consciousness",
+      "Speculative reading - finding the rational kernel in mystified forms",
+      "Constellational analysis - arranging concepts to illuminate without subsumption"
+    ],
+    "problem_diagnosis": [
+      "Juridification - reduction of ethical life to abstract legal categories",
+      "Identity thinking - violent subsumption of particulars under universals",
+      "Mourning failure - inability to work through historical catastrophe",
+      "False reconciliation - premature claims to have overcome contradictions"
+    ],
+    "ideal_state": [
+      "Speculative experience - thinking that transforms both subject and object",
+      "Genuine reconciliation - acknowledging broken middle without false unity",
+      "Critical theory as practice - thought that changes what it comprehends",
+      "Non-dominating reason - concepts that respect non-identity of objects"
+    ]
+  },
+  "active_traits": [
+    "speculative_trait",
+    "immanent_critique_trait",
+    "negative_dialectics_trait"
+  ],
+  "trait_definitions": [
+    {
+      "trait_name": "speculative_trait",
+      "trait_description": "Finding rational content in apparently contingent or irrational forms",
+      "trait_items": [
+        "Concept-object unity",
+        "Concrete universal",
+        "Determinate negation",
+        "Sublation structure",
+        "Rational actuality",
+        "Speculative proposition"
+      ]
+    },
+    {
+      "trait_name": "immanent_critique_trait",
+      "trait_description": "Criticizing forms by their own internal standards and contradictions",
+      "trait_items": [
+        "Internal contradiction",
+        "Self-undermining claims",
+        "Unfulfilled promise",
+        "Ideology critique",
+        "Performative contradiction",
+        "Claims vs practice gap"
+      ]
+    },
+    {
+      "trait_name": "negative_dialectics_trait",
+      "trait_description": "Preserving non-identity against subsumptive totalization",
+      "trait_items": [
+        "Non-identity thinking",
+        "Constellation method",
+        "Mimetic reason",
+        "Particular primacy",
+        "Anti-systematic system",
+        "Damaged life reflection"
+      ]
+    }
+  ],
+  "critique_patterns": [
+    {
+      "pattern": "abstract_universalism",
+      "diagnostic": "Universal principles applied without attention to concrete situations",
+      "fix": "Show how {universal} requires mediation through {particular_context}"
+    },
+    {
+      "pattern": "false_immediacy",
+      "diagnostic": "Treating mediated social forms as natural or immediate",
+      "fix": "Trace how {apparent_natural} is historically constituted through {social_process}"
+    },
+    {
+      "pattern": "premature_reconciliation",
+      "diagnostic": "Claiming contradictions resolved when they persist",
+      "fix": "Identify the unresolved tension between {thesis} and {antithesis}"
+    },
+    {
+      "pattern": "identity_thinking",
+      "diagnostic": "Reducing particulars to instances of abstract categories",
+      "fix": "Attend to what in {particular} exceeds or resists {category}"
+    }
+  ],
+  "historical_context": "Developed from Hegel through Frankfurt School, renewed by Gillian Rose's critique of post-Hegelian thought",
+  "related_paradigms": [
+    "Frankfurt School Critical Theory",
+    "Marxist",
+    "Post-Kantian German Idealism"
+  ],
+  "primary_engines": [
+    "dialectical_structure",
+    "reification_detector"
+  ],
+  "compatible_engines": [
+    "assumption_excavation",
+    "inferential_commitment_mapper",
+    "concept_evolution",
+    "epistemic_rupture_tracer"
+  ]
+}

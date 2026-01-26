@@ -495,6 +495,8 @@
     "structured_text_report",
     "smart_table"
   ],
-  "paradigm_keys": [],
+  "paradigm_keys": [
+    "brandomian"
+  ],
   "source_file": "analyzer/src/engines/inferential_commitment_mapper_advanced.py"
 }

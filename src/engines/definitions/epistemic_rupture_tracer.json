@@ -155,6 +155,8 @@
     "structured_text_report",
     "smart_table"
   ],
-  "paradigm_keys": [],
+  "paradigm_keys": [
+    "hegelian_critical"
+  ],
   "source_file": "analyzer/src/engines/epistemic_rupture_tracer.py"
 }

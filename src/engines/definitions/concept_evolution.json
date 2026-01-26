@@ -103,6 +103,10 @@
     "structured_text_report",
     "gemini_timeline"
   ],
-  "paradigm_keys": [],
+  "paradigm_keys": [
+    "brandomian",
+    "hegelian_critical",
+    "pragmatist_praxis"
+  ],
   "source_file": "analyzer/src/engines/concept_evolution.py"
 }

@@ -116,6 +116,9 @@
     "structured_text_report",
     "table"
   ],
-  "paradigm_keys": [],
+  "paradigm_keys": [
+    "marxist",
+    "pragmatist_praxis"
+  ],
   "source_file": "analyzer/src/engines/incentive_structure_mapper.py"
 }

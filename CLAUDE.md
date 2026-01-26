@@ -71,8 +71,30 @@ POST /v1/chains/recommend            # LLM recommends chain
 ```
 
 ## Documentation
+- **CURRENT TASKS**: `docs/CURRENT-TASKS.md` - **READ THIS FIRST** for implementation roadmap
 - Feature inventory: `docs/FEATURES.md` (read on demand)
 - Change history: `docs/CHANGELOG.md` (read on demand)
+
+## Deployment
+- **Live URL**: https://analyzer-v2.onrender.com
+- **GitHub**: https://github.com/yauhenio2025/analyzer-v2
+- **Auto-deploy**: Push to `master` triggers automatic deployment
+
+## Implementation Roadmap (See docs/CURRENT-TASKS.md for details)
+
+| Phase | Status | Description |
+|-------|--------|-------------|
+| 1. Create Analyzer v2 | ✓ DONE | FastAPI service, 123 engines, deployed |
+| 2. Complete Paradigms | IN PROGRESS | Add hegelian_critical, pragmatist_praxis, link engines |
+| 3. Engine Chains | DEFERRED | More chains, LLM recommendation |
+| 4. Wire Current Analyzer | PENDING | Add v2 client, cache, modify prompt loading |
+| 5. Consumer Integration | PENDING | Critic, Visualizer MCP, IE |
+
+## Related Projects
+- **Current Analyzer**: `/home/evgeny/projects/analyzer` - Will call this v2 API
+- **Visualizer**: `/home/evgeny/projects/visualizer` - MCP server, will use paradigms
+- **IE**: `/home/evgeny/projects/ie` - Source of paradigm data (mockParadigmData.js)
+- **Critic**: Consumer of engine definitions
 
 ## Code Conventions
 - Use Pydantic v2 models for all data structures

@@ -101,6 +101,9 @@
     "gemini_greimas_square",
     "structured_text_report"
   ],
-  "paradigm_keys": [],
+  "paradigm_keys": [
+    "marxist",
+    "hegelian_critical"
+  ],
   "source_file": "analyzer/src/engines/dialectical_structure.py"
 }
