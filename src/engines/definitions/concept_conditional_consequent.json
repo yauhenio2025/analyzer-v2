@@ -1,0 +1,16 @@
+{
+  "engine_key": "concept_conditional_consequent",
+  "engine_name": "Concept Conditional: Consequent",
+  "description": "Finds conditionals where the concept appears in the 'then' clause",
+  "version": 1,
+  "category": "concepts",
+  "kind": "relational",
+  "reasoning_domain": "conditional logic",
+  "researcher_question": "What conditions lead to this concept?",
+  "extraction_prompt": "You are conducting Phase 7.2: CONSEQUENT USES analysis.\n\n## YOUR TASK\n\nFind ALL conditionals where \"{concept}\" appears in the CONSEQUENT (the \"then\" part).\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## PATTERN: If X, then {concept}\n\nLook for:\n- \"If X holds, then {concept} follows\"\n- \"X leads to {concept}\"\n- \"Under condition X, {concept} emerges\"\n- Implicit conditionals\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with conditionals[], each containing:\n- conditional_id, antecedent, consequent (contains concept), conditional_type (indicative/subjunctive), strength (necessary/sufficient/contributes), quote, source\n\nTARGET: 10-20 consequent conditionals.",
+  "curation_prompt": "Validate consequent conditional extraction.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": []
+}

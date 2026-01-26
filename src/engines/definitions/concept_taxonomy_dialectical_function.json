@@ -1,0 +1,19 @@
+{
+  "engine_key": "concept_taxonomy_dialectical_function",
+  "engine_name": "Concept Taxonomy: Dialectical Function",
+  "description": "Classifies chains by their dialectical function (thesis-establishing, antithetical, synthetic, immanent critique)",
+  "version": 1,
+  "category": "concepts",
+  "kind": "primitive",
+  "reasoning_domain": "dialectical analysis",
+  "researcher_question": "What dialectical role does each chain play?",
+  "extraction_prompt": "You are conducting Phase 5.3: DIALECTICAL FUNCTION classification.\n\n## YOUR TASK\n\nClassify each argument chain by its DIALECTICAL FUNCTION for arguments about \"{concept}\".\n\n## DIALECTICAL FUNCTION TAXONOMY\n\n- **thesis_establishing**: POSITS the initial position\n  - Sets up the claim to be developed or challenged\n  - Defines the starting point\n\n- **antithetical**: OPPOSES or NEGATES another position\n  - Shows contradictions or limitations\n  - \"On the contrary...\" moves\n\n- **synthetic**: RECONCILES contradictions\n  - Aufhebung - preserves truth of both while transcending\n  - \"The solution is to see that...\"\n\n- **immanent_critique**: Criticizes position FROM WITHIN\n  - Uses position's own standards against it\n  - \"By their own logic...\"\n\n- **determinate_negation**: Specific negation that ADVANCES\n  - Not mere rejection but productive negation\n  - Negation that opens new possibilities\n\n## CHAINS TO CLASSIFY\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each chain: chain_id, dialectical_function, target_position (if antithetical/critical), synthesis_elements (if synthetic), confidence, justification.\n\nReturn as valid JSON.",
+  "curation_prompt": "Validate dialectical function classifications.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": [
+    "marxist",
+    "hegelian_critical"
+  ]
+}

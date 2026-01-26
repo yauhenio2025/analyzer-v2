@@ -1,0 +1,16 @@
+{
+  "engine_key": "concept_conditional_biconditional",
+  "engine_name": "Concept Conditional: Biconditional",
+  "description": "Finds biconditional (if and only if) relationships involving the concept",
+  "version": 1,
+  "category": "concepts",
+  "kind": "relational",
+  "reasoning_domain": "conditional logic",
+  "researcher_question": "What biconditional relationships involve this concept?",
+  "extraction_prompt": "You are conducting Phase 7.3: BICONDITIONAL analysis.\n\n## YOUR TASK\n\nFind BICONDITIONAL relationships involving \"{concept}\".\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## PATTERN: {concept} if and only if X\n\nBiconditionals assert:\n- X is NECESSARY for {concept}\n- X is SUFFICIENT for {concept}\n- They come together\n\nLook for:\n- \"X if and only if Y\"\n- \"X is equivalent to Y\"\n- \"X just is Y\"\n- Definitional claims\n- Mutual implication\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with biconditionals[], each containing:\n- biconditional_id, term_a, term_b, relationship_type (definitional/empirical/normative), confidence, quote, source\n\nTARGET: 3-8 biconditional relationships.",
+  "curation_prompt": "Validate biconditional extraction.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": []
+}

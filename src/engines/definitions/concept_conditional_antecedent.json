@@ -1,0 +1,16 @@
+{
+  "engine_key": "concept_conditional_antecedent",
+  "engine_name": "Concept Conditional: Antecedent",
+  "description": "Finds conditionals where the concept appears in the 'if' clause",
+  "version": 1,
+  "category": "concepts",
+  "kind": "relational",
+  "reasoning_domain": "conditional logic",
+  "researcher_question": "What follows if this concept holds?",
+  "extraction_prompt": "You are conducting Phase 7.1: ANTECEDENT USES analysis.\n\n## YOUR TASK\n\nFind ALL conditionals where \"{concept}\" appears in the ANTECEDENT (the \"if\" part).\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## PATTERN: If {concept}, then X\n\nLook for:\n- \"If {concept} is the case, then...\"\n- \"When {concept} occurs, X follows\"\n- \"Given {concept}, we can expect X\"\n- Implicit conditionals\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with conditionals[], each containing:\n- conditional_id, antecedent (contains concept), consequent, conditional_type (indicative/subjunctive), strength (necessary/sufficient/contributes), quote, source\n\nTARGET: 10-20 antecedent conditionals.",
+  "curation_prompt": "Validate antecedent conditional extraction.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": []
+}

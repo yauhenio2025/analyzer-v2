@@ -1,0 +1,18 @@
+{
+  "engine_key": "concept_causal_mechanisms",
+  "engine_name": "Concept Causal: Mechanisms",
+  "description": "Analyzes the specific mechanisms by which causal relationships operate",
+  "version": 1,
+  "category": "concepts",
+  "kind": "relational",
+  "reasoning_domain": "causal analysis",
+  "researcher_question": "What mechanisms connect causes to effects?",
+  "extraction_prompt": "You are conducting Phase 6.3: CAUSAL MECHANISMS analysis.\n\n## YOUR TASK\n\nFor causal claims involving \"{concept}\", identify the MECHANISMS by which causation operates.\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## WHAT TO LOOK FOR\n\nA mechanism specifies HOW causation works:\n- Step-by-step processes\n- Intermediate variables\n- Transmission pathways\n- Enabling conditions\n\nExample: \"Technology causes unemployment\" is vague.\nMechanism: \"Technology \u2192 automates routine tasks \u2192 reduces demand for routine labor \u2192 unemployment for routine workers\"\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with mechanisms[], each containing:\n- mechanism_id, cause, effect, steps[], intermediate_variables[], enabling_conditions[], evidence_type, quote, source\n\nTARGET: 8-15 mechanism specifications.",
+  "curation_prompt": "Validate mechanism specifications.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": [
+    "marxist"
+  ]
+}
