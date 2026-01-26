@@ -1,0 +1,121 @@
+{
+  "engine_key": "incentive_structure_mapper",
+  "engine_name": "Incentive Structure Mapper",
+  "description": "Maps incentive structures and predicts resulting behaviors. Identifies what behaviors are actually rewarded, incentive misalignment, gaming opportunities, and perverse incentives. Essential for understanding institutional behavior.",
+  "version": 1,
+  "category": "institutional",
+  "kind": "synthesis",
+  "reasoning_domain": "institutional",
+  "researcher_question": "What behaviors do the incentives actually reward?",
+  "extraction_prompt": "\nYou are mapping INCENTIVE STRUCTURES \u2014 identifying what behaviors are\nactually rewarded and how this shapes institutional behavior.\n\n## THE INCENTIVE PRINCIPLE\n\n\"Show me the incentives and I'll show you the outcome.\" \u2014 Charlie Munger\n\nPeople respond to incentives. If you want to understand behavior:\n- Don't look at what people SAY they value\n- Look at what behaviors are REWARDED\n- Predict behavior from incentives, not intentions\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY SYSTEMS AND ACTORS\nWhat institutional systems are described?\n- What are the stated goals?\n- Who are the key actors?\n- What decisions do actors make?\n\n### STEP 2: MAP INCENTIVE STRUCTURES\nFor each actor, identify:\n- What behaviors are REWARDED?\n- What behaviors are PUNISHED?\n- What's the reward mechanism (money, status, career advancement)?\n- What metrics drive rewards?\n- What's the time horizon (short-term vs. long-term)?\n\n### STEP 3: ASSESS ALIGNMENT\nDo incentives align with stated goals?\n- ALIGNED: Incentives push toward stated goals\n- PARTIALLY ALIGNED: Some alignment, some divergence\n- MISALIGNED: Incentives neutral to goals\n- OPPOSED: Incentives push against stated goals\n\nFor misalignments:\n- What goal is undermined?\n- What behavior results instead?\n\n### STEP 4: PREDICT BEHAVIORS\nBased on incentive structures, what will actors do?\n- Assume rational response to incentives\n- How does this differ from stated goals?\n- What evidence supports this prediction?\n\n### STEP 5: IDENTIFY GAMING OPPORTUNITIES\nHow might actors game the system?\n- What metrics can be manipulated?\n- How does gaming undermine goals?\n- Is gaming detectable?\n\n### STEP 6: FIND PERVERSE INCENTIVES\nWhere do incentives create opposite behavior?\n- Cobra effect: Bounty on cobras \u2192 Breeding cobras\n- Teaching to test: Measure tests \u2192 Teach only tested material\n- Short-termism: Quarterly bonuses \u2192 Ignore long-term\n\n### STEP 7: SUGGEST REDESIGN\nHow could incentives be restructured?\n- What would align incentives with goals?\n- How might new structure be gamed?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about mechanisms. \"Bad incentives\" is not useful.\n\"Quarterly bonuses tied to revenue create incentive to sacrifice quality for\nshort-term sales\" is useful.\n",
+  "curation_prompt": "\nYou are synthesizing incentive structure analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE INCENTIVE MAPS\n- What incentive structures appear across sources?\n- Where is there agreement on misalignment?\n\n### 2. IDENTIFY SYSTEMIC PATTERNS\n- Are there common incentive problems?\n- What gaming strategies appear repeatedly?\n\n### 3. ASSESS OVERALL ALIGNMENT\n- What's the overall quality of incentive structures?\n- Where are the most severe misalignments?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive incentive map with focus on misalignments and\npredicted behaviors.\n",
+  "concretization_prompt": "\nTransform the incentive structure analysis into actionable insight:\n\n1. **INCENTIVE MAP SUMMARY**\n   ```\n   | Actor | Incentive | What's Rewarded | Alignment | Problem |\n   |-------|-----------|-----------------|-----------|---------|\n   | ...   | ...       | ...             | Misaligned | ...    |\n   ```\n\n2. **INCENTIVE DETAILS**\n   ```\n   System: [Name]\n   Actor: [Who]\n   Stated goal: [What system claims to want]\n   Actual reward: [What behavior is rewarded]\n   Alignment: [Aligned/Misaligned/Opposed]\n   Consequence: [What behavior results]\n   ```\n\n3. **PREDICTED BEHAVIORS**\n   - Given incentives, [Actor] will likely:\n     - [Behavior 1] because [incentive mechanism]\n     - [Behavior 2] because [incentive mechanism]\n\n4. **GAMING OPPORTUNITIES**\n   - Metric: [What's measured]\n   - Gaming strategy: [How to manipulate]\n   - Cost to goals: [What's undermined]\n\n5. **PERVERSE INCENTIVES**\n   - Intended: [What was supposed to happen]\n   - Actual: [What happens instead]\n   - Mechanism: [Why incentives create this]\n\n6. **REDESIGN RECOMMENDATIONS**\n   - Problem: [Misalignment]\n   - Current: [Incentive structure]\n   - Proposed: [Better structure]\n   - Gaming risk: [How new structure might be gamed]\n\n7. **BOTTOM LINE**\n   [One paragraph: What do incentives actually reward? Where are the\n   most dangerous misalignments? What behaviors should we expect?]\n",
+  "canonical_schema": {
+    "systems_analyzed": [
+      {
+        "system_id": "string - SYS1, SYS2, etc.",
+        "system_name": "string",
+        "stated_goals": [
+          "string - what the system claims to achieve"
+        ],
+        "key_actors": [
+          "string - who operates in this system"
+        ]
+      }
+    ],
+    "incentive_structures": [
+      {
+        "incentive_id": "string - INC1, INC2, etc.",
+        "system_id": "string",
+        "actor": "string - who faces this incentive",
+        "incentive_type": "financial | reputational | career | regulatory | social | other",
+        "what_rewarded": "string - what behavior gets rewarded",
+        "reward_mechanism": "string - how reward is delivered",
+        "what_punished": "string - what behavior gets punished",
+        "punishment_mechanism": "string - how punishment is delivered",
+        "measurement_basis": "string - what metrics drive rewards",
+        "time_horizon": "short_term | medium_term | long_term"
+      }
+    ],
+    "incentive_alignment": [
+      {
+        "alignment_id": "string",
+        "incentive_id": "string",
+        "stated_goal": "string - what the goal claims",
+        "alignment": "aligned | partially_aligned | misaligned | opposed",
+        "misalignment_description": "string - how they diverge",
+        "consequence": "string - what behavior results"
+      }
+    ],
+    "predicted_behaviors": [
+      {
+        "behavior_id": "string",
+        "actor": "string",
+        "predicted_behavior": "string - what actors will likely do",
+        "driving_incentives": [
+          "string - incentive_ids"
+        ],
+        "differs_from_intended": "string - how this differs from stated goals",
+        "likelihood": "very_likely | likely | possible | unlikely",
+        "evidence": "string - support for this prediction"
+      }
+    ],
+    "gaming_opportunities": [
+      {
+        "gaming_id": "string",
+        "incentive_id": "string",
+        "gaming_strategy": "string - how actors might game the system",
+        "metric_manipulated": "string - what measure is exploited",
+        "cost_to_goal": "string - how this undermines actual objectives",
+        "detectability": "easy | moderate | difficult",
+        "examples": [
+          "string - cases where this occurs"
+        ]
+      }
+    ],
+    "perverse_incentives": [
+      {
+        "perverse_id": "string",
+        "incentive_id": "string",
+        "intended_outcome": "string - what was supposed to happen",
+        "actual_outcome": "string - what actually happens",
+        "mechanism": "string - how incentive creates opposite behavior",
+        "severity": "severe | significant | moderate | minor",
+        "historical_parallels": [
+          "string - similar cases"
+        ]
+      }
+    ],
+    "redesign_recommendations": [
+      {
+        "recommendation_id": "string",
+        "problem_addressed": "string - which misalignment",
+        "current_incentive": "string",
+        "proposed_change": "string",
+        "expected_improvement": "string",
+        "potential_gaming": "string - how new structure might be gamed"
+      }
+    ],
+    "meta": {
+      "systems_analyzed": "number",
+      "incentives_mapped": "number",
+      "aligned_incentives": "number",
+      "misaligned_incentives": "number",
+      "perverse_incentives_found": "number",
+      "overall_alignment_quality": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "incentive_structures",
+    "reward_mechanisms",
+    "behavioral_predictions",
+    "gaming_opportunities",
+    "perverse_incentives"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/incentive_structure_mapper.py"
+}

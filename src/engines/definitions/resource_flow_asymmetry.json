@@ -1,0 +1,120 @@
+{
+  "engine_key": "resource_flow_asymmetry",
+  "engine_name": "Resource Flow Analyst",
+  "description": "Maps resource flows (money, value, risk) across actors. Identifies asymmetries in who invests, who profits, who bears risks, and the mechanisms of value extraction.",
+  "version": 1,
+  "category": "power",
+  "kind": "relational",
+  "reasoning_domain": "flows",
+  "researcher_question": "Who pays? Who profits? Who bears the risks?",
+  "extraction_prompt": "\nYou are an expert political economist analyzing resource flows.\n\nFor this article, extract ALL information about resource distribution:\n\n## ACTORS\nIdentify all actors involved in resource flows:\n1. **NAME**: Who are they?\n2. **TYPE**: Company, government, individual, institution, collective\n3. **ROLE**: Investor, recipient, intermediary, regulator, etc.\n4. **RESOURCES**: What resources do they control?\n\n## RESOURCE FLOWS\nFor each flow of resources:\n1. **FROM \u2192 TO**: Who gives to whom?\n2. **RESOURCE TYPE**:\n   - Money (investment, revenue, tax, subsidy, fine)\n   - Data (personal data, analytics, insights)\n   - Labor (work, attention, creativity)\n   - Risk (who bears potential downsides)\n   - Regulatory favor (licenses, exemptions, access)\n\n3. **MAGNITUDE**: How much? (exact, estimated, or order of magnitude)\n4. **MECHANISM**: How does the transfer happen?\n5. **VISIBILITY**: Is this flow openly discussed or hidden?\n\n## ASYMMETRIES\nIdentify unequal distributions:\n1. **WHAT**: What's unevenly distributed?\n2. **WHO BENEFITS**: Who gets more than they contribute?\n3. **WHO PAYS**: Who contributes more than they receive?\n4. **HOW**: What mechanism creates the asymmetry?\n5. **JUSTIFICATION**: Is any rationale offered?\n\n## RISK DISTRIBUTION\nWho generates risks vs. who bears them?\n- Financial risks (market, credit, liquidity)\n- Regulatory risks (compliance, enforcement)\n- Operational risks (failure, accidents)\n- Reputational risks\n- Environmental/social risks\n\n\nFollow the money - extract every resource flow you can identify.\n",
+  "curation_prompt": "\nYou are synthesizing resource flow analyses into a unified economic map.\n\nYour task:\n1. **CONSOLIDATE ACTORS**: Merge same actors across articles\n   - Aggregate roles and resources\n   - Track across different contexts\n\n2. **MAP FLOW NETWORKS**:\n   - Create comprehensive flow diagrams\n   - Identify major and minor flows\n   - Track flow directions and magnitudes\n\n3. **IDENTIFY SYSTEMIC ASYMMETRIES**:\n   - Which asymmetries appear across multiple articles?\n   - What are the root mechanisms?\n   - Who are consistent winners/losers?\n\n4. **TRACE RISK TRANSFERS**:\n   - Map risk generation to risk bearing\n   - Identify privatized gains / socialized losses\n   - Note obscured or hidden transfers\n\n5. **CONSTRUCT VALUE CHAINS**:\n   - Where is value created?\n   - Where is value extracted?\n   - Who captures what share?\n\nCreate clear actor_ids (e.g., \"actor_google\", \"actor_us_government\").\n\n\nOutput a comprehensive map of who pays and who profits.\n",
+  "concretization_prompt": "\nTransform the resource flow analysis to use concrete labels:\n\n1. Convert actor_ids to full names:\n   - \"A1\" \u2192 \"Alphabet Inc. (Google)\"\n   - \"A2\" \u2192 \"US Federal Government\"\n\n2. Name flows specifically:\n   - \"F1\" \u2192 \"Advertising Revenue Flow\"\n   - \"F2\" \u2192 \"User Data Extraction\"\n\n3. Label asymmetries clearly:\n   - \"Asymmetry 1\" \u2192 \"The Data-Value Gap\"\n   - \"Asymmetry 2\" \u2192 \"Risk Externalization to Gig Workers\"\n\n4. Specify magnitudes where possible:\n   - Include actual dollar amounts, percentages\n   - Note uncertainty ranges\n\nPreserve all flow relationships and network structure.\nMake the money trail immediately visible.\n",
+  "canonical_schema": {
+    "actors": [
+      {
+        "actor_id": "string",
+        "name": "string",
+        "type": "company | government | individual | institution | collective",
+        "role": "investor | recipient | intermediary | regulator | beneficiary | risk_bearer",
+        "resources_controlled": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "resource_flows": [
+      {
+        "flow_id": "string",
+        "from_actor": "string",
+        "to_actor": "string",
+        "resource_type": "money | data | labor | attention | risk | regulatory_favor | subsidy | tax",
+        "magnitude": {
+          "amount": "number | null",
+          "unit": "string",
+          "precision": "exact | estimated | order_of_magnitude"
+        },
+        "mechanism": "string",
+        "is_visible": "boolean",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "asymmetries": [
+      {
+        "asymmetry_id": "string",
+        "description": "string",
+        "beneficiaries": [
+          "actor_id"
+        ],
+        "cost_bearers": [
+          "actor_id"
+        ],
+        "magnitude": "severe | moderate | minor",
+        "mechanism": "string",
+        "visibility": "overt | hidden | obscured",
+        "justification_offered": "string | null"
+      }
+    ],
+    "risk_distributions": [
+      {
+        "risk_id": "string",
+        "risk_type": "financial | regulatory | operational | reputational | existential | environmental | social",
+        "risk_generators": [
+          "actor_id"
+        ],
+        "risk_bearers": [
+          "actor_id"
+        ],
+        "transfer_mechanism": "string",
+        "is_acknowledged": "boolean"
+      }
+    ],
+    "value_chains": [
+      {
+        "chain_id": "string",
+        "description": "string",
+        "stages": [
+          {
+            "stage": "string",
+            "actor": "actor_id",
+            "value_added": "string",
+            "value_captured": "string"
+          }
+        ],
+        "extraction_points": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_flows": "number",
+      "total_value_tracked": "number | null",
+      "most_significant_asymmetry": "string",
+      "primary_beneficiaries": [
+        "actor_id"
+      ],
+      "primary_cost_bearers": [
+        "actor_id"
+      ]
+    }
+  },
+  "extraction_focus": [
+    "money_flows",
+    "investments",
+    "revenues",
+    "costs",
+    "risks",
+    "subsidies",
+    "value_transfer"
+  ],
+  "primary_output_modes": [
+    "gemini_sankey_flow",
+    "structured_text_report"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/resource_flow_asymmetry.py"
+}

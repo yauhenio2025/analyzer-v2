@@ -1,0 +1,24 @@
+{
+  "chain_key": "critical_analysis_chain",
+  "chain_name": "Critical Analysis Chain",
+  "description": "Multi-stage critical analysis: argument structure, then epistemological scrutiny, then institutional power analysis",
+  "version": 1,
+  "engine_keys": [
+    "argument_architecture",
+    "unearned_certainty_detector",
+    "strategic_omission_detector",
+    "power_interest_subtext"
+  ],
+  "blend_mode": "sequential",
+  "selection_criteria": null,
+  "max_engines": 4,
+  "merge_strategy": null,
+  "pass_context": true,
+  "category": "critique",
+  "recommended_for": [
+    "policy documents",
+    "opinion pieces",
+    "advocacy materials",
+    "documents with potential bias"
+  ]
+}

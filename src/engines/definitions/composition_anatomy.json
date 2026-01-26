@@ -1,0 +1,177 @@
+{
+  "engine_key": "composition_anatomy",
+  "engine_name": "Composition Anatomy Mapper",
+  "description": "Decomposes complex legislation, bills, or policy packages into components. Maps structural relationships between provisions, identifies implementation mechanisms, enforcement provisions, and reveals how different stakeholders are affected by each component.",
+  "version": 1,
+  "category": "market",
+  "kind": "relational",
+  "reasoning_domain": "composition",
+  "researcher_question": "What are the component parts of this legislation/policy and how do they relate?",
+  "extraction_prompt": "\nYou are an expert legal analyst decomposing legislation and policy into components.\n\nFor this article, extract ALL structural and substantive information about legislation/policy:\n\n## 1. POLICY DOCUMENTS\nFor each law, bill, regulation, or policy mentioned:\n- **DOCUMENT NAME**: Official title\n- **DOCUMENT TYPE**: Legislation, bill, regulation, directive, executive order, treaty, framework\n- **JURISDICTION**: Where does it apply?\n- **STATUS**: Proposed, enacted, amended, repealed\n- **DATE**: When enacted/proposed\n- **PRIMARY PURPOSE**: What is it trying to achieve?\n\n## 2. STRUCTURAL COMPONENTS\nMap the hierarchical structure:\n- **COMPONENT TYPE**: Title, chapter, section, article, clause, provision\n- **COMPONENT NAME**: Official designation (e.g., \"Title II\", \"Section 5(a)\")\n- **PARENT COMPONENT**: What contains this component?\n- **SUMMARY**: What does this component address?\n- **LEGAL TEXT**: Key excerpt if provided\n\n## 3. PROVISIONS\nFor each substantive provision:\n- **PROVISION TYPE**:\n  - SUBSTANTIVE: Creates rights, obligations, prohibitions\n  - PROCEDURAL: Establishes processes\n  - DEFINITIONAL: Defines key terms\n  - ENFORCEMENT: Establishes penalties/enforcement\n  - TRANSITIONAL: Phasing in/out arrangements\n  - DELEGATED AUTHORITY: Grants rulemaking power\n- **DESCRIPTION**: What does it require/permit/prohibit?\n- **MANDATORY**: Is compliance required?\n- **CONDITIONS**: When does it apply?\n- **TRIGGERS**: What events activate it?\n\n## 4. IMPLEMENTATION MECHANISMS\nHow is compliance achieved?\n- **MECHANISM TYPE**: Reporting, licensing, registration, inspection, audit\n- **RESPONSIBLE BODY**: Who administers?\n- **TIMELINE**: Deadlines and schedules\n- **REQUIREMENTS**: Specific compliance requirements\n\n## 5. ENFORCEMENT PROVISIONS\nHow is it enforced?\n- **ENFORCEMENT TYPE**: Penalty, sanction, injunction, criminal, civil, administrative\n- **ENFORCING AUTHORITY**: Who enforces?\n- **PENALTY RANGE**: Potential penalties\n- **DUE PROCESS**: Procedural protections\n\n## 6. EXCEPTIONS AND CARVE-OUTS\nWhat is exempted?\n- **EXCEPTION TYPE**: Exemption, safe harbor, grandfathering, de minimis, national security\n- **BENEFICIARIES**: Who benefits from the exception?\n- **CONDITIONS**: Requirements to qualify for exception\n- **DURATION**: Temporary or permanent?\n\n## 7. STAKEHOLDER IMPACTS\nWho is affected and how?\n- **STAKEHOLDER**: Who is impacted?\n- **IMPACT TYPE**: Obligation, right, benefit, burden, cost, opportunity\n- **SEVERITY**: High, medium, low\n\n\nBe thorough - capture the full anatomy of the legislation/policy.\n",
+  "curation_prompt": "\nYou are synthesizing legislative/policy analysis from multiple articles into a comprehensive anatomy.\n\nYour task:\n1. **CONSOLIDATE DOCUMENTS**: Build complete picture of each law/policy\n   - Merge information across articles\n   - Establish full structural hierarchy\n   - Document official names and references\n\n2. **BUILD COMPONENT HIERARCHIES**:\n   - Map parent-child relationships between components\n   - Establish levels (Title \u2192 Chapter \u2192 Section \u2192 Clause)\n   - Cross-reference related components\n\n3. **CATALOG PROVISIONS**:\n   - Group by type (substantive, procedural, enforcement, etc.)\n   - Map dependencies between provisions\n   - Note which provisions modify others\n\n4. **MAP IMPLEMENTATION**:\n   - Link mechanisms to provisions they implement\n   - Identify responsible bodies\n   - Note timelines and deadlines\n\n5. **DOCUMENT ENFORCEMENT**:\n   - Link enforcement to substantive provisions\n   - Catalog penalty ranges\n   - Note due process requirements\n\n6. **IDENTIFY EXCEPTIONS**:\n   - Map all carve-outs and exemptions\n   - Note who benefits\n   - Identify potential loopholes\n\n7. **ANALYZE STAKEHOLDER IMPACTS**:\n   - For each major stakeholder group\n   - Map which provisions affect them\n   - Assess cumulative impact\n\n8. **MAP INTER-COMPONENT RELATIONSHIPS**:\n   - Dependencies\n   - Cross-references\n   - Conflicts or tensions\n   - Supersession\n\n9. **CALCULATE METRICS**:\n   - Total components by type\n   - Hierarchy depth\n   - Exception count\n   - Enforcement mechanism density\n\n\nCreate a comprehensive anatomical map of the legislation/policy.\n",
+  "concretization_prompt": "\nTransform the legislative anatomy to be immediately usable:\n\n1. Replace generic IDs with descriptive names:\n   - \"D1\" \u2192 \"EU AI Act (2024)\"\n   - \"C1\" \u2192 \"Title II - Prohibited AI Practices\"\n   - \"P1\" \u2192 \"Art. 5 - Social Scoring Prohibition\"\n\n2. Format hierarchies clearly:\n   - Show structural nesting with indentation\n   - Note component counts at each level\n   - Highlight key provisions\n\n3. Clarify provision types:\n   - Mark mandatory vs. optional clearly\n   - Highlight enforcement provisions\n   - Note delegated authority grants\n\n4. Make exceptions visible:\n   - List all carve-outs prominently\n   - Note who benefits\n   - Flag potential loopholes\n\n5. Summarize stakeholder impacts:\n   - Create per-stakeholder impact summaries\n   - Rate severity of impacts\n   - Note opportunities vs. burdens\n\n6. Highlight relationships:\n   - Show dependencies between provisions\n   - Flag conflicts or tensions\n   - Note cross-references\n\nPreserve all hierarchical relationships.\nMake the anatomy immediately useful for policy analysis.\n",
+  "canonical_schema": {
+    "policy_documents": [
+      {
+        "document_id": "string",
+        "document_name": "string",
+        "document_type": "legislation | bill | regulation | directive | executive_order | treaty | framework",
+        "jurisdiction": "string",
+        "status": "proposed | enacted | amended | repealed",
+        "date": "string",
+        "primary_purpose": "string",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "structural_components": [
+      {
+        "component_id": "string",
+        "document_id": "string",
+        "component_type": "title | chapter | section | article | clause | provision | schedule | annex",
+        "component_name": "string",
+        "parent_component": "string or null",
+        "level": "number (0 = top level)",
+        "summary": "string",
+        "legal_text_excerpt": "string or null",
+        "child_components": [
+          "component_id"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "provisions": [
+      {
+        "provision_id": "string",
+        "component_id": "string",
+        "provision_type": "substantive | procedural | definitional | enforcement | transitional | delegated_authority",
+        "provision_name": "string",
+        "description": "string",
+        "mandatory": "boolean",
+        "conditions": [
+          "string"
+        ],
+        "triggers": [
+          "string (events that activate this provision)"
+        ],
+        "related_provisions": [
+          "provision_id"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "implementation_mechanisms": [
+      {
+        "mechanism_id": "string",
+        "provision_id": "string",
+        "mechanism_type": "reporting | licensing | registration | inspection | audit | certification | notification",
+        "responsible_body": "string",
+        "timeline": "string",
+        "requirements": [
+          "string"
+        ],
+        "compliance_indicators": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "enforcement_provisions": [
+      {
+        "enforcement_id": "string",
+        "provision_id": "string",
+        "enforcement_type": "penalty | sanction | injunction | license_revocation | criminal | civil | administrative",
+        "enforcing_authority": "string",
+        "penalty_range": "string or null",
+        "due_process": [
+          "string"
+        ],
+        "appeal_mechanism": "string or null",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "exceptions_and_carveouts": [
+      {
+        "exception_id": "string",
+        "provision_id": "string",
+        "exception_type": "exemption | safe_harbor | grandfathering | de_minimis | national_security | public_interest",
+        "description": "string",
+        "beneficiaries": [
+          "string"
+        ],
+        "conditions_for_exception": [
+          "string"
+        ],
+        "duration": "string or null",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "stakeholder_impacts": [
+      {
+        "impact_id": "string",
+        "component_id": "string",
+        "stakeholder": "string",
+        "stakeholder_type": "regulated_entity | regulator | beneficiary | third_party | consumer | industry",
+        "impact_type": "obligation | right | benefit | burden | cost | opportunity",
+        "impact_description": "string",
+        "severity": "high | medium | low",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "inter_component_relationships": [
+      {
+        "relationship_id": "string",
+        "from_component": "string",
+        "to_component": "string",
+        "relationship_type": "depends_on | modifies | supersedes | cross_references | conflicts_with | implements",
+        "description": "string",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_documents": "number",
+      "total_components": "number",
+      "total_provisions": "number",
+      "max_hierarchy_depth": "number",
+      "exception_count": "number",
+      "enforcement_mechanism_count": "number",
+      "stakeholders_identified": "number",
+      "components_by_type": {
+        "type": "number"
+      }
+    }
+  },
+  "extraction_focus": [
+    "provisions",
+    "clauses",
+    "mechanisms",
+    "enforcement",
+    "exceptions",
+    "components",
+    "structure",
+    "stakeholder_impact"
+  ],
+  "primary_output_modes": [
+    "gemini_hierarchy_diagram",
+    "structured_text_report",
+    "table",
+    "mermaid"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/composition_anatomy.py"
+}

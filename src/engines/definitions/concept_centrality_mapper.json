@@ -1,0 +1,117 @@
+{
+  "engine_key": "concept_centrality_mapper",
+  "engine_name": "Concept Centrality Mapper",
+  "description": "Maps where concepts sit in the web of belief using Quinean analysis. Identifies core vs peripheral concepts, dependency chains, and what would break if specific concepts were removed. Reveals the hidden architecture of conceptual commitments.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "quinean_holism",
+  "researcher_question": "Which concepts are load-bearing and what depends on them?",
+  "extraction_prompt": "\nYou are an expert in Quinean epistemology, analyzing concepts as nodes in a web of belief.\n\nFor this article, perform a CONCEPT CENTRALITY ANALYSIS:\n\n## 1. CONCEPT IDENTIFICATION\nFor each significant concept mentioned:\n- **Term**: The concept name/phrase\n- **Definition**: How it's defined or used in context\n- **Apparent centrality**: Does this seem core or peripheral to the argument?\n\n## 2. DEPENDENCY MAPPING\nFor each concept, identify:\n- **Definitional dependencies**: What concepts does its definition rely on?\n- **Inferential dependencies**: What concepts must be true for inferences involving this one?\n- **Presuppositional dependencies**: What must be taken for granted?\n- **Evidential dependencies**: What empirical claims support it?\n\n## 3. CENTRALITY ASSESSMENT\nEvaluate each concept's position:\n- **Distance from experience**: How many inferential steps from direct observation?\n  (0 = directly observable, 5 = highly theoretical)\n- **Revision cost**: What would revising this concept require?\n  - Catastrophic: Would require abandoning the entire framework\n  - Major: Would require significant restructuring\n  - Moderate: Would require adjusting related concepts\n  - Minor: Could be revised with local changes\n  - Trivial: Could be revised without affecting other concepts\n\n## 4. REMOVAL THOUGHT EXPERIMENTS\nFor key concepts, consider:\n- What would happen if we abandoned this concept?\n- What other concepts would become unstable?\n- What would need to be reconstructed?\n\n## 5. EMPIRICAL ANCHORS\nIdentify concepts with direct empirical grounding:\n- What observations/data anchor this concept?\n- How revisable is this empirical basis?\n\n## 6. LOAD-BEARING STRUCTURES\nIdentify conceptual structures that hold other concepts together:\n- What conceptual clusters function as units?\n- What enables/supports large portions of the argument?\n\n\nThink holistically - every concept connects to others. Map the web.\n",
+  "curation_prompt": "\nYou are synthesizing concept centrality analyses from multiple articles into a unified web of belief map.\n\nYour task:\n\n## 1. CONSOLIDATE THE CONCEPT INVENTORY\n- Merge identical concepts across articles\n- Note definitional variations\n- Track which articles use which concepts\n\n## 2. BUILD THE MASTER DEPENDENCY GRAPH\n- Aggregate all dependency relationships\n- Identify transitive dependencies (A depends on B depends on C)\n- Calculate dependency depth for each concept\n\n## 3. COMPUTE CENTRALITY SCORES\nFor each concept, calculate centrality (0-1) based on:\n- How many other concepts depend on it (incoming edges)\n- How costly revision would be\n- How far from empirical grounding\n- Whether it appears across multiple articles\n\nAssign centrality tiers:\n- **Core** (0.8-1.0): Framework-defining concepts\n- **Near-core** (0.6-0.8): Major structural concepts\n- **Intermediate** (0.4-0.6): Important but revisable\n- **Peripheral** (0.2-0.4): Supporting concepts\n- **Edge** (0-0.2): Easily abandoned concepts\n\n## 4. PERFORM REMOVAL IMPACT ANALYSIS\nFor the most central concepts:\n- What would break if removed?\n- What cascade effects would occur?\n- What surviving concepts could rebuild from?\n\n## 5. IDENTIFY LOAD-BEARING STRUCTURES\n- Which concept clusters hold the web together?\n- What are the conceptual \"keystones\"?\n- Where are the vulnerabilities?\n\n## 6. MAP WEB TOPOLOGY\n- Calculate overall web coherence\n- Identify conceptual hubs\n- Find orphan/isolated concepts\n- Assess revision vulnerability\n\n\nCreate a map that reveals the hidden architecture of conceptual commitments.\n",
+  "concretization_prompt": "\nTransform the centrality analysis to use concrete, recognizable labels:\n\n1. Name concepts specifically:\n   - \"C1\" \u2192 \"Algorithmic Fairness\"\n   - \"C2\" \u2192 \"Statistical Parity\"\n\n2. Name dependency chains descriptively:\n   - \"DC1\" \u2192 \"Fairness \u2192 Parity \u2192 Demographic Data Chain\"\n\n3. Name load-bearing structures evocatively:\n   - \"LBS1\" \u2192 \"The Quantification Apparatus\"\n   - \"LBS2\" \u2192 \"The Rights-Based Foundation\"\n\n4. Name removal impacts concretely:\n   - Describe what specifically breaks, not abstract categories\n\n5. Name empirical anchors with actual observations:\n   - \"EA1\" \u2192 \"Recidivism Rate Studies (ProPublica 2016)\"\n\nPreserve all centrality scores, dependency strengths, and topological metrics.\nMake the web of belief immediately navigable and actionable.\n",
+  "canonical_schema": {
+    "concepts": [
+      {
+        "concept_id": "string",
+        "term": "string",
+        "definition": "string",
+        "centrality_score": "number (0-1, where 1 = maximally central)",
+        "centrality_rationale": "string",
+        "centrality_tier": "core | near-core | intermediate | peripheral | edge",
+        "distance_from_experience": "number (0-5, where 0 = directly empirical)",
+        "revision_cost": "catastrophic | major | moderate | minor | trivial",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "dependency_chains": [
+      {
+        "chain_id": "string",
+        "dependent_concept": "concept_id",
+        "depends_on": [
+          "concept_id"
+        ],
+        "dependency_type": "definitional | inferential | presuppositional | evidential",
+        "dependency_strength": "number (0-1)",
+        "if_broken": "string (what happens if dependency fails)"
+      }
+    ],
+    "removal_impact_analyses": [
+      {
+        "analysis_id": "string",
+        "concept_removed": "concept_id",
+        "directly_affected": [
+          "concept_id"
+        ],
+        "cascading_effects": [
+          "concept_id"
+        ],
+        "surviving_concepts": [
+          "concept_id"
+        ],
+        "required_reconstructions": [
+          "string"
+        ],
+        "impact_severity": "total_collapse | major_restructuring | local_adjustment | minimal"
+      }
+    ],
+    "empirical_anchors": [
+      {
+        "anchor_id": "string",
+        "concept": "concept_id",
+        "empirical_basis": "string",
+        "observation_type": "direct_observation | experimental | statistical | testimonial",
+        "revisability": "high | medium | low"
+      }
+    ],
+    "load_bearing_structures": [
+      {
+        "structure_id": "string",
+        "name": "string",
+        "core_concepts": [
+          "concept_id"
+        ],
+        "function": "string (what this structure enables)",
+        "vulnerability": "string (what could destabilize it)"
+      }
+    ],
+    "web_topology": {
+      "total_concepts": "number",
+      "core_count": "number",
+      "peripheral_count": "number",
+      "average_centrality": "number",
+      "most_central_concept": "concept_id",
+      "most_connected_concept": "concept_id",
+      "conceptual_hubs": [
+        "concept_id"
+      ],
+      "orphan_concepts": [
+        "concept_id (concepts with few dependencies)"
+      ]
+    },
+    "meta": {
+      "web_coherence": "number (0-1)",
+      "revision_vulnerability": "high | medium | low",
+      "dominant_dependency_type": "string",
+      "analysis_depth": "surface | intermediate | deep"
+    }
+  },
+  "extraction_focus": [
+    "concepts",
+    "concept_dependencies",
+    "inferential_connections",
+    "empirical_anchors",
+    "theoretical_commitments",
+    "definitional_relationships"
+  ],
+  "primary_output_modes": [
+    "gemini_network_graph",
+    "mermaid_flowchart",
+    "structured_text_report",
+    "smart_table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/concept_centrality_mapper.py"
+}

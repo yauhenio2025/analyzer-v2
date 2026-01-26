@@ -1,0 +1,162 @@
+{
+  "engine_key": "identity_normalization_scanner",
+  "engine_name": "Identity Normalization Scanner",
+  "description": "Scans how concepts create and normalize identities. Maps subject positions created, looping effects, normalization pressures, and institutional enforcement. Reveals how classification shapes the classified.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "hacking_interactive_kinds",
+  "researcher_question": "What kinds of people does this concept make up?",
+  "extraction_prompt": "\nYou are an expert in Ian Hacking's philosophy of interactive kinds, analyzing how concepts shape people.\n\nFor this article, perform an IDENTITY NORMALIZATION SCAN:\n\n## 1. CONCEPT IDENTIFICATION\nFor each significant concept:\n- **Term**: The concept name/phrase\n- **Definition**: How it's used\n- **Identity relevance**: Does it classify or describe kinds of people?\n\n## 2. SUBJECT POSITION ANALYSIS\nFor concepts that create kinds of people:\n- **What kind of person** does this concept create/describe?\n- **What traits** are associated with this kind?\n- **What behaviors** are expected?\n- **Is it positive, negative, or ambivalent?**\n- **When did this kind emerge?**\n- **Is the classification contested?**\n\n## 3. LOOPING EFFECT DETECTION\nWhere classifications interact with the classified:\n- **How do classified people respond** to being classified?\n- **Do they embrace, resist, or transform** the category?\n- **How do classifiers then adjust** their categories?\n- **Is this loop stable or evolving?**\n\n## 4. NORMALIZATION PRESSURE MAPPING\nIdentify what's being normalized or pathologized:\n- **What behaviors are normalized?** (Made to seem natural, expected)\n- **What behaviors are pathologized?** (Made to seem deviant, problematic)\n- **What mechanisms enforce this?** (Institutions, social pressure, self-discipline)\n- **What resistance is possible?**\n\n## 5. IDENTITY WORK ANALYSIS\nHow do individuals work with these categories:\n- **Do they embrace** the identity?\n- **Do they negotiate** its meaning?\n- **Do they resist** the classification?\n- **Do they subvert** it creatively?\n\n## 6. INSTITUTIONAL CLASSIFICATION MAPPING\nHow do institutions use these concepts:\n- **What classification schemes** deploy these concepts?\n- **What administrative functions** do they serve?\n- **What effects** do they have on classified populations?\n\n## 7. NORMAL/PATHOLOGICAL BOUNDARIES\nIdentify where lines are drawn:\n- **What's on the normal side?**\n- **What's on the pathological side?**\n- **How firm is the boundary?**\n- **Who enforces it?**\n\n\nThink about how concepts make up people and how people respond.\n",
+  "curation_prompt": "\nYou are synthesizing identity normalization analyses from multiple articles.\n\nYour task:\n\n## 1. CONSOLIDATE CONCEPT INVENTORIES\n- Merge same concepts across articles\n- Collect all identity-relevant information\n- Rate identity relevance\n\n## 2. MAP SUBJECT POSITIONS\n- Aggregate all subject positions created\n- Identify overlapping/conflicting positions\n- Track historical emergence\n- Note contested classifications\n\n## 3. ANALYZE LOOPING EFFECTS\n- Identify loop patterns across articles\n- Categorize loop types (confirmation, resistance, transformation)\n- Assess loop stability\n- Track classification-response-revision dynamics\n\n## 4. SYNTHESIZE NORMALIZATION LANDSCAPE\n- Map what's normalized across the discourse\n- Map what's pathologized\n- Identify enforcement mechanisms\n- Note resistance possibilities and their limits\n\n## 5. AGGREGATE IDENTITY WORK PATTERNS\n- Identify how people work with categories\n- Map strategies and their outcomes\n- Note resources required for different strategies\n\n## 6. MAP INSTITUTIONAL CLASSIFICATIONS\n- Aggregate institutional schemes\n- Identify overlaps and conflicts\n- Track revision histories\n- Note effects on classified populations\n\n## 7. MAP NORMAL/PATHOLOGICAL BOUNDARIES\n- Identify all boundaries drawn\n- Assess stability of each\n- Identify who polices boundaries\n- Note consequences of transgression\n\n## 8. ANALYZE MAKING-UP DYNAMICS\n- Identify populations being \"made up\"\n- Map vectors of making-up\n- Note when communities form around classifications\n- Track advocacy and activism\n\n\nCreate a map that reveals how concepts shape identities in this discourse.\n",
+  "concretization_prompt": "\nTransform the normalization analysis to use concrete, recognizable labels:\n\n1. Name concepts specifically:\n   - \"C1\" \u2192 \"ADHD\"\n   - \"C2\" \u2192 \"Giftedness\"\n\n2. Name subject positions concretely:\n   - \"SP1\" \u2192 \"The ADHD Child (distractible, creative, needing support)\"\n   - \"SP2\" \u2192 \"The High-Performer (driven, productive, successful)\"\n\n3. Name looping effects with dynamics:\n   - \"LOOP1\" \u2192 \"ADHD diagnosis \u2192 stimulant prescription \u2192 academic improvement \u2192 confirmation of diagnosis\"\n   - \"LOOP2\" \u2192 \"Autism self-advocacy \u2192 identity reclamation \u2192 neurodiversity movement \u2192 DSM revision pressure\"\n\n4. Name normalization pressures specifically:\n   - \"NP1\" \u2192 \"Normalizes: Sustained attention in classroom settings\"\n   - \"NP2\" \u2192 \"Pathologizes: Fidgeting, daydreaming, task-switching\"\n\n5. Name boundaries concretely:\n   - \"BOUND1\" \u2192 \"The Neurotypical/Neurodivergent Boundary\"\n\n6. Name making-up dynamics:\n   - \"MUD1\" \u2192 \"The Making Up of 'Learning Disabled Children' (1970s-present)\"\n\nPreserve all loop types, normalization sources, and institutional details.\nMake the identity-shaping power of concepts visible.\n",
+  "canonical_schema": {
+    "concepts_analyzed": [
+      {
+        "concept_id": "string",
+        "term": "string",
+        "definition": "string",
+        "identity_relevance": "high | medium | low",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "subject_positions": [
+      {
+        "position_id": "string",
+        "name": "string",
+        "creating_concept": "concept_id",
+        "description": "string",
+        "position_type": "medical | legal | professional | social | psychological | economic",
+        "valence": "positive | negative | neutral | ambivalent",
+        "associated_traits": [
+          "string"
+        ],
+        "associated_behaviors": [
+          "string"
+        ],
+        "historical_emergence": "string",
+        "currently_contested": "boolean"
+      }
+    ],
+    "looping_effects": [
+      {
+        "loop_id": "string",
+        "classification": "string",
+        "classified_population": "string",
+        "loop_type": "confirmation | resistance | transformation | splitting",
+        "mechanism": "string",
+        "classified_response": "string",
+        "classifier_adjustment": "string",
+        "stability": "stable | oscillating | evolving"
+      }
+    ],
+    "normalization_pressures": [
+      {
+        "pressure_id": "string",
+        "concept": "concept_id",
+        "normalized_behavior": "string",
+        "pathologized_behavior": "string",
+        "pressure_source": "institutional | social | economic | internalized",
+        "enforcement_mechanisms": [
+          "string"
+        ],
+        "resistance_possibilities": [
+          "string"
+        ],
+        "harm_potential": "high | medium | low"
+      }
+    ],
+    "identity_work_patterns": [
+      {
+        "pattern_id": "string",
+        "subject_position": "position_id",
+        "work_type": "embrace | negotiate | resist | subvert | transcend",
+        "strategies_observed": [
+          "string"
+        ],
+        "resources_required": [
+          "string"
+        ],
+        "outcomes": [
+          "string"
+        ]
+      }
+    ],
+    "institutional_classifications": [
+      {
+        "classification_id": "string",
+        "institution": "string",
+        "classification_scheme": "string",
+        "categories_created": [
+          "string"
+        ],
+        "administrative_functions": [
+          "string"
+        ],
+        "effects_on_classified": [
+          "string"
+        ],
+        "revision_history": [
+          "string"
+        ]
+      }
+    ],
+    "normal_pathological_boundaries": [
+      {
+        "boundary_id": "string",
+        "concept": "concept_id",
+        "normal_side": "string",
+        "pathological_side": "string",
+        "boundary_markers": [
+          "string"
+        ],
+        "boundary_stability": "firm | contested | shifting",
+        "who_polices": [
+          "string"
+        ],
+        "consequences_of_crossing": [
+          "string"
+        ]
+      }
+    ],
+    "making_up_dynamics": [
+      {
+        "dynamic_id": "string",
+        "people_made_up": "string",
+        "making_up_vector": "medical | legal | administrative | scientific | popular",
+        "key_concepts_involved": [
+          "concept_id"
+        ],
+        "expert_knowledge_required": "boolean",
+        "self_knowledge_created": "boolean",
+        "community_formed": "boolean",
+        "advocacy_emerged": "boolean"
+      }
+    ],
+    "meta": {
+      "total_subject_positions": "number",
+      "total_looping_effects": "number",
+      "dominant_normalization_source": "string",
+      "most_contested_classification": "string",
+      "resistance_prevalence": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "subject_positions",
+    "identity_categories",
+    "normalization_effects",
+    "behavioral_prescriptions",
+    "institutional_classifications",
+    "looping_effects"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "gemini_concept_tree",
+    "smart_table",
+    "mermaid_mindmap"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/identity_normalization_scanner.py"
+}

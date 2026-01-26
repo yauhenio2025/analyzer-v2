@@ -1,0 +1,86 @@
+{
+  "engine_key": "quote_attribution_voice",
+  "engine_name": "Quote Attribution Network",
+  "description": "Extracts quotes with full attribution and voice analysis. Maps speaker authority, voice characteristics, rhetorical functions, and the polyphony of voices in the discourse.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "extraction",
+  "reasoning_domain": "discourse_analysis",
+  "researcher_question": "Who is speaking, what are they saying, and why does their voice matter?",
+  "extraction_prompt": "\nYou are an expert discourse analyst extracting quotes and analyzing voices.\n\nFor this article, extract ALL quotes and voice information:\n\n1. **SPEAKERS**: Everyone who is quoted or whose views are reported\n   - Name and role\n   - Affiliation (organization, institution)\n   - Authority type: expert, official, stakeholder, witness, critic\n   - Authority level (0-1 based on expertise/position relevance)\n\n2. **QUOTES**: Every instance of reported speech\n   - Exact text (for direct quotes)\n   - Speaker attribution\n   - Quote type:\n     * DIRECT: Exact words in quotation marks\n     * INDIRECT: Reported without exact words\n     * PARAPHRASE: Summary of views\n     * REPORTED_SPEECH: \"He said that...\"\n   - Context: What prompted this quote?\n\n3. **RHETORICAL FUNCTION**: Why is this quote included?\n   - EVIDENCE: Supports a claim\n   - AUTHORITY_APPEAL: Lends credibility\n   - CONTRAST: Shows opposing view\n   - ILLUSTRATION: Provides example\n   - PREDICTION: Future-oriented claim\n   - WARNING: Cautionary statement\n\n4. **VOICE CHARACTERISTICS**:\n   - Tone: confident, cautious, critical, optimistic, pessimistic\n   - Register: formal, informal, technical, colloquial\n   - Stance: supportive, oppositional, neutral\n\n\nExtract comprehensively - capture every voice in the article.\n",
+  "curation_prompt": "\nYou are synthesizing quote and voice data from multiple articles.\n\nYour task:\n1. **CONSOLIDATE SPEAKERS**: Merge references to the same person\n   - Match by name/role/affiliation\n   - Aggregate authority information\n   - Count total quotes per speaker\n\n2. **CATALOG QUOTES**: Organize all quotes\n   - Group by speaker\n   - Note rhetorical functions\n   - Rank by prominence\n\n3. **IDENTIFY VOICE PATTERNS**:\n   - Dominant voices (most frequently quoted)\n   - Marginalized voices (underrepresented)\n   - Contested voices (quoted by both sides)\n\n4. **ANALYZE POLYPHONY**:\n   - How many distinct voices?\n   - Is voice diversity high or low?\n   - Are any perspectives missing?\n   - Is the coverage balanced?\n\n5. **CALCULATE METRICS**:\n   - Total quotes and speakers\n   - Direct vs. indirect quote ratio\n   - Average authority level\n\n\nCreate a comprehensive voice map showing who speaks and how they're represented.\n",
+  "concretization_prompt": "\nTransform the quote attribution data to use full names and clear descriptions:\n\n1. Convert speaker_ids to full identities:\n   - \"S1\" \u2192 \"Dr. Jane Smith, Chief Economist at World Bank\"\n\n2. Clarify authority types:\n   - Add brief explanation of why this authority type was assigned\n\n3. Name voice patterns descriptively:\n   - \"Pattern1\" \u2192 \"Industry Insider Voices\"\n\n4. Add context to quotes:\n   - Brief note on significance of each prominent quote\n\nPreserve all relationships and metrics.\nMake the voice analysis immediately useful for discourse analysis.\n",
+  "canonical_schema": {
+    "speakers": [
+      {
+        "speaker_id": "string",
+        "name": "string",
+        "role": "string",
+        "affiliation": "string",
+        "authority_type": "expert | official | stakeholder | witness | critic",
+        "authority_level": "number (0-1)",
+        "quote_count": "number",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "quotes": [
+      {
+        "quote_id": "string",
+        "text": "string",
+        "speaker_id": "string",
+        "quote_type": "direct | indirect | paraphrase | reported_speech",
+        "context": "string",
+        "rhetorical_function": "evidence | authority_appeal | contrast | illustration | prediction | warning",
+        "voice_characteristics": {
+          "tone": "confident | cautious | critical | optimistic | pessimistic",
+          "register": "formal | informal | technical | colloquial",
+          "stance": "supportive | oppositional | neutral"
+        },
+        "source_article": "string",
+        "prominence": "number (0-1)"
+      }
+    ],
+    "voice_patterns": [
+      {
+        "pattern_id": "string",
+        "pattern_type": "dominant_voice | marginalized_voice | contested_voice",
+        "speakers": [
+          "speaker_id"
+        ],
+        "characteristic_tone": "string",
+        "frequency": "number"
+      }
+    ],
+    "polyphony_analysis": {
+      "total_distinct_voices": "number",
+      "voice_diversity_score": "number (0-1)",
+      "dominant_voice_type": "string",
+      "underrepresented_perspectives": [
+        "string"
+      ],
+      "voice_balance": "balanced | skewed_toward | skewed_against"
+    },
+    "meta": {
+      "total_quotes": "number",
+      "total_speakers": "number",
+      "direct_quote_ratio": "number (0-1)",
+      "average_authority_level": "number (0-1)"
+    }
+  },
+  "extraction_focus": [
+    "quotes",
+    "speakers",
+    "attribution",
+    "voice",
+    "rhetoric"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table",
+    "gemini_network_graph"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/quote_attribution_voice.py"
+}

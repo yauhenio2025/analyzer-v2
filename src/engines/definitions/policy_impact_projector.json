@@ -1,0 +1,120 @@
+{
+  "engine_key": "policy_impact_projector",
+  "engine_name": "Policy Impact Projector",
+  "description": "Projects policy effects across multiple orders of consequence. Analyzes first-order, second-order, and third-order effects, plus unintended consequences. Essential for anticipating outcomes.",
+  "version": 1,
+  "category": "market",
+  "kind": "synthesis",
+  "reasoning_domain": "market",
+  "researcher_question": "What are the likely first, second, and third-order effects?",
+  "extraction_prompt": "\nYou are projecting POLICY IMPACTS across multiple orders of consequence.\n\n## ORDERS OF EFFECTS\n\n### FIRST-ORDER EFFECTS\nDirect, immediate consequences of the policy:\n- What the policy directly causes\n- Who is directly affected\n- What behaviors immediately change\n\n### SECOND-ORDER EFFECTS\nConsequences of the first-order effects:\n- How affected actors respond\n- What adaptations occur\n- What new behaviors emerge\n\n### THIRD-ORDER EFFECTS\nCascading consequences further downstream:\n- System-wide adaptations\n- Long-term equilibrium changes\n- Emergent patterns\n\n### UNINTENDED CONSEQUENCES\nEffects not anticipated by policy designers:\n- Perverse incentives\n- Gaming and arbitrage\n- Displacement effects\n- Unintended beneficiaries/victims\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY POLICIES\nWhat policies or interventions are discussed?\n- What is the stated intent?\n- What is the mechanism?\n- Who is targeted?\n\n### STEP 2: MAP FIRST-ORDER EFFECTS\nWhat are the direct effects?\n- Who is directly affected?\n- What behaviors change?\n- Is this the intended effect?\n\n### STEP 3: PROJECT SECOND-ORDER EFFECTS\nWhat do first-order effects trigger?\n- How do affected actors adapt?\n- What unintended responses occur?\n- What markets or behaviors shift?\n\n### STEP 4: PROJECT THIRD-ORDER EFFECTS\nWhat do second-order effects cascade into?\n- What system-wide changes?\n- What long-term equilibria?\n- What emergent patterns?\n\n### STEP 5: IDENTIFY UNINTENDED CONSEQUENCES\nWhat wasn't anticipated?\n- What perverse incentives emerged?\n- Who was unexpectedly affected?\n- What gaming occurred?\n\n### STEP 6: MAP WINNERS AND LOSERS\nAcross all orders of effect, who benefits and who loses?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about mechanisms. \"The policy will have unintended consequences\"\nis not useful. \"The policy will cause firms to shift production offshore\nto avoid costs, resulting in job losses that offset intended benefits\" is useful.\n",
+  "curation_prompt": "\nYou are synthesizing policy impact projections across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE EFFECTS BY ORDER\n- What first-order effects appear across sources?\n- What second-order effects are projected?\n- What third-order effects are anticipated?\n\n### 2. IDENTIFY CONSENSUS AND DISAGREEMENT\n- Where do sources agree on effects?\n- Where do they disagree?\n\n### 3. ASSESS NET IMPACT\n- What's the overall projected impact?\n- Who are the net winners and losers?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive projection of policy effects across orders.\n",
+  "concretization_prompt": "\nTransform the policy impact projection into actionable insight:\n\n1. **POLICIES ANALYZED**\n   | Policy | Intent | Target | Mechanism |\n   |--------|--------|--------|-----------|\n\n2. **FIRST-ORDER EFFECTS**\n   - Policy: [Name]\n   - Effect: [Description]\n   - Intended: [Yes/No]\n   - Affected: [Actors]\n   - Magnitude: [Rating]\n\n3. **SECOND-ORDER EFFECTS**\n   - Triggered by: [First-order effect]\n   - Effect: [Description]\n   - Mechanism: [How it follows]\n   - Certainty: [Rating]\n\n4. **THIRD-ORDER EFFECTS**\n   - Triggered by: [Second-order effect]\n   - Effect: [Description]\n   - Certainty: [Usually speculative]\n\n5. **UNINTENDED CONSEQUENCES**\n   | Consequence | Order | Why Unintended | Severity |\n   |-------------|-------|----------------|----------|\n\n6. **EFFECT CHAINS**\n   ```\n   Policy \u2192 First-Order \u2192 Second-Order \u2192 Third-Order\n   [Narrative of cascade]\n   ```\n\n7. **WINNERS AND LOSERS**\n   | Winners | Losers | Redistribution |\n   |---------|--------|----------------|\n\n8. **BOTTOM LINE**\n   [One paragraph: What are the likely cascading effects of this policy?\n   What unintended consequences should be anticipated?]\n",
+  "canonical_schema": {
+    "policies_analyzed": [
+      {
+        "policy_id": "string - POL1, POL2, etc.",
+        "policy_name": "string",
+        "policy_type": "regulation | incentive | prohibition | mandate | other",
+        "stated_intent": "string",
+        "target_domain": "string"
+      }
+    ],
+    "first_order_effects": [
+      {
+        "effect_id": "string - E1.1, E1.2, etc.",
+        "policy_id": "string",
+        "effect_description": "string",
+        "intended": "yes | no | partially",
+        "affected_actors": [
+          "string"
+        ],
+        "magnitude": "large | moderate | small",
+        "certainty": "very_likely | likely | possible | unlikely",
+        "timeframe": "immediate | short_term | medium_term | long_term"
+      }
+    ],
+    "second_order_effects": [
+      {
+        "effect_id": "string - E2.1, E2.2, etc.",
+        "triggered_by": "string - first-order effect_id",
+        "effect_description": "string",
+        "mechanism": "string - how first-order leads to this",
+        "affected_actors": [
+          "string"
+        ],
+        "magnitude": "large | moderate | small",
+        "certainty": "likely | possible | speculative"
+      }
+    ],
+    "third_order_effects": [
+      {
+        "effect_id": "string - E3.1, E3.2, etc.",
+        "triggered_by": "string - second-order effect_id",
+        "effect_description": "string",
+        "mechanism": "string - cascading logic",
+        "affected_actors": [
+          "string"
+        ],
+        "magnitude": "large | moderate | small",
+        "certainty": "possible | speculative | highly_speculative"
+      }
+    ],
+    "unintended_consequences": [
+      {
+        "consequence_id": "string",
+        "policy_id": "string",
+        "description": "string",
+        "order": "first | second | third",
+        "why_unintended": "string",
+        "severity": "severe | significant | moderate | minor",
+        "who_affected": [
+          "string"
+        ]
+      }
+    ],
+    "effect_chains": [
+      {
+        "chain_id": "string",
+        "policy_id": "string",
+        "sequence": [
+          "string - effect_ids in order"
+        ],
+        "chain_description": "string - narrative of cascade",
+        "net_outcome": "string - where chain leads"
+      }
+    ],
+    "winners_losers": [
+      {
+        "policy_id": "string",
+        "winners": [
+          "string - who benefits"
+        ],
+        "losers": [
+          "string - who is harmed"
+        ],
+        "redistribution_description": "string"
+      }
+    ],
+    "meta": {
+      "policies_analyzed": "number",
+      "first_order_effects": "number",
+      "second_order_effects": "number",
+      "third_order_effects": "number",
+      "unintended_consequences": "number"
+    }
+  },
+  "extraction_focus": [
+    "policy_interventions",
+    "first_order_effects",
+    "second_order_effects",
+    "third_order_effects",
+    "unintended_consequences"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/policy_impact_projector.py"
+}

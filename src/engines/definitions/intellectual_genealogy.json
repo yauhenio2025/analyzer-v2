@@ -1,0 +1,117 @@
+{
+  "engine_key": "intellectual_genealogy",
+  "engine_name": "Intellectual Genealogy Tracer",
+  "description": "Traces intellectual lineages and influences across a collection. Maps schools of thought, mentor-student relationships, idea transmission pathways, and how foundational texts influence subsequent work.",
+  "version": 1,
+  "category": "temporal",
+  "kind": "relational",
+  "reasoning_domain": "genealogical",
+  "researcher_question": "What intellectual traditions and influences shape this discourse?",
+  "extraction_prompt": "\nYou are an expert intellectual historian tracing genealogies of ideas and influences.\n\nFor this article, extract ALL intellectual genealogy information:\n\n1. **INTELLECTUAL TRADITIONS**: Schools of thought mentioned\n   - Name and description\n   - Core tenets and beliefs\n   - Key figures associated with the tradition\n   - Foundational texts that define the tradition\n\n2. **THINKERS**: Individual scholars, philosophers, theorists\n   - Who they were influenced by (explicit or implicit)\n   - Who they influenced\n   - Their key contributions to the discourse\n\n3. **FOUNDATIONAL TEXTS**: Seminal works cited or referenced\n   - Title, author, year\n   - Key concepts introduced\n   - How often referenced in this article\n\n4. **INFLUENCE PATHWAYS**: How ideas move between thinkers\n   - Direct (student of)\n   - Conceptual (borrowed ideas)\n   - Critical (opposed and refined)\n   - Synthetic (combined multiple influences)\n\n5. **PARADIGM SHIFTS**: Major conceptual transitions\n   - From what paradigm to what paradigm\n   - Key catalysts and triggering events\n\n\nExtract comprehensively - trace the intellectual ancestry of ideas in this article.\n",
+  "curation_prompt": "\nYou are synthesizing intellectual genealogy extractions from multiple articles into a unified map.\n\nYour task:\n1. **CONSOLIDATE TRADITIONS**: Merge duplicate references to the same schools of thought\n   - Standardize naming\n   - Combine descriptions from different articles\n   - Build complete picture of core tenets\n\n2. **MAP THINKER NETWORK**: Build the influence network\n   - Deduplicate thinker mentions\n   - Trace who influenced whom\n   - Identify key nodes (most influential thinkers)\n\n3. **TRACE LINEAGES**: Connect the dots across generations\n   - Build multi-generational influence chains\n   - Identify where ideas originated and how they evolved\n\n4. **IDENTIFY FOUNDATIONAL TEXTS**: Catalog seminal works\n   - Rank by citation frequency\n   - Note which concepts came from which texts\n\n5. **MAP PARADIGM SHIFTS**: Find conceptual transitions\n   - When did major shifts occur?\n   - What catalyzed them?\n\n\nCreate a comprehensive intellectual genealogy that shows how ideas developed and spread.\n",
+  "concretization_prompt": "\nTransform the intellectual genealogy to use concrete, recognizable names:\n\n1. Convert thinker_ids to full names:\n   - \"T1\" \u2192 \"Michel Foucault\"\n   - \"T2\" \u2192 \"Pierre Bourdieu\"\n\n2. Name traditions clearly:\n   - \"Tradition1\" \u2192 \"Frankfurt School Critical Theory\"\n\n3. Title foundational texts fully:\n   - \"Text1\" \u2192 \"The Structure of Scientific Revolutions (Kuhn, 1962)\"\n\n4. Describe influence pathways specifically:\n   - Include the actual concepts that were transmitted\n\nPreserve all structural relationships and metrics.\nMake the genealogy immediately useful for researchers.\n",
+  "canonical_schema": {
+    "intellectual_traditions": [
+      {
+        "tradition_id": "string",
+        "name": "string",
+        "description": "string",
+        "founding_period": "string",
+        "core_tenets": [
+          "string"
+        ],
+        "key_figures": [
+          "thinker_id"
+        ],
+        "foundational_texts": [
+          "text_id"
+        ],
+        "sub_traditions": [
+          "tradition_id"
+        ]
+      }
+    ],
+    "thinkers": [
+      {
+        "thinker_id": "string",
+        "name": "string",
+        "period": "string",
+        "primary_tradition": "tradition_id",
+        "key_contributions": [
+          "string"
+        ],
+        "influenced_by": [
+          "thinker_id"
+        ],
+        "influences": [
+          "thinker_id"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "foundational_texts": [
+      {
+        "text_id": "string",
+        "title": "string",
+        "author": "thinker_id",
+        "year": "string",
+        "tradition": "tradition_id",
+        "key_concepts_introduced": [
+          "string"
+        ],
+        "citation_count_in_corpus": "number"
+      }
+    ],
+    "influence_pathways": [
+      {
+        "pathway_id": "string",
+        "from_thinker": "thinker_id",
+        "to_thinker": "thinker_id",
+        "influence_type": "direct | conceptual | critical | synthetic",
+        "mechanism": "string",
+        "concepts_transmitted": [
+          "string"
+        ],
+        "strength": "number (0-1)"
+      }
+    ],
+    "paradigm_shifts": [
+      {
+        "shift_id": "string",
+        "name": "string",
+        "period": "string",
+        "from_paradigm": "tradition_id",
+        "to_paradigm": "tradition_id",
+        "key_catalysts": [
+          "thinker_id"
+        ],
+        "triggering_events": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_traditions": "number",
+      "total_thinkers": "number",
+      "dominant_tradition": "string",
+      "genealogical_depth": "number (generations traced)"
+    }
+  },
+  "extraction_focus": [
+    "thinkers",
+    "schools",
+    "influences",
+    "traditions",
+    "citations",
+    "lineages"
+  ],
+  "primary_output_modes": [
+    "gemini_concept_tree",
+    "structured_text_report",
+    "gemini_network_graph"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/intellectual_genealogy.py"
+}

@@ -1,0 +1,132 @@
+{
+  "engine_key": "competing_explanations_analyzer",
+  "engine_name": "Competing Explanations Analyzer",
+  "description": "Implements Analysis of Competing Hypotheses (ACH) methodology for avoiding confirmation bias. Generates all plausible hypotheses, evaluates each against all evidence, and identifies which explanation survives with fewest inconsistencies. Highlights diagnostic evidence and critical gaps.",
+  "version": 1,
+  "category": "argument",
+  "kind": "synthesis",
+  "reasoning_domain": "argument",
+  "researcher_question": "What are all plausible explanations, and which does the evidence make least unlikely?",
+  "extraction_prompt": "\nYou are conducting ANALYSIS OF COMPETING HYPOTHESES (ACH) \u2014 a methodology\nfor avoiding confirmation bias by systematically evaluating multiple explanations.\n\n## THE ACH METHOD\n\nCore insight: Don't ask \"which hypothesis is supported by evidence?\"\nInstead ask \"which hypothesis is made LEAST UNLIKELY by the evidence?\"\n\nFocus on DISCONFIRMING evidence. The hypothesis with the fewest inconsistencies wins.\n\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY THE KEY QUESTION\n\nWhat is the central question, mystery, or assessment the text is addressing?\nBe specific. \"What happened?\" is too vague. \"Did X cause Y?\" is better.\n\n### STEP 2: GENERATE HYPOTHESES\n\nList ALL plausible hypotheses that could explain the situation:\n\n**Required hypothesis types:**\n1. **Mainstream**: The conventional/expected explanation\n2. **Contrarian**: A plausible alternative that challenges conventional wisdom\n3. **Null**: Nothing unusual is happening / it's coincidence / it's random\n4. **Alternative**: Other plausible explanations\n5. **Unconsidered**: A hypothesis the text doesn't address but should\n\nFor each hypothesis, note:\n- Who advocates for it (if anyone)\n- What assumptions it requires\n- Initial plausibility (before rigorous evidence evaluation)\n\n### STEP 3: EXTRACT EVIDENCE\n\nList every piece of evidence relevant to the question.\n\nFor each evidence item, assess:\n- Source reliability\n- Recency\n- Independence from other evidence\n\n### STEP 4: BUILD THE MATRIX\n\nFor EACH evidence item, evaluate against EACH hypothesis:\n\n- **CONSISTENT (C)**: Evidence is what you'd expect if hypothesis is true\n- **INCONSISTENT (I)**: Evidence is surprising/unlikely if hypothesis is true\n- **NEUTRAL (N)**: Evidence doesn't distinguish; expected under multiple hypotheses\n\nRate the strength: strong / moderate / weak\n\n### STEP 5: ASSESS DIAGNOSTICITY\n\nWhich evidence items are DIAGNOSTIC \u2014 strongly distinguish between hypotheses?\n\nHigh diagnosticity: Consistent with one hypothesis but inconsistent with others\nLow diagnosticity: Consistent with (or neutral to) most hypotheses\n\n### STEP 6: SCORE AND RANK\n\nFor each hypothesis, count:\n- Number of inconsistencies (weighted by evidence quality and strength)\n- The hypothesis with FEWEST INCONSISTENCIES is most viable\n\n### STEP 7: IDENTIFY GAPS\n\nWhat evidence would help distinguish between competing hypotheses?\nWhat are we missing? What should be investigated?\n\n## OUTPUT GUIDANCE\n\n- Be rigorous about rating evidence against EVERY hypothesis\n- Explain reasoning for each evaluation\n- Don't let a hypothesis win just because it has supporting evidence \u2014 count INCONSISTENCIES\n- Highlight evidence you wish you had\n- Note assumptions that could change the analysis\n",
+  "curation_prompt": "\nYou are synthesizing competing explanations analyses from multiple articles into a\nconsolidated hypothesis comparison.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE HYPOTHESES\n- Merge equivalent hypotheses from different articles\n- Identify hypotheses that appear in some articles but not others\n- Note if different articles frame the same hypothesis differently\n\n### 2. POOL EVIDENCE\n- Combine evidence items across articles\n- Note which evidence appears in multiple sources (corroboration)\n- Identify contradictory evidence across sources\n- Re-assess reliability for repeated evidence\n\n### 3. BUILD MASTER MATRIX\n- Evaluate the pooled evidence against the consolidated hypotheses\n- Re-assess diagnosticity with the fuller evidence picture\n- Weight by source quality and corroboration\n\n### 4. META-ANALYSIS\n- Did different articles reach different conclusions?\n- If so, why? (Different evidence? Different hypotheses? Different weightings?)\n- What does the spread of views tell us about certainty?\n\n### 5. SYNTHESIZED RANKING\n- Which hypothesis survives with fewest inconsistencies across all evidence?\n- How does multi-source analysis change confidence?\n- What gaps remain after pooling all sources?\n\n## OUTPUT GUIDANCE\n\nCreate a unified competing explanations analysis that is stronger than any single source.\nThe goal: a rigorous, bias-resistant assessment of which explanation best survives scrutiny.\n",
+  "concretization_prompt": "\nTransform the competing explanations analysis into a decision support document:\n\n1. **EXECUTIVE SUMMARY**\n   - Key question (one sentence)\n   - Bottom line assessment with confidence level\n   - Top 2 hypotheses with brief rationale\n\n2. **HYPOTHESIS MATRIX** (create as text table)\n   ```\n   | Evidence | H1: [Label] | H2: [Label] | H3: [Label] | Diagnostic? |\n   |----------|-------------|-------------|-------------|-------------|\n   | E1: ...  | C (strong)  | I (strong)  | N           | HIGH        |\n   ```\n\n3. **HYPOTHESIS SCORECARD**\n   For each hypothesis:\n   - Viability: [VIABLE/WEAKENED/REFUTED]\n   - Inconsistencies: X (list the key ones)\n   - Confidence if true: [qualitative]\n\n4. **CRITICAL EVIDENCE**\n   - \"The most diagnostic evidence is...\"\n   - \"The analysis hinges on...\"\n\n5. **WHAT WOULD CHANGE THE ASSESSMENT**\n   - If we learned X, hypothesis Y becomes more/less likely\n   - Key uncertainties that could flip the assessment\n\n6. **EVIDENCE GAPS**\n   1. [Highest priority info need]\n   2. [Second priority]\n   3. [Third priority]\n\n7. **CONFIDENCE STATEMENT**\n   \"We assess with [confidence level] that [conclusion] because [key reasons].\n   Key uncertainties include [list]. Alternative possibilities include [list].\"\n\nMake it scannable for decision-makers who need the bottom line fast.\n",
+  "canonical_schema": {
+    "key_question": {
+      "question": "string - the central question/mystery being analyzed",
+      "context": "string - why this question matters",
+      "scope": "string - boundaries of the analysis"
+    },
+    "hypotheses": [
+      {
+        "id": "string - H1, H2, etc.",
+        "label": "string - short label",
+        "description": "string - full description of the hypothesis",
+        "hypothesis_type": "mainstream | contrarian | null | alternative | unconsidered",
+        "proponents": [
+          "string - who advocates this view"
+        ],
+        "initial_plausibility": {
+          "assessment": "high | medium | low",
+          "rationale": "string - why this initial assessment"
+        },
+        "key_assumptions": [
+          "string - assumptions this hypothesis requires"
+        ]
+      }
+    ],
+    "evidence_items": [
+      {
+        "id": "string - E1, E2, etc.",
+        "description": "string - what the evidence is",
+        "source": "string - where it comes from",
+        "source_reliability": "high | medium | low | unknown",
+        "recency": "string - how old is this information",
+        "evaluations": {
+          "H1": {
+            "rating": "CONSISTENT | INCONSISTENT | NEUTRAL",
+            "rationale": "string - why this rating",
+            "strength": "strong | moderate | weak"
+          }
+        },
+        "diagnosticity": {
+          "level": "HIGH | MEDIUM | LOW",
+          "distinguishes_between": [
+            "string - which hypotheses it separates"
+          ],
+          "rationale": "string"
+        }
+      }
+    ],
+    "matrix_summary": {
+      "hypothesis_scores": [
+        {
+          "hypothesis_id": "string",
+          "consistent_count": "number",
+          "inconsistent_count": "number",
+          "neutral_count": "number",
+          "weighted_score": "number - considering evidence quality and diagnosticity",
+          "viability": "VIABLE | WEAKENED | REFUTED"
+        }
+      ],
+      "ranking": [
+        "string - hypothesis IDs from most to least viable"
+      ],
+      "separation_clarity": "clear | moderate | ambiguous"
+    },
+    "analysis": {
+      "most_supported_hypothesis": {
+        "id": "string",
+        "confidence": "almost certain | highly likely | likely | roughly even | unlikely",
+        "rationale": "string - why this assessment"
+      },
+      "runner_up_hypothesis": {
+        "id": "string",
+        "gap_from_leader": "string - how close is the competition"
+      },
+      "key_discriminating_evidence": [
+        {
+          "evidence_id": "string",
+          "why_discriminating": "string"
+        }
+      ],
+      "evidence_needed": [
+        {
+          "description": "string - evidence that would resolve uncertainty",
+          "would_distinguish": [
+            "string - which hypotheses"
+          ],
+          "obtainability": "readily available | requires effort | difficult"
+        }
+      ],
+      "critical_assumptions": [
+        {
+          "assumption": "string",
+          "if_wrong": "string - how conclusion changes",
+          "testability": "testable | partially testable | untestable"
+        }
+      ]
+    },
+    "meta": {
+      "hypothesis_count": "number",
+      "evidence_count": "number",
+      "high_diagnosticity_evidence_count": "number",
+      "overall_analysis_confidence": "high | medium | low",
+      "key_uncertainty_sources": [
+        "string"
+      ]
+    }
+  },
+  "extraction_focus": [
+    "hypothesis_generation",
+    "evidence_extraction",
+    "evidence_hypothesis_evaluation",
+    "diagnosticity_assessment",
+    "gap_identification"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/competing_explanations_analyzer.py"
+}

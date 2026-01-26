@@ -1,0 +1,116 @@
+{
+  "engine_key": "sample_bias_detector",
+  "engine_name": "Sample Bias Detector",
+  "description": "Detects sampling and selection biases in research and data. Identifies selection effects, survivorship bias, response bias, and coverage problems. Essential for evaluating whether findings generalize beyond the specific sample studied.",
+  "version": 1,
+  "category": "methodology",
+  "kind": "synthesis",
+  "reasoning_domain": "methodology",
+  "researcher_question": "Does the sample represent the population?",
+  "extraction_prompt": "\nYou are a SAMPLE BIAS DETECTOR \u2014 examining whether samples represent the\npopulations that conclusions are meant to apply to.\n\n## THE SAMPLING PROBLEM\n\nEvery study examines a sample but wants to conclude about a population.\nThe gap between sample and population is where generalizability dies.\n\nPopulation \u2192 Sampling Frame \u2192 Sample \u2192 Participants \u2192 Completers\n\nAt EACH step, non-random selection can introduce bias.\n\n## COMMON BIASES\n\n### SELECTION BIAS\nNon-random selection into sample:\n- Convenience sampling (whoever is available)\n- Self-selection (volunteers differ from non-volunteers)\n- Gatekeeper effects (who controls access)\n\n### SURVIVORSHIP BIAS\nOnly observing \"survivors\":\n- Successful companies, surviving species, people still alive\n- Failure to observe failures leads to biased conclusions\n- \"What successful entrepreneurs have in common\" misses failed ones\n\n### RESPONSE BIAS\nNon-random response patterns:\n- Who agrees to participate? (different from who refuses)\n- Who completes vs. drops out?\n- Who answers vs. who declines to answer?\n\n### COVERAGE BIAS\nPopulations not covered by sampling frame:\n- Phone surveys miss people without phones\n- Internet surveys miss offline populations\n- Administrative data misses informal sector\n\n### ATTRITION BIAS\nNon-random dropout:\n- Who stays in longitudinal studies?\n- Who completes treatment?\n\n## YOUR TASK\n\n### STEP 1: MAP THE SAMPLING CHAIN\nTrace from target population to actual sample:\n- Target population: Who should findings apply to?\n- Study population: Who was actually accessible?\n- Sampling frame: What list was sampled from?\n- Sample: Who was selected?\n- Participants: Who actually participated?\n- Completers: Who provided usable data?\n\n### STEP 2: IDENTIFY SELECTION POINTS\nAt each step, how did selection occur?\n- Random or non-random?\n- What determines inclusion/exclusion?\n- What systematic differences might exist?\n\n### STEP 3: LOOK FOR SURVIVORSHIP BIAS\nWho/what is NOT in the sample?\n- What didn't \"survive\" to be observed?\n- How might survivors differ from non-survivors?\n- What conclusions might be biased by this?\n\n### STEP 4: ASSESS COVERAGE\nWho is well/poorly represented?\n- What subgroups are over/underrepresented?\n- Who is systematically excluded?\n- What's the direction of coverage bias?\n\n### STEP 5: EXAMINE MISSING DATA\nWhat data is missing and why?\n- Pattern of missingness\n- Mechanism (random, related to variables, related to outcome)\n- Consequences for conclusions\n\n### STEP 6: ASSESS GENERALIZABILITY\nWhat can findings apply to?\n- Internal validity: Conclusions valid for this sample?\n- External validity: Conclusions generalizable to target population?\n- What caveats are needed?\n\n### STEP 7: OVERALL ASSESSMENT\nHow serious are sampling problems?\n- Most serious biases\n- Impact on conclusions\n- Recommendations\n\n\n## OUTPUT GUIDANCE\n\nBe specific about selection mechanisms.\nIdentify direction of bias, not just presence.\nFocus on biases that affect main conclusions.\n",
+  "curation_prompt": "\nSynthesize sample bias analyses from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **COMPARE SAMPLES**: How do samples across sources differ?\n2. **VALIDATE BIASES**: Do sources agree on sampling problems?\n3. **ASSESS CONVERGENCE**: Do different samples yield similar results?\n4. **TRIANGULATE**: What does multi-sample evidence suggest?\n5. **SYNTHESIZE GENERALIZABILITY**: Overall external validity assessment\n\n## OUTPUT GUIDANCE\n\nCreate unified assessment of sampling quality and generalizability.\n",
+  "concretization_prompt": "\nTransform sample bias analysis into clear assessment:\n\n1. **SAMPLING CHAIN**\n   Target Population \u2192 Study Population \u2192 Sample \u2192 Participants \u2192 Completers\n   [Show attrition/selection at each step]\n\n2. **BIASES IDENTIFIED** (ranked by severity)\n   | Bias | Type | Mechanism | Direction | Severity |\n   |------|------|-----------|-----------|----------|\n\n3. **COVERAGE ANALYSIS**\n   - Well covered: [Groups]\n   - Underrepresented: [Groups]\n   - Excluded: [Groups]\n\n4. **SURVIVORSHIP BIAS**\n   - Observed: [Who/what survived to observation]\n   - Not observed: [Who/what didn't survive]\n   - Bias direction: [How this skews results]\n\n5. **MISSING DATA**\n   - What's missing: [Types]\n   - Pattern: [Random/Not random]\n   - Consequence: [Effect on conclusions]\n\n6. **GENERALIZABILITY**\n   - Findings apply to: [Populations]\n   - Findings don't apply to: [Populations]\n   - Key caveats: [Qualifications]\n\n7. **OVERALL SAMPLE QUALITY**: [Excellent/Good/Fair/Poor]\n\n8. **BOTTOM LINE**\n   [How much can we generalize from this sample?]\n",
+  "canonical_schema": {
+    "sampling_context": {
+      "target_population": "string - who/what conclusions are meant to apply to",
+      "study_population": "string - who/what was actually accessible",
+      "sample": "string - who/what was actually studied",
+      "sample_size": "string - N if available",
+      "sampling_method": "string - how sample was selected"
+    },
+    "selection_biases": [
+      {
+        "bias_id": "string - B1, B2, etc.",
+        "bias_type": "selection | survivorship | volunteer | attrition | response | coverage | other",
+        "description": "string - how bias operates",
+        "stage": "sampling | recruitment | participation | retention",
+        "mechanism": "string - what causes non-random selection",
+        "direction": "string - how it skews results (overestimate/underestimate what)",
+        "severity": "minor | moderate | severe",
+        "evidence": [
+          "string - indicators of this bias"
+        ]
+      }
+    ],
+    "population_coverage": {
+      "covered_well": [
+        "string - subgroups well represented"
+      ],
+      "underrepresented": [
+        "string - subgroups likely underrepresented"
+      ],
+      "excluded": [
+        "string - subgroups systematically excluded"
+      ],
+      "unknown_coverage": [
+        "string - subgroups with unknown representation"
+      ]
+    },
+    "survivorship_analysis": {
+      "present": "yes | no | unclear",
+      "survivors": "string - what/who is observed",
+      "non_survivors": "string - what/who is not observed",
+      "selection_mechanism": "string - what determines survival to observation",
+      "bias_direction": "string - how this skews conclusions"
+    },
+    "missing_data": {
+      "missing_pattern": "random | not_random | unknown",
+      "what_missing": [
+        "string - types of missing data"
+      ],
+      "why_missing": "string - mechanism of missingness",
+      "consequences": "string - effect on conclusions"
+    },
+    "generalizability_assessment": {
+      "internal_validity": "strong | moderate | weak",
+      "external_validity": "strong | moderate | weak",
+      "generalizable_to": [
+        "string - populations results likely apply to"
+      ],
+      "not_generalizable_to": [
+        "string - populations results likely don't apply to"
+      ],
+      "caveats_needed": [
+        "string - qualifications on generalization"
+      ]
+    },
+    "bias_interactions": [
+      {
+        "biases": [
+          "string - bias_ids"
+        ],
+        "interaction": "string - how biases compound or offset",
+        "net_effect": "string - combined impact"
+      }
+    ],
+    "overall_assessment": {
+      "most_serious_biases": [
+        "string - bias_ids"
+      ],
+      "sample_quality": "excellent | good | fair | poor",
+      "confidence_adjustment": "string - how findings should be qualified",
+      "recommendations": [
+        "string - how to address biases"
+      ]
+    },
+    "meta": {
+      "biases_identified": "number",
+      "severe_biases": "number",
+      "generalizability_threats": "number"
+    }
+  },
+  "extraction_focus": [
+    "samples",
+    "populations",
+    "selection_processes",
+    "bias_indicators",
+    "generalizability",
+    "missing_data"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/sample_bias_detector.py"
+}

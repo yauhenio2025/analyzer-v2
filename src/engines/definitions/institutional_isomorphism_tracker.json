@@ -1,0 +1,124 @@
+{
+  "engine_key": "institutional_isomorphism_tracker",
+  "engine_name": "Institutional Isomorphism Tracker",
+  "description": "Tracks institutional isomorphism and organizational convergence. Identifies coercive, mimetic, and normative pressures driving similarity. Essential for understanding why organizations converge independent of efficiency considerations.",
+  "version": 1,
+  "category": "institutional",
+  "kind": "synthesis",
+  "reasoning_domain": "institutional_analysis",
+  "researcher_question": "Why are these organizations becoming similar?",
+  "extraction_prompt": "\nYou are an INSTITUTIONAL ISOMORPHISM TRACKER \u2014 examining why organizations\nbecome similar even when efficiency doesn't require it.\n\n## INSTITUTIONAL ISOMORPHISM\n\nOrganizations often converge on similar structures and practices not because\nthey're efficient, but because they confer legitimacy.\n\n\"Organizations compete not just for resources and customers, but for political\npower and institutional legitimacy.\" \u2014 DiMaggio & Powell\n\n## THREE MECHANISMS\n\n### COERCIVE ISOMORPHISM\nConformity due to pressure from powerful actors:\n- Legal requirements force similarity\n- Funders demand specific structures\n- Political pressure requires adoption\n- Dependencies create compliance\n\nSignal: \"We have to do this because...\"\n\n### MIMETIC ISOMORPHISM\nCopying others under uncertainty:\n- When goals are ambiguous, copy successful others\n- When technology is unclear, imitate leaders\n- Consultants diffuse \"best practices\"\n- Personnel carry practices across organizations\n\nSignal: \"Everyone else is doing this...\"\n\n### NORMATIVE ISOMORPHISM\nConformity due to professionalization:\n- Professional education teaches \"proper\" practice\n- Professional associations define standards\n- Hiring from same pool spreads norms\n- Credentials signal appropriate behavior\n\nSignal: \"This is how professionals do things...\"\n\n## DECOUPLING\n\nOrganizations may adopt forms ceremonially without substantive implementation:\n- Structure says one thing, behavior is another\n- Legitimacy through appearance\n- Loose coupling protects core activities\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY CONVERGENCE\nWhat similarity do you observe?\n- What organizations are becoming alike?\n- In what ways?\n- Over what time period?\n\n### STEP 2: IDENTIFY COERCIVE PRESSURES\nWho forces compliance?\n- What legal/regulatory requirements?\n- What funding conditions?\n- What dependencies create pressure?\n\n### STEP 3: IDENTIFY MIMETIC PRESSURES\nWho is being copied?\n- What uncertainties prompt imitation?\n- Who are the model organizations?\n- How do practices diffuse?\n\n### STEP 4: IDENTIFY NORMATIVE PRESSURES\nWhat professions matter?\n- What professional norms apply?\n- How are norms transmitted?\n- What's considered \"proper\"?\n\n### STEP 5: CHECK FOR DECOUPLING\nIs adoption ceremonial?\n- Is there a gap between form and function?\n- What's adopted symbolically vs. substantively?\n- How is decoupling maintained?\n\n### STEP 6: ASSESS LEGITIMACY DYNAMICS\nWhat confers legitimacy?\n- What threatens it?\n- How do organizations seek it?\n- What trade-offs with efficiency?\n\n### STEP 7: OVERALL ASSESSMENT\nWhat's driving convergence?\n- Which pressure type dominates?\n- Could efficiency explain this?\n- What's the institutional explanation?\n\n\n## OUTPUT GUIDANCE\n\nDistinguish the three pressure types carefully.\nLook for decoupling between form and function.\nConsider whether efficiency could explain convergence.\n",
+  "curation_prompt": "\nSynthesize institutional isomorphism analyses from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **TRIANGULATE PRESSURES**: Multiple sources confirm same pressures?\n2. **COMPARE MECHANISMS**: Agreement on what drives convergence?\n3. **ASSESS DECOUPLING**: Evidence of ceremonial adoption?\n4. **EVALUATE EXPLANATION**: Institutional vs. efficiency explanation?\n5. **SYNTHESIZE**: Overall isomorphism assessment\n\n## OUTPUT GUIDANCE\n\nCreate unified assessment of isomorphic pressures and their effects.\n",
+  "concretization_prompt": "\nTransform isomorphism analysis into clear assessment:\n\n1. **CONVERGENCE OBSERVED**\n   - Organizations: [List]\n   - Similarity: [What's becoming alike]\n   - Time period: [When]\n\n2. **COERCIVE PRESSURES**\n   | Source | Mechanism | What Enforced | Compliance |\n   |--------|-----------|---------------|------------|\n\n3. **MIMETIC PRESSURES**\n   | Uncertainty | Model Copied | What Copied | Via |\n   |-------------|--------------|-------------|-----|\n\n4. **NORMATIVE PRESSURES**\n   | Profession | Norms | Diffusion Path |\n   |------------|-------|----------------|\n\n5. **DECOUPLING**\n   | Practice | Formal | Substantive | Gap |\n   |----------|--------|-------------|-----|\n\n6. **LEGITIMACY DYNAMICS**\n   - Sources: [What confers legitimacy]\n   - Strategies: [How sought]\n   - Efficiency trade-offs: [What's sacrificed]\n\n7. **DOMINANT PRESSURE TYPE**: [Coercive/Mimetic/Normative/Mixed]\n\n8. **EFFICIENCY VS. INSTITUTIONAL EXPLANATION**\n   - Could efficiency explain this? [Assessment]\n   - Institutional explanation: [Alternative]\n\n9. **BOTTOM LINE**\n   [Why are these organizations converging?]\n",
+  "canonical_schema": {
+    "field_context": {
+      "organizational_field": "string - domain being analyzed",
+      "key_organizations": [
+        "string - main organizations"
+      ],
+      "time_period": "string - period of analysis",
+      "convergence_observed": "string - what similarity is observed"
+    },
+    "coercive_pressures": [
+      {
+        "pressure_id": "string - CP1, CP2, etc.",
+        "source": "string - who exerts pressure",
+        "mechanism": "legal | regulatory | contractual | dependency | political",
+        "what_enforced": "string - what organizations must do",
+        "compliance_level": "full | partial | symbolic | resistance",
+        "evidence": [
+          "string - supporting observations"
+        ]
+      }
+    ],
+    "mimetic_pressures": [
+      {
+        "pressure_id": "string - MP1, MP2, etc.",
+        "uncertainty_source": "technology | goals | environment | means_ends",
+        "model_organization": "string - who is being copied",
+        "what_copied": "string - practices/structures imitated",
+        "copying_mechanism": "direct | consultant_mediated | personnel",
+        "success_evidence": "string - whether copying worked",
+        "evidence": [
+          "string - supporting observations"
+        ]
+      }
+    ],
+    "normative_pressures": [
+      {
+        "pressure_id": "string - NP1, NP2, etc.",
+        "profession": "string - which profession",
+        "mechanism": "education | professional_associations | filtering",
+        "norms_imposed": "string - what becomes 'proper'",
+        "diffusion_path": "string - how norms spread",
+        "evidence": [
+          "string - supporting observations"
+        ]
+      }
+    ],
+    "decoupling_analysis": [
+      {
+        "practice": "string - adopted practice",
+        "formal_adoption": "yes | no",
+        "substantive_implementation": "full | partial | ceremonial | none",
+        "gap": "string - difference between form and function",
+        "maintained_how": "string - how decoupling is sustained"
+      }
+    ],
+    "legitimacy_dynamics": {
+      "legitimacy_sources": [
+        "string - what confers legitimacy"
+      ],
+      "legitimacy_threats": [
+        "string - what threatens legitimacy"
+      ],
+      "legitimacy_strategies": [
+        "string - how organizations seek legitimacy"
+      ],
+      "efficiency_vs_legitimacy": "string - trade-offs observed"
+    },
+    "convergence_pattern": {
+      "structural_convergence": [
+        "string - similar structures"
+      ],
+      "procedural_convergence": [
+        "string - similar processes"
+      ],
+      "cultural_convergence": [
+        "string - similar values/norms"
+      ],
+      "convergence_speed": "rapid | gradual | ongoing",
+      "remaining_diversity": [
+        "string - what remains different"
+      ]
+    },
+    "isomorphism_assessment": {
+      "dominant_pressure_type": "coercive | mimetic | normative | mixed",
+      "isomorphism_intensity": "weak | moderate | strong",
+      "efficiency_explanation": "string - could efficiency explain convergence?",
+      "institutional_explanation": "string - institutional account",
+      "key_evidence": [
+        "string - most important evidence"
+      ]
+    },
+    "meta": {
+      "coercive_pressures_found": "number",
+      "mimetic_pressures_found": "number",
+      "normative_pressures_found": "number",
+      "decoupling_instances": "number"
+    }
+  },
+  "extraction_focus": [
+    "organizations",
+    "similarity_patterns",
+    "isomorphic_pressures",
+    "legitimacy_concerns",
+    "decoupling_indicators"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/institutional_isomorphism_tracker.py"
+}

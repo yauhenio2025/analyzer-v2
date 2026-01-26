@@ -1,0 +1,94 @@
+{
+  "engine_key": "epistemic_stance",
+  "engine_name": "Epistemic Stance Mapper",
+  "description": "Maps certainty and uncertainty markers. Identifies hedging, boosting, evidentiality markers, epistemic modality, and how different actors claim knowledge.",
+  "version": 1,
+  "category": "epistemology",
+  "kind": "synthesis",
+  "reasoning_domain": "epistemology",
+  "researcher_question": "How certain are authors about their claims, and how do they signal this?",
+  "extraction_prompt": "\nYou are an expert linguist analyzing epistemic stance and certainty markers.\n\nFor this article, extract ALL epistemic and certainty-related language:\n\n1. **KNOWLEDGE CLAIMS**: Statements asserting knowledge\n   - What is being claimed?\n   - Certainty level (0-1): 1.0 = absolutely certain, 0 = pure speculation\n   - What epistemic markers signal this certainty?\n   - What type of evidence backs the claim?\n\n2. **HEDGING INSTANCES**: Language that reduces certainty\n   - APPROXIMATORS: \"about,\" \"roughly,\" \"approximately\"\n   - SHIELDS: \"possibly,\" \"might,\" \"could\"\n   - ATTRIBUTION SHIELDS: \"according to,\" \"X suggests\"\n   - PLAUSIBILITY SHIELDS: \"it seems,\" \"apparently\"\n   - What function does each hedge serve?\n\n3. **BOOSTING INSTANCES**: Language that increases certainty\n   - CERTAINTY MARKERS: \"clearly,\" \"obviously,\" \"certainly\"\n   - EMPHASIS: \"indeed,\" \"in fact,\" \"actually\"\n   - UNIVERSAL QUANTIFIERS: \"all,\" \"every,\" \"always\"\n   - What function does each boost serve?\n\n4. **EVIDENTIALITY MARKERS**: How do authors indicate source of knowledge?\n   - DIRECT PERCEPTION: \"I observed,\" \"we found\"\n   - INFERENCE: \"therefore,\" \"this suggests\"\n   - HEARSAY: \"reportedly,\" \"allegedly\"\n   - REPORTED: \"studies show,\" \"experts say\"\n\n\nBe comprehensive - capture subtle epistemic markers.\n",
+  "curation_prompt": "\nYou are synthesizing epistemic stance analysis from multiple articles.\n\nYour task:\n1. **AGGREGATE KNOWLEDGE CLAIMS**: Catalog all claims\n   - Group by topic\n   - Order by certainty level\n   - Note evidence types\n\n2. **ANALYZE HEDGING PATTERNS**: Map uncertainty\n   - Count hedge types\n   - Identify who hedges most\n   - Note what topics get most hedging\n\n3. **ANALYZE BOOSTING PATTERNS**: Map certainty\n   - Count boost types\n   - Identify who boosts most\n   - Note what claims get boosted\n\n4. **MAP EVIDENTIALITY**: How is knowledge sourced?\n   - What sources are most cited?\n   - What's the reliability distribution?\n\n5. **IDENTIFY EPISTEMIC COMMUNITIES**:\n   - What groups share epistemic standards?\n   - How do different communities differ in certainty?\n   - What evidence types do different groups prefer?\n\n6. **CALCULATE METRICS**:\n   - Average certainty across corpus\n   - Hedge-to-boost ratio\n   - Epistemic diversity\n\n\nCreate a comprehensive map of epistemic stances across the discourse.\n",
+  "concretization_prompt": "\nTransform the epistemic stance analysis to be immediately clear:\n\n1. Name claims with certainty ratings:\n   - \"C1\" \u2192 \"AI will transform work (Certainty: 0.85, Boosted)\"\n\n2. Categorize hedging clearly:\n   - \"H1\" \u2192 \"Shield hedge: 'might potentially lead to' on automation claims\"\n\n3. Name epistemic communities:\n   - \"EC1\" \u2192 \"AI Optimist Community (Silicon Valley Researchers)\"\n\n4. Clarify evidentiality:\n   - \"E1\" \u2192 \"Reported evidence: 'According to MIT study...'\"\n\nPreserve all certainty ratings and frequencies.\nMake the analysis useful for understanding knowledge claims.\n",
+  "canonical_schema": {
+    "knowledge_claims": [
+      {
+        "claim_id": "string",
+        "claim_text": "string",
+        "certainty_level": "number (0-1)",
+        "epistemic_markers": [
+          "string"
+        ],
+        "evidence_type": "empirical | theoretical | expert_opinion | common_knowledge | speculation",
+        "source": "string",
+        "source_article": "string"
+      }
+    ],
+    "hedging_instances": [
+      {
+        "hedge_id": "string",
+        "text": "string",
+        "hedge_type": "approximator | shield | attribution_shield | plausibility_shield",
+        "marker": "string",
+        "function": "string",
+        "source_article": "string"
+      }
+    ],
+    "boosting_instances": [
+      {
+        "boost_id": "string",
+        "text": "string",
+        "boost_type": "certainty_marker | emphasis | universal_quantifier",
+        "marker": "string",
+        "function": "string",
+        "source_article": "string"
+      }
+    ],
+    "evidentiality_markers": [
+      {
+        "marker_id": "string",
+        "text": "string",
+        "source_of_knowledge": "direct_perception | inference | hearsay | reported",
+        "marker_expression": "string",
+        "reliability_implied": "number (0-1)",
+        "source_article": "string"
+      }
+    ],
+    "epistemic_communities": [
+      {
+        "community_id": "string",
+        "name": "string",
+        "epistemic_standards": [
+          "string"
+        ],
+        "typical_certainty_level": "number (0-1)",
+        "preferred_evidence_types": [
+          "string"
+        ],
+        "members": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "average_certainty": "number (0-1)",
+      "hedge_to_boost_ratio": "number",
+      "dominant_evidence_type": "string",
+      "epistemic_diversity": "number (0-1)"
+    }
+  },
+  "extraction_focus": [
+    "hedging",
+    "certainty",
+    "modality",
+    "evidence_claims",
+    "knowledge_claims"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table",
+    "gemini_evidence_radar"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/epistemic_stance.py"
+}

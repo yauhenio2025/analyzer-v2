@@ -1,0 +1,160 @@
+{
+  "engine_key": "epistemic_rupture_tracer",
+  "engine_name": "Epistemic Rupture Tracer",
+  "description": "Traces the genealogical emergence of concepts through Bachelardian epistemological breaks. Maps predecessor concepts, identifies rupture events, and reveals how conceptual landscapes were reconfigured. Shows what had to be overcome for new concepts to emerge.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "historical_epistemology",
+  "researcher_question": "What epistemic breaks gave birth to these concepts?",
+  "extraction_prompt": "\nYou are an expert in historical epistemology in the tradition of Bachelard and Canguilhem.\n\nFor this article, perform an EPISTEMIC RUPTURE ANALYSIS:\n\n## 1. CONCEPT GENEALOGY\nFor each significant concept:\n- **Current meaning**: How is it used now?\n- **Emergence period**: When did this concept appear in its current form?\n- **Origin context**: What circumstances gave birth to it?\n- **Field of origin**: What discipline/domain first deployed it?\n\n## 2. PREDECESSOR HUNTING\nFor each concept, investigate:\n- **What did this replace?** What earlier concept(s) occupied this conceptual space?\n- **What was preserved?** What continuities exist with predecessors?\n- **What was abandoned?** What aspects of the predecessor were rejected?\n- **What was added?** What new elements distinguish this concept?\n\n## 3. RUPTURE IDENTIFICATION\nLook for epistemic breaks:\n- **Where is there discontinuity?** Where did smooth evolution fail?\n- **What triggered the break?** Discovery, crisis, controversy?\n- **Who drove it?** Key figures in the transformation\n- **What died?** What concepts became obsolete?\n- **What was born?** What new conceptual possibilities emerged?\n\n## 4. OBSTACLE ARCHAEOLOGY\nIdentify epistemological obstacles (Bachelard's obstacles \u00e9pist\u00e9mologiques):\n- **Common sense obstacles**: Folk intuitions that blocked understanding\n- **Verbal obstacles**: Words that misled thinking\n- **Substantialist obstacles**: Treating abstractions as substances\n- **Prior scientific obstacles**: Old science blocking new science\n- **How were they overcome?** What allowed transcendence?\n\n## 5. BEFORE/AFTER ANALYSIS\nFor major conceptual shifts:\n- **Before landscape**: What was thinkable before?\n- **After landscape**: What became thinkable after?\n- **Newly visible**: What could now be seen?\n- **Newly invisible**: What dropped out of view?\n\n\nThink genealogically - trace the lineage of ideas, not their logical justification.\n",
+  "curation_prompt": "\nYou are synthesizing epistemic rupture analyses from multiple articles into a genealogical map.\n\nYour task:\n\n## 1. CONSOLIDATE CONCEPT GENEALOGIES\n- Merge genealogical information across articles\n- Build complete lineage chains where possible\n- Track conceptual evolution trajectories\n\n## 2. MAP EPISTEMIC RUPTURES\n- Identify ruptures mentioned across articles\n- Classify rupture types:\n  - **Complete break**: Old concept entirely abandoned\n  - **Partial reconfiguration**: Core preserved, context changed\n  - **Inversion**: Meaning reversed\n  - **Synthesis**: Multiple predecessors combined\n  - **Differentiation**: Concept splits into multiple successors\n- Rate rupture magnitude (revolutionary \u2192 minor)\n\n## 3. BUILD PREDECESSOR NETWORKS\n- Connect successor concepts to predecessors\n- Identify orphan concepts (no clear predecessors)\n- Identify extinct concepts (no successors)\n- Map concept family trees\n\n## 4. CATALOG EPISTEMOLOGICAL OBSTACLES\n- Consolidate obstacles across articles\n- Identify persistent obstacles (still affecting thinking)\n- Map which obstacles blocked which concepts\n\n## 5. RECONSTRUCT COGNITIVE LANDSCAPES\n- Build \"before\" and \"after\" snapshots for major ruptures\n- Identify what became thinkable/unthinkable\n- Map blind spots of each era\n\n## 6. TRACE GENEALOGICAL LINEAGES\n- Build complete concept sequence chains\n- Calculate semantic distance across lineages\n- Identify terminological vs. structural continuity\n\n\nCreate a map that reveals the archaeological layers of conceptual history.\n",
+  "concretization_prompt": "\nTransform the genealogical analysis to use concrete, historically-grounded labels:\n\n1. Name concepts with their historical markers:\n   - \"C1\" \u2192 \"Phlogiston (pre-Lavoisier combustion theory)\"\n   - \"C2\" \u2192 \"Oxygen (Lavoisier 1789)\"\n\n2. Name ruptures with memorable descriptions:\n   - \"R1\" \u2192 \"The Chemical Revolution (1770s-1780s)\"\n   - \"R2\" \u2192 \"The Probabilistic Turn in Quantum Mechanics\"\n\n3. Name obstacles concretely:\n   - \"O1\" \u2192 \"The Substance Fallacy in Heat Theory\"\n   - \"O2\" \u2192 \"The Determinism Obstacle\"\n\n4. Name transformation events with specifics:\n   - \"TE1\" \u2192 \"Kuhn's Structure of Scientific Revolutions (1962)\"\n\n5. Name cognitive landscapes evocatively:\n   - \"CL1\" \u2192 \"The Mechanistic Worldview (1600-1900)\"\n   - \"CL2\" \u2192 \"The Information Age Episteme\"\n\nPreserve all temporal relationships, rupture magnitudes, and genealogical connections.\nMake the history of concepts immediately graspable.\n",
+  "canonical_schema": {
+    "concepts_analyzed": [
+      {
+        "concept_id": "string",
+        "term": "string",
+        "current_meaning": "string",
+        "emergence_period": "string",
+        "emergence_context": "string",
+        "field_of_origin": "string",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "epistemic_ruptures": [
+      {
+        "rupture_id": "string",
+        "name": "string",
+        "description": "string",
+        "rupture_type": "complete_break | partial_reconfiguration | inversion | synthesis | differentiation",
+        "date_range": "string",
+        "trigger_events": [
+          "string"
+        ],
+        "concepts_born": [
+          "concept_id"
+        ],
+        "concepts_killed": [
+          "concept_id"
+        ],
+        "concepts_transformed": [
+          "concept_id"
+        ],
+        "field_affected": "string",
+        "magnitude": "revolutionary | major | significant | minor"
+      }
+    ],
+    "predecessor_mappings": [
+      {
+        "mapping_id": "string",
+        "successor_concept": "concept_id",
+        "predecessor_concept": "string (may not exist as current concept)",
+        "predecessor_meaning": "string",
+        "relationship": "replacement | refinement | inversion | synthesis | splitting",
+        "what_preserved": [
+          "string"
+        ],
+        "what_abandoned": [
+          "string"
+        ],
+        "what_added": [
+          "string"
+        ]
+      }
+    ],
+    "epistemological_obstacles": [
+      {
+        "obstacle_id": "string",
+        "name": "string",
+        "description": "string",
+        "obstacle_type": "common_sense | verbal | substantialist | animist | quantitative | prior_scientific",
+        "blocked_concepts": [
+          "concept_id"
+        ],
+        "how_overcome": "string",
+        "by_whom": "string",
+        "residual_influence": "string (does this obstacle still affect thinking?)"
+      }
+    ],
+    "transformation_events": [
+      {
+        "event_id": "string",
+        "name": "string",
+        "date": "string",
+        "description": "string",
+        "event_type": "discovery | publication | controversy | crisis | synthesis",
+        "key_figures": [
+          "string"
+        ],
+        "concepts_affected": [
+          "concept_id"
+        ],
+        "before_state": "string",
+        "after_state": "string"
+      }
+    ],
+    "cognitive_landscapes": [
+      {
+        "landscape_id": "string",
+        "period": "string",
+        "name": "string",
+        "dominant_concepts": [
+          "concept_id"
+        ],
+        "suppressed_concepts": [
+          "string"
+        ],
+        "characteristic_problems": [
+          "string"
+        ],
+        "characteristic_methods": [
+          "string"
+        ],
+        "blind_spots": [
+          "string"
+        ]
+      }
+    ],
+    "genealogical_lineages": [
+      {
+        "lineage_id": "string",
+        "name": "string",
+        "concept_sequence": [
+          {
+            "concept": "string",
+            "period": "string",
+            "meaning": "string"
+          }
+        ],
+        "continuity_type": "terminological | structural | functional | none",
+        "total_semantic_distance": "number (0-1, where 1 = completely different)"
+      }
+    ],
+    "meta": {
+      "total_ruptures_identified": "number",
+      "dominant_rupture_type": "string",
+      "most_transformed_concept": "concept_id",
+      "deepest_genealogy": "lineage_id",
+      "analysis_temporal_span": "string"
+    }
+  },
+  "extraction_focus": [
+    "concept_origins",
+    "historical_emergence",
+    "predecessor_concepts",
+    "epistemic_obstacles",
+    "transformation_events",
+    "paradigm_shifts"
+  ],
+  "primary_output_modes": [
+    "gemini_timeline",
+    "mermaid_flowchart",
+    "structured_text_report",
+    "smart_table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/epistemic_rupture_tracer.py"
+}

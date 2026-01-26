@@ -1,0 +1,106 @@
+{
+  "engine_key": "assumption_excavation",
+  "engine_name": "Assumption Excavator",
+  "description": "Excavates hidden premises and unstated assumptions underlying arguments. Identifies premise, definitional, worldview, and methodological assumptions and assesses their vulnerability to challenge.",
+  "version": 1,
+  "category": "argument",
+  "kind": "synthesis",
+  "reasoning_domain": "epistemology",
+  "researcher_question": "What hidden assumptions underlie the arguments?",
+  "extraction_prompt": "\nYou are excavating hidden assumptions using Dennett's archaeological tools.\n\n## DENNETT'S ANALYTICAL TOOLKIT\nApply these throughout your excavation:\n- SURELY ALARM: Flag confident assertions (\"surely\", \"obviously\") \u2014 probe these\n- BOOM CRUTCH: Any premise that's actually a magic step?\n- PHILOSOPHER'S SYNDROME: \"Can't imagine otherwise\" \u2260 \"Must be true\"\n- JOOTSING: Which assumptions are NECESSARY vs merely CONVENTIONAL?\n- OCCAM'S BROOM: What methods/evidence types are swept aside?\n- CURSE OF KNOWLEDGE: Is expert jargon substituting for argument?\n\n## ASSUMPTION TYPES + DENNETT PROBES\n\n1. **PREMISE ASSUMPTIONS** (what must be true for argument to work)\n   - Unstated premises in logical chains\n   - Causal assumptions (X causes Y)\n   - Correlational assumptions (X and Y go together)\n   - BOOM CRUTCH CHECK: Is any premise actually a magic step?\n   - SURELY ALARM: Are premises asserted with unearned confidence?\n\n2. **DEFINITIONAL ASSUMPTIONS** (how terms are implicitly defined)\n   - What definition is assumed without justification?\n   - What alternative definitions are excluded?\n   - How does the definition shape the argument?\n   - BOUNDARY PROBE (Sortes): Where exactly are the definitional lines?\n   - TWO-BITSER: Does meaning shift by context?\n\n3. **WORLDVIEW ASSUMPTIONS** (beliefs about how things work)\n   - Human nature (rational, self-interested, etc.)\n   - How systems work (markets, governments, etc.)\n   - What's possible or impossible\n   - PHILOSOPHER'S SYNDROME: \"I can't imagine otherwise\" \u2260 \"It must be true\"\n   - JOOTSING: Which worldview constraints are merely conventional?\n\n4. **METHODOLOGICAL ASSUMPTIONS** (what counts as valid knowledge)\n   - What evidence types are privileged?\n   - What methods are trusted?\n   - What's considered outside the scope?\n   - OCCAM'S BROOM: What methods/evidence types are swept aside?\n   - CURSE OF KNOWLEDGE: Is expert jargon substituting for argument?\n\n5. **NORMATIVE ASSUMPTIONS** (values taken as given)\n   - What's assumed to be good/bad?\n   - What trade-offs are predetermined?\n   - Whose interests are centered?\n   - DEEPITY CHECK: Are value claims disguised as factual claims?\n   - RATHERING: Are false dilemmas hiding value choices?\n\n## FOR EACH ASSUMPTION\n\n1. **STATE IT**: Express the assumption clearly\n2. **DENNETT PROBE**: Which tool reveals its vulnerability?\n3. **CHALLENGE VECTOR**: How would you stress-test this assumption?\n4. **CLASSIFY IT**: Which type? (premise/definitional/worldview/methodological/normative)\n5. **EXPLICITNESS**: Is it stated, implied, or deeply buried?\n6. **DEPENDENCY**: Which arguments depend on it?\n7. **VULNERABILITY**:\n   - How easily could this be challenged?\n   - What would challenge it?\n   - If false, what happens to the argument?\n\n\nDig deep - the most important assumptions are often the least visible.\nThe Dennett probes help reveal vulnerability in assumptions that seem \"obvious.\"\n",
+  "curation_prompt": "\nYou are synthesizing assumption analyses into a unified map of hidden premises.\n\nYour task:\n1. **CONSOLIDATE ASSUMPTIONS**: Merge equivalent assumptions across articles\n   - Same assumption phrased differently = merge\n   - Track which articles share each assumption\n\n2. **IDENTIFY SHARED ASSUMPTIONS**:\n   - What assumptions span multiple articles?\n   - Are these consensus or unexamined?\n   - Do any articles challenge shared assumptions?\n\n3. **CLUSTER BY WORLDVIEW**:\n   - Group related assumptions\n   - Identify paradigm affiliations\n   - Name the underlying belief systems\n\n4. **MAP DEFINITIONAL CHOICES**:\n   - Where do articles define terms differently?\n   - What are the implications of each choice?\n   - Are definitional debates explicit?\n\n5. **FIND ASSUMPTION TENSIONS**:\n   - Do different assumptions in the collection conflict?\n   - Are tensions acknowledged or hidden?\n   - What would resolving tensions require?\n\n6. **ASSESS VULNERABILITIES**:\n   - Which assumptions are most challengeable?\n   - Which are most consequential if wrong?\n   - What's the overall epistemological foundation?\n\nCreate clear assumption_ids (e.g., \"asm_markets_efficient\", \"asm_tech_neutral\").\n\n\nOutput a comprehensive map of the hidden premises underlying the collection.\n",
+  "concretization_prompt": "\nTransform the assumption analysis to use concrete labels:\n\n1. Convert assumption_ids to clear statements:\n   - \"A1\" \u2192 \"Markets are informationally efficient\"\n   - \"A2\" \u2192 \"Technology is normatively neutral\"\n\n2. Name clusters descriptively:\n   - \"Cluster 1\" \u2192 \"Neoclassical Economic Assumptions\"\n   - \"Cluster 2\" \u2192 \"Techno-Optimist Worldview\"\n\n3. Specify definitional choices:\n   - Include the actual definitions used and alternatives excluded\n\n4. Make tensions concrete:\n   - Clearly state the conflicting assumptions\n\nPreserve all vulnerability assessments and dependency mappings.\nMake the assumption landscape immediately visible.\n",
+  "canonical_schema": {
+    "assumptions": [
+      {
+        "assumption_id": "string",
+        "content": "string",
+        "assumption_type": "premise | definitional | worldview | methodological | normative",
+        "explicitness": "explicit | implicit | deeply_buried",
+        "arguments_dependent": [
+          "string"
+        ],
+        "vulnerability": {
+          "challengeability": "number (0-1)",
+          "potential_challenges": [
+            "string"
+          ],
+          "if_false_impact": "undermines | weakens | irrelevant"
+        },
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "assumption_clusters": [
+      {
+        "cluster_id": "string",
+        "name": "string",
+        "assumptions": [
+          "assumption_id"
+        ],
+        "shared_worldview": "string",
+        "paradigm_affiliation": "string | null"
+      }
+    ],
+    "definitional_choices": [
+      {
+        "term": "string",
+        "assumed_definition": "string",
+        "alternative_definitions": [
+          "string"
+        ],
+        "implications_of_choice": "string",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "cross_article_assumptions": [
+      {
+        "assumption_id": "string",
+        "assumption_content": "string",
+        "prevalence": "number (0-1)",
+        "articles_sharing": [
+          "string"
+        ],
+        "articles_challenging": [
+          "string"
+        ],
+        "status": "consensus | contested | unexamined"
+      }
+    ],
+    "assumption_tensions": [
+      {
+        "tension_id": "string",
+        "assumption_a": "string",
+        "assumption_b": "string",
+        "tension_description": "string",
+        "resolution_attempted": "boolean",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_assumptions": "number",
+      "explicit_percent": "number",
+      "average_vulnerability": "number (0-1)",
+      "most_shared_assumption": "string",
+      "most_vulnerable_assumption": "string"
+    }
+  },
+  "extraction_focus": [
+    "assumptions",
+    "premises",
+    "presuppositions",
+    "implicit_beliefs",
+    "definitional_choices"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "comparative_matrix_table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/assumption_excavation.py"
+}

@@ -1,0 +1,114 @@
+{
+  "engine_key": "reception_history",
+  "engine_name": "Reception History Tracer",
+  "description": "Traces how ideas were received. Analyzes initial reception, evolution of reception over time, reception across different communities, misreadings and reinterpretations, and long-term legacy.",
+  "version": 1,
+  "category": "temporal",
+  "kind": "synthesis",
+  "reasoning_domain": "genealogical",
+  "researcher_question": "How have ideas been received, interpreted, and reinterpreted over time?",
+  "extraction_prompt": "\nYou are an expert intellectual historian tracing reception history.\n\nFor this article, extract ALL reception-related information:\n\n1. **IDEAS TRACKED**: What ideas are discussed in terms of their reception?\n   - Name of the idea\n   - Who originated it?\n   - When and where?\n   - Original formulation\n   - Original context\n\n2. **RECEPTION PHASES**: How was the idea received over time?\n   - What phases of reception are described?\n   - Time period for each phase\n   - Reception type: enthusiastic, critical, mixed, indifferent\n   - Key receivers/interpreters\n   - How was it interpreted?\n\n3. **RECEPTION BY COMMUNITY**: How did different groups respond?\n   - Which community?\n   - Reception type: adoption, adaptation, rejection, transformation\n   - What modifications were made?\n   - Why did they respond this way?\n\n4. **MISREADINGS AND REINTERPRETATIONS**: How was the idea distorted?\n   - What was the original meaning?\n   - What is the misreading?\n   - Type: productive, distorting, simplifying, politicizing\n   - Who misread it?\n   - What consequences followed?\n\n5. **LEGACY AND INFLUENCE**: What's the current status?\n   - Status: canonical, contested, forgotten, revived\n   - Contemporary relevance\n   - Ongoing debates about the idea\n   - Institutional embodiments (in laws, practices, curricula)\n\n\nBe comprehensive - trace the full trajectory of ideas through reception.\n",
+  "curation_prompt": "\nYou are synthesizing reception history from multiple articles.\n\nYour task:\n1. **CATALOG IDEAS**: What ideas are being traced?\n   - Consolidate idea descriptions\n   - Note origins and contexts\n   - Establish baseline formulations\n\n2. **MAP RECEPTION PHASES**: How did reception evolve?\n   - Build phase timelines\n   - Note reception types\n   - Track key interpreters\n\n3. **TRACK COMMUNITY RECEPTION**: How did groups differ?\n   - Map reception by community\n   - Note adaptations\n   - Compare responses\n\n4. **ANALYZE MISREADINGS**: What distortions occurred?\n   - Catalog misreadings\n   - Categorize types\n   - Note consequences\n\n5. **ASSESS LEGACY**: What's the current status?\n   - Determine current status\n   - Note contemporary debates\n   - Identify institutional embodiments\n\n\nCreate a comprehensive reception history for key ideas.\n",
+  "concretization_prompt": "\nTransform the reception history to be clear:\n\n1. Name ideas fully:\n   - \"I1\" \u2192 \"Kuhn's Paradigm Shift Concept (1962)\"\n\n2. Describe reception phases:\n   - \"P1\" \u2192 \"Phase: Initial skepticism (1962-1970) \u2192 Broad adoption (1970-1985)\"\n\n3. Name community receptions:\n   - \"CR1\" \u2192 \"Sociology reception: Productive adaptation (social constructivism)\"\n\n4. Describe misreadings:\n   - \"M1\" \u2192 \"Misreading: 'Paradigm' as mere 'framework' (simplifying)\"\n\n5. Assess legacy:\n   - \"L1\" \u2192 \"Legacy: Canonical but contested (ongoing debates about relativism)\"\n\nPreserve all phase sequences and legacy assessments.\nMake the history useful for understanding idea trajectories.\n",
+  "canonical_schema": {
+    "ideas_tracked": [
+      {
+        "idea_id": "string",
+        "idea_name": "string",
+        "originator": "string",
+        "origin_date": "string",
+        "original_formulation": "string",
+        "original_context": "string",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "reception_phases": [
+      {
+        "phase_id": "string",
+        "idea_id": "string",
+        "phase_name": "string",
+        "time_period": "string",
+        "reception_type": "enthusiastic | critical | mixed | indifferent",
+        "key_receivers": [
+          "string"
+        ],
+        "interpretations": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "reception_by_community": [
+      {
+        "reception_id": "string",
+        "idea_id": "string",
+        "community": "string",
+        "reception_type": "adoption | adaptation | rejection | transformation",
+        "modifications_made": [
+          "string"
+        ],
+        "reasons": "string",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "misreadings_reinterpretations": [
+      {
+        "misreading_id": "string",
+        "idea_id": "string",
+        "original_meaning": "string",
+        "misreading": "string",
+        "misreading_type": "productive | distorting | simplifying | politicizing",
+        "by_whom": "string",
+        "consequences": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "legacy_influence": [
+      {
+        "legacy_id": "string",
+        "idea_id": "string",
+        "current_status": "canonical | contested | forgotten | revived",
+        "contemporary_relevance": "string",
+        "ongoing_debates": [
+          "string"
+        ],
+        "institutional_embodiments": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_ideas_tracked": "number",
+      "average_reception_phases": "number",
+      "misreading_count": "number",
+      "dominant_legacy_status": "string"
+    }
+  },
+  "extraction_focus": [
+    "reception",
+    "interpretation",
+    "influence",
+    "legacy",
+    "misreading"
+  ],
+  "primary_output_modes": [
+    "gemini_timeline",
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/reception_history.py"
+}

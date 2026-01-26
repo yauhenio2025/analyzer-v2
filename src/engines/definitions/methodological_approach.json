@@ -1,0 +1,106 @@
+{
+  "engine_key": "methodological_approach",
+  "engine_name": "Methodology Analyzer",
+  "description": "Analyzes research methods used. Identifies research designs, data collection methods, analytical techniques, methodological assumptions, and assesses methodological quality and limitations.",
+  "version": 1,
+  "category": "epistemology",
+  "kind": "synthesis",
+  "reasoning_domain": "epistemology",
+  "researcher_question": "What methods are used to generate knowledge in this discourse?",
+  "extraction_prompt": "\nYou are an expert methodologist analyzing research approaches.\n\nFor this article, extract ALL methodological information:\n\n1. **RESEARCH DESIGN**: What overall approach is used?\n   - Design type: experimental, quasi-experimental, observational, survey,\n     case study, ethnographic, content analysis, meta-analysis, theoretical, mixed\n   - Paradigm: positivist, interpretivist, critical, pragmatic\n   - Description of the design\n\n2. **DATA COLLECTION METHODS**: How was data gathered?\n   - Quantitative, qualitative, or mixed?\n   - Specific methods used\n   - Data sources\n   - Sample characteristics and size\n   - Sampling strategy\n\n3. **ANALYTICAL TECHNIQUES**: How was data analyzed?\n   - Technique name\n   - Type: statistical, thematic, discourse, computational, comparative\n   - Software tools used (if mentioned)\n\n4. **METHODOLOGICAL ASSUMPTIONS**: What's assumed?\n   - Ontological (what exists)\n   - Epistemological (how we know)\n   - Axiological (values in research)\n   - Methodological (appropriate methods)\n   - Are assumptions explicit or implicit?\n\n5. **QUALITY ASSESSMENT**: How rigorous is the methodology?\n   - Internal validity (0-1)\n   - External validity/generalizability (0-1)\n   - Reliability (0-1)\n   - Transparency (0-1)\n   - What limitations are acknowledged?\n\n\nBe comprehensive - extract all methodological details.\n",
+  "curation_prompt": "\nYou are synthesizing methodological analysis from multiple articles.\n\nYour task:\n1. **MAP RESEARCH DESIGNS**: What approaches are used?\n   - Count design types\n   - Identify dominant paradigm\n   - Note paradigm diversity\n\n2. **CATALOG DATA METHODS**: How is data collected?\n   - Quantitative vs. qualitative ratio\n   - Common data sources\n   - Typical sample sizes\n\n3. **INVENTORY ANALYTICAL TECHNIQUES**: What analysis is done?\n   - Most common techniques\n   - Tool/software usage\n   - Technique sophistication\n\n4. **SURFACE ASSUMPTIONS**: What's assumed across corpus?\n   - Common explicit assumptions\n   - Common implicit assumptions\n   - Problematic assumptions\n\n5. **ASSESS QUALITY**: How rigorous is the corpus?\n   - Average quality scores\n   - Common limitations\n   - Quality distribution\n\n\nCreate a comprehensive methodological map of the discourse.\n",
+  "concretization_prompt": "\nTransform the methodological analysis to be clear:\n\n1. Name designs specifically:\n   - \"D1\" \u2192 \"Mixed Methods: Survey + Interviews\"\n\n2. Describe methods fully:\n   - \"M1\" \u2192 \"Online survey (N=1,247, stratified random sampling)\"\n\n3. Name techniques:\n   - \"T1\" \u2192 \"Multiple regression analysis (STATA)\"\n\n4. Articulate assumptions:\n   - \"A1\" \u2192 \"Implicit assumption: Rational actor model\"\n\n5. Summarize quality:\n   - \"Q1\" \u2192 \"Article X: High validity (0.85), moderate transparency (0.6)\"\n\nPreserve all quality ratings.\nMake the analysis useful for methodological assessment.\n",
+  "canonical_schema": {
+    "research_designs": [
+      {
+        "design_id": "string",
+        "design_type": "experimental | quasi-experimental | observational | survey | case_study | ethnographic | content_analysis | meta-analysis | theoretical | mixed_methods",
+        "description": "string",
+        "paradigm": "positivist | interpretivist | critical | pragmatic",
+        "frequency_in_corpus": "number",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "data_collection_methods": [
+      {
+        "method_id": "string",
+        "method_type": "quantitative | qualitative | mixed",
+        "specific_method": "string",
+        "data_sources": [
+          "string"
+        ],
+        "sample_characteristics": "string",
+        "sampling_strategy": "string",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "analytical_techniques": [
+      {
+        "technique_id": "string",
+        "technique_name": "string",
+        "technique_type": "statistical | thematic | discourse | computational | comparative",
+        "description": "string",
+        "software_tools": [
+          "string"
+        ],
+        "frequency_in_corpus": "number",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "methodological_assumptions": [
+      {
+        "assumption_id": "string",
+        "assumption": "string",
+        "assumption_type": "ontological | epistemological | axiological | methodological",
+        "explicit_or_implicit": "explicit | implicit",
+        "implications": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "methodological_quality": [
+      {
+        "article_id": "string",
+        "validity_internal": "number (0-1)",
+        "validity_external": "number (0-1)",
+        "reliability": "number (0-1)",
+        "transparency": "number (0-1)",
+        "limitations_acknowledged": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "dominant_design": "string",
+      "dominant_paradigm": "string",
+      "quantitative_qualitative_ratio": "number",
+      "average_methodological_quality": "number (0-1)",
+      "common_limitations": [
+        "string"
+      ]
+    }
+  },
+  "extraction_focus": [
+    "methods",
+    "research_design",
+    "data",
+    "analysis",
+    "limitations"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table",
+    "gemini_evidence_radar"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/methodological_approach.py"
+}

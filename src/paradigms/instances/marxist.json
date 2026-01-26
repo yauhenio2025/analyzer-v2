@@ -1,0 +1,175 @@
+{
+  "paradigm_key": "marxist",
+  "paradigm_name": "Marxist",
+  "version": "2.1.0",
+  "guiding_thinkers": "Karl Marx, Friedrich Engels, Antonio Gramsci, Rosa Luxemburg",
+  "description": "Analyzes society through class struggle, material conditions, and the contradictions of capitalism",
+  "status": "active",
+  "foundational": {
+    "assumptions": [
+      "Material conditions of production determine social consciousness",
+      "History progresses through class struggle and modes of production",
+      "Social being determines consciousness, not vice versa",
+      "Capitalism contains internal contradictions leading to its transformation",
+      "Human essence is realized through social labor and production",
+      "Ideas and culture reflect and legitimize material class relations"
+    ],
+    "core_tensions": [
+      "Forces vs Relations of Production - technological capacity versus social organization",
+      "Use Value vs Exchange Value - concrete utility versus abstract market value",
+      "Labor vs Capital - those who produce versus those who own",
+      "Base vs Superstructure - economic foundation versus ideological forms"
+    ],
+    "scope_conditions": [
+      "Applies to societies with developed division of labor and private property",
+      "Cannot explain pre-class societies or post-class communist society fully",
+      "Requires material production as basis of social life"
+    ]
+  },
+  "structural": {
+    "primary_entities": [
+      "Classes - groups defined by relationship to means of production",
+      "Mode of Production - unity of forces and relations defining an epoch",
+      "Commodity - product with both use and exchange value for market",
+      "Labor Power - human capacity to work, sold as commodity",
+      "Capital - self-expanding value through exploitation of labor"
+    ],
+    "relations": [
+      "Exploitation - extraction of surplus value from labor",
+      "Class antagonism - structural opposition of class interests",
+      "Commodity exchange - market-mediated social relations",
+      "Base-superstructure determination - economic shapes political/ideological"
+    ],
+    "levels_of_analysis": [
+      "Economic base - forces and relations of production",
+      "Political superstructure - state, law, and institutions",
+      "Ideological superstructure - culture, consciousness, ideas"
+    ]
+  },
+  "dynamic": {
+    "change_mechanisms": [
+      "Contradiction-driven crisis - internal contradictions generate systemic crises",
+      "Class struggle - conflict between classes drives historical change",
+      "Mode of production transformation - productive forces outgrow relations"
+    ],
+    "temporal_patterns": [
+      "Historical materialism - modes of production succeed through revolution",
+      "Crisis cycles - periodic crises of overproduction and profitability",
+      "Tendential laws - long-term trends like falling rate of profit"
+    ],
+    "transformation_processes": [
+      "Revolution - fundamental restructuring of class relations",
+      "Proletarianization - expansion of wage labor relations",
+      "Primitive accumulation - violent separation from means of production"
+    ]
+  },
+  "explanatory": {
+    "key_concepts": [
+      "Surplus value - value created by workers beyond their wages",
+      "Alienation - separation from product, process, species-being, and others",
+      "False consciousness - ideology that misrepresents real conditions",
+      "Commodity fetishism - social relations appear as relations between things",
+      "Primitive accumulation - violent separation from means of production",
+      "Reserve army of labor - unemployed maintaining wage pressure"
+    ],
+    "analytical_methods": [
+      "Dialectical materialism - analyzing contradictions in material conditions",
+      "Historical materialism - tracing modes of production through history",
+      "Class analysis - identifying class positions and interests",
+      "Critique of political economy - revealing capitalism's inner workings"
+    ],
+    "problem_diagnosis": [
+      "Exploitation of labor by capital",
+      "Alienation from human creative essence",
+      "Ideological mystification of class relations",
+      "Anarchic, crisis-prone production for profit"
+    ],
+    "ideal_state": [
+      "Classless society with collective ownership",
+      "From each according to ability, to each according to need",
+      "Free association of producers controlling their labor",
+      "End of prehistory, beginning of human history"
+    ]
+  },
+  "active_traits": [
+    "dialectical_trait",
+    "materialist_trait",
+    "critical_trait"
+  ],
+  "trait_definitions": [
+    {
+      "trait_name": "dialectical_trait",
+      "trait_description": "Method of analysis through contradictions and their resolution",
+      "trait_items": [
+        "Forces-relations contradiction",
+        "Capital-labor contradiction",
+        "Socialized production-private appropriation",
+        "Thesis-antithesis-synthesis",
+        "Negation of negation",
+        "Sublation processes"
+      ]
+    },
+    {
+      "trait_name": "materialist_trait",
+      "trait_description": "Grounding analysis in material conditions and production",
+      "trait_items": [
+        "Means of production primacy",
+        "Relations of production",
+        "Forces of production",
+        "Social reproduction",
+        "Surplus appropriation",
+        "Labor centrality"
+      ]
+    },
+    {
+      "trait_name": "critical_trait",
+      "trait_description": "Critique of existing social relations and ideology",
+      "trait_items": [
+        "Ideology critique",
+        "False consciousness analysis",
+        "Commodity fetishism",
+        "Reification processes",
+        "Class mystification",
+        "Revolutionary praxis"
+      ]
+    }
+  ],
+  "critique_patterns": [
+    {
+      "pattern": "missing_class_analysis",
+      "diagnostic": "Abstract categories without class content",
+      "fix": "Specify class position of {actors} and interests in {process}"
+    },
+    {
+      "pattern": "idealist_causation",
+      "diagnostic": "Ideas or consciousness as prime mover",
+      "fix": "Ground {ideological_form} in material conditions of {base}"
+    },
+    {
+      "pattern": "ahistorical_categories",
+      "diagnostic": "Treating historical forms as eternal",
+      "fix": "{Category} specific to {mode_of_production}, not universal"
+    },
+    {
+      "pattern": "voluntarist_change",
+      "diagnostic": "Change through will alone without material conditions",
+      "fix": "Revolution requires both objective conditions and subjective organization"
+    }
+  ],
+  "historical_context": "Emerged in 19th century industrial capitalism, evolved through 20th century revolutionary movements",
+  "related_paradigms": [
+    "Critical Theory",
+    "World-Systems Theory",
+    "Feminist Marxism"
+  ],
+  "primary_engines": [
+    "dialectical_structure",
+    "resource_flow_asymmetry"
+  ],
+  "compatible_engines": [
+    "power_interest_subtext",
+    "stakeholder_power_interest",
+    "institutional_capture_detector",
+    "incentive_structure_mapper"
+  ]
+}

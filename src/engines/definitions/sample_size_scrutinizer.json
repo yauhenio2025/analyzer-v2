@@ -1,0 +1,112 @@
+{
+  "engine_key": "sample_size_scrutinizer",
+  "engine_name": "Sample Size Scrutinizer",
+  "description": "Evaluates whether sample sizes are adequate for stated conclusions. Assesses statistical power, effect size requirements, confidence interval width, and generalizability. Identifies claims that may outrun their evidential basis due to small samples.",
+  "version": 1,
+  "category": "methodology",
+  "kind": "synthesis",
+  "reasoning_domain": "methodology",
+  "researcher_question": "Are sample sizes adequate for the conclusions being drawn?",
+  "extraction_prompt": "\nYou are scrutinizing SAMPLE SIZES to assess whether they adequately support\nthe conclusions being drawn.\n\n## WHY SAMPLE SIZE MATTERS\n\nSmall samples:\n- Have low statistical power (may miss real effects)\n- Produce wide confidence intervals (imprecise estimates)\n- Are more likely to yield false positives (statistically significant but not real)\n- Often fail to replicate\n\nRule of thumb concerns:\n- N < 20: Very limited inference possible\n- N < 50: Modest effects hard to detect reliably\n- N < 100: Subgroup analyses very unreliable\n- N < 500: Small effects may not be detectable\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY SAMPLES\nFor each study/claim, identify:\n- What's the sample size (N)?\n- What's the sample composed of?\n- What conclusions are drawn?\n\n### STEP 2: ASSESS ADEQUACY\nFor each sample:\n- Is N adequate for the type of analysis?\n- Is N adequate for the effect size claimed?\n- Is N adequate for the number of variables analyzed?\n- Are there subgroups with dangerously small N?\n\n**Effect size considerations:**\n- Large effects (d > 0.8): Smaller N may suffice\n- Medium effects (d ~ 0.5): Need moderate N\n- Small effects (d ~ 0.2): Need large N\n- Very small effects: Need very large N\n\n### STEP 3: ASSESS GENERALIZABILITY\nDoes the sample represent the population conclusions apply to?\n- Who's in the sample?\n- Who's conclusions supposed to apply to?\n- What populations are missing?\n- How might missing groups differ?\n\n### STEP 4: IDENTIFY RED FLAGS\nWatch for:\n- Multiple comparisons with small N (fishing for significance)\n- Subgroup analyses with tiny subgroups\n- Strong claims from pilot studies\n- Extrapolation far beyond sample characteristics\n- Failure to report confidence intervals\n\n### STEP 5: MAKE RECOMMENDATIONS\nFor each study/claim:\n- What confidence level is warranted?\n- What caveats are needed?\n- Should this be trusted, questioned, or disregarded?\n- How important is replication?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about sample sizes and their implications.\nThe goal is to identify where conclusions outrun their evidential support.\n",
+  "curation_prompt": "\nYou are synthesizing sample size analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE SAMPLE ASSESSMENTS\n- What's the pattern of sample adequacy across studies?\n- Are certain types of claims systematically underpowered?\n\n### 2. IDENTIFY REPLICATION PRIORITIES\n- Which claims most need replication?\n- What sample sizes would be needed?\n\n### 3. ASSESS OVERALL EVIDENCE QUALITY\n- Given sample size issues, how confident can we be in conclusions?\n- What claims are well-supported vs. questionable?\n\n## OUTPUT GUIDANCE\n\nCreate overall assessment of evidence quality given sample size limitations.\n",
+  "concretization_prompt": "\nTransform the sample size analysis into actionable assessment:\n\n1. **SAMPLE SIZE SUMMARY**\n   ```\n   | Study | N | Adequacy | Key Concern | Confidence |\n   |-------|---|----------|-------------|------------|\n   | S1    | 50| Borderline| Small effect claimed | Low |\n   ```\n\n2. **ADEQUACY DETAILS**\n   ```\n   Study: [Name]\n   Sample Size: [N]\n   Adequacy: [Assessment]\n   Rationale: [Why this assessment]\n   Red Flags: [Specific concerns]\n   ```\n\n3. **SUBGROUP PROBLEMS**\n   - [Study]: [Subgroup] has N=[X], too small for [analysis]\n\n4. **GENERALIZABILITY CONCERNS**\n   - [Study]: Sample is [characteristics], but conclusions apply to [broader population]\n   - Missing: [What populations not represented]\n\n5. **UNDERPOWERED CLAIMS**\n   - Claim: [Statement]\n   - Problem: [Why sample is inadequate]\n   - Implication: [What this means for trust]\n\n6. **RECOMMENDATIONS**\n   | Study | Claim Confidence | Recommendation | Replication Priority |\n   |-------|------------------|----------------|---------------------|\n\n7. **BOTTOM LINE**\n   [One paragraph: Overall assessment of sample adequacy. What claims are\n   trustworthy? What needs replication?]\n",
+  "canonical_schema": {
+    "studies_analyzed": [
+      {
+        "study_id": "string - S1, S2, etc.",
+        "study_description": "string",
+        "sample_size": "number | string - reported N",
+        "sample_type": "string - what the sample consists of",
+        "key_claims": [
+          "string - conclusions drawn"
+        ]
+      }
+    ],
+    "sample_assessments": [
+      {
+        "assessment_id": "string",
+        "study_id": "string",
+        "sample_size": "number | string",
+        "adequacy": "clearly_adequate | probably_adequate | borderline | probably_inadequate | clearly_inadequate",
+        "adequacy_rationale": "string - why this assessment",
+        "for_claimed_effect_size": {
+          "effect_claimed": "string - what effect is claimed",
+          "effect_size": "large | medium | small | very_small | not_specified",
+          "power_assessment": "adequate | marginal | underpowered | unknown"
+        },
+        "confidence_interval_implications": {
+          "expected_width": "narrow | moderate | wide | very_wide",
+          "implications": "string - what this means for precision"
+        },
+        "subgroup_problems": [
+          {
+            "subgroup": "string - what subgroup",
+            "subgroup_n": "number | string",
+            "problem": "string - what the issue is"
+          }
+        ],
+        "red_flags": [
+          "string - specific concerns"
+        ]
+      }
+    ],
+    "generalizability_assessment": [
+      {
+        "study_id": "string",
+        "sample_characteristics": [
+          "string - who's in the sample"
+        ],
+        "target_population": "string - who conclusions apply to",
+        "representativeness": "representative | somewhat_representative | questionable | unrepresentative",
+        "generalizability_concerns": [
+          "string - specific issues"
+        ]
+      }
+    ],
+    "pattern_analysis": {
+      "common_sample_size_issues": [
+        {
+          "issue": "string",
+          "frequency": "number",
+          "typical_consequence": "string"
+        }
+      ],
+      "underpowered_claims": [
+        {
+          "claim": "string",
+          "study_id": "string",
+          "why_underpowered": "string"
+        }
+      ]
+    },
+    "recommendations": [
+      {
+        "study_id": "string",
+        "claim_confidence": "high | moderate | low | very_low",
+        "recommendation": "trust | trust_with_caveats | be_skeptical | disregard",
+        "rationale": "string",
+        "replication_priority": "high | medium | low"
+      }
+    ],
+    "meta": {
+      "studies_assessed": "number",
+      "adequately_powered": "number",
+      "underpowered": "number",
+      "unclear_power": "number",
+      "overall_confidence_in_claims": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "sample_sizes",
+    "statistical_power",
+    "effect_sizes",
+    "confidence_intervals",
+    "generalizability"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/sample_size_scrutinizer.py"
+}

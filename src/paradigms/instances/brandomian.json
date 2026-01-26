@@ -1,0 +1,174 @@
+{
+  "paradigm_key": "brandomian",
+  "paradigm_name": "Brandomian Inferentialism",
+  "version": "1.0.0",
+  "guiding_thinkers": "Robert Brandom, Wilfrid Sellars, John McDowell",
+  "description": "Analyzes meaning through inferential roles, commitments, and entitlements in the space of reasons",
+  "status": "active",
+  "foundational": {
+    "assumptions": [
+      "Meaning is inferential role - to understand a concept is to master its inferential connections",
+      "Discourse is normative - a game of giving and asking for reasons",
+      "Incompatibility is more fundamental than entailment",
+      "Different scorekeepers keep different scores - perspectival structure",
+      "Content is not fully determined in advance - retroactive determination possible",
+      "Expressive vocabulary makes explicit what is implicit in practice"
+    ],
+    "core_tensions": [
+      "Commitment vs Entitlement - what you're held to vs. what gives you the right",
+      "Undertaking vs Attribution - what you think you're saying vs. what others hear",
+      "Default vs Earned entitlement - what gets a free pass vs. what must be proven",
+      "Material vs Formal inference - content-based vs. form-based validity"
+    ],
+    "scope_conditions": [
+      "Applies to discursive practices and conceptual content",
+      "Requires social practices of giving and asking for reasons",
+      "Focus on sapient, language-using beings"
+    ]
+  },
+  "structural": {
+    "primary_entities": [
+      "Commitments - deontic statuses one is held to (not beliefs)",
+      "Entitlements - normative authority to make claims",
+      "Inferential relations - connections between concepts",
+      "Discursive scorekeeping - tracking who is committed to what",
+      "Package deals - bundled commitments that come together"
+    ],
+    "relations": [
+      "Commitment inheritance - downstream commitments from accepting claims",
+      "Entitlement inheritance - authority transferred through inference",
+      "Incompatibility - positions that cannot be held together",
+      "Material consequence - content-based implications"
+    ],
+    "levels_of_analysis": [
+      "Individual scorekeeping - what each participant tracks",
+      "Social score - intersubjective normative statuses",
+      "Retrospective determination - how meaning gets fixed over time"
+    ]
+  },
+  "dynamic": {
+    "change_mechanisms": [
+      "Discursive move - utterances change normative landscape",
+      "Challenge and vindication - testing claims through reasons",
+      "Retrospective determination - future practice reveals past commitments"
+    ],
+    "temporal_patterns": [
+      "Progressive elaboration - concepts develop through use",
+      "Retroactive vindication - later developments reveal earlier commitments",
+      "Score evolution - normative standings shift through discourse"
+    ],
+    "transformation_processes": [
+      "Making explicit - expressive vocabulary reveals implicit norms",
+      "Conceptual engineering - deliberate revision of inferential roles",
+      "Paradigm revision - fundamental restructuring of commitments"
+    ]
+  },
+  "explanatory": {
+    "key_concepts": [
+      "Inferential commitment - what accepting a claim puts you on the hook for",
+      "Default entitlement - claims presumed okay unless challenged",
+      "Material inference - valid by content, not just logical form",
+      "Expressive vocabulary - words that make inferential moves explicit",
+      "Perspectival gap - difference between speaker intention and hearer attribution",
+      "Citation baggage - inherited commitments from endorsed sources"
+    ],
+    "analytical_methods": [
+      "Scorekeeping analysis - tracking normative statuses",
+      "Commitment mapping - what positions commit you to",
+      "Incompatibility identification - what you can't hold together",
+      "Entitlement auditing - what gives claims their authority"
+    ],
+    "problem_diagnosis": [
+      "Hidden commitments people don't realize they've incurred",
+      "Unearned entitlements - claims made without proper backing",
+      "Perspectival gaps causing miscommunication",
+      "Package deals forcing undesired commitments"
+    ],
+    "ideal_state": [
+      "Explicit awareness of inferential commitments",
+      "Transparent discursive scorekeeping",
+      "Earned entitlements for contested claims",
+      "Clear separation of conceptual packages"
+    ]
+  },
+  "active_traits": [
+    "inferentialist_trait",
+    "normative_pragmatics_trait",
+    "perspectival_trait"
+  ],
+  "trait_definitions": [
+    {
+      "trait_name": "inferentialist_trait",
+      "trait_description": "Analyzing meaning through inferential connections",
+      "trait_items": [
+        "Downstream commitments",
+        "Upstream entitlements",
+        "Material inferences",
+        "Incompatibility relations",
+        "Defeasibility conditions",
+        "Inferential role specification"
+      ]
+    },
+    {
+      "trait_name": "normative_pragmatics_trait",
+      "trait_description": "Focus on normative statuses in discourse",
+      "trait_items": [
+        "Commitment undertaking",
+        "Entitlement claiming",
+        "Challenge and vindication",
+        "Authority inheritance",
+        "Default vs earned status",
+        "Scorekeeping dynamics"
+      ]
+    },
+    {
+      "trait_name": "perspectival_trait",
+      "trait_description": "Attention to different scorekeeping perspectives",
+      "trait_items": [
+        "Speaker undertakings",
+        "Hearer attributions",
+        "Perspectival gaps",
+        "Social vs individual scores",
+        "Retrospective determination",
+        "Intersubjective constitution"
+      ]
+    }
+  ],
+  "critique_patterns": [
+    {
+      "pattern": "hidden_commitment",
+      "diagnostic": "Accepting position without acknowledging downstream commitments",
+      "fix": "Make explicit that accepting {claim} commits you to {downstream}"
+    },
+    {
+      "pattern": "unearned_entitlement",
+      "diagnostic": "Asserting claim without proper backing or authority",
+      "fix": "Identify what would entitle one to claim {assertion}"
+    },
+    {
+      "pattern": "perspectival_confusion",
+      "diagnostic": "Treating speaker intention as equivalent to hearer attribution",
+      "fix": "Distinguish what {speaker} undertakes from what {audience} will attribute"
+    },
+    {
+      "pattern": "package_deal_smuggling",
+      "diagnostic": "Cherry-picking from citation without inheriting full commitments",
+      "fix": "Acknowledge that endorsing {source} brings commitment to {baggage}"
+    }
+  ],
+  "historical_context": "Developed from Pittsburgh School pragmatism, building on Sellars and extending Kant/Hegel",
+  "related_paradigms": [
+    "Pittsburgh School",
+    "Neo-Hegelian Pragmatism",
+    "Normative Pragmatics"
+  ],
+  "primary_engines": [
+    "inferential_commitment_mapper_advanced",
+    "inferential_commitment_mapper"
+  ],
+  "compatible_engines": [
+    "assumption_excavation",
+    "dialectical_structure",
+    "argument_architecture"
+  ]
+}

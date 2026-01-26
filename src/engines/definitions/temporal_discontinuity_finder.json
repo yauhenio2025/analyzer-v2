@@ -1,0 +1,230 @@
+{
+  "engine_key": "temporal_discontinuity_finder",
+  "engine_name": "Temporal Discontinuity Finder",
+  "description": "Detects timeline anomalies \u2014 gaps, suspicious clusters, pattern breaks, and anachronisms. Identifies where temporal sequences are incomplete, inconsistent, or potentially manipulated. Essential for verifying narratives and detecting hidden events or deception.",
+  "version": 1,
+  "category": "temporal",
+  "kind": "synthesis",
+  "reasoning_domain": "temporal",
+  "researcher_question": "Is this timeline consistent, or are there suspicious patterns and gaps?",
+  "extraction_prompt": "\nYou are implementing TEMPORAL DISCONTINUITY DETECTION \u2014 finding anomalies,\ngaps, and suspicious patterns in timelines.\n\n## THE TEMPORAL ANALYSIS PHILOSOPHY\n\nTime is unforgiving. Events happen in sequence. When timelines are:\n- Incomplete: Someone might be hiding something\n- Clustered strangely: Coordination or crisis might be at play\n- Breaking patterns: Something changed\n- Anachronistic: The story might not be true\n\nTemporal anomalies often reveal what the narrative wants to hide.\n\n\n## YOUR TASK\n\n### STEP 1: CONSTRUCT THE TIMELINE\n\nExtract all dated/timed events from the text.\n\nFor each event:\n- When did it happen? (as precisely as available)\n- What happened?\n- Who was involved?\n- Source of this information?\n- Is it corroborated or disputed?\n\nNote timestamp precision \u2014 is this \"March 15, 2023 at 3pm\" or \"sometime in 2023\"?\n\n### STEP 2: IDENTIFY GAPS\n\nWhere are there unexplained silences or missing periods?\n\n**Gap types:**\n- Complete silence: Nothing at all during this period\n- Reduced activity: Less than expected\n- Missing actor: Someone disappears from record\n- Missing topic: An issue drops from discussion\n- Unexplained transition: State A to State B without explanation of how\n\nFor each gap:\n- How long?\n- What would we expect to see?\n- What's the context before and after?\n- Possible explanations?\n- How suspicious is this?\n\n### STEP 3: DETECT CLUSTERS\n\nAre events bunched together suspiciously?\n\n**Cluster types:**\n- Activity spike: Sudden burst of events\n- Coordination indicator: Multiple actors acting simultaneously\n- Crisis period: Legitimate surge due to situation\n- Reporting artifact: Looks like cluster but it's when data was collected\n\nFor each cluster:\n- What's the time window?\n- How many events?\n- What's the baseline expectation?\n- How unusual is this?\n- Possible explanations?\n\n### STEP 4: FIND PATTERNS AND BREAKS\n\nWhat regular patterns exist, and where do they break?\n\n**Pattern types:**\n- Cyclical: Repeating on schedule (weekly, monthly, etc.)\n- Trend: Directional change over time\n- Rhythm: Regular cadence of activity\n- Sequence: Events that follow predictable order\n- Correlation: Events that co-occur\n\nFor patterns, identify BREAKS:\n- When did the pattern break?\n- How did it break?\n- How severe was the break?\n- Did it resume?\n- What might have caused it?\n\n### STEP 5: SPOT ANACHRONISMS\n\nAre there things that don't fit their supposed time?\n\n- Claims about events that couldn't have happened when stated\n- References to things that didn't exist yet\n- Technology/language/circumstances that don't match the era\n- Impossible sequences (effect before cause)\n\n### STEP 6: FLAG SUSPICIOUS TIMING\n\nAre there coincidences that strain credulity?\n\n- Events that happen \"just in time\"\n- Multiple independent events that align too perfectly\n- Timing that's convenient for certain actors\n- \"Where were you when...\" problems\n\n### STEP 7: ANALYZE SEQUENCES\n\nDo causal sequences make temporal sense?\n\n- Is there enough time for cause to produce effect?\n- Are events in logically possible order?\n- Are there impossible sequences?\n\n### STEP 8: ASSESS OVERALL INTEGRITY\n\nHow trustworthy is this timeline?\n\n- HIGH: Consistent, well-documented, no major anomalies\n- MEDIUM: Some gaps or anomalies but generally reliable\n- LOW: Significant problems, use with caution\n- COMPROMISED: Cannot be trusted without verification\n\nAre there signs of manipulation?\n- Fabrication (events that didn't happen)\n- Deletion (events removed)\n- Reordering (sequence changed)\n- Compression/expansion (timing altered)\n\n### STEP 9: PRIORITIZE INVESTIGATION\n\nWhat anomalies most need investigation?\n- Most severe anomalies first\n- What would investigation look like?\n\n## OUTPUT GUIDANCE\n\nBe specific about evidence for anomalies.\nDistinguish suspicious from definitively wrong.\nConsider innocent explanations alongside suspicious ones.\nFocus on anomalies that matter for the analysis.\n",
+  "curation_prompt": "\nYou are synthesizing temporal analyses from multiple sources to create a\ncomprehensive timeline integrity assessment.\n\n\n## SYNTHESIS TASKS\n\n### 1. MERGE TIMELINES\n- Combine events from different sources\n- Note where sources agree on timing\n- Note where sources disagree (flag for analysis)\n- Fill gaps in one source with data from another\n\n### 2. CROSS-CHECK ANOMALIES\n- Do multiple sources show the same gaps?\n- Do clusters appear across sources?\n- Are pattern breaks consistent?\n\n### 3. TRIANGULATE SUSPICIOUS EVENTS\n- Where sources corroborate: higher confidence\n- Where sources conflict: investigate discrepancy\n- Where only one source covers: lower confidence\n\n### 4. INTEGRATED INTEGRITY ASSESSMENT\n- What's the combined picture of timeline reliability?\n- Where is the timeline solid across sources?\n- Where does it remain problematic?\n\n### 5. SYNTHESIZE INVESTIGATION PRIORITIES\n- What anomalies appear across sources? (priority)\n- What can be resolved by cross-referencing?\n- What needs external verification?\n\n## OUTPUT GUIDANCE\n\nCreate an integrated timeline analysis that:\n1. Combines all available temporal data\n2. Triangulates anomaly detection\n3. Provides robust integrity assessment\n4. Prioritizes what needs investigation\n",
+  "concretization_prompt": "\nTransform the temporal analysis into an actionable integrity report:\n\n1. **TIMELINE INTEGRITY SUMMARY**\n   ```\n   Overall Integrity: [HIGH/MEDIUM/LOW/COMPROMISED]\n   Events Analyzed: [X]\n   Anomalies Found: [X] (Critical: [X])\n   ```\n\n2. **TIMELINE VISUALIZATION** (text-based)\n   ```\n   |--2020--|--2021--|--2022--|--2023--|\n      [E1]    [E2]     [GAP]    [E3][E4][E5]\n                         ^          ^\n                    unexplained   cluster\n   ```\n\n3. **ANOMALY DASHBOARD**\n   ```\n   | ID  | Type          | Location | Severity | Suspicious? |\n   |-----|---------------|----------|----------|-------------|\n   | AN1 | Gap           | Jan 2022 | Major    | HIGH        |\n   | AN2 | Cluster       | Mar 2023 | Moderate | MEDIUM      |\n   | AN3 | Pattern Break | Q2 2022  | Minor    | LOW         |\n   ```\n\n4. **CRITICAL ANOMALIES** (expanded)\n   For each critical anomaly:\n   - What: [description]\n   - Where: [timeline location]\n   - Why suspicious: [reason]\n   - Possible explanations: [list]\n   - Investigation needed: [recommendation]\n\n5. **GAPS ANALYSIS**\n   ```\n   Gap | Period | Duration | Expected Activity | Suspiciousness\n   ----|--------|----------|-------------------|---------------\n   G1  | [date] | [time]   | [what's missing]  | [HIGH/MED/LOW]\n   ```\n\n6. **PATTERN ANALYSIS**\n   - Established patterns: [list]\n   - Pattern breaks: [list with timestamps]\n   - Significance: [what breaks might mean]\n\n7. **INTEGRITY ZONES**\n   ```\n   RELIABLE: [time period] \u2014 [why trustworthy]\n   CAUTION: [time period] \u2014 [issues present]\n   UNRELIABLE: [time period] \u2014 [cannot trust]\n   ```\n\n8. **MANIPULATION ASSESSMENT**\n   - Signs of manipulation: [YES/NO/UNCERTAIN]\n   - Type if detected: [fabrication/deletion/reordering/etc.]\n   - Evidence: [what suggests this]\n   - Confidence: [HIGH/MEDIUM/LOW]\n\n9. **INVESTIGATION PRIORITIES**\n   1. [Highest priority anomaly] \u2014 [why] \u2014 [how to investigate]\n   2. [Next priority]\n   3. [Third priority]\n\n10. **BOTTOM LINE**\n    [One paragraph: Can this timeline be trusted? What's most concerning?\n    What should be verified?]\n\nMake it useful for someone assessing whether to trust a narrative.\n",
+  "canonical_schema": {
+    "timeline_overview": {
+      "start_date": "string - earliest event",
+      "end_date": "string - latest event",
+      "total_span": "string - duration",
+      "event_count": "number",
+      "timeline_density": "dense | moderate | sparse",
+      "source_quality": "high | medium | low"
+    },
+    "events": [
+      {
+        "event_id": "string - EV1, EV2, etc.",
+        "timestamp": "string - date/time (as precise as available)",
+        "timestamp_precision": "exact | day | week | month | year | approximate | unknown",
+        "description": "string - what happened",
+        "actors_involved": [
+          "string"
+        ],
+        "source": "string - where this information comes from",
+        "source_reliability": "A | B | C | D | E | F",
+        "corroborated": "boolean",
+        "disputed": "boolean",
+        "notes": "string"
+      }
+    ],
+    "gaps": [
+      {
+        "gap_id": "string - G1, G2, etc.",
+        "start_of_gap": "string - timestamp",
+        "end_of_gap": "string - timestamp",
+        "duration": "string",
+        "gap_type": "complete_silence | reduced_activity | missing_actor | missing_topic | unexplained_transition",
+        "expected_activity": "string - what we'd expect to see",
+        "context_before": "string - what was happening before gap",
+        "context_after": "string - what was happening after gap",
+        "possible_explanations": [
+          {
+            "explanation": "string",
+            "plausibility": "high | medium | low"
+          }
+        ],
+        "suspiciousness": "highly_suspicious | moderately_suspicious | mildly_suspicious | probably_benign",
+        "investigation_priority": "high | medium | low"
+      }
+    ],
+    "clusters": [
+      {
+        "cluster_id": "string - CL1, CL2, etc.",
+        "time_window": "string - period of clustering",
+        "events_in_cluster": [
+          "string - event_ids"
+        ],
+        "event_count": "number",
+        "expected_count": "number - baseline expectation",
+        "deviation": "string - how unusual is this density",
+        "cluster_type": "activity_spike | coordination_indicator | crisis_period | reporting_artifact",
+        "possible_explanations": [
+          {
+            "explanation": "string",
+            "plausibility": "high | medium | low"
+          }
+        ],
+        "suspiciousness": "highly_suspicious | moderately_suspicious | mildly_suspicious | probably_benign",
+        "notes": "string"
+      }
+    ],
+    "patterns": [
+      {
+        "pattern_id": "string - P1, P2, etc.",
+        "pattern_type": "cyclical | trend | rhythm | sequence | correlation",
+        "description": "string - what the pattern is",
+        "period": "string - for cyclical patterns",
+        "instances": [
+          {
+            "timestamp": "string",
+            "description": "string"
+          }
+        ],
+        "strength": "strong | moderate | weak",
+        "breaks": [
+          {
+            "break_id": "string - B1, B2, etc.",
+            "timestamp": "string - when pattern broke",
+            "nature_of_break": "string - how it deviated",
+            "severity": "major | moderate | minor",
+            "possible_causes": [
+              "string"
+            ],
+            "resumed": "boolean - did pattern resume?",
+            "if_resumed_when": "string"
+          }
+        ]
+      }
+    ],
+    "anomalies": [
+      {
+        "anomaly_id": "string - AN1, AN2, etc.",
+        "anomaly_type": "gap | cluster | pattern_break | anachronism | suspicious_timing | impossible_sequence | coincidence_cluster",
+        "location": "string - where in timeline",
+        "description": "string - what the anomaly is",
+        "evidence": "string - how we detected it",
+        "severity": "critical | major | moderate | minor",
+        "possible_explanations": [
+          {
+            "explanation": "string",
+            "explanation_type": "innocent | error | manipulation | deception | unknown_event",
+            "plausibility": "high | medium | low"
+          }
+        ],
+        "implications": "string - what this might mean",
+        "investigation_recommendation": "string - what to look into"
+      }
+    ],
+    "anachronisms": [
+      {
+        "anachronism_id": "string - AC1, AC2, etc.",
+        "claim": "string - what is claimed",
+        "claimed_time": "string - when supposedly happened",
+        "problem": "string - why timing is wrong",
+        "evidence_of_problem": "string - how we know",
+        "severity": "definite_error | probable_error | possible_error | suspicious_but_uncertain",
+        "implications": "string - what this means for credibility"
+      }
+    ],
+    "suspicious_coincidences": [
+      {
+        "coincidence_id": "string - CO1, CO2, etc.",
+        "events": [
+          "string - event_ids"
+        ],
+        "timing_relationship": "string - how they're temporally related",
+        "why_suspicious": "string - what makes this notable",
+        "innocent_explanation": "string - benign interpretation",
+        "suspicious_explanation": "string - concerning interpretation",
+        "suspiciousness_level": "highly_suspicious | moderately_suspicious | notable"
+      }
+    ],
+    "sequence_analysis": {
+      "causal_sequences": [
+        {
+          "sequence_id": "string",
+          "events": [
+            "string - event_ids in order"
+          ],
+          "causal_logic": "string - implied causal chain",
+          "timing_plausibility": "plausible | tight_but_possible | implausible",
+          "notes": "string"
+        }
+      ],
+      "impossible_sequences": [
+        {
+          "sequence": [
+            "string - event_ids"
+          ],
+          "problem": "string - why sequence is impossible",
+          "implication": "string - what this means"
+        }
+      ]
+    },
+    "timeline_integrity_assessment": {
+      "overall_integrity": "HIGH | MEDIUM | LOW | COMPROMISED",
+      "integrity_rationale": "string - why this assessment",
+      "reliable_portions": [
+        {
+          "period": "string - time range",
+          "why_reliable": "string"
+        }
+      ],
+      "unreliable_portions": [
+        {
+          "period": "string - time range",
+          "why_unreliable": "string",
+          "handling_recommendation": "string"
+        }
+      ],
+      "manipulation_indicators": {
+        "detected": "boolean",
+        "type": "fabrication | deletion | reordering | compression | expansion | none_detected",
+        "evidence": "string",
+        "confidence": "high | medium | low"
+      }
+    },
+    "investigation_priorities": [
+      {
+        "priority": "number - 1 is highest",
+        "anomaly_id": "string",
+        "what_to_investigate": "string",
+        "why_important": "string",
+        "how_to_investigate": "string"
+      }
+    ],
+    "meta": {
+      "events_analyzed": "number",
+      "gaps_found": "number",
+      "clusters_found": "number",
+      "pattern_breaks_found": "number",
+      "anomalies_total": "number",
+      "critical_anomalies": "number",
+      "analysis_confidence": "high | medium | low",
+      "limitations": [
+        "string"
+      ]
+    }
+  },
+  "extraction_focus": [
+    "timeline_construction",
+    "gap_detection",
+    "cluster_analysis",
+    "pattern_identification",
+    "anomaly_assessment"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/temporal_discontinuity_finder.py"
+}

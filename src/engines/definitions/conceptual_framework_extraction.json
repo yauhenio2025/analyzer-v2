@@ -1,0 +1,113 @@
+{
+  "engine_key": "conceptual_framework_extraction",
+  "engine_name": "Conceptual Framework Extractor",
+  "description": "Extracts analytical frameworks, theoretical models, and typologies developed or used in a collection. Maps framework components, relationships, and applications.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "theory",
+  "researcher_question": "What analytical frameworks structure thinking in this collection?",
+  "extraction_prompt": "\nYou are an expert at identifying and mapping analytical frameworks.\n\nFor this article, extract ALL frameworks used or developed:\n\n## FRAMEWORKS\nFor each framework, model, or typology:\n\n1. **IDENTIFICATION**:\n   - Name (formal name or descriptive label)\n   - Type: theoretical_model, typology, taxonomy, causal_model, analytical_lens, process_model, matrix\n   - Originator (if attributed)\n   - Domain of application\n\n2. **COMPONENTS**:\n   List all elements of the framework:\n   - Variables (things that vary)\n   - Categories (discrete types)\n   - Stages (temporal sequence)\n   - Dimensions (axes of analysis)\n   - Mechanisms (causal processes)\n\n3. **RELATIONSHIPS**:\n   How do components relate?\n   - Causal relationships\n   - Correlations\n   - Containment (part-whole)\n   - Sequence (temporal order)\n   - Contrast (oppositions)\n\n4. **APPLICATION**:\n   - What is the framework applied to?\n   - How successful is the application?\n   - What adaptations are made?\n   - What insights does it generate?\n\n5. **LIMITATIONS**:\n   - What does the framework miss?\n   - Where does it break down?\n   - What critiques are offered?\n\n## FRAMEWORK RELATIONSHIPS\nWhen multiple frameworks appear:\n- Are they complementary or competing?\n- Do they operate at different levels?\n- Can they be synthesized?\n\n\nExtract every analytical structure you can identify.\n",
+  "curation_prompt": "\nYou are synthesizing framework extractions into a unified conceptual map.\n\nYour task:\n1. **CONSOLIDATE FRAMEWORKS**: Merge same frameworks across articles\n   - Same framework = merge\n   - Aggregate components if additional ones identified\n   - Note variations in how it's presented\n\n2. **MAP FRAMEWORK RELATIONSHIPS**:\n   - Which frameworks compete?\n   - Which are complementary?\n   - Which can be synthesized?\n   - Are any nested within others?\n\n3. **TRACK APPLICATIONS**:\n   - How are frameworks actually used?\n   - Which applications are successful?\n   - What adaptations are common?\n   - What limitations emerge through use?\n\n4. **IDENTIFY EMERGENT FRAMEWORKS**:\n   - Are new frameworks being proposed?\n   - How do they build on existing ones?\n   - What's their novel contribution?\n\n5. **ASSESS LANDSCAPE**:\n   - What framework types dominate?\n   - What's missing?\n   - Is there theoretical coherence or fragmentation?\n\nCreate clear framework_ids (e.g., \"fw_porters_five_forces\", \"fw_governance_triangle\").\n\n\nOutput a comprehensive map of conceptual frameworks.\n",
+  "concretization_prompt": "\nTransform the framework extraction to use concrete labels:\n\n1. Convert framework_ids to full names:\n   - \"F1\" \u2192 \"Porter's Five Forces Model\"\n   - \"F2\" \u2192 \"Platform Governance Triangle\"\n\n2. Name components clearly:\n   - Use actual terminology from the frameworks\n\n3. Label relationships specifically:\n   - \"R1\" \u2192 \"Market Power \u2192 Innovation Rate (negative correlation)\"\n\n4. Make applications concrete:\n   - Specify actual cases, industries, contexts\n\nPreserve all structural relationships and application details.\nMake the framework landscape immediately navigable.\n",
+  "canonical_schema": {
+    "frameworks": [
+      {
+        "framework_id": "string",
+        "name": "string",
+        "framework_type": "theoretical_model | typology | taxonomy | causal_model | analytical_lens | process_model | matrix",
+        "originator": "string | null",
+        "description": "string",
+        "domain": "string",
+        "components": [
+          {
+            "component_id": "string",
+            "name": "string",
+            "role": "variable | category | stage | dimension | mechanism",
+            "description": "string"
+          }
+        ],
+        "relationships": [
+          {
+            "from_component": "string",
+            "to_component": "string",
+            "relationship_type": "causes | correlates | contains | precedes | contrasts | enables",
+            "description": "string | null"
+          }
+        ],
+        "applications": [
+          "string"
+        ],
+        "limitations": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "framework_comparisons": [
+      {
+        "comparison_id": "string",
+        "frameworks": [
+          "framework_id"
+        ],
+        "comparison_type": "complementary | competing | nested | orthogonal",
+        "key_differences": [
+          "string"
+        ],
+        "synthesis_possible": "boolean",
+        "synthesis_approach": "string | null"
+      }
+    ],
+    "framework_applications": [
+      {
+        "application_id": "string",
+        "framework_id": "string",
+        "applied_to": "string",
+        "application_success": "illuminating | partial | forced | failed",
+        "insights_generated": [
+          "string"
+        ],
+        "adaptations_made": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "emergent_frameworks": [
+      {
+        "framework_id": "string",
+        "synthesized_from": [
+          "framework_id"
+        ],
+        "synthesis_logic": "string",
+        "novel_contributions": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_frameworks": "number",
+      "dominant_framework_type": "string",
+      "framework_diversity": "number (0-1)",
+      "most_applied_framework": "framework_id"
+    }
+  },
+  "extraction_focus": [
+    "frameworks",
+    "models",
+    "typologies",
+    "theories",
+    "mechanisms",
+    "analytical_lenses"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "gemini_network_graph"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/conceptual_framework_extraction.py"
+}

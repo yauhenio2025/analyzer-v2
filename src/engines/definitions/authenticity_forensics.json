@@ -1,0 +1,174 @@
+{
+  "engine_key": "authenticity_forensics",
+  "engine_name": "Authenticity Forensics",
+  "description": "Detects markers of deception, manipulation, and disinformation. Analyzes source authenticity, content manipulation, psychological tactics, logical fallacies, and narrative manipulation patterns. Assesses likelihood of intentional deception vs. honest error. Essential for counter-disinformation analysis.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "synthesis",
+  "reasoning_domain": "rhetoric",
+  "researcher_question": "Are there signs this content may be manipulative, deceptive, or part of a disinformation campaign?",
+  "extraction_prompt": "\nYou are conducting AUTHENTICITY FORENSICS \u2014 analyzing content for markers of\ndeception, manipulation, and disinformation.\n\n## IMPORTANT FRAMING\n\nYou are NOT determining \"truth\" or \"falsity\" of claims. You are identifying\nMANIPULATION MARKERS \u2014 techniques and patterns that suggest content may be\ndesigned to deceive or manipulate, requiring further scrutiny.\n\nEven accurate information can be presented manipulatively.\nEven inaccurate information can be an honest error, not deception.\n\nYour task: identify the markers, assess severity, note what warrants investigation.\n\n\n## DETECTION CATEGORIES\n\n### 1. SOURCE MANIPULATION\nScan for:\n- **Fake sources**: Non-existent experts, fabricated studies, invented institutions\n- **Misattributed sources**: Real sources cited for claims they didn't make\n- **Sock puppets**: False identities, astroturfing\n- **Credential inflation**: Exaggerated expertise or authority\n- **Anonymity abuse**: Hiding behind anonymity to avoid accountability\n\n### 2. CONTENT MANIPULATION\nScan for:\n- **Fabrication**: Made-up facts, events, or quotes\n- **Selective editing**: Removing context that changes meaning\n- **Out-of-context use**: True information used misleadingly\n- **Doctored evidence**: Altered images, documents, recordings\n- **Cherry picking**: Selecting only evidence that supports conclusion\n- **Quote mining**: Excerpts that misrepresent the original meaning\n\n### 3. PSYCHOLOGICAL MANIPULATION\nScan for:\n- **Fear appeals**: Exaggerated threats to trigger fear response\n- **False urgency**: \"Act now!\" pressure tactics\n- **Emotional manipulation**: Designed to bypass rational evaluation\n- **Identity appeals**: \"People like us believe X\"\n- **Authority abuse**: Illegitimate appeals to authority\n- **Outrage bait**: Content designed to provoke sharing through anger\n- **Tribal activation**: Us-vs-them framing to trigger group identity\n\n### 4. LOGICAL MANIPULATION\nScan for:\n- **False dichotomy**: \"Either X or Y\" when other options exist\n- **Strawman**: Misrepresenting opposing views to attack them\n- **Ad hominem**: Attacking the person instead of the argument\n- **False equivalence**: Treating unequal things as equal\n- **Whataboutism**: Deflecting by pointing to others' faults\n- **Gish gallop**: Overwhelming with many weak arguments\n- **Moving goalposts**: Changing criteria when original claims fail\n\n### 5. NARRATIVE MANIPULATION\nScan for:\n- **Conspiracy framing**: Secret powerful forces controlling events\n- **Scapegoating**: Blaming a group for complex problems\n- **Us-vs-them**: Dividing into good/evil camps\n- **Victimhood narrative**: \"We are under attack\"\n- **Decline narrative**: \"Things were better before [group] ruined it\"\n- **Simple solution to complex problem**: \"Just do X and everything is fixed\"\n\n### 6. TEMPORAL MANIPULATION\nScan for:\n- **False timelines**: Incorrect sequencing of events\n- **Manufactured recency**: Old content presented as new\n- **Anachronism**: Claims about the past that don't fit the period\n- **False precedent**: \"This has always been the case\" when it hasn't\n\n### 7. COORDINATION INDICATORS\nScan for:\n- **Synchronized messaging**: Same phrases/frames appearing across sources\n- **Artificial amplification**: Unnatural spread patterns\n- **Talking points**: Formulaic language suggesting coordinated messaging\n\n## ASSESSMENT GUIDANCE\n\nFor each indicator found:\n1. Describe specifically what you found\n2. Quote the relevant evidence\n3. Assess severity (low/medium/high)\n4. Assess confidence in the detection\n5. Consider intent: manipulation or honest error?\n\n## OUTPUT GUIDANCE\n\n- Be specific with evidence quotes\n- Distinguish between \"suspicious\" and \"confirmed\"\n- Note what would require further investigation\n- Consider who benefits from the manipulation\n- Don't over-detect \u2014 not every rhetorical technique is manipulation\n",
+  "curation_prompt": "\nYou are synthesizing authenticity forensics from multiple articles to identify\npatterns of manipulation and potential coordinated campaigns.\n\n\n## SYNTHESIS TASKS\n\n### 1. CROSS-SOURCE PATTERN DETECTION\n- Do the same manipulation techniques appear across articles?\n- Are there shared talking points or frames?\n- Do the articles seem to be pushing the same narrative?\n- Is there evidence of coordination or common origin?\n\n### 2. CONSOLIDATE INDICATORS\n- Group similar indicators across articles\n- Identify which indicators are most prevalent\n- Note indicators that appear in isolation vs. across sources\n\n### 3. CAMPAIGN ANALYSIS\nIf coordination is suspected:\n- What is the apparent objective?\n- Who is the target audience?\n- Who benefits?\n- What is the origin (if identifiable)?\n\n### 4. AUTHENTICITY LANDSCAPE\n- Which sources have highest/lowest authenticity scores?\n- Are manipulation patterns more common in certain source types?\n- Is there a \"clean\" source that others may be manipulating?\n\n### 5. PRIORITIZE CONCERNS\n- What are the most severe manipulation indicators across the corpus?\n- What requires immediate further investigation?\n- What patterns are most concerning for the discourse?\n\n### 6. META-ANALYSIS\n- Is the discourse itself being manipulated?\n- Are there influence operations at play?\n- What does the pattern of manipulation tell us about interests at stake?\n\n## OUTPUT GUIDANCE\n\nCreate a unified manipulation assessment that identifies:\n1. Common techniques across sources\n2. Evidence of coordination (if any)\n3. Most concerning patterns\n4. Verification priorities\n5. Attribution (if possible)\n",
+  "concretization_prompt": "\nTransform the authenticity forensics into an actionable intelligence product:\n\n1. **EXECUTIVE SUMMARY**\n   - Overall authenticity assessment (one line)\n   - Primary manipulation concern (if any)\n   - Confidence level\n\n2. **MANIPULATION DASHBOARD**\n   Create a visual summary:\n   ```\n   Authenticity Score: [X/10]\n\n   Category             | Status     | Severity\n   ---------------------|------------|----------\n   Source Manipulation  | [\u2713/\u2717/\u26a0]   | [H/M/L/\u2014]\n   Content Manipulation | [\u2713/\u2717/\u26a0]   | [H/M/L/\u2014]\n   Psychological Tactics| [\u2713/\u2717/\u26a0]   | [H/M/L/\u2014]\n   Logical Fallacies    | [\u2713/\u2717/\u26a0]   | [H/M/L/\u2014]\n   Narrative Manipulation| [\u2713/\u2717/\u26a0]  | [H/M/L/\u2014]\n   Coordination Signs   | [\u2713/\u2717/\u26a0]   | [H/M/L/\u2014]\n   ```\n\n3. **RED FLAGS** (if any)\n   - Bullet list of the most concerning indicators\n   - Quote the specific evidence\n   - Note the severity\n\n4. **INTENT ASSESSMENT**\n   - Likely intentional deception vs. error\n   - Apparent objectives\n   - Who benefits\n\n5. **VERIFICATION RECOMMENDATIONS**\n   For each significant claim:\n   - Claim\n   - How to verify\n   - Priority\n\n6. **KNOWN PATTERN MATCHES**\n   If applicable:\n   - \"This resembles [known technique/campaign]\"\n   - Confidence and rationale\n\n7. **ANALYST NOTES**\n   - What remains uncertain\n   - What requires further investigation\n   - Caveats and limitations\n\nMake it usable for someone who needs to quickly assess whether to trust content\nand what to investigate further.\n",
+  "canonical_schema": {
+    "overall_assessment": {
+      "authenticity_score": "number (0-1) - 1 is fully authentic, 0 is entirely manipulated",
+      "manipulation_likelihood": "none detected | low | medium | high | confirmed",
+      "primary_concern_type": "string - main category of manipulation if any",
+      "confidence_in_assessment": "high | medium | low"
+    },
+    "source_manipulation_indicators": {
+      "detected": "boolean",
+      "indicators": [
+        {
+          "indicator_type": "fake_source | misattributed | sock_puppet | astroturfing | anonymity_abuse | credential_inflation | impersonation",
+          "description": "string - what was found",
+          "evidence": "string - specific textual evidence",
+          "severity": "low | medium | high",
+          "confidence": "low | medium | high"
+        }
+      ],
+      "source_authenticity_score": "number (0-1)"
+    },
+    "content_manipulation_indicators": {
+      "detected": "boolean",
+      "indicators": [
+        {
+          "indicator_type": "fabrication | selective_editing | out_of_context | doctored_evidence | false_attribution | synthetic_content | cherry_picking | quote_mining",
+          "description": "string",
+          "evidence": "string",
+          "original_vs_manipulated": "string - if determinable, what was changed",
+          "severity": "low | medium | high",
+          "confidence": "low | medium | high"
+        }
+      ],
+      "content_integrity_score": "number (0-1)"
+    },
+    "psychological_manipulation_indicators": {
+      "detected": "boolean",
+      "indicators": [
+        {
+          "indicator_type": "fear_appeal | false_urgency | emotional_manipulation | identity_appeal | authority_abuse | bandwagon | outrage_bait | tribal_activation | moral_panic",
+          "description": "string",
+          "evidence": "string",
+          "target_emotion": "string - fear, anger, pride, etc.",
+          "severity": "low | medium | high"
+        }
+      ],
+      "manipulation_intensity": "subtle | moderate | aggressive"
+    },
+    "logical_manipulation_indicators": {
+      "detected": "boolean",
+      "indicators": [
+        {
+          "indicator_type": "false_dichotomy | strawman | ad_hominem | appeal_to_authority | circular_reasoning | false_equivalence | slippery_slope | whataboutism | gish_gallop | moving_goalposts",
+          "description": "string",
+          "evidence": "string",
+          "apparent_intent": "string - what conclusion does this push toward"
+        }
+      ],
+      "logical_integrity_score": "number (0-1)"
+    },
+    "narrative_manipulation_indicators": {
+      "detected": "boolean",
+      "indicators": [
+        {
+          "indicator_type": "conspiracy_framing | scapegoating | us_vs_them | victimhood_narrative | hero_narrative | decline_narrative | hidden_enemy | simple_solution_complex_problem",
+          "description": "string",
+          "evidence": "string",
+          "target_group": "string - who is being scapegoated/othered",
+          "beneficiary": "string - whose interests does this narrative serve"
+        }
+      ],
+      "narrative_patterns": [
+        "string - recurring patterns"
+      ]
+    },
+    "temporal_manipulation_indicators": {
+      "detected": "boolean",
+      "indicators": [
+        {
+          "indicator_type": "false_timeline | anachronism | manufactured_recency | outdated_presented_as_current | event_ordering_manipulation | false_precedent",
+          "description": "string",
+          "evidence": "string",
+          "actual_vs_claimed": "string - correct information if known"
+        }
+      ]
+    },
+    "coordinated_campaign_indicators": {
+      "detected": "boolean",
+      "indicators": [
+        {
+          "indicator_type": "synchronized_messaging | common_talking_points | artificial_amplification | cross_platform_coordination | bot_indicators | troll_farm_patterns",
+          "description": "string",
+          "evidence": "string",
+          "attributed_to": "string - suspected origin if identifiable",
+          "confidence": "low | medium | high"
+        }
+      ],
+      "campaign_assessment": "string - overall campaign analysis if applicable"
+    },
+    "intent_analysis": {
+      "likely_intent": "inform | persuade | deceive | manipulate | unknown",
+      "deception_vs_error": {
+        "assessment": "intentional deception | negligent error | honest mistake | cannot determine",
+        "rationale": "string"
+      },
+      "apparent_objectives": [
+        {
+          "objective": "string",
+          "evidence": "string",
+          "confidence": "low | medium | high"
+        }
+      ],
+      "target_audience": "string - who appears to be the intended audience",
+      "beneficiaries": [
+        "string - who benefits if this content is believed"
+      ]
+    },
+    "counterfactual_analysis": {
+      "if_authentic_implications": "string - what follows if content is genuine",
+      "if_manipulated_implications": "string - what follows if content is manipulated",
+      "verification_pathways": [
+        {
+          "claim": "string",
+          "how_to_verify": "string",
+          "difficulty": "easy | moderate | difficult | impossible"
+        }
+      ]
+    },
+    "known_pattern_matches": [
+      {
+        "pattern_name": "string - e.g., 'Firehose of Falsehood', 'Dead Cat Strategy'",
+        "match_confidence": "low | medium | high",
+        "description": "string"
+      }
+    ],
+    "meta": {
+      "total_indicators_detected": "number",
+      "categories_affected": [
+        "string"
+      ],
+      "highest_severity_indicators": [
+        "string - descriptions of worst findings"
+      ],
+      "requires_further_investigation": [
+        "string - areas needing more analysis"
+      ],
+      "analyst_confidence": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "deception_indicators",
+    "manipulation_techniques",
+    "source_authenticity",
+    "narrative_patterns",
+    "psychological_tactics"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/authenticity_forensics.py"
+}

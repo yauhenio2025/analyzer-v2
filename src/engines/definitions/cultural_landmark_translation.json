@@ -1,0 +1,102 @@
+{
+  "engine_key": "cultural_landmark_translation",
+  "engine_name": "Cultural Landmark Translator",
+  "description": "Identifies culturally-specific references, landmarks, and assumptions in texts. Provides translation strategies for conveying meaning across cultural contexts, noting what nuances may be lost and what background is assumed.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "synthesis",
+  "reasoning_domain": "rhetoric",
+  "researcher_question": "What cultural knowledge is assumed, and how can it be translated?",
+  "extraction_prompt": "\nYou are an expert in cross-cultural communication and translation studies.\n\nFor this article, extract CULTURAL LANDMARKS AND TRANSLATION CHALLENGES:\n\n1. **CULTURAL LANDMARKS**: References that assume shared cultural knowledge\n   - Historical events referenced (e.g., \"like Watergate\", \"post-9/11\")\n   - Public figures invoked (e.g., \"a Thatcher-style approach\")\n   - Texts or works alluded to (literary, religious, political)\n   - Idioms and expressions with cultural specificity\n   - Institutions assumed known (e.g., \"the BBC\", \"the Fed\")\n   - Cultural practices referenced\n\n2. **ASSUMED KNOWLEDGE**: What must readers already know?\n   - What historical context is presupposed?\n   - What cultural literacy is expected?\n   - What insider knowledge is taken for granted?\n\n3. **TRANSLATION STRATEGIES**: How could this be conveyed cross-culturally?\n   - Are there equivalent landmarks in other cultures?\n   - What explanatory glosses would help outsiders?\n   - What functional equivalents achieve similar effect?\n\n4. **TRANSLATION RISKS**: What might be lost?\n   - What connotations are culture-specific?\n   - What emotional resonances don't travel?\n   - What humor or irony depends on cultural knowledge?\n\n5. **UNTRANSLATABLES**: Concepts without good equivalents\n   - Terms that resist translation\n   - Why they resist\n   - Best approximations available\n\n\nIdentify everything that requires cultural insider knowledge to fully understand.\n",
+  "curation_prompt": "\nYou are synthesizing cultural landmark analyses from multiple articles.\n\nYour task:\n1. **CATALOG ALL LANDMARKS**: Build comprehensive inventory\n   - Deduplicate references to same landmarks\n   - Group by type and cultural domain\n\n2. **CLUSTER BY CULTURAL CONTEXT**:\n   - Group landmarks that share cultural background\n   - Identify dominant cultural domains\n   - Assess accessibility to outsiders\n\n3. **DEVELOP TRANSLATION STRATEGIES**:\n   - For each landmark, suggest multiple translation approaches\n   - Identify cultural equivalents where they exist\n   - Write explanatory glosses for outsiders\n   - Note functional equivalents\n\n4. **ASSESS TRANSLATION RISKS**:\n   - Rate difficulty of translation for each landmark\n   - Identify what nuances risk being lost\n   - Note untranslatables\n\n5. **PROFILE IMPLIED AUDIENCES**:\n   - What cultural competencies does the corpus assume?\n   - Who is the implied reader?\n   - What landmarks would be opaque to outsiders?\n\n6. **IDENTIFY PATTERNS**:\n   - What cultural domains dominate?\n   - What shared references unite the corpus?\n\n\nCreate a cultural translation guide for this discourse.\n",
+  "concretization_prompt": "\nTransform the cultural landmark analysis to use specific, helpful labels:\n\n1. Name landmarks specifically:\n   - \"L1\" -> \"Watergate Scandal (US political reference)\"\n\n2. Name translation strategies concretely:\n   - Include actual suggested glosses\n   - Provide real cultural equivalents\n\n3. Name cultural contexts clearly:\n   - \"Context1\" -> \"American Cold War Political Culture\"\n\n4. Describe audiences specifically:\n   - \"Audience1\" -> \"US-educated readers with liberal arts background\"\n\nPreserve all cultural analysis and translation guidance.\nMake the output immediately useful for cross-cultural communication.\n",
+  "canonical_schema": {
+    "cultural_landmarks": [
+      {
+        "landmark_id": "string",
+        "reference": "string (the actual reference)",
+        "type": "historical_event | public_figure | text | idiom | institution | cultural_practice",
+        "source_culture": "string",
+        "meaning_in_context": "string",
+        "assumed_knowledge": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "translation_strategies": [
+      {
+        "strategy_id": "string",
+        "landmark_id": "string",
+        "target_culture": "string",
+        "equivalent_landmark": "string (cultural equivalent if exists)",
+        "explanatory_gloss": "string (explanation for outsiders)",
+        "functional_equivalent": "string (achieves same effect differently)",
+        "risk_of_loss": "low | medium | high",
+        "what_might_be_lost": "string"
+      }
+    ],
+    "cultural_context_clusters": [
+      {
+        "cluster_id": "string",
+        "name": "string",
+        "description": "string",
+        "landmarks_in_cluster": [
+          "landmark_id"
+        ],
+        "cultural_domain": "political | religious | historical | literary | popular",
+        "accessibility_to_outsiders": "low | medium | high"
+      }
+    ],
+    "implicit_audiences": [
+      {
+        "audience_id": "string",
+        "description": "string",
+        "cultural_competencies_assumed": [
+          "string"
+        ],
+        "landmarks_accessible_to": [
+          "landmark_id"
+        ],
+        "landmarks_opaque_to": [
+          "landmark_id"
+        ]
+      }
+    ],
+    "untranslatables": [
+      {
+        "item_id": "string",
+        "term_or_concept": "string",
+        "why_untranslatable": "string",
+        "closest_approximations": [
+          "string"
+        ],
+        "source_culture": "string"
+      }
+    ],
+    "meta": {
+      "total_landmarks": "number",
+      "source_cultures_represented": [
+        "string"
+      ],
+      "translation_difficulty_overall": "low | medium | high",
+      "dominant_cultural_domain": "string"
+    }
+  },
+  "extraction_focus": [
+    "cultural_references",
+    "assumed_knowledge",
+    "idioms",
+    "historical_allusions",
+    "translation_challenges"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table",
+    "gemini_network_graph"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/cultural_landmark_translation.py"
+}

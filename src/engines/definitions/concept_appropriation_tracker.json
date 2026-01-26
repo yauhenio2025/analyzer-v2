@@ -1,0 +1,95 @@
+{
+  "engine_key": "concept_appropriation_tracker",
+  "engine_name": "Concept Appropriation Tracker",
+  "description": "Tracks how concepts migrate and mutate across contexts. Maps origins, semantic drift, appropriation, and distortions. Essential for understanding conceptual genealogy.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "epistemology",
+  "researcher_question": "How have concepts migrated and mutated across contexts?",
+  "extraction_prompt": "\nYou are tracking CONCEPT APPROPRIATION - how concepts migrate and mutate\nas they move between contexts.\n\n## CONCEPT MIGRATION PATTERNS\n\n### LEGITIMATE EXTENSION\nConcept applied to new domain while preserving core meaning.\n\n### METAPHORIZATION\nConcept used metaphorically, creating productive ambiguity.\n\n### DISTORTION\nConcept changed to serve purposes contrary to original intent.\n\n### INVERSION\nConcept's meaning reversed while keeping the term.\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY KEY CONCEPTS\nWhat important concepts appear?\n- What's their origin?\n- What did they originally mean?\n- Who originated them?\n\n### STEP 2: TRACE MIGRATIONS\nHow have concepts traveled?\n- Between what contexts?\n- Who moved them?\n- When and how?\n\n### STEP 3: MAP SEMANTIC CHANGES\nHow has meaning changed?\n- Extension or restriction?\n- Metaphorization?\n- Distortion?\n- What's preserved vs. lost?\n\n### STEP 4: IDENTIFY APPROPRIATIONS\nWho has taken concepts for new purposes?\n- Is the use faithful to original?\n- Is it a legitimate extension?\n- Or a questionable appropriation?\n\n### STEP 5: DOCUMENT DISTORTIONS\nWhere are concepts significantly distorted?\n- What's the original meaning?\n- What's the distorted version?\n- Who distorts and why?\n\n### STEP 6: MAP CURRENT USAGES\nHow are concepts currently used?\n- In what contexts?\n- With what meanings?\n- How far from original?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about semantic changes. \"The concept has been misused\" is not\nuseful. \"Originally meaning X in context A, the concept was adopted by B\nwho used it to mean Y, stripping the original emphasis on Z\" is useful.\n",
+  "curation_prompt": "\nYou are synthesizing concept appropriation analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. TRACE CONCEPT GENEALOGIES\n- What migration paths appear?\n- How have meanings evolved?\n\n### 2. IDENTIFY PATTERNS\n- What appropriation patterns recur?\n- What distortion types are common?\n\n### 3. ASSESS CURRENT STATE\n- What do concepts mean now in different contexts?\n- How much semantic drift has occurred?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of concept migrations and transformations.\n",
+  "concretization_prompt": "\nTransform the concept appropriation analysis into actionable insight:\n\n1. **CONCEPTS TRACKED**\n   | Concept | Original Context | Original Meaning | Originator |\n   |---------|------------------|------------------|------------|\n\n2. **MIGRATION PATHS**\n   - Concept: [Name]\n   - From: [Context] \u2192 To: [Context]\n   - Migrator: [Who]\n   - Mechanism: [How]\n\n3. **SEMANTIC CHANGES**\n   | Concept | Before | After | Change Type |\n   |---------|--------|-------|-------------|\n\n4. **APPROPRIATIONS**\n   | Concept | Appropriator | New Purpose | Legitimacy |\n   |---------|--------------|-------------|------------|\n\n5. **DISTORTIONS**\n   | Concept | Original | Distorted | Type | Purpose |\n   |---------|----------|-----------|------|---------|\n\n6. **CURRENT USAGES**\n   | Concept | Context | Current Meaning | Distance from Original |\n   |---------|---------|-----------------|------------------------|\n\n7. **BOTTOM LINE**\n   [One paragraph: How have key concepts migrated and changed? What\n   significant distortions exist? What should readers be aware of?]\n",
+  "canonical_schema": {
+    "concepts_tracked": [
+      {
+        "concept_id": "string - CON1, CON2, etc.",
+        "concept_name": "string",
+        "original_context": "string - where it originated",
+        "original_meaning": "string",
+        "originator": "string - if known"
+      }
+    ],
+    "migration_events": [
+      {
+        "migration_id": "string - MIG1, MIG2, etc.",
+        "concept_id": "string",
+        "from_context": "string",
+        "to_context": "string",
+        "migrator": "string - who moved it",
+        "timing": "string - when",
+        "mechanism": "string - how it traveled"
+      }
+    ],
+    "semantic_changes": [
+      {
+        "change_id": "string",
+        "concept_id": "string",
+        "migration_id": "string - associated migration",
+        "meaning_before": "string",
+        "meaning_after": "string",
+        "change_type": "extension | restriction | metaphorization | distortion | inversion",
+        "change_description": "string"
+      }
+    ],
+    "appropriations": [
+      {
+        "appropriation_id": "string",
+        "concept_id": "string",
+        "appropriator": "string - who took it",
+        "new_purpose": "string - what they use it for",
+        "relationship_to_original": "faithful | adapted | distorted | inverted",
+        "legitimacy": "legitimate_extension | questionable | illegitimate"
+      }
+    ],
+    "distortions": [
+      {
+        "distortion_id": "string",
+        "concept_id": "string",
+        "original_meaning": "string",
+        "distorted_meaning": "string",
+        "distortion_type": "oversimplification | strawman | selective | inversion",
+        "distorter": "string - if known",
+        "purpose_of_distortion": "string - why distorted"
+      }
+    ],
+    "current_usages": [
+      {
+        "usage_id": "string",
+        "concept_id": "string",
+        "context": "string",
+        "current_meaning": "string",
+        "distance_from_original": "close | moderate | far | unrecognizable"
+      }
+    ],
+    "meta": {
+      "concepts_tracked": "number",
+      "migrations_identified": "number",
+      "significant_distortions": "number",
+      "contexts_involved": "number"
+    }
+  },
+  "extraction_focus": [
+    "concept_origins",
+    "migration_paths",
+    "semantic_changes",
+    "appropriations",
+    "distortions"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/concept_appropriation_tracker.py"
+}

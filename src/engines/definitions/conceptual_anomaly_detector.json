@@ -1,0 +1,103 @@
+{
+  "engine_key": "conceptual_anomaly_detector",
+  "engine_name": "Anomaly Detector",
+  "description": "Finds conceptual outliers and anomalies. Detects unusual claims, conceptual contradictions, outlier perspectives, surprising findings, and logical inconsistencies in the discourse.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "epistemology",
+  "researcher_question": "What doesn't fit the pattern? What's surprising or contradictory?",
+  "extraction_prompt": "\nYou are an expert anomaly detector identifying what doesn't fit the pattern.\n\nFor this article, identify ALL anomalies and inconsistencies:\n\n1. **UNUSUAL CLAIMS**: What's outside the mainstream?\n   - What claim stands out?\n   - Why is it unusual?\n   - How does it deviate from the norm?\n   - What evidence is provided?\n   - How credible is it? (0-1)\n\n2. **CONCEPTUAL CONTRADICTIONS**: What conflicts with what?\n   - Statement A and Statement B\n   - Nature: direct contradiction, implicit tension, or conceptual conflict\n   - Same source or different sources?\n   - Is resolution possible?\n   - How might it be resolved?\n\n3. **OUTLIER PERSPECTIVES**: Who's saying something different?\n   - What perspective stands apart?\n   - Who advocates it?\n   - Type of deviation: methodological, theoretical, empirical, normative\n   - Strength of deviation (0-1)\n   - What value might this outlier offer?\n\n4. **SURPRISING FINDINGS**: What defies expectations?\n   - What finding is surprising?\n   - What was expected instead?\n   - Surprise factor (0-1)\n   - Is an explanation offered?\n   - What are the implications?\n\n5. **INCONSISTENCIES**: What doesn't hold together?\n   - What inconsistency exists?\n   - Type: logical, empirical, methodological, temporal\n   - What elements are involved?\n   - Severity (0-1)\n\n\nThink critically - identify what doesn't fit and why it matters.\n",
+  "curation_prompt": "\nYou are synthesizing anomaly analysis from multiple articles.\n\nYour task:\n1. **CATALOG UNUSUAL CLAIMS**: What stands out?\n   - Consolidate unusual claims\n   - Rate credibility\n   - Note patterns of deviation\n\n2. **MAP CONTRADICTIONS**: What conflicts?\n   - Identify contradictions within and across articles\n   - Note resolution possibilities\n   - Rate severity\n\n3. **IDENTIFY OUTLIERS**: Who's different?\n   - Map outlier perspectives\n   - Note deviation types\n   - Assess potential value\n\n4. **COMPILE SURPRISES**: What's unexpected?\n   - Aggregate surprising findings\n   - Rate surprise factor\n   - Note implications\n\n5. **TRACK INCONSISTENCIES**: What's inconsistent?\n   - Consolidate inconsistencies\n   - Categorize by type\n   - Rate severity\n\n\nCreate a comprehensive anomaly map highlighting what doesn't fit.\n",
+  "concretization_prompt": "\nTransform the anomaly analysis to be immediately useful:\n\n1. Describe unusual claims:\n   - \"UC1\" \u2192 \"Unusual: AI will reduce innovation (contradicts mainstream)\"\n\n2. Name contradictions:\n   - \"C1\" \u2192 \"Contradiction: 'AI creates jobs' vs. 'AI destroys jobs' (same author)\"\n\n3. Label outliers:\n   - \"O1\" \u2192 \"Outlier: Post-work society perspective (high deviation, potentially valuable)\"\n\n4. Describe surprises:\n   - \"S1\" \u2192 \"Surprise: Workers prefer AI supervision (expected resistance)\"\n\n5. Name inconsistencies:\n   - \"I1\" \u2192 \"Inconsistency: Uses 2019 and 2023 data as if comparable (methodological)\"\n\nPreserve all severity and credibility ratings.\nMake the analysis useful for critical evaluation.\n",
+  "canonical_schema": {
+    "unusual_claims": [
+      {
+        "claim_id": "string",
+        "claim": "string",
+        "why_unusual": "string",
+        "deviation_from_norm": "string",
+        "evidence_provided": "string",
+        "credibility": "number (0-1)",
+        "source_article": "string"
+      }
+    ],
+    "conceptual_contradictions": [
+      {
+        "contradiction_id": "string",
+        "statement_a": "string",
+        "statement_b": "string",
+        "nature_of_contradiction": "direct | implicit | tension",
+        "same_source": "boolean",
+        "resolution_possible": "boolean",
+        "resolution_if_possible": "string",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "outlier_perspectives": [
+      {
+        "perspective_id": "string",
+        "perspective": "string",
+        "advocate": "string",
+        "deviation_type": "methodological | theoretical | empirical | normative",
+        "strength_of_deviation": "number (0-1)",
+        "potential_value": "string",
+        "source_article": "string"
+      }
+    ],
+    "surprising_findings": [
+      {
+        "finding_id": "string",
+        "finding": "string",
+        "expected_finding": "string",
+        "surprise_factor": "number (0-1)",
+        "explanation_offered": "string",
+        "implications": [
+          "string"
+        ],
+        "source_article": "string"
+      }
+    ],
+    "inconsistencies": [
+      {
+        "inconsistency_id": "string",
+        "description": "string",
+        "inconsistency_type": "logical | empirical | methodological | temporal",
+        "elements_involved": [
+          "string"
+        ],
+        "severity": "number (0-1)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_anomalies": "number",
+      "anomaly_types": {
+        "unusual_claims": "number",
+        "contradictions": "number",
+        "outliers": "number",
+        "surprises": "number",
+        "inconsistencies": "number"
+      },
+      "average_severity": "number (0-1)",
+      "most_significant_anomaly": "string"
+    }
+  },
+  "extraction_focus": [
+    "anomalies",
+    "contradictions",
+    "outliers",
+    "surprises",
+    "inconsistencies"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/conceptual_anomaly_detector.py"
+}

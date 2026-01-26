@@ -1,0 +1,132 @@
+{
+  "engine_key": "collective_action_problem_identifier",
+  "engine_name": "Collective Action Problem Identifier",
+  "description": "Identifies collective action problems: free riding, tragedy of commons, coordination failures. Analyzes why individual rationality leads to collectively bad outcomes and what institutions can enable cooperation.",
+  "version": 1,
+  "category": "institutional",
+  "kind": "synthesis",
+  "reasoning_domain": "institutional_analysis",
+  "researcher_question": "What collective action problems prevent cooperation?",
+  "extraction_prompt": "\nYou are a COLLECTIVE ACTION PROBLEM IDENTIFIER \u2014 examining where individual\nrationality leads to collectively bad outcomes, and what can be done.\n\n## COLLECTIVE ACTION PROBLEMS\n\nWhen individuals pursue their own interests, the result can be worse for\neveryone \u2014 including themselves. This is the core collective action problem.\n\n\"What is common to the greatest number has the least care bestowed upon it.\"\n\u2014 Aristotle\n\n## TYPES OF PROBLEMS\n\n### FREE RIDER PROBLEM\nBenefiting from public goods without contributing:\n- Why pay for what you can get for free?\n- Result: public goods underprovided\n- Examples: public radio, clean environment, national defense\n\n### TRAGEDY OF THE COMMONS\nOveruse of shared resources:\n- Each person's use imposes costs on all\n- Individual gain < collective loss\n- Result: resource depletion\n- Examples: fisheries, groundwater, atmosphere\n\n### COORDINATION PROBLEMS\nFailure to coordinate on beneficial outcomes:\n- Multiple equilibria exist\n- Everyone better off if all coordinated\n- But no one moves first\n- Examples: standards, conventions, network adoption\n\n### ASSURANCE GAMES\nCooperation conditional on others cooperating:\n- Would cooperate if others do\n- Won't be a sucker\n- Lack of trust prevents cooperation\n\n### PRISONER'S DILEMMA\nDefection dominates cooperation:\n- Best outcome for me: I defect, you cooperate\n- But if we both defect, both worse off\n- Individually rational = collectively irrational\n\n## FACTORS AFFECTING COLLECTIVE ACTION\n\n- Group size: Smaller groups cooperate more easily\n- Heterogeneity: Similarity helps cooperation\n- Repeated interaction: Future dealings enable cooperation\n- Observability: Can you see who cooperates/defects?\n- Communication: Can you coordinate?\n- Trust: Baseline expectation of cooperation\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY THE COLLECTIVE GOOD\nWhat would benefit everyone if achieved?\n- What's the cooperative outcome?\n- Who would benefit?\n- What's the current suboptimal state?\n\n### STEP 2: IDENTIFY COLLECTIVE ACTION PROBLEMS\nWhat prevents cooperation?\n- Free riding?\n- Tragedy of commons?\n- Coordination failure?\n- Prisoner's dilemma?\n\n### STEP 3: ANALYZE PROBLEM STRUCTURE\nFor each problem:\n- Who are the actors?\n- What are individual incentives?\n- How do they diverge from collective interest?\n- How severe is the gap?\n\n### STEP 4: ASSESS GROUP CHARACTERISTICS\nWhat factors affect collective action difficulty?\n- Group size?\n- Heterogeneity?\n- Repeated interaction?\n- Observability?\n- Communication?\n- Trust?\n\n### STEP 5: EXAMINE EXISTING SOLUTIONS\nWhat's already in place?\n- Privatization?\n- Regulation?\n- Community management?\n- Selective incentives?\n- Norms?\n- How well do they work?\n\n### STEP 6: IDENTIFY POTENTIAL SOLUTIONS\nWhat could enable cooperation?\n- What mechanisms?\n- How feasible?\n- What barriers to implementation?\n\n### STEP 7: OVERALL ASSESSMENT\nHow serious is the collective action problem?\n- Primary problem?\n- Severity?\n- Solvability?\n- Best path forward?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about incentive structures.\nIdentify the exact collective action problem type.\nFocus on problems that affect main outcomes.\n",
+  "curation_prompt": "\nSynthesize collective action analyses from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **TRIANGULATE PROBLEMS**: Multiple sources confirm same problems?\n2. **COMPARE SOLUTIONS**: Agreement on what works?\n3. **ASSESS CONDITIONS**: What conditions enable/prevent cooperation?\n4. **EVALUATE INTERVENTIONS**: Which solutions are most promising?\n5. **SYNTHESIZE**: Overall collective action assessment\n\n## OUTPUT GUIDANCE\n\nCreate unified assessment of collective action problems and solutions.\n",
+  "concretization_prompt": "\nTransform collective action analysis into clear assessment:\n\n1. **COLLECTIVE GOOD AT STAKE**\n   - What would benefit all: [Description]\n   - Current outcome: [Description]\n   - Optimal outcome: [Description]\n\n2. **COLLECTIVE ACTION PROBLEMS**\n   | Problem | Type | Actors | Individual vs. Collective | Severity |\n   |---------|------|--------|--------------------------|----------|\n\n3. **FREE RIDING**\n   - Where: [Situation]\n   - Mechanism: [How people free ride]\n   - Result: [What's underprovided]\n\n4. **TRAGEDY OF COMMONS**\n   - Resource: [What's shared]\n   - Overuse: [Mechanism]\n   - Trajectory: [Depletion path]\n\n5. **GROUP CHARACTERISTICS**\n   - Size: [Small/Medium/Large]\n   - Heterogeneity: [Low/Moderate/High]\n   - Repeated interaction: [Frequency]\n   - Difficulty: [Easy/Moderate/Difficult/Very difficult]\n\n6. **EXISTING SOLUTIONS**\n   | Solution | Type | Effectiveness | Limitations |\n   |----------|------|---------------|-------------|\n\n7. **POTENTIAL SOLUTIONS**\n   | Solution | Mechanism | Feasibility | Likely Effectiveness |\n   |----------|-----------|-------------|---------------------|\n\n8. **OVERALL ASSESSMENT**\n   - Primary problem: [Description]\n   - Severity: [Mild/Moderate/Severe/Critical]\n   - Solvability: [Easy/Moderate/Difficult]\n   - Most promising solution: [Description]\n\n9. **BOTTOM LINE**\n   [What collective action problem exists? Can it be solved?]\n",
+  "canonical_schema": {
+    "context": {
+      "domain": "string - area where collective action is needed",
+      "collective_good": "string - what would benefit everyone",
+      "current_outcome": "string - what's happening now",
+      "optimal_outcome": "string - what could happen with cooperation"
+    },
+    "collective_action_problems": [
+      {
+        "problem_id": "string - CAP1, CAP2, etc.",
+        "problem_type": "free_rider | tragedy_commons | coordination | assurance | chicken | other",
+        "description": "string - what the problem is",
+        "actors": [
+          "string - who is involved"
+        ],
+        "individual_incentives": "string - what individuals want",
+        "collective_interest": "string - what would benefit everyone",
+        "gap": "string - how individual and collective diverge",
+        "severity": "mild | moderate | severe",
+        "evidence": [
+          "string - supporting observations"
+        ]
+      }
+    ],
+    "free_riding_analysis": [
+      {
+        "situation": "string - where free riding occurs",
+        "public_good": "string - what's being free-ridden on",
+        "excludability": "excludable | partially | non_excludable",
+        "rivalry": "rival | partially | non_rival",
+        "free_rider_strategy": "string - how people free ride",
+        "underprovision_result": "string - what doesn't get provided"
+      }
+    ],
+    "tragedy_of_commons": [
+      {
+        "resource": "string - shared resource",
+        "users": [
+          "string - who uses it"
+        ],
+        "overuse_mechanism": "string - how overuse occurs",
+        "depletion_trajectory": "stable | gradual | rapid | critical",
+        "private_benefits": "string - what individuals gain",
+        "social_costs": "string - what everyone loses"
+      }
+    ],
+    "coordination_failures": [
+      {
+        "coordination_need": "string - what needs to be coordinated",
+        "multiple_equilibria": [
+          "string - possible coordination points"
+        ],
+        "stuck_at": "string - where currently stuck",
+        "better_equilibria": [
+          "string - where could be instead"
+        ],
+        "barrier": "string - what prevents moving"
+      }
+    ],
+    "group_characteristics": {
+      "group_size": "small | medium | large | very_large",
+      "heterogeneity": "homogeneous | moderate | heterogeneous",
+      "repeated_interaction": "one_shot | occasional | frequent | continuous",
+      "observability": "full | partial | minimal",
+      "communication": "none | limited | full",
+      "trust_level": "low | moderate | high",
+      "collective_action_difficulty": "easy | moderate | difficult | very_difficult"
+    },
+    "existing_solutions": [
+      {
+        "solution_id": "string",
+        "solution_type": "privatization | regulation | community_management | selective_incentives | norms | other",
+        "description": "string - how it works",
+        "effectiveness": "ineffective | partial | effective | highly_effective",
+        "limitations": [
+          "string - where it falls short"
+        ]
+      }
+    ],
+    "potential_solutions": [
+      {
+        "solution_id": "string",
+        "solution_type": "string - type of intervention",
+        "mechanism": "string - how it would work",
+        "feasibility": "low | medium | high",
+        "barriers_to_implementation": [
+          "string - obstacles"
+        ],
+        "likely_effectiveness": "low | medium | high"
+      }
+    ],
+    "assessment": {
+      "primary_problem": "string - most important collective action problem",
+      "severity": "mild | moderate | severe | critical",
+      "solvability": "easy | moderate | difficult | intractable",
+      "key_barriers": [
+        "string - main obstacles to cooperation"
+      ],
+      "most_promising_solution": "string - best path forward"
+    },
+    "meta": {
+      "problems_identified": "number",
+      "severe_problems": "number",
+      "solutions_analyzed": "number"
+    }
+  },
+  "extraction_focus": [
+    "collective_goods",
+    "individual_incentives",
+    "cooperation_barriers",
+    "free_riding",
+    "institutional_solutions"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/collective_action_problem_identifier.py"
+}

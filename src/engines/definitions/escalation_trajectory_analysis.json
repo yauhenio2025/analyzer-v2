@@ -1,0 +1,244 @@
+{
+  "engine_key": "escalation_trajectory_analysis",
+  "engine_name": "Escalation Trajectory Analysis",
+  "description": "Models how conflicts, crises, and confrontations escalate or de-escalate. Identifies triggers, accelerants, brakes, tipping points, and feedback loops. Maps current position on escalation ladder and projects likely trajectories. Essential for crisis anticipation and intervention planning.",
+  "version": 1,
+  "category": "temporal",
+  "kind": "synthesis",
+  "reasoning_domain": "temporal",
+  "researcher_question": "How might this situation escalate or de-escalate, and what are the key dynamics?",
+  "extraction_prompt": "\nYou are an expert crisis analyst modeling ESCALATION DYNAMICS \u2014 how conflicts\nintensify, stabilize, or de-escalate over time.\n\n## THE ESCALATION FRAMEWORK\n\nCrises don't jump from calm to catastrophe. They:\n1. CLIMB LADDERS \u2014 moving through identifiable stages\n2. CROSS THRESHOLDS \u2014 tipping points after which dynamics change\n3. RESPOND TO ACCELERANTS \u2014 factors that speed escalation\n4. ARE RESTRAINED BY BRAKES \u2014 factors that slow or stop escalation\n5. CREATE FEEDBACK LOOPS \u2014 self-reinforcing spirals\n\nUnderstanding these dynamics enables ANTICIPATION and INTERVENTION.\n\n\n## YOUR TASK\n\n### STEP 1: PROFILE THE CONFLICT\n\nIdentify the conflict or crisis being analyzed:\n- What type of conflict? (interstate, institutional, social, etc.)\n- Who are the parties? What are their stakes?\n- What's the core dispute?\n- How long has this been going on?\n- What's the history of escalation/de-escalation?\n\n### STEP 2: CONSTRUCT THE ESCALATION LADDER\n\nDefine the stages from low to high intensity:\n\n**Generic Escalation Ladder (adapt to context):**\n1. Latent tension / dormant dispute\n2. Issue emergence / public disagreement\n3. Polarization / hardening positions\n4. Hostility / adversarial actions\n5. Direct confrontation / clashes\n6. Intensive conflict / sustained engagement\n7. Crisis threshold / red lines approached\n8. Acute crisis / potential for catastrophe\n9. [Context-specific higher rungs]\n\nFor each rung:\n- What does it look like in this specific conflict?\n- What evidence from the text places us there?\n- How reversible is movement at this level?\n\n### STEP 3: ASSESS CURRENT POSITION\n\nWhere is the conflict NOW?\n- Which rung?\n- Position within that rung (bottom, middle, top)?\n- Recent movement direction and velocity?\n- Confidence in assessment?\n\nBe precise. \"Somewhere between 4 and 6\" is less useful than \"Solidly at 5, trending toward 6.\"\n\n### STEP 4: IDENTIFY TRIGGERS\n\nWhat could TRIGGER escalation to the next rung?\n- Specific events, actions, statements, perceptions\n- Which party might trigger each?\n- How likely is each trigger?\n- What warning signs precede it?\n\n### STEP 5: MAP ACCELERANTS\n\nWhat SPEEDS UP escalation once triggered?\n\n**Accelerant types:**\n- **Structural:** Institutional incentives, power vacuums, resource scarcity\n- **Relational:** History of grievance, trust deficits, dehumanization\n- **Psychological:** Fear, humiliation, revenge motivation, sunk costs\n- **External:** Third-party involvement, media amplification, timing pressures\n\nWhich are currently active? How strong?\n\n### STEP 6: IDENTIFY BRAKES\n\nWhat SLOWS or STOPS escalation?\n\n**Brake types:**\n- **Structural:** Institutions, agreements, deterrence, costs\n- **Relational:** Communication channels, relationships, shared interests\n- **Psychological:** War-weariness, fear of consequences, face-saving needs\n- **External:** Third-party pressure, international norms, economic interdependence\n\nWhich are currently active? What could remove them?\n\n### STEP 7: FIND OFF-RAMPS\n\nOpportunities for DE-ESCALATION:\n- What face-saving exits exist?\n- What would need to happen?\n- Who would need to act?\n- When do these windows close?\n\n### STEP 8: FLAG TIPPING POINTS\n\nCritical thresholds after which dynamics FUNDAMENTALLY CHANGE:\n- What are they in this conflict?\n- How close are we?\n- What are the signs we're approaching?\n- What happens after crossing?\n\n### STEP 9: MAP FEEDBACK LOOPS\n\nSelf-reinforcing dynamics:\n- **Escalatory loops:** Action \u2192 reaction \u2192 counter-reaction spirals\n- **De-escalatory loops:** Concession \u2192 reciprocity \u2192 confidence building\n- **Stabilizing loops:** Cost awareness \u2192 restraint \u2192 status quo\n\nWhich are active? How to break negative loops?\n\n### STEP 10: PROJECT TRAJECTORIES\n\n- Most likely trajectory (with confidence level)\n- Escalation scenario (what would have to happen)\n- De-escalation scenario (what would have to happen)\n- Wild card scenarios\n\n### STEP 11: INTERVENTION ANALYSIS\n\n- Where are the intervention windows?\n- What actions could help?\n- What should be avoided?\n- Who could intervene effectively?\n\n## OUTPUT GUIDANCE\n\nBe specific about positions on the ladder. Vague assessments don't enable anticipation.\n\nFocus on DYNAMICS \u2014 the forces pushing up or down the ladder \u2014 not just current state.\n\nIdentify actionable intervention points, not just problems.\n",
+  "curation_prompt": "\nYou are synthesizing escalation analyses from multiple sources to create a\ncomprehensive crisis dynamics assessment.\n\n\n## SYNTHESIS TASKS\n\n### 1. RECONCILE ESCALATION ASSESSMENTS\n\n- Do sources agree on current position?\n- Where do they diverge? Why?\n- Synthesize into best estimate with confidence interval\n\n### 2. COMPREHENSIVE TRIGGER MAP\n\n- Consolidate all identified triggers\n- Note which triggers appear in multiple sources\n- Rank by likelihood and impact\n\n### 3. INTEGRATED ACCELERANT/BRAKE ANALYSIS\n\n- Map all accelerants and brakes across sources\n- Assess net direction of forces\n- Identify most powerful dynamics\n\n### 4. UNIFIED TIPPING POINT ASSESSMENT\n\n- Consolidate tipping points\n- Assess distance to each\n- Identify most critical\n\n### 5. SYNTHESIZED TRAJECTORY\n\n- What do multiple sources suggest about direction?\n- Where is there agreement/disagreement on futures?\n- Create probability-weighted trajectory assessment\n\n### 6. INTERVENTION OPPORTUNITIES\n\n- Consolidate intervention windows and options\n- Prioritize by impact and feasibility\n- Create action recommendations\n\n### 7. HISTORICAL PARALLEL SYNTHESIS\n\n- What historical cases are referenced?\n- Do they suggest consistent lessons?\n- What cautions do they offer?\n\n## OUTPUT GUIDANCE\n\nCreate an integrated escalation assessment that enables:\n1. Understanding of current position and dynamics\n2. Anticipation of likely developments\n3. Identification of intervention opportunities\n4. Awareness of critical thresholds\n",
+  "concretization_prompt": "\nTransform the escalation analysis into an operational crisis assessment:\n\n1. **ESCALATION DASHBOARD**\n   ```\n   CURRENT LEVEL: [X] / [Total Rungs] \u2014 [Rung Name]\n   Trajectory: [\u2191 ESCALATING / \u2192 STABLE / \u2193 DE-ESCALATING]\n   Velocity: [RAPID / MODERATE / SLOW]\n   Risk Level: [CRITICAL / HIGH / ELEVATED / MODERATE / LOW]\n   ```\n\n2. **ESCALATION LADDER VISUALIZATION**\n   ```\n   \u2593\u2593\u2593 [9] Acute Crisis          \u2190 [Tipping Point]\n   \u2593\u2593\u2593 [8] Crisis Threshold\n   \u2593\u2593\u2593 [7] Red Lines Approached\n   \u2588\u2588\u2588 [6] Intensive Conflict    \u2190 [Current Position]\n   \u2588\u2588\u2588 [5] Direct Confrontation\n   \u2591\u2591\u2591 [4] Hostility\n   \u2591\u2591\u2591 [3] Polarization\n   \u2591\u2591\u2591 [2] Issue Emergence\n   \u2591\u2591\u2591 [1] Latent Tension\n   ```\n\n3. **KEY DYNAMICS TABLE**\n   ```\n   | Force Type | Description | Strength | Net Effect |\n   |------------|-------------|----------|------------|\n   | Accelerant | [X]         | Strong   | \u2191          |\n   | Brake      | [Y]         | Moderate | \u2193          |\n   | Trigger    | [Z]         | Likely   | \u2191\u2191 if hit  |\n   ```\n\n4. **CRITICAL TRIGGERS TO WATCH**\n   1. [Trigger 1] \u2014 Likelihood: [X] \u2014 Impact: [Y] \u2014 Warning signs: [Z]\n   2. [Trigger 2] \u2014 ...\n\n5. **TIPPING POINTS**\n   - [TP1]: Distance = [NEAR/FAR] \u2014 Consequence if crossed: [X]\n   - [TP2]: ...\n\n6. **TRAJECTORY PROJECTION**\n   - 30 days: [Likely position] (Confidence: [X])\n   - 90 days: [Likely position] (Confidence: [X])\n   - Key dependencies: [What determines trajectory]\n\n7. **INTERVENTION OPPORTUNITIES**\n   | Window | Closes When | Action | By Whom | Success Likelihood |\n   |--------|-------------|--------|---------|-------------------|\n\n8. **DO / DON'T**\n   **DO:**\n   - [Action 1] \u2014 Because [reason]\n   - [Action 2] \u2014 Because [reason]\n\n   **DON'T:**\n   - [Action to avoid] \u2014 Risk: [consequence]\n\n9. **BOTTOM LINE**\n   [One paragraph: Where are we, where are we heading, what can be done, what to watch?]\n\nMake it scannable for crisis decision-makers who need quick situational awareness.\n",
+  "canonical_schema": {
+    "conflict_profile": {
+      "conflict_id": "string",
+      "conflict_type": "interstate | intrastate | institutional | social | economic | other",
+      "parties_involved": [
+        {
+          "party_id": "string",
+          "party_name": "string",
+          "party_type": "state | non-state | institution | group | individual",
+          "stakes": "string - what they stand to gain/lose",
+          "escalation_appetite": "aggressive | moderate | reluctant | unknown",
+          "resources_for_escalation": "high | medium | low"
+        }
+      ],
+      "core_dispute": "string - fundamental issue at stake",
+      "history_length": "new | recent | longstanding | historical",
+      "previous_escalation_peaks": [
+        {
+          "date_period": "string",
+          "peak_level": "string",
+          "what_stopped_it": "string"
+        }
+      ]
+    },
+    "escalation_ladder": {
+      "ladder_type": "string - e.g., Kahn-style, custom",
+      "rungs": [
+        {
+          "rung_number": "number",
+          "rung_name": "string",
+          "description": "string - what this level involves",
+          "examples_from_text": [
+            "string - evidence of this level"
+          ],
+          "reversibility": "easily_reversible | reversible_with_effort | difficult_to_reverse | irreversible"
+        }
+      ],
+      "total_rungs": "number"
+    },
+    "current_position": {
+      "current_rung": "number",
+      "rung_name": "string",
+      "position_within_rung": "bottom | middle | top",
+      "evidence_for_assessment": [
+        "string"
+      ],
+      "confidence_in_assessment": "high | medium | low",
+      "recent_movement": "escalating | stable | de-escalating",
+      "velocity": "rapid | moderate | slow | static"
+    },
+    "escalation_triggers": [
+      {
+        "trigger_id": "string",
+        "trigger_type": "event | action | statement | perception | external",
+        "description": "string - what could trigger escalation",
+        "likelihood": "high | medium | low",
+        "impact_if_triggered": "major_escalation | moderate_escalation | minor_escalation",
+        "would_move_to_rung": "number",
+        "which_party_most_likely": "string - party_id",
+        "warning_signs": [
+          "string - indicators this trigger is imminent"
+        ]
+      }
+    ],
+    "accelerants": [
+      {
+        "accelerant_id": "string",
+        "accelerant_type": "structural | relational | psychological | external",
+        "description": "string - what speeds up escalation",
+        "currently_active": "boolean",
+        "strength": "strong | moderate | weak",
+        "mechanism": "string - how it accelerates"
+      }
+    ],
+    "brakes": [
+      {
+        "brake_id": "string",
+        "brake_type": "structural | relational | psychological | external",
+        "description": "string - what slows or stops escalation",
+        "currently_active": "boolean",
+        "strength": "strong | moderate | weak",
+        "mechanism": "string - how it brakes",
+        "vulnerable_to": "string - what could remove this brake"
+      }
+    ],
+    "off_ramps": [
+      {
+        "off_ramp_id": "string",
+        "description": "string - opportunity for de-escalation",
+        "available_until": "string - when does this window close",
+        "requires": "string - what would need to happen",
+        "likelihood_of_use": "high | medium | low",
+        "barriers_to_use": [
+          "string"
+        ],
+        "which_parties_must_act": [
+          "string - party_ids"
+        ]
+      }
+    ],
+    "tipping_points": [
+      {
+        "tipping_point_id": "string",
+        "description": "string - threshold after which dynamics change",
+        "rung_number": "number - where on ladder",
+        "why_critical": "string - what changes after crossing",
+        "current_distance": "far | approaching | near | at | crossed",
+        "signs_approaching": [
+          "string - indicators"
+        ],
+        "consequences_if_crossed": "string",
+        "reversibility_after": "reversible | difficult | irreversible"
+      }
+    ],
+    "feedback_loops": [
+      {
+        "loop_id": "string",
+        "loop_type": "escalatory | de-escalatory | stabilizing",
+        "description": "string - the self-reinforcing dynamic",
+        "parties_involved": [
+          "string - party_ids"
+        ],
+        "currently_active": "boolean",
+        "strength": "strong | moderate | weak",
+        "how_to_break": "string - intervention point"
+      }
+    ],
+    "trajectory_projections": {
+      "most_likely_trajectory": {
+        "direction": "escalation | stability | de-escalation",
+        "projected_rung_30_days": "number",
+        "projected_rung_90_days": "number",
+        "key_assumptions": [
+          "string"
+        ],
+        "confidence": "high | medium | low"
+      },
+      "escalation_scenario": {
+        "description": "string - how it gets worse",
+        "likelihood": "string - percentage or category",
+        "trigger_sequence": [
+          "string - what happens"
+        ],
+        "end_state_rung": "number",
+        "timeline": "string"
+      },
+      "de_escalation_scenario": {
+        "description": "string - how it gets better",
+        "likelihood": "string - percentage or category",
+        "requirements": [
+          "string - what must happen"
+        ],
+        "end_state_rung": "number",
+        "timeline": "string"
+      },
+      "wild_card_scenarios": [
+        {
+          "description": "string",
+          "likelihood": "low",
+          "impact": "high | medium",
+          "trigger": "string"
+        }
+      ]
+    },
+    "intervention_analysis": {
+      "intervention_windows": [
+        {
+          "window_id": "string",
+          "description": "string - opportunity for intervention",
+          "optimal_timing": "string",
+          "closing_condition": "string - when window closes",
+          "actors_who_could_intervene": [
+            "string"
+          ],
+          "intervention_options": [
+            "string"
+          ],
+          "likelihood_of_success": "high | medium | low"
+        }
+      ],
+      "recommended_actions": [
+        {
+          "action_id": "string",
+          "target_dynamic": "string - what this addresses",
+          "action": "string - what to do",
+          "by_whom": "string",
+          "expected_effect": "string",
+          "risks": "string",
+          "priority": "immediate | soon | when_possible"
+        }
+      ],
+      "things_to_avoid": [
+        {
+          "action_to_avoid": "string",
+          "why_dangerous": "string",
+          "escalation_risk": "high | medium"
+        }
+      ]
+    },
+    "historical_parallels": [
+      {
+        "parallel_id": "string",
+        "historical_case": "string - reference case",
+        "similarity": "string - what's similar",
+        "difference": "string - what's different",
+        "outcome_in_parallel": "string - how it ended",
+        "lesson": "string - what we learn"
+      }
+    ],
+    "meta": {
+      "escalation_risk_level": "CRITICAL | HIGH | ELEVATED | MODERATE | LOW",
+      "de_escalation_opportunity": "STRONG | MODERATE | WEAK | NONE",
+      "time_pressure": "URGENT | HIGH | MODERATE | LOW",
+      "key_uncertainty": "string - biggest unknown",
+      "confidence_in_analysis": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "conflict_identification",
+    "escalation_stage_assessment",
+    "trigger_identification",
+    "brake_identification",
+    "tipping_point_analysis",
+    "trajectory_projection"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "diagram"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/escalation_trajectory_analysis.py"
+}

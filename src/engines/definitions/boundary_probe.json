@@ -1,0 +1,117 @@
+{
+  "engine_key": "boundary_probe",
+  "engine_name": "Boundary Probe",
+  "description": "Applies Sortes-style analysis to key concepts \u2014 where exactly is the boundary? Reveals hidden arbitrariness in categories and thresholds that arguments depend upon. Based on Dennett's use of the Sortes paradox to expose fuzzy concept boundaries.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "concepts",
+  "researcher_question": "Where are the boundary lines, and are they defensible?",
+  "extraction_prompt": "\nYou are performing BOUNDARY PROBE analysis using the Sortes paradox technique.\n\nThe Sortes (Paradox of the Heap) asks: If you remove one grain from a heap of sand,\nis it still a heap? And the next grain? Where exactly does it stop being a heap?\n\nThis reveals that many concepts have fuzzy boundaries we don't notice until we probe.\n\n## YOUR TASK\n\nIdentify key concepts in the text where:\n1. The argument depends on a category distinction\n2. The boundary of that category is not self-evident\n3. Probing the boundary would reveal hidden arbitrariness\n\n## FOR EACH KEY CONCEPT\n\n### 1. IDENTIFY THE CONCEPT\n- What concept does the argument rely on?\n- How is it being used in the argument?\n- Is it defined explicitly or implicitly?\n\n### 2. APPLY THE SORTES PROBE\nThink of a continuum from clear members to clear non-members:\n\n**Clear case INSIDE**: An obvious example that everyone agrees belongs\n**Clear case OUTSIDE**: An obvious example that everyone agrees doesn't belong\n**BORDERLINE cases**: Examples where reasonable people could disagree\n\nFor borderline cases:\n- Why does it challenge the boundary?\n- How would classifying it one way or the other change the argument?\n\n### 3. ASSESS BOUNDARY ARBITRARINESS\nIs the boundary:\n- **NATURAL**: There's a real break in the continuum (rare)\n- **CONVENTIONAL**: We've agreed to draw it here, but could be elsewhere\n- **ARBITRARY**: No good reason for this exact boundary\n- **STRATEGIC**: Drawn here because it helps the argument\n\nScore arbitrariness 0.0 to 1.0:\n- 0.0 = Boundary is well-justified and robust\n- 0.5 = Somewhat arbitrary but has pragmatic justification\n- 1.0 = Purely arbitrary, could easily be drawn elsewhere\n\n### 4. IDENTIFY ALTERNATIVE BOUNDARIES\nWhere else could the line be drawn?\n- What would justify each alternative?\n- How would each alternative change the argument?\n\n### 5. ASSESS ARGUMENT DEPENDENCE\nHow much does the argument depend on this boundary?\n- **ESSENTIAL**: Argument collapses without this boundary\n- **IMPORTANT**: Argument weakened but survives\n- **MINOR**: Argument barely affected\n\n### 6. FIND PRECISION ILLUSIONS\nLook for thresholds that appear precise but are actually arbitrary:\n- \"18 years old\" as the cutoff for adulthood\n- \"50% + 1\" as the majority needed\n- \"$75,000\" as \"middle class\" income\n- \"0.08 BAC\" as \"legally drunk\"\n\n## COMMON BOUNDARY-DEPENDENT CONCEPTS\n\n- **Legal categories**: person, property, harm, consent, reasonable\n- **Economic categories**: poverty, middle class, wealthy, market, monopoly\n- **Technical categories**: AI, autonomous, intelligent, alive\n- **Social categories**: adult, expert, professional, healthy\n- **Ethical categories**: harm, consent, autonomy, person\n\n\n## OUTPUT GUIDANCE\n\nFocus on concepts where boundary fuzziness actually matters to the argument.\nThe goal is to expose hidden arbitrariness that the argument glosses over,\nand identify where different boundary choices would lead to different conclusions.\n",
+  "curation_prompt": "\nYou are synthesizing boundary probe analyses across multiple articles.\n\nYour task is to map how concepts are bounded across the discourse,\nidentify contested boundaries, and assess which are most problematic.\n\n## SYNTHESIS TASKS\n\n### 1. MAP SHARED CONCEPTS\nWhich concepts appear across multiple articles?\n- Are they bounded the same way?\n- Where do definitions diverge?\n- Is there explicit disagreement about boundaries?\n\n### 2. IDENTIFY CONTESTED BOUNDARIES\nWhich boundaries are:\n- Agreed upon across articles\n- Implicitly different\n- Explicitly contested\n\n### 3. FIND BOUNDARY-DEPENDENT ARGUMENTS\nWhich arguments would collapse or reverse with different boundaries?\n- Identify the most boundary-dependent claims\n- Note which boundary choices favor which conclusions\n\n### 4. ASSESS PRECISION ILLUSIONS\nCompile all numeric thresholds and precise cutoffs:\n- Which have real justification?\n- Which are conventional?\n- Which are arbitrary?\n\n### 5. PROPOSE ROBUSTNESS TESTS\nFor each key boundary:\n- What would happen if we moved it 10% in either direction?\n- Does the argument survive reasonable boundary variation?\n\n### 6. IDENTIFY DEFINITIONAL GERRYMANDERING\nLook for cases where definitions seem designed to:\n- Include favorable cases\n- Exclude problematic cases\n- Make arguments appear stronger than they are\n\n\n## OUTPUT GUIDANCE\n\nCreate clear concept_ids (e.g., \"poverty_line\", \"middle_class\", \"market_failure\").\nThe goal is to produce a map of boundary-dependent reasoning showing:\n1. Where arguments depend on fuzzy boundaries\n2. How robust arguments are to boundary variation\n3. Where definitional choices are doing hidden argumentative work\n",
+  "concretization_prompt": "\nTransform the boundary probe analysis to be immediately useful:\n\n1. Convert concept_ids to descriptive labels:\n   - \"C1\" -> \"Poverty threshold\"\n   - \"C2\" -> \"Market failure definition\"\n\n2. Make borderline cases vivid and concrete:\n   - Not \"some cases are borderline\"\n   - Instead \"Someone earning $74,999 vs $75,001 \u2014 where exactly is the line?\"\n\n3. Quantify arbitrariness impact:\n   - \"X of Y key arguments depend on boundaries with arbitrariness > 0.7\"\n   - \"Moving the poverty line by 5% would reclassify Z million people\"\n\n4. Create robustness assessments:\n   - \"This argument is robust: survives reasonable boundary variation\"\n   - \"This argument is fragile: depends on specific boundary location\"\n\n5. Expose precision illusions:\n   - \"The '18 years old' threshold sounds precise but there's nothing magical about 18\"\n   - \"The '$250,000 income' cutoff is a round number, not a natural boundary\"\n\n6. Identify the most vulnerable arguments:\n   - Which arguments most depend on arbitrary boundaries?\n   - What alternative boundaries would they have to defend against?\n\n7. Suggest boundary stress tests:\n   - \"Ask: what happens if we move this boundary to X instead?\"\n   - \"Ask: why this threshold and not Y?\"\n\nPreserve all scores and assessments.\nMake the output useful for someone wanting to test whether arguments survive\nscrutiny of their boundary-dependent assumptions.\n",
+  "canonical_schema": {
+    "boundary_analyses": [
+      {
+        "concept_id": "string - unique identifier",
+        "concept_name": "string - the concept being probed",
+        "how_used": "string - how the text uses this concept",
+        "boundary_definition": {
+          "explicit_definition": "string - if the text defines it, what is the definition?",
+          "implicit_definition": "string - if implicit, what definition is being assumed?",
+          "definitional_source": "author | field_standard | legal | colloquial | unclear"
+        },
+        "sortes_probe": {
+          "clear_case_inside": "string - an obvious member of the category",
+          "clear_case_outside": "string - an obvious non-member",
+          "borderline_cases": [
+            {
+              "case": "string - the borderline example",
+              "why_problematic": "string - why it challenges the boundary",
+              "argument_impact": "string - how classifying it either way affects the argument"
+            }
+          ],
+          "continuum_exists": "boolean - is there a continuum with no natural break?",
+          "boundary_location": "string - where the text draws the line",
+          "boundary_justification": "string - how/if the text justifies this location"
+        },
+        "arbitrariness_assessment": {
+          "score": "number (0-1) - 0 = well-justified, 1 = purely arbitrary",
+          "rationale": "string - why this score",
+          "alternative_boundaries": [
+            {
+              "location": "string - where else could the line be drawn",
+              "justification": "string - what would justify this alternative",
+              "argument_impact": "string - how this would change the argument"
+            }
+          ]
+        },
+        "argument_dependence": {
+          "how_critical": "essential | important | minor - how much the argument depends on this boundary",
+          "what_fails": "string - what happens to the argument if boundary is contested"
+        },
+        "source_article": "string - article reference"
+      }
+    ],
+    "threshold_analyses": [
+      {
+        "threshold_id": "string - unique identifier",
+        "threshold_description": "string - what the threshold is",
+        "value": "string - the specific threshold value if any",
+        "precision_illusion": {
+          "appears_precise": "boolean - does it look like a natural boundary?",
+          "actually_arbitrary": "boolean - is it actually arbitrary?",
+          "why": "string - explanation"
+        },
+        "alternatives": [
+          {
+            "alternative_threshold": "string",
+            "pros": "string",
+            "cons": "string"
+          }
+        ],
+        "source_article": "string"
+      }
+    ],
+    "category_systems": [
+      {
+        "system_id": "string",
+        "categories": [
+          "string - the categories in this system"
+        ],
+        "mutual_exclusivity": "boolean - are categories mutually exclusive?",
+        "exhaustiveness": "boolean - do they cover all cases?",
+        "boundary_problems": [
+          {
+            "case": "string - problematic case",
+            "which_boundaries": [
+              "string - which category boundaries it stresses"
+            ],
+            "problem_type": "overlap | gap | continuum | context_dependent"
+          }
+        ]
+      }
+    ],
+    "meta": {
+      "total_concepts_probed": "number",
+      "high_arbitrariness_count": "number - concepts with score > 0.7",
+      "argument_critical_boundaries": "number - boundaries the argument depends on",
+      "most_vulnerable_boundaries": [
+        "string - concept_ids with highest arbitrariness + highest dependence"
+      ]
+    }
+  },
+  "extraction_focus": [
+    "key_concepts",
+    "boundary_definitions",
+    "threshold_claims",
+    "category_boundaries",
+    "definitional_arbitrariness"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/boundary_probe.py"
+}

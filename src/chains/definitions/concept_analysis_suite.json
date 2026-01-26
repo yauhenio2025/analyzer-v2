@@ -1,0 +1,25 @@
+{
+  "chain_key": "concept_analysis_suite",
+  "chain_name": "Concept Analysis Suite",
+  "description": "Comprehensive concept analysis using multiple philosophical lenses - centrality mapping, evolution tracking, affordance analysis, and demarcation",
+  "version": 1,
+  "engine_keys": [
+    "concept_centrality_mapper",
+    "concept_evolution",
+    "conceptual_affordance_analyzer",
+    "concept_demarcation_analyzer",
+    "presuppositional_excavator"
+  ],
+  "blend_mode": "llm_selection",
+  "selection_criteria": "Select 2-3 engines most relevant to the concepts discussed in the document. Prefer centrality_mapper for structural understanding, evolution for temporal aspects, affordance for practical implications, demarcation for boundary questions, and presuppositional for hidden assumptions.",
+  "max_engines": 3,
+  "merge_strategy": null,
+  "pass_context": true,
+  "category": "concepts",
+  "recommended_for": [
+    "philosophical texts",
+    "theoretical analysis",
+    "conceptual clarification",
+    "academic papers with abstract concepts"
+  ]
+}

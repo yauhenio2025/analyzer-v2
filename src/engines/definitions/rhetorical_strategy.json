@@ -1,0 +1,100 @@
+{
+  "engine_key": "rhetorical_strategy",
+  "engine_name": "Rhetorical Strategy Analyzer",
+  "description": "Analyzes persuasion techniques including Aristotelian appeals (ethos, pathos, logos), rhetorical devices, argument tactics, and framing strategies used to persuade audiences.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "synthesis",
+  "reasoning_domain": "rhetoric",
+  "researcher_question": "What persuasion techniques are being used and how effective are they?",
+  "extraction_prompt": "\nYou are analyzing persuasion through Dennett's philosophical lens.\n\n## DENNETT'S ANALYTICAL TOOLKIT\nApply these throughout your rhetorical analysis:\n- SURELY ALARM: Flag confident assertions (\"surely\", \"obviously\") \u2014 probe these\n- DEEPITY DETECTOR: Apply to aphorisms and profound-sounding statements\n- STEELMAN TEST: Does the text engage opposing views in their strongest form?\n- OCCAM'S BROOM: What counterarguments are suspiciously absent?\n- BOOM CRUTCH: Does \"logos\" actually explain or just describe?\n\n## ENHANCED RHETORICAL ANALYSIS\n\n1. **ARISTOTELIAN APPEALS + DENNETT**\n   - **ETHOS**: Is authority legitimate or appeal to false authority?\n   - **PATHOS**: Legitimate emotional engagement or manipulation?\n   - **LOGOS**: Valid reasoning or BOOM CRUTCH disguised as logic?\n   - Rate effectiveness and legitimacy of each (0-1)\n\n2. **RHETORICAL DEVICES + QUALITY CHECK**\n   - Repetition: Emphasis or hypnosis?\n   - Contrast, analogy, hyperbole\n   - Understatement, irony, rhetorical questions\n   - Parallelism, allusion\n   - Apply DEEPITY DETECTOR to aphorisms and metaphors\n   - Note function and epistemic quality of each\n\n3. **ARGUMENT TACTICS + FAIRNESS CHECK**\n   - Appeal to authority, appeal to emotion, bandwagon\n   - Straw man, red herring, false dilemma\n   - Slippery slope, ad hominem, tu quoque\n   - **STEELMAN TEST**: Does text engage opposing views in strongest form?\n   - Or STRAWMAN: Are weakened versions being attacked?\n   - Rate legitimacy: legitimate, questionable, fallacious\n\n4. **FRAMING STRATEGIES + JOOTSING**\n   - Problem definition (what's the problem?)\n   - Causal attribution (who/what caused it?)\n   - Moral evaluation (is it good/bad?)\n   - Proposed solution (what should be done?)\n   - What frames are implicitly EXCLUDED?\n   - What would JOOTSING to a different frame reveal?\n\n5. **SURELY ALARM SCAN**\n   - Flag ALL confidence markers in the text\n   - Rate whether confidence is EARNED by argument or mere assertion\n\n6. **OCCAM'S BROOM SCAN**\n   - What counterarguments are suspiciously absent?\n   - What evidence is being swept aside?\n\n7. **PERSUASIVE PATTERNS**: Recurring combinations of techniques\n\n\nBe comprehensive - capture both subtle and overt persuasion, with Dennett-enhanced scrutiny.\n",
+  "curation_prompt": "\nYou are synthesizing rhetorical analysis from multiple articles.\n\nYour task:\n1. **AGGREGATE APPEALS**: Combine appeal analysis\n   - Count each appeal type across corpus\n   - Identify most effective appeals\n   - Note patterns in appeal usage\n\n2. **CATALOG DEVICES**: Inventory rhetorical devices\n   - Count frequency of each device type\n   - Identify distinctive device usage\n   - Note effectiveness patterns\n\n3. **MAP ARGUMENT TACTICS**: Track persuasive strategies\n   - Identify legitimate vs. fallacious tactics\n   - Count fallacy occurrences\n   - Note who uses which tactics\n\n4. **SYNTHESIZE FRAMING**: Map framing strategies\n   - Identify competing frames\n   - Who advocates each frame?\n   - What solutions does each frame imply?\n\n5. **IDENTIFY PERSUASIVE PATTERNS**:\n   - What combinations of techniques appear repeatedly?\n   - What audience is being targeted?\n\n\nCreate a comprehensive rhetorical strategy map for the discourse.\n",
+  "concretization_prompt": "\nTransform the rhetorical analysis to be immediately clear:\n\n1. Name appeals with specific examples:\n   - \"A1\" \u2192 \"Ethos: Expert credentials (citing 20 years of research experience)\"\n\n2. Label devices with quotes:\n   - \"D1\" \u2192 \"Repetition: 'Innovation, innovation, innovation' motif\"\n\n3. Name framing strategies descriptively:\n   - \"F1\" \u2192 \"Crisis Frame: Climate Emergency Requiring Immediate Action\"\n\n4. Describe patterns with components:\n   - \"P1\" \u2192 \"Fear-Solution Pattern: Problem + Consequence + Only One Way Out\"\n\nPreserve all effectiveness ratings and frequencies.\nMake the analysis useful for understanding persuasion tactics.\n",
+  "canonical_schema": {
+    "appeals": [
+      {
+        "appeal_id": "string",
+        "appeal_type": "ethos | pathos | logos",
+        "description": "string",
+        "text_evidence": "string",
+        "effectiveness": "number (0-1)",
+        "source_article": "string"
+      }
+    ],
+    "rhetorical_devices": [
+      {
+        "device_id": "string",
+        "device_type": "repetition | contrast | analogy | hyperbole | understatement | irony | rhetorical_question | parallelism | allusion",
+        "text_example": "string",
+        "function": "string",
+        "frequency": "number",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "argument_tactics": [
+      {
+        "tactic_id": "string",
+        "tactic_type": "appeal_to_authority | appeal_to_emotion | bandwagon | straw_man | red_herring | false_dilemma | slippery_slope | ad_hominem | tu_quoque",
+        "description": "string",
+        "text_evidence": "string",
+        "legitimacy": "legitimate | questionable | fallacious",
+        "source_article": "string"
+      }
+    ],
+    "framing_strategies": [
+      {
+        "frame_id": "string",
+        "frame_name": "string",
+        "problem_definition": "string",
+        "causal_attribution": "string",
+        "moral_evaluation": "string",
+        "proposed_solution": "string",
+        "advocates": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "persuasive_patterns": [
+      {
+        "pattern_id": "string",
+        "pattern_name": "string",
+        "description": "string",
+        "components": [
+          "string"
+        ],
+        "target_audience": "string",
+        "frequency": "number"
+      }
+    ],
+    "meta": {
+      "dominant_appeal_type": "string",
+      "appeal_distribution": {
+        "ethos": "number",
+        "pathos": "number",
+        "logos": "number"
+      },
+      "total_rhetorical_devices": "number",
+      "fallacy_count": "number",
+      "overall_persuasive_quality": "number (0-1)"
+    }
+  },
+  "extraction_focus": [
+    "appeals",
+    "devices",
+    "tactics",
+    "framing",
+    "persuasion"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table",
+    "gemini_network_graph"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/rhetorical_strategy.py"
+}

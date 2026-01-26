@@ -1,0 +1,117 @@
+{
+  "engine_key": "counterfactual_analyzer",
+  "engine_name": "Counterfactual Analyzer",
+  "description": "Analyzes the quality of counterfactual reasoning. Identifies construction problems, minimal rewrite violations, butterfly effects, and counterfactual abuse. Essential for evaluating 'what if' arguments and alternative history reasoning.",
+  "version": 1,
+  "category": "methodology",
+  "kind": "synthesis",
+  "reasoning_domain": "methodology",
+  "researcher_question": "Is the counterfactual reasoning valid?",
+  "extraction_prompt": "\nYou are a COUNTERFACTUAL ANALYZER \u2014 examining the quality of \"what if\"\nreasoning in arguments and explanations.\n\n## COUNTERFACTUAL REASONING\n\nCounterfactuals are claims about what would have happened if something had\nbeen different: \"If X had (not) happened, then Y would (not) have happened.\"\n\nThey're essential for:\n- Causal attribution (what caused what)\n- Policy evaluation (what would have happened without the policy)\n- Historical understanding (how things could have been different)\n- Moral judgment (what someone should have done)\n\nBut counterfactual reasoning is treacherous.\n\n## PROBLEMS WITH COUNTERFACTUALS\n\n### CONSTRUCTION PROBLEMS\n- Vague antecedents: What exactly is being changed?\n- Impossible antecedents: Can't meaningfully consider \"if 2+2=5\"\n- Multiple interpretations: Which version of the change?\n\n### MINIMAL REWRITE VIOLATIONS\nGood counterfactuals change only what's claimed, holding other things equal.\n- Bad: \"If Hitler hadn't been born, WWII wouldn't have happened\"\n  (Changing one birth changes everything about history)\n- Better: \"If Hitler hadn't decided to invade Russia in 1941...\"\n\n### BUTTERFLY EFFECTS\nSmall changes cascade into large, unpredictable effects:\n- Changing one thing changes many other things\n- Second-order and third-order effects\n- Countervailing forces might resist change\n\n### COUNTERFACTUAL ABUSE\n- Cherry-picking which counterfactual to consider\n- Hindsight bias: Knowing outcome influences counterfactual\n- False determinism: Assuming outcome was inevitable/impossible\n- Single-cause fallacy: Attributing complex outcomes to one factor\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY COUNTERFACTUALS\nWhat \"what if\" claims are made?\n- Explicit counterfactuals (\"If X had happened, Y would have...\")\n- Implicit counterfactuals (causal claims imply counterfactuals)\n- What purpose does each serve?\n\n### STEP 2: ASSESS CONSTRUCTION\nIs each counterfactual well-constructed?\n- Is the antecedent clear and specific?\n- Is it coherent (not self-contradictory)?\n- Is there a clear consequent?\n\n### STEP 3: CHECK MINIMAL REWRITE\nDoes the counterfactual change only what's claimed?\n- What changes are required for the antecedent?\n- What collateral changes would occur?\n- Is the minimal rewrite principle honored?\n\n### STEP 4: TRACE BUTTERFLY EFFECTS\nWhat downstream effects are overlooked?\n- What else would change?\n- What second-order effects?\n- What forces might resist the change?\n\n### STEP 5: GENERATE ALTERNATIVES\nWhat other counterfactuals could be considered?\n- Different antecedents leading to same question\n- Same antecedent, different consequent\n- Why were these not considered?\n\n### STEP 6: DETECT ABUSE\nIs counterfactual reasoning being abused?\n- Cherry-picking favorable counterfactuals?\n- Hindsight bias?\n- False determinism?\n- Single-cause fallacy?\n\n### STEP 7: OVERALL ASSESSMENT\nHow reliable is the counterfactual reasoning?\n- Which counterfactuals are strongest/weakest?\n- What conclusions are affected by problems?\n- How could the reasoning be improved?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about how counterfactuals fail.\nGenerate alternative counterfactuals.\nFocus on counterfactuals that affect main conclusions.\n",
+  "curation_prompt": "\nSynthesize counterfactual analyses from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **COMPARE COUNTERFACTUALS**: Same \"what ifs\" across sources?\n2. **VALIDATE CONSTRUCTION**: Agreement on counterfactual quality?\n3. **ASSESS ALTERNATIVES**: Do sources consider different counterfactuals?\n4. **TRIANGULATE**: What does multi-source analysis suggest?\n5. **SYNTHESIZE**: Overall quality of counterfactual reasoning\n\n## OUTPUT GUIDANCE\n\nCreate unified assessment of counterfactual reasoning quality.\n",
+  "concretization_prompt": "\nTransform counterfactual analysis into clear assessment:\n\n1. **COUNTERFACTUALS IDENTIFIED**\n   | CF | Antecedent (If...) | Consequent (Then...) | Purpose |\n   |----|-------------------|---------------------|---------|\n\n2. **CONSTRUCTION QUALITY**\n   | CF | Well-Defined | Specific | Coherent | Problems |\n   |----|--------------|----------|----------|----------|\n\n3. **MINIMAL REWRITE ASSESSMENT**\n   - [CF]: Changes required: [X] | Collateral changes: [Y] | Honored? [Y/N]\n\n4. **BUTTERFLY EFFECTS OVERLOOKED**\n   - [CF]: [Overlooked consequence] \u2014 Severity: [X]\n\n5. **ALTERNATIVE COUNTERFACTUALS**\n   - For [CF]: Could instead consider [Alternative] \u2014 Different conclusion: [X]\n\n6. **COUNTERFACTUAL ABUSE**\n   - [CF]: [Type of abuse] \u2014 Obscures: [What]\n\n7. **OVERALL QUALITY**: [High/Medium/Low]\n   - Strongest: [CFs]\n   - Weakest: [CFs]\n\n8. **BOTTOM LINE**\n   [How trustworthy is the counterfactual reasoning?]\n",
+  "canonical_schema": {
+    "counterfactuals_analyzed": [
+      {
+        "cf_id": "string - CF1, CF2, etc.",
+        "antecedent": "string - what is changed (if X had happened...)",
+        "consequent": "string - what is claimed to follow (...then Y)",
+        "context": "string - where/how used",
+        "purpose": "causal_attribution | explanation | prediction | persuasion",
+        "stated_or_implied": "stated | implied"
+      }
+    ],
+    "construction_assessment": [
+      {
+        "cf_id": "string - which counterfactual",
+        "well_defined": "yes | no | partial",
+        "problems": [
+          "string - construction issues"
+        ],
+        "specificity": "precise | vague | ambiguous",
+        "coherence": "coherent | problematic | incoherent"
+      }
+    ],
+    "minimal_rewrite_analysis": [
+      {
+        "cf_id": "string - which counterfactual",
+        "changes_required": [
+          "string - what must change for antecedent"
+        ],
+        "collateral_changes": [
+          "string - other things that would change"
+        ],
+        "minimal_rewrite_honored": "yes | no | partial",
+        "violation_description": "string - how minimal rewrite is violated"
+      }
+    ],
+    "butterfly_effects": [
+      {
+        "cf_id": "string - which counterfactual",
+        "overlooked_consequences": [
+          "string - unintended downstream effects"
+        ],
+        "second_order_effects": [
+          "string - effects of effects"
+        ],
+        "countervailing_forces": [
+          "string - factors that might resist change"
+        ],
+        "severity": "minor | moderate | severe"
+      }
+    ],
+    "alternative_counterfactuals": [
+      {
+        "cf_id": "string - which original counterfactual",
+        "alternative": "string - different counterfactual",
+        "different_conclusion": "string - what this alternative suggests",
+        "why_neglected": "string - why this alternative wasn't considered"
+      }
+    ],
+    "counterfactual_abuse": [
+      {
+        "cf_id": "string - which counterfactual",
+        "abuse_type": "cherry_picking | hindsight | determinism | single_cause",
+        "description": "string - how counterfactual is abused",
+        "what_it_obscures": "string - what the abuse hides"
+      }
+    ],
+    "overall_assessment": {
+      "strongest_counterfactuals": [
+        "string - cf_ids"
+      ],
+      "weakest_counterfactuals": [
+        "string - cf_ids"
+      ],
+      "common_problems": [
+        "string - recurring issues"
+      ],
+      "counterfactual_quality": "high | medium | low",
+      "conclusions_affected": [
+        "string - which conclusions are affected"
+      ],
+      "recommendations": [
+        "string - how to improve"
+      ]
+    },
+    "meta": {
+      "counterfactuals_analyzed": "number",
+      "well_constructed": "number",
+      "problematic": "number",
+      "abused": "number"
+    }
+  },
+  "extraction_focus": [
+    "counterfactuals",
+    "causal_claims",
+    "minimal_rewrites",
+    "butterfly_effects",
+    "alternative_scenarios"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/counterfactual_analyzer.py"
+}

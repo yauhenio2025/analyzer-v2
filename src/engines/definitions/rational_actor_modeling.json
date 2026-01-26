@@ -1,0 +1,251 @@
+{
+  "engine_key": "rational_actor_modeling",
+  "engine_name": "Rational Actor Modeling",
+  "description": "Profiles key decision-makers to predict behavior. Maps worldviews and belief systems, characterizes decision-making styles, identifies constraints, analyzes track records, and predicts responses to scenarios. Essential for anticipating how key actors will respond to events.",
+  "version": 1,
+  "category": "power",
+  "kind": "synthesis",
+  "reasoning_domain": "power",
+  "researcher_question": "How do key decision-makers think, and how would they respond?",
+  "extraction_prompt": "\nYou are implementing RATIONAL ACTOR MODELING \u2014 profiling decision-makers to\npredict their behavior.\n\n## THE MODELING PHILOSOPHY\n\nActors are rational WITHIN THEIR OWN FRAME. They may have:\n- Different information than we do\n- Different values than we do\n- Different mental models than we do\n- Different constraints than we imagine\n\nTo predict behavior, model THEIR subjective reality, not our view of them.\n\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY KEY ACTORS\n\nWho are the decision-makers that matter in this context?\n- Individuals with power to act\n- Collective actors (organizations, groups)\n- Institutional actors\n\n### STEP 2: MAP WORLDVIEWS\n\nFor each actor, understand how THEY see the situation:\n\n**Core Beliefs:**\n- What are their fundamental assumptions about how the world works?\n- What values drive them?\n- What historical analogies do they draw on?\n\n**Threat Perception:**\n- What do they see as threatening?\n- How easily do they perceive threat?\n- What triggers their threat response?\n\n**Opportunity Perception:**\n- What opportunities do they see?\n- What gains are they pursuing?\n\n**In-Group/Out-Group:**\n- Who do they consider \"us\"?\n- Who is \"them\"?\n\n**Blind Spots:**\n- What do they systematically miss?\n- Why are they blind to it?\n\n### STEP 3: CHARACTERIZE DECISION STYLE\n\nHow do they make decisions?\n\n**Risk Tolerance:**\n- Risk-seeking, risk-neutral, or risk-averse?\n- Does it vary by domain?\n\n**Time Horizon:**\n- Short-term or long-term oriented?\n- How far ahead do they plan?\n\n**Information Processing:**\n- Analytical (data-driven) or intuitive?\n- Ideological (fits to framework) or pragmatic?\n- Open to new information or confirmation-biased?\n\n**Decision Mode:**\n- Decisive (quick, firm) or deliberative (slow, careful)?\n- Consultative (seeks input) or autocratic?\n- Willing to reverse course?\n\n**Consistency:**\n- Ideologically consistent or pragmatically flexible?\n- Predictable or surprising?\n\n**Under Pressure:**\n- Do they double down, escalate, compromise, or retreat?\n- What's their stress tolerance?\n\n### STEP 4: IDENTIFY CONSTRAINTS\n\nWhat limits their freedom of action?\n\n**Institutional:** Rules, procedures, checks on power\n**Political:** Coalition partners, opposition, power dynamics\n**Resource:** Money, personnel, capabilities\n**Domestic:** Public opinion, constituencies, internal politics\n**International:** Allies, adversaries, international law/norms\n**Personal:** Health, family, career concerns\n\nHow binding are these constraints? Can they be worked around?\n\n### STEP 5: ANALYZE TRACK RECORD\n\nWhat past decisions reveal about their patterns?\n- What did they decide?\n- What was the context?\n- What happened?\n- What does this reveal about their decision-making?\n- Is it consistent with the profile we've built?\n\n### STEP 6: MAP INFLUENCES\n\nWho/what influences their decisions?\n- Advisors\n- Constituencies\n- Ideology\n- Personal relationships\n- Institutional pressures\n\n### STEP 7: PREDICT RESPONSES\n\nFor key scenarios, what would they likely do?\n- Specify the scenario\n- Predict most likely response\n- Explain rationale (using the profile)\n- Note alternative possibilities\n- Identify red lines that would trigger different responses\n\n### STEP 8: MAP INTERACTIONS\n\nHow do key actors interact with each other?\n- Relationship type (alliance, rivalry, hierarchy)\n- Power differential\n- Trust level\n- Communication quality\n- Likely interaction patterns\n\n### STEP 9: COLLECTIVE DYNAMICS\n\nFor groups of actors:\n- Groupthink risk?\n- Factional divisions?\n- Veto players?\n\n## OUTPUT GUIDANCE\n\nBe specific about evidence for assessments.\nDistinguish high-confidence profile elements from speculation.\nNote where profile is thin and more information would help.\nFocus on actionable predictions.\n",
+  "curation_prompt": "\nYou are synthesizing actor profiles from multiple sources to create comprehensive\ndecision-maker models.\n\n\n## SYNTHESIS TASKS\n\n### 1. MERGE ACTOR PROFILES\n- Combine information on same actors from different sources\n- Note where sources agree (higher confidence)\n- Note where sources disagree (flag for analysis)\n\n### 2. TRIANGULATE WORLDVIEWS\n- Do sources agree on how actors see the world?\n- Where do characterizations differ?\n- What's the combined picture?\n\n### 3. RECONCILE DECISION STYLES\n- Do sources describe consistent decision patterns?\n- Where do they differ?\n- Is there evolution over time?\n\n### 4. INTEGRATE TRACK RECORDS\n- Combine past decision data\n- Does combined record confirm or complicate profile?\n\n### 5. SYNTHESIZE PREDICTIONS\n- Do sources make similar predictions?\n- Where do they diverge?\n- What's the robust prediction?\n\n### 6. META-ANALYSIS\n- Which actors are consistently profiled?\n- Which actors remain opaque?\n- How does multi-source integration improve prediction?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive actor profiles that:\n1. Integrate multiple source perspectives\n2. Note confidence levels throughout\n3. Distinguish agreement from speculation\n4. Provide actionable predictions\n",
+  "concretization_prompt": "\nTransform the actor analysis into operational intelligence:\n\n1. **ACTOR SUMMARY CARDS**\n   For each key actor:\n   ```\n   [ACTOR NAME]\n   Role: [position]\n   Profile Confidence: [HIGH/MEDIUM/LOW]\n\n   WORLDVIEW IN ONE LINE:\n   [How they see the situation]\n\n   DECISION STYLE:\n   \u2022 Risk: [seeking/neutral/averse]\n   \u2022 Speed: [fast/moderate/slow]\n   \u2022 Mode: [decisive/deliberative/consultative]\n   \u2022 Under pressure: [doubles down/compromises/retreats]\n\n   KEY CONSTRAINTS:\n   \u2022 [constraint 1]\n   \u2022 [constraint 2]\n\n   PREDICTED RESPONSE TO [SCENARIO]:\n   [Prediction] (Confidence: [X])\n   ```\n\n2. **INTERACTION MATRIX**\n   ```\n   | A1 vs | A2      | A3      | A4      |\n   |-------|---------|---------|---------|\n   | A1    | \u2014       | Ally    | Rival   |\n   | A2    | Ally    | \u2014       | Neutral |\n   ```\n\n3. **PREDICTION DASHBOARD**\n   ```\n   Scenario | Actor | Predicted Response | Confidence | Red Lines\n   ---------|-------|-------------------|------------|----------\n   SC1      | A1    | [action]          | HIGH       | [trigger]\n   ```\n\n4. **FACTIONAL MAP** (if relevant)\n   ```\n   [Faction A]          [Faction B]\n   - A1 (leader)        - A3 (leader)\n   - A2                  - A4\n   Position: X          Position: Y\n   ```\n\n5. **KEY UNCERTAINTIES**\n   - What we don't know about [Actor]: [gap]\n   - How it affects predictions: [impact]\n\n6. **WILD CARDS**\n   - If [unexpected event]: [Actor] might [surprise response]\n\n7. **BOTTOM LINE**\n   Most predictable actor: [who] \u2014 [why]\n   Least predictable: [who] \u2014 [why]\n   Key insight: [one sentence summary]\n\nMake it useful for anticipating actor behavior.\n",
+  "canonical_schema": {
+    "actors": [
+      {
+        "actor_id": "string - A1, A2, etc.",
+        "name": "string",
+        "role": "string - position/title",
+        "organization": "string - where they operate",
+        "actor_type": "individual | collective | institutional",
+        "profile_confidence": "high | medium | low",
+        "worldview": {
+          "core_beliefs": [
+            {
+              "belief": "string - fundamental belief",
+              "evidence": "string - how we know this",
+              "strength": "foundational | strong | moderate"
+            }
+          ],
+          "mental_model": "string - how they understand the situation",
+          "threat_perception": {
+            "primary_threats": [
+              "string - what they see as threatening"
+            ],
+            "threat_drivers": "string - why they see these as threats",
+            "threat_threshold": "low | moderate | high - how easily threatened"
+          },
+          "opportunity_perception": {
+            "perceived_opportunities": [
+              "string"
+            ],
+            "opportunity_drivers": "string"
+          },
+          "in_group": [
+            "string - who they consider allies/us"
+          ],
+          "out_group": [
+            "string - who they consider opponents/them"
+          ],
+          "historical_analogies": [
+            "string - past events they reference"
+          ],
+          "blind_spots": [
+            {
+              "blind_spot": "string - what they miss",
+              "why_blind": "string - reason for gap",
+              "implications": "string - what this could cause"
+            }
+          ]
+        },
+        "decision_style": {
+          "risk_tolerance": {
+            "level": "risk_seeking | risk_neutral | risk_averse | highly_risk_averse",
+            "evidence": "string",
+            "domain_variation": "string - differs by context?"
+          },
+          "time_horizon": {
+            "orientation": "short_term | medium_term | long_term | mixed",
+            "planning_depth": "string"
+          },
+          "information_processing": {
+            "style": "analytical | intuitive | ideological | reactive",
+            "detail_orientation": "high | moderate | low",
+            "openness_to_new_info": "high | moderate | low",
+            "confirmation_bias_tendency": "high | moderate | low"
+          },
+          "decision_mode": {
+            "style": "decisive | deliberative | consultative | avoidant",
+            "speed": "fast | moderate | slow",
+            "reversibility": "willing_to_reverse | reluctant_to_reverse | never_reverses"
+          },
+          "consistency": {
+            "ideological_vs_pragmatic": "strongly_ideological | lean_ideological | balanced | lean_pragmatic | strongly_pragmatic",
+            "predictability": "highly_predictable | moderately_predictable | unpredictable"
+          },
+          "under_pressure": {
+            "response": "doubles_down | escalates | seeks_compromise | retreats | freezes",
+            "stress_tolerance": "high | moderate | low"
+          }
+        },
+        "constraints": {
+          "institutional": [
+            {
+              "constraint": "string - institutional limit",
+              "binding_strength": "hard | soft | negligible",
+              "workaround_possible": "boolean"
+            }
+          ],
+          "political": [
+            {
+              "constraint": "string - political limit",
+              "source": "string - where pressure comes from",
+              "binding_strength": "hard | soft | negligible"
+            }
+          ],
+          "resource": [
+            {
+              "constraint": "string - resource limit",
+              "scarcity_level": "severe | moderate | mild"
+            }
+          ],
+          "domestic": [
+            {
+              "constraint": "string - domestic political limit",
+              "source": "string",
+              "binding_strength": "hard | soft | negligible"
+            }
+          ],
+          "international": [
+            {
+              "constraint": "string - international limit",
+              "source": "string",
+              "binding_strength": "hard | soft | negligible"
+            }
+          ],
+          "personal": [
+            {
+              "constraint": "string - personal limit (health, family, etc.)",
+              "relevance": "string"
+            }
+          ],
+          "overall_freedom_of_action": "highly_constrained | moderately_constrained | relatively_free | very_free"
+        },
+        "track_record": [
+          {
+            "decision": "string - what they decided",
+            "context": "string - situation when decided",
+            "outcome": "string - what happened",
+            "what_it_reveals": "string - insight about their pattern",
+            "consistency_with_profile": "confirms | neutral | contradicts"
+          }
+        ],
+        "key_influences": [
+          {
+            "influence": "string - person, group, or factor",
+            "influence_type": "advisor | constituency | ideology | personal | institutional",
+            "strength": "strong | moderate | weak",
+            "direction": "string - how they influence"
+          }
+        ],
+        "predicted_responses": [
+          {
+            "scenario": "string - hypothetical situation",
+            "likely_response": "string - predicted action",
+            "confidence": "high | medium | low",
+            "rationale": "string - why we predict this",
+            "alternative_response": "string - what else they might do",
+            "red_lines": [
+              "string - triggers for different response"
+            ]
+          }
+        ]
+      }
+    ],
+    "interaction_dynamics": [
+      {
+        "actor_pair": [
+          "string - actor_id",
+          "string - actor_id"
+        ],
+        "relationship_type": "alliance | rivalry | hierarchy | cooperation | competition | neutral",
+        "power_differential": "A_dominant | B_dominant | balanced | fluctuating",
+        "trust_level": "high | moderate | low | negative",
+        "communication_quality": "open | guarded | hostile | none",
+        "history": "string - how relationship has evolved",
+        "likely_interaction_pattern": "string - how they typically engage"
+      }
+    ],
+    "collective_dynamics": {
+      "group_think_risk": {
+        "level": "high | medium | low",
+        "indicators": [
+          "string"
+        ]
+      },
+      "factional_analysis": [
+        {
+          "faction": "string - name",
+          "members": [
+            "string - actor_ids"
+          ],
+          "position": "string - what they advocate",
+          "strength": "dominant | strong | moderate | weak"
+        }
+      ],
+      "veto_players": [
+        {
+          "actor_id": "string",
+          "veto_over": "string - what they can block",
+          "veto_likelihood": "high | medium | low"
+        }
+      ]
+    },
+    "prediction_summary": {
+      "most_predictable_actors": [
+        "string - actor_ids"
+      ],
+      "least_predictable_actors": [
+        "string - actor_ids"
+      ],
+      "key_uncertainties": [
+        {
+          "uncertainty": "string - what we don't know",
+          "affects_prediction_for": [
+            "string - actor_ids"
+          ],
+          "how_might_resolve": "string"
+        }
+      ],
+      "wild_cards": [
+        {
+          "scenario": "string - unexpected development",
+          "would_change": "string - how predictions would shift"
+        }
+      ]
+    },
+    "meta": {
+      "actors_profiled": "number",
+      "interactions_mapped": "number",
+      "predictions_made": "number",
+      "overall_confidence": "high | medium | low",
+      "data_quality": "rich | adequate | limited | poor",
+      "key_gaps": [
+        "string - what we wish we knew"
+      ]
+    }
+  },
+  "extraction_focus": [
+    "actor_identification",
+    "worldview_mapping",
+    "decision_style_analysis",
+    "constraint_identification",
+    "response_prediction"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/rational_actor_modeling.py"
+}

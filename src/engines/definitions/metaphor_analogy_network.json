@@ -1,0 +1,109 @@
+{
+  "engine_key": "metaphor_analogy_network",
+  "engine_name": "Metaphor Network Mapper",
+  "description": "Maps metaphor usage and analogies. Identifies conceptual metaphors, their source and target domains, rhetorical effects, and competing metaphorical framings of issues.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "relational",
+  "reasoning_domain": "rhetoric",
+  "researcher_question": "What metaphors and analogies structure understanding of this topic?",
+  "extraction_prompt": "\nYou are an expert cognitive linguist analyzing metaphor and analogy.\n\nFor this article, extract ALL metaphorical and analogical language:\n\n1. **CONCEPTUAL METAPHORS**: Deep underlying metaphors\n   - Name the metaphor (e.g., \"ECONOMY IS ORGANISM\")\n   - Source domain (where we borrow concepts FROM)\n   - Target domain (what we're trying to understand)\n   - Mappings: what corresponds to what?\n   - Linguistic expressions: exact phrases using this metaphor\n\n2. **ANALOGIES**: Explicit comparisons\n   - Full text of the analogy\n   - What's being compared to what?\n   - Key mapping points\n   - Type: historical, spatial, mechanical, biological, economic\n   - How effective is it? (0-1)\n   - Who makes this analogy?\n\n3. **RHETORICAL EFFECTS**: What does the metaphor accomplish?\n   - Does it simplify complexity?\n   - Does it evoke emotion?\n   - Does it obscure alternatives?\n   - Does it naturalize a position?\n\n4. **FREQUENCY**: How often does each metaphor appear?\n\n\nBe comprehensive - capture both obvious and subtle metaphorical language.\n",
+  "curation_prompt": "\nYou are synthesizing metaphor and analogy data from multiple articles.\n\nYour task:\n1. **IDENTIFY CONCEPTUAL METAPHORS**: Abstract underlying patterns\n   - Group similar linguistic expressions under conceptual metaphors\n   - Name metaphors using LAKOFF-JOHNSON format (TARGET IS SOURCE)\n   - Count frequency across corpus\n\n2. **CATALOG ANALOGIES**: Organize explicit comparisons\n   - Group by type\n   - Rate effectiveness\n   - Note speakers/advocates\n\n3. **MAP METAPHOR CLUSTERS**: Find related metaphors\n   - Group by source domain (war, journey, organism, etc.)\n   - Assess cluster coherence\n   - Identify dominant framing\n\n4. **IDENTIFY COMPETING FRAMINGS**: Find metaphor contests\n   - Same topic, different metaphors\n   - Who advocates each framing?\n   - What are the stakes?\n\n5. **CALCULATE METRICS**:\n   - Total metaphors and analogies\n   - Dominant source domains\n   - Metaphor density\n\n\nCreate a comprehensive map of metaphorical thinking in this discourse.\n",
+  "concretization_prompt": "\nTransform the metaphor network to be immediately clear:\n\n1. Name conceptual metaphors fully:\n   - \"M1\" \u2192 \"MARKET IS BATTLEFIELD (competition as warfare)\"\n\n2. Include key linguistic expressions:\n   - List 2-3 example phrases for each metaphor\n\n3. Name competing framings by topic:\n   - \"Competition1\" \u2192 \"AI Debate: Tool vs. Threat Metaphors\"\n\n4. Clarify cluster themes:\n   - \"Cluster1\" \u2192 \"Organic/Biological Metaphors for Economic Growth\"\n\nPreserve all mappings and effectiveness ratings.\nMake the network useful for rhetorical analysis.\n",
+  "canonical_schema": {
+    "conceptual_metaphors": [
+      {
+        "metaphor_id": "string",
+        "name": "string",
+        "source_domain": "string",
+        "target_domain": "string",
+        "mappings": [
+          {
+            "source_element": "string",
+            "target_element": "string"
+          }
+        ],
+        "linguistic_expressions": [
+          "string"
+        ],
+        "frequency": "number",
+        "rhetorical_effect": "string",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "analogies": [
+      {
+        "analogy_id": "string",
+        "text": "string",
+        "analog_source": "string",
+        "analog_target": "string",
+        "mapping_points": [
+          "string"
+        ],
+        "analogy_type": "historical | spatial | mechanical | biological | economic",
+        "effectiveness": "number (0-1)",
+        "speaker": "string",
+        "source_article": "string"
+      }
+    ],
+    "metaphor_clusters": [
+      {
+        "cluster_id": "string",
+        "domain": "string",
+        "member_metaphors": [
+          "metaphor_id"
+        ],
+        "coherence": "number (0-1)",
+        "dominant_framing": "string"
+      }
+    ],
+    "competing_framings": [
+      {
+        "topic": "string",
+        "framing_a": {
+          "metaphor_id": "string",
+          "advocates": [
+            "string"
+          ],
+          "implications": [
+            "string"
+          ]
+        },
+        "framing_b": {
+          "metaphor_id": "string",
+          "advocates": [
+            "string"
+          ],
+          "implications": [
+            "string"
+          ]
+        },
+        "stakes": "string"
+      }
+    ],
+    "meta": {
+      "total_metaphors": "number",
+      "total_analogies": "number",
+      "dominant_source_domains": [
+        "string"
+      ],
+      "metaphor_density": "number (per 1000 words)"
+    }
+  },
+  "extraction_focus": [
+    "metaphors",
+    "analogies",
+    "framing",
+    "imagery",
+    "conceptual_mappings"
+  ],
+  "primary_output_modes": [
+    "gemini_network_graph",
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/metaphor_analogy_network.py"
+}

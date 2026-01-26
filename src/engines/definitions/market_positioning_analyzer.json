@@ -1,0 +1,106 @@
+{
+  "engine_key": "market_positioning_analyzer",
+  "engine_name": "Market Positioning Analyzer",
+  "description": "Analyzes how actors position for anticipated future conditions. Maps strategic positioning, anticipatory moves, hedging, and signaling. Essential for understanding what actors expect about the future.",
+  "version": 1,
+  "category": "market",
+  "kind": "synthesis",
+  "reasoning_domain": "market",
+  "researcher_question": "How are actors positioning for future conditions?",
+  "extraction_prompt": "\nYou are analyzing MARKET POSITIONING - how actors position themselves\nfor anticipated future conditions.\n\n## POSITIONING ANALYSIS PRINCIPLES\n\nPositioning reveals expectations:\n- Investments reveal expected opportunities\n- Divestments reveal expected threats\n- Hedges reveal expected uncertainties\n- Signals reveal intended communications\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY ACTORS\nWho are the key market participants?\n- What type of actor?\n- What's their current position?\n- What's their stated strategy?\n\n### STEP 2: MAP POSITIONING MOVES\nWhat positioning actions have been taken?\n- Investments and acquisitions\n- Divestments and exits\n- Partnerships and alliances\n- Hiring and capability building\n- Regulatory positioning\n\n### STEP 3: INFER ANTICIPATED FUTURES\nWhat futures do positions anticipate?\n- What expectations do moves imply?\n- What scenarios are they preparing for?\n- What threats or opportunities do they see?\n\n### STEP 4: ANALYZE HEDGING\nWhat hedging strategies are visible?\n- What risks are being managed?\n- What diversification exists?\n- What optionality is being preserved?\n\n### STEP 5: MAP COMPETITIVE DYNAMICS\nHow do positions interact competitively?\n- Who is competing for what positions?\n- What moves are preemptive?\n- What moves are reactive?\n\n### STEP 6: ANALYZE SIGNALING\nWhat signals are positions sending?\n- To whom?\n- What message?\n- How credible?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about moves and inferences. \"Company is positioning for growth\"\nis not useful. \"Company's $X billion investment in Y technology, combined with\nhiring Z executives from industry, positions them for scenario W\" is useful.\n",
+  "curation_prompt": "\nYou are synthesizing market positioning analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE POSITIONING MOVES\n- What major positioning moves appear across sources?\n- What patterns emerge?\n\n### 2. IDENTIFY COMMON EXPECTATIONS\n- What futures are multiple actors positioning for?\n- Where do expectations diverge?\n\n### 3. ASSESS COMPETITIVE LANDSCAPE\n- How are positions interacting?\n- Who appears well-positioned vs poorly-positioned?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of market positioning and implied expectations.\n",
+  "concretization_prompt": "\nTransform the market positioning analysis into actionable insight:\n\n1. **ACTORS AND POSITIONS**\n   | Actor | Type | Current Position | Strategy |\n   |-------|------|------------------|----------|\n\n2. **POSITIONING MOVES**\n   - Actor: [Name]\n   - Move: [Description]\n   - Type: [Investment/Acquisition/etc.]\n   - Resources: [Commitment level]\n   - Reversibility: [Rating]\n\n3. **ANTICIPATED FUTURES**\n   | Actor | Expected Future | Evidence | Confidence |\n   |-------|-----------------|----------|------------|\n\n4. **HEDGING STRATEGIES**\n   - Actor: [Name]\n   - Scenarios hedged: [What risks]\n   - Mechanism: [How hedging works]\n\n5. **COMPETITIVE DYNAMICS**\n   - Competitors: [Who]\n   - Pattern: [How competing]\n   - Implications: [What positions mean]\n\n6. **SIGNALING**\n   | Signaler | Signal | Audience | Message |\n   |----------|--------|----------|---------|\n\n7. **POSITIONING ASSESSMENT**\n   | Actor | Overall Position | Expected Future | Risk Profile |\n   |-------|------------------|-----------------|--------------|\n\n8. **BOTTOM LINE**\n   [One paragraph: How are key actors positioning? What futures do they\n   anticipate? Who appears well-positioned vs vulnerable?]\n",
+  "canonical_schema": {
+    "actors_analyzed": [
+      {
+        "actor_id": "string - ACT1, ACT2, etc.",
+        "actor_name": "string",
+        "actor_type": "corporation | government | investor | other",
+        "current_position": "string - where they are now",
+        "stated_strategy": "string - if known"
+      }
+    ],
+    "positioning_moves": [
+      {
+        "move_id": "string - PM1, PM2, etc.",
+        "actor_id": "string",
+        "move_description": "string",
+        "move_type": "investment | acquisition | divestment | partnership | regulatory | hiring | other",
+        "resources_committed": "large | moderate | small",
+        "timing": "string - when made",
+        "reversibility": "irreversible | costly_to_reverse | easily_reversed"
+      }
+    ],
+    "anticipated_futures": [
+      {
+        "future_id": "string",
+        "actor_id": "string",
+        "anticipated_condition": "string - what they expect",
+        "evidence_for_anticipation": "string - why we think they expect this",
+        "positioning_response": "string - move_id or description",
+        "confidence_in_inference": "high | medium | low"
+      }
+    ],
+    "hedging_strategies": [
+      {
+        "hedge_id": "string",
+        "actor_id": "string",
+        "scenarios_hedged": [
+          "string - what risks covered"
+        ],
+        "hedge_mechanism": "string - how hedging works",
+        "cost_of_hedge": "string - what it costs"
+      }
+    ],
+    "competitive_dynamics": [
+      {
+        "dynamic_id": "string",
+        "actors_involved": [
+          "string - actor_ids"
+        ],
+        "competitive_pattern": "string - how they compete",
+        "positioning_implications": "string - what positions mean for competition"
+      }
+    ],
+    "signaling_analysis": [
+      {
+        "signal_id": "string",
+        "signaler": "string - actor_id",
+        "signal": "string - what's communicated",
+        "intended_audience": [
+          "string"
+        ],
+        "message": "string - what signal means",
+        "credibility": "high | medium | low"
+      }
+    ],
+    "positioning_assessment": [
+      {
+        "actor_id": "string",
+        "overall_positioning": "string - summary of position",
+        "anticipated_future": "string - what they seem to expect",
+        "strategic_coherence": "coherent | mixed | incoherent",
+        "risk_profile": "aggressive | balanced | conservative"
+      }
+    ],
+    "meta": {
+      "actors_analyzed": "number",
+      "positioning_moves": "number",
+      "futures_anticipated": "number",
+      "hedging_strategies": "number"
+    }
+  },
+  "extraction_focus": [
+    "positioning_decisions",
+    "anticipated_futures",
+    "hedging_strategies",
+    "competitive_moves",
+    "signaling_behavior"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/market_positioning_analyzer.py"
+}

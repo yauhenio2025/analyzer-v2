@@ -1,0 +1,264 @@
+{
+  "engine_key": "influence_attribution_analysis",
+  "engine_name": "Influence Attribution Analysis",
+  "description": "Traces influence operations, information campaigns, and coordinated inauthentic behavior to their likely originators. Analyzes behavioral, technical, content, and network signatures. Compares against known actor profiles and assesses attribution confidence. Essential for counter-influence analysis.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "synthesis",
+  "reasoning_domain": "rhetoric",
+  "researcher_question": "Who is behind this influence operation and how confident can we be?",
+  "extraction_prompt": "\nYou are an intelligence analyst specializing in INFLUENCE OPERATION ATTRIBUTION \u2014\ntracing campaigns to their originators.\n\n## THE ATTRIBUTION CHALLENGE\n\nInfluence operations intentionally obscure their origins. Attribution requires:\n1. CONVERGING INDICATORS across multiple domains\n2. COMPARISON against known actor profiles\n3. RIGOROUS consideration of alternatives\n4. APPROPRIATE confidence calibration\n\nNo single indicator is definitive. But patterns converge.\n\n\n## YOUR TASK\n\n### STEP 1: PROFILE THE OPERATION\n\nWhat are we attributing?\n- Operation type (disinformation, astroturfing, narrative injection, etc.)\n- Scale and duration\n- Target audience and geography\n- Apparent objectives\n- Platforms used\n- Current status\n\n### STEP 2: EXTRACT BEHAVIORAL SIGNATURES\n\n**Operational Patterns:**\n- When does activity occur? (timing patterns)\n- How does it escalate/de-escalate?\n- How does it respond to external events?\n- Platform and channel preferences?\n\n**Tactical TTPs:**\n- What tactics do they use?\n- What techniques implement those tactics?\n- How sophisticated is execution?\n- Who else uses these TTPs?\n\n**Operational Security:**\n- How professional is their OPSEC?\n- What mistakes have they made?\n- Any inconsistencies suggesting multiple operators?\n\n### STEP 3: EXTRACT TECHNICAL SIGNATURES\n\n**Infrastructure:**\n- Domains, IPs, hosting providers\n- Registration patterns\n- Technical indicators\n- Any association with known infrastructure\n\n**Tool Marks:**\n- Evidence of specific tools/processes\n- Automation signatures\n- Production methods\n\n**Timing Analysis:**\n- Activity hours suggest what timezone?\n- Workweek patterns?\n- Holiday gaps (which country's holidays)?\n\n### STEP 4: EXTRACT CONTENT SIGNATURES\n\n**Linguistic Markers:**\n- Language errors or artifacts\n- Idiom usage\n- Terminology choices\n- Translation artifacts\n- Style patterns\n\n**Narrative Alignment:**\n- What narratives are being pushed?\n- Where do these narratives originate?\n- Alignment with official positions?\n- Any contradictions with attribution hypothesis?\n\n**Content Production:**\n- Original vs. recycled content ratio\n- Production quality and resources implied\n\n### STEP 5: EXTRACT NETWORK SIGNATURES\n\n**Coordination Patterns:**\n- Synchronized posting?\n- Cross-platform coordination?\n- Amplification networks?\n- Response coordination?\n\n**Account Characteristics:**\n- Persona types used\n- Account creation patterns\n- Naming and profile patterns\n- Follower network patterns\n\n**Amplification:**\n- Organic vs. inauthentic engagement ratio\n- Key amplifier accounts\n- How content spreads\n\n### STEP 6: ANALYZE MOTIVATIONS\n\n**Cui Bono \u2014 Who Benefits?**\n- Who gains from this operation's success?\n- What type of benefit (political, economic, ideological)?\n- How strong is the alignment?\n\n**Timing Motivations:**\n- What events correlate with operation?\n- Why this timing?\n- Proactive, reactive, or ongoing?\n\n### STEP 7: COMPARE AGAINST KNOWN ACTORS\n\nFor each plausible actor:\n- What are their known capabilities?\n- What are their typical TTPs?\n- How well do observed indicators match?\n- What indicators DON'T match? Why might that be?\n- Overall fit assessment and score\n\n### STEP 8: ASSESS ATTRIBUTION\n\n**Primary Attribution:**\n- Who is most likely responsible?\n- What confidence level? (Use IC standards)\n- What's the key evidence?\n- What are the caveats?\n\n**Alternative Attributions:**\n- Who else could it be?\n- What supports/contradicts each alternative?\n- Why is primary attribution more likely?\n\n**False Flag Assessment:**\n- Could this be a frame job?\n- What indicators suggest possible false flag?\n- Who might frame whom?\n\n**Attribution Gaps:**\n- What don't we know?\n- How does it affect confidence?\n- What collection would help?\n\n### STEP 9: RESPONSE CONSIDERATIONS\n\nIf we attribute:\n- What are disclosure implications?\n- Diplomatic considerations?\n- Escalation risk?\n- Counter-messaging options?\n\n## OUTPUT GUIDANCE\n\nAttribution is serious. False attribution has consequences. Be rigorous.\n\nUse appropriate confidence language \u2014 \"almost certain\" means 95%+, not \"we're pretty sure.\"\n\nConsider alternatives seriously, not as box-checking.\n\nIdentify what would CHANGE your attribution \u2014 what evidence would make you revise?\n",
+  "curation_prompt": "\nYou are synthesizing attribution analyses from multiple sources to create a\ncomprehensive assessment of influence operation origins.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE OPERATION PROFILE\n\n- Merge observations about the operation itself\n- Note where sources agree/disagree on scope\n- Create comprehensive operation picture\n\n### 2. INTEGRATE SIGNATURES\n\nAcross all signature types:\n- Consolidate behavioral signatures\n- Merge technical indicators\n- Integrate content analysis\n- Combine network signatures\n\nNote where multiple sources identify the same indicators (higher confidence).\n\n### 3. UNIFIED ACTOR COMPARISON\n\n- Compare actor match assessments across sources\n- Reconcile different match scores\n- Create integrated ranking of likely actors\n\n### 4. SYNTHESIZED ATTRIBUTION\n\n- What do multiple sources suggest?\n- Where is there agreement/disagreement?\n- What's the integrated confidence level?\n- What are the key uncertainties?\n\n### 5. ALTERNATIVE ANALYSIS\n\n- Consolidate alternative attributions\n- Ensure alternatives are seriously considered\n- Assess false flag likelihood with all evidence\n\n### 6. EVIDENCE STRENGTH ASSESSMENT\n\n- Which indicators are strongest?\n- Which are weakest or potentially misleading?\n- What's the overall evidence quality?\n\n### 7. COLLECTION PRIORITIES\n\n- What additional information would help?\n- What would change the attribution?\n- Where are the critical gaps?\n\n## OUTPUT GUIDANCE\n\nCreate an attribution assessment that:\n1. States conclusion with appropriate confidence\n2. Shows the evidence basis\n3. Seriously considers alternatives\n4. Identifies what would change the assessment\n5. Enables informed decision-making about response\n",
+  "concretization_prompt": "\nTransform the attribution analysis into a decision-maker-ready assessment:\n\n1. **ATTRIBUTION SUMMARY**\n   ```\n   OPERATION: [Name/Description]\n   PRIMARY ATTRIBUTION: [Actor] \u2014 Confidence: [LEVEL]\n   Key Evidence: [Top 3 indicators]\n   ```\n\n2. **OPERATION PROFILE**\n   - Type: [disinformation/astroturfing/etc.]\n   - Scale: [major/significant/moderate]\n   - Target: [Audience] in [Geography]\n   - Objective: [What they're trying to achieve]\n   - Status: [Active/Dormant/Concluded]\n\n3. **ATTRIBUTION EVIDENCE TABLE**\n   ```\n   | Category | Indicator | Points To | Confidence |\n   |----------|-----------|-----------|------------|\n   | Behavioral | [X] | [Actor] | High |\n   | Technical | [Y] | [Actor] | Medium |\n   | Content | [Z] | [Actor] | High |\n   | Network | [W] | [Actor] | Medium |\n   | Motivation | [V] | [Actor] | High |\n   ```\n\n4. **ACTOR COMPARISON**\n   ```\n   | Actor | Match Score | Key Matches | Key Mismatches | Assessment |\n   |-------|-------------|-------------|----------------|------------|\n   | A | 85/100 | [list] | [list] | PRIMARY |\n   | B | 45/100 | [list] | [list] | Less likely |\n   | C | 30/100 | [list] | [list] | Unlikely |\n   ```\n\n5. **ALTERNATIVE ATTRIBUTIONS**\n   - Alternative 1: [Actor B] \u2014 Why possible: [X] \u2014 Why less likely: [Y]\n   - Alternative 2: [Actor C] \u2014 Why possible: [X] \u2014 Why less likely: [Y]\n\n6. **FALSE FLAG ASSESSMENT**\n   - Likelihood: [Unlikely/Possible/Concerning]\n   - Indicators: [If any]\n   - Who might frame whom: [If applicable]\n\n7. **CONFIDENCE CALIBRATION**\n   - Confidence Level: [Almost Certain / Highly Likely / Likely / Possible]\n   - Basis: [Why this confidence level]\n   - What would INCREASE confidence: [Evidence needed]\n   - What would DECREASE confidence: [Evidence that would change mind]\n\n8. **KEY UNCERTAINTIES**\n   - [Uncertainty 1] \u2014 Impact: [How it affects attribution]\n   - [Uncertainty 2] \u2014 Impact: [How it affects attribution]\n\n9. **RESPONSE CONSIDERATIONS**\n   - If disclosed publicly: [Implications]\n   - Diplomatic considerations: [X]\n   - Counter-messaging options: [List]\n\n10. **BOTTOM LINE**\n    [One paragraph: Who is responsible, how confident are we, what should we do?]\n\nMake attribution conclusions clear while showing appropriate analytical humility.\n",
+  "canonical_schema": {
+    "operation_profile": {
+      "operation_id": "string",
+      "operation_name": "string - if known, otherwise descriptive",
+      "operation_type": "disinformation | propaganda | astroturfing | coordinated_amplification | narrative_injection | harassment_campaign | other",
+      "scale": "major | significant | moderate | minor",
+      "duration": "string - active period",
+      "target_audience": [
+        "string - who is being targeted"
+      ],
+      "target_geography": [
+        "string - where"
+      ],
+      "apparent_objective": "string - what the operation seems to be trying to achieve",
+      "platforms_used": [
+        "string - where operation is visible"
+      ],
+      "current_status": "active | dormant | concluded"
+    },
+    "behavioral_signatures": {
+      "operational_patterns": [
+        {
+          "pattern_id": "string",
+          "pattern_type": "timing | frequency | platform_choice | escalation | response_to_events",
+          "description": "string - the observed pattern",
+          "consistency": "highly_consistent | consistent | variable | inconsistent",
+          "attribution_value": "high | medium | low",
+          "matches_known_actor": "string - actor_id or 'novel'"
+        }
+      ],
+      "tactical_ttps": [
+        {
+          "ttp_id": "string",
+          "tactic": "string - what they do",
+          "technique": "string - how they do it",
+          "procedure": "string - specific implementation",
+          "sophistication": "sophisticated | competent | basic",
+          "known_users": [
+            "string - actors who use this TTP"
+          ]
+        }
+      ],
+      "operational_security": {
+        "opsec_level": "professional | good | moderate | poor",
+        "mistakes_observed": [
+          "string - OPSEC failures"
+        ],
+        "sophistication_inconsistencies": "string - signs of different operators"
+      }
+    },
+    "technical_signatures": {
+      "infrastructure": [
+        {
+          "indicator_id": "string",
+          "indicator_type": "domain | ip | hosting | registration | certificate",
+          "value": "string - the specific indicator",
+          "associated_with": "string - known actor if applicable",
+          "confidence": "high | medium | low"
+        }
+      ],
+      "tool_marks": [
+        {
+          "tool_mark_id": "string",
+          "description": "string - what reveals tool/process used",
+          "indicates": "string - what this suggests about capabilities",
+          "associated_with": [
+            "string - known tools/actors"
+          ]
+        }
+      ],
+      "timing_analysis": {
+        "activity_hours": "string - when activity occurs",
+        "timezone_indicators": "string - suggested timezone",
+        "workweek_pattern": "string - weekend activity?",
+        "holiday_gaps": "string - which holidays observed",
+        "attribution_value": "high | medium | low"
+      }
+    },
+    "content_signatures": {
+      "linguistic_markers": [
+        {
+          "marker_id": "string",
+          "marker_type": "language_errors | idioms | terminology | style | translation_artifacts",
+          "observation": "string - what was observed",
+          "suggests": "string - what it indicates",
+          "confidence": "high | medium | low"
+        }
+      ],
+      "narrative_alignment": {
+        "key_narratives": [
+          "string - main messages pushed"
+        ],
+        "narrative_origins": "string - where narratives align with",
+        "talking_points_match": "string - alignment with official positions",
+        "contradictions_with_attribution": [
+          "string - things that don't fit"
+        ]
+      },
+      "content_sourcing": {
+        "original_content_ratio": "high | medium | low",
+        "recycled_from": [
+          "string - sources of recycled content"
+        ],
+        "production_quality": "professional | competent | amateur",
+        "resource_indicators": "string - what production suggests about resources"
+      }
+    },
+    "network_signatures": {
+      "coordination_patterns": [
+        {
+          "pattern_id": "string",
+          "pattern_type": "synchronized_posting | cross_platform | amplification_network | response_coordination",
+          "description": "string",
+          "scale": "number - how many accounts/entities",
+          "sophistication": "high | medium | low"
+        }
+      ],
+      "account_characteristics": {
+        "account_types": [
+          "string - persona types used"
+        ],
+        "creation_patterns": "string - when accounts created",
+        "naming_conventions": "string - patterns in names",
+        "profile_patterns": "string - patterns in bios/images",
+        "follower_network_patterns": "string - mutual following"
+      },
+      "amplification_analysis": {
+        "organic_vs_inauthentic": "string - ratio estimate",
+        "key_amplifiers": [
+          "string - important nodes"
+        ],
+        "amplification_sequence": "string - how content spreads"
+      }
+    },
+    "motivation_analysis": {
+      "cui_bono": [
+        {
+          "actor": "string - who benefits",
+          "benefit_type": "political | economic | ideological | operational | reputational",
+          "benefit_description": "string - how they benefit",
+          "alignment_strength": "strong | moderate | weak"
+        }
+      ],
+      "timing_motivations": {
+        "event_correlation": "string - what events coincide",
+        "strategic_timing": "string - why this timing makes sense",
+        "reactive_or_proactive": "proactive | reactive | ongoing"
+      },
+      "historical_motivation": "string - prior pattern of similar activity"
+    },
+    "actor_comparison": [
+      {
+        "actor_id": "string",
+        "actor_name": "string",
+        "actor_type": "state | state_proxy | political | commercial | ideological | criminal | unknown",
+        "known_capabilities": "string",
+        "known_ttps": [
+          "string - their typical methods"
+        ],
+        "match_score": "number (0-100)",
+        "matching_indicators": [
+          {
+            "indicator": "string",
+            "match_strength": "strong | moderate | weak"
+          }
+        ],
+        "non_matching_indicators": [
+          {
+            "indicator": "string",
+            "discrepancy": "string",
+            "explanation": "string - possible reason for mismatch"
+          }
+        ],
+        "assessment": "string - overall fit assessment"
+      }
+    ],
+    "attribution_assessment": {
+      "primary_attribution": {
+        "actor_id": "string",
+        "actor_name": "string",
+        "confidence": "almost_certain | highly_likely | likely | possible | unlikely",
+        "confidence_rationale": "string",
+        "key_evidence": [
+          "string - strongest indicators"
+        ],
+        "caveats": [
+          "string - limitations"
+        ]
+      },
+      "alternative_attributions": [
+        {
+          "actor_id": "string",
+          "actor_name": "string",
+          "likelihood": "string",
+          "supporting_evidence": [
+            "string"
+          ],
+          "against_evidence": [
+            "string"
+          ],
+          "why_less_likely": "string"
+        }
+      ],
+      "false_flag_assessment": {
+        "false_flag_likelihood": "unlikely | possible | concerning",
+        "false_flag_indicators": [
+          "string - signs of deception"
+        ],
+        "who_might_frame_whom": "string",
+        "confidence_in_non_false_flag": "high | medium | low"
+      },
+      "attribution_gaps": [
+        {
+          "gap": "string - what we don't know",
+          "impact_on_attribution": "string - how it affects confidence",
+          "collection_priority": "high | medium | low"
+        }
+      ]
+    },
+    "response_considerations": {
+      "disclosure_implications": "string - what happens if we attribute publicly",
+      "diplomatic_considerations": "string - relationship implications",
+      "escalation_risk": "high | medium | low",
+      "defensive_recommendations": [
+        "string - how to counter"
+      ],
+      "counter_messaging_options": [
+        "string - response strategies"
+      ]
+    },
+    "meta": {
+      "indicators_analyzed": "number",
+      "confidence_in_analysis": "high | medium | low",
+      "key_uncertainty": "string - biggest unknown",
+      "additional_collection_needed": "boolean",
+      "time_sensitivity": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "operation_characteristics",
+    "signature_extraction",
+    "actor_comparison",
+    "attribution_assessment",
+    "alternative_attributions"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/influence_attribution_analysis.py"
+}

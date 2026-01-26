@@ -1,0 +1,69 @@
+{
+  "engine_key": "paradigm_departure_analyzer",
+  "engine_name": "Paradigm Departure Analyzer",
+  "description": "Maps creative departures from established paradigms and conventions. Identifies challenged assumptions, productively broken rules, and novel possibilities opened by the departure. Distinguishes genuine innovation from mere contrarianism.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "concepts",
+  "researcher_question": "What established assumptions are being productively challenged?",
+  "extraction_prompt": "\nYou are analyzing PARADIGM DEPARTURES \u2014 where authors productively break\nfrom established conventions, assumptions, or ways of thinking.\n\n## WHAT TO LOOK FOR\n\n### 1. CHALLENGED ASSUMPTIONS\nWhat \"obvious truths\" are being questioned?\n- What does everyone in the field take for granted?\n- What assumption is this author refusing to accept?\n- Is the challenge explicit or implicit?\n\n### 2. NATURE OF DEPARTURE\nHow is the paradigm being departed from?\n- REJECTION: \"This whole framework is wrong\"\n- MODIFICATION: \"This works but needs adjustment\"\n- INVERSION: \"The opposite is actually true\"\n- SYNTHESIS: \"These opposing views can be reconciled\"\n- TRANSCENDENCE: \"This debate is asking the wrong question\"\n\n### 3. NEW POSSIBILITIES\nWhat does the departure open up?\n- What questions become askable?\n- What solutions become visible?\n- What connections become apparent?\n\n### 4. INNOVATION QUALITY\nIs this departure productive?\n- GENUINE INSIGHT: Reveals something true and important\n- PRODUCTIVE PROVOCATION: May not be right but sharpens thinking\n- MERE CONTRARIANISM: Disagrees without offering better alternative\n- CATEGORY ERROR: Misunderstands what it's departing from\n\n### 5. EVIDENCE QUALITY\nIs the departure supported?\n- Strong: Substantial evidence for the new view\n- Moderate: Some support, needs more development\n- Weak: Provocative but under-argued\n- Absent: Claimed without support\n\n### 6. IMPORTANCE\nHow significant is this departure?\n- PARADIGM SHIFTING: Would change how the field thinks\n- SIGNIFICANT: Opens important new avenues\n- INCREMENTAL: Useful refinement\n- TRIVIAL: Distinction without much difference\n\n## FOR EACH DEPARTURE\n\n1. **ESTABLISHED PARADIGM**: What conventional view is being departed from?\n2. **CHALLENGED ASSUMPTION**: What specific assumption is questioned?\n3. **NATURE**: How is the departure made (rejection, modification, etc.)?\n4. **DESCRIPTION**: What does the departure involve?\n5. **NEW POSSIBILITIES**: What does this open up?\n6. **RISKS**: What could go wrong with this departure?\n7. **INNOVATION TYPE**: Is this genuine insight or mere contrarianism?\n8. **EVIDENCE**: How well supported is the departure?\n9. **IMPORTANCE**: How significant if correct?\n\n\n## OUTPUT GUIDANCE\n\nFocus on substantive departures from important assumptions.\nThe goal is to map where thinking is breaking new ground.\n",
+  "curation_prompt": "\nYou are synthesizing paradigm departure analysis across multiple articles.\n\n\n## SYNTHESIS TASKS\n\n### 1. MAP THE PARADIGM LANDSCAPE\n- What established paradigms are being challenged?\n- Which paradigms face most challenges?\n- Are departures converging on new paradigms?\n\n### 2. ASSESS INNOVATION QUALITY\n- What percentage of departures are genuine insights?\n- What percentage are mere contrarianism?\n- What distinguishes productive from unproductive departures?\n\n### 3. IDENTIFY EMERGENT PARADIGMS\n- Are multiple departures pointing in the same direction?\n- Is a new paradigm emerging from the challenges?\n- What would the field look like if departures succeeded?\n\n### 4. MAP RISKS AND OPPORTUNITIES\n- What are the biggest risks if departures fail?\n- What are the biggest opportunities if they succeed?\n- Which departures most deserve further investigation?\n\n## OUTPUT GUIDANCE\n\nThe goal is to map the paradigm departure landscape and identify\nthe most promising innovations.\n",
+  "concretization_prompt": "\nTransform the paradigm departure analysis to be actionable:\n\n1. Create a departure map:\n   | Paradigm Challenged | Departure | Type | Quality | Importance |\n   |---------------------|-----------|------|---------|------------|\n   | [Conventional view] | [What's different] | [Genuine insight] | [High] |\n\n2. Highlight most significant departures:\n   - DEPARTURE: [Description]\n   - CHALLENGES: [What assumption]\n   - OPENS UP: [New possibilities]\n   - RISK: [What could go wrong]\n\n3. Map paradigm vulnerability:\n   - Most challenged: [paradigm] (N departures)\n   - Most successful challenges: [list]\n\n4. Assess innovation quality:\n   - \"X of Y departures represent genuine insights\"\n   - \"Most productive departures involve [pattern]\"\n\n5. Identify emerging paradigms:\n   - Multiple departures suggest [emerging view]\n   - Key shift: From [old assumption] to [new understanding]\n\nPreserve all scores and assessments.\nMake the output useful for tracking intellectual innovation.\n",
+  "canonical_schema": {
+    "paradigm_departures": [
+      {
+        "departure_id": "string - unique identifier",
+        "established_paradigm": "string - the conventional view being departed from",
+        "challenged_assumption": "string - the specific assumption questioned",
+        "nature_of_departure": "rejection | modification | inversion | synthesis | transcendence",
+        "departure_description": "string - what the departure involves",
+        "new_possibilities": [
+          "string - what this opens up"
+        ],
+        "risks_of_departure": [
+          "string - what could go wrong"
+        ],
+        "innovation_type": "genuine_insight | productive_provocation | mere_contrarianism | category_error",
+        "evidence_quality": "strong | moderate | weak | absent",
+        "importance": "paradigm_shifting | significant | incremental | trivial",
+        "source_article": "string - article reference"
+      }
+    ],
+    "paradigm_landscape": {
+      "established_paradigms": [
+        {
+          "paradigm": "string - the conventional view",
+          "departure_count": "number - how many departures from it",
+          "most_significant_departure": "string - departure_id"
+        }
+      ],
+      "innovation_quality_distribution": {
+        "genuine_insight": "number",
+        "productive_provocation": "number",
+        "mere_contrarianism": "number",
+        "category_error": "number"
+      }
+    },
+    "meta": {
+      "total_departures_mapped": "number",
+      "paradigms_challenged": "number",
+      "high_importance_departures": "number",
+      "innovation_quality_average": "string",
+      "most_challenged_paradigm": "string"
+    }
+  },
+  "extraction_focus": [
+    "paradigm_identification",
+    "departure_mapping",
+    "assumption_challenges",
+    "innovation_assessment",
+    "possibility_opening"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/paradigm_departure_analyzer.py"
+}

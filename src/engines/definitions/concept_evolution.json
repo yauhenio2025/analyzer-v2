@@ -1,0 +1,108 @@
+{
+  "engine_key": "concept_evolution",
+  "engine_name": "Concept Evolution Tracker",
+  "description": "Tracks how key terms and concepts evolve across a collection. Maps definitional variations, semantic drift, contested meanings, and conceptual genealogies.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "conceptual_analysis",
+  "researcher_question": "How do key terms transform across this collection?",
+  "extraction_prompt": "\nYou are an expert in conceptual analysis tracking how terms evolve.\n\nFor this article, extract ALL concept-related information:\n\n## KEY CONCEPTS\nIdentify the important terms/concepts and for each:\n1. **TERM**: The word or phrase\n2. **IMPORTANCE**: Core (central to argument), supporting, or peripheral\n3. **DEFINITION(S)**: How is it defined?\n   - Explicit: Author provides definition\n   - Operational: Defined by how it's used/measured\n   - Implicit: Meaning inferred from context\n4. **AUTHOR**: Who defines it this way? (if attributed)\n5. **DATE**: When? (if temporal context available)\n\n## SEMANTIC FIELD\nFor important concepts:\n- What related terms cluster with it?\n- What terms are treated as synonymous?\n- What terms are contrasted with it?\n\n## DEFINITIONAL TENSIONS\nIdentify where:\n- The same term is defined differently\n- Definitions are contested\n- Narrow vs. broad uses conflict\n- Technical vs. colloquial meanings differ\n\n## CONCEPTUAL ORIGINS\nIf discussed:\n- Where does this concept come from?\n- Who introduced it? When?\n- How has it changed from original meaning?\n- What earlier concepts does it build on?\n\n\nBe thorough - concepts are the building blocks of arguments.\n",
+  "curation_prompt": "\nYou are synthesizing concept analyses from multiple articles into a unified conceptual map.\n\nYour task:\n1. **CONSOLIDATE CONCEPTS**: Merge same concept across articles\n   - Collect all definitions\n   - Note definitional variations\n   - Track frequency and importance\n\n2. **MAP VARIATIONS**:\n   - Where do definitions diverge?\n   - What type of variation is it?\n   - How contested is the concept?\n\n3. **TRACE EVOLUTION**:\n   - If temporal data exists, track meaning changes\n   - What triggers semantic shifts?\n   - What's the current stable meaning (if any)?\n\n4. **BUILD GENEALOGIES**:\n   - Which concepts derive from others?\n   - What are the intellectual lineages?\n   - Where do concepts split or merge?\n\n5. **CLUSTER SEMANTICALLY**:\n   - Group related concepts\n   - Identify conceptual families\n   - Map the semantic landscape\n\nCreate clear concept_ids (e.g., \"concept_sovereignty\", \"concept_innovation\").\n\n\nOutput a comprehensive map of conceptual terrain.\n",
+  "concretization_prompt": "\nTransform the conceptual analysis to use concrete, recognizable labels:\n\n1. Convert concept_ids to actual terms:\n   - \"C1\" \u2192 \"Digital Sovereignty\"\n   - \"C2\" \u2192 \"Disruptive Innovation\"\n\n2. Name variations descriptively:\n   - \"V1\" \u2192 \"The 'Innovation' Definition Wars\"\n   - \"V2\" \u2192 \"Narrow vs. Broad AI Concepts\"\n\n3. Label evolutions clearly:\n   - \"E1\" \u2192 \"The Expanding Meaning of 'Platform'\"\n\n4. Name semantic clusters:\n   - \"Cluster 1\" \u2192 \"Governance Concepts\"\n   - \"Cluster 2\" \u2192 \"Market Dynamics Terms\"\n\nPreserve all definitions, relationships, and temporal sequences.\nMake the conceptual landscape immediately navigable.\n",
+  "canonical_schema": {
+    "concepts": [
+      {
+        "concept_id": "string",
+        "term": "string",
+        "importance": "core | supporting | peripheral",
+        "definitions": [
+          {
+            "definition_id": "string",
+            "text": "string",
+            "author": "string | null",
+            "date": "string | null",
+            "source_article": "string",
+            "definition_type": "explicit | operational | implicit"
+          }
+        ],
+        "semantic_field": [
+          "related_terms"
+        ],
+        "first_appearance": "string | null",
+        "frequency": "number"
+      }
+    ],
+    "definitional_variations": [
+      {
+        "variation_id": "string",
+        "concept": "string",
+        "variant_definitions": [
+          "definition_id"
+        ],
+        "variation_type": "narrow_vs_broad | normative_vs_descriptive | technical_vs_colloquial | competing_paradigms",
+        "tension_level": "number (0-1)",
+        "resolution": "string | null"
+      }
+    ],
+    "concept_evolution": [
+      {
+        "evolution_id": "string",
+        "concept": "string",
+        "trajectory": [
+          {
+            "stage": "string",
+            "date": "string | null",
+            "meaning": "string",
+            "trigger": "string | null"
+          }
+        ],
+        "evolution_type": "expansion | narrowing | reversal | splitting | merger",
+        "current_state": "string"
+      }
+    ],
+    "conceptual_genealogies": [
+      {
+        "genealogy_id": "string",
+        "concept": "string",
+        "ancestors": [
+          "concept_id"
+        ],
+        "descendants": [
+          "concept_id"
+        ],
+        "influence_type": "direct | adapted | contested"
+      }
+    ],
+    "semantic_clusters": [
+      {
+        "cluster_id": "string",
+        "central_concept": "string",
+        "related_concepts": [
+          "concept_id"
+        ],
+        "cluster_name": "string",
+        "cohesion": "number (0-1)"
+      }
+    ],
+    "meta": {
+      "total_concepts": "number",
+      "most_contested_concept": "string",
+      "most_evolved_concept": "string",
+      "definitional_stability": "number (0-1)"
+    }
+  },
+  "extraction_focus": [
+    "definitions",
+    "key_terms",
+    "semantic_usage",
+    "conceptual_debates",
+    "terminology"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "gemini_timeline"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/concept_evolution.py"
+}

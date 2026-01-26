@@ -1,0 +1,147 @@
+{
+  "engine_key": "concept_demarcation_analyzer",
+  "engine_name": "Concept Demarcation Analyzer",
+  "description": "Analyzes concept boundaries and demarcation criteria. Maps inclusion/exclusion rules, edge cases, boundary sharpness, and contested demarcations. Reveals where concepts end and what polices their borders.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "boundary_analysis",
+  "researcher_question": "Where does this concept end and what maintains its boundaries?",
+  "extraction_prompt": "\nYou are an expert in conceptual analysis, examining how concepts draw boundaries.\n\nFor this article, perform a CONCEPT DEMARCATION ANALYSIS:\n\n## 1. CONCEPT IDENTIFICATION\nFor each significant concept:\n- **Term**: The concept name/phrase\n- **Definition**: How it's defined or used\n- **Apparent sharpness**: Does it have clear boundaries or fuzzy ones?\n\n## 2. BOUNDARY SPECIFICATION\nFor each concept, characterize its boundary:\n- **Type**: Is it defined by:\n  - Extension (list of instances)?\n  - Intension (necessary and sufficient conditions)?\n  - Prototype (similarity to best example)?\n  - Criteria (checklist of features)?\n- **Sharpness**: Sharp, gradient, vague, or context-dependent?\n- **Stability**: Stable, shifting, or contested?\n\n## 3. INCLUSION CRITERIA EXTRACTION\nWhat determines if something falls under this concept:\n- **Necessary conditions**: What MUST be true?\n- **Sufficient conditions**: What GUARANTEES inclusion?\n- **Prototype features**: What's the central/typical case?\n- **Family resemblance**: What overlapping features connect instances?\n\n## 4. EXCLUSION CRITERIA EXTRACTION\nWhat determines if something is EXCLUDED:\n- **What is explicitly ruled out?**\n- **Why is it ruled out?** (definitional, normative, pragmatic)\n- **How strict is the exclusion?**\n\n## 5. EDGE CASE IDENTIFICATION\nIdentify borderline cases:\n- **What cases sit on the boundary?**\n- **Why are they borderline?**\n- **What arguments exist for inclusion/exclusion?**\n- **Is this concept susceptible to Sorites paradoxes?**\n\n## 6. BOUNDARY CONTEST DETECTION\nWhere are boundaries disputed:\n- **What boundary is contested?**\n- **Who wants to expand the concept?**\n- **Who wants to restrict it?**\n- **What's at stake?**\n\n## 7. DEMARCATION MECHANISM ANALYSIS\nHow are boundaries maintained:\n- **Who polices the boundary?** (experts, institutions, society)\n- **How is it enforced?**\n- **What challenges exist?**\n\n## 8. NATURAL/CONSTRUCTED ASSESSMENT\nIs this concept tracking something real:\n- **Is it a natural kind?** (like water or gold)\n- **Is it a social construct?** (like money or marriage)\n- **Does it support inductive generalizations?**\n\n\nThink about where concepts end - boundaries matter as much as centers.\n",
+  "curation_prompt": "\nYou are synthesizing concept demarcation analyses from multiple articles.\n\nYour task:\n\n## 1. CONSOLIDATE CONCEPT INVENTORIES\n- Merge same concepts across articles\n- Collect all boundary information\n- Calculate boundary sharpness scores\n\n## 2. SYNTHESIZE BOUNDARY SPECIFICATIONS\n- Aggregate boundary types\n- Assess overall sharpness\n- Note stability across articles\n- Identify where articulation differs\n\n## 3. COMPILE INCLUSION CRITERIA\n- Aggregate criteria for each concept\n- Note where criteria conflict\n- Identify necessary vs. sufficient vs. prototype\n- Weight criteria by prevalence\n\n## 4. COMPILE EXCLUSION CRITERIA\n- Aggregate exclusion patterns\n- Note strictness levels\n- Identify contested exclusions\n\n## 5. CATALOG EDGE CASES\n- Aggregate borderline cases\n- Note resolution patterns\n- Identify Sorites-susceptible concepts\n- Map inclusion/exclusion arguments\n\n## 6. MAP BOUNDARY CONTESTS\n- Identify ongoing disputes\n- Map expansion vs. restriction positions\n- Clarify stakes\n- Note resolution status\n\n## 7. ANALYZE DEMARCATION MECHANISMS\n- Map who enforces which boundaries\n- Identify enforcement mechanisms\n- Rate effectiveness\n- Note challenges and failures\n\n## 8. ASSESS NATURAL VS. CONSTRUCTED\n- Evaluate natural kind status\n- Rate inductive potential\n- Assess cross-cultural stability\n- Note hybrid cases\n\n## 9. MAP BOUNDARY RELATIONS\n- Identify containment relations\n- Map overlaps between concepts\n- Note complementary concepts\n- Identify exclusion relations\n\n\nCreate a map that reveals where concepts end and how those endings are maintained.\n",
+  "concretization_prompt": "\nTransform the demarcation analysis to use concrete, recognizable labels:\n\n1. Name concepts specifically:\n   - \"C1\" \u2192 \"Consciousness\"\n   - \"C2\" \u2192 \"Intelligence\"\n\n2. Name boundaries concretely:\n   - \"B1\" \u2192 \"The Consciousness/Mere Responsiveness Boundary\"\n   - \"B2\" \u2192 \"The Human/Animal Intelligence Divide\"\n\n3. Name inclusion criteria specifically:\n   - \"IC1\" \u2192 \"Self-awareness criterion for consciousness\"\n   - \"IC2\" \u2192 \"Problem-solving flexibility criterion for intelligence\"\n\n4. Name edge cases with examples:\n   - \"EC1\" \u2192 \"Do cephalopods have consciousness? (borderline case)\"\n   - \"EC2\" \u2192 \"Does GPT-4 exhibit intelligence? (contested)\"\n\n5. Name boundary contests specifically:\n   - \"BC1\" \u2192 \"The Expanded Consciousness Debate (panpsychism vs. higher-order theories)\"\n\n6. Name demarcation mechanisms:\n   - \"DM1\" \u2192 \"Neurological criteria enforced by cognitive scientists\"\n   - \"DM2\" \u2192 \"Turing Test enforced by AI researchers\"\n\n7. Name natural kind assessments:\n   - \"NK1\" \u2192 \"Consciousness: Likely natural kind, neural correlates exist\"\n   - \"NK2\" \u2192 \"Intelligence: Social construct, culturally variable definitions\"\n\nPreserve all sharpness scores, criterion types, and contest statuses.\nMake the boundary architecture of concepts visible.\n",
+  "canonical_schema": {
+    "concepts_analyzed": [
+      {
+        "concept_id": "string",
+        "term": "string",
+        "definition": "string",
+        "boundary_sharpness": "number (0-1, where 1 = perfectly sharp)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "boundary_specifications": [
+      {
+        "boundary_id": "string",
+        "concept": "concept_id",
+        "boundary_type": "extensional | intensional | prototypical | criterial",
+        "sharpness": "sharp | gradient | vague | context_dependent",
+        "stability": "stable | shifting | contested",
+        "articulation_level": "explicit | implicit | tacit"
+      }
+    ],
+    "inclusion_criteria": [
+      {
+        "criterion_id": "string",
+        "concept": "concept_id",
+        "criterion": "string",
+        "criterion_type": "necessary | sufficient | necessary_and_sufficient | prototype_feature | family_resemblance",
+        "weight": "number (0-1)",
+        "operationalization": "string (how is it applied?)",
+        "contested": "boolean"
+      }
+    ],
+    "exclusion_criteria": [
+      {
+        "exclusion_id": "string",
+        "concept": "concept_id",
+        "excludes_what": "string",
+        "exclusion_type": "definitional | normative | pragmatic | historical",
+        "strictness": "absolute | defeasible | contextual",
+        "rationale": "string"
+      }
+    ],
+    "edge_cases": [
+      {
+        "case_id": "string",
+        "concept": "concept_id",
+        "case_description": "string",
+        "why_borderline": "string",
+        "inclusion_arguments": [
+          "string"
+        ],
+        "exclusion_arguments": [
+          "string"
+        ],
+        "typical_resolution": "include | exclude | depends | unresolved",
+        "sorites_susceptible": "boolean"
+      }
+    ],
+    "boundary_contests": [
+      {
+        "contest_id": "string",
+        "concept": "concept_id",
+        "disputed_boundary": "string",
+        "expansion_advocates": [
+          "string"
+        ],
+        "restriction_advocates": [
+          "string"
+        ],
+        "stakes": "string (what's at stake in this dispute)",
+        "current_status": "ongoing | resolved | dormant"
+      }
+    ],
+    "demarcation_mechanisms": [
+      {
+        "mechanism_id": "string",
+        "concept": "concept_id",
+        "mechanism_type": "definitional | institutional | expert | social | legal",
+        "who_enforces": [
+          "string"
+        ],
+        "how_enforced": "string",
+        "effectiveness": "high | medium | low",
+        "challenges": [
+          "string"
+        ]
+      }
+    ],
+    "natural_vs_constructed": [
+      {
+        "assessment_id": "string",
+        "concept": "concept_id",
+        "natural_kind_status": "natural_kind | human_kind | social_construct | hybrid | unclear",
+        "carves_nature": "boolean",
+        "inductive_potential": "high | medium | low",
+        "cross_cultural_stability": "high | medium | low",
+        "rationale": "string"
+      }
+    ],
+    "boundary_relations": [
+      {
+        "relation_id": "string",
+        "concept_a": "concept_id",
+        "concept_b": "concept_id",
+        "relation_type": "containment | overlap | exclusion | gradient | complement",
+        "boundary_interaction": "string"
+      }
+    ],
+    "meta": {
+      "total_concepts": "number",
+      "average_boundary_sharpness": "number",
+      "most_contested_concept": "concept_id",
+      "sharpest_concept": "concept_id",
+      "vaguest_concept": "concept_id",
+      "natural_kind_count": "number"
+    }
+  },
+  "extraction_focus": [
+    "concept_boundaries",
+    "inclusion_criteria",
+    "exclusion_criteria",
+    "edge_cases",
+    "boundary_disputes",
+    "demarcation_mechanisms"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "smart_table",
+    "gemini_concept_tree",
+    "mermaid_mindmap"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/concept_demarcation_analyzer.py"
+}

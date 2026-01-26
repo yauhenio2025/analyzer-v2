@@ -1,0 +1,99 @@
+{
+  "engine_key": "absent_center",
+  "engine_name": "Strategic Absence Detector",
+  "description": "Detects strategic silences and gaps. Identifies what's not being said, conspicuous absences, avoided topics, marginalized perspectives, and structural blindspots in the discourse.",
+  "version": 1,
+  "category": "epistemology",
+  "kind": "synthesis",
+  "reasoning_domain": "epistemology",
+  "researcher_question": "What's missing from this discourse that should be present?",
+  "extraction_prompt": "\nYou are an expert discourse analyst identifying strategic absences and silences.\n\nFor this article, analyze what is MISSING that should reasonably be present:\n\n1. **CONSPICUOUS ABSENCES**: Topics that should be discussed but aren't\n   - What topic is missing?\n   - Why would we expect it to be present?\n   - Is it completely absent, partially mentioned, or treated superficially?\n   - How significant is this absence? (0-1)\n   - What might explain the absence?\n\n2. **AVOIDED TOPICS**: Subjects that are skirted around\n   - What topic seems to be avoided?\n   - What indicators suggest avoidance?\n   - How close does the text get before deflecting?\n   - Who benefits from this avoidance?\n\n3. **MARGINALIZED PERSPECTIVES**: Voices not represented\n   - What groups/perspectives are missing?\n   - How are they marginalized (absent, tokenized, minimized)?\n   - Why would their perspective be relevant?\n   - Are there any token mentions?\n\n4. **STRUCTURAL BLINDSPOTS**: Systematic gaps in analysis\n   - What analytical perspectives are missing?\n   - What systemic factors cause this blindspot?\n   - How does this affect the analysis?\n\n5. **DEFLECTION PATTERNS**: When discussion shifts away\n   - From what topic?\n   - To what topic?\n   - What mechanism is used to deflect?\n\n\nThink critically - identify what the text is NOT saying.\n",
+  "curation_prompt": "\nYou are synthesizing absence analysis from multiple articles.\n\nYour task:\n1. **MAP SYSTEMATIC ABSENCES**: What's missing across the corpus?\n   - Consolidate absence identification\n   - Identify patterns in what's not said\n   - Rank absences by significance\n\n2. **TRACK AVOIDED TOPICS**: What gets consistently skirted?\n   - Are the same topics avoided across articles?\n   - Who benefits from these avoidances?\n\n3. **CATALOG MARGINALIZED PERSPECTIVES**: Who's not heard?\n   - What groups are consistently underrepresented?\n   - How are they marginalized (absent vs. tokenized)?\n   - What's the expected relevance?\n\n4. **IDENTIFY STRUCTURAL BLINDSPOTS**: What can't the discourse see?\n   - What systemic factors create blindspots?\n   - What corrections are needed?\n\n5. **MAP DEFLECTION PATTERNS**: Where does discourse redirect?\n   - Common deflection targets\n   - Mechanisms of deflection\n\n\nCreate a comprehensive map of what's missing from this discourse.\n",
+  "concretization_prompt": "\nTransform the absence analysis to be immediately clear:\n\n1. Name absences specifically:\n   - \"A1\" \u2192 \"Absent: Worker displacement costs in automation debates\"\n\n2. Identify avoided topics:\n   - \"T1\" \u2192 \"Avoided: Executive compensation in productivity discussions\"\n\n3. Name marginalized groups:\n   - \"P1\" \u2192 \"Marginalized: Gig economy workers' perspectives\"\n\n4. Describe blindspots:\n   - \"B1\" \u2192 \"Blindspot: Global South perspectives on AI governance\"\n\n5. Label deflection patterns:\n   - \"D1\" \u2192 \"Deflection: From job losses TO new job creation narratives\"\n\nPreserve all significance ratings.\nMake the analysis useful for identifying discourse gaps.\n",
+  "canonical_schema": {
+    "conspicuous_absences": [
+      {
+        "absence_id": "string",
+        "topic": "string",
+        "expected_presence": "string",
+        "why_expected": "string",
+        "absence_type": "complete | partial | superficial",
+        "significance": "number (0-1)",
+        "possible_reasons": [
+          "string"
+        ],
+        "noted_in_articles": [
+          "string"
+        ]
+      }
+    ],
+    "avoided_topics": [
+      {
+        "topic_id": "string",
+        "topic_name": "string",
+        "avoidance_indicators": [
+          "string"
+        ],
+        "proximity_to_discussion": "string",
+        "stakeholders_benefiting": [
+          "string"
+        ],
+        "significance": "number (0-1)"
+      }
+    ],
+    "marginalized_perspectives": [
+      {
+        "perspective_id": "string",
+        "group": "string",
+        "perspective_description": "string",
+        "degree_of_marginalization": "absent | tokenized | minimized",
+        "expected_relevance": "string",
+        "noted_mentions": [
+          "string"
+        ]
+      }
+    ],
+    "structural_blindspots": [
+      {
+        "blindspot_id": "string",
+        "description": "string",
+        "systemic_cause": "string",
+        "affected_analysis": [
+          "string"
+        ],
+        "correction_needed": "string"
+      }
+    ],
+    "deflection_patterns": [
+      {
+        "pattern_id": "string",
+        "from_topic": "string",
+        "to_topic": "string",
+        "deflection_mechanism": "string",
+        "frequency": "number",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_absences_identified": "number",
+      "most_significant_absence": "string",
+      "marginalized_groups_count": "number",
+      "blindspot_severity": "number (0-1)"
+    }
+  },
+  "extraction_focus": [
+    "silences",
+    "gaps",
+    "absences",
+    "avoidances",
+    "marginalization"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/absent_center.py"
+}

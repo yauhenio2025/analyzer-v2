@@ -1,0 +1,108 @@
+{
+  "engine_key": "data_quality_assessor",
+  "engine_name": "Data Quality Assessor",
+  "description": "Evaluates reliability and completeness of data. Assesses data reliability, validity, completeness, and provenance. Essential for evaluating the foundation of data-based claims.",
+  "version": 1,
+  "category": "evidence",
+  "kind": "synthesis",
+  "reasoning_domain": "epistemology",
+  "researcher_question": "How reliable and complete is this data?",
+  "extraction_prompt": "\nYou are assessing DATA QUALITY - the reliability, validity, and completeness\nof data underlying claims and analyses.\n\n## DATA QUALITY DIMENSIONS\n\n### RELIABILITY\nIs the data consistent and repeatable?\n- Would re-collection produce same results?\n- Are there inconsistencies or contradictions?\n- How stable is the measurement?\n\n### VALIDITY\nDoes data measure what it claims to measure?\n- Is the construct well-defined?\n- Does measurement capture the construct?\n- What alternative interpretations exist?\n\n### COMPLETENESS\nIs the data complete or are there gaps?\n- What coverage exists?\n- What's missing?\n- How do gaps affect conclusions?\n\n### PROVENANCE\nWhere does data come from?\n- What's the original source?\n- How was it collected?\n- What transformations occurred?\n- Is chain of custody documented?\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY DATA SOURCES\nWhat data sources are used?\n- What type of data?\n- How was it collected?\n- By whom?\n\n### STEP 2: ASSESS RELIABILITY\nHow reliable is each source?\n- Consistency issues?\n- Repeatability concerns?\n- Known problems?\n\n### STEP 3: ASSESS VALIDITY\nDoes data measure what's claimed?\n- Construct validity issues?\n- Alternative interpretations?\n- Measurement problems?\n\n### STEP 4: ASSESS COMPLETENESS\nWhat's missing?\n- Coverage gaps?\n- Missing time periods?\n- Missing populations?\n- Impact of gaps?\n\n### STEP 5: ASSESS PROVENANCE\nWhere does data come from?\n- Original source known?\n- Chain of custody clear?\n- Transformations documented?\n\n### STEP 6: OVERALL ASSESSMENT\nWhat's the overall data quality?\n- Major concerns?\n- Usability rating?\n- Recommendations for use?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about quality issues. \"Data quality is questionable\" is not\nuseful. \"Sample was collected only from urban areas, excluding 40% of the\npopulation, and response rates varied from 20% to 80% across regions\" is useful.\n",
+  "curation_prompt": "\nYou are synthesizing data quality assessments across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE QUALITY ISSUES\n- What reliability issues appear?\n- What validity issues appear?\n- What completeness gaps exist?\n\n### 2. IDENTIFY PATTERNS\n- Are there systematic quality problems?\n- What sources are most/least reliable?\n\n### 3. ASSESS IMPLICATIONS\n- How do quality issues affect conclusions?\n- What should be treated with caution?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive assessment of data quality and its implications.\n",
+  "concretization_prompt": "\nTransform the data quality assessment into actionable insight:\n\n1. **DATA SOURCES**\n   | Source | Type | Collection Method | Time Period |\n   |--------|------|-------------------|-------------|\n\n2. **RELIABILITY ASSESSMENT**\n   | Source | Consistency | Repeatability | Issues | Score |\n   |--------|-------------|---------------|--------|-------|\n\n3. **VALIDITY ASSESSMENT**\n   | Source | Claims to Measure | Actually Measures | Issues |\n   |--------|-------------------|-------------------|--------|\n\n4. **COMPLETENESS ASSESSMENT**\n   | Source | Coverage | Missing Data | Impact of Gaps |\n   |--------|----------|--------------|----------------|\n\n5. **PROVENANCE ASSESSMENT**\n   | Source | Origin | Chain of Custody | Concerns |\n   |--------|--------|------------------|----------|\n\n6. **OVERALL QUALITY**\n   | Source | Quality | Major Concerns | Usability |\n   |--------|---------|----------------|-----------|\n\n7. **BOTTOM LINE**\n   [One paragraph: How reliable is the data underlying these claims?\n   What quality issues exist? What should be treated with caution?]\n",
+  "canonical_schema": {
+    "data_sources": [
+      {
+        "source_id": "string - DS1, DS2, etc.",
+        "source_name": "string",
+        "data_type": "quantitative | qualitative | mixed",
+        "collection_method": "string",
+        "time_period": "string",
+        "sample_size": "string - if applicable",
+        "collector": "string - who gathered it"
+      }
+    ],
+    "reliability_assessment": [
+      {
+        "assessment_id": "string",
+        "source_id": "string",
+        "consistency": "high | medium | low",
+        "repeatability": "verified | likely | uncertain | doubtful",
+        "reliability_issues": [
+          "string - specific problems"
+        ],
+        "reliability_score": "reliable | mostly_reliable | uncertain | unreliable"
+      }
+    ],
+    "validity_assessment": [
+      {
+        "assessment_id": "string",
+        "source_id": "string",
+        "claimed_measure": "string - what data claims to measure",
+        "actual_measure": "string - what it actually measures",
+        "construct_validity": "high | medium | low",
+        "validity_issues": [
+          "string - specific problems"
+        ]
+      }
+    ],
+    "completeness_assessment": [
+      {
+        "assessment_id": "string",
+        "source_id": "string",
+        "coverage": "complete | mostly_complete | partial | sparse",
+        "missing_data": [
+          "string - what's missing"
+        ],
+        "gaps_description": "string",
+        "impact_of_gaps": "string - how gaps affect analysis"
+      }
+    ],
+    "provenance_assessment": [
+      {
+        "assessment_id": "string",
+        "source_id": "string",
+        "origin": "string - where data came from",
+        "chain_of_custody": "documented | partial | unknown",
+        "transformations": [
+          "string - how data was processed"
+        ],
+        "provenance_concerns": [
+          "string - issues with origin/handling"
+        ]
+      }
+    ],
+    "overall_quality_assessment": [
+      {
+        "source_id": "string",
+        "overall_quality": "high | acceptable | questionable | poor",
+        "major_concerns": [
+          "string"
+        ],
+        "usability_rating": "fully_usable | usable_with_caveats | limited_use | unusable",
+        "recommendations": [
+          "string - how to use or not use"
+        ]
+      }
+    ],
+    "meta": {
+      "sources_assessed": "number",
+      "high_quality_sources": "number",
+      "questionable_sources": "number",
+      "major_gaps_identified": "number"
+    }
+  },
+  "extraction_focus": [
+    "data_sources",
+    "reliability_assessment",
+    "validity_assessment",
+    "completeness_assessment",
+    "provenance_issues"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/data_quality_assessor.py"
+}

@@ -1,0 +1,108 @@
+{
+  "engine_key": "evidence_quality_assessment",
+  "engine_name": "Evidence Quality Assessor",
+  "description": "Evaluates the quality of evidence used across a collection. Assesses credibility, relevance, sufficiency, recency, and potential bias to identify well-supported vs. weakly-supported claims.",
+  "version": 1,
+  "category": "argument",
+  "kind": "synthesis",
+  "reasoning_domain": "epistemology",
+  "researcher_question": "How well-supported are the claims in this collection?",
+  "extraction_prompt": "\nYou are assessing evidence quality with Dennett's epistemic rigor tools.\n\n## DENNETT'S ANALYTICAL TOOLKIT\nApply these throughout your evidence assessment:\n- HETEROPHENOMENOLOGY: Treat claim AS DATA first, then evaluate truth separately\n- STURGEON'S LAW: Is this in the 90% crap or 10% good? Quality filter FIRST\n- BOOM CRUTCH: Does evidence actually EXPLAIN or just DESCRIBE?\n- PROVENANCE AUDIT: Where does this evidence REALLY originate?\n- CERTAINTY GRADIENT: Assign probability, not binary true/false\n\n## EVIDENCE INVENTORY\nFor each piece of evidence cited:\n\n1. **TYPE + QUALITY FILTER**: Classify and immediately assess\n   - Empirical data: Statistics, measurements, experimental results\n   - Expert testimony: Statements from authorities\n   - Case study: Specific examples analyzed in depth\n   - Logical argument: Deductive or inductive reasoning\n   - Analogy: Comparisons to similar situations\n   - Anecdote: Single instances without systematic analysis\n   - STURGEON'S LAW: Apply quality filter BEFORE counting citations\n\n2. **PROVENANCE AUDIT**:\n   - WHERE does this evidence actually originate?\n   - TRANSFORMATION CHAIN: How did it get from origin to here?\n   - TELEPHONE GAME CHECK: How much signal loss occurred?\n   - Who/what is the cited source? (Name, organization)\n   - Source type: Academic, government, industry, news, advocacy\n   - Credibility score (0-1): Based on reputation, methodology\n   - Potential bias: Any conflicts of interest or systematic bias?\n\n3. **HETEROPHENOMENOLOGICAL SEPARATION**:\n   - Treat claim AS DATA: What do we learn from the fact this claim was made?\n   - Then separately evaluate: Is the claim actually TRUE?\n   - Note the distinction in your assessment\n\n4. **QUALITY MARKERS + CERTAINTY GRADIENT**:\n   - Relevance (0-1): How well does it actually support the claim?\n   - Sufficiency (0-1): Is there enough for the claim's scope?\n   - Recency: Current (<2yr), recent (2-5yr), dated (5-10yr), outdated (>10yr)\n   - Replication: Has it been independently verified?\n   - CERTAINTY LEVEL: Assign calibrated probability (0.0-1.0) not binary\n\n5. **BOOM CRUTCH IN EVIDENCE**:\n   - Does evidence actually EXPLAIN or just DESCRIBE?\n   - \"Studies show\" without mechanism = weak evidence\n   - Flag evidence that skips the causal mechanism\n\n6. **CLAIM MAPPING**:\n   - What specific claims does this evidence support?\n   - Is the claim's scope appropriate for the evidence?\n\n## EVIDENCE GAPS + OCCAM'S BROOM\nIdentify:\n- Claims made without evidence\n- Claims with insufficient evidence for their scope\n- Missing obvious counterevidence (OCCAM'S BROOM)\n- Circular reasoning (claims as their own evidence)\n- What evidence SHOULD be here but is suspiciously absent?\n\n\nBe thorough - assess EVERY evidentiary claim with Dennett-enhanced scrutiny.\n",
+  "curation_prompt": "\nYou are synthesizing evidence quality assessments from multiple articles.\n\nYour task:\n1. **DEDUPLICATE EVIDENCE**: Merge same evidence cited in multiple articles\n   - Same data/study = merge, keep best assessment\n   - Track which articles cite each piece\n\n2. **AGGREGATE CLAIM SUPPORT**:\n   - For claims appearing across articles, aggregate evidence\n   - Determine overall support status\n   - Identify if different articles have conflicting evidence\n\n3. **IDENTIFY PATTERNS**:\n   - What types of evidence dominate?\n   - Are certain source types over/under-represented?\n   - What's the overall evidence quality level?\n\n4. **FLAG CONCERNS**:\n   - Systematic reliance on weak evidence types\n   - Potential source bias patterns\n   - Major claims with insufficient support\n   - Evidence currency issues\n\n5. **HIGHLIGHT GAPS**:\n   - What evidence is missing across the collection?\n   - What would strengthen the overall argument?\n   - Where is more research needed?\n\nCreate clear evidence_ids (e.g., \"ev_smith2023_gdp_growth\").\n\n\nOutput a comprehensive evidence quality map.\n",
+  "concretization_prompt": "\nTransform the evidence assessment to use concrete, recognizable labels:\n\n1. Convert evidence_ids to descriptive names:\n   - \"E1\" \u2192 \"Smith 2023 GDP Growth Study\"\n   - \"E2\" \u2192 \"WHO 2024 Health Statistics Report\"\n\n2. Make sources concrete:\n   - Include full names, institutions, publication details\n\n3. Label claims clearly:\n   - Replace generic IDs with actual claim text summaries\n\n4. Specify concerns concretely:\n   - \"Bias concern\" \u2192 \"Industry-funded study on product safety\"\n\nPreserve all quality scores, ratings, and relationships.\nMake the output immediately actionable for a researcher.\n",
+  "canonical_schema": {
+    "evidence_inventory": [
+      {
+        "evidence_id": "string",
+        "content": "string",
+        "evidence_type": "empirical_data | expert_testimony | case_study | logical_argument | analogy | anecdote | survey | meta_analysis",
+        "source": {
+          "name": "string",
+          "type": "academic | government | industry | news | advocacy | unknown",
+          "credibility_score": "number (0-1)",
+          "potential_bias": "string | null"
+        },
+        "claims_supported": [
+          "string"
+        ],
+        "quality_assessment": {
+          "relevance": "number (0-1)",
+          "sufficiency": "number (0-1)",
+          "recency": "current | recent | dated | outdated | unknown",
+          "replication_status": "replicated | unreplicated | contested | unknown"
+        },
+        "overall_strength": "number (0-1)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "claim_support_analysis": [
+      {
+        "claim_id": "string",
+        "claim_text": "string",
+        "claim_scope": "narrow | moderate | broad | universal",
+        "supporting_evidence": [
+          "evidence_id"
+        ],
+        "evidence_strength_aggregate": "number (0-1)",
+        "support_status": "well_supported | moderately_supported | weakly_supported | unsupported",
+        "gaps": [
+          "string"
+        ]
+      }
+    ],
+    "evidence_patterns": {
+      "type_distribution": {
+        "empirical_data": "number",
+        "expert_testimony": "number",
+        "case_study": "number",
+        "logical_argument": "number",
+        "analogy": "number",
+        "other": "number"
+      },
+      "source_distribution": {
+        "academic": "number",
+        "government": "number",
+        "industry": "number",
+        "news": "number",
+        "other": "number"
+      },
+      "average_credibility": "number (0-1)",
+      "average_relevance": "number (0-1)"
+    },
+    "quality_concerns": [
+      {
+        "concern_id": "string",
+        "type": "outdated | biased | insufficient | irrelevant | unreplicated | circular",
+        "description": "string",
+        "affected_claims": [
+          "string"
+        ],
+        "severity": "high | medium | low"
+      }
+    ],
+    "meta": {
+      "total_evidence_pieces": "number",
+      "average_evidence_strength": "number (0-1)",
+      "well_supported_claims_percent": "number (0-100)",
+      "key_evidence_gaps": [
+        "string"
+      ]
+    }
+  },
+  "extraction_focus": [
+    "evidence",
+    "sources",
+    "claims",
+    "citations",
+    "data",
+    "methodology"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "comparative_matrix_table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/evidence_quality_assessment.py"
+}

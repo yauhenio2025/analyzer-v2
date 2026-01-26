@@ -1,0 +1,109 @@
+{
+  "engine_key": "temporal_multiscale",
+  "engine_name": "Multi-Scale Temporal Analyzer",
+  "description": "Analyzes temporal patterns at micro (events), meso (trends), and macro (structural) scales. Maps how events at one scale influence patterns at others, revealing temporal dynamics invisible at a single timescale.",
+  "version": 1,
+  "category": "temporal",
+  "kind": "synthesis",
+  "reasoning_domain": "temporality",
+  "researcher_question": "How do events relate across different time scales?",
+  "extraction_prompt": "\nYou are an expert in temporal analysis, examining phenomena across multiple time scales.\n\nFor this article, extract temporal information at THREE scales:\n\n1. **MICRO-EVENTS** (days to weeks):\n   - Individual events, decisions, announcements\n   - Immediate causes and effects\n   - Specific dates when possible\n   - Key actors involved\n\n2. **MESO-PATTERNS** (months to years):\n   - Trends developing over time\n   - Cycles and recurring patterns\n   - Accelerations or decelerations\n   - Driving forces behind patterns\n\n3. **MACRO-TRENDS** (years to decades):\n   - Long-duration structural changes\n   - Path dependencies and historical constraints\n   - Transformations in fundamental structures\n   - Trajectories (ascending, descending, cyclical)\n\n4. **SCALE INTERACTIONS**:\n   - How micro-events aggregate into meso-patterns\n   - How macro-trends constrain micro-events\n   - Bottom-up vs top-down causation\n   - Time lags between scales\n\n5. **TEMPORAL MARKERS**:\n   - Turning points and ruptures\n   - Moments of acceleration or consolidation\n   - Before/after divisions\n\n\nExtract events and patterns at all three scales. Trace how scales interact.\n",
+  "curation_prompt": "\nYou are synthesizing multi-scale temporal extractions from multiple articles.\n\nYour task:\n1. **BUILD MICRO-EVENT TIMELINE**:\n   - Deduplicate events mentioned across articles\n   - Establish clear chronological ordering\n   - Connect causes and effects\n\n2. **IDENTIFY MESO-PATTERNS**:\n   - Find patterns that emerge from aggregated events\n   - Classify pattern types (trend, cycle, acceleration)\n   - Name patterns descriptively\n\n3. **TRACE MACRO-TRENDS**:\n   - Identify long-duration structural changes\n   - Show how they emerge from meso-patterns\n   - Note path dependencies\n\n4. **MAP SCALE INTERACTIONS**:\n   - Show how micro-events build into meso-patterns\n   - Show how macro-trends shape what's possible at micro level\n   - Identify bidirectional feedback loops\n\n5. **MARK KEY TEMPORAL POINTS**:\n   - Identify turning points where trajectory changed\n   - Note moments of rupture or consolidation\n\n\nCreate a unified multi-scale temporal map of the discourse.\n",
+  "concretization_prompt": "\nTransform the temporal analysis to use concrete, descriptive names:\n\n1. Name events specifically:\n   - \"E1\" -> \"Silicon Valley Bank Collapse (March 2023)\"\n\n2. Name patterns descriptively:\n   - \"Pattern1\" -> \"Accelerating Fintech Regulation Wave (2021-2024)\"\n\n3. Name macro-trends substantively:\n   - \"Trend1\" -> \"Post-2008 Financial Oversight Expansion\"\n\n4. Describe scale interactions concretely:\n   - Include specific mechanisms of influence\n\nPreserve all temporal relationships and metrics.\nMake the analysis immediately useful for temporal reasoning.\n",
+  "canonical_schema": {
+    "micro_events": [
+      {
+        "event_id": "string",
+        "description": "string",
+        "date": "string (ISO date or period)",
+        "duration": "string (hours, days, weeks)",
+        "actors": [
+          "string"
+        ],
+        "immediate_causes": [
+          "event_id"
+        ],
+        "immediate_effects": [
+          "event_id"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "meso_patterns": [
+      {
+        "pattern_id": "string",
+        "name": "string",
+        "description": "string",
+        "timespan": "string (e.g., '2020-2023')",
+        "pattern_type": "trend | cycle | acceleration | deceleration | reversal",
+        "constituent_events": [
+          "event_id"
+        ],
+        "driving_forces": [
+          "string"
+        ],
+        "indicators": [
+          "string"
+        ]
+      }
+    ],
+    "macro_trends": [
+      {
+        "trend_id": "string",
+        "name": "string",
+        "description": "string",
+        "timespan": "string (decades)",
+        "structural_nature": "string (what structural feature is changing)",
+        "contributing_patterns": [
+          "pattern_id"
+        ],
+        "path_dependency": "string (how past constrains present)",
+        "trajectory": "ascending | descending | transformative | cyclical"
+      }
+    ],
+    "scale_interactions": [
+      {
+        "interaction_id": "string",
+        "from_scale": "micro | meso | macro",
+        "to_scale": "micro | meso | macro",
+        "mechanism": "string (how one scale affects another)",
+        "from_element": "string (event_id, pattern_id, or trend_id)",
+        "to_element": "string",
+        "direction": "bottom_up | top_down | bidirectional",
+        "lag_time": "string"
+      }
+    ],
+    "temporal_markers": [
+      {
+        "marker_id": "string",
+        "type": "turning_point | acceleration | rupture | consolidation",
+        "date": "string",
+        "description": "string",
+        "significance": "string"
+      }
+    ],
+    "meta": {
+      "total_micro_events": "number",
+      "total_meso_patterns": "number",
+      "total_macro_trends": "number",
+      "temporal_range": "string",
+      "dominant_scale": "micro | meso | macro"
+    }
+  },
+  "extraction_focus": [
+    "micro_events",
+    "meso_patterns",
+    "macro_trends",
+    "temporal_markers",
+    "scale_interactions"
+  ],
+  "primary_output_modes": [
+    "gemini_timeline",
+    "structured_text_report",
+    "mermaid_timeline"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/temporal_multiscale.py"
+}

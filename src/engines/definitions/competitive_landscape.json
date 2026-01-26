@@ -1,0 +1,162 @@
+{
+  "engine_key": "competitive_landscape",
+  "engine_name": "Competitive Landscape Mapper",
+  "description": "Maps competitive positioning and market dynamics. Identifies key players, their strategic positions, competitive advantages, and the tensions that shape market evolution.",
+  "version": 1,
+  "category": "market",
+  "kind": "relational",
+  "reasoning_domain": "landscape",
+  "researcher_question": "Who are the key competitors, how are they positioned, and what dynamics drive the market?",
+  "extraction_prompt": "\nYou are an expert competitive analyst mapping market positioning and dynamics.\n\nFor this article, extract ALL competitive information:\n\n## 1. COMPETITORS\nFor each company/player mentioned:\n- **NAME**: Company or organization\n- **TYPE**:\n  - INCUMBENT: Established market leader\n  - CHALLENGER: Growing competitor challenging leaders\n  - NICHE: Specialized player in specific segment\n  - EMERGING: New entrant with potential\n  - DECLINING: Losing market position\n- **MARKET POSITION**:\n  - Market share (if mentioned)\n  - Position type: leader, challenger, follower, niche\n  - Geographic and segment strengths\n\n## 2. COMPETITIVE ADVANTAGES\nFor each competitor, identify:\n- **ADVANTAGE TYPE**:\n  - SCALE: Size-based advantages\n  - TECHNOLOGY: Technical capabilities\n  - BRAND: Recognition and trust\n  - NETWORK: Network effects\n  - COST: Cost structure advantages\n  - REGULATION: Regulatory moats\n  - TALENT: Human capital\n  - DATA: Data advantages\n- **DESCRIPTION**: How does this advantage manifest?\n- **SUSTAINABILITY**: How durable is this advantage?\n\n## 3. MARKET SEGMENTS\nFor each segment mentioned:\n- **SEGMENT NAME**: What's the segment?\n- **SIZE**: Market size if mentioned\n- **GROWTH RATE**: Growing, stable, declining\n- **KEY PLAYERS**: Who competes here?\n- **COMPETITIVE INTENSITY**: How fierce is competition?\n- **BARRIERS TO ENTRY**: What stops new entrants?\n\n## 4. STRATEGIC MOVES\nFor each strategic action:\n- **ACTOR**: Who made the move?\n- **MOVE TYPE**: Product launch, market entry, price change, acquisition, partnership, exit, pivot\n- **DESCRIPTION**: What happened?\n- **TARGET SEGMENT**: What segment was targeted?\n- **COMPETITIVE RESPONSE**: How did competitors react?\n\n## 5. COMPETITIVE TENSIONS\nWhere is competition most intense?\n- **COMPETITORS INVOLVED**: Who is competing?\n- **TENSION TYPE**: Direct competition, substitute threat, value chain conflict, platform competition\n- **BATTLEGROUND**: Where does competition occur?\n- **INTENSITY**: How intense?\n\n## 6. POSITIONING\nHow are competitors positioned relative to each other?\n- What dimensions differentiate them?\n- Who is positioned similarly?\n- Who occupies unique positions?\n\n\nMap the complete competitive landscape.\n",
+  "curation_prompt": "\nYou are synthesizing competitive data from multiple articles into a comprehensive market map.\n\nYour task:\n1. **CONSOLIDATE COMPETITORS**: Build complete competitor profiles\n   - Merge information across articles\n   - Document market position and advantages\n   - Classify by type (incumbent, challenger, etc.)\n\n2. **MAP MARKET SEGMENTS**:\n   - Define key segments\n   - Size and growth where known\n   - Key players per segment\n   - Competitive intensity\n\n3. **ANALYZE COMPETITIVE DYNAMICS**:\n   - Type of competition (rivalry, cooperation, disruption)\n   - Intensity and trajectory\n   - Key players involved\n\n4. **CATALOG STRATEGIC MOVES**:\n   - Recent moves by each competitor\n   - Competitive responses\n   - Timeline of market evolution\n\n5. **BUILD POSITIONING MAP**:\n   - Identify key differentiation axes\n   - Position each competitor\n   - Note strategic groups\n\n6. **IDENTIFY COMPETITIVE TENSIONS**:\n   - Where is competition most intense?\n   - What are the key battlegrounds?\n   - Who is in direct conflict?\n\n7. **CALCULATE METRICS**:\n   - Total competitors by type\n   - Segment count\n   - Strategic move count\n   - Average competitive intensity\n\n\nCreate a comprehensive competitive landscape map for strategic planning.\n",
+  "concretization_prompt": "\nTransform the competitive data to be immediately usable:\n\n1. Replace generic IDs with company names:\n   - \"C1\" \u2192 \"Microsoft (Incumbent, 35% share)\"\n   - \"S1\" \u2192 \"Enterprise Cloud Segment ($200B)\"\n\n2. Clarify competitive advantages:\n   - Make specific to each competitor\n   - Note sustainability\n\n3. Format positioning map clearly:\n   - Define axes with clear labels\n   - Position competitors with rationale\n\n4. Highlight strategic tensions:\n   - Make key rivalries prominent\n   - Note battlegrounds and intensity\n\n5. Show actionable insights:\n   - Key competitive dynamics\n   - Recent strategic moves\n   - Emerging threats/opportunities\n\nPreserve all positioning and competitive relationships.\nMake the landscape immediately useful for strategic analysis.\n",
+  "canonical_schema": {
+    "competitors": [
+      {
+        "competitor_id": "string",
+        "name": "string",
+        "type": "incumbent | challenger | niche | emerging | declining",
+        "description": "string",
+        "market_position": {
+          "market_share": "string (e.g., 35%, leader, etc.)",
+          "position_type": "leader | challenger | follower | niche",
+          "geographic_strength": [
+            "string"
+          ],
+          "segment_strength": [
+            "string"
+          ]
+        },
+        "competitive_advantages": [
+          {
+            "advantage_type": "scale | technology | brand | network | cost | regulation | talent | data",
+            "description": "string",
+            "sustainability": "high | medium | low"
+          }
+        ],
+        "weaknesses": [
+          "string"
+        ],
+        "strategic_focus": [
+          "string"
+        ],
+        "recent_moves": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "market_segments": [
+      {
+        "segment_id": "string",
+        "segment_name": "string",
+        "description": "string",
+        "size": "string (dollar value or relative)",
+        "growth_rate": "string",
+        "key_players": [
+          "competitor_id"
+        ],
+        "competitive_intensity": "high | medium | low",
+        "barriers_to_entry": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "competitive_dynamics": [
+      {
+        "dynamic_id": "string",
+        "dynamic_type": "rivalry | cooperation | disruption | consolidation | fragmentation",
+        "description": "string",
+        "players_involved": [
+          "competitor_id"
+        ],
+        "intensity": "high | medium | low",
+        "trajectory": "intensifying | stable | de-escalating",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "strategic_moves": [
+      {
+        "move_id": "string",
+        "actor": "string (competitor_id)",
+        "move_type": "product_launch | market_entry | price_change | acquisition | partnership | exit | pivot",
+        "description": "string",
+        "target_segment": "string",
+        "competitive_response": "string or null",
+        "date": "string",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "positioning_map": {
+      "axes": [
+        {
+          "axis_id": "string",
+          "axis_name": "string",
+          "low_end": "string",
+          "high_end": "string"
+        }
+      ],
+      "positions": [
+        {
+          "competitor_id": "string",
+          "x_position": "number (0-100)",
+          "y_position": "number (0-100)",
+          "rationale": "string"
+        }
+      ]
+    },
+    "competitive_tensions": [
+      {
+        "tension_id": "string",
+        "competitors": [
+          "competitor_id"
+        ],
+        "tension_type": "direct_competition | substitute_threat | value_chain_conflict | platform_competition",
+        "description": "string",
+        "battleground": "string (where competition occurs)",
+        "intensity": "high | medium | low",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_competitors": "number",
+      "competitors_by_type": {
+        "incumbent": "number",
+        "challenger": "number",
+        "niche": "number",
+        "emerging": "number"
+      },
+      "total_segments": "number",
+      "total_strategic_moves": "number",
+      "average_competitive_intensity": "string",
+      "dominant_dynamic": "string"
+    }
+  },
+  "extraction_focus": [
+    "competitors",
+    "positioning",
+    "strategy",
+    "advantages",
+    "market_segments",
+    "rivalry"
+  ],
+  "primary_output_modes": [
+    "gemini_landscape",
+    "gemini_quadrant",
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/competitive_landscape.py"
+}

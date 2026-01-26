@@ -1,0 +1,115 @@
+{
+  "engine_key": "reproducibility_assessor",
+  "engine_name": "Reproducibility Assessor",
+  "description": "Assesses reproducibility and replicability of research. Identifies barriers to reproduction, documentation gaps, data availability issues, and replication evidence. Essential for evaluating research robustness and trustworthiness.",
+  "version": 1,
+  "category": "methodology",
+  "kind": "synthesis",
+  "reasoning_domain": "methodology",
+  "researcher_question": "Can this research be reproduced?",
+  "extraction_prompt": "\nYou are a REPRODUCIBILITY ASSESSOR \u2014 examining whether research can be\nreproduced and replicated by others.\n\n## THE REPRODUCIBILITY CRISIS\n\nMuch research cannot be reproduced:\n- Data not available\n- Methods not fully documented\n- Analysis code not provided\n- Results don't replicate\n\nThis is the reproducibility crisis \u2014 and it matters for what we can trust.\n\n## KEY CONCEPTS\n\n### REPRODUCIBILITY\nSame data + same analysis = same results\n- Can someone else run your analysis and get the same numbers?\n- Requires: data access, code access, documentation\n\n### REPLICABILITY\nNew data + same methods = consistent results\n- Can someone else collect new data and find the same effect?\n- Requires: clear methods, generalizable findings\n\n### TRANSPARENCY\n- Is the research process fully visible?\n- Pre-registration, open data, open code\n- All analyses reported (not just significant ones)\n\n## YOUR TASK\n\n### STEP 1: ASSESS DATA AVAILABILITY\nCan others access the data?\n- Is data described in detail?\n- Is it publicly available?\n- If restricted, how can access be obtained?\n- What barriers exist?\n\n### STEP 2: ASSESS METHOD DOCUMENTATION\nAre methods fully documented?\n- Is there a step-by-step protocol?\n- Are materials specified?\n- Are parameters documented?\n- Is analysis code available?\n- What's missing?\n\n### STEP 3: ASSESS ANALYSIS TRANSPARENCY\nIs the analysis process transparent?\n- Was the analysis plan pre-registered?\n- Are all analyses reported (or just significant ones)?\n- What robustness checks were done?\n- How many researcher degrees of freedom exist?\n- What's the p-hacking risk?\n\n### STEP 4: IDENTIFY REPRODUCIBILITY BARRIERS\nWhat prevents reproduction?\n- Data barriers (access, format, documentation)\n- Method barriers (undocumented steps, tacit knowledge)\n- Resource barriers (equipment, expertise, cost)\n- Other barriers\n\n### STEP 5: ASSESS REPLICATION EVIDENCE\nHas this been replicated?\n- Direct replications (same methods)?\n- Conceptual replications (different methods, same concept)?\n- Failed replications?\n- Meta-analyses?\n\n### STEP 6: OVERALL ASSESSMENT\nHow reproducible is this research?\n- Computational reproducibility (can we get same numbers?)\n- Methodological reproducibility (can we follow the methods?)\n- Expected replicability (would it replicate with new data?)\n\n### STEP 7: RECOMMENDATIONS\nWhat's needed for reproducibility?\n- What should authors provide?\n- What caveats should readers note?\n- What should replicators know?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about reproducibility barriers.\nDistinguish reproducibility from replicability.\nFocus on barriers that affect main conclusions.\n",
+  "curation_prompt": "\nSynthesize reproducibility assessments from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **COMPARE TRANSPARENCY**: How do sources compare on transparency?\n2. **VALIDATE METHODS**: Do sources provide enough methodological detail?\n3. **ASSESS REPLICATION**: What does replication evidence show?\n4. **IDENTIFY PATTERNS**: Common reproducibility problems across sources?\n5. **SYNTHESIZE**: Overall reproducibility assessment\n\n## OUTPUT GUIDANCE\n\nCreate unified assessment of reproducibility and replicability.\n",
+  "concretization_prompt": "\nTransform reproducibility assessment into clear report:\n\n1. **DATA AVAILABILITY**\n   - Described: [Y/N/Partial]\n   - Accessible: [Public/Restricted/Unavailable]\n   - Barriers: [List]\n\n2. **METHOD DOCUMENTATION**\n   - Protocol detail: [Comprehensive/Adequate/Sparse/Missing]\n   - Materials specified: [Y/N]\n   - Code available: [Y/N]\n   - Documentation gaps: [List]\n\n3. **ANALYSIS TRANSPARENCY**\n   - Pre-registered: [Y/N]\n   - All analyses reported: [Y/N]\n   - Robustness checks: [List]\n   - P-hacking risk: [Low/Medium/High]\n\n4. **REPRODUCIBILITY BARRIERS** (ranked by severity)\n   | Barrier | Type | Severity | Surmountable? |\n   |---------|------|----------|---------------|\n\n5. **REPLICATION EVIDENCE**\n   - Direct replications: [Success/Failure/None]\n   - Conceptual replications: [Success/Failure/None]\n   - Overall status: [Well-replicated/Mixed/Not replicated/Unknown]\n\n6. **OVERALL REPRODUCIBILITY ASSESSMENT**\n   - Computational: [High/Medium/Low]\n   - Methodological: [High/Medium/Low]\n   - Expected replicability: [High/Medium/Low]\n\n7. **RECOMMENDATIONS**\n   - For readers: [Caveats]\n   - For replicators: [Advice]\n\n8. **BOTTOM LINE**\n   [Can this research be trusted based on reproducibility?]\n",
+  "canonical_schema": {
+    "research_context": {
+      "research_type": "experimental | observational | computational | qualitative | mixed",
+      "main_claims": [
+        "string - primary findings"
+      ],
+      "methods_overview": "string - brief method summary"
+    },
+    "data_availability": {
+      "data_described": "yes | no | partial",
+      "data_accessible": "public | restricted | unavailable | not_specified",
+      "data_location": "string - where data can be accessed",
+      "data_format": "string - how data is stored",
+      "data_barriers": [
+        "string - obstacles to data access"
+      ],
+      "assessment": "fully_available | partially_available | unavailable"
+    },
+    "method_documentation": {
+      "protocol_detail": "comprehensive | adequate | sparse | missing",
+      "materials_specified": "yes | no | partial",
+      "procedures_step_by_step": "yes | no | partial",
+      "parameters_documented": "yes | no | partial",
+      "analysis_code_available": "yes | no | partial",
+      "documentation_gaps": [
+        "string - what's missing"
+      ],
+      "assessment": "fully_documented | partially_documented | poorly_documented"
+    },
+    "analysis_transparency": {
+      "analysis_plan_preregistered": "yes | no | unclear",
+      "all_analyses_reported": "yes | no | unclear",
+      "robustness_checks": [
+        "string - sensitivity analyses reported"
+      ],
+      "researcher_degrees_of_freedom": [
+        "string - choices that could affect results"
+      ],
+      "p_hacking_risk": "low | medium | high",
+      "assessment": "transparent | somewhat_transparent | opaque"
+    },
+    "reproducibility_barriers": [
+      {
+        "barrier_id": "string - B1, B2, etc.",
+        "barrier_type": "data | method | resource | expertise | other",
+        "description": "string - what the barrier is",
+        "severity": "minor | moderate | severe",
+        "surmountable": "yes | no | with_effort"
+      }
+    ],
+    "replication_evidence": {
+      "direct_replications": [
+        "string - studies that replicated directly"
+      ],
+      "conceptual_replications": [
+        "string - studies that replicated conceptually"
+      ],
+      "failed_replications": [
+        "string - studies that failed to replicate"
+      ],
+      "replication_rate": "string - if known",
+      "meta_analyses": [
+        "string - relevant meta-analyses"
+      ],
+      "overall_replication_status": "well_replicated | mixed | not_replicated | unknown"
+    },
+    "reproducibility_assessment": {
+      "computational_reproducibility": "high | medium | low | unknown",
+      "methodological_reproducibility": "high | medium | low | unknown",
+      "replicability_expectation": "high | medium | low | unknown",
+      "overall_reproducibility": "high | medium | low | unknown"
+    },
+    "recommendations": {
+      "for_authors": [
+        "string - what authors should provide"
+      ],
+      "for_readers": [
+        "string - caveats for readers"
+      ],
+      "for_replicators": [
+        "string - advice for those attempting replication"
+      ]
+    },
+    "meta": {
+      "barriers_identified": "number",
+      "severe_barriers": "number",
+      "documentation_completeness": "percentage or qualitative"
+    }
+  },
+  "extraction_focus": [
+    "methods",
+    "data_sources",
+    "analysis_procedures",
+    "transparency_indicators",
+    "replication_evidence"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/reproducibility_assessor.py"
+}
