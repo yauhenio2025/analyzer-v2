@@ -85,9 +85,9 @@ POST /v1/chains/recommend            # LLM recommends chain
 | Phase | Status | Description |
 |-------|--------|-------------|
 | 1. Create Analyzer v2 | ✓ DONE | FastAPI service, 123 engines, deployed |
-| 2. Complete Paradigms | IN PROGRESS | Add hegelian_critical, pragmatist_praxis, link engines |
+| 2. Complete Paradigms | ✓ DONE | 4 paradigms (marxist, brandomian, hegelian_critical, pragmatist_praxis), 12 engines linked |
 | 3. Engine Chains | DEFERRED | More chains, LLM recommendation |
-| 4. Wire Current Analyzer | PENDING | Add v2 client, cache, modify prompt loading |
+| 4. Wire Current Analyzer | ✓ DONE | v2 client added, caching, prompt loading modified |
 | 5. Consumer Integration | PENDING | Critic, Visualizer MCP, IE |
 
 ## Related Projects

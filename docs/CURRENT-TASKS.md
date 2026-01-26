@@ -57,43 +57,14 @@
 - **Deployed**: https://analyzer-v2.onrender.com
 - **GitHub**: https://github.com/yauhenio2025/analyzer-v2
 
-### Phase 2 (Partial): Add Paradigms
-- **Status**: IN_PROGRESS
+### Phase 2: Add Paradigms ✓
+- **Status**: COMPLETE
 - **Completed**:
   - `src/paradigms/instances/marxist.json` - Ported from IE mockParadigmData.js
   - `src/paradigms/instances/brandomian.json` - New, for inferential analysis
-- **Remaining**: See task below
-
----
-
-## Phase 2: Complete Paradigms (IN PROGRESS)
-
-### Task: Add Hegelian Critical Paradigm
-- **Status**: PENDING
-- **Description**: Create `src/paradigms/instances/hegelian_critical.json` based on Gillian Rose, Adorno, and critical theory tradition
-- **Key Elements**:
-  - Guiding thinkers: Gillian Rose, Theodor Adorno, Hegel
-  - Focus: Determinate negation, broken middle, speculative identity
-  - 4-layer ontology structure matching marxist.json format
-- **Reference**: Look at IE mockParadigmData.js for Foucauldian paradigm structure as additional example
-
-### Task: Add Pragmatist Praxis Paradigm
-- **Status**: PENDING
-- **Description**: Create `src/paradigms/instances/pragmatist_praxis.json` based on György Márkus, Hans Joas, and pragmatist tradition
-- **Key Elements**:
-  - Guiding thinkers: György Márkus, Hans Joas, John Dewey
-  - Focus: Technical normativity, creative action, practice theory
-  - Critique of reification of communicative sphere
-- **Reference**: Márkus's "Language and Production" for technical normativity concepts
-
-### Task: Link Engines to Paradigms
-- **Status**: PENDING
-- **Description**: Update engine JSON files to include `paradigm_keys` field
-- **Files to Modify**:
-  - `src/engines/definitions/dialectical_structure.json` → add `["marxist", "hegelian_critical"]`
-  - `src/engines/definitions/inferential_commitment_mapper*.json` → add `["brandomian"]`
-  - `src/engines/definitions/reification_detector.json` → add `["marxist", "pragmatist_praxis"]`
-  - Review all 123 engines for paradigm associations
+  - `src/paradigms/instances/hegelian_critical.json` - Rose, Adorno, Hegel
+  - `src/paradigms/instances/pragmatist_praxis.json` - Márkus, Joas, Dewey
+  - 12 engines linked to paradigms via paradigm_keys
 
 ---
 
@@ -111,36 +82,37 @@
 
 ---
 
-## Phase 4: Wire Current Analyzer to v2 (PENDING)
+## Phase 4: Wire Current Analyzer to v2 ✓
 
-### Task: Add Analyzer v2 Client
-- **Status**: PENDING
-- **Description**: Add httpx client to current Analyzer that fetches prompts from v2
-- **Files to Create/Modify** in `/home/evgeny/projects/analyzer`:
-  - `src/clients/analyzer_v2.py` - New client class
-  - Add to `src/core/config.py`:
-    ```python
-    ANALYZER_V2_URL = os.getenv("ANALYZER_V2_URL", "https://analyzer-v2.onrender.com")
-    ```
+### Task: Add Analyzer v2 Client ✓
+- **Status**: COMPLETE
+- **Files Created** in `/home/evgeny/projects/analyzer`:
+  - `src/clients/__init__.py` - Package exports
+  - `src/clients/analyzer_v2.py` - Full async httpx client with:
+    - In-memory cache with TTL (24h default)
+    - Automatic retry on transient failures (tenacity)
+    - Graceful degradation - never breaks pipeline
+    - Support for all prompt types + paradigms + schemas
 
-### Task: Add Caching Layer
-- **Status**: PENDING
-- **Description**: Cache engine definitions locally to avoid hitting v2 API every request
-- **Implementation Options**:
-  1. In-memory cache with TTL (simple)
-  2. Redis cache (if already using Redis)
-  3. File-based cache with periodic refresh
+### Task: Add Caching Layer ✓
+- **Status**: COMPLETE
+- **Implementation**: In-memory cache with TTL (simpler, sufficient)
+- **Location**: `src/clients/analyzer_v2.py` - `CacheEntry` class
 
-### Task: Modify Prompt Loading
-- **Status**: PENDING
-- **Description**: Change engine classes to fetch prompts from v2 instead of local
+### Task: Modify Prompt Loading ✓
+- **Status**: COMPLETE
 - **Key Changes**:
-  - `src/engines/base.py` - Add `get_prompt_from_v2()` method
-  - Or: Create adapter that wraps v2 definitions as engine classes
-- **Test**: Verify current Analyzer works identically with prompts from v2
+  - `src/core/extraction.py` - v2 client is priority 1
+  - `src/core/curation.py` - v2 client is priority 1
+- **Config**: `config/settings.py` - Added `analyzer_v2_*` settings
+
+Prompt resolution priority is now:
+1. Analyzer v2 (remote definitions service)
+2. Database prompts
+3. Hardcoded engine prompts
 
 ### Task: Optional Rename
-- **Status**: PENDING (LOW PRIORITY)
+- **Status**: DEFERRED
 - **Description**: Rename current Analyzer → "Renderer" or "Executor"
 - **Notes**: Cosmetic, can do later or skip
 
