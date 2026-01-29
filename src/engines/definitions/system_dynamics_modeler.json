@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "systems",
   "researcher_question": "How does this system evolve over time?",
-  "extraction_prompt": "\nYou are modeling SYSTEM DYNAMICS \u2014 how systems evolve over time through stocks\n(accumulations), flows (rates of change), and delays.\n\n## SYSTEM DYNAMICS FUNDAMENTALS\n\n### STOCKS\nThings that accumulate or deplete over time:\n- Physical: inventory, population, debt, pollution\n- Intangible: trust, knowledge, reputation, morale\n- Key insight: Stocks change only through their flows\n\n### FLOWS\nRates of change that alter stocks:\n- Inflows: Add to stock\n- Outflows: Subtract from stock\n- Key insight: Flow rates are controlled by stocks, decisions, delays\n\n### DELAYS\nTime lags between cause and effect:\n- Information delays: Learning, detection\n- Material delays: Physical processes\n- Decision delays: Response time\n- Key insight: Delays create oscillation and overshoot\n\n### BEHAVIOR MODES\nCharacteristic patterns:\n1. Exponential growth: R loop dominance\n2. Goal-seeking: B loop dominance\n3. Oscillation: Delays in B loops\n4. S-shaped growth: R then B dominance\n5. Overshoot and collapse: R then delayed B\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY STOCKS\nWhat accumulates in this system?\n- What changes level only gradually?\n- What has memory of past flows?\n- What serves as a buffer?\n\n### STEP 2: IDENTIFY FLOWS\nWhat changes the stocks?\n- What adds to each stock?\n- What subtracts from each stock?\n- What controls each flow rate?\n\n### STEP 3: IDENTIFY DELAYS\nWhere are time lags?\n- How long between action and effect?\n- What type of delay?\n- What does the delay cause?\n\n### STEP 4: MAP BEHAVIOR MODES\nWhat patterns appear?\n- Which stocks show what behavior?\n- What structure causes the pattern?\n- Where is the system in its trajectory?\n\n### STEP 5: IDENTIFY EQUILIBRIA\nWhere are balance points?\n- Stable (returns when disturbed)?\n- Unstable (departs when disturbed)?\n- What maintains the balance?\n\n### STEP 6: RECOGNIZE ARCHETYPES\nClassic system patterns:\n- Limits to growth? Shifting the burden?\n- Tragedy of the commons? Eroding goals?\n- Escalation? Success to the successful?\n\n### STEP 7: ASSESS OVERALL DYNAMICS\nSystem trajectory:\n- Which behavior mode dominates?\n- Where is the system heading?\n- What are the critical stocks/flows?\n\n\n## OUTPUT GUIDANCE\n\nModel the essential structure that explains dynamic behavior.\nFocus on stocks, flows, and delays that drive key patterns.\n",
-  "curation_prompt": "\nSynthesize system dynamics analyses from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **CONSOLIDATE STRUCTURE**: Merge stock-flow models, reconcile differences\n2. **VALIDATE DYNAMICS**: Do sources agree on behavior patterns?\n3. **IDENTIFY GAPS**: What structure appears in one source but not others?\n4. **ASSESS TRAJECTORY**: Multi-source view of where system is heading\n5. **SYNTHESIZE MODEL**: Build integrated dynamic model\n\n## OUTPUT GUIDANCE\n\nCreate unified stock-flow model that captures essential dynamics.\n",
-  "concretization_prompt": "\nTransform system dynamics analysis into clear model:\n\n1. **STOCK-FLOW DIAGRAM** (text representation)\n   ```\n   [Stock A] \u2190\u2500\u2500 inflow F1 \u2190\u2500\u2500 [Source]\n        \u2502\n        \u2514\u2500\u2500\u2192 outflow F2 \u2500\u2500\u2192 [Stock B]\n   ```\n\n2. **STOCKS TABLE**\n   | Stock | Description | Current | Trajectory |\n   |-------|-------------|---------|------------|\n\n3. **FLOWS TABLE**\n   | Flow | From \u2192 To | Rate | Determinants |\n   |------|-----------|------|--------------|\n\n4. **DELAYS**\n   | Location | Type | Duration | Effect |\n   |----------|------|----------|--------|\n\n5. **BEHAVIOR MODES**\n   - [Stock]: [Pattern] because [Structure]\n\n6. **SYSTEM ARCHETYPES PRESENT**\n   - [Archetype]: [How it manifests]\n\n7. **DYNAMIC ASSESSMENT**\n   - Dominant mode: [Pattern]\n   - Trajectory: [Where heading]\n   - Critical leverage points: [Stocks/flows]\n\n8. **BOTTOM LINE**\n   [What drives system behavior? Where is it heading?]\n",
   "canonical_schema": {
     "system_context": {
       "system_name": "string - what system is being modeled",
@@ -117,5 +114,64 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/system_dynamics_modeler.py"
+  "source_file": "analyzer/src/engines/system_dynamics_modeler.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "system dynamics modeler",
+      "analysis_type_plural": "system dynamics modelers",
+      "core_question": "How does this system evolve over time?",
+      "extraction_steps": [
+        "IDENTIFY STOCKS",
+        "IDENTIFY FLOWS",
+        "IDENTIFY DELAYS",
+        "MAP BEHAVIOR MODES",
+        "IDENTIFY EQUILIBRIA",
+        "RECOGNIZE ARCHETYPES",
+        "ASSESS OVERALL DYNAMICS"
+      ],
+      "key_fields": {},
+      "id_field": "system_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "system dynamics modeler",
+      "item_type_plural": "system dynamics modelers",
+      "consolidation_rules": [
+        "CONSOLIDATE STRUCTURE: Merge stock-flow models, reconcile differences",
+        "VALIDATE DYNAMICS: Do sources agree on behavior patterns?",
+        "IDENTIFY GAPS: What structure appears in one source but not others?",
+        "ASSESS TRAJECTORY: Multi-source view of where system is heading",
+        "SYNTHESIZE MODEL: Build integrated dynamic model"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

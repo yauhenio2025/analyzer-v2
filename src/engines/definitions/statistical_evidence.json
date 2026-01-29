@@ -7,9 +7,6 @@
   "kind": "extraction",
   "reasoning_domain": "extraction",
   "researcher_question": "What quantitative evidence supports the claims, and how reliable is it?",
-  "extraction_prompt": "\nYou are an expert data analyst extracting and evaluating statistical evidence.\n\nFor this article, extract ALL statistical and quantitative information:\n\n1. **STATISTICS**: Every number, percentage, ratio mentioned\n   - Exact value (e.g., \"47%\", \"$3.2 trillion\", \"3:1 ratio\")\n   - What the statistic measures (subject)\n   - Context in which it appears\n\n2. **SOURCE INFORMATION**: Where does this data come from?\n   - Source name (organization, study, report)\n   - Source type: government, academic, industry, NGO, media\n   - Year of data\n   - Is methodology mentioned?\n\n3. **QUALITY ASSESSMENT**: Rate each statistic's reliability\n   - Source credibility (0-1)\n   - Methodology transparency (0-1)\n   - Sample size adequacy (if mentioned)\n   - Recency: current, dated, outdated\n\n4. **CLAIM STRENGTH**: How strong is the statistical claim?\n   - STRONG: Credible source, clear methodology, recent\n   - MODERATE: Some quality indicators present\n   - WEAK: Poor sourcing or methodology\n   - UNVERIFIABLE: Cannot assess quality\n\n5. **DATA PATTERNS**: Identify trends, comparisons, correlations\n   - What story do the numbers tell?\n\n\nBe comprehensive - capture every quantitative claim and assess its quality.\n",
-  "curation_prompt": "\nYou are synthesizing statistical evidence from multiple articles.\n\nYour task:\n1. **CATALOG ALL STATISTICS**: Create comprehensive inventory\n   - Group by topic/subject\n   - Note value types\n   - Preserve source information\n\n2. **IDENTIFY CONFLICTS**: Find contradictory statistics\n   - Same topic, different numbers\n   - Note magnitude of discrepancy\n   - Suggest possible explanations (different years, methodologies, definitions)\n\n3. **ASSESS OVERALL DATA QUALITY**:\n   - Average source credibility across corpus\n   - How much methodology is documented?\n   - How recent is the data overall?\n\n4. **FIND DATA GAPS**: What's missing?\n   - Topics where statistics are needed but absent\n   - Rate importance of each gap\n   - Note what data would be helpful\n\n5. **MAP DATA PATTERNS**:\n   - What trends emerge across statistics?\n   - What comparisons are most meaningful?\n\n\nCreate a comprehensive statistical evidence catalog for research use.\n",
-  "concretization_prompt": "\nTransform the statistical evidence to be immediately usable:\n\n1. Format statistics clearly:\n   - \"S1\" \u2192 \"47% of workers report job insecurity (Gallup, 2024)\"\n\n2. Name contested statistics by topic:\n   - \"Conflict1\" \u2192 \"Disputed: AI Job Displacement Rates\"\n\n3. Describe data gaps specifically:\n   - \"Gap1\" \u2192 \"Missing: Longitudinal data on reskilling outcomes\"\n\n4. Label patterns descriptively:\n   - \"Pattern1\" \u2192 \"Upward trend in automation investment 2020-2024\"\n\nPreserve all quality assessments and metrics.\nMake the catalog immediately useful for evidence-based writing.\n",
   "canonical_schema": {
     "statistics": [
       {
@@ -91,5 +88,67 @@
     "gemini_evidence_radar"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/statistical_evidence.py"
+  "source_file": "analyzer/src/engines/statistical_evidence.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "evidence",
+      "analysis_type_plural": "evidence items",
+      "core_question": "What quantitative evidence supports the claims, and how reliable is it?",
+      "extraction_steps": [
+        "STATISTICS",
+        "SOURCE INFORMATION",
+        "QUALITY ASSESSMENT",
+        "CLAIM STRENGTH",
+        "DATA PATTERNS"
+      ],
+      "key_fields": {},
+      "id_field": "statistical_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "evidence",
+      "item_type_plural": "evidence items",
+      "consolidation_rules": [
+        "CATALOG ALL STATISTICS: Create comprehensive inventory",
+        "IDENTIFY CONFLICTS: Find contradictory statistics",
+        "ASSESS OVERALL DATA QUALITY: - Average source credibility across corpus",
+        "FIND DATA GAPS: What's missing?",
+        "MAP DATA PATTERNS: - What trends emerge across statistics?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "S1",
+          "to": "47% of workers report job insecurity (Gallup, 2024)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

@@ -1,0 +1,138 @@
+{#
+  CURATION STAGE TEMPLATE
+
+  Composed with engine-specific context for synthesis/consolidation prompts.
+
+  Variables available:
+  - engine_key: str
+  - audience: str
+  - curation: dict (from CurationContext)
+  - framework_primer: str (if framework specified)
+  - has_framework: bool
+  - vocabulary: dict (audience-specific terms)
+  - audience_guidance: str
+#}
+
+# {{ curation.item_type | title }} Synthesis
+
+You are synthesizing **{{ curation.item_type_plural }}** extracted from multiple documents into a unified analysis.
+
+---
+
+{{ audience_guidance }}
+
+---
+
+## SYNTHESIS TASK
+
+You have {{ curation.item_type }} extractions from multiple documents.
+Now synthesize them into a unified picture.
+
+### ANALYZING MULTIPLE DOCUMENTS AS A DISCOURSE
+
+When you have multiple documents, you're not just analyzing them separately -
+you're mapping a CONVERSATION across texts, authors, and time.
+
+Look for:
+- Where one author **RESPONDS** to another (implicitly or explicitly)
+- **SHARED** {{ curation.item_type_plural }} everyone seems to accept
+- **CONTESTED** {{ curation.item_type_plural }} where authors diverge
+- What's being **ASSUMED** without argument (common ground)
+- What's being **FOUGHT** over (active disputes)
+
+---
+
+## CONSOLIDATION RULES
+
+{% if curation.consolidation_rules %}
+{% for rule in curation.consolidation_rules %}
+{{ loop.index }}. {{ rule }}
+{% endfor %}
+{% else %}
+1. **DEDUPLICATE**: Merge equivalent {{ curation.item_type_plural }} that appear across articles
+   - Same core content + similar supporting evidence = merge
+   - Keep the best articulation from each source
+
+2. **PRESERVE PROVENANCE**: Track which document(s) each item came from
+   - Never lose source attribution
+   - Note when multiple sources support the same item
+
+3. **IDENTIFY CHAINS**: Find where one {{ curation.item_type }}'s conclusion feeds into another
+   - Create chain_ids and sequence items logically
+   - Note the terminal points of each chain
+
+4. **MAP RELATIONSHIPS**: Build the relationship graph
+   - What supports what?
+   - What conflicts with what?
+   - What depends on what?
+{% endif %}
+
+---
+
+{% if curation.cross_doc_patterns %}
+## CROSS-DOCUMENT PATTERNS TO IDENTIFY
+
+{% for pattern in curation.cross_doc_patterns %}
+- **{{ pattern | replace('_', ' ') | title }}**: Map where this appears across documents
+{% endfor %}
+{% endif %}
+
+---
+
+## SYNTHESIS OUTPUTS
+
+{% if curation.synthesis_outputs %}
+Build these specific outputs:
+
+{% for output in curation.synthesis_outputs %}
+### {{ loop.index }}. {{ output | replace('_', ' ') | title }}
+Create a comprehensive {{ output | replace('_', ' ') }} from the consolidated data.
+
+{% endfor %}
+{% else %}
+### 1. Consolidated Item List
+All deduplicated {{ curation.item_type_plural }} with source tracking.
+
+### 2. Relationship Map
+How {{ curation.item_type_plural }} connect across the collection.
+
+### 3. Cross-Document Dynamics
+- **Shared Ground**: {{ curation.item_type_plural | title }} everyone accepts
+- **Contested Territory**: {{ curation.item_type_plural | title }} under dispute
+- **Fault Lines**: Fundamental disagreements
+
+### 4. Author/Source Positions
+Who takes what position on key {{ curation.item_type_plural }}.
+{% endif %}
+
+---
+
+{% if curation.special_instructions %}
+## ADDITIONAL INSTRUCTIONS
+
+{{ curation.special_instructions }}
+
+---
+{% endif %}
+
+## QUALITY CHECKS
+
+Before finalizing:
+
+1. **No orphans**: Every {{ curation.item_type }} should have at least one relationship
+2. **No duplicates**: Same content shouldn't appear twice
+3. **Source tracking**: Every item traces back to source document(s)
+4. **Relationship reciprocity**: If A relates to B, B should relate to A
+5. **Audience calibration**: Language matches {{ audience }} expectations
+
+---
+
+## OUTPUT FORMAT
+
+Produce a comprehensive synthesis that:
+- Maintains all individual extractions (consolidated)
+- Adds cross-document analysis
+- Builds the relationship graph
+- Identifies patterns invisible in single-document analysis
+
+The goal is a MAP that reveals the landscape across all documents.

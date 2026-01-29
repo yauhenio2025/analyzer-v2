@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "systems",
   "researcher_question": "What unintended consequences might follow from proposed actions?",
-  "extraction_prompt": "\nYou are scanning for UNINTENDED CONSEQUENCES \u2014 the effects of actions that\nweren't intended and often weren't anticipated.\n\n## WHY UNINTENDED CONSEQUENCES MATTER\n\n\"The road to hell is paved with good intentions.\"\n\nIn complex systems:\n- Direct effects are rarely the only effects\n- Second and third-order effects can dwarf first-order effects\n- Well-intentioned interventions often produce opposite results\n- Systems push back against attempts to change them\n\n## TYPES OF UNINTENDED CONSEQUENCES\n\n### SECOND-ORDER EFFECTS\nConsequences of the direct consequences:\n- Intervention \u2192 Direct effect \u2192 Second-order effect\n- Example: Seatbelt laws \u2192 Safer cars \u2192 Riskier driving\n\n### THIRD-ORDER (AND HIGHER) EFFECTS\nFurther downstream ripples:\n- Example: Antibiotics \u2192 Resistant bacteria \u2192 Untreatable infections\n\n### PERVERSE INCENTIVES\nRules that create behavior opposite to intentions:\n- Cobra effect: Bounty on cobras \u2192 Breeding cobras for bounty\n- Teaching to the test: Measure test scores \u2192 Teach only tested material\n\n### COMPENSATING FEEDBACK\nSystem responses that cancel intended changes:\n- Cut costs \u2192 Quality drops \u2192 Customers leave \u2192 Revenue falls \u2192 Cut costs more\n- Subsidize X \u2192 X becomes inefficient \u2192 Need more subsidies\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY INTERVENTIONS\nWhat actions, policies, or changes are proposed or underway?\n- What's the stated intention?\n- What's the direct expected effect?\n\n### STEP 2: TRACE SECOND-ORDER EFFECTS\nFor each intervention, ask: \"And then what happens?\"\n- Direct effect happens. Then what?\n- Who responds to the direct effect? How?\n- What systems are affected? How do they adjust?\n\n### STEP 3: TRACE THIRD-ORDER EFFECTS\nPush further: \"And then what happens after that?\"\n- Second-order effects happen. Then what?\n- What cascade effects occur?\n- What long-term patterns emerge?\n\n### STEP 4: IDENTIFY PERVERSE INCENTIVES\nHow might the intervention create incentives for opposite behavior?\n- What are people motivated to do under the new regime?\n- How might they game the system?\n- What behaviors are rewarded that shouldn't be?\n\n### STEP 5: IDENTIFY COMPENSATING FEEDBACK\nHow might the system push back?\n- What balancing loops might activate?\n- How might the system resist change?\n- What might cancel out the intended effect?\n\n### STEP 6: FIND HISTORICAL PARALLELS\nHas something similar been tried before?\n- What happened?\n- What went wrong?\n- What lessons apply?\n\n### STEP 7: ASSESS AND RECOMMEND\nFor each unintended consequence:\n- How likely is it?\n- How severe would it be?\n- Is it reversible?\n\nOverall assessment:\n- Should intervention proceed?\n- What safeguards are needed?\n- Should it be reconsidered?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about causal chains. \"Things might go wrong\" is not useful.\n\"X leads to Y, which leads to Z, which is opposite of intention\" is useful.\n",
-  "curation_prompt": "\nYou are synthesizing unintended consequence analyses from multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE CONSEQUENCES\n- Merge similar consequences identified across sources\n- Note where sources agree on likely consequences\n- Identify consequences only one source sees\n\n### 2. STRENGTHEN HISTORICAL PARALLELS\n- Compile all historical parallels\n- Which parallels are strongest?\n- What do they teach?\n\n### 3. AGGREGATE RISK ASSESSMENT\n- Which consequences appear highest risk across sources?\n- Where do sources disagree on risk?\n- What's the overall risk picture?\n\n### 4. SYNTHESIZE RECOMMENDATIONS\n- What safeguards are commonly recommended?\n- What interventions should be reconsidered?\n\n## OUTPUT GUIDANCE\n\nCreate a comprehensive unintended consequence map that decision-makers\ncan use to anticipate problems.\n",
-  "concretization_prompt": "\nTransform the unintended consequence analysis into decision support:\n\n1. **CONSEQUENCE CASCADE MAP**\n   ```\n   INTERVENTION \u2192 DIRECT EFFECT\n                      \u2193\n               SECOND-ORDER EFFECT\n                      \u2193\n               THIRD-ORDER EFFECT\n   ```\n\n2. **UNINTENDED CONSEQUENCES TABLE**\n   ```\n   | Consequence | Order | Direction | Likelihood | Severity | Reversible |\n   |-------------|-------|-----------|------------|----------|------------|\n   | UC1: ...    | 2nd   | Opposite  | Likely     | Severe   | No         |\n   ```\n\n3. **PERVERSE INCENTIVES**\n   - Intended: [What intervention wants]\n   - Actual: [What people will do instead]\n   - Why: [Mechanism]\n\n4. **COMPENSATING FEEDBACK**\n   - Intervention tries to: [Change X]\n   - System responds by: [Compensating mechanism]\n   - Net effect: [What actually happens]\n\n5. **HISTORICAL WARNINGS**\n   - [Historical case]: [What happened]\n   - Lesson for current situation: [Applicable insight]\n\n6. **RISK ASSESSMENT**\n   | Intervention | Unintended Risk | Benefit vs. Risk |\n   |--------------|-----------------|------------------|\n\n7. **RECOMMENDATIONS**\n   - PROCEED WITH SAFEGUARDS: [List with safeguards]\n   - RECONSIDER: [List with reasons]\n   - ABORT: [List with reasons]\n\n8. **BOTTOM LINE**\n   [One paragraph: What are the most likely unintended consequences?\n   Should intervention proceed? What monitoring is essential?]\n",
   "canonical_schema": {
     "interventions_analyzed": [
       {
@@ -141,5 +138,58 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/unintended_consequence_scanner.py"
+  "source_file": "analyzer/src/engines/unintended_consequence_scanner.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "unintended consequence scanner",
+      "analysis_type_plural": "unintended consequence scanners",
+      "core_question": "What unintended consequences might follow from proposed actions?",
+      "extraction_steps": [
+        "IDENTIFY INTERVENTIONS",
+        "TRACE SECOND-ORDER EFFECTS",
+        "TRACE THIRD-ORDER EFFECTS",
+        "IDENTIFY PERVERSE INCENTIVES",
+        "IDENTIFY COMPENSATING FEEDBACK",
+        "FIND HISTORICAL PARALLELS",
+        "ASSESS AND RECOMMEND"
+      ],
+      "key_fields": {},
+      "id_field": "unintended_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "unintended consequence scanner",
+      "item_type_plural": "unintended consequence scanners",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

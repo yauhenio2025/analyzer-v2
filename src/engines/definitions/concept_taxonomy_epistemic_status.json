@@ -7,10 +7,60 @@
   "kind": "primitive",
   "reasoning_domain": "epistemology",
   "researcher_question": "What is the epistemic status of each chain's claims?",
-  "extraction_prompt": "You are conducting Phase 5.5: EPISTEMIC STATUS classification.\n\n## YOUR TASK\n\nAssess the EPISTEMIC STATUS of claims in each chain about \"{concept}\".\n\n## EPISTEMIC CATEGORIES\n\n1. **Empirical**: Claims about observable facts\n2. **Theoretical**: Claims within a theoretical framework\n3. **Normative**: Claims about what ought to be\n4. **Definitional**: Claims about meaning/classification\n5. **Historical**: Claims about past events\n6. **Predictive**: Claims about future states\n\n## CHAINS TO CLASSIFY\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each chain: chain_id, primary_status, supporting_evidence_type, falsifiability, certainty_level.\n\nReturn as valid JSON.",
-  "curation_prompt": "Validate epistemic status classifications.",
   "canonical_schema": {
     "type": "object"
   },
-  "paradigm_keys": []
+  "paradigm_keys": [],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What is the epistemic status of each chain's claims?",
+      "extraction_steps": [
+        "Empirical",
+        "Theoretical",
+        "Normative",
+        "Definitional",
+        "Historical",
+        "Predictive"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

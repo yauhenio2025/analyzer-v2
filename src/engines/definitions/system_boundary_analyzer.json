@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "systems",
   "researcher_question": "How are system boundaries drawn and what does that choice include/exclude?",
-  "extraction_prompt": "\nYou are analyzing SYSTEM BOUNDARIES \u2014 how systems are defined and what\nthose definitions include or exclude.\n\n## WHY BOUNDARIES MATTER\n\n\"The way we frame a problem determines the solutions we can see.\"\n\nBoundary choices:\n- Define what's \"inside\" (our responsibility) vs. \"outside\" (someone else's problem)\n- Create externalities by pushing costs/effects across the boundary\n- Privilege some stakeholders by including them, marginalizing others by excluding\n- Shape which solutions seem viable and which seem impossible\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY STATED BOUNDARIES\nHow is the system/problem/scope defined in the text?\n- What spatial boundaries? (geographic, organizational)\n- What temporal boundaries? (time periods, phases)\n- What conceptual boundaries? (what counts as relevant)\n- What stakeholder boundaries? (who's considered)\n\n### STEP 2: MAP INCLUSIONS AND EXCLUSIONS\nFor each boundary:\n- What's explicitly included?\n- What's explicitly excluded?\n- What's implicitly excluded (never mentioned but relevant)?\n\n### STEP 3: IDENTIFY EXTERNALITIES\nWhat costs, effects, or stakeholders are pushed outside the boundary?\n- Who bears costs that aren't counted?\n- What effects are ignored because they're \"external\"?\n- Whose voices are silenced by the boundary definition?\n\n### STEP 4: ANALYZE BOUNDARY TENSIONS\nWhere do conflicts arise at boundaries?\n- Resource flows across boundaries\n- Responsibility disputes\n- Authority conflicts\n- Identity issues (who belongs?)\n\n### STEP 5: CRITIQUE BOUNDARY CHOICES\nAre boundaries strategic (benefiting some parties)?\n- Who wins from this boundary definition?\n- Who loses?\n- What does the boundary choice conceal?\n\nAre boundaries arbitrary?\n- Could the boundary reasonably be drawn differently?\n- What would change if it were?\n\n### STEP 6: PROPOSE ALTERNATIVES\nWhat would happen with different boundaries?\n- Expand boundary: Include what's currently external\n- Contract boundary: Focus on core elements\n- Shift boundary: Different in/out configuration\n- Multiple boundaries: Nested systems\n\nFor each alternative:\n- How does the problem look different?\n- How do solutions change?\n- Who wins/loses differently?\n\n### STEP 7: ASSESS PERMEABILITY\nWhat crosses boundaries and how?\n- What flows in and out?\n- How is crossing controlled?\n- What shouldn't cross but does? What should cross but can't?\n\n\n## OUTPUT GUIDANCE\n\nBe explicit about boundary choices and their consequences.\nEvery boundary is a choice \u2014 make those choices visible and contestable.\n",
-  "curation_prompt": "\nYou are synthesizing boundary analyses from multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. COMPARE BOUNDARY CHOICES\n- Do different sources draw boundaries differently?\n- What's included in one source but excluded in another?\n- What do boundary differences reveal about perspectives?\n\n### 2. AGGREGATE EXTERNALITIES\n- What externalities appear across sources?\n- Are some externalities consistently ignored?\n- Who consistently bears external costs?\n\n### 3. MAP BOUNDARY POLITICS\n- Whose framing dominates across sources?\n- What alternative boundaries are never considered?\n- What does the pattern of boundaries reveal?\n\n### 4. SYNTHESIZE ALTERNATIVES\n- What boundary alternatives emerge from multi-source analysis?\n- Which alternatives would address the most externalities?\n\n## OUTPUT GUIDANCE\n\nCreate a boundary analysis that makes visible the choices that sources\noften take for granted.\n",
-  "concretization_prompt": "\nTransform the boundary analysis into actionable insight:\n\n1. **BOUNDARY MAP**\n   ```\n   INSIDE THE BOUNDARY          |  OUTSIDE THE BOUNDARY\n   [What's included]            |  [What's excluded]\n   [Who's considered]           |  [Who's ignored]\n   [What costs counted]         |  [What costs externalized]\n   ```\n\n2. **BOUNDARY CHOICES**\n   ```\n   | Boundary | Type | Justification | Who Benefits | Who Loses |\n   |----------|------|---------------|--------------|-----------|\n   | B1       | ...  | ...           | ...          | ...       |\n   ```\n\n3. **EXTERNALITIES**\n   ```\n   | Externality | Created By | Who Bears It | Magnitude | Visibility |\n   |-------------|------------|--------------|-----------|------------|\n   | ...         | B1         | ...          | Large     | Hidden     |\n   ```\n\n4. **BOUNDARY TENSIONS**\n   - At B1: [Tension description] \u2014 Involves: [Parties]\n\n5. **ALTERNATIVE BOUNDARIES**\n   - If boundary expanded to include [X]:\n     - Problem becomes: [New framing]\n     - Solutions change: [How]\n\n6. **BOUNDARY POLITICS**\n   - Current boundaries benefit: [Who]\n   - Current boundaries marginalize: [Who]\n   - Hidden by boundary choices: [What]\n\n7. **BOTTOM LINE**\n   [One paragraph: How do boundary choices shape the problem? What would\n   different boundaries reveal?]\n",
   "canonical_schema": {
     "system_boundaries": [
       {
@@ -129,5 +126,58 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/system_boundary_analyzer.py"
+  "source_file": "analyzer/src/engines/system_boundary_analyzer.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "system boundary",
+      "analysis_type_plural": "system boundarys",
+      "core_question": "How are system boundaries drawn and what does that choice include/exclude?",
+      "extraction_steps": [
+        "IDENTIFY STATED BOUNDARIES",
+        "MAP INCLUSIONS AND EXCLUSIONS",
+        "IDENTIFY EXTERNALITIES",
+        "ANALYZE BOUNDARY TENSIONS",
+        "CRITIQUE BOUNDARY CHOICES",
+        "PROPOSE ALTERNATIVES",
+        "ASSESS PERMEABILITY"
+      ],
+      "key_fields": {},
+      "id_field": "system_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "system boundary",
+      "item_type_plural": "system boundarys",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

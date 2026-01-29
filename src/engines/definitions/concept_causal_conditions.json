@@ -7,10 +7,59 @@
   "kind": "relational",
   "reasoning_domain": "causal analysis",
   "researcher_question": "What are the necessary/sufficient conditions for this concept?",
-  "extraction_prompt": "You are conducting Phase 6.4: CONDITIONS analysis.\n\n## YOUR TASK\n\nFind NECESSARY and SUFFICIENT CONDITIONS for \"{concept}\".\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## WHAT TO LOOK FOR\n\nNECESSARY: \"Without X, {concept} cannot exist\"\nSUFFICIENT: \"If X, then necessarily {concept}\"\nCONTRIBUTING: \"X makes {concept} more likely\"\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with conditions[], each containing:\n- condition_id, condition_type (necessary/sufficient/contributing), condition_description, justification, quote, source\n\nTARGET: 10-15 conditions.",
-  "curation_prompt": "Validate condition identification.",
   "canonical_schema": {
     "type": "object"
   },
-  "paradigm_keys": []
+  "paradigm_keys": [],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What are the necessary/sufficient conditions for this concept?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

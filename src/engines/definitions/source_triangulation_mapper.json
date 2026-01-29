@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "epistemology",
   "researcher_question": "Do independent sources corroborate these claims?",
-  "extraction_prompt": "\nYou are mapping SOURCE TRIANGULATION - whether claims are corroborated\nby multiple independent sources.\n\n## TRIANGULATION PRINCIPLES\n\nMultiple independent sources strengthen claims:\n- Same claim from unrelated sources increases confidence\n- Dependent sources (sharing origin) don't add much\n- Single-source claims are more vulnerable\n- Contradictions require resolution\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY CLAIMS\nWhat key claims are made?\n- Factual claims\n- Interpretive claims\n- Predictive claims\n\n### STEP 2: IDENTIFY SOURCES\nWhat sources support each claim?\n- Primary sources (original data/observation)\n- Secondary sources (reporting on primary)\n- Tertiary sources (syntheses/reviews)\n\n### STEP 3: ASSESS SOURCE INDEPENDENCE\nAre supporting sources truly independent?\n- Different origins?\n- Different methods?\n- Different perspectives?\n- Or do they share common sources?\n\n### STEP 4: MAP TRIANGULATION\nFor each claim, what's the triangulation level?\n- Strong: 3+ truly independent sources\n- Moderate: 2 independent sources\n- Weak: Multiple dependent sources\n- Single-source: Only one source\n\n### STEP 5: IDENTIFY CONTRADICTIONS\nWhere do sources conflict?\n- Direct contradictions?\n- Partial disagreements?\n- Interpretive differences?\n- How resolved (if at all)?\n\n### STEP 6: FLAG SINGLE-SOURCE CLAIMS\nWhat claims rest on only one source?\n- How vulnerable is this?\n- Could it be corroborated?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about independence. \"Multiple sources agree\" is not useful if\nthey all trace to the same original source. Specify what makes sources\ntruly independent or what shared origins they have.\n",
-  "curation_prompt": "\nYou are synthesizing source triangulation analyses across multiple documents.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE TRIANGULATION\n- What claims are well-triangulated across sources?\n- What claims rest on single sources?\n\n### 2. ASSESS INDEPENDENCE\n- What source dependencies exist?\n- Where is apparent triangulation actually illusory?\n\n### 3. IDENTIFY CONTRADICTIONS\n- What contradictions appear?\n- How significant are they?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of claim triangulation and source relationships.\n",
-  "concretization_prompt": "\nTransform the source triangulation analysis into actionable insight:\n\n1. **CLAIMS AND SOURCES**\n   | Claim | Supporting Sources | Contradicting Sources |\n   |-------|-------------------|----------------------|\n\n2. **SOURCE ASSESSMENT**\n   | Source | Type | Credibility | Potential Biases |\n   |--------|------|-------------|------------------|\n\n3. **SOURCE INDEPENDENCE**\n   | Source A | Source B | Independence | Shared Origin |\n   |----------|----------|--------------|---------------|\n\n4. **TRIANGULATION MAP**\n   | Claim | Triangulation Level | Independent Sources | Notes |\n   |-------|---------------------|---------------------|-------|\n\n5. **CONTRADICTIONS**\n   | Claim A | Source A | Claim B | Source B | Resolution |\n   |---------|----------|---------|----------|------------|\n\n6. **SINGLE-SOURCE CLAIMS (Vulnerable)**\n   | Claim | Sole Source | Vulnerability |\n   |-------|-------------|---------------|\n\n7. **BOTTOM LINE**\n   [One paragraph: Which claims are well-triangulated by independent sources?\n   Which rest on single sources? What contradictions exist?]\n",
   "canonical_schema": {
     "claims_analyzed": [
       {
@@ -108,5 +105,57 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/source_triangulation_mapper.py"
+  "source_file": "analyzer/src/engines/source_triangulation_mapper.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "source triangulation",
+      "analysis_type_plural": "source triangulations",
+      "core_question": "Do independent sources corroborate these claims?",
+      "extraction_steps": [
+        "IDENTIFY CLAIMS",
+        "IDENTIFY SOURCES",
+        "ASSESS SOURCE INDEPENDENCE",
+        "MAP TRIANGULATION",
+        "IDENTIFY CONTRADICTIONS",
+        "FLAG SINGLE-SOURCE CLAIMS"
+      ],
+      "key_fields": {},
+      "id_field": "claim_id",
+      "key_relationships": [
+        "contradicts"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "source triangulation",
+      "item_type_plural": "source triangulations",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

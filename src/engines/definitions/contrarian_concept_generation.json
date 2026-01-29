@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "dialectical",
   "researcher_question": "What contrarian positions challenge the dominant discourse?",
-  "extraction_prompt": "\nYou are an expert contrarian analyst identifying and generating counter-positions.\n\nFor this article, analyze what's assumed and what challenges exist:\n\n1. **DOMINANT POSITIONS**: What views are presented as mainstream or obvious?\n   - State the position\n   - What arguments support it?\n   - What truths does it assume?\n   - How prevalent is this view?\n\n2. **COUNTER-ARGUMENTS**: What challenges to dominant views appear?\n   - What position is being challenged?\n   - What's the counter-argument?\n   - What evidence supports the counter?\n   - How strong is the counter? (0-1)\n   - How novel is it? (0-1)\n\n3. **ALTERNATIVE FRAMINGS**: Are there different ways to frame the issue?\n   - Original framing\n   - Alternative framing\n   - How do implications change?\n   - How feasible is adopting the alternative?\n\n4. **ASSUMPTION INVERSIONS**: What happens if we flip assumptions?\n   - Original assumption\n   - Inverted assumption\n   - What would change?\n   - Any supporting examples?\n   - How plausible is the inversion?\n\n5. **UNDEREXPLORED PERSPECTIVES**: What viewpoints are missing?\n   - What perspective is neglected?\n   - Whose perspective is it?\n   - Why is it underexplored?\n   - What insights might it offer?\n\n\nThink critically - identify both explicit contrarian views and generate possibilities.\n",
-  "curation_prompt": "\nYou are synthesizing contrarian analysis from multiple articles.\n\nYour task:\n1. **MAP DOMINANT POSITIONS**: What's the consensus?\n   - Consolidate dominant views\n   - Rate prevalence\n   - Identify assumed truths\n\n2. **COMPILE COUNTER-ARGUMENTS**: What challenges exist?\n   - Aggregate counters from corpus\n   - Generate additional counters\n   - Rate strength and novelty\n\n3. **CATALOG ALTERNATIVE FRAMINGS**: What other frames exist?\n   - Collect from corpus\n   - Generate possibilities\n   - Assess feasibility\n\n4. **GENERATE INVERSIONS**: What if assumptions are wrong?\n   - Invert key assumptions\n   - Assess plausibility\n   - Note implications\n\n5. **MAP UNDEREXPLORED PERSPECTIVES**: What's missing?\n   - Identify neglected viewpoints\n   - Note potential insights\n\n6. **CREATE DEVIL'S ADVOCATE POSITIONS**: Steelman challenges\n   - For each dominant position\n   - Create strongest possible counter\n   - Note value of consideration\n\n\nCreate a comprehensive contrarian analysis to challenge groupthink.\n",
-  "concretization_prompt": "\nTransform the contrarian analysis to be immediately useful:\n\n1. Name dominant positions:\n   - \"DP1\" \u2192 \"Consensus: AI will create more jobs than it destroys\"\n\n2. Articulate counter-arguments:\n   - \"CA1\" \u2192 \"Counter: Historical automation didn't require human-level cognition\"\n\n3. Describe alternative framings:\n   - \"AF1\" \u2192 \"Reframe: From 'job displacement' \u2192 'labor market transformation'\"\n\n4. State inversions:\n   - \"INV1\" \u2192 \"Invert: 'Regulation slows innovation' \u2192 'Regulation enables trust'\"\n\n5. Name perspectives:\n   - \"UP1\" \u2192 \"Underexplored: Global South technology workers' perspective\"\n\n6. Devil's advocate:\n   - \"DA1\" \u2192 \"DA Position: AI development should be paused (challenge: safety)\"\n\nPreserve all strength and plausibility ratings.\nMake the analysis useful for challenging assumptions.\n",
   "canonical_schema": {
     "dominant_positions": [
       {
@@ -110,5 +107,63 @@
     "gemini_debate_map"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/contrarian_concept_generation.py"
+  "source_file": "analyzer/src/engines/contrarian_concept_generation.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What contrarian positions challenge the dominant discourse?",
+      "extraction_steps": [
+        "DOMINANT POSITIONS",
+        "COUNTER-ARGUMENTS",
+        "ALTERNATIVE FRAMINGS",
+        "ASSUMPTION INVERSIONS",
+        "UNDEREXPLORED PERSPECTIVES"
+      ],
+      "key_fields": {},
+      "id_field": "contrarian_id",
+      "key_relationships": [
+        "supports"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [
+        "MAP DOMINANT POSITIONS: What's the consensus?",
+        "COMPILE COUNTER-ARGUMENTS: What challenges exist?",
+        "CATALOG ALTERNATIVE FRAMINGS: What other frames exist?",
+        "GENERATE INVERSIONS: What if assumptions are wrong?",
+        "MAP UNDEREXPLORED PERSPECTIVES: What's missing?",
+        "CREATE DEVIL'S ADVOCATE POSITIONS: Steelman challenges"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

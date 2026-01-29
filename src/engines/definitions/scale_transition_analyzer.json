@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "systems",
   "researcher_question": "How do properties change across scales?",
-  "extraction_prompt": "\nYou are analyzing SCALE TRANSITIONS \u2014 how system properties, behaviors, and\ndynamics change when moving between different levels of analysis.\n\n## SCALE TRANSITION FUNDAMENTALS\n\n### SCALE LEVELS\nNested hierarchies from small to large:\n- Micro: Individual elements, local interactions\n- Meso: Groups, organizations, communities\n- Macro: Populations, societies, ecosystems, markets\n\n### KEY CONCEPTS\n\n**Emergence**: Properties that appear at higher scales but not lower\n- Wetness emerges from H2O molecules (not wet individually)\n- Market prices emerge from individual trades\n- Culture emerges from individual behaviors\n\n**Aggregation Effects**: How individual properties combine\n- Simple sum? Average? Non-linear combination?\n- Simpson's paradox: trends reverse at different scales\n\n**Downward Causation**: Higher scales constraining lower\n- Laws constrain individual behavior\n- Culture shapes individual choices\n- Market conditions affect firm strategies\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY SCALE LEVELS\nWhat scales are relevant to this analysis?\n- What's the micro level? (individual elements)\n- What's the meso level? (intermediate groupings)\n- What's the macro level? (whole system)\n- How are they related?\n\n### STEP 2: CHARACTERIZE EACH SCALE\nFor each scale level:\n- What entities operate here?\n- What properties are visible?\n- What dynamics occur?\n- What time scales apply?\n\n### STEP 3: MAP SCALE TRANSITIONS\nMoving from lower to higher scales:\n- What aggregates how?\n- What properties emerge?\n- What properties disappear?\n- What transforms?\n\n### STEP 4: IDENTIFY EMERGENT PROPERTIES\nWhat only exists at higher scales?\n- How does it emerge?\n- Can it be reduced to lower-scale properties?\n- Is it genuinely novel?\n\n### STEP 5: TRACE CROSS-SCALE EFFECTS\nHow do scales influence each other?\n- Upward causation (micro \u2192 macro)?\n- Downward causation (macro \u2192 micro)?\n- Bidirectional feedback?\n\n### STEP 6: CHECK FOR SCALE FALLACIES\nPotential analysis errors:\n- Ecological fallacy (inferring individual from aggregate)?\n- Atomistic fallacy (inferring aggregate from individual)?\n- Wrong-level analysis?\n\n### STEP 7: ASSESS SCALE APPROPRIATENESS\nFor the main questions:\n- What's the right scale to analyze?\n- Where are scale mismatches?\n- Where does emergence matter most?\n\n\n## OUTPUT GUIDANCE\n\nMap the scale structure clearly.\nIdentify where properties transform across scales.\nFlag potential scale-related reasoning errors.\n",
-  "curation_prompt": "\nSynthesize scale transition analyses from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **CONSOLIDATE SCALES**: Agree on scale definitions across sources\n2. **VALIDATE EMERGENCE**: Do sources agree on what emerges where?\n3. **IDENTIFY GAPS**: What scale effects appear in one source but not others?\n4. **ASSESS CROSS-SCALE**: Multi-source view of cross-scale effects\n5. **SYNTHESIZE MODEL**: Build integrated multi-scale model\n\n## OUTPUT GUIDANCE\n\nCreate unified scale map capturing key transitions and emergent properties.\n",
-  "concretization_prompt": "\nTransform scale transition analysis into clear multi-level map:\n\n1. **SCALE HIERARCHY**\n   ```\n   MACRO: [Scope] \u2014 [Key properties]\n     \u2191\u2193\n   MESO: [Scope] \u2014 [Key properties]\n     \u2191\u2193\n   MICRO: [Scope] \u2014 [Key properties]\n   ```\n\n2. **SCALE LEVELS TABLE**\n   | Scale | Scope | Units | Properties | Dynamics |\n   |-------|-------|-------|------------|----------|\n\n3. **SCALE TRANSITIONS**\n   - [Lower] \u2192 [Higher]: [What emerges] | [What disappears]\n\n4. **EMERGENT PROPERTIES**\n   - [Property] emerges at [Scale] via [Mechanism]\n\n5. **CROSS-SCALE EFFECTS**\n   - Upward: [Micro affects macro via...]\n   - Downward: [Macro constrains micro via...]\n\n6. **SCALE FALLACY WARNINGS**\n   - Risk: [Fallacy type] in [Location]\n   - Mitigation: [How to avoid]\n\n7. **SCALE APPROPRIATENESS**\n   - Best scale for main question: [Scale]\n   - Scale mismatches: [Where]\n\n8. **BOTTOM LINE**\n   [What's the key scale structure? Where does emergence matter?]\n",
   "canonical_schema": {
     "system_context": {
       "system_name": "string - what system is being analyzed",
@@ -124,5 +121,64 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/scale_transition_analyzer.py"
+  "source_file": "analyzer/src/engines/scale_transition_analyzer.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "scale transition",
+      "analysis_type_plural": "scale transitions",
+      "core_question": "How do properties change across scales?",
+      "extraction_steps": [
+        "IDENTIFY SCALE LEVELS",
+        "CHARACTERIZE EACH SCALE",
+        "MAP SCALE TRANSITIONS",
+        "IDENTIFY EMERGENT PROPERTIES",
+        "TRACE CROSS-SCALE EFFECTS",
+        "CHECK FOR SCALE FALLACIES",
+        "ASSESS SCALE APPROPRIATENESS"
+      ],
+      "key_fields": {},
+      "id_field": "scale_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "scale transition",
+      "item_type_plural": "scale transitions",
+      "consolidation_rules": [
+        "CONSOLIDATE SCALES: Agree on scale definitions across sources",
+        "VALIDATE EMERGENCE: Do sources agree on what emerges where?",
+        "IDENTIFY GAPS: What scale effects appear in one source but not others?",
+        "ASSESS CROSS-SCALE: Multi-source view of cross-scale effects",
+        "SYNTHESIZE MODEL: Build integrated multi-scale model"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

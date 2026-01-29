@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "landscape",
   "researcher_question": "Who are the key competitors, how are they positioned, and what dynamics drive the market?",
-  "extraction_prompt": "\nYou are an expert competitive analyst mapping market positioning and dynamics.\n\nFor this article, extract ALL competitive information:\n\n## 1. COMPETITORS\nFor each company/player mentioned:\n- **NAME**: Company or organization\n- **TYPE**:\n  - INCUMBENT: Established market leader\n  - CHALLENGER: Growing competitor challenging leaders\n  - NICHE: Specialized player in specific segment\n  - EMERGING: New entrant with potential\n  - DECLINING: Losing market position\n- **MARKET POSITION**:\n  - Market share (if mentioned)\n  - Position type: leader, challenger, follower, niche\n  - Geographic and segment strengths\n\n## 2. COMPETITIVE ADVANTAGES\nFor each competitor, identify:\n- **ADVANTAGE TYPE**:\n  - SCALE: Size-based advantages\n  - TECHNOLOGY: Technical capabilities\n  - BRAND: Recognition and trust\n  - NETWORK: Network effects\n  - COST: Cost structure advantages\n  - REGULATION: Regulatory moats\n  - TALENT: Human capital\n  - DATA: Data advantages\n- **DESCRIPTION**: How does this advantage manifest?\n- **SUSTAINABILITY**: How durable is this advantage?\n\n## 3. MARKET SEGMENTS\nFor each segment mentioned:\n- **SEGMENT NAME**: What's the segment?\n- **SIZE**: Market size if mentioned\n- **GROWTH RATE**: Growing, stable, declining\n- **KEY PLAYERS**: Who competes here?\n- **COMPETITIVE INTENSITY**: How fierce is competition?\n- **BARRIERS TO ENTRY**: What stops new entrants?\n\n## 4. STRATEGIC MOVES\nFor each strategic action:\n- **ACTOR**: Who made the move?\n- **MOVE TYPE**: Product launch, market entry, price change, acquisition, partnership, exit, pivot\n- **DESCRIPTION**: What happened?\n- **TARGET SEGMENT**: What segment was targeted?\n- **COMPETITIVE RESPONSE**: How did competitors react?\n\n## 5. COMPETITIVE TENSIONS\nWhere is competition most intense?\n- **COMPETITORS INVOLVED**: Who is competing?\n- **TENSION TYPE**: Direct competition, substitute threat, value chain conflict, platform competition\n- **BATTLEGROUND**: Where does competition occur?\n- **INTENSITY**: How intense?\n\n## 6. POSITIONING\nHow are competitors positioned relative to each other?\n- What dimensions differentiate them?\n- Who is positioned similarly?\n- Who occupies unique positions?\n\n\nMap the complete competitive landscape.\n",
-  "curation_prompt": "\nYou are synthesizing competitive data from multiple articles into a comprehensive market map.\n\nYour task:\n1. **CONSOLIDATE COMPETITORS**: Build complete competitor profiles\n   - Merge information across articles\n   - Document market position and advantages\n   - Classify by type (incumbent, challenger, etc.)\n\n2. **MAP MARKET SEGMENTS**:\n   - Define key segments\n   - Size and growth where known\n   - Key players per segment\n   - Competitive intensity\n\n3. **ANALYZE COMPETITIVE DYNAMICS**:\n   - Type of competition (rivalry, cooperation, disruption)\n   - Intensity and trajectory\n   - Key players involved\n\n4. **CATALOG STRATEGIC MOVES**:\n   - Recent moves by each competitor\n   - Competitive responses\n   - Timeline of market evolution\n\n5. **BUILD POSITIONING MAP**:\n   - Identify key differentiation axes\n   - Position each competitor\n   - Note strategic groups\n\n6. **IDENTIFY COMPETITIVE TENSIONS**:\n   - Where is competition most intense?\n   - What are the key battlegrounds?\n   - Who is in direct conflict?\n\n7. **CALCULATE METRICS**:\n   - Total competitors by type\n   - Segment count\n   - Strategic move count\n   - Average competitive intensity\n\n\nCreate a comprehensive competitive landscape map for strategic planning.\n",
-  "concretization_prompt": "\nTransform the competitive data to be immediately usable:\n\n1. Replace generic IDs with company names:\n   - \"C1\" \u2192 \"Microsoft (Incumbent, 35% share)\"\n   - \"S1\" \u2192 \"Enterprise Cloud Segment ($200B)\"\n\n2. Clarify competitive advantages:\n   - Make specific to each competitor\n   - Note sustainability\n\n3. Format positioning map clearly:\n   - Define axes with clear labels\n   - Position competitors with rationale\n\n4. Highlight strategic tensions:\n   - Make key rivalries prominent\n   - Note battlegrounds and intensity\n\n5. Show actionable insights:\n   - Key competitive dynamics\n   - Recent strategic moves\n   - Emerging threats/opportunities\n\nPreserve all positioning and competitive relationships.\nMake the landscape immediately useful for strategic analysis.\n",
   "canonical_schema": {
     "competitors": [
       {
@@ -158,5 +155,72 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/competitive_landscape.py"
+  "source_file": "analyzer/src/engines/competitive_landscape.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "competitive landscape",
+      "analysis_type_plural": "competitive landscapes",
+      "core_question": "Who are the key competitors, how are they positioned, and what dynamics drive the market?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "competitive_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "competitive landscape",
+      "item_type_plural": "competitive landscapes",
+      "consolidation_rules": [
+        "CONSOLIDATE COMPETITORS: Build complete competitor profiles",
+        "MAP MARKET SEGMENTS: - Define key segments",
+        "ANALYZE COMPETITIVE DYNAMICS: - Type of competition (rivalry, cooperation, disruption)",
+        "CATALOG STRATEGIC MOVES: - Recent moves by each competitor",
+        "BUILD POSITIONING MAP: - Identify key differentiation axes",
+        "IDENTIFY COMPETITIVE TENSIONS: - Where is competition most intense?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "C1",
+          "to": "Microsoft (Incumbent, 35% share)"
+        },
+        {
+          "from": "S1",
+          "to": "Enterprise Cloud Segment ($200B)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

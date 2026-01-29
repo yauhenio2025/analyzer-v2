@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "temporal",
   "researcher_question": "What happened when, and what caused what?",
-  "extraction_prompt": "\nYou are an expert historian and causal analyst mapping events.\n\nFor this article, extract ALL events and their relationships:\n\n## EVENTS\nFor each event mentioned:\n1. **WHAT**: What happened? (Concise description)\n2. **WHEN**: Date or time period\n   - Precision: exact date, month, year, approximate, or relative (e.g., \"before X\")\n3. **TYPE**: Policy, market, political, technological, social, legal, crisis\n4. **WHO**: Actors involved\n5. **WHERE**: Location (if mentioned)\n6. **SIGNIFICANCE**: High, medium, low\n\n## CAUSAL RELATIONSHIPS\nFor each causal claim:\n1. **CAUSE \u2192 EFFECT**: Which event caused which?\n2. **RELATIONSHIP TYPE**:\n   - Direct cause: A directly caused B\n   - Enabling condition: A made B possible\n   - Trigger: A was the proximate cause of B\n   - Contributing factor: A was one of several causes\n\n3. **MECHANISM**: How did causation work?\n4. **STRENGTH**: How strong is the causal link? (0-1)\n5. **TIME LAG**: How long between cause and effect?\n6. **EXPLICIT?**: Is this causation claimed or inferred?\n\n## CAUSAL CHAINS\nIdentify longer causal sequences:\n- A \u2192 B \u2192 C \u2192 D\n- Note if chains branch, converge, or loop\n\n## PERIODS\nIdentify named eras or phases:\n- What characterizes each period?\n- What events mark transitions?\n\n\nExtract every event and causal claim you can identify.\n",
-  "curation_prompt": "\nYou are synthesizing event timelines from multiple articles into a unified chronology.\n\nYour task:\n1. **CONSOLIDATE EVENTS**: Merge same event from different articles\n   - Resolve date discrepancies\n   - Combine actor information\n   - Note differing characterizations\n\n2. **BUILD UNIFIED TIMELINE**:\n   - Order all events chronologically\n   - Identify parallel timelines by domain\n   - Note timeline intersections\n\n3. **MAP CAUSAL NETWORKS**:\n   - Aggregate causal claims\n   - Identify contested causation\n   - Build comprehensive causal chains\n   - Note where causation is disputed\n\n4. **IDENTIFY PERIODS**:\n   - Synthesize era characterizations\n   - Mark transition events\n   - Note period boundaries\n\n5. **FIND MOST CONSEQUENTIAL**:\n   - Which events have most downstream effects?\n   - Which are most frequently cited as causes?\n   - Which are turning points?\n\nCreate clear event_ids (e.g., \"event_2008_financial_crisis\", \"event_eu_gdpr_adoption\").\n\n\nOutput a comprehensive timeline with causal mapping.\n",
-  "concretization_prompt": "\nTransform the timeline to use concrete, recognizable labels:\n\n1. Convert event_ids to descriptive names:\n   - \"E1\" \u2192 \"Lehman Brothers Collapse (Sept 2008)\"\n   - \"E2\" \u2192 \"GDPR Enforcement Begins (May 2018)\"\n\n2. Name causal chains:\n   - \"Chain 1\" \u2192 \"The 2008 Regulatory Cascade\"\n   - \"Chain 2\" \u2192 \"Tech Antitrust Momentum\"\n\n3. Label periods clearly:\n   - \"Period 1\" \u2192 \"The Deregulation Era (1980-2007)\"\n   - \"Period 2\" \u2192 \"Post-Crisis Reform Period\"\n\n4. Make dates concrete:\n   - Convert relative dates to absolute where possible\n   - Note uncertainty explicitly\n\nPreserve all temporal ordering and causal relationships.\nMake the chronology immediately navigable.\n",
   "canonical_schema": {
     "events": [
       {
@@ -106,5 +103,76 @@
     "structured_text_report"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/event_timeline_causal.py"
+  "source_file": "analyzer/src/engines/event_timeline_causal.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "event timeline & causal",
+      "analysis_type_plural": "event timeline & causals",
+      "core_question": "What happened when, and what caused what?",
+      "extraction_steps": [
+        "WHAT",
+        "WHEN",
+        "TYPE",
+        "WHO",
+        "WHERE",
+        "SIGNIFICANCE",
+        "CAUSE \u2192 EFFECT",
+        "RELATIONSHIP TYPE",
+        "MECHANISM",
+        "STRENGTH"
+      ],
+      "key_fields": {},
+      "id_field": "event_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "event timeline & causal",
+      "item_type_plural": "event timeline & causals",
+      "consolidation_rules": [
+        "CONSOLIDATE EVENTS: Merge same event from different articles",
+        "BUILD UNIFIED TIMELINE: - Order all events chronologically",
+        "MAP CAUSAL NETWORKS: - Aggregate causal claims",
+        "IDENTIFY PERIODS: - Synthesize era characterizations",
+        "FIND MOST CONSEQUENTIAL: - Which events have most downstream effects?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "E1",
+          "to": "Lehman Brothers Collapse (Sept 2008)"
+        },
+        {
+          "from": "E2",
+          "to": "GDPR Enforcement Begins (May 2018)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

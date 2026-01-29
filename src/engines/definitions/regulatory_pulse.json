@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "landscape",
   "researcher_question": "How is regulation evolving, and who is affected by policy changes?",
-  "extraction_prompt": "\nYou are an expert regulatory analyst extracting policy and legal information.\n\nFor this article, extract ALL regulatory activity:\n\n## 1. REGULATIONS & POLICIES\nFor each regulation, law, or policy mentioned:\n- **TITLE**: Official name\n- **SHORT NAME**: Acronym or common name (e.g., GDPR, Dodd-Frank)\n- **TYPE**:\n  - LEGISLATION: Laws passed by legislature\n  - RULE: Agency regulations\n  - EXECUTIVE_ORDER: Presidential/executive actions\n  - GUIDANCE: Non-binding regulatory guidance\n  - JUDICIAL_DECISION: Court rulings with regulatory impact\n  - TREATY: International agreements\n  - STANDARD: Industry or technical standards\n- **DESCRIPTION**: What it does\n\n## 2. JURISDICTION & REGULATOR\n- **JURISDICTION**: Where it applies (country, state, EU, etc.)\n- **JURISDICTION TYPE**: Country, state, supranational, city, agency\n- **REGION**: Americas, Europe, Asia-Pacific, Middle East, Africa\n- **REGULATOR**: Who issued/enforces it\n- **REGULATOR TYPE**: Legislative, executive, judicial, independent agency\n\n## 3. TIMELINE\n- **PROPOSED**: When first proposed\n- **ENACTED**: When passed/adopted\n- **EFFECTIVE**: When it takes effect\n- **COMPLIANCE DEADLINE**: When compliance required\n\n## 4. STATUS\n- PROPOSED: Under consideration\n- PENDING: Passed but not yet effective\n- ENACTED: In force\n- EFFECTIVE: Currently being enforced\n- REPEALED: No longer in effect\n- CHALLENGED: Under legal challenge\n\n## 5. IMPACT\n- **AFFECTED SECTORS**: Industries impacted\n- **AFFECTED ENTITIES**: Types of organizations/people affected\n- **KEY PROVISIONS**: Main requirements (prohibitions, mandates, disclosures)\n- **PENALTIES**: Fines, criminal liability\n\n## 6. ENFORCEMENT ACTIONS\nFor each enforcement action mentioned:\n- **TARGET**: Who was targeted\n- **REGULATOR**: Who took action\n- **TYPE**: Investigation, fine, settlement, lawsuit, ban\n- **AMOUNT**: Financial penalty if any\n- **OUTCOME**: Result if known\n\n\nBe comprehensive - capture every regulatory development mentioned.\n",
-  "curation_prompt": "\nYou are synthesizing regulatory data from multiple articles into a comprehensive policy landscape.\n\nYour task:\n1. **CONSOLIDATE REGULATIONS**: Merge references to the same regulation\n   - Match by name and jurisdiction\n   - Take most complete timeline data\n   - Aggregate provisions from multiple sources\n\n2. **BUILD JURISDICTION PROFILES**:\n   - Group regulations by jurisdiction\n   - Count regulatory activity per jurisdiction\n   - Assess overall trend (tightening, loosening, stable)\n   - Identify key focus areas per jurisdiction\n\n3. **MAP IMPACTS**:\n   - Who is affected by each regulation\n   - Type and severity of impact\n   - Compliance timelines\n   - Cost implications if mentioned\n\n4. **CATALOG ENFORCEMENT**:\n   - List all enforcement actions\n   - Link to relevant regulations\n   - Note outcomes and amounts\n\n5. **IDENTIFY POLICY TRENDS**:\n   - Cross-jurisdictional trends\n   - Common themes across regulations\n   - Direction of regulatory change\n   - Driving factors\n\n6. **CALCULATE METRICS**:\n   - Total regulations by type\n   - Jurisdictions covered\n   - Enforcement action count\n   - Date range\n   - Dominant regulatory trend\n\n\nCreate a comprehensive regulatory landscape map for compliance and strategy.\n",
-  "concretization_prompt": "\nTransform the regulatory data to be immediately usable:\n\n1. Replace generic IDs with descriptive names:\n   - \"R1\" \u2192 \"EU AI Act (2024)\"\n   - \"J1\" \u2192 \"European Union\"\n\n2. Format timelines clearly:\n   - Show progression: Proposed \u2192 Enacted \u2192 Effective\n   - Note upcoming deadlines prominently\n\n3. Clarify impacts:\n   - \"Affects: Tech companies with >\u20ac10M revenue\"\n   - Note compliance costs if mentioned\n\n4. Name trends descriptively:\n   - \"Trend1\" \u2192 \"Global AI Regulation Wave\"\n\n5. Highlight actionable information:\n   - Upcoming compliance deadlines\n   - Active enforcement areas\n   - Recent significant penalties\n\nPreserve all jurisdiction mappings and timeline data.\nMake the regulatory landscape immediately useful for compliance planning.\n",
   "canonical_schema": {
     "regulations": [
       {
@@ -151,5 +148,72 @@
     "gemini_timeline"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/regulatory_pulse.py"
+  "source_file": "analyzer/src/engines/regulatory_pulse.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "regulatory pulse tracker",
+      "analysis_type_plural": "regulatory pulse trackers",
+      "core_question": "How is regulation evolving, and who is affected by policy changes?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "regulatory_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "regulatory pulse tracker",
+      "item_type_plural": "regulatory pulse trackers",
+      "consolidation_rules": [
+        "CONSOLIDATE REGULATIONS: Merge references to the same regulation",
+        "BUILD JURISDICTION PROFILES: - Group regulations by jurisdiction",
+        "MAP IMPACTS: - Who is affected by each regulation",
+        "CATALOG ENFORCEMENT: - List all enforcement actions",
+        "IDENTIFY POLICY TRENDS: - Cross-jurisdictional trends",
+        "CALCULATE METRICS: - Total regulations by type"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "R1",
+          "to": "EU AI Act (2024)"
+        },
+        {
+          "from": "J1",
+          "to": "European Union"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

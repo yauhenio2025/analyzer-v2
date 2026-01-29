@@ -7,9 +7,6 @@
   "kind": "primitive",
   "reasoning_domain": "extraction",
   "researcher_question": "Who and what are the key actors and objects in this discourse?",
-  "extraction_prompt": "\nYou are an expert information extractor identifying named entities in text.\n\nFor this article, extract ALL named entities:\n\n## 1. PEOPLE\nFor each person mentioned:\n- **NAME**: Full name\n- **TITLE/ROLE**: Their position or function\n- **AFFILIATION**: Organization they belong to\n- **AUTHORITY LEVEL**: Executive, expert, official, spokesperson, other\n- **CONTEXT**: Why are they mentioned?\n- **SIGNIFICANCE**: How important to the story (high/medium/low)\n\n## 2. ORGANIZATIONS\nFor each organization mentioned:\n- **NAME**: Official name (and common abbreviations)\n- **TYPE**: Company, government agency, NGO, institution, consortium, other\n- **INDUSTRY/SECTOR**: What domain they operate in\n- **HEADQUARTERS**: Location if mentioned\n- **ROLE IN TEXT**: Why are they discussed?\n- **SIGNIFICANCE**: How central to the story\n\n## 3. LOCATIONS\nFor each geographic location mentioned:\n- **NAME**: Place name\n- **TYPE**: Country, state/province, city, region, other\n- **CONTEXT**: Why is this location relevant?\n- **SIGNIFICANCE**: Geographic importance to story\n\n## 4. PRODUCTS & TECHNOLOGIES\nFor each product or technology mentioned:\n- **NAME**: Product/technology name\n- **TYPE**: Software, hardware, platform, service, drug, etc.\n- **OWNER/CREATOR**: Company or entity behind it\n- **CONTEXT**: Why is it discussed?\n- **SIGNIFICANCE**: How central to the story\n\n## 5. EVENTS\nFor each named event mentioned:\n- **NAME**: Event name\n- **TYPE**: Conference, crisis, launch, legislation, other\n- **DATE/PERIOD**: When it occurred\n- **CONTEXT**: Why is it referenced?\n\n## 6. RELATIONSHIPS\nIdentify explicit relationships between entities:\n- Who employs whom\n- Who owns what\n- Who regulates whom\n- Who competes with whom\n- Who partners with whom\n\n\nBe comprehensive - capture every named entity that appears.\n",
-  "curation_prompt": "\nYou are synthesizing entity data from multiple articles into a comprehensive catalog.\n\nYour task:\n1. **CONSOLIDATE ENTITIES**: Merge references to the same entity\n   - Match by name variations (IBM, International Business Machines)\n   - Aggregate mention counts\n   - Combine context from different articles\n\n2. **CLASSIFY AND SUBTYPE**: Assign precise types\n   - Main type (person, organization, place, product, event)\n   - Subtype for precision (CEO, tech company, regulatory agency, city, etc.)\n\n3. **ASSESS SIGNIFICANCE**:\n   - HIGH: Central to the discourse, mentioned repeatedly\n   - MEDIUM: Important supporting entity\n   - LOW: Peripheral mention\n\n4. **MAP RELATIONSHIPS**:\n   - Employment (person \u2192 organization)\n   - Ownership (organization \u2192 product/subsidiary)\n   - Regulation (agency \u2192 industry/company)\n   - Competition (organization \u2194 organization)\n   - Partnership (organization \u2194 organization)\n   - Location (entity \u2192 place)\n\n5. **IDENTIFY CLUSTERS**:\n   - Industry clusters (tech companies, pharma, etc.)\n   - Regional clusters (Silicon Valley players, EU institutions)\n   - Alliance clusters (partners, consortiums)\n\n6. **CALCULATE METRICS**:\n   - Total entities by type\n   - Most frequently mentioned\n   - Most connected (relationship count)\n\n\nCreate a comprehensive entity catalog for research use.\n",
-  "concretization_prompt": "\nTransform the entity catalog to be immediately usable:\n\n1. Replace generic IDs with full identities:\n   - \"E1\" \u2192 \"Satya Nadella (CEO, Microsoft)\"\n   - \"O1\" \u2192 \"European Commission (EU regulatory body)\"\n\n2. Clarify relationship types:\n   - Add context to each relationship\n   - Note if relationship is inferred vs. explicit\n\n3. Name clusters descriptively:\n   - \"Cluster1\" \u2192 \"Big Tech AI Leaders\"\n\n4. Highlight most significant entities:\n   - Mark entities that are central to understanding the corpus\n\nPreserve all metrics and relationship mappings.\nMake the catalog immediately useful for analysis.\n",
   "canonical_schema": {
     "entities": [
       {
@@ -88,5 +85,72 @@
     "gemini_network_graph"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/entity_extraction.py"
+  "source_file": "analyzer/src/engines/entity_extraction.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "entity",
+      "analysis_type_plural": "entities",
+      "core_question": "Who and what are the key actors and objects in this discourse?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "entity_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "entity",
+      "item_type_plural": "entities",
+      "consolidation_rules": [
+        "CONSOLIDATE ENTITIES: Merge references to the same entity",
+        "CLASSIFY AND SUBTYPE: Assign precise types",
+        "ASSESS SIGNIFICANCE: - HIGH: Central to the discourse, mentioned repeatedly",
+        "MAP RELATIONSHIPS: - Employment (person \u2192 organization)",
+        "IDENTIFY CLUSTERS: - Industry clusters (tech companies, pharma, etc.)",
+        "CALCULATE METRICS: - Total entities by type"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "E1",
+          "to": "Satya Nadella (CEO, Microsoft)"
+        },
+        {
+          "from": "O1",
+          "to": "European Commission (EU regulatory body)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

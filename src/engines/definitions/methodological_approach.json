@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "epistemology",
   "researcher_question": "What methods are used to generate knowledge in this discourse?",
-  "extraction_prompt": "\nYou are an expert methodologist analyzing research approaches.\n\nFor this article, extract ALL methodological information:\n\n1. **RESEARCH DESIGN**: What overall approach is used?\n   - Design type: experimental, quasi-experimental, observational, survey,\n     case study, ethnographic, content analysis, meta-analysis, theoretical, mixed\n   - Paradigm: positivist, interpretivist, critical, pragmatic\n   - Description of the design\n\n2. **DATA COLLECTION METHODS**: How was data gathered?\n   - Quantitative, qualitative, or mixed?\n   - Specific methods used\n   - Data sources\n   - Sample characteristics and size\n   - Sampling strategy\n\n3. **ANALYTICAL TECHNIQUES**: How was data analyzed?\n   - Technique name\n   - Type: statistical, thematic, discourse, computational, comparative\n   - Software tools used (if mentioned)\n\n4. **METHODOLOGICAL ASSUMPTIONS**: What's assumed?\n   - Ontological (what exists)\n   - Epistemological (how we know)\n   - Axiological (values in research)\n   - Methodological (appropriate methods)\n   - Are assumptions explicit or implicit?\n\n5. **QUALITY ASSESSMENT**: How rigorous is the methodology?\n   - Internal validity (0-1)\n   - External validity/generalizability (0-1)\n   - Reliability (0-1)\n   - Transparency (0-1)\n   - What limitations are acknowledged?\n\n\nBe comprehensive - extract all methodological details.\n",
-  "curation_prompt": "\nYou are synthesizing methodological analysis from multiple articles.\n\nYour task:\n1. **MAP RESEARCH DESIGNS**: What approaches are used?\n   - Count design types\n   - Identify dominant paradigm\n   - Note paradigm diversity\n\n2. **CATALOG DATA METHODS**: How is data collected?\n   - Quantitative vs. qualitative ratio\n   - Common data sources\n   - Typical sample sizes\n\n3. **INVENTORY ANALYTICAL TECHNIQUES**: What analysis is done?\n   - Most common techniques\n   - Tool/software usage\n   - Technique sophistication\n\n4. **SURFACE ASSUMPTIONS**: What's assumed across corpus?\n   - Common explicit assumptions\n   - Common implicit assumptions\n   - Problematic assumptions\n\n5. **ASSESS QUALITY**: How rigorous is the corpus?\n   - Average quality scores\n   - Common limitations\n   - Quality distribution\n\n\nCreate a comprehensive methodological map of the discourse.\n",
-  "concretization_prompt": "\nTransform the methodological analysis to be clear:\n\n1. Name designs specifically:\n   - \"D1\" \u2192 \"Mixed Methods: Survey + Interviews\"\n\n2. Describe methods fully:\n   - \"M1\" \u2192 \"Online survey (N=1,247, stratified random sampling)\"\n\n3. Name techniques:\n   - \"T1\" \u2192 \"Multiple regression analysis (STATA)\"\n\n4. Articulate assumptions:\n   - \"A1\" \u2192 \"Implicit assumption: Rational actor model\"\n\n5. Summarize quality:\n   - \"Q1\" \u2192 \"Article X: High validity (0.85), moderate transparency (0.6)\"\n\nPreserve all quality ratings.\nMake the analysis useful for methodological assessment.\n",
   "canonical_schema": {
     "research_designs": [
       {
@@ -102,5 +99,83 @@
     "gemini_evidence_radar"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/methodological_approach.py"
+  "source_file": "analyzer/src/engines/methodological_approach.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "methodology",
+      "analysis_type_plural": "methodologys",
+      "core_question": "What methods are used to generate knowledge in this discourse?",
+      "extraction_steps": [
+        "RESEARCH DESIGN",
+        "DATA COLLECTION METHODS",
+        "ANALYTICAL TECHNIQUES",
+        "METHODOLOGICAL ASSUMPTIONS",
+        "QUALITY ASSESSMENT"
+      ],
+      "key_fields": {},
+      "id_field": "methodological_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "methodology",
+      "item_type_plural": "methodologys",
+      "consolidation_rules": [
+        "MAP RESEARCH DESIGNS: What approaches are used?",
+        "CATALOG DATA METHODS: How is data collected?",
+        "INVENTORY ANALYTICAL TECHNIQUES: What analysis is done?",
+        "SURFACE ASSUMPTIONS: What's assumed across corpus?",
+        "ASSESS QUALITY: How rigorous is the corpus?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "D1",
+          "to": "Mixed Methods: Survey + Interviews"
+        },
+        {
+          "from": "M1",
+          "to": "Online survey (N=1,247, stratified random sampling)"
+        },
+        {
+          "from": "T1",
+          "to": "Multiple regression analysis (STATA)"
+        },
+        {
+          "from": "A1",
+          "to": "Implicit assumption: Rational actor model"
+        },
+        {
+          "from": "Q1",
+          "to": "Article X: High validity (0.85), moderate transparency (0.6)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

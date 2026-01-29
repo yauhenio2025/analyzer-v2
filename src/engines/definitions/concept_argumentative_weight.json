@@ -7,10 +7,59 @@
   "kind": "synthesis",
   "reasoning_domain": "argument evaluation",
   "researcher_question": "Which arguments are most important to the overall thesis?",
-  "extraction_prompt": "You are conducting Phase 8: ARGUMENTATIVE WEIGHT analysis.\n\n## YOUR TASK\n\nClassify each argument about \"{concept}\" by its IMPORTANCE to the overall thesis.\n\n## WEIGHT CATEGORIES\n\n1. **LOAD-BEARING**: Remove this and the thesis collapses\n2. **SUPPORTING**: Strengthens thesis but not essential\n3. **ILLUSTRATIVE**: Provides examples, not logical support\n4. **DEFENSIVE**: Responds to objections\n5. **PERIPHERAL**: Tangential to main thesis\n\n## ARGUMENTS AND CHAINS\n\n{arguments_json}\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each argument: argument_id, weight_class, justification, dependency_count, if_removed_impact.\n\nAlso provide: thesis_core_arguments[], most_vulnerable_arguments[].\n\nReturn as valid JSON.",
-  "curation_prompt": "Validate weight classifications.",
   "canonical_schema": {
     "type": "object"
   },
-  "paradigm_keys": []
+  "paradigm_keys": [],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "argument structure",
+      "analysis_type_plural": "argument structures",
+      "core_question": "Which arguments are most important to the overall thesis?",
+      "extraction_steps": [
+        "LOAD-BEARING",
+        "SUPPORTING",
+        "ILLUSTRATIVE",
+        "DEFENSIVE",
+        "PERIPHERAL"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "argument structure",
+      "item_type_plural": "argument structures",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

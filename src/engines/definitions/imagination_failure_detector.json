@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "epistemology",
   "researcher_question": "Where is failure of imagination being mistaken for impossibility?",
-  "extraction_prompt": "\nYou are detecting IMAGINATION FAILURE \u2014 where failure of imagination is disguised\nas insight into necessity or impossibility.\n\nThis fallacy takes the form:\n\"I cannot imagine how X could be true, therefore X is impossible/false.\"\n\n## WHAT TO LOOK FOR\n\n### 1. IMPOSSIBILITY CLAIMS\nDirect claims that something cannot happen:\n- \"X is impossible\" / \"X could never work\" / \"There's no way X\"\n- \"It's impossible to reconcile A with B\"\n- \"We can never achieve X\"\n\n**Critical question:** Is this based on LOGICAL NECESSITY or merely FAILURE TO IMAGINE?\n\n### 2. INCONCEIVABILITY ARGUMENTS\nAppeals to inability to conceive:\n- \"It's inconceivable that...\" / \"No one could imagine how...\"\n- \"It defies comprehension\" / \"Beyond human understanding\"\n- \"I cannot fathom how X could...\"\n\n**Red flag:** Inconceivability \u2260 impossibility. Many true things were once inconceivable.\n\n### 3. HISTORICAL BLINDNESS\nClaims that ignore history's track record of imagination failures:\n- \"Heavier-than-air flight is impossible\" (Lord Kelvin, 1895)\n- \"I think there is a world market for maybe five computers\" (Watson, IBM, 1943)\n- \"The horse is here to stay; the automobile is only a novelty\"\n\n**Check:** Has something similar been claimed impossible before, only to happen?\n\n### 4. COMPLEXITY SURRENDER\nGiving up on explanation due to complexity:\n- \"This is too complex to be explained by X\"\n- \"The human mind cannot grasp Y\"\n- \"This is simply beyond our ability to understand\"\n\n**Often masks:** \"I don't understand how X could explain this\" (personal limitation \u2260 logical impossibility)\n\n### 5. INTUITION ANCHORING\nOver-relying on intuition:\n- \"Intuitively, X cannot...\"\n- \"Common sense tells us X is impossible\"\n- \"It just seems obvious that X can't...\"\n\n**Check:** Is intuition reliable in this domain?\n\n## FOR EACH INSTANCE FOUND\n\n1. **QUOTE**: The impossibility/inconceivability claim\n2. **CLAIM TYPE**: Which pattern does it match?\n3. **TARGET PHENOMENON**: What is being claimed impossible?\n4. **REASONING PATTERN**: How does the argument move from \"can't imagine\" to \"impossible\"?\n5. **HIDDEN PREMISE**: State the unstated assumption explicitly\n6. **ACTUAL BASIS**:\n   - Is there a logical proof of impossibility?\n   - Is there empirical proof?\n   - Or is it just imagination failure?\n7. **HISTORICAL PARALLELS**: What similar claims were wrong?\n8. **SEVERITY**:\n   - **LOW**: Claim has some basis beyond imagination failure, acknowledges uncertainty\n   - **MEDIUM**: Mainly imagination-based but with some caveats\n   - **HIGH**: Pure \"I can't imagine it therefore impossible\" with no qualification\n9. **CORRECTION**: How should this argument be properly stated?\n\n\n## OUTPUT GUIDANCE\n\nFocus on substantive impossibility claims, not casual language.\nThe goal is to identify where arguments illegitimately close off inquiry\nby treating limitations of imagination as proofs of impossibility.\n",
-  "curation_prompt": "\nYou are synthesizing imagination failure detection across multiple articles.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE SIMILAR FAILURES\n- Merge instances of the same impossibility claim across articles\n- Note which articles state it most strongly\n- Identify if anyone challenges the claim\n\n### 2. MAP BY DOMAIN\nWhat domains are most affected by imagination failure arguments?\n- Technology (\"AI can never...\")\n- Consciousness/mind (\"Understanding can never...\")\n- Economics (\"Markets can never...\")\n- Society/politics (\"Democracy can never...\")\n- Science (\"We can never know...\")\n\n### 3. ASSESS SEVERITY DISTRIBUTION\n- What % are high severity (pure imagination failure)?\n- What % have some legitimate basis?\n- What % could be fixed with proper qualification?\n\n### 4. IDENTIFY HISTORICAL PATTERNS\n- Compile all historical parallels cited\n- What do these tell us about the reliability of impossibility claims?\n- Are there patterns in what types of claims tend to be wrong?\n\n### 5. FIND CORRECTABLE ARGUMENTS\nMany imagination failure arguments could be legitimate if restated as:\n- \"We don't currently know how X could work\" (honest uncertainty)\n- \"Given current technology, X seems unlikely\" (proper qualification)\n- \"X would require Y, which we don't have\" (conditional claim)\n\n## OUTPUT GUIDANCE\n\nCreate a map of imagination failure patterns and provide guidance\nfor more appropriate epistemic humility.\n",
-  "concretization_prompt": "\nTransform the imagination failure analysis to be immediately useful:\n\n1. Convert failure_ids to descriptive labels:\n   - \"F1\" -> \"AI consciousness impossibility claim\"\n   - \"F2\" -> \"Market prediction impossibility claim\"\n\n2. State the problematic claims clearly:\n   - Original claim as stated\n   - Hidden assumption exposed\n   - Proper reformulation\n\n3. Make historical parallels vivid:\n   - \"Lord Kelvin declared heavier-than-air flight impossible in 1895\"\n   - \"Less than 70 years later, humans walked on the moon\"\n\n4. Create a severity assessment:\n   - \"X of Y impossibility claims are pure imagination failures\"\n   - \"Z claims could be legitimately restated\"\n\n5. Provide correction templates:\n   - \"Instead of 'X is impossible,' say 'We currently don't understand how X could work'\"\n   - \"Instead of 'X can never happen,' say 'X would require Y, which we don't currently have'\"\n\n6. Identify the most consequential failures:\n   - Which impossibility claims, if wrong, would have biggest implications?\n   - Which are shutting down potentially productive inquiry?\n\nPreserve all scores and assessments.\nMake the output useful for reopening inquiry that has been prematurely closed.\n",
   "canonical_schema": {
     "imagination_failures": [
       {
@@ -83,5 +80,60 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/imagination_failure_detector.py"
+  "source_file": "analyzer/src/engines/imagination_failure_detector.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "imagination failure detector",
+      "analysis_type_plural": "imagination failure detectors",
+      "core_question": "Where is failure of imagination being mistaken for impossibility?",
+      "extraction_steps": [
+        "QUOTE",
+        "CLAIM TYPE",
+        "TARGET PHENOMENON",
+        "REASONING PATTERN",
+        "HIDDEN PREMISE",
+        "ACTUAL BASIS",
+        "HISTORICAL PARALLELS",
+        "SEVERITY",
+        "CORRECTION"
+      ],
+      "key_fields": {},
+      "id_field": "imagination_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "imagination failure detector",
+      "item_type_plural": "imagination failure detectors",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

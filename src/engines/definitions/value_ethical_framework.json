@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "epistemology",
   "researcher_question": "What values and ethical positions underlie the arguments?",
-  "extraction_prompt": "\nYou are an expert ethicist analyzing values and moral positions.\n\nFor this article, extract ALL value-laden and ethical content:\n\n1. **VALUES**: What is considered good, important, desirable?\n   - Name the value (e.g., \"efficiency,\" \"fairness,\" \"innovation\")\n   - Type: TERMINAL (end in itself) or INSTRUMENTAL (means to an end)\n   - Domain: economic, social, political, environmental, cultural, individual\n   - Is it EXPLICIT (stated) or IMPLICIT (assumed)?\n   - How important does the author consider it? (0-1)\n   - Who advocates for this value?\n\n2. **ETHICAL FRAMEWORKS**: What moral reasoning is used?\n   - UTILITARIAN: Greatest good for greatest number\n   - DEONTOLOGICAL: Duty-based, rule-following\n   - VIRTUE: Character and excellence focused\n   - CARE: Relationships and responsibility\n   - RIGHTS: Individual rights and freedoms\n   - JUSTICE: Fairness and distribution\n   - What principles does the author rely on?\n\n3. **MORAL JUDGMENTS**: Evaluations of good/bad, right/wrong\n   - What is being evaluated?\n   - What's the evaluation (good, bad, right, wrong)?\n   - How is it justified?\n\n4. **VALUE CONFLICTS**: Tensions between competing values\n   - What values are in tension?\n   - How is the conflict described?\n   - Are there resolution attempts?\n\n5. **NORMATIVE CLAIMS**: Statements about what should be done\n   - Who should do what?\n   - What type of claim (ought, should, must)?\n\n\nBe comprehensive - capture both obvious and subtle value content.\n",
-  "curation_prompt": "\nYou are synthesizing values and ethical analysis from multiple articles.\n\nYour task:\n1. **CONSOLIDATE VALUES**: Build value inventory\n   - Deduplicate value mentions\n   - Group by domain\n   - Rank by frequency/importance\n   - Note who advocates each\n\n2. **MAP ETHICAL FRAMEWORKS**: Identify moral reasoning patterns\n   - What frameworks appear most often?\n   - Who uses which frameworks?\n   - Are there framework conflicts?\n\n3. **CATALOG MORAL JUDGMENTS**: Track evaluations\n   - What gets judged positively/negatively?\n   - What justifications are given?\n   - How do judgments map to values?\n\n4. **ANALYZE VALUE CONFLICTS**: Map tensions\n   - What values compete?\n   - How are conflicts resolved (or not)?\n   - Are there patterns in value trade-offs?\n\n5. **SYNTHESIZE NORMATIVE CLAIMS**: Track prescriptions\n   - What actions are prescribed?\n   - Who is being addressed?\n   - What justifications are given?\n\n\nCreate a comprehensive value and ethics map for the discourse.\n",
-  "concretization_prompt": "\nTransform the values and ethics analysis to be clear:\n\n1. Name values explicitly:\n   - \"V1\" \u2192 \"Economic Efficiency (instrumental value)\"\n\n2. Label ethical frameworks with advocates:\n   - \"F1\" \u2192 \"Utilitarian Framework (tech industry advocates)\"\n\n3. Describe value conflicts clearly:\n   - \"C1\" \u2192 \"Privacy vs. Security: Individual rights tension\"\n\n4. Clarify normative claims:\n   - \"N1\" \u2192 \"Governments SHOULD regulate AI (addressed to policymakers)\"\n\nPreserve all rankings and relationships.\nMake the analysis useful for understanding ethical dimensions.\n",
   "canonical_schema": {
     "values": [
       {
@@ -103,5 +100,79 @@
     "gemini_network_graph"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/value_ethical_framework.py"
+  "source_file": "analyzer/src/engines/value_ethical_framework.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "value & ethics",
+      "analysis_type_plural": "value & ethics",
+      "core_question": "What values and ethical positions underlie the arguments?",
+      "extraction_steps": [
+        "VALUES",
+        "ETHICAL FRAMEWORKS",
+        "MORAL JUDGMENTS",
+        "VALUE CONFLICTS",
+        "NORMATIVE CLAIMS"
+      ],
+      "key_fields": {},
+      "id_field": "claim_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "value & ethics",
+      "item_type_plural": "value & ethics",
+      "consolidation_rules": [
+        "CONSOLIDATE VALUES: Build value inventory",
+        "MAP ETHICAL FRAMEWORKS: Identify moral reasoning patterns",
+        "CATALOG MORAL JUDGMENTS: Track evaluations",
+        "ANALYZE VALUE CONFLICTS: Map tensions",
+        "SYNTHESIZE NORMATIVE CLAIMS: Track prescriptions"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "V1",
+          "to": "Economic Efficiency (instrumental value)"
+        },
+        {
+          "from": "F1",
+          "to": "Utilitarian Framework (tech industry advocates)"
+        },
+        {
+          "from": "C1",
+          "to": "Privacy vs. Security: Individual rights tension"
+        },
+        {
+          "from": "N1",
+          "to": "Governments SHOULD regulate AI (addressed to policymakers)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

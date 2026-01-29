@@ -1,0 +1,150 @@
+{#
+  CONCRETIZATION STAGE TEMPLATE
+
+  Transforms abstract IDs and technical language into concrete, vivid output.
+
+  Variables available:
+  - engine_key: str
+  - audience: str
+  - concretization: dict (from ConcretizationContext)
+  - vocabulary: dict (audience-specific terms)
+  - audience_guidance: str
+#}
+
+# Final Translation: Making It Crystal Clear
+
+You have sophisticated analysis. Now make it **SING** for your audience.
+
+---
+
+{{ audience_guidance }}
+
+---
+
+## CONCRETIZATION TASKS
+
+### 1. NAME EVERYTHING VIVIDLY
+
+Transform abstract IDs into memorable, descriptive names.
+
+{% if concretization.id_examples %}
+**Examples:**
+{% for example in concretization.id_examples %}
+- `{{ example.from }}` → "{{ example.to }}"
+{% endfor %}
+{% else %}
+**Examples:**
+- `C1` → "The 'Humans Stay in Charge' commitment"
+- `X1` → "The 'Can't Have Both' choice: automation vs. accountability"
+- `I1` → "The AI Autonomy Thesis"
+- `P1` → "The Techno-Optimist Bundle"
+{% endif %}
+
+{% if concretization.naming_guidance %}
+**Naming Guidance:**
+{{ concretization.naming_guidance }}
+{% else %}
+**Naming Principles:**
+- **Evocative**: Names should capture the essence in 3-7 words
+- **Memorable**: Someone should remember the name after reading once
+- **Accurate**: The name should genuinely represent the content
+- **Audience-appropriate**: Match the vocabulary to {{ audience }} level
+{% endif %}
+
+---
+
+### 2. MAKE STAKES VISCERAL
+
+Transform analytical statements into impactful language.
+
+**Before (analytical):**
+> "This entails downstream commitment to Q"
+
+**After (visceral):**
+> "Accept this, and you're stuck defending Q whether you meant to or not"
+
+---
+
+### 3. SURFACE THE HIDDEN GAME
+
+Don't just describe what IS. Reveal what MATTERS.
+
+**Before:**
+> "The author incurs normative commitments"
+
+**After:**
+> "By saying this, the author is putting themselves on the hook for..."
+
+---
+
+{% if concretization.recommended_table_types %}
+## TABLE OUTPUT GUIDANCE
+
+When rendering as tables, use these formats:
+
+{% for table_type in concretization.recommended_table_types %}
+### {{ table_type | replace('_', ' ') | title }}
+Optimize data structure for {{ table_type | replace('_', ' ') }} visualization.
+
+{% endfor %}
+
+**Table Language Rules:**
+- Column headers should be QUESTIONS or PLAIN PHRASES
+  - GOOD: "What You Get", "The Catch", "Who Says So"
+  - BAD: "Commitment", "Entitlement", "Inference"
+- Cell content should be PUNCHY and SCANNABLE
+- Use status indicators that feel natural: "Locked in", "Usually", "Loosely"
+{% endif %}
+
+---
+
+{% if concretization.recommended_visual_patterns %}
+## VISUAL OUTPUT GUIDANCE
+
+When rendering as graphs/diagrams, optimize for:
+
+{% for pattern in concretization.recommended_visual_patterns %}
+- **{{ pattern | replace('_', ' ') | title }}**: Structure data for this visualization pattern
+{% endfor %}
+
+**Visual Labeling Rules:**
+- Node labels: 2-5 words, evocative
+- Edge labels: relationship type, clear
+- Cluster names: memorable themes
+{% endif %}
+
+---
+
+## THE TRANSLATION TEST
+
+Before finalizing, read your output aloud. Would a smart {{ audience }} without specialized training:
+
+1. **Understand every word?** (no googling required)
+2. **See something they didn't see before?** (real insight)
+3. **Know what's at stake?** (visceral understanding)
+4. **Be able to explain it to someone else?** (transferable)
+
+If not → translate further.
+
+---
+
+## PRESERVE THE DEPTH
+
+**Don't dumb it down - TRANSLATE it.**
+
+The insights should be just as sophisticated, just expressed in words everyone knows.
+
+- A specialist reading this should think: "They really understand this - beautifully translated."
+- A non-specialist should think: "I never saw it this way before, but now it seems obvious."
+
+---
+
+## OUTPUT REQUIREMENTS
+
+1. **All IDs replaced** with concrete, memorable names
+2. **All jargon translated** appropriate to {{ audience }} level
+3. **All relationships preserved** in accessible language
+4. **All structural data intact** for rendering
+5. **Vivid, punchy language** throughout
+
+The analysis is complete. Your job is to make it accessible without losing any depth.

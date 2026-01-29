@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "rhetoric",
   "researcher_question": "What metaphors and analogies structure understanding of this topic?",
-  "extraction_prompt": "\nYou are an expert cognitive linguist analyzing metaphor and analogy.\n\nFor this article, extract ALL metaphorical and analogical language:\n\n1. **CONCEPTUAL METAPHORS**: Deep underlying metaphors\n   - Name the metaphor (e.g., \"ECONOMY IS ORGANISM\")\n   - Source domain (where we borrow concepts FROM)\n   - Target domain (what we're trying to understand)\n   - Mappings: what corresponds to what?\n   - Linguistic expressions: exact phrases using this metaphor\n\n2. **ANALOGIES**: Explicit comparisons\n   - Full text of the analogy\n   - What's being compared to what?\n   - Key mapping points\n   - Type: historical, spatial, mechanical, biological, economic\n   - How effective is it? (0-1)\n   - Who makes this analogy?\n\n3. **RHETORICAL EFFECTS**: What does the metaphor accomplish?\n   - Does it simplify complexity?\n   - Does it evoke emotion?\n   - Does it obscure alternatives?\n   - Does it naturalize a position?\n\n4. **FREQUENCY**: How often does each metaphor appear?\n\n\nBe comprehensive - capture both obvious and subtle metaphorical language.\n",
-  "curation_prompt": "\nYou are synthesizing metaphor and analogy data from multiple articles.\n\nYour task:\n1. **IDENTIFY CONCEPTUAL METAPHORS**: Abstract underlying patterns\n   - Group similar linguistic expressions under conceptual metaphors\n   - Name metaphors using LAKOFF-JOHNSON format (TARGET IS SOURCE)\n   - Count frequency across corpus\n\n2. **CATALOG ANALOGIES**: Organize explicit comparisons\n   - Group by type\n   - Rate effectiveness\n   - Note speakers/advocates\n\n3. **MAP METAPHOR CLUSTERS**: Find related metaphors\n   - Group by source domain (war, journey, organism, etc.)\n   - Assess cluster coherence\n   - Identify dominant framing\n\n4. **IDENTIFY COMPETING FRAMINGS**: Find metaphor contests\n   - Same topic, different metaphors\n   - Who advocates each framing?\n   - What are the stakes?\n\n5. **CALCULATE METRICS**:\n   - Total metaphors and analogies\n   - Dominant source domains\n   - Metaphor density\n\n\nCreate a comprehensive map of metaphorical thinking in this discourse.\n",
-  "concretization_prompt": "\nTransform the metaphor network to be immediately clear:\n\n1. Name conceptual metaphors fully:\n   - \"M1\" \u2192 \"MARKET IS BATTLEFIELD (competition as warfare)\"\n\n2. Include key linguistic expressions:\n   - List 2-3 example phrases for each metaphor\n\n3. Name competing framings by topic:\n   - \"Competition1\" \u2192 \"AI Debate: Tool vs. Threat Metaphors\"\n\n4. Clarify cluster themes:\n   - \"Cluster1\" \u2192 \"Organic/Biological Metaphors for Economic Growth\"\n\nPreserve all mappings and effectiveness ratings.\nMake the network useful for rhetorical analysis.\n",
   "canonical_schema": {
     "conceptual_metaphors": [
       {
@@ -105,5 +102,66 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/metaphor_analogy_network.py"
+  "source_file": "analyzer/src/engines/metaphor_analogy_network.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "metaphor network",
+      "analysis_type_plural": "metaphor networks",
+      "core_question": "What metaphors and analogies structure understanding of this topic?",
+      "extraction_steps": [
+        "CONCEPTUAL METAPHORS",
+        "ANALOGIES",
+        "RHETORICAL EFFECTS",
+        "FREQUENCY"
+      ],
+      "key_fields": {},
+      "id_field": "metaphor_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "metaphor network",
+      "item_type_plural": "metaphor networks",
+      "consolidation_rules": [
+        "IDENTIFY CONCEPTUAL METAPHORS: Abstract underlying patterns",
+        "CATALOG ANALOGIES: Organize explicit comparisons",
+        "MAP METAPHOR CLUSTERS: Find related metaphors",
+        "IDENTIFY COMPETING FRAMINGS: Find metaphor contests",
+        "CALCULATE METRICS: - Total metaphors and analogies"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "M1",
+          "to": "MARKET IS BATTLEFIELD (competition as warfare)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

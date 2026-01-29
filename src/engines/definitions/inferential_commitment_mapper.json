@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "brandomian_inferentialism",
   "researcher_question": "What follows from endorsing these concepts?",
-  "extraction_prompt": "\nYou are an expert in Brandomian inferentialism, analyzing the score-keeping structure of discourse.\n\n## CRITICAL: READ THE ACTUAL DOCUMENT CAREFULLY\n\nBefore extracting inferential commitments, you MUST first understand:\n1. **Who is the author** and what is their argumentative stance?\n2. **Is this a CRITIQUE or an ENDORSEMENT** of the concepts discussed?\n3. **What is the author's ACTUAL ARGUMENT** - not just what concepts appear?\n\nIf the document is a CRITIQUE of a theory/framework:\n- The commitments you extract should reflect the CRITIC'S argument\n- Show what the critic argues is WRONG with the position they're attacking\n- The \"enemy\" is the position being critiqued, not some external power\n\nDO NOT hallucinate based on the document title or vocabulary you recognize.\nDO NOT generate generic content about concepts mentioned - analyze what the AUTHOR actually argues.\n\nFor this article, perform an INFERENTIAL COMMITMENT ANALYSIS:\n\n## 1. CONCEPT IDENTIFICATION\nFor each significant concept or claim:\n- **Term/Claim**: What is being asserted or deployed?\n- **Author's stance**: Does the author ENDORSE, CRITIQUE, or merely DISCUSS this?\n- **Apparent commitments**: What else does endorsing this seem to require?\n\n## 2. COMMITMENT MAPPING\nFor each concept/claim, identify what you're COMMITTED to if you endorse it:\n- **Immediate commitments**: What directly follows?\n- **Downstream commitments**: What follows from those?\n- **Practical commitments**: What actions are implied?\n- **Attitudinal commitments**: What attitudes are required?\n\nNote the STRENGTH of each commitment:\n- **Strict**: Cannot endorse the concept without this commitment\n- **Defeasible**: Normally follows, but can be defeated\n- **Weak**: Suggested but not required\n\n## 3. ENTITLEMENT MAPPING\nFor each concept/claim, identify what ENTITLES you to endorse it:\n- **Inferential entitlement**: What other claims make this one legitimate?\n- **Testimonial entitlement**: Whose word would suffice?\n- **Perceptual entitlement**: What observations would ground it?\n- **Default entitlement**: Is this presumptively entitled?\n\nIdentify DEFEATERS - what would undermine entitlement?\n\n## 4. INCOMPATIBILITY MAPPING\nIdentify what's INCOMPATIBLE with each concept/claim:\n- **Logical incompatibilities**: Contradictions\n- **Material incompatibilities**: Can't both be true given how the world works\n- **Practical incompatibilities**: Can't act on both\n- **Normative incompatibilities**: Can't endorse both without inconsistency\n\n## 5. MATERIAL INFERENCE EXTRACTION\nIdentify non-logical inferences that the discourse treats as valid:\n- From \"It's raining\" to \"The streets will be wet\"\n- From \"X is a democracy\" to \"X has elections\"\nNote what makes these valid and what would defeat them.\n\n## 6. SCORE-KEEPING DYNAMICS\nWhen someone makes a claim:\n- What commitments do they incur?\n- What entitlements do they gain or lose?\n- What can others now demand of them?\n\n\nThink like a deontic scorekeeper tracking who's committed to what.\n",
-  "curation_prompt": "\nYou are synthesizing inferential commitment analyses from multiple articles.\n\nYour task:\n\n## 1. CONSOLIDATE CONCEPT/CLAIM INVENTORIES\n- Merge same concepts across articles\n- Collect all inferential information\n- Build unified concept identifiers\n\n## 2. BUILD COMMITMENT NETWORK\n- Aggregate commitment relations\n- Identify commitment chains (A commits to B commits to C)\n- Find highly committing concepts (many downstream commitments)\n- Find commitment hubs (concepts that many things commit to)\n\n## 3. BUILD ENTITLEMENT STRUCTURE\n- Map what entitles what\n- Identify sources of entitlement (where chains ground out)\n- Aggregate defeaters\n- Find concepts with precarious entitlement\n\n## 4. MAP INCOMPATIBILITY LANDSCAPE\n- Aggregate incompatibility relations\n- Identify incompatibility clusters\n- Find concepts with many incompatibilities\n- Map \"camps\" of mutually compatible concepts\n\n## 5. SYNTHESIZE MATERIAL INFERENCES\n- Collect domain-specific valid inferences\n- Identify patterns across articles\n- Note contested inferences\n- Map counterexample conditions\n\n## 6. ANALYZE SCORE-KEEPING PATTERNS\n- Identify typical discursive moves\n- Map what commitments/entitlements they involve\n- Identify high-stakes moves (incur many commitments)\n\n## 7. IDENTIFY COMMITMENT PACKAGES\n- Find concepts that come together\n- Map practical implications of packages\n- Identify incompatible packages\n\n## 8. SURFACE INFERENTIAL TENSIONS\n- Find unstable commitment combinations\n- Identify sources of tension\n- Map resolution options\n\n\nCreate a map that reveals the normative force propagating through this discourse.\n",
-  "concretization_prompt": "\nTransform the inferential commitment analysis to use concrete, recognizable labels:\n\n1. Name concepts/claims specifically:\n   - \"C1\" \u2192 \"AI Systems Require Human Oversight\"\n   - \"C2\" \u2192 \"Algorithmic Decision-Making Is Objective\"\n\n2. Name commitments concretely:\n   - \"COMMIT-1\" \u2192 \"Commits to: Humans retain ultimate authority\"\n   - \"COMMIT-2\" \u2192 \"Commits to: Bias is a human, not algorithmic, problem\"\n\n3. Name incompatibilities clearly:\n   - \"INCOMPAT-1\" \u2192 \"Can't hold both 'AI is objective' and 'AI reflects training data biases'\"\n\n4. Name material inferences domain-specifically:\n   - \"MI-1\" \u2192 \"From 'uses machine learning' infer 'requires training data'\"\n\n5. Name commitment packages evocatively:\n   - \"PKG-1\" \u2192 \"The Automation Skeptic Package\"\n   - \"PKG-2\" \u2192 \"The Techno-Optimist Package\"\n\n6. Name tensions specifically:\n   - \"TENSION-1\" \u2192 \"The Efficiency-Accountability Trade-off\"\n\nPreserve all commitment strengths, entitlement structures, and incompatibility severities.\nMake the game of giving and asking for reasons visible.\n",
   "canonical_schema": {
     "concepts_analyzed": [
       {
@@ -158,5 +155,64 @@
   "paradigm_keys": [
     "brandomian"
   ],
-  "source_file": "analyzer/src/engines/inferential_commitment_mapper.py"
+  "source_file": "analyzer/src/engines/inferential_commitment_mapper.py",
+  "stage_context": {
+    "framework_key": "brandomian",
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "inferential commitment",
+      "analysis_type_plural": "inferential commitments",
+      "core_question": "What follows from endorsing these concepts?",
+      "extraction_steps": [
+        "Who is the author",
+        "Is this a CRITIQUE or an ENDORSEMENT",
+        "What is the author's ACTUAL ARGUMENT"
+      ],
+      "key_fields": {},
+      "id_field": "commitment_id",
+      "key_relationships": [
+        "is_incompatible_with",
+        "contradicts"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "inferential commitment",
+      "item_type_plural": "inferential commitments",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "C1",
+          "to": "AI Systems Require Human Oversight"
+        },
+        {
+          "from": "C2",
+          "to": "Algorithmic Decision-Making Is Objective"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

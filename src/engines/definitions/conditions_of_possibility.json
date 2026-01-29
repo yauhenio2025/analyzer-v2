@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "genealogical",
   "researcher_question": "What conditions make this discourse/practice possible?",
-  "extraction_prompt": "\nYou are an expert in Foucauldian analysis, examining what makes discourses and practices possible.\n\nFor this article, extract the CONDITIONS OF POSSIBILITY:\n\n1. **PHENOMENA TO ANALYZE**: What discourses, practices, or knowledge claims are present?\n   - What is being said/done/known that we should interrogate?\n   - When did these phenomena emerge?\n\n2. **EPISTEMIC CONDITIONS**: What knowledge frameworks make this possible?\n   - What conceptual frameworks are assumed?\n   - What methodologies are taken for granted?\n   - What forms of rationality are invoked?\n\n3. **INSTITUTIONAL CONDITIONS**: What institutions enable this?\n   - What organizations, laws, or professional bodies are required?\n   - What state apparatus is involved?\n   - What institutional functions are necessary?\n\n4. **MATERIAL CONDITIONS**: What physical/economic infrastructure is required?\n   - What technologies must exist?\n   - What economic arrangements are presupposed?\n   - What physical spaces or resources are needed?\n\n5. **DISCURSIVE CONDITIONS**: What prior discourses had to exist?\n   - What concepts are inherited from earlier discourses?\n   - What debates or discussions paved the way?\n\n6. **POWER ARRANGEMENTS**: What power configurations enable/constrain?\n   - Who benefits from the current arrangement?\n   - Who is constrained or excluded?\n   - What type of power is operating (sovereign, disciplinary, biopolitical)?\n\n7. **EXCLUSIONS**: What is rendered impossible or unthinkable?\n   - What alternatives are suppressed?\n   - What cannot be said within this discourse?\n\n\nThink genealogically - trace the conditions that had to exist for this to be thinkable.\n",
-  "curation_prompt": "\nYou are synthesizing conditions-of-possibility analyses from multiple articles.\n\nYour task:\n1. **CONSOLIDATE PHENOMENA**: Identify the key discourses/practices being analyzed\n   - Merge duplicates\n   - Note variations in how phenomena appear across articles\n\n2. **MAP EPISTEMIC CONDITIONS**:\n   - What knowledge frameworks are shared across the corpus?\n   - What rationalities are taken for granted?\n\n3. **MAP INSTITUTIONAL CONDITIONS**:\n   - What institutions appear repeatedly as enabling conditions?\n   - What institutional functions are essential?\n\n4. **MAP MATERIAL CONDITIONS**:\n   - What technologies and infrastructures are presupposed?\n   - What economic arrangements are necessary?\n\n5. **TRACE DISCURSIVE GENEALOGY**:\n   - What prior discourses are invoked across articles?\n   - What conceptual inheritances are shared?\n\n6. **ANALYZE POWER ARRANGEMENTS**:\n   - What power configurations make this discourse possible?\n   - Who benefits/loses across the corpus?\n\n7. **IDENTIFY SYSTEMATIC EXCLUSIONS**:\n   - What alternatives are consistently suppressed?\n   - What cannot be thought within this discursive formation?\n\n8. **MAP CONDITION DEPENDENCIES**:\n   - How do conditions relate to each other?\n   - What is the structure of enabling conditions?\n\n\nCreate a map of conditions that reveals what makes this discourse possible.\n",
-  "concretization_prompt": "\nTransform the conditions analysis to use concrete, specific names:\n\n1. Name phenomena specifically:\n   - \"P1\" -> \"Algorithmic Credit Scoring Discourse\"\n\n2. Name conditions concretely:\n   - \"EC1\" -> \"Statistical Probability Theory (post-18th century)\"\n   - \"IC1\" -> \"Consumer Financial Protection Bureau\"\n   - \"MC1\" -> \"Big Data Infrastructure and Cloud Computing\"\n\n3. Name power arrangements specifically:\n   - Include who actually benefits and is constrained\n\n4. Name exclusions concretely:\n   - What specific alternatives are suppressed?\n\nPreserve all relationships and analytical depth.\nMake the genealogy immediately useful for critical analysis.\n",
   "canonical_schema": {
     "phenomena_analyzed": [
       {
@@ -134,5 +131,65 @@
     "mermaid_mindmap"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/conditions_of_possibility.py"
+  "source_file": "analyzer/src/engines/conditions_of_possibility.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "conditions of possibility",
+      "analysis_type_plural": "conditions of possibilitys",
+      "core_question": "What conditions make this discourse/practice possible?",
+      "extraction_steps": [
+        "PHENOMENA TO ANALYZE",
+        "EPISTEMIC CONDITIONS",
+        "INSTITUTIONAL CONDITIONS",
+        "MATERIAL CONDITIONS",
+        "DISCURSIVE CONDITIONS",
+        "POWER ARRANGEMENTS",
+        "EXCLUSIONS"
+      ],
+      "key_fields": {},
+      "id_field": "conditions_id",
+      "key_relationships": [
+        "depends_on"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "conditions of possibility",
+      "item_type_plural": "conditions of possibilitys",
+      "consolidation_rules": [
+        "CONSOLIDATE PHENOMENA: Identify the key discourses/practices being analyzed",
+        "MAP EPISTEMIC CONDITIONS: - What knowledge frameworks are shared across the corpus?",
+        "MAP INSTITUTIONAL CONDITIONS: - What institutions appear repeatedly as enabling conditions?",
+        "MAP MATERIAL CONDITIONS: - What technologies and infrastructures are presupposed?",
+        "TRACE DISCURSIVE GENEALOGY: - What prior discourses are invoked across articles?",
+        "ANALYZE POWER ARRANGEMENTS: - What power configurations make this discourse possible?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

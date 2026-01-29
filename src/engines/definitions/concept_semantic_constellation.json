@@ -7,8 +7,6 @@
   "kind": "primitive",
   "reasoning_domain": "semantic analysis",
   "researcher_question": "What is the full semantic field of this concept?",
-  "extraction_prompt": "You are conducting Phase 1 of a multi-pass conceptual analysis.\n\n## YOUR TASK: SEMANTIC CONSTELLATION\n\nBefore we extract any arguments or claims about \"{concept}\", we need to understand its SEMANTIC FIELD.\n\nYour goal is to map ALL terms that are semantically related to \"{concept}\" in the texts:\n- Near-synonyms used interchangeably\n- Related theoretical terms from the same tradition\n- Broader/narrower terms (hypernyms/hyponyms)\n- Evaluatively colored variants\n- Terms that function as metonyms or stand-ins\n\n## WHY THIS MATTERS\n\nIn political economy and critical theory, authors often use multiple terms for the same concept:\n- \"work\" / \"labor\" / \"activity\" / \"praxis\" / \"toil\"\n- \"capitalism\" / \"bourgeois society\" / \"market society\"\n- \"efficiency\" / \"productivity\" / \"rationalization\"\n\nIf we don't map this semantic field FIRST, we'll miss arguments that use related terms.\n\n## ANALYSIS TASKS\n\n1. **Find ALL semantically related terms** used when discussing \"{concept}\"\n\n2. **Classify each term's relationship** to the primary concept:\n   - near_synonym: Almost identical meaning\n   - theoretical_synonym: Same in specific theoretical framework\n   - hypernym: More general category\n   - hyponym: More specific instance\n   - metonym: Part-whole or associated concept\n   - evaluative_variant: Same concept with evaluative coloring\n   - antonym: Opposite concept\n   - complementary: Paired concept\n\n3. **Document author usage patterns**:\n   - Which phrasings are preferred?\n   - When do they switch between terms?\n   - What theoretical register is used?\n\n4. **Map concept boundaries**:\n   - What clearly falls UNDER this concept?\n   - What is explicitly EXCLUDED?\n   - What cases are CONTESTED or ambiguous?\n\n## DOCUMENTS\n\n{documents_text}\n\n## REMINDER\n\nYou are ONLY mapping the semantic field of \"{concept}\".\nDo NOT yet extract arguments or make analytical claims.\nJust map the TERMS and their RELATIONSHIPS.\n\nReturn your analysis as valid JSON.",
-  "curation_prompt": "Validate and enhance the semantic constellation mapping.",
   "canonical_schema": {
     "type": "object",
     "properties": {
@@ -64,5 +62,55 @@
   "paradigm_keys": [
     "marxist",
     "brandomian"
-  ]
+  ],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What is the full semantic field of this concept?",
+      "extraction_steps": [
+        "Find ALL semantically related terms",
+        "Classify each term's relationship",
+        "Document author usage patterns",
+        "Map concept boundaries"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

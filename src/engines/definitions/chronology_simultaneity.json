@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "temporality",
   "researcher_question": "What was happening simultaneously, and how do different timelines overlap or contradict?",
-  "extraction_prompt": "\nYou are an expert temporal analyst mapping overlapping timelines and simultaneous events.\n\nFor this article, extract ALL temporal and simultaneity information:\n\n## 1. TIMELINES\nFor each distinct timeline (actor, process, institution):\n- **TIMELINE NAME**: Who or what does this timeline follow?\n- **TIMELINE TYPE**: Actor, process, institution, theme, geographic region\n- **TIME SPAN**: Start and end dates (if known)\n- **KEY EVENTS**: Major events on this timeline\n\n## 2. EVENTS\nFor each event mentioned:\n- **EVENT NAME**: Brief description\n- **EVENT TYPE**: Action, decision, announcement, crisis, transition, milestone\n- **DATE**: When did it happen?\n- **DATE PRECISION**: Exact date, approximate, or inferred?\n- **DURATION**: Instant, hours, days, weeks, months, years\n- **ACTORS INVOLVED**: Who participated?\n- **SIGNIFICANCE**: High, medium, low\n\n## 3. SIMULTANEOUS EVENTS\nWhen multiple events happened at the same time:\n- **EVENTS**: Which events happened together?\n- **SIMULTANEITY TYPE**:\n  - EXACT_SAME_TIME: Same moment\n  - SAME_DAY: Within 24 hours\n  - SAME_WEEK: Within a week\n  - SAME_PERIOD: Overlapping longer periods\n- **INTERACTION TYPE**:\n  - INDEPENDENT: Coincidental, no connection\n  - COORDINATED: Planned together\n  - REACTIVE: One responding to the other\n  - COMPETING: Working against each other\n  - CONFLICTING: Contradictory outcomes\n  - REINFORCING: Amplifying each other\n- **SIGNIFICANCE**: Why does this simultaneity matter?\n\n## 4. SYNCHRONIZATION POINTS\nWhen different timelines converge:\n- **TIMELINES INVOLVED**: Which timelines meet?\n- **SYNC EVENT**: What brings them together?\n- **SYNC TYPE**: Meeting, announcement, crisis, deadline, launch\n- **CONSEQUENCES**: What results from this convergence?\n\n## 5. TEMPORAL CONTRADICTIONS\nWhen sources disagree about timing:\n- **CONTRADICTION TYPE**: Date discrepancy, sequence dispute, duration conflict\n- **CLAIM A**: What one source says\n- **CLAIM B**: What another source says\n- **RESOLUTION**: If resolved, how?\n\n## 6. TEMPORAL RELATIONSHIPS\nHow events relate in time:\n- **EVENT A** and **EVENT B**\n- **RELATIONSHIP**: Before, after, during, concurrent, overlaps, causes\n- **TIME GAP**: How much time between them?\n- **CAUSAL LINK**: Does A cause B?\n\n\nBe precise about dates and temporal relationships.\n",
-  "curation_prompt": "\nYou are synthesizing temporal data from multiple articles into a comprehensive simultaneity map.\n\nYour task:\n1. **CONSOLIDATE TIMELINES**: Build distinct timelines for different actors/processes\n   - Merge events that appear across articles\n   - Resolve date conflicts where possible\n   - Establish comprehensive event sequences\n\n2. **IDENTIFY SIMULTANEOUS EVENTS**:\n   - Find events that happened at the same time\n   - Cluster by time period\n   - Analyze interaction patterns (coordinated, reactive, competing, etc.)\n   - Explain significance of simultaneity\n\n3. **MAP SYNCHRONIZATION POINTS**:\n   - Where do different timelines intersect?\n   - What events bring actors/processes together?\n   - What are the consequences of convergence?\n\n4. **DOCUMENT CONTRADICTIONS**:\n   - Where do sources disagree on timing?\n   - Which claims about sequence conflict?\n   - Can contradictions be resolved with more context?\n\n5. **BUILD TEMPORAL RELATIONSHIPS**:\n   - Map before/after/during relationships\n   - Identify causal chains\n   - Note time gaps between related events\n\n6. **IDENTIFY PARALLEL PROCESSES**:\n   - What processes unfold simultaneously?\n   - How do they interact?\n   - What phases do they share?\n\n7. **CALCULATE METRICS**:\n   - Total timelines and events\n   - Number of simultaneity clusters\n   - Contradictions found\n   - Time span covered\n\n\nCreate a comprehensive map showing temporal overlap and simultaneity.\n",
-  "concretization_prompt": "\nTransform the simultaneity data to be immediately usable:\n\n1. Replace generic IDs with descriptive names:\n   - \"TL1\" \u2192 \"US Regulatory Timeline (2022-2024)\"\n   - \"E1\" \u2192 \"FTC Investigation Launched (March 2023)\"\n   - \"S1\" \u2192 \"Parallel Investigations Cluster (Q2 2023)\"\n\n2. Format timelines clearly:\n   - Show chronological sequence\n   - Mark synchronization points\n   - Highlight simultaneous events\n\n3. Visualize simultaneity:\n   - Group concurrent events clearly\n   - Show interaction types (coordinated, competing, etc.)\n   - Explain why simultaneity matters\n\n4. Highlight contradictions:\n   - Make date discrepancies visible\n   - Show competing claims clearly\n   - Note resolutions if available\n\n5. Map temporal relationships:\n   - Show causal chains\n   - Note time gaps\n   - Indicate sequence dependencies\n\n6. Create period summaries:\n   - What was happening in each major period?\n   - Which timelines were most active?\n   - What synchronization occurred?\n\nPreserve all temporal precision.\nMake the simultaneity immediately useful for understanding parallel developments.\n",
   "canonical_schema": {
     "timelines": [
       {
@@ -172,5 +169,72 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/chronology_simultaneity.py"
+  "source_file": "analyzer/src/engines/chronology_simultaneity.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "chronology simultaneity",
+      "analysis_type_plural": "chronology simultaneitys",
+      "core_question": "What was happening simultaneously, and how do different timelines overlap or contradict?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "chronology_id",
+      "key_relationships": [
+        "contradicts"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "chronology simultaneity",
+      "item_type_plural": "chronology simultaneitys",
+      "consolidation_rules": [
+        "CONSOLIDATE TIMELINES: Build distinct timelines for different actors/processes",
+        "IDENTIFY SIMULTANEOUS EVENTS: - Find events that happened at the same time",
+        "MAP SYNCHRONIZATION POINTS: - Where do different timelines intersect?",
+        "DOCUMENT CONTRADICTIONS: - Where do sources disagree on timing?",
+        "BUILD TEMPORAL RELATIONSHIPS: - Map before/after/during relationships",
+        "IDENTIFY PARALLEL PROCESSES: - What processes unfold simultaneously?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "E1",
+          "to": "FTC Investigation Launched (March 2023)"
+        },
+        {
+          "from": "S1",
+          "to": "Parallel Investigations Cluster (Q2 2023)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

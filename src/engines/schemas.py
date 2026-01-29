@@ -2,12 +2,21 @@
 
 Pure analytical capability definitions - NO execution logic.
 These schemas define what engines ARE, not how they RUN.
+
+MIGRATION NOTES (2026-01-29):
+- BREAKING CHANGE: extraction_prompt, curation_prompt, concretization_prompt removed
+- NEW: stage_context field with StageContext for template composition
+- Prompts are now composed at runtime from generic templates + engine context
+- See src/stages/ for template system
+- Migration script: scripts/migrate_engines_to_stages.py
 """
 
 from enum import Enum
 from typing import Any, Optional
 
 from pydantic import BaseModel, Field
+
+from ..stages.schemas import StageContext
 
 
 class EngineKind(str, Enum):
@@ -92,18 +101,11 @@ class EngineDefinition(BaseModel):
         examples=["What are you really signing up for when you accept these ideas?"],
     )
 
-    # Prompts (the theory - this is what we're extracting)
-    extraction_prompt: str = Field(
+    # Stage context (replaces old prompt fields - 2026-01-29 migration)
+    # Prompts are now composed at runtime from templates + this context
+    stage_context: StageContext = Field(
         ...,
-        description="Prompt that guides Stage 1 extraction from documents",
-    )
-    curation_prompt: str = Field(
-        ...,
-        description="Prompt that guides Stage 2 curation/synthesis",
-    )
-    concretization_prompt: Optional[str] = Field(
-        default=None,
-        description="Prompt for Stage 2.5 label transformation (optional)",
+        description="Context for composing stage prompts from generic templates",
     )
 
     # Schema (the structure)
@@ -151,8 +153,22 @@ class EngineDefinition(BaseModel):
                 "kind": "synthesis",
                 "reasoning_domain": "argument_structure",
                 "researcher_question": "How is this argument structured?",
-                "extraction_prompt": "Analyze the document for argument structure...",
-                "curation_prompt": "Synthesize the extracted argument structures...",
+                "stage_context": {
+                    "framework_key": "toulmin",
+                    "additional_frameworks": ["dennett"],
+                    "extraction": {
+                        "analysis_type": "argument structure",
+                        "analysis_type_plural": "argument structures",
+                        "core_question": "How is this argument structured?",
+                        "id_field": "arg_id",
+                        "key_relationships": ["supports", "opposes", "chains_to"],
+                    },
+                    "curation": {
+                        "item_type": "argument",
+                        "item_type_plural": "arguments",
+                    },
+                    "concretization": {},
+                },
                 "canonical_schema": {"claims": [{"id": "string", "text": "string"}]},
                 "extraction_focus": ["claims", "relationships", "evidence"],
                 "primary_output_modes": ["gemini_network_graph", "smart_table"],
@@ -174,11 +190,18 @@ class EngineSummary(BaseModel):
 
 
 class EnginePromptResponse(BaseModel):
-    """Response for prompt retrieval endpoints."""
+    """Response for prompt retrieval endpoints.
+
+    MIGRATION NOTE (2026-01-29): Prompts are now COMPOSED at runtime
+    from generic templates + engine stage_context. The prompt field
+    contains the fully rendered prompt ready for use.
+    """
 
     engine_key: str
     prompt_type: str  # "extraction", "curation", or "concretization"
     prompt: str
+    audience: str = "analyst"  # Target audience used for composition
+    framework_used: Optional[str] = None  # Framework primer injected (if any)
 
 
 class EngineSchemaResponse(BaseModel):

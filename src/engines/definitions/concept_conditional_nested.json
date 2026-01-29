@@ -7,10 +7,59 @@
   "kind": "relational",
   "reasoning_domain": "conditional logic",
   "researcher_question": "What complex conditional structures involve this concept?",
-  "extraction_prompt": "You are conducting Phase 7.4: NESTED CONDITIONALS analysis.\n\n## YOUR TASK\n\nFind NESTED or COMPLEX conditional structures involving \"{concept}\".\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## PATTERNS\n\nNested conditionals have conditionals within conditionals:\n- \"If (if X then Y), then Z\"\n- \"If X, then (if Y then Z)\"\n- Chains: \"If X then Y, and if Y then Z\"\n- Disjunctive: \"If X or Y, then Z\"\n\nAlso look for:\n- Conditional exceptions\n- Qualified conditionals\n- Contextual conditionals\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with nested_conditionals[], each containing:\n- conditional_id, structure_description, outer_condition, inner_condition (if nested), chain_elements (if chained), complexity_type, quote, source\n\nTARGET: 5-10 complex conditional structures.",
-  "curation_prompt": "Validate nested conditional extraction.",
   "canonical_schema": {
     "type": "object"
   },
-  "paradigm_keys": []
+  "paradigm_keys": [],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What complex conditional structures involve this concept?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

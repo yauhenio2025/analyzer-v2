@@ -7,12 +7,63 @@
   "kind": "primitive",
   "reasoning_domain": "logical classification",
   "researcher_question": "What type of inference does each chain employ?",
-  "extraction_prompt": "You are conducting Phase 5.1: INFERENTIAL MODE classification.\n\n## YOUR TASK\n\nClassify each chain's PRIMARY INFERENTIAL MODE for arguments about \"{concept}\".\n\n## INFERENTIAL MODES\n\n1. **Deductive**: Conclusion follows NECESSARILY from premises\n2. **Inductive**: Conclusion is PROBABLE given evidence\n3. **Abductive**: Conclusion is BEST EXPLANATION\n4. **Normative**: OUGHT-claim from values/principles\n5. **Transcendental**: NECESSARY CONDITIONS for possibility\n6. **Dialectical**: SYNTHESIS from contradictions\n7. **Genealogical**: HISTORICAL EMERGENCE explains features\n\n## CHAINS TO CLASSIFY\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each chain, provide: chain_id, primary_mode, secondary_mode, confidence, justification.\n\nReturn as valid JSON.",
-  "curation_prompt": "Validate inferential mode classifications.",
   "canonical_schema": {
     "type": "object"
   },
   "paradigm_keys": [
     "brandomian"
-  ]
+  ],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What type of inference does each chain employ?",
+      "extraction_steps": [
+        "Deductive",
+        "Inductive",
+        "Abductive",
+        "Normative",
+        "Transcendental",
+        "Dialectical",
+        "Genealogical"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "contradicts"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

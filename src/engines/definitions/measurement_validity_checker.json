@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "methodology",
   "researcher_question": "Do the measurements actually capture what they claim to measure?",
-  "extraction_prompt": "\nYou are checking MEASUREMENT VALIDITY \u2014 whether measures actually capture\nwhat they claim to measure.\n\n## WHY MEASUREMENT VALIDITY MATTERS\n\n\"Not everything that can be counted counts, and not everything that counts\ncan be counted.\" \u2014 attributed to Einstein\n\nPoor measurement validity means:\n- We might be measuring the wrong thing\n- Conclusions don't actually apply to the concept of interest\n- Even rigorous analysis can't overcome bad measurement\n\n## TYPES OF MEASUREMENT VALIDITY\n\n### FACE VALIDITY\nDoes the measure look like it measures the concept?\n- \"Happiness measured by smile frequency\" \u2014 moderate face validity\n- \"Intelligence measured by shoe size\" \u2014 no face validity\n\n### CONSTRUCT VALIDITY\nDoes the measure actually capture the theoretical concept?\n- Does it correlate with other measures of the same concept?\n- Does it NOT correlate with measures of different concepts?\n\n### CONTENT VALIDITY\nDoes the measure cover all aspects of the concept?\n- If measuring \"wellbeing,\" does it include mental, physical, social aspects?\n- What's missing?\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY CONSTRUCTS\nWhat abstract concepts are being measured?\n- What is the theoretical meaning of each concept?\n- How is each operationalized (made measurable)?\n\n### STEP 2: ASSESS OPERATIONALIZATION QUALITY\nFor each construct:\n- Does the measure match the concept? (construct validity)\n- Does it look appropriate? (face validity)\n- Does it cover all aspects? (content validity)\n- Is it reliable (consistent)?\n\n### STEP 3: ANALYZE PROXY MEASURES\nWhen the measure is a proxy (measuring something related):\n- What are we actually measuring?\n- What is the gap between proxy and concept?\n- Is the proxy valid for conclusions being drawn?\n\n### STEP 4: IDENTIFY MEASUREMENT PROBLEMS\nLook for:\n- Construct mismatch (measure doesn't match concept)\n- Narrow operationalization (only part of concept)\n- Social desirability (people give approved answers)\n- Reactivity (measurement changes behavior)\n- Measurement error (noise in the measure)\n\n### STEP 5: ASSESS CONCLUSION IMPACT\nHow do measurement issues affect conclusions?\n- Are conclusions still valid despite issues?\n- Do they need caveats?\n- Are they undermined?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about the gap between concept and measure.\nThe goal is to identify where conclusions might not apply to the intended concepts.\n",
-  "curation_prompt": "\nYou are synthesizing measurement validity analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. COMPARE OPERATIONALIZATIONS\n- Do different sources measure the same constructs differently?\n- Which operationalizations are better?\n\n### 2. AGGREGATE VALIDITY CONCERNS\n- What measurement problems recur?\n- Are there systematic validity issues?\n\n### 3. ASSESS OVERALL MEASUREMENT QUALITY\n- Which constructs are well-measured across sources?\n- Which are problematically measured?\n\n## OUTPUT GUIDANCE\n\nCreate assessment of measurement quality and its impact on conclusions.\n",
-  "concretization_prompt": "\nTransform the measurement validity analysis into actionable assessment:\n\n1. **MEASUREMENT SUMMARY**\n   ```\n   | Construct | Operationalization | Validity | Key Problem |\n   |-----------|-------------------|----------|-------------|\n   | CON1      | [How measured]    | Moderate | [Problem]   |\n   ```\n\n2. **VALIDITY DETAILS**\n   ```\n   Construct: [Name]\n   Definition: [Theoretical meaning]\n   Measured by: [Operationalization]\n   Validity: [Assessment]\n   Problems: [Issues identified]\n   Impact: [How this affects conclusions]\n   ```\n\n3. **PROXY MEASURE ANALYSIS**\n   - Intended: [What we want to measure]\n   - Actual: [What we're measuring]\n   - Gap: [Difference]\n   - Validity of proxy: [Assessment]\n\n4. **MEASUREMENT PROBLEMS**\n   ```\n   | Problem | Construct | Severity | Impact on Conclusions |\n   |---------|-----------|----------|----------------------|\n   | ...     | CON1      | Severe   | Undermines claim X   |\n   ```\n\n5. **CONCLUSION VALIDITY**\n   - Conclusion: [Finding]\n   - Measurement issues: [Problems]\n   - Validity: [Robust/Weakened/Undermined]\n   - Caveat needed: [Qualification]\n\n6. **BOTTOM LINE**\n   [One paragraph: How good is measurement quality? Which conclusions\n   are robust? Which need qualification due to measurement issues?]\n",
   "canonical_schema": {
     "constructs_measured": [
       {
@@ -107,5 +104,56 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/measurement_validity_checker.py"
+  "source_file": "analyzer/src/engines/measurement_validity_checker.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "measurement validity checker",
+      "analysis_type_plural": "measurement validity checkers",
+      "core_question": "Do the measurements actually capture what they claim to measure?",
+      "extraction_steps": [
+        "IDENTIFY CONSTRUCTS",
+        "ASSESS OPERATIONALIZATION QUALITY",
+        "ANALYZE PROXY MEASURES",
+        "IDENTIFY MEASUREMENT PROBLEMS",
+        "ASSESS CONCLUSION IMPACT"
+      ],
+      "key_fields": {},
+      "id_field": "measurement_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "measurement validity checker",
+      "item_type_plural": "measurement validity checkers",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

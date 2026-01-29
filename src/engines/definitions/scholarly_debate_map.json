@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "intellectual_history",
   "researcher_question": "Who disagrees with whom, and on what grounds?",
-  "extraction_prompt": "\nYou are an expert intellectual historian mapping scholarly debates.\n\nFor this article, extract ALL debate-relevant information:\n\n## SCHOLARS & POSITIONS\nFor each scholar/author mentioned:\n1. **IDENTIFICATION**: Name, affiliation (if mentioned)\n2. **POSITION**: What is their main argument or stance?\n3. **WORKS**: Which of their works are cited?\n4. **SCHOOL**: Do they belong to a particular tradition/paradigm?\n\n## DISAGREEMENTS\nFor each disagreement or critique:\n1. **PARTIES**: Who criticizes whom?\n2. **ISSUE**: What specific claim or method is contested?\n3. **GROUNDS**: Why do they disagree?\n   - Empirical: Different data or interpretations\n   - Methodological: Different approaches/methods\n   - Theoretical: Different frameworks\n   - Normative: Different values\n   - Definitional: Different concepts\n\n4. **NATURE**: Is this:\n   - Direct critique: Explicit naming and refutation\n   - Indirect challenge: Contradicting without naming\n   - Silent disagreement: Ignoring contrary work\n\n## ALLIANCES\nIdentify groupings:\n1. **SCHOOLS**: Formal intellectual traditions\n2. **PARADIGMS**: Shared theoretical frameworks\n3. **COLLABORATIONS**: Co-authored or mutually supporting\n4. **CITATION NETWORKS**: Who cites whom approvingly\n\n## DEBATES\nFor overarching debates:\n1. **TOPIC**: What's being debated?\n2. **CENTRAL QUESTION**: The key point of contention\n3. **POSITIONS**: Different stances and who holds them\n4. **STATUS**: Active, resolved, or dormant?\n\n\nBe comprehensive - capture the full intellectual landscape.\n",
-  "curation_prompt": "\nYou are synthesizing scholarly debate extractions into a unified intellectual map.\n\nYour task:\n1. **CONSOLIDATE SCHOLARS**: Merge same person across articles\n   - Aggregate their positions and works\n   - Note evolution if positions change\n\n2. **MAP DEBATE STRUCTURE**:\n   - Group related disagreements into overarching debates\n   - Identify central questions organizing multiple disputes\n   - Track debate intensity and status\n\n3. **IDENTIFY SCHOOLS**:\n   - Group scholars by shared commitments\n   - Name implicit schools even if not self-identified\n   - Map inter-school relationships\n\n4. **TRACE NETWORKS**:\n   - Create citation and critique networks\n   - Identify isolated vs. central figures\n   - Note gatekeepers and bridge-builders\n\n5. **ASSESS DYNAMICS**:\n   - What debates are most active?\n   - Where are alliances forming or breaking?\n   - What's being ignored that shouldn't be?\n\nCreate clear IDs (e.g., \"scholar_krugman_paul\", \"debate_trade_liberalization\").\n\n\nOutput a comprehensive map of the intellectual landscape.\n",
-  "concretization_prompt": "\nTransform the debate map to use concrete, recognizable labels:\n\n1. Convert scholar_ids to full names:\n   - \"S1\" \u2192 \"Paul Krugman (Princeton)\"\n   - \"S2\" \u2192 \"Daron Acemoglu (MIT)\"\n\n2. Name debates descriptively:\n   - \"D1\" \u2192 \"The Causes of Inequality Debate\"\n   - \"D2\" \u2192 \"The Automation Employment Controversy\"\n\n3. Label schools clearly:\n   - \"School 1\" \u2192 \"New Keynesian Economists\"\n   - \"School 2\" \u2192 \"Austrian School Critics\"\n\n4. Make positions concrete:\n   - Include actual quotes or positions where available\n\nPreserve all relationships, intensity scores, and network structure.\nMake the output a clear map of who thinks what.\n",
   "canonical_schema": {
     "scholars": [
       {
@@ -113,5 +110,85 @@
     "structured_text_report"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/scholarly_debate_map.py"
+  "source_file": "analyzer/src/engines/scholarly_debate_map.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "scholarly debate",
+      "analysis_type_plural": "scholarly debates",
+      "core_question": "Who disagrees with whom, and on what grounds?",
+      "extraction_steps": [
+        "IDENTIFICATION",
+        "POSITION",
+        "WORKS",
+        "SCHOOL",
+        "PARTIES",
+        "ISSUE",
+        "GROUNDS",
+        "NATURE",
+        "SCHOOLS",
+        "PARADIGMS"
+      ],
+      "key_fields": {},
+      "id_field": "scholarly_id",
+      "key_relationships": [
+        "cites",
+        "contradicts"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "scholarly debate",
+      "item_type_plural": "scholarly debates",
+      "consolidation_rules": [
+        "CONSOLIDATE SCHOLARS: Merge same person across articles",
+        "MAP DEBATE STRUCTURE: - Group related disagreements into overarching debates",
+        "IDENTIFY SCHOOLS: - Group scholars by shared commitments",
+        "TRACE NETWORKS: - Create citation and critique networks",
+        "ASSESS DYNAMICS: - What debates are most active?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "S1",
+          "to": "Paul Krugman (Princeton)"
+        },
+        {
+          "from": "S2",
+          "to": "Daron Acemoglu (MIT)"
+        },
+        {
+          "from": "D1",
+          "to": "The Causes of Inequality Debate"
+        },
+        {
+          "from": "D2",
+          "to": "The Automation Employment Controversy"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

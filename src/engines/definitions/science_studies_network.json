@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "composition",
   "researcher_question": "How are human and non-human actors assembled into networks?",
-  "extraction_prompt": "\nYou are an expert in Science and Technology Studies, applying Actor-Network Theory.\n\nFor this article, extract the SOCIOTECHNICAL NETWORK:\n\n1. **ACTANTS**: All entities with agency in the network\n   - Human actors (individuals, groups, organizations)\n   - Non-human actors (technologies, texts, standards, natural entities)\n   - Their roles and interests\n   - Their position in the network\n\n2. **TRANSLATIONS**: How actants align and transform interests\n   - Problematization: How issues are framed\n   - Interessement: How allies are attracted\n   - Enrollment: How roles are assigned\n   - Mobilization: How the network acts as one\n   - Note successes, failures, resistance\n\n3. **BLACK BOXES**: Stabilized assemblages hidden from view\n   - What complexity is hidden inside?\n   - How was it stabilized?\n   - What would open it up?\n\n4. **CONTROVERSIES**: Where networks become visible\n   - What is contested?\n   - Who is involved?\n   - What black boxes are opened?\n\n5. **INSCRIPTIONS**: Programs of action delegated to artifacts\n   - What behaviors are built into technologies?\n   - What actions are enabled/prevented?\n   - How rigid are these inscriptions?\n\n6. **OBLIGATORY PASSAGE POINTS**: Bottleneck actants\n   - Who/what must everything pass through?\n   - How is this control maintained?\n\n\nFollow the actors - trace connections regardless of human/non-human distinction.\n",
-  "curation_prompt": "\nYou are synthesizing Actor-Network analyses from multiple articles.\n\nYour task:\n1. **BUILD ACTANT NETWORK**:\n   - Deduplicate actants across articles\n   - Classify by type (human/non-human)\n   - Map network positions\n\n2. **TRACE TRANSLATIONS**:\n   - Map the chain of translations\n   - Identify key translation moments\n   - Note where translations succeeded/failed\n\n3. **IDENTIFY BLACK BOXES**:\n   - What is taken for granted across articles?\n   - How were these stabilized?\n   - What controversies might open them?\n\n4. **MAP CONTROVERSIES**:\n   - What debates reveal network structure?\n   - What is contested?\n   - How are controversies resolved?\n\n5. **CATALOG INSCRIPTIONS**:\n   - What programs of action are built into artifacts?\n   - What behaviors are enabled/prevented?\n\n6. **IDENTIFY OBLIGATORY PASSAGE POINTS**:\n   - What actants control the network?\n   - Why are they obligatory?\n\n7. **ASSESS NETWORK EFFECTS**:\n   - How durable is the network?\n   - How far does it extend?\n\n\nCreate a comprehensive ANT map of the sociotechnical assemblage.\n",
-  "concretization_prompt": "\nTransform the ANT analysis to use concrete, specific names:\n\n1. Name actants specifically:\n   - \"A1\" -> \"European Union GDPR Framework\"\n   - \"A2\" -> \"Facebook's Algorithmic Content Moderation System\"\n\n2. Describe translations concretely:\n   - Include actual alignment of interests\n   - Name specific actors and their transformations\n\n3. Name black boxes clearly:\n   - \"BB1\" -> \"Machine Learning Model Training Process\"\n\n4. Describe controversies specifically:\n   - Include actual contested issues\n\n5. Name inscriptions concretely:\n   - What specific behaviors are encoded?\n\nPreserve all network relationships and ANT concepts.\nMake the analysis useful for sociotechnical understanding.\n",
   "canonical_schema": {
     "actants": [
       {
@@ -122,5 +119,64 @@
     "structured_text_report"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/science_studies_network.py"
+  "source_file": "analyzer/src/engines/science_studies_network.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "sociotechnical network  (ant)",
+      "analysis_type_plural": "sociotechnical network  (ant)s",
+      "core_question": "How are human and non-human actors assembled into networks?",
+      "extraction_steps": [
+        "ACTANTS",
+        "TRANSLATIONS",
+        "BLACK BOXES",
+        "CONTROVERSIES",
+        "INSCRIPTIONS",
+        "OBLIGATORY PASSAGE POINTS"
+      ],
+      "key_fields": {},
+      "id_field": "science_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "sociotechnical network  (ant)",
+      "item_type_plural": "sociotechnical network  (ant)s",
+      "consolidation_rules": [
+        "BUILD ACTANT NETWORK: - Deduplicate actants across articles",
+        "TRACE TRANSLATIONS: - Map the chain of translations",
+        "IDENTIFY BLACK BOXES: - What is taken for granted across articles?",
+        "MAP CONTROVERSIES: - What debates reveal network structure?",
+        "CATALOG INSCRIPTIONS: - What programs of action are built into artifacts?",
+        "IDENTIFY OBLIGATORY PASSAGE POINTS: - What actants control the network?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

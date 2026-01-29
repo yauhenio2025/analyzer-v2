@@ -7,10 +7,60 @@
   "kind": "primitive",
   "reasoning_domain": "rhetorical analysis",
   "researcher_question": "What argumentative work does each chain do?",
-  "extraction_prompt": "You are conducting Phase 5.3: ARGUMENTATIVE FUNCTION classification.\n\n## YOUR TASK\n\nIdentify each chain's ARGUMENTATIVE FUNCTION for \"{concept}\".\n\n## FUNCTIONS\n\n1. **Establishing**: Introduces and defines the concept\n2. **Defending**: Responds to objections/alternatives\n3. **Extending**: Applies concept to new domains\n4. **Limiting**: Specifies boundaries/exceptions\n5. **Historicizing**: Places in historical context\n6. **Politicizing**: Draws political implications\n\n## CHAINS TO CLASSIFY\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each chain: chain_id, primary_function, secondary_function, target_audience, strategic_purpose.\n\nReturn as valid JSON.",
-  "curation_prompt": "Validate function classifications.",
   "canonical_schema": {
     "type": "object"
   },
-  "paradigm_keys": []
+  "paradigm_keys": [],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What argumentative work does each chain do?",
+      "extraction_steps": [
+        "Establishing",
+        "Defending",
+        "Extending",
+        "Limiting",
+        "Historicizing",
+        "Politicizing"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

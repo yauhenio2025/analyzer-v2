@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "genealogical",
   "researcher_question": "What intellectual traditions and influences shape this discourse?",
-  "extraction_prompt": "\nYou are an expert intellectual historian tracing genealogies of ideas and influences.\n\nFor this article, extract ALL intellectual genealogy information:\n\n1. **INTELLECTUAL TRADITIONS**: Schools of thought mentioned\n   - Name and description\n   - Core tenets and beliefs\n   - Key figures associated with the tradition\n   - Foundational texts that define the tradition\n\n2. **THINKERS**: Individual scholars, philosophers, theorists\n   - Who they were influenced by (explicit or implicit)\n   - Who they influenced\n   - Their key contributions to the discourse\n\n3. **FOUNDATIONAL TEXTS**: Seminal works cited or referenced\n   - Title, author, year\n   - Key concepts introduced\n   - How often referenced in this article\n\n4. **INFLUENCE PATHWAYS**: How ideas move between thinkers\n   - Direct (student of)\n   - Conceptual (borrowed ideas)\n   - Critical (opposed and refined)\n   - Synthetic (combined multiple influences)\n\n5. **PARADIGM SHIFTS**: Major conceptual transitions\n   - From what paradigm to what paradigm\n   - Key catalysts and triggering events\n\n\nExtract comprehensively - trace the intellectual ancestry of ideas in this article.\n",
-  "curation_prompt": "\nYou are synthesizing intellectual genealogy extractions from multiple articles into a unified map.\n\nYour task:\n1. **CONSOLIDATE TRADITIONS**: Merge duplicate references to the same schools of thought\n   - Standardize naming\n   - Combine descriptions from different articles\n   - Build complete picture of core tenets\n\n2. **MAP THINKER NETWORK**: Build the influence network\n   - Deduplicate thinker mentions\n   - Trace who influenced whom\n   - Identify key nodes (most influential thinkers)\n\n3. **TRACE LINEAGES**: Connect the dots across generations\n   - Build multi-generational influence chains\n   - Identify where ideas originated and how they evolved\n\n4. **IDENTIFY FOUNDATIONAL TEXTS**: Catalog seminal works\n   - Rank by citation frequency\n   - Note which concepts came from which texts\n\n5. **MAP PARADIGM SHIFTS**: Find conceptual transitions\n   - When did major shifts occur?\n   - What catalyzed them?\n\n\nCreate a comprehensive intellectual genealogy that shows how ideas developed and spread.\n",
-  "concretization_prompt": "\nTransform the intellectual genealogy to use concrete, recognizable names:\n\n1. Convert thinker_ids to full names:\n   - \"T1\" \u2192 \"Michel Foucault\"\n   - \"T2\" \u2192 \"Pierre Bourdieu\"\n\n2. Name traditions clearly:\n   - \"Tradition1\" \u2192 \"Frankfurt School Critical Theory\"\n\n3. Title foundational texts fully:\n   - \"Text1\" \u2192 \"The Structure of Scientific Revolutions (Kuhn, 1962)\"\n\n4. Describe influence pathways specifically:\n   - Include the actual concepts that were transmitted\n\nPreserve all structural relationships and metrics.\nMake the genealogy immediately useful for researchers.\n",
   "canonical_schema": {
     "intellectual_traditions": [
       {
@@ -113,5 +110,71 @@
     "gemini_network_graph"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/intellectual_genealogy.py"
+  "source_file": "analyzer/src/engines/intellectual_genealogy.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "intellectual genealogy tracer",
+      "analysis_type_plural": "intellectual genealogy tracers",
+      "core_question": "What intellectual traditions and influences shape this discourse?",
+      "extraction_steps": [
+        "INTELLECTUAL TRADITIONS",
+        "THINKERS",
+        "FOUNDATIONAL TEXTS",
+        "INFLUENCE PATHWAYS",
+        "PARADIGM SHIFTS"
+      ],
+      "key_fields": {},
+      "id_field": "intellectual_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "intellectual genealogy tracer",
+      "item_type_plural": "intellectual genealogy tracers",
+      "consolidation_rules": [
+        "CONSOLIDATE TRADITIONS: Merge duplicate references to the same schools of thought",
+        "MAP THINKER NETWORK: Build the influence network",
+        "TRACE LINEAGES: Connect the dots across generations",
+        "IDENTIFY FOUNDATIONAL TEXTS: Catalog seminal works",
+        "MAP PARADIGM SHIFTS: Find conceptual transitions"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "T1",
+          "to": "Michel Foucault"
+        },
+        {
+          "from": "T2",
+          "to": "Pierre Bourdieu"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

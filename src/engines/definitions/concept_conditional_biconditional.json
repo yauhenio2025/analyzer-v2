@@ -7,10 +7,59 @@
   "kind": "relational",
   "reasoning_domain": "conditional logic",
   "researcher_question": "What biconditional relationships involve this concept?",
-  "extraction_prompt": "You are conducting Phase 7.3: BICONDITIONAL analysis.\n\n## YOUR TASK\n\nFind BICONDITIONAL relationships involving \"{concept}\".\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## PATTERN: {concept} if and only if X\n\nBiconditionals assert:\n- X is NECESSARY for {concept}\n- X is SUFFICIENT for {concept}\n- They come together\n\nLook for:\n- \"X if and only if Y\"\n- \"X is equivalent to Y\"\n- \"X just is Y\"\n- Definitional claims\n- Mutual implication\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with biconditionals[], each containing:\n- biconditional_id, term_a, term_b, relationship_type (definitional/empirical/normative), confidence, quote, source\n\nTARGET: 3-8 biconditional relationships.",
-  "curation_prompt": "Validate biconditional extraction.",
   "canonical_schema": {
     "type": "object"
   },
-  "paradigm_keys": []
+  "paradigm_keys": [],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What biconditional relationships involve this concept?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

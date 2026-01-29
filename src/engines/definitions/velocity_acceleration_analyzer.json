@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "temporal",
   "researcher_question": "Is this phenomenon speeding up, slowing down, or at an inflection point?",
-  "extraction_prompt": "\nYou are analyzing VELOCITY AND ACCELERATION - the rates of change and\nhow those rates themselves are changing.\n\n## KEY CONCEPTS\n\n### VELOCITY (First Derivative)\nHow fast is something changing?\n- Rapid increase\n- Gradual increase\n- Stable\n- Gradual decrease\n- Rapid decrease\n\n### ACCELERATION (Second Derivative)\nIs the rate of change itself changing?\n- Accelerating: Change is speeding up\n- Constant: Change continues at same rate\n- Decelerating: Change is slowing down\n\n### INFLECTION POINTS\nWhere does the nature of change change?\n- Reversal: Direction changes\n- Acceleration shift: Speed of change changes\n- Saturation onset: Limits start binding\n- Breakthrough: Constraints removed\n\n### SATURATION\nAre there limits to change?\n- What constrains further change?\n- How close to limits?\n- What happens at saturation?\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY PHENOMENA\nWhat phenomena are described that change over time?\n- What's being measured?\n- Over what time period?\n- What's the data quality?\n\n### STEP 2: ASSESS VELOCITY\nHow fast is each phenomenon changing?\n- What's the current rate of change?\n- How does this compare to historical rates?\n- What's driving the velocity?\n\n### STEP 3: ASSESS ACCELERATION\nIs the rate of change itself changing?\n- Is change speeding up or slowing down?\n- What's causing acceleration/deceleration?\n- Where is this heading?\n\n### STEP 4: IDENTIFY INFLECTION POINTS\nAre there or will there be inflection points?\n- Where does/will direction change?\n- Where does/will rate change?\n- What evidence suggests inflection?\n\n### STEP 5: ASSESS SATURATION\nAre there limits to change?\n- What constraints exist?\n- How close to saturation?\n- What happens at limits?\n\n### STEP 6: PROJECT TRAJECTORIES\nWhere does current trajectory lead?\n- If trends continue?\n- Key uncertainties?\n- Potential disruptions?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about rates and changes. \"Things are changing fast\" is not\nuseful. \"The rate of adoption increased 40% annually until 2020, then\ndecelerated to 15% annually, suggesting approaching saturation of early\nadopter segment\" is useful.\n",
-  "curation_prompt": "\nYou are synthesizing velocity and acceleration analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE DYNAMICS\n- What phenomena are tracked?\n- What velocity patterns appear?\n- What acceleration trends?\n\n### 2. IDENTIFY INFLECTIONS\n- What inflection points appear across sources?\n- What drives them?\n\n### 3. ASSESS TRAJECTORIES\n- Where are things heading?\n- What saturation effects appear?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of temporal dynamics and their implications.\n",
-  "concretization_prompt": "\nTransform the velocity/acceleration analysis into actionable insight:\n\n1. **PHENOMENA ANALYZED**\n   | Phenomenon | Measurement | Time Period |\n   |------------|-------------|-------------|\n\n2. **VELOCITY ANALYSIS**\n   | Phenomenon | Current Velocity | vs. Historical |\n   |------------|------------------|----------------|\n\n3. **ACCELERATION ANALYSIS**\n   | Phenomenon | Acceleration | Trend Direction |\n   |------------|--------------|-----------------|\n\n4. **INFLECTION POINTS**\n   | Phenomenon | Inflection Type | Timing | Significance |\n   |------------|-----------------|--------|--------------|\n\n5. **SATURATION ASSESSMENT**\n   | Phenomenon | Status | Limiting Factors | Runway |\n   |------------|--------|------------------|--------|\n\n6. **TRAJECTORY PROJECTIONS**\n   - Phenomenon: [Name]\n   - If current trajectory: [Where it leads]\n   - Key uncertainties: [List]\n\n7. **BOTTOM LINE**\n   [One paragraph: What are the key temporal dynamics? What's accelerating\n   vs. decelerating? What inflection points are approaching?]\n",
   "canonical_schema": {
     "phenomena_analyzed": [
       {
@@ -92,5 +89,57 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/velocity_acceleration_analyzer.py"
+  "source_file": "analyzer/src/engines/velocity_acceleration_analyzer.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "velocity & acceleration",
+      "analysis_type_plural": "velocity & accelerations",
+      "core_question": "Is this phenomenon speeding up, slowing down, or at an inflection point?",
+      "extraction_steps": [
+        "IDENTIFY PHENOMENA",
+        "ASSESS VELOCITY",
+        "ASSESS ACCELERATION",
+        "IDENTIFY INFLECTION POINTS",
+        "ASSESS SATURATION",
+        "PROJECT TRAJECTORIES"
+      ],
+      "key_fields": {},
+      "id_field": "velocity_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "velocity & acceleration",
+      "item_type_plural": "velocity & accelerations",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

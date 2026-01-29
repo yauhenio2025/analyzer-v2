@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "institutional",
   "researcher_question": "How do regulations evolve and affect behavior?",
-  "extraction_prompt": "\nYou are analyzing REGULATORY DYNAMICS \u2014 how regulations evolve, interact,\nand affect behavior.\n\n## REGULATORY DYNAMICS CONCEPTS\n\n### REGULATORY EVOLUTION\nRules change through political dynamics:\n- Interest group pressure\n- Crisis-driven reform\n- Regulatory expansion (rarely contraction)\n- Rule layering (new rules on old)\n\n### REGULATORY EFFECTS\nRegulations have intended and unintended effects:\n- Do they achieve stated goals?\n- What unintended consequences?\n- Who wins and loses?\n\n### REGULATORY ARBITRAGE\nActors exploit gaps between rules:\n- Jurisdictional arbitrage (move to lenient jurisdiction)\n- Definitional arbitrage (restructure to avoid rules)\n- Timing arbitrage (act before rules take effect)\n\n### COMPLIANCE DYNAMICS\nHow actors respond to rules:\n- Full compliance\n- Minimal compliance\n- Creative compliance (letter not spirit)\n- Non-compliance\n\n## YOUR TASK\n\n### STEP 1: MAP REGULATORY LANDSCAPE\nWhat regulations are relevant?\n- What's the stated purpose?\n- Who enforces?\n- What's covered?\n\n### STEP 2: ANALYZE REGULATORY EVOLUTION\nHow have regulations changed?\n- What drove changes?\n- Who pushed for/against?\n- What political dynamics?\n\n### STEP 3: ASSESS REGULATORY EFFECTS\nWhat effects do regulations have?\n- Intended effects: Are goals being achieved?\n- Unintended effects: What wasn't anticipated?\n- Who wins and loses?\n\n### STEP 4: ANALYZE COMPLIANCE\nHow do actors respond?\n- What are compliance costs?\n- Who bears those costs?\n- How is enforcement working?\n- What gaming occurs?\n\n### STEP 5: IDENTIFY ARBITRAGE\nHow do actors exploit regulatory gaps?\n- What strategies are used?\n- What gaps are exploited?\n- How widespread?\n\n### STEP 6: MAP REGULATORY INTERACTIONS\nHow do regulations interact?\n- Do they conflict?\n- Do they create gaps?\n- Do they reinforce each other?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about mechanisms. \"Regulation causes problems\" is not useful.\n\"The reporting requirement increases costs by X for small firms while large\nfirms can spread costs, creating competitive advantage\" is useful.\n",
-  "curation_prompt": "\nYou are synthesizing regulatory dynamics analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. MAP REGULATORY LANDSCAPE\n- What regulations appear across sources?\n- How is the landscape characterized?\n\n### 2. AGGREGATE EFFECTS\n- What intended/unintended effects appear?\n- Who wins and loses consistently?\n\n### 3. IDENTIFY ARBITRAGE PATTERNS\n- What arbitrage strategies are common?\n- What gaps are exploited?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of regulatory dynamics and their effects.\n",
-  "concretization_prompt": "\nTransform the regulatory dynamics analysis into actionable insight:\n\n1. **REGULATORY LANDSCAPE**\n   ```\n   | Regulation | Purpose | Enforcer | Key Provisions |\n   |------------|---------|----------|----------------|\n   ```\n\n2. **REGULATORY EVOLUTION**\n   - Regulation: [Name]\n   - Change: [What changed]\n   - Drivers: [Why]\n   - Political dynamics: [Who pushed]\n\n3. **REGULATORY EFFECTS**\n   | Regulation | Intended Effect | Unintended Effect | Winners | Losers |\n   |------------|-----------------|-------------------|---------|--------|\n\n4. **COMPLIANCE ANALYSIS**\n   - Regulation: [Name]\n   - Costs: [Who pays what]\n   - Enforcement: [How strict]\n   - Gaming: [How evaded]\n\n5. **REGULATORY ARBITRAGE**\n   - Strategy: [What's done]\n   - Gap exploited: [What hole]\n   - Who uses: [Which actors]\n   - Scale: [How common]\n\n6. **REGULATORY INTERACTIONS**\n   - [Reg 1] + [Reg 2]: [Conflict/Complement/Gap]\n   - Implications: [What this means]\n\n7. **BOTTOM LINE**\n   [One paragraph: How is the regulatory landscape working? What effects\n   intended and unintended? Where is arbitrage occurring?]\n",
   "canonical_schema": {
     "regulatory_landscape": [
       {
@@ -137,5 +134,57 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/regulatory_dynamics_analyzer.py"
+  "source_file": "analyzer/src/engines/regulatory_dynamics_analyzer.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "regulatory dynamics",
+      "analysis_type_plural": "regulatory dynamics",
+      "core_question": "How do regulations evolve and affect behavior?",
+      "extraction_steps": [
+        "MAP REGULATORY LANDSCAPE",
+        "ANALYZE REGULATORY EVOLUTION",
+        "ASSESS REGULATORY EFFECTS",
+        "ANALYZE COMPLIANCE",
+        "IDENTIFY ARBITRAGE",
+        "MAP REGULATORY INTERACTIONS"
+      ],
+      "key_fields": {},
+      "id_field": "regulatory_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "regulatory dynamics",
+      "item_type_plural": "regulatory dynamics",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

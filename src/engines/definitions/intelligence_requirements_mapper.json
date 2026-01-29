@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "epistemology",
   "researcher_question": "What key questions does this answer, and what gaps remain?",
-  "extraction_prompt": "\nYou are mapping analytical findings to INTELLIGENCE REQUIREMENTS \u2014\nensuring analysis answers the questions that matter and honestly identifies gaps.\n\n## THE REQUIREMENTS MAPPING FRAMEWORK\n\nAnalysis exists to answer decision-makers' questions. Rigorous analysis:\n1. IDENTIFIES the key questions the subject matter raises\n2. BREAKS DOWN questions into essential elements of information\n3. MAPS findings to requirements they address\n4. HONESTLY IDENTIFIES gaps where questions remain unanswered\n5. PRIORITIZES investigation to fill gaps\n\nThis discipline ensures RELEVANCE and HONESTY about what we know and don't know.\n\n\n## YOUR TASK\n\n### STEP 1: ESTABLISH CONTEXT\n\nWhat's the analysis context?\n- What subject area does this analysis cover?\n- What decisions might it inform?\n- What's the time horizon?\n\n### STEP 2: IDENTIFY PRIORITY REQUIREMENTS\n\nWhat are the TOP PRIORITY questions?\n- What does a decision-maker most need to know?\n- Why is each question a priority?\n- What decision does it enable?\n- How time-sensitive is it?\n\n### STEP 3: DEVELOP KEY QUESTIONS\n\nExpand priorities into specific, answerable questions:\n\n**Question Types:**\n- **Descriptive:** What is happening? Who is involved?\n- **Explanatory:** Why is this happening? What are the causes?\n- **Predictive:** What will happen? What are likely outcomes?\n- **Evaluative:** How effective? How significant? How reliable?\n\n### STEP 4: EXTRACT ESSENTIAL ELEMENTS\n\nBreak questions into specific information needs:\n\nFor each element:\n- What specific information is needed?\n- Has it been obtained from the documents?\n- If obtained, what's the answer and how confident are we?\n- If not obtained, is it critical?\n\n### STEP 5: MAP FINDINGS TO REQUIREMENTS\n\nFor each significant finding in the documents:\n- Which requirements does it address?\n- Does it fully answer, substantially address, or partially address?\n- What's its analytical value?\n\n### STEP 6: IDENTIFY GAPS\n\nWhere do requirements remain unanswered?\n- What don't we know?\n- What's the impact of this gap?\n- Where might we get this information?\n- How hard would it be to fill?\n\n### STEP 7: PRIORITIZE INVESTIGATION\n\nBased on gaps, what should be investigated?\n- Priority ranking\n- What specifically to investigate\n- Why this priority\n\n## OUTPUT GUIDANCE\n\nBe rigorous about mapping. Vague connections don't help.\nBe honest about gaps. Pretending we know more than we do is counterproductive.\nPrioritize ruthlessly. Not all gaps are equal.\n",
-  "curation_prompt": "\nYou are synthesizing requirements mappings from multiple sources to create a\ncomprehensive requirements assessment.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE REQUIREMENTS\n\n- Merge equivalent questions and elements from different sources\n- Create unified requirement structure\n- Note where sources identified the same questions (validates importance)\n\n### 2. INTEGRATE FINDINGS MAPPING\n\n- Consolidate how findings address requirements\n- Note where multiple sources contribute to same requirement\n- Assess cumulative coverage\n\n### 3. UNIFIED GAP ASSESSMENT\n\n- Merge gap identifications\n- Prioritize based on cross-source analysis\n- Identify systematic gaps (appearing across all sources)\n\n### 4. SYNTHESIZED INVESTIGATION PRIORITIES\n\n- Create integrated priority list\n- Resolve conflicting priorities\n- Focus on highest-impact gaps\n\n### 5. OVERALL REQUIREMENT COVERAGE\n\n- What percentage of requirements are addressed?\n- Where is coverage strongest/weakest?\n- What decisions can/cannot be supported?\n\n## OUTPUT GUIDANCE\n\nCreate an integrated requirements map that enables:\n1. Understanding of what questions are answered\n2. Honest acknowledgment of what remains unknown\n3. Prioritized investigation guidance\n",
-  "concretization_prompt": "\nTransform the requirements mapping into a decision-ready report:\n\n1. **REQUIREMENTS SUMMARY**\n   ```\n   SUBJECT: [Topic]\n   COVERAGE: [X]% of key requirements addressed\n   CRITICAL GAPS: [Number]\n   ```\n\n2. **PRIORITY REQUIREMENTS STATUS**\n   ```\n   | Priority | Question | Status | Confidence | Key Gap |\n   |----------|----------|--------|------------|---------|\n   | PR1 | [Question] | \u2705 Answered | High | \u2014 |\n   | PR2 | [Question] | \u26a0\ufe0f Partial | Medium | [Gap] |\n   | PR3 | [Question] | \u274c Unanswered | \u2014 | [Gap] |\n   ```\n\n3. **KEY QUESTION BREAKDOWN**\n   For each question:\n   ```\n   KQ1: [Question]\n   Status: [Answered/Partial/Unanswered]\n   Answer: [If answered]\n   Confidence: [Level]\n   Gaps: [If any]\n   ```\n\n4. **GAPS**\n   ```\n   | Priority | Gap | Affects | Impact | Difficulty |\n   |----------|-----|---------|--------|------------|\n   | 1 | [Gap] | PR1, KQ2 | Critical | Moderate |\n   ```\n\n5. **INVESTIGATION PRIORITIES**\n   1. **[Gap 1]** \u2014 Investigate: [What] \u2014 Why: [Reason]\n\n6. **WHAT WE NOW KNOW**\n   - [Knowledge 1] \u2014 Confidence: [Level]\n\n7. **WHAT REMAINS UNCERTAIN**\n   - [Uncertainty 1] \u2014 Affects: [Questions]\n\n8. **BOTTOM LINE**\n   [One paragraph: What questions are answered, what gaps remain?]\n\nMake it clear what the analysis delivers and what it doesn't.\n",
   "canonical_schema": {
     "analysis_context": {
       "subject_area": "string - what domain this analysis covers",
@@ -140,5 +137,58 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/intelligence_requirements_mapper.py"
+  "source_file": "analyzer/src/engines/intelligence_requirements_mapper.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "intelligence requirements",
+      "analysis_type_plural": "intelligence requirements",
+      "core_question": "What key questions does this answer, and what gaps remain?",
+      "extraction_steps": [
+        "ESTABLISH CONTEXT",
+        "IDENTIFY PRIORITY REQUIREMENTS",
+        "DEVELOP KEY QUESTIONS",
+        "EXTRACT ESSENTIAL ELEMENTS",
+        "MAP FINDINGS TO REQUIREMENTS",
+        "IDENTIFY GAPS",
+        "PRIORITIZE INVESTIGATION"
+      ],
+      "key_fields": {},
+      "id_field": "intelligence_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "intelligence requirements",
+      "item_type_plural": "intelligence requirements",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

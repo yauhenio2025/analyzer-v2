@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "flows",
   "researcher_question": "Who pays? Who profits? Who bears the risks?",
-  "extraction_prompt": "\nYou are an expert political economist analyzing resource flows.\n\nFor this article, extract ALL information about resource distribution:\n\n## ACTORS\nIdentify all actors involved in resource flows:\n1. **NAME**: Who are they?\n2. **TYPE**: Company, government, individual, institution, collective\n3. **ROLE**: Investor, recipient, intermediary, regulator, etc.\n4. **RESOURCES**: What resources do they control?\n\n## RESOURCE FLOWS\nFor each flow of resources:\n1. **FROM \u2192 TO**: Who gives to whom?\n2. **RESOURCE TYPE**:\n   - Money (investment, revenue, tax, subsidy, fine)\n   - Data (personal data, analytics, insights)\n   - Labor (work, attention, creativity)\n   - Risk (who bears potential downsides)\n   - Regulatory favor (licenses, exemptions, access)\n\n3. **MAGNITUDE**: How much? (exact, estimated, or order of magnitude)\n4. **MECHANISM**: How does the transfer happen?\n5. **VISIBILITY**: Is this flow openly discussed or hidden?\n\n## ASYMMETRIES\nIdentify unequal distributions:\n1. **WHAT**: What's unevenly distributed?\n2. **WHO BENEFITS**: Who gets more than they contribute?\n3. **WHO PAYS**: Who contributes more than they receive?\n4. **HOW**: What mechanism creates the asymmetry?\n5. **JUSTIFICATION**: Is any rationale offered?\n\n## RISK DISTRIBUTION\nWho generates risks vs. who bears them?\n- Financial risks (market, credit, liquidity)\n- Regulatory risks (compliance, enforcement)\n- Operational risks (failure, accidents)\n- Reputational risks\n- Environmental/social risks\n\n\nFollow the money - extract every resource flow you can identify.\n",
-  "curation_prompt": "\nYou are synthesizing resource flow analyses into a unified economic map.\n\nYour task:\n1. **CONSOLIDATE ACTORS**: Merge same actors across articles\n   - Aggregate roles and resources\n   - Track across different contexts\n\n2. **MAP FLOW NETWORKS**:\n   - Create comprehensive flow diagrams\n   - Identify major and minor flows\n   - Track flow directions and magnitudes\n\n3. **IDENTIFY SYSTEMIC ASYMMETRIES**:\n   - Which asymmetries appear across multiple articles?\n   - What are the root mechanisms?\n   - Who are consistent winners/losers?\n\n4. **TRACE RISK TRANSFERS**:\n   - Map risk generation to risk bearing\n   - Identify privatized gains / socialized losses\n   - Note obscured or hidden transfers\n\n5. **CONSTRUCT VALUE CHAINS**:\n   - Where is value created?\n   - Where is value extracted?\n   - Who captures what share?\n\nCreate clear actor_ids (e.g., \"actor_google\", \"actor_us_government\").\n\n\nOutput a comprehensive map of who pays and who profits.\n",
-  "concretization_prompt": "\nTransform the resource flow analysis to use concrete labels:\n\n1. Convert actor_ids to full names:\n   - \"A1\" \u2192 \"Alphabet Inc. (Google)\"\n   - \"A2\" \u2192 \"US Federal Government\"\n\n2. Name flows specifically:\n   - \"F1\" \u2192 \"Advertising Revenue Flow\"\n   - \"F2\" \u2192 \"User Data Extraction\"\n\n3. Label asymmetries clearly:\n   - \"Asymmetry 1\" \u2192 \"The Data-Value Gap\"\n   - \"Asymmetry 2\" \u2192 \"Risk Externalization to Gig Workers\"\n\n4. Specify magnitudes where possible:\n   - Include actual dollar amounts, percentages\n   - Note uncertainty ranges\n\nPreserve all flow relationships and network structure.\nMake the money trail immediately visible.\n",
   "canonical_schema": {
     "actors": [
       {
@@ -119,5 +116,84 @@
     "marxist",
     "pragmatist_praxis"
   ],
-  "source_file": "analyzer/src/engines/resource_flow_asymmetry.py"
+  "source_file": "analyzer/src/engines/resource_flow_asymmetry.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "resource flow analyst",
+      "analysis_type_plural": "resource flow analysts",
+      "core_question": "Who pays? Who profits? Who bears the risks?",
+      "extraction_steps": [
+        "NAME",
+        "TYPE",
+        "ROLE",
+        "RESOURCES",
+        "FROM \u2192 TO",
+        "RESOURCE TYPE",
+        "MAGNITUDE",
+        "MECHANISM",
+        "VISIBILITY",
+        "WHAT"
+      ],
+      "key_fields": {},
+      "id_field": "resource_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "resource flow analyst",
+      "item_type_plural": "resource flow analysts",
+      "consolidation_rules": [
+        "CONSOLIDATE ACTORS: Merge same actors across articles",
+        "MAP FLOW NETWORKS: - Create comprehensive flow diagrams",
+        "IDENTIFY SYSTEMIC ASYMMETRIES: - Which asymmetries appear across multiple articles?",
+        "TRACE RISK TRANSFERS: - Map risk generation to risk bearing",
+        "CONSTRUCT VALUE CHAINS: - Where is value created?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "A1",
+          "to": "Alphabet Inc. (Google)"
+        },
+        {
+          "from": "A2",
+          "to": "US Federal Government"
+        },
+        {
+          "from": "F1",
+          "to": "Advertising Revenue Flow"
+        },
+        {
+          "from": "F2",
+          "to": "User Data Extraction"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

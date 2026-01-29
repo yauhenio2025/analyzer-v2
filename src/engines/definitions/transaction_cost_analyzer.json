@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "institutional_analysis",
   "researcher_question": "What are the transaction costs in this exchange?",
-  "extraction_prompt": "\nYou are a TRANSACTION COST ANALYZER \u2014 examining the costs of using market\nmechanisms versus organizing activity within firms or through other\ngovernance structures.\n\n## TRANSACTION COST ECONOMICS\n\nMarkets aren't free. Every transaction has costs beyond the price:\n- Finding trading partners\n- Negotiating terms\n- Writing contracts\n- Monitoring compliance\n- Enforcing agreements\n\nWhen these costs are high, markets fail and hierarchies emerge.\n\n\"The main reason why it is profitable to establish a firm would seem to be\nthat there is a cost to using the price mechanism.\" \u2014 Ronald Coase\n\n## TRANSACTION COST COMPONENTS\n\n### SEARCH COSTS\nFinding trading partners and information:\n- Who can provide what I need?\n- What's the quality?\n- What's the fair price?\n\n### BARGAINING COSTS\nNegotiating the deal:\n- What are the terms?\n- How long does negotiation take?\n- Risk of hold-up?\n\n### CONTRACTING COSTS\nWriting the agreement:\n- Can we specify everything?\n- What about unforeseen contingencies?\n- Legal fees and complexity?\n\n### MONITORING COSTS\nEnsuring compliance:\n- Can we observe what they're doing?\n- How do we check quality?\n- Moral hazard problems?\n\n### ENFORCEMENT COSTS\nDealing with breaches:\n- Can we prove breach?\n- Will courts enforce?\n- What sanctions are available?\n\n## KEY FACTORS\n\n### ASSET SPECIFICITY\nHow specific are investments to this relationship?\n- Site specificity (location-bound)\n- Physical asset specificity (specialized equipment)\n- Human asset specificity (specialized skills)\n- Dedicated assets (investment for this customer)\n\nHigh specificity \u2192 high lock-in \u2192 high hold-up risk \u2192 favor hierarchy\n\n### UNCERTAINTY\nHow uncertain is the environment?\n- Can we anticipate all contingencies?\n- How stable are conditions?\n\nHigh uncertainty \u2192 incomplete contracts \u2192 favor hierarchy\n\n### FREQUENCY\nHow often do transactions occur?\n- One-time vs. repeated\n- Duration of relationship\n\nHigh frequency \u2192 justify specialized governance\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY THE TRANSACTION\nWhat exchange is being analyzed?\n- Who are the parties?\n- What's being exchanged?\n- What governance structure exists?\n\n### STEP 2: ASSESS SEARCH COSTS\nHow costly is finding partners and information?\n- Information asymmetry?\n- Quality verification difficulty?\n\n### STEP 3: ASSESS BARGAINING COSTS\nHow costly is negotiation?\n- Complexity?\n- Hold-up risk?\n- Bargaining power distribution?\n\n### STEP 4: ASSESS CONTRACTING COSTS\nHow costly is writing contracts?\n- Completeness possible?\n- Uncertainty level?\n- Specification difficulty?\n\n### STEP 5: ASSESS MONITORING COSTS\nHow costly is ensuring compliance?\n- Observability?\n- Moral hazard?\n- Monitoring mechanisms?\n\n### STEP 6: ASSESS ENFORCEMENT COSTS\nHow costly is dealing with breaches?\n- Legal system quality?\n- Dispute resolution?\n- Sanction mechanisms?\n\n### STEP 7: ANALYZE ASSET SPECIFICITY\nHow specific are investments?\n- Site, physical, human, dedicated?\n- Lock-in implications?\n\n### STEP 8: ANALYZE GOVERNANCE FIT\nIs governance structure appropriate?\n- Given transaction costs and specificity?\n- Would alternatives be better?\n\n### STEP 9: MAKE-OR-BUY ANALYSIS\nIf applicable:\n- Transaction costs of market vs. hierarchy?\n- Production costs of market vs. hierarchy?\n- Optimal governance?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about cost components.\nIdentify the highest-cost elements.\nConnect to governance implications.\n",
-  "curation_prompt": "\nSynthesize transaction cost analyses from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **TRIANGULATE COSTS**: Multiple sources confirm same cost structure?\n2. **COMPARE GOVERNANCE**: Agreement on appropriate governance?\n3. **ASSESS SPECIFICITY**: Consistent view of asset specificity?\n4. **EVALUATE ALTERNATIVES**: What governance alternatives are considered?\n5. **SYNTHESIZE**: Overall transaction cost assessment\n\n## OUTPUT GUIDANCE\n\nCreate unified assessment of transaction costs and governance implications.\n",
-  "concretization_prompt": "\nTransform transaction cost analysis into clear assessment:\n\n1. **TRANSACTION CONTEXT**\n   - Transaction: [What's being exchanged]\n   - Parties: [Who]\n   - Current governance: [Market/Hierarchy/Hybrid]\n\n2. **TRANSACTION COST COMPONENTS**\n   | Component | Level | Key Drivers |\n   |-----------|-------|-------------|\n   | Search | [Low/Mod/High] | [Drivers] |\n   | Bargaining | [Low/Mod/High] | [Drivers] |\n   | Contracting | [Low/Mod/High] | [Drivers] |\n   | Monitoring | [Low/Mod/High] | [Drivers] |\n   | Enforcement | [Low/Mod/High] | [Drivers] |\n\n3. **ASSET SPECIFICITY**\n   - Site: [Low/Mod/High]\n   - Physical: [Low/Mod/High]\n   - Human: [Low/Mod/High]\n   - Overall: [Low/Mod/High]\n   - Lock-in implications: [Description]\n\n4. **TRANSACTION FREQUENCY**: [One-time/Occasional/Frequent/Continuous]\n\n5. **GOVERNANCE ANALYSIS**\n   - Current: [Market/Hierarchy/Hybrid]\n   - Fit: [Well-matched/Adequate/Mismatched]\n   - Alternatives: [Options]\n\n6. **MAKE-OR-BUY** (if applicable)\n   - Market transaction costs: [Assessment]\n   - Hierarchy transaction costs: [Assessment]\n   - Recommendation: [Make/Buy/Hybrid]\n   - Rationale: [Why]\n\n7. **COST REDUCTION OPPORTUNITIES**\n   - [Opportunity 1]\n   - [Opportunity 2]\n\n8. **BOTTOM LINE**\n   [What are the key transaction costs? What governance is appropriate?]\n",
   "canonical_schema": {
     "transaction_context": {
       "transaction_type": "string - what exchange is being analyzed",
@@ -131,5 +128,66 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/transaction_cost_analyzer.py"
+  "source_file": "analyzer/src/engines/transaction_cost_analyzer.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "transaction cost",
+      "analysis_type_plural": "transaction costs",
+      "core_question": "What are the transaction costs in this exchange?",
+      "extraction_steps": [
+        "IDENTIFY THE TRANSACTION",
+        "ASSESS SEARCH COSTS",
+        "ASSESS BARGAINING COSTS",
+        "ASSESS CONTRACTING COSTS",
+        "ASSESS MONITORING COSTS",
+        "ASSESS ENFORCEMENT COSTS",
+        "ANALYZE ASSET SPECIFICITY",
+        "ANALYZE GOVERNANCE FIT",
+        "MAKE-OR-BUY ANALYSIS"
+      ],
+      "key_fields": {},
+      "id_field": "transaction_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "transaction cost",
+      "item_type_plural": "transaction costs",
+      "consolidation_rules": [
+        "TRIANGULATE COSTS: Multiple sources confirm same cost structure?",
+        "COMPARE GOVERNANCE: Agreement on appropriate governance?",
+        "ASSESS SPECIFICITY: Consistent view of asset specificity?",
+        "EVALUATE ALTERNATIVES: What governance alternatives are considered?",
+        "SYNTHESIZE: Overall transaction cost assessment"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "epistemology",
   "researcher_question": "How certain are authors about their claims, and how do they signal this?",
-  "extraction_prompt": "\nYou are an expert linguist analyzing epistemic stance and certainty markers.\n\nFor this article, extract ALL epistemic and certainty-related language:\n\n1. **KNOWLEDGE CLAIMS**: Statements asserting knowledge\n   - What is being claimed?\n   - Certainty level (0-1): 1.0 = absolutely certain, 0 = pure speculation\n   - What epistemic markers signal this certainty?\n   - What type of evidence backs the claim?\n\n2. **HEDGING INSTANCES**: Language that reduces certainty\n   - APPROXIMATORS: \"about,\" \"roughly,\" \"approximately\"\n   - SHIELDS: \"possibly,\" \"might,\" \"could\"\n   - ATTRIBUTION SHIELDS: \"according to,\" \"X suggests\"\n   - PLAUSIBILITY SHIELDS: \"it seems,\" \"apparently\"\n   - What function does each hedge serve?\n\n3. **BOOSTING INSTANCES**: Language that increases certainty\n   - CERTAINTY MARKERS: \"clearly,\" \"obviously,\" \"certainly\"\n   - EMPHASIS: \"indeed,\" \"in fact,\" \"actually\"\n   - UNIVERSAL QUANTIFIERS: \"all,\" \"every,\" \"always\"\n   - What function does each boost serve?\n\n4. **EVIDENTIALITY MARKERS**: How do authors indicate source of knowledge?\n   - DIRECT PERCEPTION: \"I observed,\" \"we found\"\n   - INFERENCE: \"therefore,\" \"this suggests\"\n   - HEARSAY: \"reportedly,\" \"allegedly\"\n   - REPORTED: \"studies show,\" \"experts say\"\n\n\nBe comprehensive - capture subtle epistemic markers.\n",
-  "curation_prompt": "\nYou are synthesizing epistemic stance analysis from multiple articles.\n\nYour task:\n1. **AGGREGATE KNOWLEDGE CLAIMS**: Catalog all claims\n   - Group by topic\n   - Order by certainty level\n   - Note evidence types\n\n2. **ANALYZE HEDGING PATTERNS**: Map uncertainty\n   - Count hedge types\n   - Identify who hedges most\n   - Note what topics get most hedging\n\n3. **ANALYZE BOOSTING PATTERNS**: Map certainty\n   - Count boost types\n   - Identify who boosts most\n   - Note what claims get boosted\n\n4. **MAP EVIDENTIALITY**: How is knowledge sourced?\n   - What sources are most cited?\n   - What's the reliability distribution?\n\n5. **IDENTIFY EPISTEMIC COMMUNITIES**:\n   - What groups share epistemic standards?\n   - How do different communities differ in certainty?\n   - What evidence types do different groups prefer?\n\n6. **CALCULATE METRICS**:\n   - Average certainty across corpus\n   - Hedge-to-boost ratio\n   - Epistemic diversity\n\n\nCreate a comprehensive map of epistemic stances across the discourse.\n",
-  "concretization_prompt": "\nTransform the epistemic stance analysis to be immediately clear:\n\n1. Name claims with certainty ratings:\n   - \"C1\" \u2192 \"AI will transform work (Certainty: 0.85, Boosted)\"\n\n2. Categorize hedging clearly:\n   - \"H1\" \u2192 \"Shield hedge: 'might potentially lead to' on automation claims\"\n\n3. Name epistemic communities:\n   - \"EC1\" \u2192 \"AI Optimist Community (Silicon Valley Researchers)\"\n\n4. Clarify evidentiality:\n   - \"E1\" \u2192 \"Reported evidence: 'According to MIT study...'\"\n\nPreserve all certainty ratings and frequencies.\nMake the analysis useful for understanding knowledge claims.\n",
   "canonical_schema": {
     "knowledge_claims": [
       {
@@ -90,5 +87,75 @@
     "gemini_evidence_radar"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/epistemic_stance.py"
+  "source_file": "analyzer/src/engines/epistemic_stance.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "epistemic stance",
+      "analysis_type_plural": "epistemic stances",
+      "core_question": "How certain are authors about their claims, and how do they signal this?",
+      "extraction_steps": [
+        "KNOWLEDGE CLAIMS",
+        "HEDGING INSTANCES",
+        "BOOSTING INSTANCES",
+        "EVIDENTIALITY MARKERS"
+      ],
+      "key_fields": {},
+      "id_field": "claim_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "epistemic stance",
+      "item_type_plural": "epistemic stances",
+      "consolidation_rules": [
+        "AGGREGATE KNOWLEDGE CLAIMS: Catalog all claims",
+        "ANALYZE HEDGING PATTERNS: Map uncertainty",
+        "ANALYZE BOOSTING PATTERNS: Map certainty",
+        "MAP EVIDENTIALITY: How is knowledge sourced?",
+        "IDENTIFY EPISTEMIC COMMUNITIES: - What groups share epistemic standards?",
+        "CALCULATE METRICS: - Average certainty across corpus"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "C1",
+          "to": "AI will transform work (Certainty: 0.85, Boosted)"
+        },
+        {
+          "from": "H1",
+          "to": "Shield hedge: 'might potentially lead to' on automation claims"
+        },
+        {
+          "from": "E1",
+          "to": "Reported evidence: 'According to MIT study...'"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

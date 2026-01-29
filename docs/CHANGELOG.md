@@ -6,6 +6,34 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Stage Prompt Composition System** - Generic templates + engine context injection
+  - `src/stages/` module with Jinja2 template composition
+  - Generic templates: `extraction.md.j2`, `curation.md.j2`, `concretization.md.j2`
+  - Shared frameworks: Brandomian, Dennett, Toulmin primers
+  - StageComposer for runtime prompt composition
+  - Audience parameter for vocabulary calibration (researcher/analyst/executive/activist)
+- Migration script `scripts/migrate_engines_to_stages.py` for converting engines
+- Architecture documentation in `docs/STAGE_PROMPTS.md`
+- New endpoint: `GET /v1/engines/{key}/stage-context` for debugging
+
+### Changed
+- **BREAKING**: EngineDefinition schema restructured
+  - Removed: `extraction_prompt`, `curation_prompt`, `concretization_prompt` fields
+  - Added: `stage_context` field with injection context for templates
+- Prompt endpoints now compose prompts at runtime from templates
+- Added `audience` query parameter to prompt endpoints
+- EnginePromptResponse includes `audience` and `framework_used` fields
+
+### Migration Required
+- Run `python scripts/migrate_engines_to_stages.py` to convert engine JSON files
+- Backups saved to `src/engines/definitions_backup_pre_stages/`
+- See `docs/STAGE_PROMPTS.md` for full migration guide
+
+---
+
+## [0.1.1] - 2026-01-29
+
+### Added
 - Initial Analyzer v2 service structure ([src/](src/))
 - Pydantic schemas for engines, paradigms, chains ([src/engines/schemas.py](src/engines/schemas.py), [src/paradigms/schemas.py](src/paradigms/schemas.py), [src/chains/schemas.py](src/chains/schemas.py))
 - Registry classes for loading definitions from JSON ([src/engines/registry.py](src/engines/registry.py), [src/paradigms/registry.py](src/paradigms/registry.py), [src/chains/registry.py](src/chains/registry.py))

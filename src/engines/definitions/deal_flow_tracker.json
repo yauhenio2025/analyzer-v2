@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "flows",
   "researcher_question": "What deals are reshaping this market, and who is acquiring power through transactions?",
-  "extraction_prompt": "\nYou are an expert M&A analyst extracting deal information from text.\n\nFor this article, extract ALL deal activity:\n\n## 1. DEALS\nFor each transaction mentioned:\n- **DEAL TYPE**:\n  - ACQUISITION: One company buying another\n  - MERGER: Two companies combining as equals\n  - INVESTMENT: Equity stake without control\n  - PARTNERSHIP: Strategic alliance\n  - LICENSING: Rights to technology/IP\n  - JOINT VENTURE: New entity from multiple parties\n  - DIVESTITURE: Selling off business unit\n- **HEADLINE**: Brief description (e.g., \"Microsoft acquires Activision\")\n- **DESCRIPTION**: Fuller context\n\n## 2. PARTIES\nFor each deal, identify:\n- **ACQUIRER**: Who is buying/investing/leading\n- **TARGET**: Who is being acquired/receiving investment\n- **INVESTORS**: Other investors (for investment rounds)\n- **PARTNERS**: Co-parties (for partnerships/JVs)\n- **ADVISORS**: Banks, lawyers mentioned\n\n## 3. VALUATION & TERMS\nExtract financial details:\n- **AMOUNT**: Dollar value (exact or estimated)\n- **CURRENCY**: USD, EUR, etc.\n- **PAYMENT TYPE**: Cash, stock, mixed\n- **PREMIUM**: If mentioned (e.g., \"30% above share price\")\n- **CONDITIONS**: Regulatory approval, shareholder vote, etc.\n- **MILESTONES**: Future payments tied to performance\n\n## 4. TIMELINE\n- **ANNOUNCED**: When deal was announced\n- **EXPECTED CLOSE**: When expected to complete\n- **STATUS**: Announced, pending approval, closed, terminated\n\n## 5. RATIONALE\nWhy is this deal happening?\n- Strategic reasoning given\n- Synergies expected\n- Market positioning goals\n\n\nBe comprehensive - capture every deal mentioned, even in passing.\n",
-  "curation_prompt": "\nYou are synthesizing deal data from multiple articles into a comprehensive M&A map.\n\nYour task:\n1. **CONSOLIDATE DEALS**: Merge references to the same deal\n   - Match by parties and timing\n   - Take most complete valuation data\n   - Aggregate rationale from multiple sources\n\n2. **BUILD PARTY PROFILES**:\n   - Identify all unique parties\n   - Calculate their deal activity (buyer vs. seller)\n   - Total values on each side\n   - Primary sectors and regions\n\n3. **CREATE DEAL NETWORK**:\n   - Map who acquired/invested in whom\n   - Edge weights by deal value\n   - Direction shows flow of control\n\n4. **ANALYZE BY SECTOR**:\n   - Count deals per sector\n   - Total value per sector\n   - Identify consolidation trends\n   - Name top acquirers per sector\n\n5. **CALCULATE METRICS**:\n   - Total deal count and value\n   - Average deal size\n   - Breakdown by deal type\n   - Most active acquirer\n   - Date range covered\n\n\nCreate a comprehensive deal flow map showing market restructuring.\n",
-  "concretization_prompt": "\nTransform the deal flow data to be immediately usable:\n\n1. Replace generic IDs with descriptive names:\n   - \"D1\" \u2192 \"Microsoft-Activision Acquisition ($69B)\"\n   - \"P1\" \u2192 \"Microsoft Corporation\"\n\n2. Format valuations clearly:\n   - Include currency and scale (billions, millions)\n   - Note if value includes debt or milestones\n\n3. Clarify party roles:\n   - \"Acquirer: Microsoft (Big Tech, US)\"\n   - \"Target: Activision Blizzard (Gaming)\"\n\n4. Name sector analysis descriptively:\n   - \"Sector1\" \u2192 \"Enterprise Software Consolidation\"\n\n5. Highlight strategic patterns:\n   - Note major consolidation trends\n   - Flag unusual or large deals\n\nPreserve all metrics and network relationships.\nMake the deal flow immediately useful for market analysis.\n",
   "canonical_schema": {
     "deals": [
       {
@@ -134,5 +131,71 @@
     "gemini_sankey"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/deal_flow_tracker.py"
+  "source_file": "analyzer/src/engines/deal_flow_tracker.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "deal flow tracker",
+      "analysis_type_plural": "deal flow trackers",
+      "core_question": "What deals are reshaping this market, and who is acquiring power through transactions?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "deal_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "deal flow tracker",
+      "item_type_plural": "deal flow trackers",
+      "consolidation_rules": [
+        "CONSOLIDATE DEALS: Merge references to the same deal",
+        "BUILD PARTY PROFILES: - Identify all unique parties",
+        "CREATE DEAL NETWORK: - Map who acquired/invested in whom",
+        "ANALYZE BY SECTOR: - Count deals per sector",
+        "CALCULATE METRICS: - Total deal count and value"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "D1",
+          "to": "Microsoft-Activision Acquisition ($69B)"
+        },
+        {
+          "from": "P1",
+          "to": "Microsoft Corporation"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

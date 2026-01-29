@@ -7,9 +7,6 @@
   "kind": "extraction",
   "reasoning_domain": "discourse_analysis",
   "researcher_question": "Who is speaking, what are they saying, and why does their voice matter?",
-  "extraction_prompt": "\nYou are an expert discourse analyst extracting quotes and analyzing voices.\n\nFor this article, extract ALL quotes and voice information:\n\n1. **SPEAKERS**: Everyone who is quoted or whose views are reported\n   - Name and role\n   - Affiliation (organization, institution)\n   - Authority type: expert, official, stakeholder, witness, critic\n   - Authority level (0-1 based on expertise/position relevance)\n\n2. **QUOTES**: Every instance of reported speech\n   - Exact text (for direct quotes)\n   - Speaker attribution\n   - Quote type:\n     * DIRECT: Exact words in quotation marks\n     * INDIRECT: Reported without exact words\n     * PARAPHRASE: Summary of views\n     * REPORTED_SPEECH: \"He said that...\"\n   - Context: What prompted this quote?\n\n3. **RHETORICAL FUNCTION**: Why is this quote included?\n   - EVIDENCE: Supports a claim\n   - AUTHORITY_APPEAL: Lends credibility\n   - CONTRAST: Shows opposing view\n   - ILLUSTRATION: Provides example\n   - PREDICTION: Future-oriented claim\n   - WARNING: Cautionary statement\n\n4. **VOICE CHARACTERISTICS**:\n   - Tone: confident, cautious, critical, optimistic, pessimistic\n   - Register: formal, informal, technical, colloquial\n   - Stance: supportive, oppositional, neutral\n\n\nExtract comprehensively - capture every voice in the article.\n",
-  "curation_prompt": "\nYou are synthesizing quote and voice data from multiple articles.\n\nYour task:\n1. **CONSOLIDATE SPEAKERS**: Merge references to the same person\n   - Match by name/role/affiliation\n   - Aggregate authority information\n   - Count total quotes per speaker\n\n2. **CATALOG QUOTES**: Organize all quotes\n   - Group by speaker\n   - Note rhetorical functions\n   - Rank by prominence\n\n3. **IDENTIFY VOICE PATTERNS**:\n   - Dominant voices (most frequently quoted)\n   - Marginalized voices (underrepresented)\n   - Contested voices (quoted by both sides)\n\n4. **ANALYZE POLYPHONY**:\n   - How many distinct voices?\n   - Is voice diversity high or low?\n   - Are any perspectives missing?\n   - Is the coverage balanced?\n\n5. **CALCULATE METRICS**:\n   - Total quotes and speakers\n   - Direct vs. indirect quote ratio\n   - Average authority level\n\n\nCreate a comprehensive voice map showing who speaks and how they're represented.\n",
-  "concretization_prompt": "\nTransform the quote attribution data to use full names and clear descriptions:\n\n1. Convert speaker_ids to full identities:\n   - \"S1\" \u2192 \"Dr. Jane Smith, Chief Economist at World Bank\"\n\n2. Clarify authority types:\n   - Add brief explanation of why this authority type was assigned\n\n3. Name voice patterns descriptively:\n   - \"Pattern1\" \u2192 \"Industry Insider Voices\"\n\n4. Add context to quotes:\n   - Brief note on significance of each prominent quote\n\nPreserve all relationships and metrics.\nMake the voice analysis immediately useful for discourse analysis.\n",
   "canonical_schema": {
     "speakers": [
       {
@@ -82,5 +79,66 @@
     "gemini_network_graph"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/quote_attribution_voice.py"
+  "source_file": "analyzer/src/engines/quote_attribution_voice.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "quote attribution network",
+      "analysis_type_plural": "quote attribution networks",
+      "core_question": "Who is speaking, what are they saying, and why does their voice matter?",
+      "extraction_steps": [
+        "SPEAKERS",
+        "QUOTES",
+        "RHETORICAL FUNCTION",
+        "VOICE CHARACTERISTICS"
+      ],
+      "key_fields": {},
+      "id_field": "quote_id",
+      "key_relationships": [
+        "supports"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "quote attribution network",
+      "item_type_plural": "quote attribution networks",
+      "consolidation_rules": [
+        "CONSOLIDATE SPEAKERS: Merge references to the same person",
+        "CATALOG QUOTES: Organize all quotes",
+        "IDENTIFY VOICE PATTERNS: - Dominant voices (most frequently quoted)",
+        "ANALYZE POLYPHONY: - How many distinct voices?",
+        "CALCULATE METRICS: - Total quotes and speakers"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "S1",
+          "to": "Dr. Jane Smith, Chief Economist at World Bank"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

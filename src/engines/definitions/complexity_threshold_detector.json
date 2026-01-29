@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "systems",
   "researcher_question": "What complexity level is this system at, and are appropriate methods being used?",
-  "extraction_prompt": "\nYou are detecting COMPLEXITY THRESHOLDS \u2014 identifying what level of\ncomplexity a system is at and whether appropriate methods are being used.\n\n## THE CYNEFIN COMPLEXITY FRAMEWORK\n\n### SIMPLE (Clear)\n- Cause and effect are obvious\n- Best practices exist and work\n- Sense \u2192 Categorize \u2192 Respond\n- Example: Following a recipe\n\n### COMPLICATED\n- Cause and effect require analysis\n- Expert knowledge needed\n- Sense \u2192 Analyze \u2192 Respond\n- Example: Repairing a car engine\n\n### COMPLEX\n- Cause and effect only clear in retrospect\n- Emergent patterns, not predictable\n- Probe \u2192 Sense \u2192 Respond\n- Example: Raising a child, managing an ecosystem\n\n### CHAOTIC\n- No clear cause and effect\n- Turbulence, crisis\n- Act \u2192 Sense \u2192 Respond\n- Example: Managing in a crisis, war\n\n## WHY THIS MATTERS\n\nUsing the wrong approach for the complexity level fails:\n- Applying best practices to complex problems \u2192 Failure\n- Using expert analysis for chaotic situations \u2192 Too slow\n- Treating complex as complicated \u2192 Missing emergence\n- Treating complicated as complex \u2192 Wasted experimentation\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY SYSTEMS/PROBLEMS\nWhat systems or problems are being discussed?\n\n### STEP 2: ASSESS COMPLEXITY LEVEL\nFor each system/problem, determine complexity level:\n\n**Simple indicators:**\n- Clear cause and effect\n- Repeatable outcomes\n- Best practices work\n- Anyone can do it with training\n\n**Complicated indicators:**\n- Requires expertise to understand\n- Analysis can predict outcomes\n- Right answer exists, just hard to find\n- Experts disagree on approach, not on nature\n\n**Complex indicators:**\n- Outcomes unpredictable\n- Patterns only clear afterward\n- Expertise helps but doesn't determine outcome\n- Emergent behavior\n- The same inputs produce different outputs\n\n**Chaotic indicators:**\n- No patterns\n- Crisis mode\n- Need to act first, analyze later\n- Stabilization needed before anything else\n\n### STEP 3: IDENTIFY THRESHOLD CROSSINGS\nHas the system moved between complexity levels?\n- What triggered the crossing?\n- What are the implications?\n\n### STEP 4: DETECT METHOD MISMATCHES\nAre methods appropriate for the complexity level?\n- What approach is being used?\n- What complexity level is that approach for?\n- How is the mismatch causing problems?\n\n### STEP 5: RECOMMEND APPROPRIATE METHODS\nWhat methods fit the actual complexity?\n- For simple: Best practices, checklists, standard procedures\n- For complicated: Expert analysis, scenario planning, detailed design\n- For complex: Safe-to-fail experiments, adaptive management, emergence\n- For chaotic: Decisive action, crisis management, stabilization\n\n\n## OUTPUT GUIDANCE\n\nBe specific about indicators. Don't just label \u2014 explain why.\nFocus on method mismatches that are causing problems.\n",
-  "curation_prompt": "\nYou are synthesizing complexity threshold analyses from multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. RECONCILE COMPLEXITY ASSESSMENTS\n- Do sources agree on complexity levels?\n- Where do assessments differ? Why?\n- What's the best-supported assessment?\n\n### 2. CONSOLIDATE METHOD MISMATCHES\n- What mismatches appear across sources?\n- What's the pattern of inappropriate methods?\n\n### 3. AGGREGATE INDICATORS\n- Which indicators are most robust?\n- What additional indicators emerge from synthesis?\n\n### 4. SYNTHESIZE RECOMMENDATIONS\n- What method changes are most needed?\n- Where is there agreement on appropriate approaches?\n\n## OUTPUT GUIDANCE\n\nCreate a unified complexity assessment with clear recommendations for\nmethod alignment.\n",
-  "concretization_prompt": "\nTransform the complexity threshold analysis into practical guidance:\n\n1. **COMPLEXITY ASSESSMENT SUMMARY**\n   ```\n   | System | Complexity Level | Confidence | Key Indicators |\n   |--------|------------------|------------|----------------|\n   | S1     | Complex          | High       | [Indicators]   |\n   ```\n\n2. **COMPLEXITY LEVEL DETAILS**\n   ```\n   System: [Name]\n   Level: [Simple/Complicated/Complex/Chaotic]\n   Indicators:\n   - [Indicator 1] (strong)\n   - [Indicator 2] (moderate)\n   Implications: [What this means for approach]\n   ```\n\n3. **THRESHOLD CROSSINGS**\n   - [System] crossed from [Level] to [Level]\n   - Trigger: [What caused it]\n   - Implications: [What this means]\n\n4. **METHOD MISMATCHES**\n   ```\n   | System | Actual Complexity | Method Used | Method For | Problem |\n   |--------|-------------------|-------------|------------|---------|\n   | S1     | Complex           | Best practice | Simple  | Failing |\n   ```\n\n5. **MISMATCH ANALYSIS**\n   - System: [Name]\n   - Problem: Using [method] for [complexity level] system\n   - Why it fails: [Mechanism]\n   - Appropriate instead: [Method]\n\n6. **RECOMMENDED METHODS BY LEVEL**\n   - Simple: [Methods]\n   - Complicated: [Methods]\n   - Complex: [Methods]\n   - Chaotic: [Methods]\n\n7. **ACTION RECOMMENDATIONS**\n   | System | Current Approach | Should Shift To | Implementation |\n   |--------|------------------|-----------------|----------------|\n\n8. **BOTTOM LINE**\n   [One paragraph: What complexity levels are present? What method\n   shifts are most urgent?]\n",
   "canonical_schema": {
     "systems_assessed": [
       {
@@ -113,5 +110,56 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/complexity_threshold_detector.py"
+  "source_file": "analyzer/src/engines/complexity_threshold_detector.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "complexity threshold detector",
+      "analysis_type_plural": "complexity threshold detectors",
+      "core_question": "What complexity level is this system at, and are appropriate methods being used?",
+      "extraction_steps": [
+        "IDENTIFY SYSTEMS/PROBLEMS",
+        "ASSESS COMPLEXITY LEVEL",
+        "IDENTIFY THRESHOLD CROSSINGS",
+        "DETECT METHOD MISMATCHES",
+        "RECOMMEND APPROPRIATE METHODS"
+      ],
+      "key_fields": {},
+      "id_field": "complexity_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "complexity threshold detector",
+      "item_type_plural": "complexity threshold detectors",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

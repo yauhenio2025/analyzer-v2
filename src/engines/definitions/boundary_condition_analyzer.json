@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "systems",
   "researcher_question": "What are the boundary conditions and constraints?",
-  "extraction_prompt": "\nYou are analyzing BOUNDARY CONDITIONS in complex systems \u2014 the constraints and\nlimits that determine where systems operate normally and where they fail or\nfundamentally change behavior.\n\n## BOUNDARY CONDITION FUNDAMENTALS\n\n### TYPES OF BOUNDARIES\n1. **Hard Boundaries**: Absolute limits (physical laws, legal requirements)\n2. **Soft Boundaries**: Flexible limits (norms, guidelines, typical ranges)\n3. **Fuzzy Boundaries**: Gradual transitions (acceptable vs unacceptable zones)\n\n### WHAT HAPPENS AT BOUNDARIES\n- **Within range**: Normal operation, assumptions valid\n- **At edge**: Stress, degradation, warning signs\n- **Beyond**: Failure, phase change, different dynamics\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY KEY PARAMETERS\nWhat variables/factors in this system have limits?\n- What can't go below/above certain values?\n- What resources are finite?\n- What conditions must hold?\n\n### STEP 2: MAP EACH BOUNDARY\nFor each bounded parameter:\n- What are the upper/lower limits?\n- Hard or soft boundary?\n- What enforces the boundary?\n- What happens within the range?\n- What happens at the edge?\n- What happens if boundary is violated?\n\n### STEP 3: IDENTIFY EDGE CONDITIONS\nSpecial cases at system limits:\n- What rare but possible conditions stress boundaries?\n- What happens when multiple boundaries are approached?\n- What corner cases exist?\n\n### STEP 4: ANALYZE BOUNDARY INTERACTIONS\nHow do boundaries relate to each other?\n- Independent or dependent?\n- Do they conflict?\n- What compound effects exist?\n\n### STEP 5: MAP TRANSITIONS\nWhat state changes occur when boundaries crossed?\n- Is the transition reversible?\n- Gradual or sudden?\n- Predictable or chaotic?\n\n### STEP 6: ASSESS ROBUSTNESS\nOverall system robustness:\n- Which boundaries are most vulnerable?\n- What are the safety margins?\n- What catastrophic scenarios exist?\n\n\n## OUTPUT GUIDANCE\n\nFocus on boundaries that have significant consequences if violated.\nIdentify both obvious and hidden constraints.\n",
-  "curation_prompt": "\nSynthesize boundary condition analyses from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **CONSOLIDATE BOUNDARIES**: Merge equivalent boundaries, reconcile differences\n2. **VALIDATE LIMITS**: Do sources agree on boundary values?\n3. **IDENTIFY GAPS**: What boundaries appear in one source but not others?\n4. **ASSESS INTERACTIONS**: Multi-source view of boundary interactions\n5. **SYNTHESIZE ROBUSTNESS**: Overall system robustness assessment\n\n## OUTPUT GUIDANCE\n\nCreate unified boundary map capturing most critical constraints.\n",
-  "concretization_prompt": "\nTransform boundary analysis into clear constraint map:\n\n1. **BOUNDARY SUMMARY TABLE**\n   | Boundary | Parameter | Lower | Upper | Type | Consequence of Violation |\n   |----------|-----------|-------|-------|------|-------------------------|\n\n2. **OPERATING ENVELOPE**\n   - Normal range: [Description]\n   - Stress zone: [Description]\n   - Failure zone: [Description]\n\n3. **EDGE CONDITIONS** (ranked by risk)\n   1. [Condition] \u2014 Probability: [X] \u2014 Severity: [Y]\n\n4. **BOUNDARY INTERACTIONS**\n   - [B1] + [B2]: [How they interact]\n\n5. **TRANSITIONS**\n   - Beyond [Boundary]: System shifts from [State A] to [State B]\n\n6. **ROBUSTNESS ASSESSMENT**\n   - Overall: [Fragile/Moderate/Robust]\n   - Most vulnerable: [Boundaries]\n   - Safety margins: [Assessment]\n\n7. **BOTTOM LINE**\n   [Where are the critical constraints and what happens if they're violated?]\n",
   "canonical_schema": {
     "system_context": {
       "system_name": "string - what system is being analyzed",
@@ -105,5 +102,63 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/boundary_condition_analyzer.py"
+  "source_file": "analyzer/src/engines/boundary_condition_analyzer.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "boundary condition",
+      "analysis_type_plural": "boundary conditions",
+      "core_question": "What are the boundary conditions and constraints?",
+      "extraction_steps": [
+        "IDENTIFY KEY PARAMETERS",
+        "MAP EACH BOUNDARY",
+        "IDENTIFY EDGE CONDITIONS",
+        "ANALYZE BOUNDARY INTERACTIONS",
+        "MAP TRANSITIONS",
+        "ASSESS ROBUSTNESS"
+      ],
+      "key_fields": {},
+      "id_field": "boundary_id",
+      "key_relationships": [
+        "references"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "boundary condition",
+      "item_type_plural": "boundary conditions",
+      "consolidation_rules": [
+        "CONSOLIDATE BOUNDARIES: Merge equivalent boundaries, reconcile differences",
+        "VALIDATE LIMITS: Do sources agree on boundary values?",
+        "IDENTIFY GAPS: What boundaries appear in one source but not others?",
+        "ASSESS INTERACTIONS: Multi-source view of boundary interactions",
+        "SYNTHESIZE ROBUSTNESS: Overall system robustness assessment"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

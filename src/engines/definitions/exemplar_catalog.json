@@ -7,9 +7,6 @@
   "kind": "primitive",
   "reasoning_domain": "empirical",
   "researcher_question": "What concrete cases illustrate the arguments?",
-  "extraction_prompt": "\nYou are an expert analyst cataloging concrete examples and case studies.\n\nFor this article, extract ALL examples used:\n\n## EXEMPLARS\nFor each concrete example, case study, or illustration:\n\n1. **IDENTIFICATION**:\n   - Name/label (e.g., \"The Nokia Failure\", \"GDPR Implementation in France\")\n   - Brief description (2-3 sentences)\n   - Type: case_study, anecdote, historical_precedent, data_point, thought_experiment, comparison\n\n2. **CONTEXT**:\n   - Domain (tech, healthcare, finance, etc.)\n   - Time period (if applicable)\n   - Location (if applicable)\n   - Key actors involved\n\n3. **USAGE**:\n   - Function: How is the example used?\n     * Illustration: Makes abstract concept concrete\n     * Proof: Evidence for a claim\n     * Warning: Cautionary tale\n     * Counterexample: Refutes a claim\n     * Analogy: Comparison to explain\n   - What argument(s) does it support?\n   - How extensively is it discussed?\n\n4. **QUALITY**:\n   - Relevance: How well does it fit the argument?\n   - Representativeness: Typical, atypical, or extreme case?\n   - Verifiability: Can claims about it be verified?\n   - Detail level: Rich, moderate, or sparse description?\n\n## EXAMPLE PATTERNS\nNote:\n- What types of examples dominate?\n- What domains are most cited?\n- What functions are most common?\n- Are examples well-chosen or cherry-picked?\n\n\nCatalog every concrete example you can find.\n",
-  "curation_prompt": "\nYou are synthesizing exemplar catalogs from multiple articles.\n\nYour task:\n1. **CONSOLIDATE EXEMPLARS**: Merge same examples across articles\n   - Same case/example = merge\n   - Aggregate usage patterns\n   - Note if used differently by different authors\n\n2. **IDENTIFY RECURRING EXAMPLES**:\n   - Which examples appear across multiple articles?\n   - Are they used consistently or differently?\n   - What makes certain examples \"canonical\"?\n\n3. **MAP TO ARGUMENTS**:\n   - Which arguments are well-supported by examples?\n   - Which arguments lack concrete illustrations?\n   - Are there argument-example mismatches?\n\n4. **ASSESS COLLECTION-LEVEL PATTERNS**:\n   - What domains dominate?\n   - What time periods are most referenced?\n   - Are examples balanced or biased?\n   - What's missing?\n\n5. **EVALUATE QUALITY**:\n   - Overall representativeness of examples\n   - Verification status across collection\n   - Example richness vs. argument complexity\n\nCreate clear exemplar_ids (e.g., \"ex_nokia_smartphone_failure\", \"ex_gdpr_france\").\n\n\nOutput a comprehensive catalog of examples across the collection.\n",
-  "concretization_prompt": "\nTransform the exemplar catalog to use concrete labels:\n\n1. Convert exemplar_ids to descriptive names:\n   - \"EX1\" \u2192 \"Nokia's Smartphone Market Failure (2007-2013)\"\n   - \"EX2\" \u2192 \"Estonia's E-Government Success Story\"\n\n2. Name patterns clearly:\n   - Include specific statistics where available\n\n3. Label argument connections:\n   - Make clear which claims each example supports\n\n4. Specify domains and time periods:\n   - Be as precise as the source material allows\n\nPreserve all quality assessments and usage patterns.\nMake the catalog immediately useful for research.\n",
   "canonical_schema": {
     "exemplars": [
       {
@@ -99,5 +96,61 @@
     "comparative_matrix_table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/exemplar_catalog.py"
+  "source_file": "analyzer/src/engines/exemplar_catalog.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "exemplar catalog",
+      "analysis_type_plural": "exemplar catalogs",
+      "core_question": "What concrete cases illustrate the arguments?",
+      "extraction_steps": [
+        "IDENTIFICATION",
+        "CONTEXT",
+        "USAGE",
+        "QUALITY"
+      ],
+      "key_fields": {},
+      "id_field": "exemplar_id",
+      "key_relationships": [
+        "contradicts"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "exemplar catalog",
+      "item_type_plural": "exemplar catalogs",
+      "consolidation_rules": [
+        "CONSOLIDATE EXEMPLARS: Merge same examples across articles",
+        "IDENTIFY RECURRING EXAMPLES: - Which examples appear across multiple articles?",
+        "MAP TO ARGUMENTS: - Which arguments are well-supported by examples?",
+        "ASSESS COLLECTION-LEVEL PATTERNS: - What domains dominate?",
+        "EVALUATE QUALITY: - Overall representativeness of examples"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

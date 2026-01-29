@@ -1,0 +1,41 @@
+{
+  "key": "toulmin",
+  "name": "Toulmin Model of Argumentation",
+  "description": "Stephen Toulmin's model for analyzing argument structure: claims, grounds, warrants, backing, qualifiers, and rebuttals.",
+  "paradigm_keys": [],
+  "primer": "## THE TOULMIN MODEL OF ARGUMENTATION\n\nToulmin's model breaks arguments into six components, revealing the\nstructure that makes reasoning work (or fail).\n\n### THE SIX COMPONENTS\n\n#### 1. CLAIM\n**What it is**: The conclusion or thesis being argued for.\n\n**Types**:\n- **Empirical claims**: About facts (\"Sales increased 20%\")\n- **Normative claims**: About values (\"We should prioritize sustainability\")\n- **Causal claims**: About cause-effect (\"The marketing campaign drove sales\")\n\n**Analysis questions**:\n- Is the claim clear and specific?\n- What type of claim is it?\n- Is the scope appropriate (not overclaiming)?\n\n#### 2. GROUNDS (Data/Evidence)\n**What it is**: The evidence, facts, or data supporting the claim.\n\n**Quality factors**:\n- **Relevance**: Does this evidence actually bear on the claim?\n- **Sufficiency**: Is there enough evidence?\n- **Accuracy**: Is the evidence correct?\n- **Recency**: Is it current enough?\n\n**Analysis questions**:\n- What evidence is offered?\n- Is the evidence sufficient for the claim?\n- Are sources credible?\n\n#### 3. WARRANT\n**What it is**: The reasoning that connects grounds to claim.\nThe \"license\" that allows the inferential leap.\n\n**Explicit vs. Implicit**:\n- **Explicit**: The warrant is stated (\"Studies show correlation implies...\")\n- **Implicit**: The warrant is assumed (you have to infer it)\n\n**Common warrant types**:\n- Authority (\"Experts say, therefore...\")\n- Generalization (\"This sample suggests the population...\")\n- Analogy (\"This is like that, therefore...\")\n- Cause (\"X caused Y because of mechanism Z\")\n\n**Analysis questions**:\n- What reasoning connects evidence to claim?\n- Is the warrant made explicit?\n- Is the warrant itself justified?\n\n#### 4. BACKING\n**What it is**: Additional support for the warrant itself.\nWhen someone challenges \"why should that reasoning work?\"\n\n**Types**:\n- Theoretical backing (the underlying theory)\n- Statistical backing (the general pattern)\n- Authority backing (who endorses this reasoning)\n\n**Analysis questions**:\n- Is backing provided for the warrant?\n- How strong is the backing?\n- What would undermine the backing?\n\n#### 5. QUALIFIER\n**What it is**: The degree of force the claim has.\nWords like: probably, certainly, possibly, usually, in most cases.\n\n**Strength spectrum**:\n- Absolute: \"certainly\", \"definitely\", \"always\"\n- Strong: \"probably\", \"usually\", \"typically\"\n- Moderate: \"possibly\", \"may\", \"sometimes\"\n- Weak: \"could\", \"might\", \"in some cases\"\n\n**Analysis questions**:\n- Is the claim appropriately qualified?\n- Does the evidence support the qualifier's strength?\n- Is the qualifier honest or hedging?\n\n#### 6. REBUTTAL\n**What it is**: Conditions under which the claim would NOT hold.\nExceptions, counterarguments, limitations.\n\n**Quality of rebuttal handling**:\n- **Acknowledged and addressed**: Strong argument\n- **Acknowledged but dismissed**: Weaker\n- **Not acknowledged**: Suspicious\n\n**Analysis questions**:\n- Are potential counterarguments addressed?\n- Are they fairly represented (steelmanned)?\n- Are the responses adequate?\n\n---\n\n### ARGUMENT STRENGTH ASSESSMENT\n\nRate arguments based on:\n\n**STRONG ARGUMENTS**:\n- Clear, appropriately scoped claim\n- Multiple relevant grounds\n- Explicit, justified warrant\n- Backing provided for warrant\n- Appropriate qualifier\n- Rebuttals addressed seriously\n\n**MODERATE ARGUMENTS**:\n- Clear claim\n- Some grounds provided\n- Warrant present (explicit or inferrable)\n- Limited backing\n- Some qualification\n- Some rebuttals noted\n\n**WEAK ARGUMENTS**:\n- Vague or overclaimed conclusion\n- Insufficient or irrelevant grounds\n- Warrant missing or unjustified\n- No backing\n- No qualification (overconfident)\n- Rebuttals ignored\n\n---\n\n### ARGUMENT CHAINS\n\nArguments often chain together:\n- Conclusion of Argument A becomes Ground for Argument B\n- Creates dependency chains\n- Chain is as strong as weakest link\n\n**Analysis**: Map these chains and find the weak links.\n\n---\n\n### CONTESTED CLAIMS\n\nWhen the same claim has both supporting and opposing arguments:\n- Map both sides using Toulmin structure\n- Compare the strength of warrants and backing\n- Identify the crux of disagreement\n\n**Resolution status**:\n- **Resolved**: One side clearly stronger\n- **Partially resolved**: Some aspects settled\n- **Unresolved**: Genuine controversy remains",
+  "vocabulary": {
+    "researcher": {
+      "claim": "propositional claim",
+      "grounds": "evidential grounds",
+      "warrant": "inferential warrant",
+      "backing": "backing for warrant",
+      "qualifier": "modal qualifier",
+      "rebuttal": "potential defeaters"
+    },
+    "analyst": {
+      "claim": "main argument/conclusion",
+      "grounds": "supporting evidence",
+      "warrant": "reasoning connection",
+      "backing": "deeper justification",
+      "qualifier": "confidence level",
+      "rebuttal": "counterarguments"
+    },
+    "executive": {
+      "claim": "what they're arguing",
+      "grounds": "the evidence they cite",
+      "warrant": "why that evidence matters",
+      "backing": "the underlying logic",
+      "qualifier": "how confident they are",
+      "rebuttal": "what could prove them wrong"
+    },
+    "activist": {
+      "claim": "their conclusion",
+      "grounds": "their so-called evidence",
+      "warrant": "the leap they're making",
+      "backing": "what props up their logic",
+      "qualifier": "their confidence (often overblown)",
+      "rebuttal": "what they don't want to address"
+    }
+  }
+}

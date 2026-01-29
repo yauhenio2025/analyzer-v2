@@ -7,10 +7,59 @@
   "kind": "relational",
   "reasoning_domain": "conditional logic",
   "researcher_question": "What conditional relationships involve this concept?",
-  "extraction_prompt": "You are conducting Phase 7: CONDITIONAL WEB analysis.\n\n## YOUR TASK\n\nExtract ALL if-then relationships involving \"{concept}\".\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## WHAT TO LOOK FOR\n\n- \"If {concept}, then X\"\n- \"If X, then {concept}\"\n- \"Only if X, {concept}\"\n- \"Unless X, not {concept}\"\n- Counterfactuals: \"If {concept} had been different...\"\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with conditionals[], each containing:\n- conditional_id, antecedent, consequent, type (indicative/counterfactual/normative), scope, confidence, quote, source\n\nAlso include: conditional_clusters[] grouping related conditionals.\n\nTARGET: 15-25 conditional relationships.",
-  "curation_prompt": "Validate conditional extraction and typing.",
   "canonical_schema": {
     "type": "object"
   },
-  "paradigm_keys": []
+  "paradigm_keys": [],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What conditional relationships involve this concept?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "systems",
   "researcher_question": "What feedback loops drive system behavior?",
-  "extraction_prompt": "\nYou are mapping FEEDBACK LOOPS in complex systems \u2014 the circular causality that\ndetermines whether systems grow, decline, oscillate, or stabilize.\n\n## FEEDBACK LOOP FUNDAMENTALS\n\n### REINFORCING LOOPS (R)\nAmplify change \u2014 more leads to more (or less leads to less):\n- Virtuous cycles: Success \u2192 More resources \u2192 More success\n- Vicious cycles: Decline \u2192 Less investment \u2192 More decline\n- Compound growth: Interest \u2192 Principal grows \u2192 More interest\n\nSignal: Look for amplification, acceleration, snowball effects.\n\n### BALANCING LOOPS (B)\nResist change \u2014 push back toward equilibrium:\n- Thermostats: Temperature rises \u2192 AC activates \u2192 Temperature falls\n- Markets: Price rises \u2192 Demand falls \u2192 Price falls\n- Homeostasis: Any deviation triggers correction\n\nSignal: Look for regulation, correction, equilibrium-seeking.\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY KEY VARIABLES\nWhat are the main quantities/states that change in this system?\n- What goes up and down?\n- What are people trying to increase or decrease?\n- What responds to what?\n\n### STEP 2: MAP CAUSAL CONNECTIONS\nHow does each variable affect others?\n- Positive polarity (+): More of A leads to more of B\n- Negative polarity (-): More of A leads to less of B\n\nNote time delays: Does the effect happen immediately or with lag?\n\n### STEP 3: TRACE LOOPS\nFollow causal chains back to their starting points:\n- If odd number of negative links: BALANCING loop (B)\n- If even number of negative links (or all positive): REINFORCING loop (R)\n\nName each loop descriptively.\n\n### STEP 4: ASSESS LOOP STATE\nFor each loop:\n- Is it currently active or dormant?\n- How strong is it?\n- Is it dominating system behavior?\n\n### STEP 5: MAP LOOP INTERACTIONS\nHow do loops affect each other?\n- Do they reinforce each other?\n- Do they compete for dominance?\n- Does one activate another?\n\n### STEP 6: IDENTIFY TIME DELAYS\nDelays cause oscillations and overshoot:\n- Where are significant delays?\n- What do they cause?\n\n### STEP 7: ASSESS SYSTEM DYNAMICS\nOverall system behavior:\n- Which loops currently dominate?\n- Is the system growing, declining, oscillating, or stable?\n- Are there tipping points where dominance could shift?\n\n### STEP 8: INTERVENTION IMPLICATIONS\nWhere could intervention be effective?\n- High-leverage points that affect multiple loops\n- Counterintuitive dynamics to avoid\n\n\n## OUTPUT GUIDANCE\n\nUse standard notation: R1, R2 for reinforcing; B1, B2 for balancing.\nDraw causal chains clearly with polarity signs.\nFocus on loops with significant impact on system behavior.\n",
-  "curation_prompt": "\nYou are synthesizing feedback loop analyses from multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE LOOP MAPS\n- Merge equivalent loops from different sources\n- Reconcile different naming conventions\n- Build unified loop diagram\n\n### 2. VALIDATE LOOPS\n- Do multiple sources confirm the same loops?\n- Where do sources disagree on loop structure?\n- What loops appear in one source but not others?\n\n### 3. ASSESS OVERALL DYNAMICS\n- Which loops are consistently identified as dominant?\n- What does multi-source view say about system trajectory?\n- Where is there disagreement about system behavior?\n\n### 4. SYNTHESIZE INTERVENTIONS\n- What leverage points appear across sources?\n- Where do sources agree/disagree on intervention effectiveness?\n\n## OUTPUT GUIDANCE\n\nCreate a unified feedback loop map that captures the most robust insights.\n",
-  "concretization_prompt": "\nTransform the feedback loop analysis into a visual-ready map:\n\n1. **SYSTEM OVERVIEW**\n   ```\n   System: [Name]\n   Key Variables: [List]\n   Dominant Loops: [R1, B2, ...]\n   Trajectory: [Growing/Declining/Oscillating/Stable]\n   ```\n\n2. **LOOP DIAGRAMS** (text representation)\n   ```\n   R1: [Loop Name]\n   [Variable A] \u2500(+)\u2192 [Variable B] \u2500(+)\u2192 [Variable C] \u2500(+)\u2192 [Variable A]\n   Status: ACTIVE/DOMINANT | Strength: STRONG\n   ```\n\n3. **LOOP SUMMARY TABLE**\n   ```\n   | Loop | Type | Name | Status | Strength | Key Effect |\n   |------|------|------|--------|----------|------------|\n   | R1   | Reinforcing | ... | Active | Strong | ... |\n   ```\n\n4. **INTERACTIONS**\n   - R1 + R2: [How they interact]\n   - B1 vs R1: [Competition dynamics]\n\n5. **TIME DELAYS**\n   - [Where] \u2192 [Duration] \u2192 [Consequence]\n\n6. **LEVERAGE POINTS**\n   1. [Point] \u2014 Affects: [Loops] \u2014 Risk: [Risk]\n\n7. **COUNTERINTUITIVE DYNAMICS**\n   - \"[Intervention]\" \u2192 Actually causes \u2192 [Opposite effect]\n   - Why: [Feedback mechanism]\n\n8. **BOTTOM LINE**\n   [One paragraph: What drives this system? Where are opportunities/risks?]\n",
   "canonical_schema": {
     "system_context": {
       "system_name": "string - what system is being analyzed",
@@ -126,5 +123,59 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/feedback_loop_mapper.py"
+  "source_file": "analyzer/src/engines/feedback_loop_mapper.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "feedback loop",
+      "analysis_type_plural": "feedback loops",
+      "core_question": "What feedback loops drive system behavior?",
+      "extraction_steps": [
+        "IDENTIFY KEY VARIABLES",
+        "MAP CAUSAL CONNECTIONS",
+        "TRACE LOOPS",
+        "ASSESS LOOP STATE",
+        "MAP LOOP INTERACTIONS",
+        "IDENTIFY TIME DELAYS",
+        "ASSESS SYSTEM DYNAMICS",
+        "INTERVENTION IMPLICATIONS"
+      ],
+      "key_fields": {},
+      "id_field": "feedback_id",
+      "key_relationships": [
+        "references"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "feedback loop",
+      "item_type_plural": "feedback loops",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

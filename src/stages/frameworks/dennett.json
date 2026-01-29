@@ -1,0 +1,41 @@
+{
+  "key": "dennett",
+  "name": "Dennett's Critical Toolkit",
+  "description": "Daniel Dennett's philosophical tools for critical analysis: SURELY ALARM, OCCAM'S BROOM, BOOM CRUTCH, STEELMAN, JOOTSING, and more.",
+  "paradigm_keys": [],
+  "primer": "## DENNETT'S ANALYTICAL TOOLKIT\n\nApply these critical tools throughout your analysis:\n\n### SURELY ALARM\n**Trigger words**: \"surely\", \"obviously\", \"clearly\", \"of course\", \"everyone knows\"\n\nWhen you see these confidence markers, PROBE. They often signal:\n- Claims the author can't actually defend\n- Assumptions being smuggled past the reader\n- Points where challenge would be unwelcome\n\n**Action**: Flag these and ask: \"Is this actually obvious? What would challenge it?\"\n\n### OCCAM'S BROOM\n**Pattern**: Important considerations that are suspiciously absent\n\nAuthors often \"sweep under the rug\" inconvenient facts, counterexamples,\nor alternative explanations. Unlike Occam's Razor (don't multiply entities),\nOccam's Broom is about what's being HIDDEN.\n\n**Action**: Ask: \"What's NOT being discussed that should be?\"\n\n### BOOM CRUTCH\n**Pattern**: \"And then a miracle occurs\" / \"Understanding emerges\" / \"Meaning arises\"\n\nExplanatory gaps disguised as explanations. Watch for:\n- Passive voice hiding agency (\"patterns are recognized\")\n- Nominalizations hiding processes (\"understanding occurs\")\n- Appeals to emergence without mechanism\n\n**Action**: Flag these as \"BOOM - magic step here\" and note what's actually being skipped.\n\n### STEELMAN\n**Principle**: Express arguments in their STRONGEST form before critique\n\nThe opposite of strawmanning. Before attacking a position:\n1. State it as its proponents would\n2. Add the best supporting arguments you can think of\n3. THEN engage critically\n\n**Action**: For opposing views, check if they're being fairly represented.\n\n### JOOTSING (Jumping Out Of The System)\n**Pattern**: Implicit rules constraining the argument\n\nEvery argument operates within a system of assumptions. True creativity\n(and devastating critique) comes from stepping OUTSIDE the system.\n\n**Action**: Ask: \"What rules is this argument assuming? What would happen if we rejected them?\"\n\n### DEEPITY\n**Pattern**: Statements that seem profound but equivocate between two readings\n\n- **Trivial reading**: Obviously true but boring\n- **Profound reading**: Interesting if true but actually false\n\nExample: \"Love is just a word\"\n- Trivial: The word 'love' is just a word (duh)\n- Profound: Love itself is merely linguistic (false)\n\n**Action**: Separate the readings and evaluate each.\n\n### STURGEON'S LAW\n**Principle**: \"90% of everything is crap\"\n\nApplies to evidence, citations, examples. Not all support is equal.\n\n**Action**: Assess quality, not just quantity, of supporting material.\n\n### PHILOSOPHER'S SYNDROME\n**Pattern**: Mistaking failure of imagination for insight into necessity\n\n\"I can't imagine how X could be true, therefore X is impossible.\"\n\n**Action**: When you see impossibility claims, check if they're based on\nargument or just failure to imagine alternatives.\n\n### PROVENANCE AUDIT\n**Principle**: Where does this claim actually come from?\n\nTrace evidence back to its source:\n- Is it primary or secondary?\n- Has it been filtered/interpreted?\n- What's the original context?\n\n**Action**: For key claims, track the citation chain.\n\n### HETEROPHENOMENOLOGY\n**Principle**: Take subjective reports seriously as DATA, not as final truth\n\nWhat people say about their experience is evidence about their beliefs,\nnot necessarily about reality.\n\n**Action**: Distinguish between \"people believe X\" and \"X is true.\"\n\n---\n\n### APPLYING THE TOOLKIT\n\nAs you analyze:\n\n1. **SURELY ALARM CHECK**: Mark all confidence markers and probe\n2. **OCCAM'S BROOM CHECK**: Note what's suspiciously absent\n3. **BOOM CRUTCH CHECK**: Flag explanatory gaps\n4. **STEELMAN CHECK**: Are opposing views fairly represented?\n5. **JOOTSING CHECK**: What system rules constrain the argument?\n6. **DEEPITY CHECK**: Any pseudo-profound equivocations?\n7. **STURGEON CHECK**: Is the supporting material quality or filler?\n8. **PROVENANCE CHECK**: Where does key evidence actually originate?\n\nThese tools expose where arguments are WEAKEST - even when they sound strongest.",
+  "vocabulary": {
+    "researcher": {
+      "surely_alarm": "SURELY ALARM trigger",
+      "occams_broom": "Occam's Broom exclusion",
+      "boom_crutch": "BOOM CRUTCH explanatory gap",
+      "deepity": "deepity (trivial/profound equivocation)",
+      "jootsing": "JOOTSING opportunity (system escape)",
+      "steelman": "steelman representation"
+    },
+    "analyst": {
+      "surely_alarm": "confidence marker (possibly unjustified)",
+      "occams_broom": "suspicious omission",
+      "boom_crutch": "explanatory gap (magic step)",
+      "deepity": "pseudo-profound statement",
+      "jootsing": "hidden assumption to challenge",
+      "steelman": "strongest form of argument"
+    },
+    "executive": {
+      "surely_alarm": "claim stated without proof",
+      "occams_broom": "what they're not telling you",
+      "boom_crutch": "hand-waving explanation",
+      "deepity": "sounds deep but means little",
+      "jootsing": "the rules they assume you accept",
+      "steelman": "the best case for the other side"
+    },
+    "activist": {
+      "surely_alarm": "assertion to challenge",
+      "occams_broom": "what they're hiding",
+      "boom_crutch": "the gap in their logic",
+      "deepity": "empty rhetoric",
+      "jootsing": "the system they don't want questioned",
+      "steelman": "their actual best argument"
+    }
+  }
+}

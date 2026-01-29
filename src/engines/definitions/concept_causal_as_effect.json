@@ -7,12 +7,61 @@
   "kind": "relational",
   "reasoning_domain": "causal analysis",
   "researcher_question": "What causes this concept to emerge or change?",
-  "extraction_prompt": "You are conducting Phase 6.2: CONCEPT AS EFFECT analysis.\n\n## YOUR TASK\n\nFind all places where \"{concept}\" is treated as an EFFECT of other factors.\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## WHAT TO LOOK FOR\n\n- \"X leads to {concept}\"\n- \"X produces {concept}\"\n- \"{concept} results from X\"\n- \"{concept} emerges due to X\"\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with causal_claims[], each containing:\n- claim_id, concept_role: \"effect\", cause, mechanism, evidence_type, confidence, quote, source\n\nTARGET: 10-20 causal claims where concept is the effect.",
-  "curation_prompt": "Validate causal claims where concept is effect.",
   "canonical_schema": {
     "type": "object"
   },
   "paradigm_keys": [
     "marxist"
-  ]
+  ],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What causes this concept to emerge or change?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "blumenberg_metaphorology",
   "researcher_question": "What metaphors drive this concept and where might they lead?",
-  "extraction_prompt": "\nYou are an expert in Blumenberg's metaphorology, analyzing the metaphorical infrastructure of concepts.\n\nFor this article, perform a METAPHORICAL INFRASTRUCTURE ANALYSIS:\n\n## 1. CONCEPT IDENTIFICATION\nFor each significant concept:\n- **Term**: The concept name/phrase\n- **Definition**: How it's used\n- **Apparent metaphorical content**: What imagery is present?\n\n## 2. ROOT METAPHOR EXCAVATION\nFor each concept, identify underlying metaphors:\n- **What is the root metaphor?** (The fundamental comparison structuring the concept)\n- **Source domain**: Where does the imagery come from?\n- **Target domain**: What is being understood through this imagery?\n- **Metaphor type**:\n  - Orientational (up/down, in/out, forward/back)\n  - Ontological (treating abstractions as substances/entities)\n  - Structural (complex source domain maps to complex target)\n  - Container (boundaries, inside/outside)\n  - Journey (paths, goals, obstacles)\n  - War (conflict, victory, defeat)\n  - Machine (mechanisms, inputs, outputs)\n  - Organic (growth, health, disease)\n\n## 3. MAPPING ANALYSIS\nFor each root metaphor:\n- **What mappings** does it create? (source element \u2192 target element)\n- **What does it highlight?** (What aspects does it make visible?)\n- **What does it hide?** (What aspects are obscured?)\n- **How productive is it?** (Does it generate new inferences?)\n\n## 4. ABSOLUTENESS ASSESSMENT\nEvaluate whether metaphors can be translated to literal terms:\n- **Absolute metaphors**: Cannot be replaced by literal description\n- **Near-absolute**: Could theoretically be literalized but practically aren't\n- **Translatable**: Can be unpacked into non-metaphorical terms\n- **Dead metaphors**: No longer recognized as metaphorical\n\n## 5. CONCEPTUAL PERSONA IDENTIFICATION\nWhat character does the concept have:\n- **What personality traits** does the concept seem to have?\n- **What actions** does the concept typically perform (linguistically)?\n- **What relationships** does it enter into?\n- **What emotional valence** does it carry?\n\n## 6. TRANSFORMATION POTENTIAL\nWhere might the metaphor evolve:\n- **What directions of change** are built into the metaphor?\n- **What trigger conditions** might shift the metaphor?\n- **What alternative metaphors** are available?\n- **What historical precedents** exist for such shifts?\n\n## 7. METAPHOR TENSION DETECTION\nWhere do metaphors conflict:\n- **What competing metaphors** structure the same concept?\n- **How do they conflict?** (contradiction, competition, complementarity)\n- **How is the tension managed?**\n\n\nThink archaeologically - dig beneath the surface of concepts to find their metaphorical strata.\n",
-  "curation_prompt": "\nYou are synthesizing metaphorical infrastructure analyses from multiple articles.\n\nYour task:\n\n## 1. CONSOLIDATE CONCEPT INVENTORIES\n- Merge same concepts across articles\n- Collect all metaphorical information\n- Calculate metaphorical density scores\n\n## 2. BUILD ROOT METAPHOR CATALOG\n- Aggregate root metaphors across concepts\n- Classify by type\n- Assess absoluteness\n- Map what each highlights and hides\n\n## 3. SYNTHESIZE METAPHORICAL MAPPINGS\n- Aggregate mappings for each metaphor\n- Identify productive vs. barren mappings\n- Note entailments\n\n## 4. IDENTIFY METAPHOR CLUSTERS\n- Find metaphors that work together\n- Identify coherence principles\n- Map which concepts are affected\n\n## 5. PROFILE CONCEPTUAL PERSONAS\n- Aggregate persona traits\n- Note emotional valences\n- Connect to underlying metaphors\n\n## 6. PROJECT TRANSFORMATION VECTORS\n- Aggregate potential directions\n- Assess likelihoods\n- Note trigger conditions\n- Identify historical precedents\n\n## 7. MAP METAPHOR TENSIONS\n- Identify conflicting metaphors\n- Classify tension types\n- Note resolution patterns\n\n## 8. CATALOG DEAD METAPHORS\n- Identify once-live metaphors now dead\n- Note residual effects\n- Identify reviving metaphors\n\n## 9. BUILD METAPHOR ARCHAEOLOGY\n- For key concepts, trace metaphorical history\n- Identify sedimentation patterns\n- Note what each layer enabled\n\n\nCreate a map that reveals the metaphorical infrastructure driving conceptual development.\n",
-  "concretization_prompt": "\nTransform the metaphorical infrastructure analysis to use concrete, recognizable labels:\n\n1. Name concepts specifically:\n   - \"C1\" \u2192 \"Artificial Intelligence\"\n   - \"C2\" \u2192 \"Machine Learning\"\n\n2. Name root metaphors evocatively:\n   - \"RM1\" \u2192 \"MIND AS COMPUTER (intelligence = computation)\"\n   - \"RM2\" \u2192 \"LEARNING AS TRAINING (knowledge = pattern recognition)\"\n\n3. Name mappings specifically:\n   - \"MAP1\" \u2192 \"neurons \u2192 nodes, synapses \u2192 weights, firing \u2192 activation\"\n\n4. Name personas vividly:\n   - \"PERSONA1\" \u2192 \"AI as The Eager Student (learns, improves, sometimes fails)\"\n   - \"PERSONA2\" \u2192 \"AI as The Tireless Worker (never sleeps, processes constantly)\"\n\n5. Name transformation vectors:\n   - \"TV1\" \u2192 \"From computational metaphor toward biological metaphor (neuromorphic computing)\"\n   - \"TV2\" \u2192 \"From tool metaphor toward agent metaphor (autonomous systems)\"\n\n6. Name tensions specifically:\n   - \"TENS1\" \u2192 \"TOOL vs. AGENT tension in AI discourse\"\n   - \"TENS2\" \u2192 \"OBJECTIVE MACHINE vs. BIASED SYSTEM tension\"\n\n7. Name dead metaphors with origins:\n   - \"DEAD1\" \u2192 \"'Debugging' - once meant removing actual insects from hardware\"\n   - \"DEAD2\" \u2192 \"'Memory' - once explicitly compared to human memory\"\n\nPreserve all metaphor types, absoluteness assessments, and mapping details.\nMake the metaphorical infrastructure visible and actionable.\n",
   "canonical_schema": {
     "concepts_analyzed": [
       {
@@ -163,5 +160,65 @@
     "smart_table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/metaphorical_infrastructure_mapper.py"
+  "source_file": "analyzer/src/engines/metaphorical_infrastructure_mapper.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "metaphorical infrastructure",
+      "analysis_type_plural": "metaphorical infrastructures",
+      "core_question": "What metaphors drive this concept and where might they lead?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "contradicts"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "metaphorical infrastructure",
+      "item_type_plural": "metaphorical infrastructures",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "C1",
+          "to": "Artificial Intelligence"
+        },
+        {
+          "from": "C2",
+          "to": "Machine Learning"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

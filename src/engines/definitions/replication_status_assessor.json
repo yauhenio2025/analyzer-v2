@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "methodology",
   "researcher_question": "Have these findings been replicated?",
-  "extraction_prompt": "\nYou are assessing REPLICATION STATUS \u2014 whether findings have been replicated\nand what this means for their robustness.\n\n## THE REPLICATION CRISIS CONTEXT\n\nMany published findings fail to replicate:\n- Psychology: ~40% replication rate in major study\n- Medicine: Many effects shrink in replication\n- Economics: ~50% replication rate\n- Cancer biology: Majority don't replicate\n\nThis means: Published doesn't mean reliable. Replication evidence matters.\n\n## TYPES OF REPLICATION\n\n### DIRECT REPLICATION\nSame method, new sample\n- Strongest test of finding\n- If fails, original finding questionable\n\n### CONCEPTUAL REPLICATION\nDifferent method, same concept\n- Tests whether concept is robust\n- If fails, may be method-specific\n\n### META-ANALYSIS\nSynthesizes multiple studies\n- Can reveal whether effect is real and how large\n- Publication bias can inflate effects\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY KEY FINDINGS\nWhat findings are being relied on?\n- What does each claim?\n- Where was it originally published?\n- What's the original effect size?\n\n### STEP 2: SEARCH FOR REPLICATION EVIDENCE\nFor each finding:\n- Has it been directly replicated?\n- Has it been conceptually replicated?\n- Are there failed replications?\n- Is there a meta-analysis?\n\nFor each replication attempt:\n- What type of replication?\n- What was the outcome?\n- How does the effect compare to original?\n- What's the methodological quality?\n\n### STEP 3: ASSESS EFFECT SHRINKAGE\nDo effects get smaller in replications?\n- Original effect size vs. replication effect sizes\n- This is common and informative\n\n### STEP 4: IDENTIFY UNTESTED FINDINGS\nWhat findings have no replication evidence?\n- How concerning is this?\n- How feasible would replication be?\n- What's the replication priority?\n\n### STEP 5: ASSESS ROBUSTNESS\nFor each finding:\n- Robust: Consistently replicated\n- Probably robust: Some successful replications\n- Uncertain: Mixed evidence\n- Probably fragile: More failures than successes\n- Fragile: Consistently fails to replicate\n\n### STEP 6: MAKE RECOMMENDATIONS\nHow much should we trust each finding?\n- Trust: Robust replication evidence\n- Trust cautiously: Some positive evidence\n- Await replication: Untested\n- Be skeptical: Mixed or failed replications\n- Disregard: Consistently fails to replicate\n\n\n## OUTPUT GUIDANCE\n\nBe specific about replication evidence. \"Probably replicated\" is not useful.\n\"Three direct replications, two successful, one failed, average effect 60% of original\" is useful.\n",
-  "curation_prompt": "\nYou are synthesizing replication status assessments across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE REPLICATION EVIDENCE\n- Combine replication information across sources\n- What's the complete picture of replications?\n\n### 2. IDENTIFY ROBUST VS. FRAGILE FINDINGS\n- Which findings are consistently replicated?\n- Which consistently fail?\n- Which are untested?\n\n### 3. ASSESS FIELD-LEVEL PATTERNS\n- What's the overall replication rate?\n- What predicts successful replication?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive replication assessment for all key findings.\n",
-  "concretization_prompt": "\nTransform the replication status analysis into actionable assessment:\n\n1. **REPLICATION SUMMARY**\n   ```\n   | Finding | Replications | Successes | Failures | Robustness |\n   |---------|--------------|-----------|----------|------------|\n   | F1      | 5            | 3         | 2        | Uncertain  |\n   ```\n\n2. **REPLICATION DETAILS**\n   ```\n   Finding: [Description]\n   Original: [Source, N, effect size]\n   Replications:\n   - R1: [Type] | [Outcome] | Effect: [Size] | Quality: [Rating]\n   - R2: ...\n   Overall: [Robustness assessment]\n   ```\n\n3. **EFFECT SHRINKAGE**\n   - F1: Original effect d=0.8, average replication d=0.4 (50% shrinkage)\n\n4. **ROBUSTNESS CATEGORIES**\n   - ROBUST: [Findings with consistent replication]\n   - UNCERTAIN: [Findings with mixed evidence]\n   - FRAGILE: [Findings that fail to replicate]\n   - UNTESTED: [Findings needing replication]\n\n5. **RECOMMENDATIONS**\n   | Finding | Evidence | Recommendation |\n   |---------|----------|----------------|\n   | F1      | Mixed    | Trust cautiously |\n\n6. **REPLICATION PRIORITIES**\n   - High priority: [Untested findings that matter most]\n   - Why: [Importance and feasibility]\n\n7. **BOTTOM LINE**\n   [One paragraph: Which findings are robust? Which should we be skeptical of?\n   What's the overall evidentiary quality given replication evidence?]\n",
   "canonical_schema": {
     "findings_assessed": [
       {
@@ -96,5 +93,57 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/replication_status_assessor.py"
+  "source_file": "analyzer/src/engines/replication_status_assessor.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "replication status assessor",
+      "analysis_type_plural": "replication status assessors",
+      "core_question": "Have these findings been replicated?",
+      "extraction_steps": [
+        "IDENTIFY KEY FINDINGS",
+        "SEARCH FOR REPLICATION EVIDENCE",
+        "ASSESS EFFECT SHRINKAGE",
+        "IDENTIFY UNTESTED FINDINGS",
+        "ASSESS ROBUSTNESS",
+        "MAKE RECOMMENDATIONS"
+      ],
+      "key_fields": {},
+      "id_field": "replication_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "replication status assessor",
+      "item_type_plural": "replication status assessors",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

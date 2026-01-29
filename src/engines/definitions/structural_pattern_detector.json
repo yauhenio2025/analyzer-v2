@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "composition",
   "researcher_question": "What structural patterns organize this discourse?",
-  "extraction_prompt": "\nYou are an expert discourse analyst detecting structural patterns.\n\nFor this article, identify ALL structural patterns:\n\n1. **ARGUMENTATIVE STRUCTURES**: How is the argument organized?\n   - Structure type:\n     * LINEAR: Point follows point\n     * TREE: Main claim with branching support\n     * NETWORK: Interconnected claims\n     * DIALECTICAL: Thesis-antithesis-synthesis\n     * CONVERGENT: Multiple lines leading to one conclusion\n   - What are the components?\n   - How effective is this structure? (0-1)\n\n2. **NARRATIVE PATTERNS**: What story structure is used?\n   - Pattern type:\n     * PROBLEM_SOLUTION\n     * CHRONOLOGICAL\n     * COMPARISON\n     * CAUSE_EFFECT\n     * QUESTION_ANSWER\n   - What's the narrative arc?\n\n3. **RHETORICAL STRUCTURES**: What rhetorical form is used?\n   - Structure type:\n     * CLASSICAL_ORATION: Introduction, narration, proof, refutation, conclusion\n     * INVERTED_PYRAMID: Most important first\n     * HOURGLASS: Broad \u2192 narrow \u2192 broad\n     * DIAMOND: Narrow \u2192 broad \u2192 narrow\n   - What components are present?\n   - What function does each serve?\n\n4. **ORGANIZATIONAL PATTERNS**: How is content organized?\n   - What's the overall pattern?\n   - What's the hierarchy?\n   - What types of sections appear?\n   - What transitions are used?\n   - How coherent is the organization? (0-1)\n\n5. **COMPOSITIONAL STRATEGIES**: What writing strategies are used?\n   - What strategy is employed?\n   - What techniques are used?\n   - What effect on the reader?\n\n\nBe comprehensive - identify both macro and micro structural patterns.\n",
-  "curation_prompt": "\nYou are synthesizing structural pattern analysis from multiple articles.\n\nYour task:\n1. **MAP ARGUMENTATIVE STRUCTURES**: What argument forms appear?\n   - Consolidate structure types\n   - Rate effectiveness\n   - Count frequency\n\n2. **CATALOG NARRATIVE PATTERNS**: What stories are told?\n   - Identify common patterns\n   - Map narrative arcs\n   - Count occurrences\n\n3. **IDENTIFY RHETORICAL STRUCTURES**: What forms are used?\n   - Map rhetorical structures\n   - Note component functions\n   - Track distribution\n\n4. **ANALYZE ORGANIZATION**: How is content arranged?\n   - Map organizational patterns\n   - Rate coherence\n   - Note transitions\n\n5. **SYNTHESIZE STRATEGIES**: What compositional approaches work?\n   - Catalog strategies\n   - Note effects\n   - Rank by frequency\n\n\nCreate a comprehensive structural pattern map of the discourse.\n",
-  "concretization_prompt": "\nTransform the structural analysis to be clear:\n\n1. Name argumentative structures:\n   - \"AS1\" \u2192 \"Dialectical: Thesis (AI benefit) \u2192 Antithesis (risks) \u2192 Synthesis (governance)\"\n\n2. Label narrative patterns:\n   - \"NP1\" \u2192 \"Problem-Solution: Identify gap \u2192 Propose fix \u2192 Show results\"\n\n3. Describe rhetorical structures:\n   - \"RS1\" \u2192 \"Classical oration with strong refutation section\"\n\n4. Name organizational patterns:\n   - \"OP1\" \u2192 \"Academic: Introduction \u2192 Literature \u2192 Methods \u2192 Findings \u2192 Discussion\"\n\n5. Label strategies:\n   - \"CS1\" \u2192 \"Strategy: Progressive revelation (builds to key insight)\"\n\nPreserve all effectiveness and coherence ratings.\nMake the analysis useful for understanding discourse organization.\n",
   "canonical_schema": {
     "argumentative_structures": [
       {
@@ -111,5 +108,62 @@
     "gemini_network_graph"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/structural_pattern_detector.py"
+  "source_file": "analyzer/src/engines/structural_pattern_detector.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "pattern",
+      "analysis_type_plural": "patterns",
+      "core_question": "What structural patterns organize this discourse?",
+      "extraction_steps": [
+        "ARGUMENTATIVE STRUCTURES",
+        "NARRATIVE PATTERNS",
+        "RHETORICAL STRUCTURES",
+        "ORGANIZATIONAL PATTERNS",
+        "COMPOSITIONAL STRATEGIES"
+      ],
+      "key_fields": {},
+      "id_field": "structural_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "pattern",
+      "item_type_plural": "patterns",
+      "consolidation_rules": [
+        "MAP ARGUMENTATIVE STRUCTURES: What argument forms appear?",
+        "CATALOG NARRATIVE PATTERNS: What stories are told?",
+        "IDENTIFY RHETORICAL STRUCTURES: What forms are used?",
+        "ANALYZE ORGANIZATION: How is content arranged?",
+        "SYNTHESIZE STRATEGIES: What compositional approaches work?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

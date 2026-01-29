@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "methodology",
   "researcher_question": "Can this research be reproduced?",
-  "extraction_prompt": "\nYou are a REPRODUCIBILITY ASSESSOR \u2014 examining whether research can be\nreproduced and replicated by others.\n\n## THE REPRODUCIBILITY CRISIS\n\nMuch research cannot be reproduced:\n- Data not available\n- Methods not fully documented\n- Analysis code not provided\n- Results don't replicate\n\nThis is the reproducibility crisis \u2014 and it matters for what we can trust.\n\n## KEY CONCEPTS\n\n### REPRODUCIBILITY\nSame data + same analysis = same results\n- Can someone else run your analysis and get the same numbers?\n- Requires: data access, code access, documentation\n\n### REPLICABILITY\nNew data + same methods = consistent results\n- Can someone else collect new data and find the same effect?\n- Requires: clear methods, generalizable findings\n\n### TRANSPARENCY\n- Is the research process fully visible?\n- Pre-registration, open data, open code\n- All analyses reported (not just significant ones)\n\n## YOUR TASK\n\n### STEP 1: ASSESS DATA AVAILABILITY\nCan others access the data?\n- Is data described in detail?\n- Is it publicly available?\n- If restricted, how can access be obtained?\n- What barriers exist?\n\n### STEP 2: ASSESS METHOD DOCUMENTATION\nAre methods fully documented?\n- Is there a step-by-step protocol?\n- Are materials specified?\n- Are parameters documented?\n- Is analysis code available?\n- What's missing?\n\n### STEP 3: ASSESS ANALYSIS TRANSPARENCY\nIs the analysis process transparent?\n- Was the analysis plan pre-registered?\n- Are all analyses reported (or just significant ones)?\n- What robustness checks were done?\n- How many researcher degrees of freedom exist?\n- What's the p-hacking risk?\n\n### STEP 4: IDENTIFY REPRODUCIBILITY BARRIERS\nWhat prevents reproduction?\n- Data barriers (access, format, documentation)\n- Method barriers (undocumented steps, tacit knowledge)\n- Resource barriers (equipment, expertise, cost)\n- Other barriers\n\n### STEP 5: ASSESS REPLICATION EVIDENCE\nHas this been replicated?\n- Direct replications (same methods)?\n- Conceptual replications (different methods, same concept)?\n- Failed replications?\n- Meta-analyses?\n\n### STEP 6: OVERALL ASSESSMENT\nHow reproducible is this research?\n- Computational reproducibility (can we get same numbers?)\n- Methodological reproducibility (can we follow the methods?)\n- Expected replicability (would it replicate with new data?)\n\n### STEP 7: RECOMMENDATIONS\nWhat's needed for reproducibility?\n- What should authors provide?\n- What caveats should readers note?\n- What should replicators know?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about reproducibility barriers.\nDistinguish reproducibility from replicability.\nFocus on barriers that affect main conclusions.\n",
-  "curation_prompt": "\nSynthesize reproducibility assessments from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **COMPARE TRANSPARENCY**: How do sources compare on transparency?\n2. **VALIDATE METHODS**: Do sources provide enough methodological detail?\n3. **ASSESS REPLICATION**: What does replication evidence show?\n4. **IDENTIFY PATTERNS**: Common reproducibility problems across sources?\n5. **SYNTHESIZE**: Overall reproducibility assessment\n\n## OUTPUT GUIDANCE\n\nCreate unified assessment of reproducibility and replicability.\n",
-  "concretization_prompt": "\nTransform reproducibility assessment into clear report:\n\n1. **DATA AVAILABILITY**\n   - Described: [Y/N/Partial]\n   - Accessible: [Public/Restricted/Unavailable]\n   - Barriers: [List]\n\n2. **METHOD DOCUMENTATION**\n   - Protocol detail: [Comprehensive/Adequate/Sparse/Missing]\n   - Materials specified: [Y/N]\n   - Code available: [Y/N]\n   - Documentation gaps: [List]\n\n3. **ANALYSIS TRANSPARENCY**\n   - Pre-registered: [Y/N]\n   - All analyses reported: [Y/N]\n   - Robustness checks: [List]\n   - P-hacking risk: [Low/Medium/High]\n\n4. **REPRODUCIBILITY BARRIERS** (ranked by severity)\n   | Barrier | Type | Severity | Surmountable? |\n   |---------|------|----------|---------------|\n\n5. **REPLICATION EVIDENCE**\n   - Direct replications: [Success/Failure/None]\n   - Conceptual replications: [Success/Failure/None]\n   - Overall status: [Well-replicated/Mixed/Not replicated/Unknown]\n\n6. **OVERALL REPRODUCIBILITY ASSESSMENT**\n   - Computational: [High/Medium/Low]\n   - Methodological: [High/Medium/Low]\n   - Expected replicability: [High/Medium/Low]\n\n7. **RECOMMENDATIONS**\n   - For readers: [Caveats]\n   - For replicators: [Advice]\n\n8. **BOTTOM LINE**\n   [Can this research be trusted based on reproducibility?]\n",
   "canonical_schema": {
     "research_context": {
       "research_type": "experimental | observational | computational | qualitative | mixed",
@@ -111,5 +108,64 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/reproducibility_assessor.py"
+  "source_file": "analyzer/src/engines/reproducibility_assessor.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "reproducibility assessor",
+      "analysis_type_plural": "reproducibility assessors",
+      "core_question": "Can this research be reproduced?",
+      "extraction_steps": [
+        "ASSESS DATA AVAILABILITY",
+        "ASSESS METHOD DOCUMENTATION",
+        "ASSESS ANALYSIS TRANSPARENCY",
+        "IDENTIFY REPRODUCIBILITY BARRIERS",
+        "ASSESS REPLICATION EVIDENCE",
+        "OVERALL ASSESSMENT",
+        "RECOMMENDATIONS"
+      ],
+      "key_fields": {},
+      "id_field": "reproducibility_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "reproducibility assessor",
+      "item_type_plural": "reproducibility assessors",
+      "consolidation_rules": [
+        "COMPARE TRANSPARENCY: How do sources compare on transparency?",
+        "VALIDATE METHODS: Do sources provide enough methodological detail?",
+        "ASSESS REPLICATION: What does replication evidence show?",
+        "IDENTIFY PATTERNS: Common reproducibility problems across sources?",
+        "SYNTHESIZE: Overall reproducibility assessment"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "landscape",
   "researcher_question": "How do different disciplines contribute to and contest this topic?",
-  "extraction_prompt": "\nYou are an expert analyst mapping interdisciplinary connections.\n\nFor this article, extract ALL disciplinary and cross-disciplinary content:\n\n1. **DISCIPLINES PRESENT**: What fields contribute to this text?\n   - Name the discipline\n   - What parent field does it belong to?\n   - What concepts does it contribute?\n   - What methods does it contribute?\n   - Representative authors from this discipline\n\n2. **CONCEPT TRANSLATIONS**: When concepts move between disciplines\n   - What concept is being translated?\n   - From what discipline to what discipline?\n   - Original meaning in source discipline\n   - Meaning in target discipline\n   - Is the translation faithful, adapted, or distorted?\n\n3. **METHODOLOGICAL BORROWINGS**: When methods are adopted\n   - What method is borrowed?\n   - From what discipline to what discipline?\n   - What adaptations were made?\n   - Was the borrowing successful or problematic?\n\n4. **INTERDISCIPLINARY SYNTHESES**: Genuine combinations\n   - What new synthesis is being created?\n   - What disciplines are combined?\n   - What novel contributions emerge?\n   - How coherent is the synthesis?\n\n5. **DISCIPLINARY TENSIONS**: Conflicts between fields\n   - What disciplines are in tension?\n   - What is the nature of the tension?\n     * Methodological (how to study)\n     * Ontological (what exists)\n     * Epistemological (what counts as knowledge)\n     * Territorial (who owns the topic)\n   - Are there resolution attempts?\n\n\nBe comprehensive - capture both explicit and implicit disciplinary dynamics.\n",
-  "curation_prompt": "\nYou are synthesizing interdisciplinary analysis from multiple articles.\n\nYour task:\n1. **MAP DISCIPLINARY LANDSCAPE**: What fields are present?\n   - Catalog all disciplines\n   - Rank by prominence\n   - Note concepts and methods contributed\n\n2. **TRACK CONCEPT TRANSLATIONS**: How do ideas move?\n   - Consolidate translation instances\n   - Rate translation quality\n   - Identify problematic translations\n\n3. **MAP METHODOLOGICAL BORROWINGS**: What methods cross fields?\n   - Track successful vs. problematic borrowings\n   - Note required adaptations\n\n4. **IDENTIFY SYNTHESES**: Where is integration happening?\n   - Map interdisciplinary combinations\n   - Rate coherence\n   - Note novel contributions\n\n5. **ANALYZE TENSIONS**: Where are fields in conflict?\n   - Map disciplinary tensions\n   - Categorize tension types\n   - Note resolution attempts\n\n\nCreate a comprehensive interdisciplinary map of the discourse.\n",
-  "concretization_prompt": "\nTransform the interdisciplinary analysis to be clear:\n\n1. Name disciplines fully:\n   - \"D1\" \u2192 \"Economics (Behavioral Economics subdiscipline)\"\n\n2. Describe translations specifically:\n   - \"T1\" \u2192 \"'Rationality' translation: Economics \u2192 Psychology (distorted)\"\n\n3. Label borrowings with assessment:\n   - \"B1\" \u2192 \"Experimental method borrowed from Psychology to Economics (successful)\"\n\n4. Name syntheses:\n   - \"S1\" \u2192 \"Behavioral Economics synthesis (Psychology + Economics)\"\n\n5. Describe tensions:\n   - \"Ten1\" \u2192 \"Economics vs. Sociology: Methodological individualism debate\"\n\nPreserve all quality ratings and relationships.\nMake the map useful for understanding disciplinary dynamics.\n",
   "canonical_schema": {
     "disciplines": [
       {
@@ -106,5 +103,79 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/interdisciplinary_connection.py"
+  "source_file": "analyzer/src/engines/interdisciplinary_connection.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "interdisciplinary",
+      "analysis_type_plural": "interdisciplinarys",
+      "core_question": "How do different disciplines contribute to and contest this topic?",
+      "extraction_steps": [
+        "DISCIPLINES PRESENT",
+        "CONCEPT TRANSLATIONS",
+        "METHODOLOGICAL BORROWINGS",
+        "INTERDISCIPLINARY SYNTHESES",
+        "DISCIPLINARY TENSIONS"
+      ],
+      "key_fields": {},
+      "id_field": "interdisciplinary_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "interdisciplinary",
+      "item_type_plural": "interdisciplinarys",
+      "consolidation_rules": [
+        "MAP DISCIPLINARY LANDSCAPE: What fields are present?",
+        "TRACK CONCEPT TRANSLATIONS: How do ideas move?",
+        "MAP METHODOLOGICAL BORROWINGS: What methods cross fields?",
+        "IDENTIFY SYNTHESES: Where is integration happening?",
+        "ANALYZE TENSIONS: Where are fields in conflict?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "D1",
+          "to": "Economics (Behavioral Economics subdiscipline)"
+        },
+        {
+          "from": "T1",
+          "to": "'Rationality' translation: Economics \u2192 Psychology (distorted)"
+        },
+        {
+          "from": "B1",
+          "to": "Experimental method borrowed from Psychology to Economics (successful)"
+        },
+        {
+          "from": "S1",
+          "to": "Behavioral Economics synthesis (Psychology + Economics)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

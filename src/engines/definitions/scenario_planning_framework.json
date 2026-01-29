@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "temporal",
   "researcher_question": "What futures are possible, and how would we get there?",
-  "extraction_prompt": "\nYou are implementing SCENARIO PLANNING methodology \u2014 mapping the space of\nplausible futures to prepare for uncertainty rather than pretend to predict.\n\n## THE SCENARIO PLANNING PHILOSOPHY\n\nWe cannot predict the future. But we CAN:\n1. Identify the KEY DRIVERS that will shape it\n2. Acknowledge what we DON'T KNOW (uncertainties)\n3. Construct MULTIPLE PLAUSIBLE FUTURES\n4. Think through the PATHWAY to each\n5. Identify what's ROBUST across futures\n\nGoal: Not to predict, but to prepare.\n\n\n## YOUR TASK\n\n### STEP 1: DEFINE THE FOCAL QUESTION\n\nWhat strategic question are we trying to illuminate?\n- What decision does this inform?\n- What time horizon matters?\n- What's in scope and out of scope?\n\n### STEP 2: IDENTIFY KEY DRIVERS\n\nWhat forces/factors will most shape the future in this domain?\n\n**Driver types:**\n- Structural: Long-term, slow-moving forces\n- Cyclical: Recurring patterns\n- Technological: Tech development trajectories\n- Social: Demographic, cultural, behavioral trends\n- Political: Governance, policy, power dynamics\n- Economic: Markets, resources, trade\n- Environmental: Climate, resources, physical constraints\n- Wild cards: Low probability but high impact surprises\n\nFor each driver:\n- Where is it now? (current state)\n- Where could it go? (range of outcomes)\n- How uncertain is its trajectory?\n- How much impact would changes have?\n\n### STEP 3: IDENTIFY CRITICAL UNCERTAINTIES\n\nWhich drivers have high uncertainty AND high impact?\nThese are the axes for scenario construction.\n\n### STEP 4: CONSTRUCT SCENARIOS\n\nSelect the 2 most critical uncertainties as axes.\nThis creates a 2x2 matrix with 4 quadrants.\n\nFor each quadrant, construct a scenario:\n- Give it an evocative NAME\n- Write a NARRATIVE\n- Specify DRIVER CONFIGURATION\n- Check INTERNAL CONSISTENCY\n- Assess PROBABILITY\n\n### STEP 5: DEVELOP SCENARIO DETAILS\n\nFor each scenario:\n- KEY FEATURES: What defines this world?\n- WINNERS/LOSERS: Who benefits, who suffers?\n- IMPLICATIONS: What does this mean?\n- EARLY INDICATORS: What signs would tell us this is emerging?\n\n### STEP 6: MAP PATHWAYS\n\nHow do we get from here to each scenario?\n- What's the NARRATIVE?\n- What are KEY EVENTS along the way?\n- Where are BRANCH POINTS?\n- What would ACCELERATE or DECELERATE this path?\n\n### STEP 7: CROSS-SCENARIO ANALYSIS\n\nWhat's consistent across scenarios?\n- ROBUST FINDINGS: True in multiple scenarios\n- CONTINGENT FINDINGS: Depends on which scenario\n\n### STEP 8: STRATEGIC IMPLICATIONS\n\nWhat should decision-makers do?\n- ROBUST STRATEGIES: Work across multiple scenarios\n- HEDGING OPTIONS: Protect against specific scenarios\n- MONITORING PRIORITIES: What to watch\n- DECISION TRIGGERS: When to act\n\n## OUTPUT GUIDANCE\n\nScenarios should be PLAUSIBLE, DISTINCT, CHALLENGING, and DECISION-RELEVANT.\n",
-  "curation_prompt": "\nYou are synthesizing scenario analyses from multiple sources to create a\ncomprehensive possibility space map.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE DRIVERS\n- Merge equivalent drivers from different sources\n- Note where sources agree/disagree on driver importance\n- Identify drivers only one source mentions\n\n### 2. TRIANGULATE UNCERTAINTIES\n- Which uncertainties appear across sources?\n- Do sources agree on uncertainty levels?\n\n### 3. INTEGRATE SCENARIOS\n- Do different sources imagine similar futures?\n- Are there complementary scenarios?\n- Are there contradictory scenarios?\n\n### 4. COMBINE PATHWAY ANALYSIS\n- Do sources identify similar pathways?\n- Are there pathway branches one source sees but another misses?\n\n### 5. SYNTHESIZE IMPLICATIONS\n- What robust findings emerge across sources?\n- What's contingent?\n- What strategic implications appear consistently?\n\n## OUTPUT GUIDANCE\n\nCreate a comprehensive scenario framework that:\n1. Maps the full possibility space\n2. Builds on multiple source perspectives\n3. Identifies robust vs. contingent insights\n4. Provides actionable strategic guidance\n",
-  "concretization_prompt": "\nTransform the scenario analysis into a strategic planning document:\n\n1. **EXECUTIVE SUMMARY**\n   - Focal question\n   - Number of scenarios mapped\n   - Key insight in one sentence\n\n2. **SCENARIO MATRIX VISUALIZATION**\n   ```\n                    [Driver 1: High]\n                          \u2502\n        \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n        \u2502   SCENARIO A    \u2502   SCENARIO B    \u2502\n   [D2: \u2502   \"Name\"        \u2502   \"Name\"        \u2502 [D2:\n   Low] \u2502   [tagline]     \u2502   [tagline]     \u2502 High]\n        \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n        \u2502   SCENARIO C    \u2502   SCENARIO D    \u2502\n        \u2502   \"Name\"        \u2502   \"Name\"        \u2502\n        \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                    [Driver 1: Low]\n   ```\n\n3. **SCENARIO BRIEFS**\n   ```\n   SCENARIO [X]: \"[Name]\"\n   Tagline: [one sentence]\n   Probability: [assessment]\n   Key Features: [bullets]\n   Early Indicators: [what to watch]\n   ```\n\n4. **PATHWAY MAP**\n   ```\n   PRESENT \u2192 [Branch Point] \u2192 SCENARIO X\n                     \u2193\n              [Alternative] \u2192 SCENARIO Y\n   ```\n\n5. **STRATEGIC IMPLICATIONS**\n   **Robust (true across scenarios):** [findings]\n   **Hedging Required:** If [scenario], then [response]\n   **Watch For:** [indicators]\n\n6. **DECISION TRIGGERS**\n   | Trigger | Response |\n   |---------|----------|\n\nMake it usable for strategic planning sessions.\n",
   "canonical_schema": {
     "focal_question": {
       "question": "string - the strategic question we're exploring",
@@ -206,5 +203,59 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/scenario_planning_framework.py"
+  "source_file": "analyzer/src/engines/scenario_planning_framework.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "scenario planning framework",
+      "analysis_type_plural": "scenario planning frameworks",
+      "core_question": "What futures are possible, and how would we get there?",
+      "extraction_steps": [
+        "DEFINE THE FOCAL QUESTION",
+        "IDENTIFY KEY DRIVERS",
+        "IDENTIFY CRITICAL UNCERTAINTIES",
+        "CONSTRUCT SCENARIOS",
+        "DEVELOP SCENARIO DETAILS",
+        "MAP PATHWAYS",
+        "CROSS-SCENARIO ANALYSIS",
+        "STRATEGIC IMPLICATIONS"
+      ],
+      "key_fields": {},
+      "id_field": "scenario_id",
+      "key_relationships": [
+        "depends_on"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "scenario planning framework",
+      "item_type_plural": "scenario planning frameworks",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

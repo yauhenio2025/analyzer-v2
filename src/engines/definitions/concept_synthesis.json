@@ -7,13 +7,62 @@
   "kind": "synthesis",
   "reasoning_domain": "integration",
   "researcher_question": "What is the unified picture of how this concept functions?",
-  "extraction_prompt": "You are conducting Phase 12: SYNTHESIS.\n\n## YOUR TASK\n\nCreate a UNIFIED ANALYSIS of \"{concept}\" integrating all previous phases.\n\n## PHASE OUTPUTS TO SYNTHESIZE\n\n{all_phase_outputs}\n\n## SYNTHESIS STRUCTURE\n\n1. **Semantic Core**: What \"{concept}\" means in this corpus\n2. **Argumentative Architecture**: How arguments about it are structured\n3. **Logical Assessment**: Strengths and vulnerabilities\n4. **Cross-Text Evolution**: How treatment develops\n5. **Critical Verdict**: Overall assessment with key quotes\n\n## OUTPUT FORMAT\n\nReturn JSON with:\n- semantic_core: {definition, key_collocations, theoretical_lineage}\n- argumentative_architecture: {core_chains, supporting_chains, key_arguments}\n- logical_assessment: {strengths[], vulnerabilities[], overall_soundness}\n- evolution: {trajectory, key_shifts, contradictions}\n- critical_verdict: {summary, key_quotes[], recommendations}\n\nThis is the FINAL SYNTHESIS. Make it comprehensive and well-supported.",
-  "curation_prompt": "Validate synthesis completeness and integration.",
   "canonical_schema": {
     "type": "object"
   },
   "paradigm_keys": [
     "marxist",
     "brandomian"
-  ]
+  ],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What is the unified picture of how this concept functions?",
+      "extraction_steps": [
+        "Semantic Core",
+        "Argumentative Architecture",
+        "Logical Assessment",
+        "Cross-Text Evolution",
+        "Critical Verdict"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "contradicts"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

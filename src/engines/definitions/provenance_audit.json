@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "evidence",
   "researcher_question": "Where do these claims come from, and how reliable are those sources?",
-  "extraction_prompt": "\nYou are performing a PROVENANCE AUDIT \u2014 tracing where claims come from and\nevaluating source quality using Dennett's heterophenomenological method.\n\n## THE HETEROPHENOMENOLOGICAL APPROACH\n\nDennett's key insight: Treat claims as DATA first, then separately ask if they're TRUE.\n\nThe fact that someone claims X is itself informative:\n- It tells us what they believe (or want us to believe)\n- It reveals what claims are circulating\n- It shows what's considered worth saying\n\nBut whether X is actually true is a SEPARATE question.\n\n## YOUR TASK\n\n### 1. SOURCE IDENTIFICATION\nFor each significant claim in the text:\n- Who is the source?\n- What type of source? (primary/secondary/tertiary)\n- How did they get this information? (observation/study/interview/hearsay)\n- What category? (academic/government/industry/journalism/advocacy/individual)\n\n### 2. CREDIBILITY ASSESSMENT\nFor each source, rate (0-1):\n\n**Expertise Relevance**: Does the source have relevant expertise?\n- Domain expert = high\n- Generalist = medium\n- Opining outside expertise = low\n\n**Track Record**: History of accuracy?\n- Consistently reliable = high\n- Mixed record = medium\n- Known errors/retractions = low\n\n**Independence**: Free from bias or conflict of interest?\n- No stake in outcome = high\n- Disclosed conflicts = medium\n- Undisclosed conflicts or obvious bias = low\n\n**Transparency**: Methods/data accessible?\n- Open methodology, available data = high\n- Some transparency = medium\n- Black box = low\n\n**Corroboration**: Confirmed by independent sources?\n- Multiple independent confirmations = high\n- Some corroboration = medium\n- Single source only = low\n\n### 3. PROVENANCE CHAIN TRACING\nFor key claims, trace the path from origin to this text:\n- Where did this claim ORIGINATE?\n- What intermediaries passed it along?\n- How did it TRANSFORM at each step?\n- How much FIDELITY DEGRADATION occurred?\n\n### 4. CITATION PATTERN ANALYSIS\nLook for:\n- **Echo chambers**: Sources citing each other in closed loops\n- **Circular citations**: A cites B cites C cites A\n- **Single points of failure**: Many claims depending on one source\n- **Orphan claims**: Claims presented as fact with no traceable source\n\n### 5. BIAS INDICATORS\nFor each source, note potential biases:\n- Financial (funding, commercial interest)\n- Ideological (political, philosophical commitments)\n- Institutional (organization's agenda)\n- Personal (individual stakes)\n- Selection (cherry-picking what to report)\n\n### 6. HETEROPHENOMENOLOGICAL INSIGHTS\nFor interesting claims, separately analyze:\n- **As data**: What do we learn from the fact this claim was made?\n- **As truth candidate**: Is there reason to think it's actually true?\n- **Why separation matters**: Where does treating claim-as-data vs claim-as-truth diverge?\n\n\n## OUTPUT GUIDANCE\n\nFocus on claims that matter to the argument.\nThe goal is to produce a map showing:\n1. Where information actually comes from\n2. How reliable those sources are\n3. How much transformation/degradation occurred\n4. Where the argument has epistemic vulnerabilities\n",
-  "curation_prompt": "\nYou are synthesizing provenance audits across multiple articles.\n\nYour task is to create a comprehensive source map for the discourse,\nidentify patterns in sourcing, and assess overall epistemic quality.\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE SOURCES\n- Merge same sources appearing across articles\n- Note which sources are most heavily cited\n- Identify if different articles cite same sources differently\n\n### 2. MAP SOURCE ECOSYSTEM\n- Who are the primary authorities in this discourse?\n- Are there echo chamber clusters?\n- Are there independent verification pathways?\n- Is there over-reliance on particular sources?\n\n### 3. TRACE CROSS-ARTICLE PROVENANCE\nSome claims may appear in multiple articles:\n- Do they trace to the same origin?\n- Do different articles transform them differently?\n- Is there a \"super-spreader\" source?\n\n### 4. ASSESS DISCOURSE-WIDE CREDIBILITY\nOverall source quality:\n- What % of sources are high credibility?\n- What % have significant bias indicators?\n- What % are primary vs. secondary/tertiary?\n\n### 5. IDENTIFY CRITICAL VULNERABILITIES\n- Which widely-cited sources have credibility concerns?\n- Which key claims have weak sourcing?\n- Where are the single points of failure?\n\n### 6. HETEROPHENOMENOLOGICAL SYNTHESIS\nLooking at the discourse as a whole:\n- What does the pattern of claims (regardless of truth) tell us?\n- What beliefs are being promoted?\n- What information is conspicuously absent?\n\n\n## OUTPUT GUIDANCE\n\nCreate clear source_ids (e.g., \"smith_2022_study\", \"industry_report_x\", \"anonymous_official\").\nThe goal is to produce a source map showing:\n1. Where the discourse gets its information\n2. How reliable that information ecosystem is\n3. Where epistemic vulnerabilities exist\n",
-  "concretization_prompt": "\nTransform the provenance audit to be immediately useful:\n\n1. Convert source_ids to descriptive labels:\n   - \"S1\" -> \"2022 Harvard Study (Smith et al.)\"\n   - \"S2\" -> \"Industry White Paper (Company X)\"\n\n2. Create credibility summary cards for key sources:\n   - Source: [Name]\n   - Type: [Primary/Secondary]\n   - Credibility: [X/10]\n   - Key concerns: [list]\n\n3. Visualize provenance chains:\n   - \"Original study (2020) \u2192 News report (2021) \u2192 This article (2023)\"\n   - Note transformations at each step\n\n4. Quantify source quality:\n   - \"X of Y sources are high credibility (>0.7)\"\n   - \"Z claims rest on single sources\"\n   - \"W claims have no traceable origin\"\n\n5. Create vulnerability alerts:\n   - \"WARNING: Claim X depends entirely on Source Y (credibility 0.3)\"\n   - \"WARNING: Echo chamber detected in [cluster]\"\n\n6. Heterophenomenological highlights:\n   - \"The fact that this claim is repeated across X sources tells us...\"\n   - \"But whether the claim is true remains uncertain because...\"\n\n7. Source diversity assessment:\n   - Types represented\n   - Perspectives represented\n   - Geographic diversity\n   - Methodological diversity\n\nPreserve all scores and assessments.\nMake the output useful for someone assessing whether to trust the claims in this discourse.\n",
   "canonical_schema": {
     "sources": [
       {
@@ -148,5 +145,56 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/provenance_audit.py"
+  "source_file": "analyzer/src/engines/provenance_audit.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "provenance audit",
+      "analysis_type_plural": "provenance audits",
+      "core_question": "Where do these claims come from, and how reliable are those sources?",
+      "extraction_steps": [
+        "Where information actually comes from",
+        "How reliable those sources are",
+        "How much transformation/degradation occurred",
+        "Where the argument has epistemic vulnerabilities"
+      ],
+      "key_fields": {},
+      "id_field": "provenance_id",
+      "key_relationships": [
+        "cites",
+        "references"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "provenance audit",
+      "item_type_plural": "provenance audits",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

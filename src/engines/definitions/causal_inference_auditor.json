@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "methodology",
   "researcher_question": "Are causal claims warranted by the evidence?",
-  "extraction_prompt": "\nYou are a CAUSAL INFERENCE AUDITOR \u2014 examining whether causal claims are\nwarranted given the research design and evidence.\n\n## THE CAUSAL INFERENCE PROBLEM\n\nCorrelation \u2260 Causation. To claim X causes Y, you need:\n1. Association: X and Y are correlated\n2. Temporal precedence: X precedes Y\n3. No confounding: No third variable Z causes both X and Y\n4. No reverse causation: Y doesn't cause X\n5. Mechanism: Plausible causal pathway\n\n## THREATS TO CAUSAL INFERENCE\n\n### CONFOUNDING\nA third variable Z causes both X and Y, creating spurious association:\n- Ice cream sales and drownings both caused by summer heat\n- Education and income both caused by family background\n- Treatment and outcome both affected by disease severity\n\n### SELECTION BIAS\nNon-random selection into treatment/exposure:\n- People who take vitamins differ from those who don't\n- Countries that adopt policies differ from those that don't\n- Selection creates spurious association\n\n### REVERSE CAUSATION\nThe effect causes the cause:\n- Does depression cause unemployment, or vice versa?\n- Does democracy cause growth, or growth cause democracy?\n- Temporal precedence alone doesn't resolve this\n\n### IDENTIFICATION STRATEGIES\nMethods for establishing causation:\n- **Randomized experiments**: Random assignment eliminates confounding\n- **Instrumental variables**: Use exogenous variation in X\n- **Difference-in-differences**: Compare changes across groups\n- **Regression discontinuity**: Exploit threshold rules\n- **Matching**: Create comparable treatment/control\n- **Panel data**: Control for time-invariant confounders\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY CAUSAL CLAIMS\nWhat causal claims are being made?\n- What is claimed to cause what?\n- How strong is the causal language?\n- What's the evidence type?\n\n### STEP 2: EXAMINE CONFOUNDING\nFor each claim, what confounders might exist?\n- What third variables could cause both X and Y?\n- Are they controlled for?\n- How well?\n- What residual confounding remains?\n\n### STEP 3: ASSESS SELECTION\nIs there non-random selection into treatment/exposure?\n- How were treated/exposed units selected?\n- How do they differ from untreated/unexposed?\n- Is selection on observables or unobservables?\n\n### STEP 4: CONSIDER REVERSE CAUSATION\nCould the effect cause the cause?\n- Is the temporal ordering clear?\n- Could there be feedback loops?\n- How is reverse causation ruled out?\n\n### STEP 5: EVALUATE IDENTIFICATION STRATEGY\nWhat strategy identifies causal effect?\n- What are the key assumptions?\n- How plausible are they?\n- What robustness checks exist?\n- What are testable implications?\n\n### STEP 6: GENERATE ALTERNATIVE EXPLANATIONS\nWhat else could explain the association?\n- Non-causal alternatives\n- Different causal paths\n- How are they ruled out?\n\n### STEP 7: OVERALL ASSESSMENT\nHow confident should we be in causal claims?\n- Which claims are best/worst identified?\n- What are most serious threats?\n- What caveats are needed?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about threats to identification.\nIdentify the most plausible alternative explanations.\nFocus on threats that affect main conclusions.\n",
-  "curation_prompt": "\nSynthesize causal inference audits from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **COMPARE CLAIMS**: Same causal claims across sources?\n2. **TRIANGULATE IDENTIFICATION**: Do different strategies yield same answer?\n3. **CROSS-VALIDATE THREATS**: Agreement on threats to validity?\n4. **ASSESS ROBUSTNESS**: How robust is the causal conclusion?\n5. **SYNTHESIZE CONFIDENCE**: Overall assessment of causal claims\n\n## OUTPUT GUIDANCE\n\nCreate unified assessment of causal claim credibility.\n",
-  "concretization_prompt": "\nTransform causal inference audit into clear assessment:\n\n1. **CAUSAL CLAIMS**\n   | Claim | Cause \u2192 Effect | Evidence Type | Identification | Confidence |\n   |-------|---------------|---------------|----------------|------------|\n\n2. **CONFOUNDING THREATS** (ranked by severity)\n   - [Claim]: [Confounder] \u2014 [Mechanism] \u2014 Addressed? [Y/N] \u2014 Severity: [X]\n\n3. **SELECTION THREATS**\n   - [Claim]: [Selection mechanism] \u2014 Direction: [Inflates/Deflates]\n\n4. **REVERSE CAUSATION**\n   - [Claim]: [Reverse story] \u2014 Plausibility: [X] \u2014 Ruled out? [Y/N]\n\n5. **IDENTIFICATION ASSESSMENT**\n   | Claim | Strategy | Key Assumption | Plausibility | Robustness |\n   |-------|----------|----------------|--------------|------------|\n\n6. **ALTERNATIVE EXPLANATIONS**\n   - [Claim]: [Alternative] \u2014 Ruled out? [Y/N]\n\n7. **OVERALL CAUSAL CONFIDENCE**\n   - High confidence: [Claims]\n   - Medium confidence: [Claims]\n   - Low confidence: [Claims]\n\n8. **BOTTOM LINE**\n   [Which causal claims are warranted? What caveats are needed?]\n",
   "canonical_schema": {
     "causal_claims": [
       {
@@ -119,5 +116,64 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/causal_inference_auditor.py"
+  "source_file": "analyzer/src/engines/causal_inference_auditor.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "causal inference auditor",
+      "analysis_type_plural": "causal inference auditors",
+      "core_question": "Are causal claims warranted by the evidence?",
+      "extraction_steps": [
+        "IDENTIFY CAUSAL CLAIMS",
+        "EXAMINE CONFOUNDING",
+        "ASSESS SELECTION",
+        "CONSIDER REVERSE CAUSATION",
+        "EVALUATE IDENTIFICATION STRATEGY",
+        "GENERATE ALTERNATIVE EXPLANATIONS",
+        "OVERALL ASSESSMENT"
+      ],
+      "key_fields": {},
+      "id_field": "claim_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "causal inference auditor",
+      "item_type_plural": "causal inference auditors",
+      "consolidation_rules": [
+        "COMPARE CLAIMS: Same causal claims across sources?",
+        "TRIANGULATE IDENTIFICATION: Do different strategies yield same answer?",
+        "CROSS-VALIDATE THREATS: Agreement on threats to validity?",
+        "ASSESS ROBUSTNESS: How robust is the causal conclusion?",
+        "SYNTHESIZE CONFIDENCE: Overall assessment of causal claims"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

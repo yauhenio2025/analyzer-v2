@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "argument",
   "researcher_question": "What is the strongest version of each argument present?",
-  "extraction_prompt": "\nYou are generating CHARITABLY RECONSTRUCTED versions of every argument \u2014 the\nstrongest possible formulation, even (especially) for positions you might\npersonally disagree with.\n\n## WHY CHARITABLE RECONSTRUCTION MATTERS\n\nAttacking a weak version of an argument is:\n- Intellectually dishonest\n- Unconvincing to those who hold the position\n- Misses the opportunity to learn\n- Often wrong about what matters\n\nCharitable reconstruction forces you to truly understand a position before critiquing it.\n\n## FOR EACH SIGNIFICANT ARGUMENT OR POSITION\n\n### 1. ORIGINAL FORMULATION\n- Quote or paraphrase how the text states the argument\n- Note any rhetorical weaknesses in the original presentation\n- Identify what the core claim actually is\n\n### 2. RECONSTRUCTED VERSION\nReformulate to be:\n- **Clearer**: Remove ambiguity, state exactly what's being claimed\n- **More precise**: Specify scope, add necessary qualifications\n- **More defensible**: Remove obvious weaknesses that distract from the core\n- **More charitable**: Interpret ambiguities in the most favorable light\n- **More powerful**: Add support that's available but unstated\n\nThe reconstruction should be something the original author would say:\n\"Yes! That's exactly what I meant, but better expressed.\"\n\n### 3. POINTS OF AGREEMENT\nWhat parts are genuinely valid? Be honest:\n- Empirical claims that hold up\n- Logical steps that follow\n- Values that are worth considering\n- Insights that illuminate something real\n\n### 4. LEARNING POINTS\nWhat does engaging this position teach us?\n- What would we miss if we dismissed it out of hand?\n- What does the popularity of this view tell us?\n- What legitimate concerns does it address?\n\n### 5. STRONGEST EVIDENCE\nWhat's the best support for this position?\n- Most compelling data points\n- Strongest examples\n- Best-qualified proponents\n- Historical precedents\n\n### 6. RECONSTRUCTION DELTA\nHow much reconstruction was required?\n- **LOW**: Position was already well-stated, minimal improvement needed\n- **MEDIUM**: Needed clarification but core was solid\n- **HIGH**: Required significant reconstruction to be defensible\n\n### 7. REMAINING VULNERABILITIES (Only after completing steps 1-6)\nAfter giving the argument its best shot, what weaknesses persist?\n- These are the legitimate targets for critique\n- Note whether vulnerabilities are empirical, logical, normative, or practical\n- Rate severity: how damaging if exploited\n\n\n## OUTPUT GUIDANCE\n\nFocus on substantive arguments, not every minor claim.\nThe goal is to produce versions of arguments that their proponents would recognize\nand appreciate, while honestly identifying what vulnerabilities remain after\ngiving them their best chance.\n",
-  "curation_prompt": "\nYou are synthesizing charitable reconstruction analyses across multiple articles.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE ARGUMENTS\n- Merge same/similar arguments across articles\n- If an argument appears in multiple articles, create ONE reconstruction that\n  incorporates the best elements from all versions\n- Note which version was strongest originally\n\n### 2. MAP ARGUMENT LANDSCAPE\n- What are the major positions in this discourse?\n- How do they relate to each other?\n  * Mutual support (arguments that strengthen each other)\n  * Tension (arguments that conflict despite being on same \"side\")\n  * Opposition (arguments directly against each other)\n\n### 3. ASSESS ARGUMENT QUALITY\nFor the discourse as a whole:\n- What % of arguments have a solid defensible core?\n- What % required significant reconstruction?\n- Are the strongest arguments well-represented or marginalized?\n\n### 4. IDENTIFY CROSS-CUTTING PATTERNS\n- Shared assumptions: What do multiple arguments depend on?\n- Common weaknesses: Where do multiple arguments fail in similar ways?\n- Mutual support: Which arguments strengthen each other?\n\n### 5. RANK BY STRENGTH\nAfter reconstructing everything:\n- Which arguments are most defensible?\n- Which have the most serious remaining vulnerabilities?\n- Which improved the most through reconstruction?\n\n### 6. LEARNING SYNTHESIS\nWhat does engaging all these arguments teach us about:\n- The topic itself?\n- The quality of discourse on this topic?\n- What perspectives might be missing?\n\n## OUTPUT GUIDANCE\n\nCreate clear argument_ids (e.g., \"market_efficiency\", \"regulatory_necessity\").\nThe goal is to produce a fair map of the argumentative landscape at its strongest,\nenabling genuinely productive critique.\n",
-  "concretization_prompt": "\nTransform the charitable reconstruction analysis to be immediately useful:\n\n1. Convert argument_ids to descriptive labels:\n   - \"A1\" -> \"Market efficiency argument\"\n   - \"A2\" -> \"Regulatory necessity argument\"\n\n2. State reconstructed versions as clear, quotable reformulations:\n   - Something the original author would endorse\n   - Something a critic must actually engage with\n\n3. Make points of agreement genuinely substantive:\n   - Not \"they have some good points\"\n   - Instead \"Their observation that X is well-supported by Y\"\n\n4. Articulate remaining vulnerabilities precisely:\n   - Not \"still has problems\"\n   - Instead \"Even after reconstruction, this fails because [specific issue]\"\n\n5. Quantify where possible:\n   - \"3 of 7 arguments have solid cores after reconstruction\"\n   - \"The market efficiency argument improved most (high delta)\"\n\n6. Create a useful summary for critics:\n   - \"To engage the strongest version of position X, you must address:\"\n   - List the reconstructed points that genuinely need response\n\nPreserve all scores and assessments.\nMake the output useful for someone wanting to engage arguments fairly and effectively.\n",
   "canonical_schema": {
     "reconstructed_arguments": [
       {
@@ -94,5 +91,56 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/charitable_reconstruction.py"
+  "source_file": "analyzer/src/engines/charitable_reconstruction.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "charitable reconstruction",
+      "analysis_type_plural": "charitable reconstructions",
+      "core_question": "What is the strongest version of each argument present?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "charitable_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "charitable reconstruction",
+      "item_type_plural": "charitable reconstructions",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

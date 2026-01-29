@@ -7,12 +7,62 @@
   "kind": "primitive",
   "reasoning_domain": "intellectual history",
   "researcher_question": "What theoretical tradition does each chain employ?",
-  "extraction_prompt": "You are conducting Phase 5.4: THEORETICAL REGISTER classification.\n\n## YOUR TASK\n\nIdentify each chain's THEORETICAL REGISTER for \"{concept}\".\n\n## REGISTERS\n\n1. **Classical Marxist**: Marx, Engels, value theory\n2. **Post-Keynesian**: Demand, employment, instability\n3. **Autonomist**: Labor refusal, composition, exodus\n4. **Critical Theory**: Frankfurt School, dialectics\n5. **Analytical Marxist**: Rational choice, game theory\n6. **Liberal/Reformist**: Market corrections, redistribution\n\n## CHAINS TO CLASSIFY\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each chain: chain_id, primary_register, secondary_register, key_references, tension_with_other_registers.\n\nReturn as valid JSON.",
-  "curation_prompt": "Validate theoretical register classifications.",
   "canonical_schema": {
     "type": "object"
   },
   "paradigm_keys": [
     "marxist"
-  ]
+  ],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What theoretical tradition does each chain employ?",
+      "extraction_steps": [
+        "Classical Marxist",
+        "Post-Keynesian",
+        "Autonomist",
+        "Critical Theory",
+        "Analytical Marxist",
+        "Liberal/Reformist"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "references"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

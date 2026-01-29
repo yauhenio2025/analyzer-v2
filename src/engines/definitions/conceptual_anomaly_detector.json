@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "epistemology",
   "researcher_question": "What doesn't fit the pattern? What's surprising or contradictory?",
-  "extraction_prompt": "\nYou are an expert anomaly detector identifying what doesn't fit the pattern.\n\nFor this article, identify ALL anomalies and inconsistencies:\n\n1. **UNUSUAL CLAIMS**: What's outside the mainstream?\n   - What claim stands out?\n   - Why is it unusual?\n   - How does it deviate from the norm?\n   - What evidence is provided?\n   - How credible is it? (0-1)\n\n2. **CONCEPTUAL CONTRADICTIONS**: What conflicts with what?\n   - Statement A and Statement B\n   - Nature: direct contradiction, implicit tension, or conceptual conflict\n   - Same source or different sources?\n   - Is resolution possible?\n   - How might it be resolved?\n\n3. **OUTLIER PERSPECTIVES**: Who's saying something different?\n   - What perspective stands apart?\n   - Who advocates it?\n   - Type of deviation: methodological, theoretical, empirical, normative\n   - Strength of deviation (0-1)\n   - What value might this outlier offer?\n\n4. **SURPRISING FINDINGS**: What defies expectations?\n   - What finding is surprising?\n   - What was expected instead?\n   - Surprise factor (0-1)\n   - Is an explanation offered?\n   - What are the implications?\n\n5. **INCONSISTENCIES**: What doesn't hold together?\n   - What inconsistency exists?\n   - Type: logical, empirical, methodological, temporal\n   - What elements are involved?\n   - Severity (0-1)\n\n\nThink critically - identify what doesn't fit and why it matters.\n",
-  "curation_prompt": "\nYou are synthesizing anomaly analysis from multiple articles.\n\nYour task:\n1. **CATALOG UNUSUAL CLAIMS**: What stands out?\n   - Consolidate unusual claims\n   - Rate credibility\n   - Note patterns of deviation\n\n2. **MAP CONTRADICTIONS**: What conflicts?\n   - Identify contradictions within and across articles\n   - Note resolution possibilities\n   - Rate severity\n\n3. **IDENTIFY OUTLIERS**: Who's different?\n   - Map outlier perspectives\n   - Note deviation types\n   - Assess potential value\n\n4. **COMPILE SURPRISES**: What's unexpected?\n   - Aggregate surprising findings\n   - Rate surprise factor\n   - Note implications\n\n5. **TRACK INCONSISTENCIES**: What's inconsistent?\n   - Consolidate inconsistencies\n   - Categorize by type\n   - Rate severity\n\n\nCreate a comprehensive anomaly map highlighting what doesn't fit.\n",
-  "concretization_prompt": "\nTransform the anomaly analysis to be immediately useful:\n\n1. Describe unusual claims:\n   - \"UC1\" \u2192 \"Unusual: AI will reduce innovation (contradicts mainstream)\"\n\n2. Name contradictions:\n   - \"C1\" \u2192 \"Contradiction: 'AI creates jobs' vs. 'AI destroys jobs' (same author)\"\n\n3. Label outliers:\n   - \"O1\" \u2192 \"Outlier: Post-work society perspective (high deviation, potentially valuable)\"\n\n4. Describe surprises:\n   - \"S1\" \u2192 \"Surprise: Workers prefer AI supervision (expected resistance)\"\n\n5. Name inconsistencies:\n   - \"I1\" \u2192 \"Inconsistency: Uses 2019 and 2023 data as if comparable (methodological)\"\n\nPreserve all severity and credibility ratings.\nMake the analysis useful for critical evaluation.\n",
   "canonical_schema": {
     "unusual_claims": [
       {
@@ -99,5 +96,79 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/conceptual_anomaly_detector.py"
+  "source_file": "analyzer/src/engines/conceptual_anomaly_detector.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What doesn't fit the pattern? What's surprising or contradictory?",
+      "extraction_steps": [
+        "UNUSUAL CLAIMS",
+        "CONCEPTUAL CONTRADICTIONS",
+        "OUTLIER PERSPECTIVES",
+        "SURPRISING FINDINGS",
+        "INCONSISTENCIES"
+      ],
+      "key_fields": {},
+      "id_field": "claim_id",
+      "key_relationships": [
+        "contradicts"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [
+        "CATALOG UNUSUAL CLAIMS: What stands out?",
+        "MAP CONTRADICTIONS: What conflicts?",
+        "IDENTIFY OUTLIERS: Who's different?",
+        "COMPILE SURPRISES: What's unexpected?",
+        "TRACK INCONSISTENCIES: What's inconsistent?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "C1",
+          "to": "Contradiction: 'AI creates jobs' vs. 'AI destroys jobs' (same author)"
+        },
+        {
+          "from": "O1",
+          "to": "Outlier: Post-work society perspective (high deviation, potentially valuable)"
+        },
+        {
+          "from": "S1",
+          "to": "Surprise: Workers prefer AI supervision (expected resistance)"
+        },
+        {
+          "from": "I1",
+          "to": "Inconsistency: Uses 2019 and 2023 data as if comparable (methodological)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

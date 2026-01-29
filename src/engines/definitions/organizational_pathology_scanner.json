@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "institutional",
   "researcher_question": "What organizational pathologies create dysfunction?",
-  "extraction_prompt": "\nYou are scanning for ORGANIZATIONAL PATHOLOGIES \u2014 dysfunctional patterns\nthat prevent organizations from achieving their purposes.\n\n## TYPES OF ORGANIZATIONAL PATHOLOGY\n\n### BUREAUCRATIC PATHOLOGIES\n\n**Goal Displacement**: Means become ends\n- Following procedures becomes more important than outcomes\n- Metrics become goals rather than measures\n\n**Trained Incapacity**: Expertise blinds to alternatives\n- \"We've always done it this way\"\n- Professional training creates blinders\n\n**Rule Rigidity**: Rules applied regardless of context\n- Letter of law over spirit\n- Inability to adapt to circumstances\n\n**Turf Protection**: Defending territory over mission\n- Hoarding resources\n- Resisting cooperation\n\n**Empire Building**: Growth for its own sake\n- Building staff/budget regardless of need\n- Expansion as success metric\n\n### CULTURAL DYSFUNCTIONS\n\n**Groupthink**: Conformity suppresses dissent\n- Pressure to agree with consensus\n- Devil's advocates silenced\n- Illusion of unanimity\n\n**Not-Invented-Here**: Rejecting external ideas\n- Pride in internal solutions\n- Dismissing outside expertise\n- Reinventing wheels\n\n**Learned Helplessness**: Believing change impossible\n- \"Nothing ever changes here\"\n- Cynicism about improvement\n- Passive acceptance of problems\n\n**Blame Culture**: Fear of responsibility\n- Covering tracks over learning\n- Risk aversion from fear of blame\n- Hiding problems\n\n### STRUCTURAL PROBLEMS\n\n**Silos**: Isolated units don't communicate\n- Information hoarding\n- Duplicated efforts\n- Suboptimal decisions\n\n**Coordination Failure**: Parts don't work together\n- Left hand doesn't know what right is doing\n- Conflicting actions\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY ORGANIZATIONS\nWhat organizations are described?\n- What type?\n- What's the mission?\n- What's the context?\n\n### STEP 2: SCAN FOR BUREAUCRATIC PATHOLOGIES\nLook for signs of:\n- Goal displacement\n- Rule rigidity\n- Turf protection\n- Empire building\n\n### STEP 3: SCAN FOR CULTURAL DYSFUNCTIONS\nLook for signs of:\n- Groupthink\n- Not-invented-here\n- Learned helplessness\n- Blame culture\n\n### STEP 4: SCAN FOR STRUCTURAL PROBLEMS\nLook for signs of:\n- Silos\n- Coordination failures\n- Misaligned incentives\n\n### STEP 5: ANALYZE PATHOLOGY INTERACTIONS\nDo pathologies reinforce each other?\n- What's the combined effect?\n\n### STEP 6: ASSESS ORGANIZATIONAL HEALTH\nOverall, how healthy/dysfunctional is the organization?\n- What are root causes?\n- What's the prognosis?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about symptoms and mechanisms. \"The organization is bureaucratic\"\nis not useful. \"Approval requirements have grown to 7 levels, adding 3 weeks\nto decisions, because each layer added review to reduce their liability\" is useful.\n",
-  "curation_prompt": "\nYou are synthesizing organizational pathology analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE PATHOLOGIES\n- What pathologies appear across organizations?\n- Are there sector-wide patterns?\n\n### 2. IDENTIFY ROOT CAUSES\n- What creates these pathologies?\n- What are common mechanisms?\n\n### 3. ASSESS REFORM POTENTIAL\n- What might address these pathologies?\n- What obstacles exist?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of organizational pathologies and their effects.\n",
-  "concretization_prompt": "\nTransform the organizational pathology analysis into actionable diagnosis:\n\n1. **PATHOLOGY SUMMARY**\n   ```\n   | Organization | Pathologies | Severity | Health |\n   |--------------|-------------|----------|--------|\n   | ...          | BP1, CD2    | Severe   | Dysfunctional |\n   ```\n\n2. **BUREAUCRATIC PATHOLOGIES**\n   - Pathology: [Type]\n   - Organization: [Name]\n   - Symptoms: [Observable signs]\n   - Cause: [What creates this]\n   - Consequence: [Effect on performance]\n\n3. **CULTURAL DYSFUNCTIONS**\n   - Dysfunction: [Type]\n   - How it manifests: [Description]\n   - How perpetuated: [Why it persists]\n   - Impact: [Effect]\n\n4. **STRUCTURAL PROBLEMS**\n   - Problem: [Type]\n   - Structural source: [What creates it]\n   - Manifestations: [How it shows up]\n\n5. **GOAL DISPLACEMENT**\n   - Original goal: [What should be pursued]\n   - Displaced by: [What's actually pursued]\n   - Who benefits: [Winners from displacement]\n\n6. **ORGANIZATIONAL HEALTH ASSESSMENT**\n   | Organization | Health | Key Pathologies | Root Causes | Prognosis |\n   |--------------|--------|-----------------|-------------|-----------|\n\n7. **BOTTOM LINE**\n   [One paragraph: What are the key organizational pathologies? What\n   dysfunction do they create? What might address them?]\n",
   "canonical_schema": {
     "organizations_analyzed": [
       {
@@ -128,5 +125,57 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/organizational_pathology_scanner.py"
+  "source_file": "analyzer/src/engines/organizational_pathology_scanner.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "organizational pathology scanner",
+      "analysis_type_plural": "organizational pathology scanners",
+      "core_question": "What organizational pathologies create dysfunction?",
+      "extraction_steps": [
+        "IDENTIFY ORGANIZATIONS",
+        "SCAN FOR BUREAUCRATIC PATHOLOGIES",
+        "SCAN FOR CULTURAL DYSFUNCTIONS",
+        "SCAN FOR STRUCTURAL PROBLEMS",
+        "ANALYZE PATHOLOGY INTERACTIONS",
+        "ASSESS ORGANIZATIONAL HEALTH"
+      ],
+      "key_fields": {},
+      "id_field": "organizational_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "organizational pathology scanner",
+      "item_type_plural": "organizational pathology scanners",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "epistemology",
   "researcher_question": "How certain should we actually be about these claims?",
-  "extraction_prompt": "\nYou are performing EPISTEMIC CALIBRATION \u2014 assigning calibrated certainty levels\nto claims and distinguishing different types of uncertainty.\n\n## THE CERTAINTY GRADIENT\n\nReplace binary true/false with calibrated probability:\n\n**ESTABLISHED FACT (0.95-1.0)**\n- Well-replicated findings\n- Consilience across multiple methods\n- Would be extraordinary if wrong\n- Example: \"The Earth is approximately 4.5 billion years old\"\n\n**STRONG EVIDENCE (0.80-0.94)**\n- Good evidence from multiple sources\n- Some room for doubt but unlikely to be overturned\n- Example: \"Human activity is the primary driver of recent climate change\"\n\n**MODERATE SUPPORT (0.60-0.79)**\n- More likely than not, but significant uncertainty\n- Reasonable people could weight evidence differently\n- Example: \"Remote work increases productivity for knowledge workers\"\n\n**CONTESTED (0.40-0.59)**\n- Reasonable people disagree based on same evidence\n- Evidence is mixed or interpretation-dependent\n- Example: \"Minimum wage increases reduce employment\"\n\n**WEAK SUPPORT (0.20-0.39)**\n- Some evidence but mostly speculative\n- Wouldn't be surprising if wrong\n- Example: \"Quantum computing will be commercially viable by 2030\"\n\n**SPECULATIVE (0.05-0.19)**\n- Interesting possibility, little direct evidence\n- Based more on theory than observation\n- Example: \"Consciousness is substrate-independent\"\n\n**UNKNOWN (below 0.05)**\n- Could go either way\n- We simply don't have enough information\n- Example: \"First contact with alien intelligence will occur this century\"\n\n## UNCERTAINTY TYPES\n\nNot all uncertainty is the same:\n\n**EMPIRICAL**: We don't have the data YET\n- Potentially resolvable with more research\n- \"We don't know if X works\" \u2014 run the experiment\n\n**FUNDAMENTAL**: We CAN'T know in principle\n- Limits of knowledge or measurement\n- \"We can't know what it's like to be a bat\" (Nagel)\n\n**IMAGINATION FAILURE**: We can't see HOW, but might still be true\n- Dennett's \"Philosopher's Syndrome\"\n- \"I can't imagine how consciousness arises\" \u2260 \"It can't\"\n\n**MODEL DEPENDENT**: Depends on which framework you use\n- Different models give different answers\n- \"Inflation was good/bad\" depends on your economic framework\n\n**DEFINITIONAL**: Depends on how you define terms\n- \"Is a virus alive?\" depends on definition of \"alive\"\n\n## FOR EACH SIGNIFICANT CLAIM\n\n### 1. IDENTIFY THE CLAIM\nWhat exactly is being asserted?\n\n### 2. NOTE AS-STATED CONFIDENCE\nHow does the text present this claim?\n- As certain fact?\n- As strong likelihood?\n- As speculation?\n- What language markers indicate confidence level?\n\n### 3. CALIBRATE ACTUAL CERTAINTY\nBased on available evidence, where should this claim fall on the gradient?\n- What's the probability range?\n- Why this calibration?\n\n### 4. IDENTIFY UNCERTAINTY TYPE\nWhat kind of uncertainty is this?\n- Could more research resolve it?\n- Is it fundamentally unknowable?\n- Is it just imagination failure?\n\n### 5. ASSESS CALIBRATION GAP\nIs the text's confidence appropriate?\n- Over-confident: Claims more certainty than warranted\n- Under-confident: Undersells well-supported claims\n- Well-calibrated: Confidence matches evidence\n\n### 6. ASSESS CONSEQUENTIALITY\nHow much does this matter?\n- If wrong, what would be the impact?\n- What decisions depend on this claim?\n- Is the argument's success riding on this?\n\n\n## OUTPUT GUIDANCE\n\nFocus on claims that matter to the argument.\nThe goal is to produce a calibrated map showing:\n1. What we actually know vs. what we think we know\n2. Where confidence is well-calibrated vs. over/under-confident\n3. Which uncertainties are resolvable vs. fundamental\n4. Which uncertain claims have the highest stakes\n",
-  "curation_prompt": "\nYou are synthesizing epistemic calibrations across multiple articles.\n\nYour task is to create a comprehensive certainty map for the discourse,\nidentify calibration patterns, and highlight consequential uncertainties.\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE CLAIMS\n- Merge same claims across articles\n- Note if different articles assign different certainty\n- Identify where calibration differs\n\n### 2. BUILD CERTAINTY DISTRIBUTION\nAcross the whole discourse:\n- What % of claims are established fact?\n- What % are contested or weaker?\n- Is this discourse building on solid ground or sand?\n\n### 3. MAP UNCERTAINTY TYPES\n- What proportion of uncertainty is empirical (resolvable)?\n- What proportion is fundamental (unresolvable)?\n- Where is imagination failure masquerading as impossibility?\n\n### 4. IDENTIFY CALIBRATION PATTERNS\n- Is the discourse systematically over-confident?\n- Are some topics more over-confident than others?\n- Are speculative claims being treated as established?\n\n### 5. PRIORITIZE CONSEQUENTIAL UNCERTAINTIES\nRank uncertainties by: (impact if wrong) \u00d7 (argument dependence)\n- Which uncertain claims have the highest stakes?\n- Which resolvable uncertainties should be prioritized?\n\n### 6. CREATE CERTAINTY DASHBOARD\nSummary visualization data:\n- Certainty distribution across the discourse\n- Key uncertainties and their types\n- Calibration quality assessment\n\n\n## OUTPUT GUIDANCE\n\nCreate clear claim_ids (e.g., \"market_efficiency\", \"ai_consciousness\", \"policy_effectiveness\").\nThe goal is to produce a calibrated map showing what the discourse actually knows,\nwhat it thinks it knows, and where the gaps between these are most consequential.\n",
-  "concretization_prompt": "\nTransform the epistemic calibration to be immediately useful:\n\n1. Convert claim_ids to descriptive labels:\n   - \"C1\" -> \"Market efficiency hypothesis\"\n   - \"C2\" -> \"AI consciousness possibility\"\n\n2. Create certainty cards for key claims:\n   - Claim: [text]\n   - As Stated: [high confidence / hedged / etc.]\n   - Actual Level: [strong evidence / contested / etc.]\n   - Gap: [over-confident by X / well-calibrated / etc.]\n\n3. Build the certainty dashboard:\n   - Distribution bar chart data (how many at each level)\n   - Highlight high-stakes uncertainties\n   - Flag calibration issues\n\n4. Quantify calibration quality:\n   - \"X% of claims are over-confident\"\n   - \"Y claims presented as fact are actually contested\"\n   - \"Z uncertainties are resolvable with more research\"\n\n5. Create priority list:\n   - \"Most consequential uncertainties to resolve:\"\n   - Ranked by impact \u00d7 tractability\n\n6. Separate uncertainty types clearly:\n   - \"These uncertainties could be resolved: [list]\"\n   - \"These are fundamentally unknowable: [list]\"\n   - \"These may just be imagination failures: [list]\"\n\n7. Generate warnings for decision-makers:\n   - \"WARNING: Decision X depends on claim Y (certainty: only moderate)\"\n   - \"WARNING: Claim Z presented as fact but is actually contested\"\n\nPreserve all scores and assessments.\nMake the output useful for someone deciding how much weight to give claims in this discourse.\n",
   "canonical_schema": {
     "calibrated_claims": [
       {
@@ -152,5 +149,55 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/epistemic_calibration.py"
+  "source_file": "analyzer/src/engines/epistemic_calibration.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "epistemic calibration",
+      "analysis_type_plural": "epistemic calibrations",
+      "core_question": "How certain should we actually be about these claims?",
+      "extraction_steps": [
+        "What we actually know vs. what we think we know",
+        "Where confidence is well-calibrated vs. over/under-confident",
+        "Which uncertainties are resolvable vs. fundamental",
+        "Which uncertain claims have the highest stakes"
+      ],
+      "key_fields": {},
+      "id_field": "claim_id",
+      "key_relationships": [
+        "supports"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "epistemic calibration",
+      "item_type_plural": "epistemic calibrations",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

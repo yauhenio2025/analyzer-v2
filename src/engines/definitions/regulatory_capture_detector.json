@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "institutional_analysis",
   "researcher_question": "Is this regulatory body captured by industry?",
-  "extraction_prompt": "\nYou are a REGULATORY CAPTURE DETECTOR \u2014 examining whether regulatory bodies\nhave been co-opted by the industries they're supposed to regulate.\n\n## REGULATORY CAPTURE\n\nCapture occurs when regulators serve the interests of the regulated industry\nrather than the public interest they're mandated to protect.\n\n\"The regulatory agencies are the captives of the industries they regulate.\"\n\u2014 George Stigler\n\n## CAPTURE MECHANISMS\n\n### REVOLVING DOOR\nPersonnel movement between regulator and industry:\n- Regulators seeking future industry jobs pull punches\n- Industry veterans in regulatory roles bring industry perspective\n- Back-and-forth movement creates shared identity\n\n### INFORMATION ASYMMETRY\nRegulator depends on industry for technical information:\n- Industry controls what regulator knows\n- Complexity favors industry expertise\n- Regulator can't evaluate industry claims\n\n### RESOURCE ASYMMETRY\nIndustry outspends in the regulatory process:\n- More lawyers, experts, lobbyists\n- Regulator can't match in litigation\n- Industry dominates comment periods\n\n### COGNITIVE CAPTURE\nRegulators adopt industry worldview:\n- Shared professional training\n- Repeated interaction creates sympathy\n- Industry frames become default\n\n### STRUCTURAL CAPTURE\nInstitutional design favors industry:\n- Funding from regulated industry\n- Industry-dominated advisory boards\n- Narrow mandate excludes public interest\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY THE REGULATORY RELATIONSHIP\n- What regulator?\n- What industry?\n- What's the public interest mandate?\n\n### STEP 2: EXAMINE REVOLVING DOOR\n- Who has moved between regulator and industry?\n- What direction? When?\n- What influence might this create?\n\n### STEP 3: ASSESS INFORMATION ASYMMETRY\n- What's the regulator's independent capacity?\n- Where does it rely on industry?\n- What are the consequences?\n\n### STEP 4: IDENTIFY CAPTURE INDICATORS\n- Personnel: Who staffs the regulator?\n- Funding: Where does money come from?\n- Information: Who provides expertise?\n- Ideology: Whose worldview dominates?\n- Procedural: Who participates effectively?\n\n### STEP 5: ANALYZE RULEMAKING\n- What rules have been made?\n- Who did they favor?\n- Where was public interest sacrificed?\n\n### STEP 6: MAP CAPTURE MECHANISMS\n- How does capture operate here?\n- How is it perpetuated?\n\n### STEP 7: ASSESS OVERALL CAPTURE\n- How captured is this regulator?\n- What's the trajectory?\n- How confident can we be?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about capture indicators.\nDistinguish weak from strong evidence.\nFocus on patterns, not isolated incidents.\n",
-  "curation_prompt": "\nSynthesize regulatory capture analyses from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **TRIANGULATE INDICATORS**: Multiple sources confirm capture?\n2. **COMPARE MECHANISMS**: Agreement on how capture operates?\n3. **ASSESS PATTERNS**: What patterns appear across sources?\n4. **EVALUATE CONFIDENCE**: How strong is the evidence overall?\n5. **SYNTHESIZE**: Overall capture assessment\n\n## OUTPUT GUIDANCE\n\nCreate unified assessment of regulatory capture with evidence base.\n",
-  "concretization_prompt": "\nTransform regulatory capture analysis into clear assessment:\n\n1. **REGULATORY RELATIONSHIP**\n   - Regulator: [Name]\n   - Industry: [Name]\n   - Mandate: [Public interest mission]\n\n2. **REVOLVING DOOR**\n   | Person | From | To | Direction | Concern |\n   |--------|------|-----|-----------|---------|\n\n3. **CAPTURE INDICATORS** (ranked by strength)\n   | Indicator | Type | Strength | Evidence |\n   |-----------|------|----------|----------|\n\n4. **RULEMAKING PATTERN**\n   | Rule | Industry Wanted | Public Interest | Outcome |\n   |------|-----------------|-----------------|---------|\n\n5. **CAPTURE MECHANISMS**\n   - [Mechanism]: [How it operates] \u2014 [How it persists]\n\n6. **PUBLIC INTEREST ASSESSMENT**\n   - Mandate fulfillment: [Strong/Adequate/Weak/Failed]\n   - Balance: [Serves public/Mixed/Serves industry]\n\n7. **OVERALL CAPTURE LEVEL**: [None/Weak/Moderate/Strong/Complete]\n   - Trajectory: [Increasing/Stable/Decreasing]\n   - Confidence: [High/Medium/Low]\n\n8. **BOTTOM LINE**\n   [Is this regulator captured? What's the evidence?]\n",
   "canonical_schema": {
     "regulatory_context": {
       "regulator": "string - regulatory body being examined",
@@ -104,5 +101,64 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/regulatory_capture_detector.py"
+  "source_file": "analyzer/src/engines/regulatory_capture_detector.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "regulatory capture detector",
+      "analysis_type_plural": "regulatory capture detectors",
+      "core_question": "Is this regulatory body captured by industry?",
+      "extraction_steps": [
+        "IDENTIFY THE REGULATORY RELATIONSHIP",
+        "EXAMINE REVOLVING DOOR",
+        "ASSESS INFORMATION ASYMMETRY",
+        "IDENTIFY CAPTURE INDICATORS",
+        "ANALYZE RULEMAKING",
+        "MAP CAPTURE MECHANISMS",
+        "ASSESS OVERALL CAPTURE"
+      ],
+      "key_fields": {},
+      "id_field": "regulatory_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "regulatory capture detector",
+      "item_type_plural": "regulatory capture detectors",
+      "consolidation_rules": [
+        "TRIANGULATE INDICATORS: Multiple sources confirm capture?",
+        "COMPARE MECHANISMS: Agreement on how capture operates?",
+        "ASSESS PATTERNS: What patterns appear across sources?",
+        "EVALUATE CONFIDENCE: How strong is the evidence overall?",
+        "SYNTHESIZE: Overall capture assessment"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

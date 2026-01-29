@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "rhetoric",
   "researcher_question": "What cultural knowledge is assumed, and how can it be translated?",
-  "extraction_prompt": "\nYou are an expert in cross-cultural communication and translation studies.\n\nFor this article, extract CULTURAL LANDMARKS AND TRANSLATION CHALLENGES:\n\n1. **CULTURAL LANDMARKS**: References that assume shared cultural knowledge\n   - Historical events referenced (e.g., \"like Watergate\", \"post-9/11\")\n   - Public figures invoked (e.g., \"a Thatcher-style approach\")\n   - Texts or works alluded to (literary, religious, political)\n   - Idioms and expressions with cultural specificity\n   - Institutions assumed known (e.g., \"the BBC\", \"the Fed\")\n   - Cultural practices referenced\n\n2. **ASSUMED KNOWLEDGE**: What must readers already know?\n   - What historical context is presupposed?\n   - What cultural literacy is expected?\n   - What insider knowledge is taken for granted?\n\n3. **TRANSLATION STRATEGIES**: How could this be conveyed cross-culturally?\n   - Are there equivalent landmarks in other cultures?\n   - What explanatory glosses would help outsiders?\n   - What functional equivalents achieve similar effect?\n\n4. **TRANSLATION RISKS**: What might be lost?\n   - What connotations are culture-specific?\n   - What emotional resonances don't travel?\n   - What humor or irony depends on cultural knowledge?\n\n5. **UNTRANSLATABLES**: Concepts without good equivalents\n   - Terms that resist translation\n   - Why they resist\n   - Best approximations available\n\n\nIdentify everything that requires cultural insider knowledge to fully understand.\n",
-  "curation_prompt": "\nYou are synthesizing cultural landmark analyses from multiple articles.\n\nYour task:\n1. **CATALOG ALL LANDMARKS**: Build comprehensive inventory\n   - Deduplicate references to same landmarks\n   - Group by type and cultural domain\n\n2. **CLUSTER BY CULTURAL CONTEXT**:\n   - Group landmarks that share cultural background\n   - Identify dominant cultural domains\n   - Assess accessibility to outsiders\n\n3. **DEVELOP TRANSLATION STRATEGIES**:\n   - For each landmark, suggest multiple translation approaches\n   - Identify cultural equivalents where they exist\n   - Write explanatory glosses for outsiders\n   - Note functional equivalents\n\n4. **ASSESS TRANSLATION RISKS**:\n   - Rate difficulty of translation for each landmark\n   - Identify what nuances risk being lost\n   - Note untranslatables\n\n5. **PROFILE IMPLIED AUDIENCES**:\n   - What cultural competencies does the corpus assume?\n   - Who is the implied reader?\n   - What landmarks would be opaque to outsiders?\n\n6. **IDENTIFY PATTERNS**:\n   - What cultural domains dominate?\n   - What shared references unite the corpus?\n\n\nCreate a cultural translation guide for this discourse.\n",
-  "concretization_prompt": "\nTransform the cultural landmark analysis to use specific, helpful labels:\n\n1. Name landmarks specifically:\n   - \"L1\" -> \"Watergate Scandal (US political reference)\"\n\n2. Name translation strategies concretely:\n   - Include actual suggested glosses\n   - Provide real cultural equivalents\n\n3. Name cultural contexts clearly:\n   - \"Context1\" -> \"American Cold War Political Culture\"\n\n4. Describe audiences specifically:\n   - \"Audience1\" -> \"US-educated readers with liberal arts background\"\n\nPreserve all cultural analysis and translation guidance.\nMake the output immediately useful for cross-cultural communication.\n",
   "canonical_schema": {
     "cultural_landmarks": [
       {
@@ -98,5 +95,63 @@
     "gemini_network_graph"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/cultural_landmark_translation.py"
+  "source_file": "analyzer/src/engines/cultural_landmark_translation.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "cultural landmark translator",
+      "analysis_type_plural": "cultural landmark translators",
+      "core_question": "What cultural knowledge is assumed, and how can it be translated?",
+      "extraction_steps": [
+        "CULTURAL LANDMARKS",
+        "ASSUMED KNOWLEDGE",
+        "TRANSLATION STRATEGIES",
+        "TRANSLATION RISKS",
+        "UNTRANSLATABLES"
+      ],
+      "key_fields": {},
+      "id_field": "item_id",
+      "key_relationships": [
+        "references"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "cultural landmark translator",
+      "item_type_plural": "cultural landmark translators",
+      "consolidation_rules": [
+        "CATALOG ALL LANDMARKS: Build comprehensive inventory",
+        "CLUSTER BY CULTURAL CONTEXT: - Group landmarks that share cultural background",
+        "DEVELOP TRANSLATION STRATEGIES: - For each landmark, suggest multiple translation approaches",
+        "ASSESS TRANSLATION RISKS: - Rate difficulty of translation for each landmark",
+        "PROFILE IMPLIED AUDIENCES: - What cultural competencies does the corpus assume?",
+        "IDENTIFY PATTERNS: - What cultural domains dominate?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

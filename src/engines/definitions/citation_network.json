@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "genealogical",
   "researcher_question": "How do works in this field cite and reference each other?",
-  "extraction_prompt": "\nYou are an expert bibliometrician analyzing citation patterns.\n\nFor this article, extract ALL citation and reference information:\n\n1. **WORKS CITED**: Every work referenced in this article\n   - Title, authors, year\n   - Publication venue\n   - Work type (article, book, etc.)\n\n2. **CITATION CONTEXT**: For each citation, note:\n   - Is it SUPPORTING the author's argument?\n   - Is it CRITICAL (being disagreed with)?\n   - Is it BACKGROUND (setting context)?\n   - Is it METHODOLOGICAL (borrowing methods)?\n   - Is it a DATA SOURCE?\n\n3. **CITATION LOCATION**: Where does the citation appear?\n   - Introduction\n   - Literature review\n   - Methods\n   - Results/findings\n   - Discussion/conclusion\n\n4. **CITATION IMPORTANCE**: Rate 0-1\n   - 1.0 = Central to the argument\n   - 0.5 = Moderately important\n   - 0.0 = Peripheral mention\n\n5. **CITATION TEXT**: Extract the sentence/context where cited\n\n\nBe comprehensive - capture every reference and its role in the article.\n",
-  "curation_prompt": "\nYou are synthesizing citation data from multiple articles into a unified network.\n\nYour task:\n1. **DEDUPLICATE WORKS**: Merge references to the same work\n   - Match by title/author/year\n   - Consolidate metadata from all mentions\n\n2. **BUILD CITATION NETWORK**: Map who cites whom\n   - Aggregate citation counts\n   - Note citation contexts\n\n3. **IDENTIFY CLUSTERS**: Find groups of works that cite each other\n   - Name clusters by theme\n   - Calculate internal density\n\n4. **FIND HUB WORKS**: Identify highly-cited works\n   - Calculate hub scores\n   - Note influence breadth\n\n5. **FIND AUTHORITY WORKS**: Identify comprehensive reviews/syntheses\n   - Works that cite many others\n   - Rate synthesis quality\n\n6. **CALCULATE NETWORK METRICS**:\n   - Total works and citations\n   - Network density\n   - Time span of citations\n\n\nCreate a comprehensive citation network showing the scholarly conversation structure.\n",
-  "concretization_prompt": "\nTransform the citation network to use complete, recognizable references:\n\n1. Convert work_ids to full citations:\n   - \"W1\" \u2192 \"Smith, J. (2020). The Future of AI. Nature, 580(7801), 22-25.\"\n\n2. Name citation clusters descriptively:\n   - \"Cluster1\" \u2192 \"AI Ethics and Governance Literature\"\n\n3. Clarify citation contexts:\n   - Include brief explanations of why each citation context was assigned\n\nPreserve all network relationships and metrics.\nMake the network immediately useful for literature review.\n",
   "canonical_schema": {
     "works": [
       {
@@ -89,5 +86,68 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/citation_network.py"
+  "source_file": "analyzer/src/engines/citation_network.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "citation",
+      "analysis_type_plural": "citations",
+      "core_question": "How do works in this field cite and reference each other?",
+      "extraction_steps": [
+        "WORKS CITED",
+        "CITATION CONTEXT",
+        "CITATION LOCATION",
+        "CITATION IMPORTANCE",
+        "CITATION TEXT"
+      ],
+      "key_fields": {},
+      "id_field": "citation_id",
+      "key_relationships": [
+        "references"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "citation",
+      "item_type_plural": "citations",
+      "consolidation_rules": [
+        "DEDUPLICATE WORKS: Merge references to the same work",
+        "BUILD CITATION NETWORK: Map who cites whom",
+        "IDENTIFY CLUSTERS: Find groups of works that cite each other",
+        "FIND HUB WORKS: Identify highly-cited works",
+        "FIND AUTHORITY WORKS: Identify comprehensive reviews/syntheses",
+        "CALCULATE NETWORK METRICS: - Total works and citations"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "W1",
+          "to": "Smith, J. (2020). The Future of AI. Nature, 580(7801), 22-25."
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

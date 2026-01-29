@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "concepts",
   "researcher_question": "Where are the boundary lines, and are they defensible?",
-  "extraction_prompt": "\nYou are performing BOUNDARY PROBE analysis using the Sortes paradox technique.\n\nThe Sortes (Paradox of the Heap) asks: If you remove one grain from a heap of sand,\nis it still a heap? And the next grain? Where exactly does it stop being a heap?\n\nThis reveals that many concepts have fuzzy boundaries we don't notice until we probe.\n\n## YOUR TASK\n\nIdentify key concepts in the text where:\n1. The argument depends on a category distinction\n2. The boundary of that category is not self-evident\n3. Probing the boundary would reveal hidden arbitrariness\n\n## FOR EACH KEY CONCEPT\n\n### 1. IDENTIFY THE CONCEPT\n- What concept does the argument rely on?\n- How is it being used in the argument?\n- Is it defined explicitly or implicitly?\n\n### 2. APPLY THE SORTES PROBE\nThink of a continuum from clear members to clear non-members:\n\n**Clear case INSIDE**: An obvious example that everyone agrees belongs\n**Clear case OUTSIDE**: An obvious example that everyone agrees doesn't belong\n**BORDERLINE cases**: Examples where reasonable people could disagree\n\nFor borderline cases:\n- Why does it challenge the boundary?\n- How would classifying it one way or the other change the argument?\n\n### 3. ASSESS BOUNDARY ARBITRARINESS\nIs the boundary:\n- **NATURAL**: There's a real break in the continuum (rare)\n- **CONVENTIONAL**: We've agreed to draw it here, but could be elsewhere\n- **ARBITRARY**: No good reason for this exact boundary\n- **STRATEGIC**: Drawn here because it helps the argument\n\nScore arbitrariness 0.0 to 1.0:\n- 0.0 = Boundary is well-justified and robust\n- 0.5 = Somewhat arbitrary but has pragmatic justification\n- 1.0 = Purely arbitrary, could easily be drawn elsewhere\n\n### 4. IDENTIFY ALTERNATIVE BOUNDARIES\nWhere else could the line be drawn?\n- What would justify each alternative?\n- How would each alternative change the argument?\n\n### 5. ASSESS ARGUMENT DEPENDENCE\nHow much does the argument depend on this boundary?\n- **ESSENTIAL**: Argument collapses without this boundary\n- **IMPORTANT**: Argument weakened but survives\n- **MINOR**: Argument barely affected\n\n### 6. FIND PRECISION ILLUSIONS\nLook for thresholds that appear precise but are actually arbitrary:\n- \"18 years old\" as the cutoff for adulthood\n- \"50% + 1\" as the majority needed\n- \"$75,000\" as \"middle class\" income\n- \"0.08 BAC\" as \"legally drunk\"\n\n## COMMON BOUNDARY-DEPENDENT CONCEPTS\n\n- **Legal categories**: person, property, harm, consent, reasonable\n- **Economic categories**: poverty, middle class, wealthy, market, monopoly\n- **Technical categories**: AI, autonomous, intelligent, alive\n- **Social categories**: adult, expert, professional, healthy\n- **Ethical categories**: harm, consent, autonomy, person\n\n\n## OUTPUT GUIDANCE\n\nFocus on concepts where boundary fuzziness actually matters to the argument.\nThe goal is to expose hidden arbitrariness that the argument glosses over,\nand identify where different boundary choices would lead to different conclusions.\n",
-  "curation_prompt": "\nYou are synthesizing boundary probe analyses across multiple articles.\n\nYour task is to map how concepts are bounded across the discourse,\nidentify contested boundaries, and assess which are most problematic.\n\n## SYNTHESIS TASKS\n\n### 1. MAP SHARED CONCEPTS\nWhich concepts appear across multiple articles?\n- Are they bounded the same way?\n- Where do definitions diverge?\n- Is there explicit disagreement about boundaries?\n\n### 2. IDENTIFY CONTESTED BOUNDARIES\nWhich boundaries are:\n- Agreed upon across articles\n- Implicitly different\n- Explicitly contested\n\n### 3. FIND BOUNDARY-DEPENDENT ARGUMENTS\nWhich arguments would collapse or reverse with different boundaries?\n- Identify the most boundary-dependent claims\n- Note which boundary choices favor which conclusions\n\n### 4. ASSESS PRECISION ILLUSIONS\nCompile all numeric thresholds and precise cutoffs:\n- Which have real justification?\n- Which are conventional?\n- Which are arbitrary?\n\n### 5. PROPOSE ROBUSTNESS TESTS\nFor each key boundary:\n- What would happen if we moved it 10% in either direction?\n- Does the argument survive reasonable boundary variation?\n\n### 6. IDENTIFY DEFINITIONAL GERRYMANDERING\nLook for cases where definitions seem designed to:\n- Include favorable cases\n- Exclude problematic cases\n- Make arguments appear stronger than they are\n\n\n## OUTPUT GUIDANCE\n\nCreate clear concept_ids (e.g., \"poverty_line\", \"middle_class\", \"market_failure\").\nThe goal is to produce a map of boundary-dependent reasoning showing:\n1. Where arguments depend on fuzzy boundaries\n2. How robust arguments are to boundary variation\n3. Where definitional choices are doing hidden argumentative work\n",
-  "concretization_prompt": "\nTransform the boundary probe analysis to be immediately useful:\n\n1. Convert concept_ids to descriptive labels:\n   - \"C1\" -> \"Poverty threshold\"\n   - \"C2\" -> \"Market failure definition\"\n\n2. Make borderline cases vivid and concrete:\n   - Not \"some cases are borderline\"\n   - Instead \"Someone earning $74,999 vs $75,001 \u2014 where exactly is the line?\"\n\n3. Quantify arbitrariness impact:\n   - \"X of Y key arguments depend on boundaries with arbitrariness > 0.7\"\n   - \"Moving the poverty line by 5% would reclassify Z million people\"\n\n4. Create robustness assessments:\n   - \"This argument is robust: survives reasonable boundary variation\"\n   - \"This argument is fragile: depends on specific boundary location\"\n\n5. Expose precision illusions:\n   - \"The '18 years old' threshold sounds precise but there's nothing magical about 18\"\n   - \"The '$250,000 income' cutoff is a round number, not a natural boundary\"\n\n6. Identify the most vulnerable arguments:\n   - Which arguments most depend on arbitrary boundaries?\n   - What alternative boundaries would they have to defend against?\n\n7. Suggest boundary stress tests:\n   - \"Ask: what happens if we move this boundary to X instead?\"\n   - \"Ask: why this threshold and not Y?\"\n\nPreserve all scores and assessments.\nMake the output useful for someone wanting to test whether arguments survive\nscrutiny of their boundary-dependent assumptions.\n",
   "canonical_schema": {
     "boundary_analyses": [
       {
@@ -113,5 +110,54 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/boundary_probe.py"
+  "source_file": "analyzer/src/engines/boundary_probe.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "boundary probe",
+      "analysis_type_plural": "boundary probes",
+      "core_question": "Where are the boundary lines, and are they defensible?",
+      "extraction_steps": [
+        "The argument depends on a category distinction",
+        "The boundary of that category is not self-evident",
+        "Probing the boundary would reveal hidden arbitrariness"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "boundary probe",
+      "item_type_plural": "boundary probes",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

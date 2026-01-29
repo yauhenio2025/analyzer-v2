@@ -1,6 +1,12 @@
-"""Engine API routes."""
+"""Engine API routes.
 
-from typing import Optional
+MIGRATION NOTES (2026-01-29):
+- Prompt endpoints now COMPOSE prompts at runtime using StageComposer
+- Added 'audience' query parameter for audience-specific vocabulary
+- Added new /stages/* endpoints for template/framework access
+"""
+
+from typing import Literal, Optional
 
 from fastapi import APIRouter, HTTPException, Query
 
@@ -12,8 +18,24 @@ from src.engines.schemas import (
     EngineSchemaResponse,
     EngineSummary,
 )
+from src.stages.composer import StageComposer
+from src.stages.registry import get_stage_registry
 
 router = APIRouter(prefix="/engines", tags=["engines"])
+
+# Lazy-loaded composer
+_composer: Optional[StageComposer] = None
+
+
+def get_composer() -> StageComposer:
+    """Get or create the StageComposer singleton."""
+    global _composer
+    if _composer is None:
+        _composer = StageComposer()
+    return _composer
+
+
+AudienceType = Literal["researcher", "analyst", "executive", "activist"]
 
 
 @router.get("", response_model=list[EngineSummary])
@@ -91,7 +113,7 @@ async def list_engines_by_category(
 
 @router.get("/{engine_key}", response_model=EngineDefinition)
 async def get_engine(engine_key: str) -> EngineDefinition:
-    """Get full engine definition including prompts and schema."""
+    """Get full engine definition including stage_context and schema."""
     registry = get_engine_registry()
     engine = registry.get(engine_key)
     if engine is None:
@@ -103,8 +125,21 @@ async def get_engine(engine_key: str) -> EngineDefinition:
 
 
 @router.get("/{engine_key}/extraction-prompt", response_model=EnginePromptResponse)
-async def get_extraction_prompt(engine_key: str) -> EnginePromptResponse:
-    """Get extraction prompt for an engine."""
+async def get_extraction_prompt(
+    engine_key: str,
+    audience: AudienceType = Query(
+        "analyst",
+        description="Target audience for vocabulary calibration",
+    ),
+) -> EnginePromptResponse:
+    """Get COMPOSED extraction prompt for an engine.
+
+    The prompt is composed at runtime from:
+    - Generic extraction template
+    - Engine's stage_context
+    - Framework primer (if specified)
+    - Audience-specific vocabulary
+    """
     registry = get_engine_registry()
     engine = registry.get(engine_key)
     if engine is None:
@@ -112,16 +147,40 @@ async def get_extraction_prompt(engine_key: str) -> EnginePromptResponse:
             status_code=404,
             detail=f"Engine not found: {engine_key}",
         )
+
+    composer = get_composer()
+    try:
+        composed = composer.compose(
+            stage="extraction",
+            engine_key=engine_key,
+            stage_context=engine.stage_context,
+            audience=audience,
+            canonical_schema=engine.canonical_schema,
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to compose prompt: {e}",
+        )
+
     return EnginePromptResponse(
         engine_key=engine_key,
         prompt_type="extraction",
-        prompt=engine.extraction_prompt,
+        prompt=composed.prompt,
+        audience=audience,
+        framework_used=composed.framework_used,
     )
 
 
 @router.get("/{engine_key}/curation-prompt", response_model=EnginePromptResponse)
-async def get_curation_prompt(engine_key: str) -> EnginePromptResponse:
-    """Get curation prompt for an engine."""
+async def get_curation_prompt(
+    engine_key: str,
+    audience: AudienceType = Query(
+        "analyst",
+        description="Target audience for vocabulary calibration",
+    ),
+) -> EnginePromptResponse:
+    """Get COMPOSED curation prompt for an engine."""
     registry = get_engine_registry()
     engine = registry.get(engine_key)
     if engine is None:
@@ -129,18 +188,41 @@ async def get_curation_prompt(engine_key: str) -> EnginePromptResponse:
             status_code=404,
             detail=f"Engine not found: {engine_key}",
         )
+
+    composer = get_composer()
+    try:
+        composed = composer.compose(
+            stage="curation",
+            engine_key=engine_key,
+            stage_context=engine.stage_context,
+            audience=audience,
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to compose prompt: {e}",
+        )
+
     return EnginePromptResponse(
         engine_key=engine_key,
         prompt_type="curation",
-        prompt=engine.curation_prompt,
+        prompt=composed.prompt,
+        audience=audience,
+        framework_used=composed.framework_used,
     )
 
 
 @router.get(
     "/{engine_key}/concretization-prompt", response_model=EnginePromptResponse
 )
-async def get_concretization_prompt(engine_key: str) -> EnginePromptResponse:
-    """Get concretization prompt for an engine (if available)."""
+async def get_concretization_prompt(
+    engine_key: str,
+    audience: AudienceType = Query(
+        "analyst",
+        description="Target audience for vocabulary calibration",
+    ),
+) -> EnginePromptResponse:
+    """Get COMPOSED concretization prompt for an engine (if not skipped)."""
     registry = get_engine_registry()
     engine = registry.get(engine_key)
     if engine is None:
@@ -148,15 +230,33 @@ async def get_concretization_prompt(engine_key: str) -> EnginePromptResponse:
             status_code=404,
             detail=f"Engine not found: {engine_key}",
         )
-    if engine.concretization_prompt is None:
+
+    if engine.stage_context.skip_concretization:
         raise HTTPException(
             status_code=404,
-            detail=f"Engine {engine_key} has no concretization prompt",
+            detail=f"Engine {engine_key} has no concretization stage",
         )
+
+    composer = get_composer()
+    try:
+        composed = composer.compose(
+            stage="concretization",
+            engine_key=engine_key,
+            stage_context=engine.stage_context,
+            audience=audience,
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to compose prompt: {e}",
+        )
+
     return EnginePromptResponse(
         engine_key=engine_key,
         prompt_type="concretization",
-        prompt=engine.concretization_prompt,
+        prompt=composed.prompt,
+        audience=audience,
+        framework_used=composed.framework_used,
     )
 
 
@@ -176,9 +276,25 @@ async def get_engine_schema(engine_key: str) -> EngineSchemaResponse:
     )
 
 
+@router.get("/{engine_key}/stage-context")
+async def get_stage_context(engine_key: str) -> dict:
+    """Get raw stage context for an engine (for debugging/inspection)."""
+    registry = get_engine_registry()
+    engine = registry.get(engine_key)
+    if engine is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Engine not found: {engine_key}",
+        )
+    return engine.stage_context.model_dump()
+
+
 @router.post("/reload")
 async def reload_engines() -> dict[str, str]:
     """Force reload all engine definitions from disk."""
     registry = get_engine_registry()
     registry.reload()
+    # Also reload stage templates/frameworks
+    stage_registry = get_stage_registry()
+    stage_registry.reload()
     return {"status": "reloaded", "count": str(registry.count())}

@@ -7,9 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "composition",
   "researcher_question": "How are things classified in this domain, and what do the categories reveal?",
-  "extraction_prompt": "\nYou are an expert knowledge organizer identifying classification systems and taxonomies.\n\nFor this article, extract ALL classification and categorization information:\n\n## 1. EXPLICIT TAXONOMIES\nFor each classification system presented:\n- **TAXONOMY NAME**: What is this classification called?\n- **DOMAIN**: What area does it organize?\n- **PURPOSE**: Why classify this way? (regulatory, analytical, practical)\n- **CLASSIFICATION CRITERIA**: What dimensions are used to categorize?\n  - Criterion name\n  - Type: function, structure, origin, impact, size, other\n  - Measurement: categorical, ordinal, continuous\n\n## 2. CATEGORIES\nFor each category mentioned:\n- **CATEGORY NAME**: Label for this category\n- **PARENT CATEGORY**: What broader category does it belong to?\n- **DEFINITION**: How is this category defined?\n- **DEFINING CHARACTERISTICS**: What makes something belong here?\n- **EXAMPLES**: Instances given as examples\n- **SUB-CATEGORIES**: Any finer distinctions within\n\n## 3. INSTANCES\nFor specific things classified:\n- **INSTANCE NAME**: What is being classified\n- **CATEGORY**: Which category it belongs to\n- **ATTRIBUTES**: Key characteristics\n- **EXEMPLAR STATUS**:\n  - TYPICAL: Standard example of category\n  - ATYPICAL: Unusual but still in category\n  - BOUNDARY: Edge case, unclear membership\n  - CONTESTED: Disputed classification\n\n## 4. IMPLICIT CLASSIFICATIONS\nLook for unstated taxonomies:\n- When authors distinguish \"types\" or \"kinds\"\n- When comparisons imply categories\n- When lists suggest classification\n\n## 5. CONTESTED CLASSIFICATIONS\nWhere is classification disputed?\n- **ITEM**: What is being classified\n- **COMPETING CATEGORIES**: Different proposed classifications\n- **PROPONENTS**: Who supports each classification\n- **STAKES**: Why does the classification matter?\n\n## 6. CATEGORY EVOLUTION\nHow have categories changed?\n- **CHANGE TYPE**: Split, merge, rename, redefinition\n- **DRIVER**: What caused the change?\n\n\nMap both explicit and implicit classification systems.\n",
-  "curation_prompt": "\nYou are synthesizing classification data from multiple articles into comprehensive taxonomies.\n\nYour task:\n1. **CONSOLIDATE TAXONOMIES**: Build coherent classification systems\n   - Merge related categories across articles\n   - Establish hierarchy (root \u2192 branches \u2192 leaves)\n   - Document classification criteria\n\n2. **BUILD CATEGORY HIERARCHIES**:\n   - Identify parent-child relationships\n   - Note level in hierarchy\n   - Document defining characteristics per category\n   - Count instances per category\n\n3. **CATALOG INSTANCES**:\n   - Map specific items to categories\n   - Note exemplar status (typical, atypical, boundary)\n   - Preserve attributes\n\n4. **MAP CROSS-CLASSIFICATIONS**:\n   - How do different taxonomies relate?\n   - Orthogonal (independent dimensions)\n   - Overlapping (partial correspondence)\n   - Nested (one within another)\n   - Competing (alternative ways to classify same things)\n\n5. **DOCUMENT CONTESTATION**:\n   - Where is classification disputed?\n   - What are the competing views?\n   - What's at stake?\n\n6. **TRACK EVOLUTION**:\n   - How have categories changed?\n   - What drove changes?\n\n7. **CALCULATE METRICS**:\n   - Total taxonomies and categories\n   - Hierarchy depth\n   - Contestation count\n\n\nCreate comprehensive taxonomies showing how knowledge is organized.\n",
-  "concretization_prompt": "\nTransform the taxonomy data to be immediately usable:\n\n1. Replace generic IDs with descriptive names:\n   - \"T1\" \u2192 \"AI System Types Taxonomy\"\n   - \"C1\" \u2192 \"Generative AI (under AI System Types)\"\n\n2. Format hierarchies clearly:\n   - Show parent \u2192 child relationships\n   - Indent to show depth\n   - Note instance counts\n\n3. Clarify classification criteria:\n   - Explain what distinguishes categories\n   - Note measurement type\n\n4. Highlight contestations:\n   - Make disputed classifications prominent\n   - Show competing views clearly\n\n5. Show practical value:\n   - How can this taxonomy be used?\n   - What does it reveal about the domain?\n\nPreserve all hierarchical relationships and cross-references.\nMake the taxonomies immediately useful for organizing knowledge.\n",
   "canonical_schema": {
     "taxonomies": [
       {
@@ -146,5 +143,72 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/composition_taxonomy.py"
+  "source_file": "analyzer/src/engines/composition_taxonomy.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "composition taxonomy builder",
+      "analysis_type_plural": "composition taxonomy builders",
+      "core_question": "How are things classified in this domain, and what do the categories reveal?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "composition_id",
+      "key_relationships": [
+        "supports"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "composition taxonomy builder",
+      "item_type_plural": "composition taxonomy builders",
+      "consolidation_rules": [
+        "CONSOLIDATE TAXONOMIES: Build coherent classification systems",
+        "BUILD CATEGORY HIERARCHIES: - Identify parent-child relationships",
+        "CATALOG INSTANCES: - Map specific items to categories",
+        "MAP CROSS-CLASSIFICATIONS: - How do different taxonomies relate?",
+        "DOCUMENT CONTESTATION: - Where is classification disputed?",
+        "TRACK EVOLUTION: - How have categories changed?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "T1",
+          "to": "AI System Types Taxonomy"
+        },
+        {
+          "from": "C1",
+          "to": "Generative AI (under AI System Types)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

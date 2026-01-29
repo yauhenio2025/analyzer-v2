@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "narrative",
   "researcher_question": "What narrative structures organize this discourse?",
-  "extraction_prompt": "\nYou are an expert narratologist analyzing how stories structure understanding.\n\nFor this article, extract NARRATIVE STRUCTURES:\n\n1. **NARRATIVES**: What stories are being told?\n   - What is the overarching narrative?\n   - What type? (quest, redemption, tragedy, progress, decline, cycle)\n\n2. **ACTANTIAL STRUCTURE** (Greimas model):\n   - Subject: Who is the protagonist/agent?\n   - Object: What is being sought or at stake?\n   - Sender: Who/what initiates the quest?\n   - Receiver: Who benefits from success?\n   - Helper: Who/what assists?\n   - Opponent: Who/what opposes?\n\n3. **NARRATIVE PROGRAMS**: Transformations of state\n   - Initial state \u2192 Final state\n   - What type of transformation? (acquisition, deprivation)\n   - Modal changes (wanting, having-to, being-able-to, knowing-how-to)\n\n4. **CANONICAL SCHEMAS**: Narrative phases\n   - Contract phase (mandate, promise)\n   - Competence phase (acquiring ability)\n   - Performance phase (the test)\n   - Sanction phase (reward, judgment)\n\n5. **FOCALIZATION**: Perspective structure\n   - Whose point of view dominates?\n   - What can/cannot be seen from this perspective?\n   - Internal, external, or zero focalization?\n\n6. **TEMPORAL STRUCTURE**: Time in the narrative\n   - Chronological or disrupted?\n   - Flashbacks (analepses)\n   - Flash-forwards (prolepses)\n   - Pacing (summary, scene, pause)\n\n\nAnalyze how narrative structures organize understanding in this text.\n",
-  "curation_prompt": "\nYou are synthesizing narratological analyses from multiple articles.\n\nYour task:\n1. **MAP NARRATIVES**: Identify the stories being told\n   - What dominant narratives span the corpus?\n   - How do individual narratives relate?\n\n2. **CONSOLIDATE ACTANTIAL STRUCTURES**:\n   - Are the same subjects/objects appearing?\n   - Who consistently appears as helper/opponent?\n\n3. **TRACE NARRATIVE PROGRAMS**:\n   - What transformations are narrated?\n   - Are there shared programs across articles?\n\n4. **IDENTIFY CANONICAL SCHEMAS**:\n   - Which phases are emphasized?\n   - What is systematically present/absent?\n\n5. **ANALYZE FOCALIZATION PATTERNS**:\n   - Whose perspectives dominate the corpus?\n   - What is systematically invisible?\n\n6. **MAP TEMPORAL ORGANIZATION**:\n   - How is time structured across narratives?\n   - What temporal patterns recur?\n\n7. **IDENTIFY NARRATIVE TENSIONS**:\n   - What remains unresolved?\n   - What conflicts drive the narratives?\n\n\nCreate a comprehensive narratological map of the discourse.\n",
-  "concretization_prompt": "\nTransform the narrative analysis to use concrete, descriptive names:\n\n1. Name narratives clearly:\n   - \"N1\" -> \"The Tech Industry Redemption Arc\"\n\n2. Name actantial roles specifically:\n   - Subject: \"Regulatory Agencies\"\n   - Object: \"Consumer Data Protection\"\n   - Opponent: \"Tech Industry Lobbyists\"\n\n3. Describe narrative programs concretely:\n   - \"From unregulated market to regulated industry\"\n\n4. Name focalizers specifically:\n   - \"Consumer advocacy perspective\"\n\n5. Describe temporal structures clearly:\n   - Include actual flashback/forward content\n\nPreserve all narratological relationships and concepts.\nMake the analysis useful for understanding how discourse is narratively organized.\n",
   "canonical_schema": {
     "narratives": [
       {
@@ -117,5 +114,64 @@
     "gemini_network_graph"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/narrative_transformation.py"
+  "source_file": "analyzer/src/engines/narrative_transformation.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "narrative structure",
+      "analysis_type_plural": "narrative structures",
+      "core_question": "What narrative structures organize this discourse?",
+      "extraction_steps": [
+        "NARRATIVES",
+        "ACTANTIAL STRUCTURE",
+        "NARRATIVE PROGRAMS",
+        "CANONICAL SCHEMAS",
+        "FOCALIZATION",
+        "TEMPORAL STRUCTURE"
+      ],
+      "key_fields": {},
+      "id_field": "narrative_id",
+      "key_relationships": [
+        "opposes"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "narrative structure",
+      "item_type_plural": "narrative structures",
+      "consolidation_rules": [
+        "MAP NARRATIVES: Identify the stories being told",
+        "CONSOLIDATE ACTANTIAL STRUCTURES: - Are the same subjects/objects appearing?",
+        "TRACE NARRATIVE PROGRAMS: - What transformations are narrated?",
+        "IDENTIFY CANONICAL SCHEMAS: - Which phases are emphasized?",
+        "ANALYZE FOCALIZATION PATTERNS: - Whose perspectives dominate the corpus?",
+        "MAP TEMPORAL ORGANIZATION: - How is time structured across narratives?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

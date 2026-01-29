@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "scholarly",
   "researcher_question": "What does citation behavior reveal about academic politics?",
-  "extraction_prompt": "\nYou are analyzing CITATION POLITICS - what citation behavior reveals about\nacademic power dynamics and politics.\n\n## CITATION AS POLITICS\n\nCitations are not neutral acknowledgments:\n- They confer status and legitimacy\n- They signal tribal affiliations\n- They can exclude rivals\n- They reflect and reinforce hierarchies\n\n## TYPES OF CITATION POLITICS\n\n### STATUS SIGNALING\n- Citing high-status figures reverently\n- Omitting lower-status contributors\n- Using citations to claim lineage\n\n### CITATION NETWORKS\n- Schools of thought citing each other\n- Departmental citation clusters\n- Methodological tribes\n- Ideological camps\n\n### STRATEGIC OMISSION\n- Deliberately not citing rivals\n- Ignoring inconvenient prior work\n- Erasing contributions of out-groups\n\n### OBLIGATORY CITATION\n- Ritual citation of founders/gatekeepers\n- Citing likely reviewers\n- Methodological requirement citations\n\n## YOUR TASK\n\n### STEP 1: MAP CITATION PATTERNS\nWhat citation behaviors are visible?\n- Who cites whom?\n- Who is notably absent?\n- What patterns emerge?\n\n### STEP 2: ANALYZE STATUS DYNAMICS\nHow do citations reflect status?\n- Who gets reverent citation?\n- Who gets overlooked?\n- What status signals appear?\n\n### STEP 3: IDENTIFY CITATION NETWORKS\nWhat citation clusters exist?\n- What schools of thought?\n- What methodological tribes?\n- Who's in vs. out?\n\n### STEP 4: DETECT STRATEGIC OMISSIONS\nWhat appears strategically omitted?\n- Relevant work not cited?\n- Rivals ignored?\n- What explains omissions?\n\n### STEP 5: IDENTIFY OBLIGATORY CITATIONS\nWhat citations seem ritualistic?\n- Gatekeepers cited without engagement?\n- Founders invoked but not used?\n- Reviewer-pleasing citations?\n\n### STEP 6: MAP POWER DYNAMICS\nWhat power relations do citations reflect?\n- Editorial power?\n- Funding influence?\n- Methodological authority?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about patterns. \"The field has citation politics\" is not useful.\n\"Author X consistently cites school Y while omitting equally relevant work\nfrom school Z, suggesting paradigm-based filtering\" is useful.\n",
-  "curation_prompt": "\nYou are synthesizing citation politics analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. MAP CITATION LANDSCAPE\n- What networks and tribes appear?\n- What status hierarchies exist?\n\n### 2. IDENTIFY PATTERNS\n- What omission patterns recur?\n- What obligatory citations appear?\n\n### 3. ASSESS IMPLICATIONS\n- How do citation politics shape the field?\n- What gets marginalized?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of citation politics and their implications.\n",
-  "concretization_prompt": "\nTransform the citation politics analysis into actionable insight:\n\n1. **CITATION PATTERNS**\n   | Pattern | Type | Actors | Frequency |\n   |---------|------|--------|-----------|\n\n2. **STATUS DYNAMICS**\n   - High-status cited: [Who]\n   - Low-status ignored: [Who]\n   - Status markers: [How signaled]\n\n3. **CITATION NETWORKS**\n   | Network | Type | Core Members | Excluded |\n   |---------|------|--------------|----------|\n\n4. **STRATEGIC OMISSIONS**\n   | Omitted Work | Omitted By | Likely Reason |\n   |--------------|------------|---------------|\n\n5. **OBLIGATORY CITATIONS**\n   | Cited Work | Why Obligatory | Substantive? |\n   |------------|----------------|--------------|\n\n6. **POWER DYNAMICS**\n   | Power Holder | Power Type | How Reflected |\n   |--------------|------------|---------------|\n\n7. **BOTTOM LINE**\n   [One paragraph: What do citation patterns reveal about academic politics\n   in this field? What power dynamics shape what gets cited?]\n",
   "canonical_schema": {
     "citation_patterns": [
       {
@@ -96,5 +93,57 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/citation_politics_analyzer.py"
+  "source_file": "analyzer/src/engines/citation_politics_analyzer.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "citation",
+      "analysis_type_plural": "citations",
+      "core_question": "What does citation behavior reveal about academic politics?",
+      "extraction_steps": [
+        "MAP CITATION PATTERNS",
+        "ANALYZE STATUS DYNAMICS",
+        "IDENTIFY CITATION NETWORKS",
+        "DETECT STRATEGIC OMISSIONS",
+        "IDENTIFY OBLIGATORY CITATIONS",
+        "MAP POWER DYNAMICS"
+      ],
+      "key_fields": {},
+      "id_field": "citation_id",
+      "key_relationships": [
+        "cites"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "citation",
+      "item_type_plural": "citations",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

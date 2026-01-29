@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "epistemology",
   "researcher_question": "How do authors explain phenomena, and what patterns emerge?",
-  "extraction_prompt": "\nYou are an expert analyst mapping explanatory patterns.\n\nFor this article, extract ALL explanatory content:\n\n1. **CAUSAL EXPLANATIONS**: How are things explained?\n   - What phenomenon is being explained?\n   - What's the cause?\n   - What mechanism connects cause to effect?\n   - Explanation type:\n     * MECHANISTIC: Step-by-step process\n     * FUNCTIONAL: What purpose it serves\n     * INTENTIONAL: Actor motives\n     * STATISTICAL: Probabilistic relationships\n     * NARRATIVE: Story-based\n   - Evidence quality (0-1)\n   - Completeness of explanation (0-1)\n\n2. **EXPLANATORY STRATEGIES**: What patterns of explanation are used?\n   - What strategy is employed?\n   - What's the typical structure?\n   - What are its strengths?\n   - What are its weaknesses?\n\n3. **EXPLANATORY GAPS**: What remains unexplained?\n   - What phenomenon has gaps?\n   - What specifically is unexplained?\n   - Gap type: mechanism, cause, context, scope\n   - How important is filling this gap? (0-1)\n\n4. **COMPETING EXPLANATIONS**: Are there rival explanations?\n   - What phenomenon has multiple explanations?\n   - What are the competing explanations?\n   - What's the key difference?\n   - Which has more evidence? (-1 to 1, negative = A, positive = B)\n\n5. **EXPLANATORY HIERARCHIES**: Multi-level explanations\n   - What phenomenon has multi-level explanation?\n   - What are the different levels?\n   - Proximate (immediate), distal (further back), ultimate (deepest)\n   - Which level is preferred?\n\n\nBe comprehensive - capture how understanding is constructed.\n",
-  "curation_prompt": "\nYou are synthesizing explanatory pattern analysis from multiple articles.\n\nYour task:\n1. **CATALOG EXPLANATIONS**: What explanations appear?\n   - Consolidate explanations by phenomenon\n   - Rate evidence quality\n   - Assess completeness\n\n2. **IDENTIFY STRATEGIES**: What explanatory approaches are used?\n   - Map common strategies\n   - Note strengths/weaknesses\n   - Rank by frequency\n\n3. **MAP GAPS**: What's unexplained?\n   - Consolidate gaps\n   - Rate importance\n   - Categorize by type\n\n4. **TRACK COMPETITIONS**: What explanations compete?\n   - Map competing explanations\n   - Assess evidence balance\n   - Note key differences\n\n5. **BUILD HIERARCHIES**: Multi-level explanations\n   - Identify hierarchical explanations\n   - Map levels\n   - Note preferences\n\n\nCreate a comprehensive map of explanatory patterns in the discourse.\n",
-  "concretization_prompt": "\nTransform the explanatory analysis to be clear:\n\n1. Name explanations fully:\n   - \"E1\" \u2192 \"AI adoption caused by cost reduction (mechanistic)\"\n\n2. Label strategies:\n   - \"S1\" \u2192 \"Strategy: Economic determinism (structural \u2192 behavior)\"\n\n3. Describe gaps:\n   - \"G1\" \u2192 \"Gap: Mechanism for AI-creativity connection unexplained\"\n\n4. Name competitions:\n   - \"C1\" \u2192 \"Competition: Skill-biased vs. task-based explanations of automation\"\n\n5. Describe hierarchies:\n   - \"H1\" \u2192 \"Hierarchy: Immediate (productivity) \u2192 Distal (incentives) \u2192 Ultimate (capitalism)\"\n\nPreserve all quality and evidence ratings.\nMake the analysis useful for understanding how knowledge is constructed.\n",
   "canonical_schema": {
     "causal_explanations": [
       {
@@ -108,5 +105,83 @@
     "gemini_network_graph"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/explanatory_pattern_analysis.py"
+  "source_file": "analyzer/src/engines/explanatory_pattern_analysis.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "pattern",
+      "analysis_type_plural": "patterns",
+      "core_question": "How do authors explain phenomena, and what patterns emerge?",
+      "extraction_steps": [
+        "CAUSAL EXPLANATIONS",
+        "EXPLANATORY STRATEGIES",
+        "EXPLANATORY GAPS",
+        "COMPETING EXPLANATIONS",
+        "EXPLANATORY HIERARCHIES"
+      ],
+      "key_fields": {},
+      "id_field": "explanatory_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "pattern",
+      "item_type_plural": "patterns",
+      "consolidation_rules": [
+        "CATALOG EXPLANATIONS: What explanations appear?",
+        "IDENTIFY STRATEGIES: What explanatory approaches are used?",
+        "MAP GAPS: What's unexplained?",
+        "TRACK COMPETITIONS: What explanations compete?",
+        "BUILD HIERARCHIES: Multi-level explanations"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "E1",
+          "to": "AI adoption caused by cost reduction (mechanistic)"
+        },
+        {
+          "from": "S1",
+          "to": "Strategy: Economic determinism (structural \u2192 behavior)"
+        },
+        {
+          "from": "G1",
+          "to": "Gap: Mechanism for AI-creativity connection unexplained"
+        },
+        {
+          "from": "C1",
+          "to": "Competition: Skill-biased vs. task-based explanations of automation"
+        },
+        {
+          "from": "H1",
+          "to": "Hierarchy: Immediate (productivity) \u2192 Distal (incentives) \u2192 Ultimate (capitalism)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "methodology",
   "researcher_question": "What do these statistical findings actually mean?",
-  "extraction_prompt": "\nYou are interpreting STATISTICAL SIGNIFICANCE in proper context \u2014\nwhat do the numbers actually mean?\n\n## KEY DISTINCTIONS\n\n### STATISTICAL VS. PRACTICAL SIGNIFICANCE\nStatistically significant \u2260 important or meaningful\n\n- With large N, tiny effects become statistically significant\n- A \"significant\" correlation of r = 0.05 explains 0.25% of variance\n- p < 0.05 doesn't mean 95% chance of being true\n\n### EFFECT SIZE MATTERS MORE THAN P-VALUE\nP-values depend on sample size; effect sizes don't.\n\nEffect size benchmarks (Cohen's d):\n- Small: d = 0.2 (hard to see without measurement)\n- Medium: d = 0.5 (visible to careful observer)\n- Large: d = 0.8 (obvious to naked eye)\n\n### P-HACKING\nAnalyzing data multiple ways until something is significant:\n- Testing many variables\n- Trying multiple analysis methods\n- Excluding inconvenient data points\n- Adding covariates until significance emerges\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY STATISTICAL CLAIMS\nWhat statistical significance claims are made?\n- What's the p-value?\n- What test was used?\n- What's the sample size?\n\n### STEP 2: ANALYZE EFFECT SIZES\nIs an effect size reported?\n- What type (d, r, OR, etc.)?\n- What's the magnitude?\n- Is this practically meaningful?\n\n### STEP 3: ASSESS PRACTICAL SIGNIFICANCE\nDoes statistical significance translate to real-world importance?\n- What does the effect mean in practice?\n- Would anyone notice this difference?\n- Is it worth caring about?\n\n### STEP 4: IDENTIFY P-HACKING RISKS\nAre there signs of analytical flexibility?\n- Many comparisons with few corrections?\n- Selective reporting of significant results?\n- Post-hoc hypotheses presented as confirmatory?\n- Lack of pre-registration?\n\n### STEP 5: INTERPRET CONFIDENCE INTERVALS\nIf CIs are reported:\n- How wide are they?\n- What does the range tell us?\n- Does the CI include zero/null?\n\n### STEP 6: ASSESS INTERPRETATION QUALITY\nAre findings properly interpreted?\n- Are there overstatements?\n- Is p-value misunderstood?\n- Are effect sizes ignored?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about what the numbers mean.\nThe goal is to separate statistical from practical significance.\n",
-  "curation_prompt": "\nYou are synthesizing statistical significance interpretations across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. COMPARE EFFECT SIZES\n- How do effect sizes compare across studies?\n- Is there consistency?\n\n### 2. AGGREGATE P-HACKING CONCERNS\n- Are there systematic concerns about analytical flexibility?\n- Which findings are most suspect?\n\n### 3. ASSESS OVERALL PRACTICAL SIGNIFICANCE\n- Which findings matter in practice?\n- Which are statistically significant but trivial?\n\n## OUTPUT GUIDANCE\n\nCreate clear picture of what the statistics actually tell us.\n",
-  "concretization_prompt": "\nTransform the statistical significance analysis into clear interpretation:\n\n1. **STATISTICAL CLAIMS SUMMARY**\n   ```\n   | Claim | p-value | N | Effect Size | Practical Significance |\n   |-------|---------|---|-------------|----------------------|\n   | SC1   | p<0.01  | 500 | d=0.15    | Negligible           |\n   ```\n\n2. **EFFECT SIZE INTERPRETATION**\n   ```\n   Claim: [Description]\n   Effect size: [Value] ([Type])\n   Magnitude: [Small/Medium/Large]\n   In practice: [What this means in real terms]\n   ```\n\n3. **STATISTICAL VS. PRACTICAL**\n   - SC1: Statistically significant (p<0.01) but NOT practically significant\n     - Effect explains only [X]% of variance\n     - In practice: [Real-world meaning]\n\n4. **P-HACKING CONCERNS**\n   | Claim | Risk Level | Indicators |\n   |-------|------------|------------|\n   | SC1   | High       | [List]     |\n\n5. **CONFIDENCE INTERVALS**\n   - SC1: 95% CI [X, Y] \u2014 Very wide, estimate imprecise\n   - SC2: 95% CI [X, Y] \u2014 Includes zero, effect may be null\n\n6. **INTERPRETATION ISSUES**\n   - Claim: [What's claimed]\n   - Issue: [Overstatement or misinterpretation]\n   - Proper interpretation: [What should be said]\n\n7. **BOTTOM LINE**\n   [One paragraph: What do the statistics actually tell us? Which findings\n   are practically meaningful? Where is significance overinterpreted?]\n",
   "canonical_schema": {
     "statistical_claims": [
       {
@@ -117,5 +114,57 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/statistical_significance_interpreter.py"
+  "source_file": "analyzer/src/engines/statistical_significance_interpreter.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "statistical significance interpreter",
+      "analysis_type_plural": "statistical significance interpreters",
+      "core_question": "What do these statistical findings actually mean?",
+      "extraction_steps": [
+        "IDENTIFY STATISTICAL CLAIMS",
+        "ANALYZE EFFECT SIZES",
+        "ASSESS PRACTICAL SIGNIFICANCE",
+        "IDENTIFY P-HACKING RISKS",
+        "INTERPRET CONFIDENCE INTERVALS",
+        "ASSESS INTERPRETATION QUALITY"
+      ],
+      "key_fields": {},
+      "id_field": "claim_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "statistical significance interpreter",
+      "item_type_plural": "statistical significance interpreters",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

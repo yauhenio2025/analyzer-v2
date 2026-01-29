@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "temporal",
   "researcher_question": "What signs should we watch for, and what do current indicators tell us?",
-  "extraction_prompt": "\nYou are implementing INDICATIONS & WARNINGS (I&W) methodology \u2014 the approach\nto early warning and strategic monitoring.\n\n## THE I&W PHILOSOPHY\n\nWe cannot predict the future. But we CAN:\n1. Define what SIGNS would indicate a particular future is unfolding\n2. WATCH for those signs systematically\n3. ASSESS whether the signs are appearing\n4. FLAG when signs cross thresholds requiring attention\n\nGoal: Be prepared, not surprised.\n\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY SCENARIOS TO MONITOR\n\nWhat key outcomes, events, or situations does this text suggest we should watch for?\n\nFor each scenario:\n- What is it? (clear description)\n- Why does it matter? (significance)\n- How likely does it currently appear?\n\nInclude:\n- Scenarios the text explicitly discusses\n- Scenarios implied but not stated\n- Negative scenarios (things we hope don't happen)\n- Positive scenarios (opportunities to watch for)\n\n### STEP 2: DEFINE SIGNPOSTS\n\nFor each scenario, what observable events/conditions would indicate it's unfolding?\n\n**Signpost Types:**\n- **Leading indicators**: Would appear BEFORE the scenario fully manifests\n- **Coincident indicators**: Would appear AS the scenario unfolds\n- **Lagging indicators**: Would confirm AFTER the scenario has occurred\n\n**For each signpost, specify:**\n- What exactly to look for (be specific and observable)\n- How observable is it?\n- How reliable is it?\n- Threshold for concern (when to pay closer attention)\n- Threshold for action (when to respond)\n\n### STEP 3: EXTRACT CURRENT INDICATOR STATUS\n\nBased on evidence in the text, what is the current status of each indicator?\n\n**Status levels:**\n- Not present: No evidence of this indicator\n- Emerging: Weak or initial signs\n- Partially present: Some evidence, incomplete\n- Present: Clear evidence\n- Strongly present: Overwhelming evidence\n\n**Track the trend:**\n- Stable: Not changing\n- Increasing: Getting stronger\n- Decreasing: Getting weaker\n- Volatile: Fluctuating\n- Unknown: Can't assess direction\n\n### STEP 4: ASSESS SIGNPOST STATUS\n\nFor each signpost, roll up the indicators:\n- How many indicators are triggered?\n- Has it crossed the concern threshold?\n- Has it crossed the action threshold?\n\n### STEP 5: OVERALL WARNING ASSESSMENT\n\nSynthesize across all signposts:\n- Overall posture: NORMAL / ELEVATED / HIGH / CRITICAL\n- Trajectory: STABLE / ESCALATING / DE-ESCALATING / MIXED\n\n### STEP 6: MONITORING REQUIREMENTS\n\nPrioritize what to watch:\n- What's most important to monitor?\n- How frequently?\n\n### STEP 7: IDENTIFY TRIPWIRES\n\nWhat combinations of indicators should trigger automatic response?\n\n### STEP 8: GAP ANALYSIS\n\nWhat CAN'T we monitor? Blind spots? Access limitations?\n\n## OUTPUT GUIDANCE\n\nBe specific about observables. \"Watch for political instability\" is too vague.\n\"Watch for three or more cabinet resignations within 30 days\" is actionable.\n",
-  "curation_prompt": "\nYou are synthesizing early warning analyses from multiple sources to create a\ncomprehensive monitoring framework.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE SCENARIOS\n- Merge equivalent scenarios from different sources\n- Identify scenarios mentioned by multiple sources (higher priority)\n- Note scenarios only one source identifies\n\n### 2. INTEGRATE SIGNPOSTS\n- Combine signposts for the same scenarios\n- Look for leading, coincident, and lagging indicators across sources\n- Identify where sources agree/disagree on what to watch\n\n### 3. TRIANGULATE INDICATOR STATUS\n- Where multiple sources assess the same indicator, compare assessments\n- Higher confidence where sources agree\n- Flag discrepancies for investigation\n\n### 4. COMPREHENSIVE WARNING PICTURE\n- Roll up all signpost assessments\n- Assess overall posture across the full scenario space\n- Identify trajectory considering all evidence\n\n### 5. PRIORITIZED MONITORING\n- What's most important to watch across all scenarios?\n- Where do gaps exist across sources?\n- What are the critical tripwires?\n\n## OUTPUT GUIDANCE\n\nCreate a unified warning framework that:\n1. Covers all identified scenarios\n2. Provides specific, observable signposts\n3. Tracks current indicator status with confidence\n4. Assesses overall warning posture\n5. Prioritizes monitoring requirements\n",
-  "concretization_prompt": "\nTransform the early warning analysis into an operational dashboard:\n\n1. **WARNING POSTURE SUMMARY** (one-line)\n   ```\n   CURRENT POSTURE: [NORMAL/ELEVATED/HIGH/CRITICAL]\n   Trajectory: [STABLE/ESCALATING/DE-ESCALATING]\n   ```\n\n2. **SCENARIO STATUS BOARD**\n   ```\n   Scenario | Likelihood | Trend | Key Signpost Status\n   ---------|------------|-------|--------------------\n   S1: ...  | Likely     | \u2191     | 2 at CONCERN\n   S2: ...  | Unlikely   | \u2192     | All INACTIVE\n   ```\n\n3. **ACTIVE WARNINGS** (if any)\n   - Signpost SP1: [STATUS] \u2014 Key indicators: [list]\n\n4. **INDICATOR DASHBOARD**\n   ```\n   Indicator | Status    | Trend | Confidence | Last Updated\n   ----------|-----------|-------|------------|-------------\n   I1: ...   | PRESENT   | \u2191     | HIGH       | [date/source]\n   ```\n\n5. **TRIPWIRE STATUS**\n   ```\n   Tripwire | Condition | Distance | Response if Tripped\n   ---------|-----------|----------|--------------------\n   TW1      | ...       | NEAR     | ...\n   ```\n\n6. **PRIORITY WATCH LIST**\n   1. [What to watch] \u2014 [Why important] \u2014 [Frequency]\n\n7. **COVERAGE GAPS**\n   - Gap: [What we can't see]\n   - Impact: [Which scenarios affected]\n\n8. **BOTTOM LINE**\n   [One paragraph: What's the warning picture?]\n\nMake it scannable for quick situational awareness.\n",
   "canonical_schema": {
     "scenarios_monitored": [
       {
@@ -137,5 +134,59 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/early_warning_tracker.py"
+  "source_file": "analyzer/src/engines/early_warning_tracker.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "early warning tracker",
+      "analysis_type_plural": "early warning trackers",
+      "core_question": "What signs should we watch for, and what do current indicators tell us?",
+      "extraction_steps": [
+        "IDENTIFY SCENARIOS TO MONITOR",
+        "DEFINE SIGNPOSTS",
+        "EXTRACT CURRENT INDICATOR STATUS",
+        "ASSESS SIGNPOST STATUS",
+        "OVERALL WARNING ASSESSMENT",
+        "MONITORING REQUIREMENTS",
+        "IDENTIFY TRIPWIRES",
+        "GAP ANALYSIS"
+      ],
+      "key_fields": {},
+      "id_field": "early_id",
+      "key_relationships": [
+        "supports"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "early warning tracker",
+      "item_type_plural": "early warning trackers",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

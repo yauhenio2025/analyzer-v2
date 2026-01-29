@@ -7,10 +7,59 @@
   "kind": "synthesis",
   "reasoning_domain": "comparative analysis",
   "researcher_question": "How does treatment of this concept change across texts?",
-  "extraction_prompt": "You are conducting Phase 10: CROSS-TEXT COMPARISON.\n\n## YOUR TASK\n\nCompare how \"{concept}\" is treated ACROSS DIFFERENT DOCUMENTS.\n\n## DOCUMENTS\n\n{documents_summary}\n\n## WHAT TO LOOK FOR\n\n1. **Definitional shifts**: Does the meaning change?\n2. **Emphasis changes**: Different aspects highlighted?\n3. **New arguments**: Arguments appearing in later texts?\n4. **Contradictions**: Claims that conflict?\n5. **Development**: How does understanding deepen?\n\n## CONTEXT FROM PREVIOUS PHASES\n\n{previous_outputs_summary}\n\n## OUTPUT FORMAT\n\nReturn JSON with:\n- definitional_evolution: how meaning changes\n- emphasis_shifts[]: what changes in focus\n- new_elements[]: what appears in later texts\n- potential_contradictions[]: conflicting claims\n- development_trajectory: overall arc\n\nReturn as valid JSON.",
-  "curation_prompt": "Validate cross-text comparison.",
   "canonical_schema": {
     "type": "object"
   },
-  "paradigm_keys": []
+  "paradigm_keys": [],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "How does treatment of this concept change across texts?",
+      "extraction_steps": [
+        "Definitional shifts",
+        "Emphasis changes",
+        "New arguments",
+        "Contradictions",
+        "Development"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "contradicts"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

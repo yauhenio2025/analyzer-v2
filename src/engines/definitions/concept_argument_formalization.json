@@ -7,8 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "argument extraction",
   "researcher_question": "What specific arguments are made about this concept?",
-  "extraction_prompt": "You are conducting Phase 3 of a multi-pass conceptual analysis.\n\n## YOUR TASK: ARGUMENT FORMALIZATION\n\nExtract ALL arguments that involve \"{concept}\" from the current document.\n\n## CONTEXT FROM PREVIOUS PHASES\n\nSemantic field (catch synonyms): {semantic_context}\nStructural landscape (where to look): {structural_context}\n\n## WHAT COUNTS AS AN ARGUMENT\n\nAn argument is:\n1. A CLAIM (conclusion) about \"{concept}\"\n2. One or more PREMISES (reasons/evidence)\n3. An INFERENTIAL LINK connecting them\n\n## FOR EACH ARGUMENT\n\n1. State the CONCLUSION clearly\n2. List all PREMISES (stated and implied)\n3. Identify the INFERENCE TYPE:\n   - Deductive (conclusion follows necessarily)\n   - Inductive (conclusion is probable)\n   - Abductive (best explanation)\n   - Normative (ought-claim from values)\n   - Causal (effect from cause)\n\n4. Note QUALIFICATIONS and SCOPE\n5. Provide DIRECT QUOTES as evidence\n\n## DOCUMENT TO ANALYZE: {document_name}\n\n{document_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with array of arguments, each containing:\n- argument_id, conclusion, premises[], inference_type, qualifications, quotes[], source\n\nTARGET: 15-25 distinct arguments from this document.",
-  "curation_prompt": "Validate argument extraction and ensure logical formalization is correct.",
   "canonical_schema": {
     "type": "object",
     "properties": {
@@ -48,5 +46,59 @@
   },
   "paradigm_keys": [
     "brandomian"
-  ]
+  ],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "argument structure",
+      "analysis_type_plural": "argument structures",
+      "core_question": "What specific arguments are made about this concept?",
+      "extraction_steps": [
+        "A CLAIM (conclusion) about \"{concept}\"",
+        "One or more PREMISES (reasons/evidence)",
+        "An INFERENTIAL LINK connecting them",
+        "State the CONCLUSION clearly",
+        "List all PREMISES (stated and implied)",
+        "Identify the INFERENCE TYPE:",
+        "Note QUALIFICATIONS and SCOPE",
+        "Provide DIRECT QUOTES as evidence"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "argument structure",
+      "item_type_plural": "argument structures",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

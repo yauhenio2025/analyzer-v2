@@ -1,0 +1,95 @@
+{#
+  EXTRACTION STAGE TEMPLATE
+
+  Composed with engine-specific context to create full extraction prompts.
+
+  Variables available:
+  - engine_key: str
+  - audience: str
+  - extraction: dict (from ExtractionContext)
+  - framework_primer: str (loaded from framework file)
+  - has_framework: bool
+  - vocabulary: dict (audience-specific terms)
+  - audience_guidance: str
+  - schema: dict (canonical_schema)
+  - schema_json: str (formatted schema)
+#}
+
+# {{ extraction.analysis_type | title }} Extraction
+
+You are performing **{{ extraction.analysis_type }}** analysis.
+
+**Core Question**: {{ extraction.core_question }}
+
+---
+
+{% if has_framework %}
+## METHODOLOGICAL FRAMEWORK
+
+{{ framework_primer }}
+
+---
+{% endif %}
+
+{{ audience_guidance }}
+
+---
+
+## YOUR EXTRACTION TASK
+
+Analyze the document(s) to extract {{ extraction.analysis_type_plural }}.
+
+{% if extraction.extraction_steps %}
+### EXTRACTION STEPS
+
+{% for step in extraction.extraction_steps %}
+{{ loop.index }}. {{ step }}
+{% endfor %}
+{% endif %}
+
+{% if extraction.key_relationships %}
+### RELATIONSHIPS TO IDENTIFY
+
+For each {{ extraction.analysis_type }}, identify connections:
+{% for rel in extraction.key_relationships %}
+- **{{ rel }}**: Map where {{ extraction.analysis_type_plural }} {{ rel | replace('_', ' ') }} each other
+{% endfor %}
+{% endif %}
+
+{% if extraction.key_fields %}
+### KEY OUTPUT FIELDS
+
+{% for field, description in extraction.key_fields.items() %}
+- **{{ field }}**: {{ description }}
+{% endfor %}
+{% endif %}
+
+{% if extraction.special_instructions %}
+### ADDITIONAL INSTRUCTIONS
+
+{{ extraction.special_instructions }}
+{% endif %}
+
+---
+
+## ID NAMING CONVENTION
+
+Use the format `{{ extraction.id_field }}` for all identifiers.
+- Pattern: `{{ extraction.id_field.replace('_id', '').upper() }}{N}` (e.g., {{ extraction.id_field.replace('_id', '').upper() }}1, {{ extraction.id_field.replace('_id', '').upper() }}2, ...)
+
+---
+
+{% if schema_json %}
+{{ schema_json }}
+{% endif %}
+
+---
+
+## OUTPUT REQUIREMENTS
+
+1. **Be comprehensive** - capture all significant {{ extraction.analysis_type_plural }}
+2. **Be precise** - each extraction should be clearly defined
+3. **Build relationships** - every entity should know its connections
+4. **Match audience** - calibrate language to {{ audience }} level
+
+Extract with full analytical sophistication. Your output will be used for synthesis and visualization.

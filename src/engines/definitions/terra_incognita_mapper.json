@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "epistemology",
   "researcher_question": "What don't we know, and what would we need to find out?",
-  "extraction_prompt": "\nYou are mapping the TERRA INCOGNITA \u2014 the blank spaces in our knowledge about\nthis topic. Your task is to identify what we DON'T know and what we'd need to find out.\n\n## EPISTEMOLOGICAL FRAMEWORK\n\n**Known Knowns**: Things established with confidence\n**Known Unknowns**: Questions we know we need answered\n**Unknown Unknowns**: Gaps we might not realize exist\n**Unknowables**: Things that may be inherently impossible to know\n\n\n## YOUR TASK\n\n### 1. MAP THE KNOWLEDGE LANDSCAPE\n\n**Known Knowns**: What does the text establish with reasonable confidence?\n- What's well-supported?\n- What's the source quality?\n\n**Known Unknowns**: What questions does the text acknowledge needing answers to?\n- Explicit gaps the text recognizes\n- Questions raised but not answered\n\n**Unknown Unknowns** (this is the hard part): What gaps might exist that the text doesn't realize?\n- What perspectives are absent?\n- What data wasn't collected?\n- What questions weren't asked?\n- What assumptions weren't tested?\n\n**Unknowables**: What might be impossible to know?\n- Destroyed evidence\n- Inherently private information\n- Counterfactual paths not taken\n- Future contingencies\n\n### 2. IDENTIFY ASSUMPTIONS MASQUERADING AS KNOWLEDGE\n\nLook for things treated as facts that are actually:\n- Unverified assumptions\n- Plausible inferences (but not established)\n- Conventions (accepted but not proven)\n- Speculation (dressed up as knowledge)\n\nFor each: How testable is it? What happens if it's wrong?\n\n### 3. CATALOG CRITICAL GAPS\n\nFor each significant gap:\n\n**Gap Category:**\n- **Source gap**: Missing primary sources, over-reliance on secondary\n- **Data gap**: Missing quantitative evidence\n- **Methodology gap**: Untested methods, missing validation\n- **Temporal gap**: Outdated information, missing time periods\n- **Causal gap**: Correlation claimed without mechanism\n- **Contextual gap**: Missing background, missing comparison cases\n- **Comparative gap**: No baseline, no control group, no comparison\n\n**Gap Handling:**\n- How does the text deal with this gap?\n- Ignored? Assumed away? Acknowledged? Bracketed?\n- Is the handling adequate?\n\n**Impact:**\n- Which conclusions depend on this gap being filled?\n- How confident can we be given this gap?\n\n### 4. GENERATE COLLECTION REQUIREMENTS\n\nFor gaps that could be filled, specify:\n- What specific information is needed?\n- Where might it be found?\n- How much effort would it take?\n- How much would it help?\n\nCollection types:\n- Open source research\n- Primary research (interviews, surveys)\n- Expert consultation\n- Data acquisition\n- Archival research\n- Technical collection\n- Field work\n\n### 5. ASK THE UNASKED QUESTIONS\n\nWhat questions SHOULD the text have addressed but didn't?\n- Why might these questions have been avoided?\n- What would the answers reveal?\n\n### 6. TEMPORAL ASSESSMENT\n\n- Is any information likely outdated?\n- Are there future developments that would change the analysis?\n- What should be monitored going forward?\n\n### 7. COMPARATIVE ASSESSMENT\n\n- What comparisons would strengthen the analysis?\n- Are there missing baselines or reference points?\n- What \"natural experiments\" or comparison cases exist?\n\n## OUTPUT GUIDANCE\n\nThe goal is an honest map of what we know, what we don't know, and what we need to know.\nBe specific about gaps. Be realistic about what can be collected.\nRemember: acknowledging uncertainty is epistemically virtuous, not a weakness.\n",
-  "curation_prompt": "\nYou are synthesizing gap analyses from multiple sources to create a comprehensive\nmap of what we know and don't know about this topic.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE KNOWLEDGE LANDSCAPE\n- What's established across multiple sources? (Higher confidence)\n- What's claimed by only one source? (Lower confidence)\n- Where do sources contradict each other? (Gap indicator)\n\n### 2. MERGE GAP CATALOGS\n- Which gaps appear across multiple sources?\n- Which gaps does one source fill that another has?\n- Are there gaps that ALL sources share? (Priority collection targets)\n\n### 3. IDENTIFY DISCOURSE-WIDE GAPS\nLooking at the body of literature as a whole:\n- What is everyone assuming?\n- What questions is no one asking?\n- What evidence does no one have?\n- What perspectives are systematically absent?\n\n### 4. PRIORITIZE COLLECTION REQUIREMENTS\n- Which gaps, if filled, would most transform understanding?\n- Which gaps are most feasible to fill?\n- What's the best effort-to-value ratio?\n\n### 5. ASSESS CROSS-SOURCE RELIABILITY\n- Do sources validate each other?\n- Are they drawing from the same primary sources? (False corroboration)\n- Where is independent verification actually occurring?\n\n### 6. MAP THE EPISTEMIC LANDSCAPE\n- What areas are well-mapped (multiple independent sources, consensus)?\n- What areas are contested (contradictions, debates)?\n- What areas are terra incognita (no one knows)?\n\n## OUTPUT GUIDANCE\n\nCreate a unified gap map that:\n1. Shows where knowledge is solid vs. thin vs. absent\n2. Prioritizes collection requirements\n3. Identifies assumptions shared across the discourse\n4. Notes where the field is epistemically honest vs. overconfident\n",
-  "concretization_prompt": "\nTransform the terra incognita map into an actionable research planning document:\n\n1. **EXECUTIVE SUMMARY**\n   - Overall epistemic health assessment (one sentence)\n   - Number of critical gaps identified\n   - Top collection priority\n\n2. **KNOWLEDGE MAP VISUALIZATION**\n   ```\n   WELL ESTABLISHED (High Confidence)\n   \u2022 [Item]\n   \u2022 [Item]\n\n   TENTATIVELY ESTABLISHED (Moderate Confidence)\n   \u2022 [Item] \u2014 caveat: [gap]\n   \u2022 [Item] \u2014 caveat: [gap]\n\n   UNKNOWN / CONTESTED\n   \u2022 [Question]\n   \u2022 [Question]\n\n   UNKNOWABLE\n   \u2022 [Item] \u2014 why: [reason]\n   ```\n\n3. **CRITICAL GAPS TABLE**\n   ```\n   | Gap | Affects | Priority | Difficulty | Current Handling |\n   |-----|---------|----------|------------|------------------|\n   | G1  | [...]   | Critical | Moderate   | Assumed          |\n   ```\n\n4. **ASSUMPTIONS ALERT**\n   Things treated as facts but actually unverified:\n   - [Assumption] \u2014 impact if wrong: [impact]\n   - [Assumption] \u2014 impact if wrong: [impact]\n\n5. **COLLECTION REQUIREMENTS** (prioritized)\n   1. **[CR1]** \u2014 Information needed: [X]\n      - Would fill: Gap G1\n      - Potential sources: [list]\n      - Effort: [estimate]\n      - Value: [HIGH/MEDIUM/LOW]\n\n   2. **[CR2]** ...\n\n6. **QUESTIONS NO ONE IS ASKING**\n   - [Question] \u2014 why it matters: [reason]\n   - [Question] \u2014 why it matters: [reason]\n\n7. **TEMPORAL ALERTS**\n   - Outdated: [information that may be stale]\n   - Monitor: [future developments to watch]\n\n8. **EPISTEMIC HEALTH SCORECARD**\n   ```\n   Gap acknowledgment: [Good/Partial/Poor]\n   Assumption transparency: [Good/Partial/Poor]\n   Collection needs identified: [Yes/Partial/No]\n   Overall: [Solid/Adequate/Questionable/Poor]\n   ```\n\nMake it useful for someone planning follow-up research or deciding\nhow confident to be in conclusions.\n",
   "canonical_schema": {
     "knowledge_landscape": {
       "known_knowns": [
@@ -160,5 +157,56 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/terra_incognita_mapper.py"
+  "source_file": "analyzer/src/engines/terra_incognita_mapper.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "terra incognita",
+      "analysis_type_plural": "terra incognitas",
+      "core_question": "What don't we know, and what would we need to find out?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "terra_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "terra incognita",
+      "item_type_plural": "terra incognitas",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

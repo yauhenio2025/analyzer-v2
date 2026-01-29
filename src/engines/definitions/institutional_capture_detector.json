@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "institutional",
   "researcher_question": "Has this institution been captured by narrow interests?",
-  "extraction_prompt": "\nYou are detecting INSTITUTIONAL CAPTURE \u2014 when institutions meant to serve\nbroad interests are captured by narrow interests.\n\n## TYPES OF CAPTURE\n\n### REGULATORY CAPTURE\nRegulators serve the industry they regulate:\n- Industry writes the rules\n- Enforcement is weak against industry interests\n- Public interest subordinated to industry interest\n\n### MISSION DRIFT\nInstitution serves itself rather than mission:\n- Staff interests dominate\n- Bureaucratic growth over mission effectiveness\n- Self-preservation over purpose\n\n### INTEREST GROUP CAPTURE\nConcentrated interests dominate diffuse interests:\n- Small groups with strong interests vs. large groups with weak interests\n- Lobbying, funding, expertise capture\n- Regulatory outcomes favor organized interests\n\n### REVOLVING DOOR\nPersonnel movement creates conflicts:\n- Regulators move to industry (and back)\n- Creates incentives to please future employers\n- Industry expertise becomes industry loyalty\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY INSTITUTIONS\nWhat institutions are described?\n- What's the stated mission?\n- Who are supposed beneficiaries?\n- How does it actually operate?\n\n### STEP 2: LOOK FOR CAPTURE INDICATORS\nSigns of regulatory capture:\n- Rules that favor industry over public\n- Weak enforcement against industry\n- Industry personnel in regulatory positions\n\nSigns of mission drift:\n- Activities that don't serve mission\n- Resources going to institutional maintenance\n- Staff interests prioritized\n\nSigns of interest group capture:\n- Organized groups with outsized influence\n- Public interest groups marginalized\n- Regulatory outcomes consistently favor same groups\n\n### STEP 3: ANALYZE BENEFICIARIES\nWho actually benefits from institutional action?\n- Compare to who should benefit\n- Identify systematic beneficiary patterns\n- Who loses?\n\n### STEP 4: MAP REVOLVING DOOR\nWhat personnel movement occurs?\n- Industry to regulator?\n- Regulator to industry?\n- What capture does this create?\n\n### STEP 5: ASSESS CAPTURE LEVEL\nHow captured is the institution?\n- Fully captured: Serves narrow interests completely\n- Substantially captured: Mostly serves narrow interests\n- Partially captured: Split between interests\n- Contested: Active struggle for control\n- Independent: Serves stated mission\n\n\n## OUTPUT GUIDANCE\n\nBe specific about who benefits and how. \"Regulatory capture\" as a vague\nclaim is not useful. \"The agency consistently rules in favor of the three\nlargest firms, who employ former commissioners\" is useful.\n",
-  "curation_prompt": "\nYou are synthesizing institutional capture analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE CAPTURE EVIDENCE\n- What capture patterns appear across sources?\n- Which institutions show most capture?\n\n### 2. IDENTIFY SYSTEMIC PATTERNS\n- Is capture field-wide or institution-specific?\n- What mechanisms create capture?\n\n### 3. ASSESS COUNTER-CAPTURE\n- What resists capture?\n- How effective are counter-mechanisms?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of institutional capture and its mechanisms.\n",
-  "concretization_prompt": "\nTransform the institutional capture analysis into actionable insight:\n\n1. **CAPTURE SUMMARY**\n   ```\n   | Institution | Capture Level | Type | Captured By | Evidence |\n   |-------------|---------------|------|-------------|----------|\n   | ...         | Substantial   | Regulatory | Industry X | ... |\n   ```\n\n2. **CAPTURE DETAILS**\n   ```\n   Institution: [Name]\n   Stated mission: [What it should do]\n   Actual operation: [What it does]\n   Capture level: [Assessment]\n   Captured by: [Who]\n   Evidence: [Indicators]\n   ```\n\n3. **BENEFICIARY ANALYSIS**\n   - Should benefit: [Who]\n   - Actually benefits: [Who]\n   - Mismatch: [Difference]\n   - Losers: [Who pays the cost]\n\n4. **REVOLVING DOOR**\n   | Movement | Capture Effect | Examples |\n   |----------|----------------|----------|\n\n5. **INTEREST GROUP INFLUENCE**\n   | Group | Mechanism | Outcome | Public Cost |\n   |-------|-----------|---------|-------------|\n\n6. **CAPTURE ASSESSMENT**\n   - Institution: [Name]\n   - Level: [Fully/Substantially/Partially captured]\n   - Primary type: [Regulatory/Mission drift/Interest group]\n   - Public interest gap: [What's lost]\n\n7. **BOTTOM LINE**\n   [One paragraph: Which institutions are captured? By whom? What's the\n   public interest cost? What might address capture?]\n",
   "canonical_schema": {
     "institutions_analyzed": [
       {
@@ -132,5 +129,56 @@
     "marxist",
     "pragmatist_praxis"
   ],
-  "source_file": "analyzer/src/engines/institutional_capture_detector.py"
+  "source_file": "analyzer/src/engines/institutional_capture_detector.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "institutional capture detector",
+      "analysis_type_plural": "institutional capture detectors",
+      "core_question": "Has this institution been captured by narrow interests?",
+      "extraction_steps": [
+        "IDENTIFY INSTITUTIONS",
+        "LOOK FOR CAPTURE INDICATORS",
+        "ANALYZE BENEFICIARIES",
+        "MAP REVOLVING DOOR",
+        "ASSESS CAPTURE LEVEL"
+      ],
+      "key_fields": {},
+      "id_field": "institutional_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "institutional capture detector",
+      "item_type_plural": "institutional capture detectors",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

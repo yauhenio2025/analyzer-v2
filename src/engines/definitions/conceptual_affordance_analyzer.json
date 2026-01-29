@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "deleuzian_pragmatics",
   "researcher_question": "What does this concept make possible?",
-  "extraction_prompt": "\nYou are an expert in Deleuzian analysis, examining concepts as productive forces.\n\nFor this article, perform a CONCEPTUAL AFFORDANCE ANALYSIS:\n\n## 1. CONCEPT IDENTIFICATION\nFor each significant concept:\n- **Term**: The concept name/phrase\n- **Definition**: How it's used\n- **Pragmatic function**: What work is it doing?\n\n## 2. ENABLED POSSIBILITIES\nFor each concept, identify what it MAKES POSSIBLE:\n- **Cognitive possibilities**: What new thoughts/questions does it enable?\n- **Practical possibilities**: What actions does it enable?\n- **Institutional possibilities**: What organizations/structures does it enable?\n- **Social possibilities**: What relationships/identities does it enable?\n- **Political possibilities**: What movements/positions does it enable?\n\nNote: Are these actualized or merely virtual (possible but not yet real)?\n\n## 3. BLOCKED PATHS\nFor each concept, identify what it FORECLOSES:\n- **What becomes unthinkable?** What questions can't be asked?\n- **What becomes undoable?** What actions are ruled out?\n- **What becomes invisible?** What can't be seen through this lens?\n- **What alternatives are obscured?** What other ways of thinking are blocked?\n\n## 4. ASSEMBLAGE ANALYSIS\nIdentify assemblages the concept participates in:\n- **What practices** does it connect with?\n- **What institutions** use it?\n- **What technologies** rely on it?\n- **What other concepts** does it combine with?\n- **What emerges** from these combinations?\n\n## 5. LINES OF FLIGHT\nIdentify escape possibilities:\n- **What constraints** might this concept help escape?\n- **What new territories** might it open?\n- **What resistances** would this encounter?\n- **What re-capture risks** exist?\n\n## 6. TERRITORIALIZATION EFFECTS\nHow does this concept stabilize or destabilize:\n- **What gets ordered/categorized?**\n- **What gets coded/decoded?**\n- **What regimes does it support or undermine?**\n\n\nThink pragmatically - what does this concept DO, not just what does it MEAN?\n",
-  "curation_prompt": "\nYou are synthesizing conceptual affordance analyses from multiple articles.\n\nYour task:\n\n## 1. CONSOLIDATE CONCEPT INVENTORIES\n- Merge same concepts across articles\n- Collect all affordance information\n- Calculate affordance richness scores\n\n## 2. MAP ENABLED POSSIBILITIES\n- Aggregate possibilities enabled by each concept\n- Categorize by type (cognitive, practical, institutional, etc.)\n- Note what's actualized vs. merely virtual\n- Identify conditions for actualization\n\n## 3. MAP BLOCKED PATHS\n- Aggregate what each concept forecloses\n- Identify patterns in blockages\n- Note workarounds and alternative concepts\n- Find concepts that open what others close\n\n## 4. BUILD ASSEMBLAGE MAPS\n- Identify recurring assemblages across articles\n- Map their components (concepts, practices, institutions, technologies)\n- Identify emergent properties\n- Assess assemblage stability\n\n## 5. TRACE LINES OF FLIGHT\n- Identify escape routes opened by concepts\n- Map where they lead\n- Identify resistances and re-capture risks\n- Assess viability of different escape routes\n\n## 6. ANALYZE TERRITORIALIZATION DYNAMICS\n- Identify what concepts stabilize\n- Identify what they destabilize\n- Map coding/overcoding effects\n- Assess overall territorial function\n\n## 7. IDENTIFY CONCEPTUAL MACHINES\n- Find concept combinations that produce consistent effects\n- Map their operational logic\n- Identify failure conditions\n\n\nCreate a map that reveals the productive power of concepts in this discourse.\n",
-  "concretization_prompt": "\nTransform the affordance analysis to use concrete, recognizable labels:\n\n1. Name concepts specifically:\n   - \"C1\" \u2192 \"Platform Economy\"\n   - \"C2\" \u2192 \"Gig Work\"\n\n2. Name enabled possibilities concretely:\n   - \"EP1\" \u2192 \"Enables: Flexible work scheduling for individuals\"\n   - \"EP2\" \u2192 \"Enables: Labor cost reduction for companies\"\n\n3. Name blocked paths specifically:\n   - \"BP1\" \u2192 \"Forecloses: Traditional employment protections\"\n   - \"BP2\" \u2192 \"Obscures: Employer responsibility for benefits\"\n\n4. Name assemblages evocatively:\n   - \"ASM1\" \u2192 \"The Platform-Worker-Algorithm Assemblage\"\n   - \"ASM2\" \u2192 \"The Flexibility-Precarity Machine\"\n\n5. Name lines of flight concretely:\n   - \"LOF1\" \u2192 \"Escape from 9-5 toward autonomous scheduling\"\n   - \"LOF2\" \u2192 \"Escape from employer control toward platform dependency\"\n\n6. Name territorialization effects:\n   - \"TERR1\" \u2192 \"Recodes 'employee' as 'independent contractor'\"\n\nPreserve all affordance types, assemblage components, and dynamic assessments.\nMake the productive power of concepts immediately visible.\n",
   "canonical_schema": {
     "concepts_analyzed": [
       {
@@ -153,5 +150,65 @@
     "smart_table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/conceptual_affordance_analyzer.py"
+  "source_file": "analyzer/src/engines/conceptual_affordance_analyzer.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What does this concept make possible?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "C1",
+          "to": "Platform Economy"
+        },
+        {
+          "from": "C2",
+          "to": "Gig Work"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

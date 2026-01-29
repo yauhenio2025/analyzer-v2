@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "methodology",
   "researcher_question": "What confounding variables might explain these findings?",
-  "extraction_prompt": "\nYou are detecting CONFOUNDING VARIABLES that might provide alternative\nexplanations for observed relationships.\n\n## WHAT IS CONFOUNDING?\n\nA confound is a third variable (Z) that:\n1. Affects the supposed cause (X)\n2. Affects the supposed effect (Y)\n3. Creates a spurious relationship between X and Y\n\nIf Z is not controlled, we might mistake correlation for causation.\n\nExample:\n- Claim: Ice cream sales (X) cause drownings (Y)\n- Confound: Summer heat (Z) causes both ice cream sales AND swimming\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY CAUSAL CLAIMS\nWhat cause-effect relationships are claimed?\n- What is X (the cause)?\n- What is Y (the effect)?\n- How strong is the claim? (Causes vs. associated with)\n- What type of evidence supports it?\n\n### STEP 2: GENERATE POTENTIAL CONFOUNDERS\nFor each causal claim, brainstorm: What else could explain this?\n\n**Common confounders to consider:**\n- Demographic factors (age, gender, education, income)\n- Geographic factors (region, urban/rural)\n- Temporal factors (time trends, seasonality)\n- Selection effects (who chose to be in the study)\n- Common causes (third factor driving both)\n- Reverse causation (Y causes X, not X causes Y)\n\nFor each potential confounder:\n- How does it affect the supposed cause?\n- How does it affect the supposed effect?\n- How plausible is this alternative explanation?\n\n### STEP 3: ASSESS CONTROL ADEQUACY\nFor each confounder:\n- Was it controlled for?\n- If yes, how? (randomization, matching, statistical control)\n- Is the control adequate?\n\n### STEP 4: GENERATE ALTERNATIVE EXPLANATIONS\nCombine confounders into coherent alternative explanations:\n- What if the relationship is entirely due to confounders?\n- What evidence would distinguish causal from confounded?\n\n### STEP 5: ASSESS CAUSAL INFERENCE VALIDITY\nFor each claim:\n- How valid is the causal inference?\n- What are the key threats?\n- Should we accept causal interpretation?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about mechanisms. \"There might be confounders\" is not useful.\n\"Socioeconomic status affects both X and Y through these mechanisms...\" is useful.\n",
-  "curation_prompt": "\nYou are synthesizing confound detection across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE CONFOUNDERS\n- What confounders appear across multiple claims?\n- Are there systematic confounding patterns?\n\n### 2. ASSESS CONTROL PATTERNS\n- Are confounders consistently controlled?\n- What's the typical control adequacy?\n\n### 3. EVALUATE OVERALL CAUSAL CONFIDENCE\n- Which causal claims survive confound analysis?\n- Which are weakened or refuted?\n\n## OUTPUT GUIDANCE\n\nCreate assessment of which causal claims warrant confidence and which\nare potentially confounded.\n",
-  "concretization_prompt": "\nTransform the confound analysis into actionable assessment:\n\n1. **CAUSAL CLAIMS SUMMARY**\n   ```\n   | Claim | X \u2192 Y | Evidence Type | Validity | Key Confounders |\n   |-------|-------|---------------|----------|-----------------|\n   | C1    | ...   | Observational | Weak     | CF1, CF2        |\n   ```\n\n2. **CONFOUNDERS IDENTIFIED**\n   ```\n   | Confounder | Affects Claims | Controlled? | Adequacy |\n   |------------|----------------|-------------|----------|\n   | CF1: SES   | C1, C3, C5     | Partially   | Questionable |\n   ```\n\n3. **CONFOUNDER DETAILS**\n   ```\n   Claim: [X \u2192 Y]\n   Confounder: [Z]\n   How Z affects X: [Mechanism]\n   How Z affects Y: [Mechanism]\n   Why this matters: [Implication]\n   Controlled: [Yes/No/Partially]\n   ```\n\n4. **ALTERNATIVE EXPLANATIONS**\n   - For claim [C1]: [Alternative explanation]\n   - Plausibility: [Assessment]\n   - Would distinguish: [What evidence needed]\n\n5. **CAUSAL VALIDITY ASSESSMENT**\n   ```\n   | Claim | Validity | Recommendation |\n   |-------|----------|----------------|\n   | C1    | Weak     | Correlational only |\n   | C2    | Moderate | Accept with caveats |\n   ```\n\n6. **BOTTOM LINE**\n   [One paragraph: Which causal claims are trustworthy? What confounds\n   undermine which claims? What additional evidence is needed?]\n",
   "canonical_schema": {
     "causal_claims": [
       {
@@ -90,5 +87,57 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/confound_detector.py"
+  "source_file": "analyzer/src/engines/confound_detector.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "confound detector",
+      "analysis_type_plural": "confound detectors",
+      "core_question": "What confounding variables might explain these findings?",
+      "extraction_steps": [
+        "IDENTIFY CAUSAL CLAIMS",
+        "GENERATE POTENTIAL CONFOUNDERS",
+        "ASSESS CONTROL ADEQUACY",
+        "GENERATE ALTERNATIVE EXPLANATIONS",
+        "ASSESS CAUSAL INFERENCE VALIDITY"
+      ],
+      "key_fields": {},
+      "id_field": "claim_id",
+      "key_relationships": [
+        "leads_to",
+        "supports"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "confound detector",
+      "item_type_plural": "confound detectors",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

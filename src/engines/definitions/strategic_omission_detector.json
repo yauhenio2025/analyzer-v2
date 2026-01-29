@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "epistemology",
   "researcher_question": "What inconvenient facts are being swept under the rug?",
-  "extraction_prompt": "\nYou are detecting STRATEGIC OMISSIONS \u2014 what's being swept under the rug.\n\nThis is about HIDING complexity \u2014 the tendency to sweep inconvenient facts\nunder the rug that would complicate the story being told.\n\n## OMISSION PATTERNS TO DETECT\n\n### 1. MISSING COUNTEREXAMPLES\nThe argument makes broad claims. What obvious exceptions are NOT mentioned?\n- Famous cases that contradict the pattern\n- Historical examples that complicate the narrative\n- Edge cases that reveal the limits of the claim\n- \"What about X?\" cases that any informed reader would think of\n\nQuestions to ask:\n- Is this claim really universal, or are counterexamples being ignored?\n- What's the most famous case that doesn't fit? Is it mentioned?\n- Would an honest opponent immediately point to an unmentioned case?\n\n### 2. ABSENT STAKEHOLDERS\nWho is affected but not consulted? Whose perspective would complicate things?\n- Groups who would disagree with the framing\n- Experts in adjacent fields who might see it differently\n- Those who bear costs vs. those who reap benefits\n- Historical voices who predicted current problems\n\nQuestions to ask:\n- Who loses if this argument wins? Are they quoted?\n- Whose lived experience contradicts the analysis?\n- Who has expertise but isn't cited?\n\n### 3. EXCLUDED DATA/SCOPE\nWhat time periods, geographies, or data sets are conveniently left out?\n- Time periods when the pattern didn't hold\n- Countries/regions where outcomes differed\n- Demographics not included in the sample\n- Methodologies not employed\n\nQuestions to ask:\n- Why these dates and not others?\n- Why these countries and not others?\n- What would the full dataset show?\n\n### 4. UNASKED QUESTIONS\nWhat obvious follow-up questions are NOT posed?\n- \"And then what happens?\" (long-term consequences)\n- \"At what cost?\" (trade-offs)\n- \"According to whom?\" (source of claims)\n- \"Compared to what?\" (baseline/alternative)\n\n### 5. DEFINITIONAL GERRYMANDERING\nAre terms defined to exclude problematic cases?\n- Categories that conveniently leave out failures\n- Success metrics that ignore important dimensions\n- Timeframes that end before problems emerge\n\n## FOR EACH OMISSION FOUND\n\n1. **TYPE**: Which pattern?\n2. **WHAT'S MISSING**: Be specific about what's absent\n3. **WHY RELEVANT**: Why should this be present?\n4. **EVIDENCE OF OMISSION**: How do we know it's swept away, not just forgotten?\n5. **WHO BENEFITS**: Whose argument is helped by this omission?\n6. **IMPACT IF INCLUDED**: How would the argument change if this were addressed?\n7. **OMISSION CONFIDENCE** (0-1): How confident are you this is strategic?\n8. **SIGNIFICANCE** (0-1): How important is what's missing?\n\n\nFocus on the most significant omissions \u2014 things that would substantially\nchange our understanding if included.\n",
-  "curation_prompt": "\nYou are synthesizing strategic omission analysis across multiple articles.\n\n\n## SYNTHESIS TASKS\n\n1. **CONSOLIDATE OMISSIONS**\n   - Merge similar omissions across articles\n   - If the same thing is missing from multiple articles, that's MORE significant\n   - Track: Is this absence universal or just in some sources?\n\n2. **IDENTIFY SYSTEMATIC PATTERNS**\n   - What's NEVER mentioned across the collection?\n   - Are certain stakeholders consistently excluded?\n   - Are certain time periods/geographies always avoided?\n   - Do the omissions benefit the same groups?\n\n3. **MAP BENEFICIARIES**\n   - Who consistently benefits from what's left out?\n   - Is there a pattern suggesting coordinated or shared blind spots?\n   - What worldview is protected by these omissions?\n\n4. **ASSESS DISCOURSE INTEGRITY**\n   - How much of the \"floor\" is actually \"rug\"?\n   - What would the discourse look like if omissions were included?\n   - Rate overall completeness of the discourse\n\n5. **PRIORITIZE REVELATIONS**\n   - Which omissions, if addressed, would most change conclusions?\n   - Which are most clearly strategic (vs. accidental)?\n   - Which reveal systematic bias?\n\n## OUTPUT GUIDANCE\n\nFocus on omissions that reveal something important about the discourse \u2014\nsystematic blindspots or strategic silences that shape conclusions.\n",
-  "concretization_prompt": "\nTransform the strategic omission analysis to be immediately actionable:\n\n1. Name omissions specifically:\n   - \"O1\" \u2192 \"Omitted: Labor displacement costs in automation discussion\"\n   - \"O2\" \u2192 \"Omitted: Global South manufacturing workers' perspectives\"\n\n2. Identify counterexamples concretely:\n   - \"A famous case\" \u2192 \"The 2008 financial crisis, where market self-correction failed\"\n\n3. Name absent stakeholders:\n   - \"Affected workers\" \u2192 \"Amazon warehouse workers, gig economy drivers\"\n\n4. Specify excluded scopes:\n   - \"Some time periods\" \u2192 \"Pre-2010 data that shows opposite trend\"\n\n5. Articulate unasked questions:\n   - \"Follow-up not asked\" \u2192 \"What happens when the venture capital runs out?\"\n\n6. Quantify where possible:\n   - \"This omission appears in 6 of 8 articles\"\n   - \"Only 1 of 15 stakeholders affected is actually quoted\"\n\n7. State the revelation:\n   - \"CRITICAL BLIND SPOT: The entire discourse excludes [perspective],\n     which would fundamentally challenge the [claim]\"\n\nPreserve all scores and beneficiary analysis.\nMake the output useful for filling the gaps in this discourse.\n",
   "canonical_schema": {
     "omissions": [
       {
@@ -99,5 +96,74 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/strategic_omission_detector.py"
+  "source_file": "analyzer/src/engines/strategic_omission_detector.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "strategic omission detector",
+      "analysis_type_plural": "strategic omission detectors",
+      "core_question": "What inconvenient facts are being swept under the rug?",
+      "extraction_steps": [
+        "TYPE",
+        "WHAT'S MISSING",
+        "WHY RELEVANT",
+        "EVIDENCE OF OMISSION",
+        "WHO BENEFITS",
+        "IMPACT IF INCLUDED",
+        "OMISSION CONFIDENCE",
+        "SIGNIFICANCE"
+      ],
+      "key_fields": {},
+      "id_field": "strategic_id",
+      "key_relationships": [
+        "contradicts"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "strategic omission detector",
+      "item_type_plural": "strategic omission detectors",
+      "consolidation_rules": [
+        "CONSOLIDATE OMISSIONS: - Merge similar omissions across articles",
+        "IDENTIFY SYSTEMATIC PATTERNS: - What's NEVER mentioned across the collection?",
+        "MAP BENEFICIARIES: - Who consistently benefits from what's left out?",
+        "ASSESS DISCOURSE INTEGRITY: - How much of the \"floor\" is actually \"rug\"?",
+        "PRIORITIZE REVELATIONS: - Which omissions, if addressed, would most change conclusions?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "O1",
+          "to": "Omitted: Labor displacement costs in automation discussion"
+        },
+        {
+          "from": "O2",
+          "to": "Omitted: Global South manufacturing workers' perspectives"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

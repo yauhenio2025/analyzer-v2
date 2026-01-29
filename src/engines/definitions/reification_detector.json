@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "epistemology",
   "researcher_question": "Where are abstractions being treated as concrete entities?",
-  "extraction_prompt": "\nYou are detecting REIFICATION - where abstractions are treated as concrete entities.\n\n## TYPES OF REIFICATION\n\n### CONCEPT REIFICATION\nAbstract concepts treated as things that act:\n- \"Society demands...\" (society isn't an agent)\n- \"The market decided...\" (markets don't decide)\n- \"History shows...\" (history doesn't show, people interpret)\n\n### STATISTICAL REIFICATION\nStatistical constructs treated as real entities:\n- \"The average person\" (no such person exists)\n- GDP as a measure of wellbeing (it's a specific calculation)\n- IQ as intelligence (it's a test score)\n\n### THEORETICAL REIFICATION\nTheoretical entities treated as concrete:\n- Treating \"human capital\" as actual capital\n- Treating \"social forces\" as physical forces\n- Treating \"market equilibrium\" as a real state\n\n### METAPHOR LITERALIZATION\nMetaphors taken as literal descriptions:\n- \"Information flows\" (treated as if actually flowing)\n- \"Mind as computer\" (then assuming computational properties)\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY ABSTRACTIONS USED\nWhat abstract concepts, categories, or constructs are used?\n- Categories (society, market, culture)\n- Statistical constructs (average, median, index)\n- Theoretical entities (capital, utility, equilibrium)\n- Metaphors (flow, force, network)\n\n### STEP 2: DETECT REIFICATION\nWhere are these abstractions treated as concrete?\n- Given causal agency?\n- Treated as acting or deciding?\n- Given properties they can't have?\n\n### STEP 3: IDENTIFY CATEGORY ERRORS\nWhere are levels of abstraction confused?\n- Aggregate treated as individual?\n- Statistical summary treated as real entity?\n- Theoretical construct treated as observable?\n\n### STEP 4: FLAG LITERALIZED METAPHORS\nWhere are metaphors taken literally?\n- What's the original metaphor?\n- How is it literalized?\n- What problems does this cause?\n\n### STEP 5: SUGGEST CORRECTIONS\nHow should these be properly understood?\n- What is the abstraction actually?\n- How should claims be reformulated?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about the reification. \"The text reifies society\" is not useful.\n\"The claim that 'society rejected this idea' treats society as a unified\nagent capable of rejection, when actually [specific groups/processes]...\" is useful.\n",
-  "curation_prompt": "\nYou are synthesizing reification analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE REIFICATIONS\n- What concepts are commonly reified?\n- What patterns appear?\n\n### 2. ASSESS SEVERITY\n- Which reifications are most problematic?\n- What errors do they lead to?\n\n### 3. SUGGEST CORRECTIONS\n- How should key concepts be understood?\n- What reformulations are needed?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of reifications and their corrections.\n",
-  "concretization_prompt": "\nTransform the reification analysis into actionable insight:\n\n1. **REIFIED CONCEPTS**\n   | Concept | Type | How Reified | Severity |\n   |---------|------|-------------|----------|\n\n2. **CAUSAL ATTRIBUTION ERRORS**\n   - Abstraction: [What's treated as causal]\n   - Attributed effect: [What it supposedly causes]\n   - Problem: [Why this is wrong]\n   - Better formulation: [How to fix]\n\n3. **CATEGORY ERRORS**\n   | Category | Confusion Type | Consequence |\n   |----------|----------------|-------------|\n\n4. **STATISTICAL REIFICATIONS**\n   | Construct | Treated As | Actually Is |\n   |-----------|------------|-------------|\n\n5. **LITERALIZED METAPHORS**\n   | Metaphor | Literalization | Problem |\n   |----------|----------------|---------|\n\n6. **CORRECTIONS**\n   | Reified Usage | Corrected Understanding |\n   |---------------|-------------------------|\n\n7. **BOTTOM LINE**\n   [One paragraph: What key reifications occur? What category errors\n   result? How should these abstractions properly be understood?]\n",
   "canonical_schema": {
     "reified_concepts": [
       {
@@ -90,5 +87,56 @@
     "hegelian_critical",
     "pragmatist_praxis"
   ],
-  "source_file": "analyzer/src/engines/reification_detector.py"
+  "source_file": "analyzer/src/engines/reification_detector.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "reification detector",
+      "analysis_type_plural": "reification detectors",
+      "core_question": "Where are abstractions being treated as concrete entities?",
+      "extraction_steps": [
+        "IDENTIFY ABSTRACTIONS USED",
+        "DETECT REIFICATION",
+        "IDENTIFY CATEGORY ERRORS",
+        "FLAG LITERALIZED METAPHORS",
+        "SUGGEST CORRECTIONS"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "reification detector",
+      "item_type_plural": "reification detectors",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

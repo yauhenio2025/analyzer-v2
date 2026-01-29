@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "dialectics",
   "researcher_question": "What tensions and oppositions structure the debate?",
-  "extraction_prompt": "\nYou are an expert in dialectical analysis, trained in Hegelian and post-structuralist methods.\n\nFor this article, extract ALL dialectical structures:\n\n## THESIS/ANTITHESIS PAIRS\nFor each opposition you identify:\n1. **THESIS**: The dominant or initial position\n   - Core claim and main argument\n   - Who advocates this position\n   - Key evidence cited\n\n2. **ANTITHESIS**: The opposing position\n   - Core counter-claim\n   - Who advocates opposition\n   - Key counter-evidence\n\n3. **SYNTHESIS** (if present):\n   - How are the positions reconciled?\n   - Who proposes the synthesis?\n   - Is it genuine resolution or surface compromise?\n\n4. Rate the TENSION LEVEL (0-1):\n   - 1.0 = irreconcilable opposition\n   - 0.5 = significant disagreement with potential resolution\n   - 0.0 = superficial disagreement already resolved\n\n## BINARY OPPOSITIONS\nIdentify key conceptual binaries structuring the text:\n- nature/culture, public/private, regulation/innovation, etc.\n- Which term is privileged (treated as default/superior)?\n- What structural role does the binary play?\n\n## UNRESOLVED CONTRADICTIONS\nFind logical inconsistencies or tensions:\n- Where does the author contradict themselves?\n- Where do cited sources conflict?\n- What remains unaddressed?\n\n## DIALECTICAL MOVEMENT\nHow does the argument develop dialectically?\n- What triggers shifts in position?\n- What's the overall trajectory?\n\n\nExtract comprehensively - capture all dialectical dynamics in the text.\n",
-  "curation_prompt": "\nYou are synthesizing dialectical analyses from multiple articles into a unified dialectical map.\n\nYour task:\n1. **IDENTIFY RECURRING PAIRS**: Find thesis/antithesis pairs that appear across articles\n   - Same opposition expressed differently = merge\n   - Track which articles address which tensions\n\n2. **TRACK SYNTHESIS ATTEMPTS**:\n   - Which tensions get resolved across the collection?\n   - What resolution strategies are proposed?\n   - Which remain intractable?\n\n3. **MAP BINARY OPPOSITIONS**:\n   - Which binaries structure the entire discourse?\n   - How consistently is each term privileged?\n   - Are any binaries deconstructed or inverted?\n\n4. **IDENTIFY META-CONTRADICTIONS**:\n   - Do articles contradict each other?\n   - What systemic tensions emerge at the collection level?\n\n5. **CHART DIALECTICAL PROGRESSION**:\n   - If articles have temporal ordering, how does the debate evolve?\n   - What triggers position shifts?\n   - What's the current state of the discourse?\n\nCreate clear, descriptive pair_ids (e.g., \"innovation_vs_regulation\").\n\n\nOutput a comprehensive dialectical map of the collection.\n",
-  "concretization_prompt": "\nTransform the dialectical map to use concrete, recognizable labels:\n\n1. Convert pair_ids to descriptive names:\n   - \"D1\" \u2192 \"The Innovation-Regulation Tension\"\n   - \"D2\" \u2192 \"The Speed-Safety Tradeoff\"\n\n2. Name binary oppositions clearly:\n   - Include concrete examples from the text\n\n3. Label contradictions specifically:\n   - \"C1\" \u2192 \"The Efficiency-Equity Paradox\"\n\n4. Make proponents and positions concrete:\n   - Replace generic labels with actual names/organizations\n\nPreserve all structural relationships, tension levels, and resolution statuses.\nMake the output immediately understandable to a researcher.\n",
   "canonical_schema": {
     "dialectical_pairs": [
       {
@@ -105,5 +102,73 @@
     "marxist",
     "hegelian_critical"
   ],
-  "source_file": "analyzer/src/engines/dialectical_structure.py"
+  "source_file": "analyzer/src/engines/dialectical_structure.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "dialectical structure",
+      "analysis_type_plural": "dialectical structures",
+      "core_question": "What tensions and oppositions structure the debate?",
+      "extraction_steps": [
+        "THESIS",
+        "ANTITHESIS",
+        "SYNTHESIS"
+      ],
+      "key_fields": {},
+      "id_field": "dialectical_id",
+      "key_relationships": [
+        "contradicts"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "dialectical structure",
+      "item_type_plural": "dialectical structures",
+      "consolidation_rules": [
+        "IDENTIFY RECURRING PAIRS: Find thesis/antithesis pairs that appear across articles",
+        "TRACK SYNTHESIS ATTEMPTS: - Which tensions get resolved across the collection?",
+        "MAP BINARY OPPOSITIONS: - Which binaries structure the entire discourse?",
+        "IDENTIFY META-CONTRADICTIONS: - Do articles contradict each other?",
+        "CHART DIALECTICAL PROGRESSION: - If articles have temporal ordering, how does the debate evolve?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "D1",
+          "to": "The Innovation-Regulation Tension"
+        },
+        {
+          "from": "D2",
+          "to": "The Speed-Safety Tradeoff"
+        },
+        {
+          "from": "C1",
+          "to": "The Efficiency-Equity Paradox"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

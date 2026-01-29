@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "flows",
   "researcher_question": "What power dynamics and interests lurk beneath the surface of this discourse?",
-  "extraction_prompt": "\nYou are an expert critical analyst uncovering hidden power dynamics.\n\nFor this article, analyze what lies beneath the surface:\n\n1. **IMPLICIT POWER STRUCTURES**: What power arrangements exist unstated?\n   - Who holds power (explicitly or implicitly)?\n   - What type of power: economic, political, cultural, informational, institutional?\n   - How visible is this power structure: hidden, obscured, normalized?\n   - What mechanisms maintain it?\n\n2. **HIDDEN INTERESTS**: What motivations aren't stated?\n   - Who is the actor?\n   - What do they SAY their interest is?\n   - What might their ACTUAL interest be?\n   - What evidence supports this reading?\n   - How confident are you? (0-1)\n\n3. **BENEFICIARY ANALYSIS**: Who gains and loses?\n   - What topic or policy is being discussed?\n   - Who benefits most (primary beneficiaries)?\n   - Who benefits somewhat (secondary)?\n   - Who loses?\n   - How are gains distributed?\n\n4. **STRUCTURAL ADVANTAGES**: What gives some actors an edge?\n   - What group is advantaged?\n   - What's the nature of the advantage?\n   - How is it maintained?\n   - How is it naturalized (made to seem normal)?\n\n5. **POWER PRESERVATION TACTICS**: How is status quo defended?\n   - What tactics are used?\n   - Type: discursive, institutional, economic, coercive\n   - Who uses these tactics?\n   - How effective are they?\n\n\nRead critically - identify what's not explicitly acknowledged.\n",
-  "curation_prompt": "\nYou are synthesizing power analysis from multiple articles.\n\nYour task:\n1. **MAP POWER STRUCTURES**: What structures emerge?\n   - Consolidate implicit structures\n   - Identify patterns across articles\n   - Rate visibility\n\n2. **CATALOG HIDDEN INTERESTS**: What motivations appear?\n   - Aggregate hidden interest analysis\n   - Rate confidence\n   - Note evidence quality\n\n3. **ANALYZE BENEFICIARIES**: Who consistently wins/loses?\n   - Track who benefits across topics\n   - Track who loses across topics\n   - Note distribution patterns\n\n4. **IDENTIFY STRUCTURAL ADVANTAGES**: What advantages persist?\n   - Map advantaged groups\n   - Identify maintenance mechanisms\n   - Note naturalization tactics\n\n5. **CATALOG TACTICS**: How is power preserved?\n   - Inventory preservation tactics\n   - Rate effectiveness\n   - Note who uses what\n\n\nCreate a comprehensive map of hidden power dynamics.\n",
-  "concretization_prompt": "\nTransform the power analysis to be immediately clear:\n\n1. Name power structures:\n   - \"PS1\" \u2192 \"Tech Industry Information Asymmetry\"\n\n2. Describe hidden interests:\n   - \"HI1\" \u2192 \"Corporation X: States 'innovation,' hidden interest: market monopoly\"\n\n3. Name beneficiaries:\n   - \"B1\" \u2192 \"Policy Y benefits: Large incumbents; Harms: New entrants\"\n\n4. Label advantages:\n   - \"SA1\" \u2192 \"First-mover advantage: Platform companies\"\n\n5. Name tactics:\n   - \"T1\" \u2192 \"Regulatory capture tactic (institutional)\"\n\nPreserve all confidence ratings.\nMake the analysis useful for critical power analysis.\n",
   "canonical_schema": {
     "implicit_power_structures": [
       {
@@ -118,5 +115,71 @@
   "paradigm_keys": [
     "marxist"
   ],
-  "source_file": "analyzer/src/engines/power_interest_subtext.py"
+  "source_file": "analyzer/src/engines/power_interest_subtext.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "power subtext",
+      "analysis_type_plural": "power subtexts",
+      "core_question": "What power dynamics and interests lurk beneath the surface of this discourse?",
+      "extraction_steps": [
+        "IMPLICIT POWER STRUCTURES",
+        "HIDDEN INTERESTS",
+        "BENEFICIARY ANALYSIS",
+        "STRUCTURAL ADVANTAGES",
+        "POWER PRESERVATION TACTICS"
+      ],
+      "key_fields": {},
+      "id_field": "power_id",
+      "key_relationships": [
+        "supports"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "power subtext",
+      "item_type_plural": "power subtexts",
+      "consolidation_rules": [
+        "MAP POWER STRUCTURES: What structures emerge?",
+        "CATALOG HIDDEN INTERESTS: What motivations appear?",
+        "ANALYZE BENEFICIARIES: Who consistently wins/loses?",
+        "IDENTIFY STRUCTURAL ADVANTAGES: What advantages persist?",
+        "CATALOG TACTICS: How is power preserved?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "B1",
+          "to": "Policy Y benefits: Large incumbents; Harms: New entrants"
+        },
+        {
+          "from": "T1",
+          "to": "Regulatory capture tactic (institutional)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

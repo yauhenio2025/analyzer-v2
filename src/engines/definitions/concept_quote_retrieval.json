@@ -7,10 +7,59 @@
   "kind": "primitive",
   "reasoning_domain": "evidence collection",
   "researcher_question": "What are the key quotes that illustrate each finding?",
-  "extraction_prompt": "You are conducting Phase 11: QUOTE RETRIEVAL.\n\n## YOUR TASK\n\nFind KEY QUOTES that ILLUSTRATE each major finding about \"{concept}\".\n\n## FINDINGS TO ILLUSTRATE\n\n{findings_summary}\n\n## DOCUMENTS\n\n{documents_text}\n\n## FOR EACH FINDING\n\nFind 2-3 quotes that:\n- DIRECTLY illustrate the finding\n- Are SUBSTANTIVE (not just mentions)\n- Can STAND ALONE as evidence\n\n## OUTPUT FORMAT\n\nReturn JSON with quote_sets[], each containing:\n- finding_id, finding_summary, quotes[{text, source, page_approx, why_illustrative}]\n\nTARGET: 25-40 high-quality quotes total.",
-  "curation_prompt": "Validate quote selection and relevance.",
   "canonical_schema": {
     "type": "object"
   },
-  "paradigm_keys": []
+  "paradigm_keys": [],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What are the key quotes that illustrate each finding?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

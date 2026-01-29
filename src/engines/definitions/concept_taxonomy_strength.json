@@ -7,10 +7,59 @@
   "kind": "primitive",
   "reasoning_domain": "argument evaluation",
   "researcher_question": "How strong is each inferential chain?",
-  "extraction_prompt": "You are conducting Phase 5.2: STRENGTH ASSESSMENT.\n\n## YOUR TASK\n\nAssess the LOGICAL STRENGTH of each chain about \"{concept}\".\n\n## STRENGTH CRITERIA\n\n- **Validity**: Do conclusions follow from premises?\n- **Soundness**: Are premises true/defensible?\n- **Completeness**: Are all necessary premises stated?\n- **Coherence**: Is the chain internally consistent?\n\n## CHAINS TO ASSESS\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each chain: chain_id, overall_strength (1-10), validity_score, soundness_score, completeness_score, coherence_score, weakest_link, justification.\n\nReturn as valid JSON.",
-  "curation_prompt": "Validate strength assessments.",
   "canonical_schema": {
     "type": "object"
   },
-  "paradigm_keys": []
+  "paradigm_keys": [],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "How strong is each inferential chain?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

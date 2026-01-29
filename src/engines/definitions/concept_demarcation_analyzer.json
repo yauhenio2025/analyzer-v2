@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "boundary_analysis",
   "researcher_question": "Where does this concept end and what maintains its boundaries?",
-  "extraction_prompt": "\nYou are an expert in conceptual analysis, examining how concepts draw boundaries.\n\nFor this article, perform a CONCEPT DEMARCATION ANALYSIS:\n\n## 1. CONCEPT IDENTIFICATION\nFor each significant concept:\n- **Term**: The concept name/phrase\n- **Definition**: How it's defined or used\n- **Apparent sharpness**: Does it have clear boundaries or fuzzy ones?\n\n## 2. BOUNDARY SPECIFICATION\nFor each concept, characterize its boundary:\n- **Type**: Is it defined by:\n  - Extension (list of instances)?\n  - Intension (necessary and sufficient conditions)?\n  - Prototype (similarity to best example)?\n  - Criteria (checklist of features)?\n- **Sharpness**: Sharp, gradient, vague, or context-dependent?\n- **Stability**: Stable, shifting, or contested?\n\n## 3. INCLUSION CRITERIA EXTRACTION\nWhat determines if something falls under this concept:\n- **Necessary conditions**: What MUST be true?\n- **Sufficient conditions**: What GUARANTEES inclusion?\n- **Prototype features**: What's the central/typical case?\n- **Family resemblance**: What overlapping features connect instances?\n\n## 4. EXCLUSION CRITERIA EXTRACTION\nWhat determines if something is EXCLUDED:\n- **What is explicitly ruled out?**\n- **Why is it ruled out?** (definitional, normative, pragmatic)\n- **How strict is the exclusion?**\n\n## 5. EDGE CASE IDENTIFICATION\nIdentify borderline cases:\n- **What cases sit on the boundary?**\n- **Why are they borderline?**\n- **What arguments exist for inclusion/exclusion?**\n- **Is this concept susceptible to Sorites paradoxes?**\n\n## 6. BOUNDARY CONTEST DETECTION\nWhere are boundaries disputed:\n- **What boundary is contested?**\n- **Who wants to expand the concept?**\n- **Who wants to restrict it?**\n- **What's at stake?**\n\n## 7. DEMARCATION MECHANISM ANALYSIS\nHow are boundaries maintained:\n- **Who polices the boundary?** (experts, institutions, society)\n- **How is it enforced?**\n- **What challenges exist?**\n\n## 8. NATURAL/CONSTRUCTED ASSESSMENT\nIs this concept tracking something real:\n- **Is it a natural kind?** (like water or gold)\n- **Is it a social construct?** (like money or marriage)\n- **Does it support inductive generalizations?**\n\n\nThink about where concepts end - boundaries matter as much as centers.\n",
-  "curation_prompt": "\nYou are synthesizing concept demarcation analyses from multiple articles.\n\nYour task:\n\n## 1. CONSOLIDATE CONCEPT INVENTORIES\n- Merge same concepts across articles\n- Collect all boundary information\n- Calculate boundary sharpness scores\n\n## 2. SYNTHESIZE BOUNDARY SPECIFICATIONS\n- Aggregate boundary types\n- Assess overall sharpness\n- Note stability across articles\n- Identify where articulation differs\n\n## 3. COMPILE INCLUSION CRITERIA\n- Aggregate criteria for each concept\n- Note where criteria conflict\n- Identify necessary vs. sufficient vs. prototype\n- Weight criteria by prevalence\n\n## 4. COMPILE EXCLUSION CRITERIA\n- Aggregate exclusion patterns\n- Note strictness levels\n- Identify contested exclusions\n\n## 5. CATALOG EDGE CASES\n- Aggregate borderline cases\n- Note resolution patterns\n- Identify Sorites-susceptible concepts\n- Map inclusion/exclusion arguments\n\n## 6. MAP BOUNDARY CONTESTS\n- Identify ongoing disputes\n- Map expansion vs. restriction positions\n- Clarify stakes\n- Note resolution status\n\n## 7. ANALYZE DEMARCATION MECHANISMS\n- Map who enforces which boundaries\n- Identify enforcement mechanisms\n- Rate effectiveness\n- Note challenges and failures\n\n## 8. ASSESS NATURAL VS. CONSTRUCTED\n- Evaluate natural kind status\n- Rate inductive potential\n- Assess cross-cultural stability\n- Note hybrid cases\n\n## 9. MAP BOUNDARY RELATIONS\n- Identify containment relations\n- Map overlaps between concepts\n- Note complementary concepts\n- Identify exclusion relations\n\n\nCreate a map that reveals where concepts end and how those endings are maintained.\n",
-  "concretization_prompt": "\nTransform the demarcation analysis to use concrete, recognizable labels:\n\n1. Name concepts specifically:\n   - \"C1\" \u2192 \"Consciousness\"\n   - \"C2\" \u2192 \"Intelligence\"\n\n2. Name boundaries concretely:\n   - \"B1\" \u2192 \"The Consciousness/Mere Responsiveness Boundary\"\n   - \"B2\" \u2192 \"The Human/Animal Intelligence Divide\"\n\n3. Name inclusion criteria specifically:\n   - \"IC1\" \u2192 \"Self-awareness criterion for consciousness\"\n   - \"IC2\" \u2192 \"Problem-solving flexibility criterion for intelligence\"\n\n4. Name edge cases with examples:\n   - \"EC1\" \u2192 \"Do cephalopods have consciousness? (borderline case)\"\n   - \"EC2\" \u2192 \"Does GPT-4 exhibit intelligence? (contested)\"\n\n5. Name boundary contests specifically:\n   - \"BC1\" \u2192 \"The Expanded Consciousness Debate (panpsychism vs. higher-order theories)\"\n\n6. Name demarcation mechanisms:\n   - \"DM1\" \u2192 \"Neurological criteria enforced by cognitive scientists\"\n   - \"DM2\" \u2192 \"Turing Test enforced by AI researchers\"\n\n7. Name natural kind assessments:\n   - \"NK1\" \u2192 \"Consciousness: Likely natural kind, neural correlates exist\"\n   - \"NK2\" \u2192 \"Intelligence: Social construct, culturally variable definitions\"\n\nPreserve all sharpness scores, criterion types, and contest statuses.\nMake the boundary architecture of concepts visible.\n",
   "canonical_schema": {
     "concepts_analyzed": [
       {
@@ -143,5 +140,73 @@
     "mermaid_mindmap"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/concept_demarcation_analyzer.py"
+  "source_file": "analyzer/src/engines/concept_demarcation_analyzer.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "Where does this concept end and what maintains its boundaries?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "C1",
+          "to": "Consciousness"
+        },
+        {
+          "from": "C2",
+          "to": "Intelligence"
+        },
+        {
+          "from": "B1",
+          "to": "The Consciousness/Mere Responsiveness Boundary"
+        },
+        {
+          "from": "B2",
+          "to": "The Human/Animal Intelligence Divide"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

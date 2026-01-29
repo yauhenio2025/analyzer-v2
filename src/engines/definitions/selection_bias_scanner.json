@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "methodology",
   "researcher_question": "How might selection bias affect these findings?",
-  "extraction_prompt": "\nYou are scanning for SELECTION BIAS \u2014 systematic non-representativeness\nin samples, data, or evidence that could bias conclusions.\n\n## TYPES OF SELECTION BIAS\n\n### SAMPLING BIAS\nWho/what gets into the sample isn't representative:\n- Convenience samples (whoever is easy to reach)\n- Volunteer samples (only motivated people)\n- Geographic limits (only certain places)\n- Temporal limits (only certain times)\n\n### SURVIVORSHIP BIAS\nOnly seeing what survived selection process:\n- Successful companies (failures disappeared)\n- Living people (deceased can't be surveyed)\n- Standing buildings (demolished ones aren't visible)\n- Published studies (failed studies in file drawers)\n\nClassic example: \"Follow the strategies of successful companies\"\nProblem: The same strategies may have been used by failed companies\n\n### PUBLICATION BIAS\nPublished research is systematically different from unpublished:\n- Positive results published, null results not\n- Surprising findings published, expected findings not\n- Clean results published, messy results not\n\nThe \"file drawer problem\": Null results languish unpublished\n\n### SELF-SELECTION\nPeople choose whether to participate:\n- Volunteers differ from non-volunteers\n- Survey responders differ from non-responders\n- People who share experiences differ from those who don't\n\n### ATTRITION BIAS\nWho drops out of longitudinal studies isn't random\n\n### AVAILABILITY BIAS\nWhat's available to study isn't representative of what exists\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY SAMPLES/DATA\nWhat sample or data is being used?\n- Who/what is included?\n- How was selection done?\n- What's the target population?\n\n### STEP 2: DETECT SELECTION MECHANISMS\nHow did things get into (or stay out of) the sample?\n- What inclusion criteria?\n- What exclusion criteria?\n- What survival process?\n- What publication filter?\n\n### STEP 3: ASSESS WHO'S MISSING\nWho/what is NOT in the sample?\n- Who was excluded by design?\n- Who self-excluded?\n- Who didn't survive?\n- What didn't get published?\n\n### STEP 4: ANALYZE BIAS DIRECTION\nHow do the missing differ from the included?\n- In ways that make findings look better or worse?\n- In ways that affect which conclusions are drawn?\n\n### STEP 5: ASSESS IMPACT\nHow does selection bias affect the conclusions?\n- What findings are overstated?\n- What findings are understated?\n- What findings might reverse with representative sample?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about selection mechanisms and their effects.\nThe goal is to identify how non-representative samples bias conclusions.\n",
-  "curation_prompt": "\nYou are synthesizing selection bias analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE BIAS PATTERNS\n- What types of selection bias are most common?\n- Are there systematic patterns across studies?\n\n### 2. ASSESS CUMULATIVE IMPACT\n- How do biases across sources combine?\n- Is the overall evidence base biased in a direction?\n\n### 3. IDENTIFY ROBUST FINDINGS\n- Which findings survive selection bias concerns?\n- Which are most compromised?\n\n## OUTPUT GUIDANCE\n\nCreate assessment of how selection bias affects confidence in overall conclusions.\n",
-  "concretization_prompt": "\nTransform the selection bias analysis into actionable assessment:\n\n1. **SELECTION BIAS SUMMARY**\n   ```\n   | Study | Bias Type | Severity | Direction | Impact |\n   |-------|-----------|----------|-----------|--------|\n   | S1    | Survivorship | Severe | Overstates | High |\n   ```\n\n2. **BIAS DETAILS**\n   ```\n   Study: [Name]\n   Bias: [Type]\n   Included: [Who/what is in sample]\n   Excluded: [Who/what is missing]\n   Selection mechanism: [How this happened]\n   How excluded differs: [Why this matters]\n   Impact: [How conclusions affected]\n   ```\n\n3. **SURVIVORSHIP BIAS CASES**\n   - [What we see]: [Survivors/successes]\n   - [What we don't see]: [Failures/deceased]\n   - Implication: [How this biases conclusions]\n\n4. **PUBLICATION BIAS CONCERNS**\n   - Published: [What we see]\n   - File drawer: [What's likely missing]\n   - Effect: [How this biases overall evidence]\n\n5. **IMPACT ASSESSMENT**\n   | Study | Bias Severity | Trustworthiness | Affected Claims |\n   |-------|---------------|-----------------|-----------------|\n\n6. **BOTTOM LINE**\n   [One paragraph: How serious is selection bias in this evidence base?\n   Which conclusions survive scrutiny? What would be needed to correct?]\n",
   "canonical_schema": {
     "studies_analyzed": [
       {
@@ -107,5 +104,56 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/selection_bias_scanner.py"
+  "source_file": "analyzer/src/engines/selection_bias_scanner.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "selection bias scanner",
+      "analysis_type_plural": "selection bias scanners",
+      "core_question": "How might selection bias affect these findings?",
+      "extraction_steps": [
+        "IDENTIFY SAMPLES/DATA",
+        "DETECT SELECTION MECHANISMS",
+        "ASSESS WHO'S MISSING",
+        "ANALYZE BIAS DIRECTION",
+        "ASSESS IMPACT"
+      ],
+      "key_fields": {},
+      "id_field": "selection_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "selection bias scanner",
+      "item_type_plural": "selection bias scanners",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

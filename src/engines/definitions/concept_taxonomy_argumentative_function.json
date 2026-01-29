@@ -7,10 +7,59 @@
   "kind": "primitive",
   "reasoning_domain": "rhetorical analysis",
   "researcher_question": "What argumentative work does each chain do?",
-  "extraction_prompt": "You are conducting Phase 5.5: ARGUMENTATIVE FUNCTION classification.\n\n## YOUR TASK\n\nClassify each argument chain by its ARGUMENTATIVE FUNCTION for arguments about \"{concept}\".\n\n## ARGUMENTATIVE FUNCTION TAXONOMY\n\n- **foundational**: ESTABLISHES core claims\n  - Sets up premises that other arguments build on\n  - \"The starting point is...\"\n\n- **elaborative**: DEVELOPS or EXTENDS a position\n  - Adds detail, nuance, or scope\n  - \"Furthermore...\", \"More specifically...\"\n\n- **defensive**: PROTECTS against objections\n  - Anticipates and answers criticisms\n  - \"One might object that..., but...\"\n\n- **bridge**: CONNECTS different parts of argument\n  - Links separate lines of reasoning\n  - \"This connects to the earlier point about...\"\n\n- **culminative**: ARRIVES at final conclusions\n  - Draws everything together\n  - \"Therefore, we can conclude...\"\n\n## CHAINS TO CLASSIFY\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each chain: chain_id, argumentative_function, connects_to (for bridge), protects (for defensive), confidence, justification.\n\nReturn as valid JSON.",
-  "curation_prompt": "Validate argumentative function classifications.",
   "canonical_schema": {
     "type": "object"
   },
-  "paradigm_keys": []
+  "paradigm_keys": [],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "argument structure",
+      "analysis_type_plural": "argument structures",
+      "core_question": "What argumentative work does each chain do?",
+      "extraction_steps": [
+        "Read the document carefully to understand the context",
+        "Identify key items matching the analysis type",
+        "Extract relationships between items",
+        "Build the relationship graph",
+        "Verify completeness and accuracy"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "argument structure",
+      "item_type_plural": "argument structures",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }

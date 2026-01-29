@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "rhetoric",
   "researcher_question": "Where do arguments rely on volume rather than substance?",
-  "extraction_prompt": "\nYou are detecting RHETORICAL AMPLIFICATION \u2014 words that add volume without substance.\n\n## AMPLIFICATION PATTERNS\n\n### 1. HOLLOW INTENSIFIERS\nWords that sound emphatic but add nothing:\n- \"Very\" / \"Extremely\" / \"Incredibly\" / \"Tremendously\"\n- \"Hugely\" / \"Massively\" / \"Vastly\"\n\nTest: Can you replace it with a specific quantity or comparison?\n\"Very large\" \u2192 \"Larger than X\" or \"50% above average\"\n\n### 2. FALSE PRECISION\nWords claiming accuracy without providing it:\n- \"Literally\" (when not literal)\n- \"Actually\" (when not contrasting with a misconception)\n- \"Exactly\" / \"Precisely\" (when approximate)\n- \"Technically\" (when not being technical)\n\nTest: Is this word doing real precision work or just emphasis?\n\n### 3. EMPHATIC FILLER\nWords hiding absence of reasoning:\n- \"Clearly\" / \"Obviously\" / \"Evidently\"\n- \"Undoubtedly\" / \"Undeniably\" / \"Unquestionably\"\n- \"Of course\" / \"Naturally\"\n\nTest: If it's so clear, why state it? Often these mask weak reasoning.\n\n### 4. VOLUME SUBSTITUTES\nIntensity where evidence should be:\n- \"It cannot be overstated...\" (yet no evidence follows)\n- \"The importance of X is immense...\" (without explaining why)\n- \"This is absolutely critical...\" (without justification)\n\nTest: What would remain if you removed the intensifier?\n\n## FOR EACH INSTANCE\n\n1. **QUOTE**: The text containing amplification\n2. **INTENSIFIER**: The amplifying word/phrase\n3. **TYPE**: Which pattern (hollow, false precision, emphatic, volume)\n4. **WHAT IT MODIFIES**: What claim is being amplified\n5. **SUBSTANCE ADDED**: Does it add real meaning?\n6. **REMOVABLE**: Would the argument survive without it?\n7. **UNDERLYING WEAKNESS**: What gap might this mask?\n8. **REPLACEMENT**: How to make the same point with substance\n\n\n## OUTPUT GUIDANCE\n\nFocus on amplification that masks weak arguments, not casual language.\nThe goal is to identify where rhetoric substitutes for evidence.\n",
-  "curation_prompt": "\nYou are synthesizing rhetorical amplification detection across multiple articles.\n\n\n## SYNTHESIS TASKS\n\n### 1. COUNT AMPLIFICATION PATTERNS\n- Which intensifiers appear most frequently?\n- Are there characteristic patterns in this discourse?\n- Which authors/articles rely most on amplification?\n\n### 2. MAP TO ARGUMENT STRENGTH\n- Do the most amplified claims tend to be weakest?\n- Is there correlation between intensifier use and evidence quality?\n- What would the discourse look like without amplification?\n\n### 3. IDENTIFY SYSTEMATIC PATTERNS\n- Are certain topics more amplified than others?\n- Is amplification concentrated or distributed?\n- What does the pattern reveal about discourse quality?\n\n### 4. CREATE IMPROVEMENT GUIDANCE\n- Compile suggested replacements\n- Create templates for substantive alternatives\n- Note which arguments need most reconstruction\n\n## OUTPUT GUIDANCE\n\nThe goal is to map rhetorical amplification patterns and provide guidance\nfor more substantive discourse.\n",
-  "concretization_prompt": "\nTransform the amplification analysis to be actionable:\n\n1. Create an amplification frequency table:\n   | Intensifier | Count | Most Common Context |\n   |-------------|-------|---------------------|\n   | \"clearly\"   | 12    | Hiding weak claims  |\n\n2. Show before/after examples:\n   - AMPLIFIED: \"This is clearly extremely important\"\n   - SUBSTANTIVE: \"This matters because [specific reason]\"\n\n3. Identify highest-impact replacements:\n   - Which amplified claims would benefit most from substance?\n   - What specific evidence would replace the intensifiers?\n\n4. Assess discourse quality:\n   - \"X% of major claims rely on amplification\"\n   - \"Removing intensifiers would expose Y weak arguments\"\n\n5. Create a style guide:\n   - Avoid: \"very,\" \"extremely,\" \"literally\" (without literal meaning)\n   - Instead: Specific quantities, comparisons, evidence\n\nPreserve all counts and patterns.\nMake the output useful for improving argumentative rigor.\n",
   "canonical_schema": {
     "amplification_instances": [
       {
@@ -66,5 +63,59 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/rhetorical_amplification_detector.py"
+  "source_file": "analyzer/src/engines/rhetorical_amplification_detector.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "rhetorical amplification detector",
+      "analysis_type_plural": "rhetorical amplification detectors",
+      "core_question": "Where do arguments rely on volume rather than substance?",
+      "extraction_steps": [
+        "QUOTE",
+        "INTENSIFIER",
+        "TYPE",
+        "WHAT IT MODIFIES",
+        "SUBSTANCE ADDED",
+        "REMOVABLE",
+        "UNDERLYING WEAKNESS",
+        "REPLACEMENT"
+      ],
+      "key_fields": {},
+      "id_field": "rhetorical_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "rhetorical amplification detector",
+      "item_type_plural": "rhetorical amplification detectors",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

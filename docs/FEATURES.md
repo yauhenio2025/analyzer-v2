@@ -1,6 +1,6 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-01-26
+> Auto-maintained by Claude Code. Last updated: 2026-01-29
 
 ## Engine Definitions
 
@@ -73,6 +73,44 @@
 - **Entry Points**:
   - `src/chains/definitions/critical_analysis_chain.json`
 - **Added**: 2026-01-26
+
+## Stage Prompt Composition
+
+### Stage Templates
+- **Status**: Active
+- **Description**: Generic Jinja2 templates for extraction, curation, and concretization stages
+- **Entry Points**:
+  - `src/stages/templates/extraction.md.j2` - Generic extraction template
+  - `src/stages/templates/curation.md.j2` - Generic curation template
+  - `src/stages/templates/concretization.md.j2` - Generic concretization template
+- **Dependencies**: Jinja2
+- **Added**: 2026-01-29
+
+### Stage Composer
+- **Status**: Active
+- **Description**: Composes prompts at runtime from templates + engine context + frameworks
+- **Entry Points**:
+  - `src/stages/composer.py:1-200` - StageComposer class with Jinja2 rendering
+  - `src/stages/schemas.py:1-200` - StageContext, ExtractionContext, etc.
+  - `src/stages/registry.py:1-100` - StageRegistry for templates/frameworks
+- **Dependencies**: Jinja2, Pydantic v2
+- **Added**: 2026-01-29
+
+### Shared Frameworks
+- **Status**: Active
+- **Description**: Reusable methodological primers for template injection
+- **Entry Points**:
+  - `src/stages/frameworks/brandomian.json` - Brandomian inferentialism primer
+  - `src/stages/frameworks/dennett.json` - Dennett's critical toolkit
+  - `src/stages/frameworks/toulmin.json` - Toulmin model of argumentation
+- **Added**: 2026-01-29
+
+### Engine Migration Script
+- **Status**: Active
+- **Description**: Migrates engines from old prompt format to new stage_context format
+- **Entry Points**:
+  - `scripts/migrate_engines_to_stages.py` - Migration script with dry-run support
+- **Added**: 2026-01-29
 
 ## API
 

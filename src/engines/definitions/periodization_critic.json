@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "temporal",
   "researcher_question": "Are the proposed time periods analytically justified?",
-  "extraction_prompt": "\nYou are critically examining PERIODIZATION - whether the way time is\ndivided into periods is analytically justified.\n\n## PERIODIZATION PROBLEMS\n\n### ARBITRARY BOUNDARIES\n- Why this date and not another?\n- Is the boundary driven by convenient round numbers?\n- Does the boundary mark real change?\n\n### OVERSIMPLIFICATION\n- Is the period internally diverse?\n- Does the label obscure important variation?\n- Are subperiods needed?\n\n### EVENT-DRIVEN PERIODIZATION\n- Is the period defined by a single event?\n- Did that event really change everything?\n- What continued unchanged?\n\n### TELEOLOGICAL PERIODIZATION\n- Is the period defined by its outcome?\n- Would contemporaries recognize this period?\n- Does it impose hindsight?\n\n### CONTINUITY IGNORED\n- What persists across the supposed boundary?\n- Are continuities as important as ruptures?\n- Does periodization overstate change?\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY PERIODIZATION SCHEMES\nWhat periodizations are proposed or used?\n- What periods are defined?\n- What domain is being periodized?\n- Who proposes this scheme?\n\n### STEP 2: EXAMINE BOUNDARIES\nFor each boundary between periods:\n- What date/moment is used?\n- What justifies this boundary?\n- What changes at this point?\n- What continues unchanged?\n\n### STEP 3: ASSESS INTERNAL COHERENCE\nFor each period:\n- Does it hang together?\n- What variation exists within it?\n- What unifies the period?\n\n### STEP 4: CRITIQUE BOUNDARIES\nAre boundaries well-justified?\n- Are they arbitrary?\n- Are they oversimplified?\n- Are they teleological?\n- What alternatives exist?\n\n### STEP 5: CONSIDER ALTERNATIVES\nWhat alternative periodizations might work?\n- Different boundaries?\n- Different number of periods?\n- Different organizing principles?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about boundary problems. \"The periodization is problematic\"\nis not useful. \"The boundary at 1945 overemphasizes political rupture\nwhile obscuring that [X, Y, Z] continued unchanged, suggesting [alternative\nboundary] might better capture [analytical purpose]\" is useful.\n",
-  "curation_prompt": "\nYou are synthesizing periodization critiques across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. MAP PERIODIZATION SCHEMES\n- What schemes appear across sources?\n- How do they differ?\n\n### 2. AGGREGATE CRITIQUES\n- What boundary problems recur?\n- What coherence issues appear?\n\n### 3. ASSESS ALTERNATIVES\n- What alternative periodizations are proposed?\n- What are their merits?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive assessment of periodization quality and alternatives.\n",
-  "concretization_prompt": "\nTransform the periodization critique into actionable insight:\n\n1. **PERIODIZATION SCHEMES**\n   | Scheme | Periods | Domain | Purpose |\n   |--------|---------|--------|---------|\n\n2. **PERIODS**\n   | Period | Dates | Defining Characteristics | Coherence |\n   |--------|-------|-------------------------|-----------|\n\n3. **BOUNDARIES**\n   | Boundary | Date | What Changes | What Continues |\n   |----------|------|--------------|----------------|\n\n4. **BOUNDARY CRITIQUE**\n   | Boundary | Critique Type | Detail | Alternative |\n   |----------|---------------|--------|-------------|\n\n5. **COHERENCE ASSESSMENT**\n   | Period | Problems | Internal Diversity | Verdict |\n   |--------|----------|-------------------|---------|\n\n6. **ALTERNATIVE PERIODIZATIONS**\n   | Alternative | Rationale | Advantages | Disadvantages |\n   |-------------|-----------|------------|---------------|\n\n7. **BOTTOM LINE**\n   [One paragraph: Are the proposed periodizations analytically justified?\n   What boundary problems exist? What alternatives might work better?]\n",
   "canonical_schema": {
     "periodization_schemes": [
       {
@@ -109,5 +106,56 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/periodization_critic.py"
+  "source_file": "analyzer/src/engines/periodization_critic.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "periodization critic",
+      "analysis_type_plural": "periodization critics",
+      "core_question": "Are the proposed time periods analytically justified?",
+      "extraction_steps": [
+        "IDENTIFY PERIODIZATION SCHEMES",
+        "EXAMINE BOUNDARIES",
+        "ASSESS INTERNAL COHERENCE",
+        "CRITIQUE BOUNDARIES",
+        "CONSIDER ALTERNATIVES"
+      ],
+      "key_fields": {},
+      "id_field": "periodization_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "periodization critic",
+      "item_type_plural": "periodization critics",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

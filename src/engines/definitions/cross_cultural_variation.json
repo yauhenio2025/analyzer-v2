@@ -7,9 +7,6 @@
   "kind": "comparison",
   "reasoning_domain": "comparison",
   "researcher_question": "How do cultural contexts shape this discourse differently?",
-  "extraction_prompt": "\nYou are an expert cross-cultural analyst examining cultural variations.\n\nFor this article, extract ALL cultural and cross-cultural content:\n\n1. **CULTURAL CONTEXTS**: What cultural contexts are discussed?\n   - Name and geographic scope\n   - Cultural dimensions (if assessable):\n     * Individualism-Collectivism (-1 to 1)\n     * Power distance (0-1)\n     * Uncertainty avoidance (0-1)\n     * Long/short-term orientation (-1 to 1)\n   - Relevant values associated with this context\n\n2. **CROSS-CULTURAL VARIATIONS**: What differs across cultures?\n   - What topic shows variation?\n   - Between which contexts?\n   - What's the variation?\n   - How is it explained?\n   - How significant is it? (0-1)\n\n3. **UNIVERSAL PATTERNS**: What seems to hold everywhere?\n   - What pattern appears universal?\n   - In which contexts observed?\n   - Confidence it's truly universal (0-1)\n   - Any exceptions noted?\n\n4. **CULTURE-SPECIFIC PATTERNS**: What's unique to a context?\n   - What pattern is culture-specific?\n   - Which context is it specific to?\n   - What cultural factors explain it?\n   - How transferable might it be? (0-1)\n\n5. **TRANSLATION CHALLENGES**: What's hard to translate?\n   - What concept is challenging?\n   - Original and target contexts\n   - Challenge type: conceptual, linguistic, practical\n   - Any proposed solutions?\n\n\nBe comprehensive - capture both explicit and implicit cultural dimensions.\n",
-  "curation_prompt": "\nYou are synthesizing cross-cultural analysis from multiple articles.\n\nYour task:\n1. **MAP CULTURAL CONTEXTS**: What contexts appear?\n   - Consolidate context descriptions\n   - Note cultural dimensions\n   - Identify key values\n\n2. **CATALOG VARIATIONS**: What differs across cultures?\n   - Aggregate variations by topic\n   - Rate significance\n   - Note explanations\n\n3. **IDENTIFY UNIVERSALS**: What holds everywhere?\n   - Consolidate universal patterns\n   - Rate confidence\n   - Note exceptions\n\n4. **MAP CULTURE-SPECIFIC**: What's unique?\n   - Catalog culture-specific patterns\n   - Note cultural explanations\n   - Assess transferability\n\n5. **COMPILE TRANSLATION CHALLENGES**: What's hard to translate?\n   - Group by challenge type\n   - Note proposed solutions\n\n\nCreate a comprehensive cross-cultural map of the discourse.\n",
-  "concretization_prompt": "\nTransform the cross-cultural analysis to be clear:\n\n1. Name cultural contexts:\n   - \"C1\" \u2192 \"East Asian (Confucian-influenced) Context\"\n\n2. Describe variations:\n   - \"V1\" \u2192 \"Variation: Regulatory approach (US market-led vs. EU precautionary)\"\n\n3. Name universal patterns:\n   - \"U1\" \u2192 \"Universal: Economic efficiency concerns (observed in all contexts)\"\n\n4. Label culture-specific patterns:\n   - \"CS1\" \u2192 \"Culture-specific: Guanxi in Chinese business (low transferability)\"\n\n5. Describe translation challenges:\n   - \"TC1\" \u2192 \"Challenge: 'Privacy' concept translation to East Asian contexts\"\n\nPreserve all dimensional ratings and significance scores.\nMake the analysis useful for cross-cultural understanding.\n",
   "canonical_schema": {
     "cultural_contexts": [
       {
@@ -106,5 +103,75 @@
     "gemini_geographic_map"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/cross_cultural_variation.py"
+  "source_file": "analyzer/src/engines/cross_cultural_variation.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "cross-cultural",
+      "analysis_type_plural": "cross-culturals",
+      "core_question": "How do cultural contexts shape this discourse differently?",
+      "extraction_steps": [
+        "CULTURAL CONTEXTS",
+        "CROSS-CULTURAL VARIATIONS",
+        "UNIVERSAL PATTERNS",
+        "CULTURE-SPECIFIC PATTERNS",
+        "TRANSLATION CHALLENGES"
+      ],
+      "key_fields": {},
+      "id_field": "cross_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "cross-cultural",
+      "item_type_plural": "cross-culturals",
+      "consolidation_rules": [
+        "MAP CULTURAL CONTEXTS: What contexts appear?",
+        "CATALOG VARIATIONS: What differs across cultures?",
+        "IDENTIFY UNIVERSALS: What holds everywhere?",
+        "MAP CULTURE-SPECIFIC: What's unique?",
+        "COMPILE TRANSLATION CHALLENGES: What's hard to translate?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "C1",
+          "to": "East Asian (Confucian-influenced) Context"
+        },
+        {
+          "from": "V1",
+          "to": "Variation: Regulatory approach (US market-led vs. EU precautionary)"
+        },
+        {
+          "from": "U1",
+          "to": "Universal: Economic efficiency concerns (observed in all contexts)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

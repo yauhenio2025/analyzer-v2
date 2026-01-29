@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "theory",
   "researcher_question": "What analytical frameworks structure thinking in this collection?",
-  "extraction_prompt": "\nYou are an expert at identifying and mapping analytical frameworks.\n\nFor this article, extract ALL frameworks used or developed:\n\n## FRAMEWORKS\nFor each framework, model, or typology:\n\n1. **IDENTIFICATION**:\n   - Name (formal name or descriptive label)\n   - Type: theoretical_model, typology, taxonomy, causal_model, analytical_lens, process_model, matrix\n   - Originator (if attributed)\n   - Domain of application\n\n2. **COMPONENTS**:\n   List all elements of the framework:\n   - Variables (things that vary)\n   - Categories (discrete types)\n   - Stages (temporal sequence)\n   - Dimensions (axes of analysis)\n   - Mechanisms (causal processes)\n\n3. **RELATIONSHIPS**:\n   How do components relate?\n   - Causal relationships\n   - Correlations\n   - Containment (part-whole)\n   - Sequence (temporal order)\n   - Contrast (oppositions)\n\n4. **APPLICATION**:\n   - What is the framework applied to?\n   - How successful is the application?\n   - What adaptations are made?\n   - What insights does it generate?\n\n5. **LIMITATIONS**:\n   - What does the framework miss?\n   - Where does it break down?\n   - What critiques are offered?\n\n## FRAMEWORK RELATIONSHIPS\nWhen multiple frameworks appear:\n- Are they complementary or competing?\n- Do they operate at different levels?\n- Can they be synthesized?\n\n\nExtract every analytical structure you can identify.\n",
-  "curation_prompt": "\nYou are synthesizing framework extractions into a unified conceptual map.\n\nYour task:\n1. **CONSOLIDATE FRAMEWORKS**: Merge same frameworks across articles\n   - Same framework = merge\n   - Aggregate components if additional ones identified\n   - Note variations in how it's presented\n\n2. **MAP FRAMEWORK RELATIONSHIPS**:\n   - Which frameworks compete?\n   - Which are complementary?\n   - Which can be synthesized?\n   - Are any nested within others?\n\n3. **TRACK APPLICATIONS**:\n   - How are frameworks actually used?\n   - Which applications are successful?\n   - What adaptations are common?\n   - What limitations emerge through use?\n\n4. **IDENTIFY EMERGENT FRAMEWORKS**:\n   - Are new frameworks being proposed?\n   - How do they build on existing ones?\n   - What's their novel contribution?\n\n5. **ASSESS LANDSCAPE**:\n   - What framework types dominate?\n   - What's missing?\n   - Is there theoretical coherence or fragmentation?\n\nCreate clear framework_ids (e.g., \"fw_porters_five_forces\", \"fw_governance_triangle\").\n\n\nOutput a comprehensive map of conceptual frameworks.\n",
-  "concretization_prompt": "\nTransform the framework extraction to use concrete labels:\n\n1. Convert framework_ids to full names:\n   - \"F1\" \u2192 \"Porter's Five Forces Model\"\n   - \"F2\" \u2192 \"Platform Governance Triangle\"\n\n2. Name components clearly:\n   - Use actual terminology from the frameworks\n\n3. Label relationships specifically:\n   - \"R1\" \u2192 \"Market Power \u2192 Innovation Rate (negative correlation)\"\n\n4. Make applications concrete:\n   - Specify actual cases, industries, contexts\n\nPreserve all structural relationships and application details.\nMake the framework landscape immediately navigable.\n",
   "canonical_schema": {
     "frameworks": [
       {
@@ -109,5 +106,75 @@
     "gemini_network_graph"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/conceptual_framework_extraction.py"
+  "source_file": "analyzer/src/engines/conceptual_framework_extraction.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "What analytical frameworks structure thinking in this collection?",
+      "extraction_steps": [
+        "IDENTIFICATION",
+        "COMPONENTS",
+        "RELATIONSHIPS",
+        "APPLICATION",
+        "LIMITATIONS"
+      ],
+      "key_fields": {},
+      "id_field": "conceptual_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [
+        "CONSOLIDATE FRAMEWORKS: Merge same frameworks across articles",
+        "MAP FRAMEWORK RELATIONSHIPS: - Which frameworks compete?",
+        "TRACK APPLICATIONS: - How are frameworks actually used?",
+        "IDENTIFY EMERGENT FRAMEWORKS: - Are new frameworks being proposed?",
+        "ASSESS LANDSCAPE: - What framework types dominate?"
+      ],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "F1",
+          "to": "Porter's Five Forces Model"
+        },
+        {
+          "from": "F2",
+          "to": "Platform Governance Triangle"
+        },
+        {
+          "from": "R1",
+          "to": "Market Power \u2192 Innovation Rate (negative correlation)"
+        }
+      ],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

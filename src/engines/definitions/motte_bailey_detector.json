@@ -7,9 +7,6 @@
   "kind": "synthesis",
   "reasoning_domain": "rhetoric",
   "researcher_question": "Where do arguments retreat from strong to weak claims when challenged?",
-  "extraction_prompt": "\nYou are detecting MOTTE AND BAILEY patterns - where arguers retreat from\nbold claims to defensible claims when challenged.\n\n## THE PATTERN\n\n### BAILEY (The Bold Claim)\n- The controversial, interesting claim actually being advanced\n- Often provocative or far-reaching\n- Difficult to defend rigorously\n- What the arguer wants you to accept\n\n### MOTTE (The Defensible Claim)\n- The modest, easily defended fallback position\n- Often trivially true or uncontroversial\n- Where the arguer retreats when challenged\n- Used to claim \"that's what I meant all along\"\n\n### THE SWITCH\n- Bold claim made initially\n- When challenged, retreat to defensible claim\n- Claim victory or dismissal of critic\n- Return to bold claim when pressure subsides\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY BOLD CLAIMS (BAILEYS)\nWhat strong, controversial claims are made?\n- What makes them bold?\n- Where are they vulnerable?\n- What would they require to defend?\n\n### STEP 2: IDENTIFY DEFENSIVE CLAIMS (MOTTES)\nWhat modest claims could serve as retreats?\n- Are they stated or implied?\n- Are they trivially true?\n- Could they be what's \"really meant\"?\n\n### STEP 3: DETECT SWITCHING\nIs there evidence of switching between claims?\n- Does the arguer retreat when challenged?\n- Do they return to bold claims later?\n- Is there strategic ambiguity?\n\n### STEP 4: IDENTIFY AMBIGUITY EXPLOITATION\nWhat ambiguities enable the pattern?\n- What terms have both bold and modest readings?\n- How is ambiguity exploited?\n\n### STEP 5: ASSESS PATTERN\nHow clear is the motte-bailey pattern?\n- Is switching explicit or implicit?\n- Is it deliberate or accidental?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about both claims. \"This is a motte and bailey\" is not useful.\n\"The bold claim that [X] retreats to the defensible claim that [Y] when\nchallenged on [Z], but then [X] is reasserted when discussing [W]\" is useful.\n",
-  "curation_prompt": "\nYou are synthesizing motte-bailey detection across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE INSTANCES\n- What motte-bailey patterns appear?\n- What claims are involved?\n\n### 2. IDENTIFY COMMON PATTERNS\n- What switching triggers recur?\n- What ambiguities are exploited?\n\n### 3. ASSESS PREVALENCE\n- How common is this pattern?\n- How deliberate does it appear?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of motte-bailey patterns and their mechanisms.\n",
-  "concretization_prompt": "\nTransform the motte-bailey analysis into actionable insight:\n\n1. **MOTTE-BAILEY INSTANCES**\n   | ID | Bailey (Bold) | Motte (Defensible) | Switching? |\n   |----|---------------|--------------------| -----------|\n\n2. **BAILEY CLAIMS (Bold)**\n   - Claim: [Text]\n   - What makes it bold: [Why controversial]\n   - Vulnerability: [Where attackable]\n\n3. **MOTTE CLAIMS (Defensible)**\n   - Claim: [Text]\n   - Defensibility: [Why safe]\n   - Relationship to bailey: [Connection]\n\n4. **SWITCHING PATTERNS**\n   | Instance | Trigger | Retreat Mechanism | Return? |\n   |----------|---------|-------------------|---------|\n\n5. **AMBIGUITY EXPLOITATION**\n   | Term | Bold Reading | Modest Reading | How Exploited |\n   |------|--------------|----------------|---------------|\n\n6. **BOTTOM LINE**\n   [One paragraph: What motte-bailey patterns appear? What bold claims\n   retreat to what defensible claims? How is ambiguity exploited?]\n",
   "canonical_schema": {
     "motte_bailey_instances": [
       {
@@ -76,5 +73,56 @@
     "table"
   ],
   "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/motte_bailey_detector.py"
+  "source_file": "analyzer/src/engines/motte_bailey_detector.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "motte and bailey detector",
+      "analysis_type_plural": "motte and bailey detectors",
+      "core_question": "Where do arguments retreat from strong to weak claims when challenged?",
+      "extraction_steps": [
+        "IDENTIFY BOLD CLAIMS (BAILEYS)",
+        "IDENTIFY DEFENSIVE CLAIMS (MOTTES)",
+        "DETECT SWITCHING",
+        "IDENTIFY AMBIGUITY EXPLOITATION",
+        "ASSESS PATTERN"
+      ],
+      "key_fields": {},
+      "id_field": "claim_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "motte and bailey detector",
+      "item_type_plural": "motte and bailey detectors",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
 }

@@ -7,8 +7,6 @@
   "kind": "relational",
   "reasoning_domain": "inferential structure",
   "researcher_question": "How do arguments connect into larger inferential chains?",
-  "extraction_prompt": "You are conducting Phase 4 of a multi-pass conceptual analysis.\n\n## YOUR TASK: CHAIN BUILDING\n\nGroup the extracted arguments about \"{concept}\" into INFERENTIAL CHAINS.\n\n## WHAT IS AN INFERENTIAL CHAIN?\n\nA chain shows how arguments BUILD ON EACH OTHER:\n- Argument A's conclusion becomes Argument B's premise\n- Or multiple arguments combine to support a higher-level claim\n- Or arguments form a sequence of reasoning\n\n## ARGUMENTS FROM PHASE 3\n\n{arguments_json}\n\n## FOR EACH CHAIN\n\n1. Name the chain (its main thesis)\n2. List arguments in INFERENTIAL ORDER\n3. Show DEPENDENCY relationships\n4. Identify the ULTIMATE CONCLUSION\n5. Note any GAPS or WEAK LINKS\n\n## OUTPUT FORMAT\n\nReturn JSON with:\n- chains[]: array of chains, each with chain_id, thesis, argument_ids[], dependencies, ultimate_conclusion, weak_links[]\n- orphan_arguments[]: arguments that don't fit chains\n- master_structure: how chains relate to each other\n\nTARGET: 5-15 distinct chains.",
-  "curation_prompt": "Validate chain structure and dependency relationships.",
   "canonical_schema": {
     "type": "object",
     "properties": {
@@ -25,5 +23,56 @@
   },
   "paradigm_keys": [
     "brandomian"
-  ]
+  ],
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concept",
+      "analysis_type_plural": "concepts",
+      "core_question": "How do arguments connect into larger inferential chains?",
+      "extraction_steps": [
+        "Name the chain (its main thesis)",
+        "List arguments in INFERENTIAL ORDER",
+        "Show DEPENDENCY relationships",
+        "Identify the ULTIMATE CONCLUSION",
+        "Note any GAPS or WEAK LINKS"
+      ],
+      "key_fields": {},
+      "id_field": "concept_id",
+      "key_relationships": [
+        "relates_to"
+      ],
+      "special_instructions": null
+    },
+    "curation": {
+      "item_type": "concept",
+      "item_type_plural": "concepts",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [
+        "shared_items",
+        "contested_items",
+        "response_network"
+      ],
+      "synthesis_outputs": [
+        "consolidated_item_list",
+        "relationship_map",
+        "cross_document_dynamics"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  }
 }
