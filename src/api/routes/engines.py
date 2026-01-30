@@ -14,6 +14,8 @@ from src.engines.registry import get_engine_registry
 from src.engines.schemas import (
     EngineCategory,
     EngineDefinition,
+    EngineProfile,
+    EngineProfileResponse,
     EnginePromptResponse,
     EngineSchemaResponse,
     EngineSummary,
@@ -71,6 +73,7 @@ async def list_engines(
             kind=e.kind,
             version=e.version,
             paradigm_keys=e.paradigm_keys,
+            has_profile=e.engine_profile is not None,
         )
         for e in engines
     ]
@@ -106,6 +109,7 @@ async def list_engines_by_category(
             kind=e.kind,
             version=e.version,
             paradigm_keys=e.paradigm_keys,
+            has_profile=e.engine_profile is not None,
         )
         for e in engines
     ]
@@ -287,6 +291,90 @@ async def get_stage_context(engine_key: str) -> dict:
             detail=f"Engine not found: {engine_key}",
         )
     return engine.stage_context.model_dump()
+
+
+@router.get("/{engine_key}/profile", response_model=EngineProfileResponse)
+async def get_engine_profile(engine_key: str) -> EngineProfileResponse:
+    """Get rich profile/about section for an engine.
+
+    Returns theoretical foundations, methodology, use cases, strengths,
+    limitations, and related engines. Returns has_profile=false if
+    no profile exists yet.
+    """
+    registry = get_engine_registry()
+    engine = registry.get(engine_key)
+    if engine is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Engine not found: {engine_key}",
+        )
+    return EngineProfileResponse(
+        engine_key=engine_key,
+        engine_name=engine.engine_name,
+        has_profile=engine.engine_profile is not None,
+        profile=engine.engine_profile,
+    )
+
+
+@router.put("/{engine_key}/profile", response_model=EngineProfileResponse)
+async def save_engine_profile(
+    engine_key: str, profile: EngineProfile
+) -> EngineProfileResponse:
+    """Save or update the profile for an engine.
+
+    This persists the profile to the engine's JSON definition file.
+    """
+    registry = get_engine_registry()
+    engine = registry.get(engine_key)
+    if engine is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Engine not found: {engine_key}",
+        )
+
+    success = registry.save_profile(engine_key, profile)
+    if not success:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to save profile for engine: {engine_key}",
+        )
+
+    return EngineProfileResponse(
+        engine_key=engine_key,
+        engine_name=engine.engine_name,
+        has_profile=True,
+        profile=profile,
+    )
+
+
+@router.delete("/{engine_key}/profile")
+async def delete_engine_profile(engine_key: str) -> dict:
+    """Delete the profile for an engine.
+
+    This removes the profile from the engine's JSON definition file.
+    """
+    registry = get_engine_registry()
+    engine = registry.get(engine_key)
+    if engine is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Engine not found: {engine_key}",
+        )
+
+    if engine.engine_profile is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Engine {engine_key} has no profile to delete",
+        )
+
+    success = registry.delete_profile(engine_key)
+    if not success:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to delete profile for engine: {engine_key}",
+        )
+
+    return {"status": "deleted", "engine_key": engine_key}
 
 
 @router.post("/reload")

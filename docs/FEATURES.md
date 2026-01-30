@@ -1,6 +1,6 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-01-29
+> Auto-maintained by Claude Code. Last updated: 2026-01-30
 
 ## Engine Definitions
 
@@ -13,6 +13,17 @@
   - `src/engines/definitions/*.json` - 123 engine definition files
 - **Dependencies**: Pydantic v2
 - **Added**: 2026-01-26
+
+### Engine Profile (About Section)
+- **Status**: Active
+- **Description**: Rich "About" section for engines with theoretical foundations, methodology, use cases
+- **Entry Points**:
+  - `src/engines/schemas.py:216-359` - EngineProfile and related Pydantic models
+  - `src/api/routes/engines.py:310-370` - Profile CRUD endpoints (GET/PUT/DELETE)
+  - `src/api/routes/llm.py:1-300` - LLM-powered profile generation endpoints
+  - `src/engines/registry.py:123-180` - save_profile/delete_profile methods
+- **Dependencies**: Anthropic SDK (optional, for LLM generation)
+- **Added**: 2026-01-30
 
 ### Engine Extraction Script
 - **Status**: Active
@@ -118,9 +129,10 @@
 - **Status**: Active
 - **Description**: REST API serving definitions at /v1/*
 - **Entry Points**:
-  - `src/api/main.py:1-150` - FastAPI app with CORS, health check
-  - `src/api/routes/engines.py` - Engine endpoints
+  - `src/api/main.py:1-175` - FastAPI app with CORS, health check
+  - `src/api/routes/engines.py` - Engine endpoints (incl. profile CRUD)
   - `src/api/routes/paradigms.py` - Paradigm endpoints
   - `src/api/routes/chains.py` - Chain endpoints
-- **Dependencies**: FastAPI, Uvicorn, Pydantic v2
-- **Added**: 2026-01-26
+  - `src/api/routes/llm.py` - LLM-powered profile generation
+- **Dependencies**: FastAPI, Uvicorn, Pydantic v2, Anthropic SDK (optional)
+- **Added**: 2026-01-26 | **Modified**: 2026-01-30

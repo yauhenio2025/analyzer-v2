@@ -12,7 +12,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import chains, engines, paradigms
+from src.api.routes import chains, engines, llm, paradigms
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
 from src.paradigms.registry import get_paradigm_registry
@@ -86,6 +86,7 @@ app.add_middleware(
 app.include_router(engines.router, prefix="/v1")
 app.include_router(paradigms.router, prefix="/v1")
 app.include_router(chains.router, prefix="/v1")
+app.include_router(llm.router, prefix="/v1")
 
 
 @app.get("/")

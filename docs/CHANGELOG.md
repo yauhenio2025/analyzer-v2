@@ -6,6 +6,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Engine Profile / About Feature** - Rich metadata for engines
+  - `EngineProfile` Pydantic model with theoretical foundations, key thinkers, methodology, extracts, use cases, strengths, limitations, related engines, preamble
+  - `engine_profile` optional field on `EngineDefinition`
+  - `has_profile` field on `EngineSummary` for list endpoints
+  - CRUD endpoints: `GET/PUT/DELETE /v1/engines/{key}/profile`
+  - LLM endpoints for AI-powered profile generation:
+    - `POST /v1/llm/profile-generate` - Generate full profile from engine data
+    - `POST /v1/llm/profile-suggestions` - Get suggestions for improving specific fields
+    - `GET /v1/llm/status` - Check LLM availability
+  - Profiles persist to engine JSON definition files
+  - Requires `ANTHROPIC_API_KEY` environment variable for LLM features
 - **Stage Prompt Composition System** - Generic templates + engine context injection
   - `src/stages/` module with Jinja2 template composition
   - Generic templates: `extraction.md.j2`, `curation.md.j2`, `concretization.md.j2`

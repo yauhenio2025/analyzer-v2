@@ -8,6 +8,7 @@ from typing import Optional
 from src.engines.schemas import (
     EngineCategory,
     EngineDefinition,
+    EngineProfile,
     EngineSummary,
 )
 
@@ -121,6 +122,94 @@ class EngineRegistry:
         """Get total number of engines."""
         self.load()
         return len(self._engines)
+
+    def save_profile(self, engine_key: str, profile: EngineProfile) -> bool:
+        """Save a profile to an engine's JSON file.
+
+        Updates both the in-memory engine and the JSON file on disk.
+
+        Args:
+            engine_key: Key of the engine to update
+            profile: The profile to save
+
+        Returns:
+            True if save was successful, False otherwise
+        """
+        self.load()
+        engine = self._engines.get(engine_key)
+        if engine is None:
+            return False
+
+        # Find the JSON file for this engine
+        json_file = self.definitions_dir / f"{engine_key}.json"
+        if not json_file.exists():
+            logger.error(f"JSON file not found for engine: {engine_key}")
+            return False
+
+        try:
+            # Load current JSON
+            with open(json_file, "r") as f:
+                data = json.load(f)
+
+            # Update with profile
+            data["engine_profile"] = profile.model_dump()
+
+            # Save back to file
+            with open(json_file, "w") as f:
+                json.dump(data, f, indent=2)
+
+            # Update in-memory engine
+            engine.engine_profile = profile
+            self._engines[engine_key] = engine
+
+            logger.info(f"Saved profile for engine: {engine_key}")
+            return True
+
+        except Exception as e:
+            logger.error(f"Failed to save profile for {engine_key}: {e}")
+            return False
+
+    def delete_profile(self, engine_key: str) -> bool:
+        """Delete a profile from an engine's JSON file.
+
+        Args:
+            engine_key: Key of the engine to update
+
+        Returns:
+            True if delete was successful, False otherwise
+        """
+        self.load()
+        engine = self._engines.get(engine_key)
+        if engine is None:
+            return False
+
+        json_file = self.definitions_dir / f"{engine_key}.json"
+        if not json_file.exists():
+            return False
+
+        try:
+            # Load current JSON
+            with open(json_file, "r") as f:
+                data = json.load(f)
+
+            # Remove profile if present
+            if "engine_profile" in data:
+                del data["engine_profile"]
+
+            # Save back to file
+            with open(json_file, "w") as f:
+                json.dump(data, f, indent=2)
+
+            # Update in-memory engine
+            engine.engine_profile = None
+            self._engines[engine_key] = engine
+
+            logger.info(f"Deleted profile for engine: {engine_key}")
+            return True
+
+        except Exception as e:
+            logger.error(f"Failed to delete profile for {engine_key}: {e}")
+            return False
 
     def reload(self) -> None:
         """Force reload all definitions."""

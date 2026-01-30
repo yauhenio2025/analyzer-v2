@@ -142,6 +142,12 @@ class EngineDefinition(BaseModel):
         description="Original source file path in current Analyzer (for extraction tracking)",
     )
 
+    # Rich profile/about section (optional)
+    engine_profile: Optional["EngineProfile"] = Field(
+        default=None,
+        description="Rich 'About' section with theoretical foundations, methodology, use cases",
+    )
+
     class Config:
         json_schema_extra = {
             "example": {
@@ -187,6 +193,7 @@ class EngineSummary(BaseModel):
     kind: EngineKind
     version: int
     paradigm_keys: list[str] = Field(default_factory=list)
+    has_profile: bool = Field(default=False, description="Whether this engine has a rich profile")
 
 
 class EnginePromptResponse(BaseModel):
@@ -209,3 +216,144 @@ class EngineSchemaResponse(BaseModel):
 
     engine_key: str
     canonical_schema: dict[str, Any]
+
+
+# ============================================================================
+# Engine Profile - Rich "About" Section for Engines
+# ============================================================================
+
+
+class TheoreticalFoundation(BaseModel):
+    """A theoretical foundation that underlies the engine's approach."""
+
+    name: str = Field(..., description="Name of the theoretical foundation")
+    description: str = Field(..., description="Brief explanation of this foundation")
+    source_thinker: Optional[str] = Field(
+        default=None, description="Key thinker associated with this foundation"
+    )
+
+
+class KeyThinker(BaseModel):
+    """A key thinker whose work informs the engine."""
+
+    name: str = Field(..., description="Name of the thinker")
+    contribution: str = Field(..., description="What they contributed to this approach")
+    works: list[str] = Field(
+        default_factory=list, description="Key works by this thinker"
+    )
+
+
+class Methodology(BaseModel):
+    """The methodological approach of the engine."""
+
+    approach: str = Field(
+        ..., description="Plain-language description of the methodology (2-3 sentences)"
+    )
+    key_moves: list[str] = Field(
+        default_factory=list, description="Analytical steps the engine performs"
+    )
+    conceptual_tools: list[str] = Field(
+        default_factory=list, description="Tools/concepts the engine uses"
+    )
+
+
+class EngineExtracts(BaseModel):
+    """What the engine extracts from texts."""
+
+    primary_outputs: list[str] = Field(
+        default_factory=list, description="Main things the engine extracts"
+    )
+    secondary_outputs: list[str] = Field(
+        default_factory=list, description="Secondary/supporting extractions"
+    )
+    relationships: list[str] = Field(
+        default_factory=list, description="Types of relationships identified"
+    )
+
+
+class UseCase(BaseModel):
+    """A use case for the engine."""
+
+    domain: str = Field(..., description="Domain where this is useful")
+    description: str = Field(..., description="How the engine helps in this domain")
+    example: Optional[str] = Field(
+        default=None, description="Concrete example of use"
+    )
+
+
+class RelatedEngine(BaseModel):
+    """A related engine and how it relates."""
+
+    engine_key: str = Field(..., description="Key of the related engine")
+    relationship: str = Field(
+        ...,
+        description="How this engine relates: complementary, alternative, prerequisite, or extends",
+    )
+
+
+class EngineProfile(BaseModel):
+    """Rich 'About' section for an engine.
+
+    Contains theoretical foundations, methodology, use cases, and other
+    rich metadata that helps users understand what the engine does and
+    how to use it effectively.
+    """
+
+    # Theoretical foundations
+    theoretical_foundations: list[TheoreticalFoundation] = Field(
+        default_factory=list,
+        description="Theoretical foundations underlying the engine's approach",
+    )
+
+    # Key thinkers
+    key_thinkers: list[KeyThinker] = Field(
+        default_factory=list,
+        description="Key thinkers whose work informs the engine",
+    )
+
+    # Methodology
+    methodology: Optional[Methodology] = Field(
+        default=None, description="The methodological approach of the engine"
+    )
+
+    # What it extracts
+    extracts: Optional[EngineExtracts] = Field(
+        default=None, description="What the engine extracts from texts"
+    )
+
+    # Use cases
+    use_cases: list[UseCase] = Field(
+        default_factory=list, description="Use cases for the engine"
+    )
+
+    # Strengths & limitations
+    strengths: list[str] = Field(
+        default_factory=list, description="Strengths of this engine"
+    )
+    limitations: list[str] = Field(
+        default_factory=list, description="Known limitations"
+    )
+
+    # Related engines
+    related_engines: list[RelatedEngine] = Field(
+        default_factory=list, description="Related engines and their relationships"
+    )
+
+    # Preamble for prompt injection
+    preamble: str = Field(
+        default="",
+        description="Preamble text that can be injected into prompts for context",
+    )
+
+
+class EngineProfileResponse(BaseModel):
+    """Response for profile retrieval endpoints."""
+
+    engine_key: str
+    engine_name: str
+    has_profile: bool
+    profile: Optional[EngineProfile] = None
+
+
+# Rebuild EngineDefinition to resolve forward reference to EngineProfile
+EngineDefinition.model_rebuild()

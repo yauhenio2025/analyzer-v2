@@ -15,6 +15,7 @@ This is the "reversed approach" - instead of moving process code TO Visualizer, 
 - Python 3.11+ with FastAPI
 - Pydantic v2 for schemas
 - JSON files for definitions (no database)
+- Anthropic SDK for LLM features (optional, requires ANTHROPIC_API_KEY)
 
 ## Quick Reference
 - Start: `./start` or `uvicorn src.api.main:app --reload --port 8001`
@@ -52,11 +53,14 @@ analyzer-v2/
 ## API Endpoints
 
 ```
-GET  /v1/engines                     # List all engines
+GET  /v1/engines                     # List all engines (has_profile flag)
 GET  /v1/engines/{key}               # Full engine definition
 GET  /v1/engines/{key}/extraction-prompt
 GET  /v1/engines/{key}/curation-prompt
 GET  /v1/engines/{key}/schema
+GET  /v1/engines/{key}/profile       # Get engine profile/about
+PUT  /v1/engines/{key}/profile       # Save engine profile
+DELETE /v1/engines/{key}/profile     # Delete engine profile
 GET  /v1/engines/category/{category}
 
 GET  /v1/paradigms                   # List all paradigms
@@ -67,6 +71,10 @@ GET  /v1/paradigms/{key}/critique-patterns
 
 GET  /v1/chains                      # List chains
 GET  /v1/chains/{key}                # Chain specification
+
+GET  /v1/llm/status                  # Check LLM availability
+POST /v1/llm/profile-generate        # Generate profile with AI
+POST /v1/llm/profile-suggestions     # Get AI suggestions for profile
 POST /v1/chains/recommend            # LLM recommends chain
 ```
 
