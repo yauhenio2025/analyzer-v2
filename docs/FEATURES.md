@@ -33,6 +33,98 @@
 - **Dependencies**: Current Analyzer at /home/evgeny/projects/analyzer
 - **Added**: 2026-01-26
 
+## Advanced Engines
+
+Ten advanced engines with deep theoretical foundations, cross-referencing ID systems, relationship graphs, and rich stage contexts.
+
+### Inferential Commitment Mapper Advanced
+- **Status**: Active
+- **Description**: Advanced Brandomian inferentialism analysis with commitment/entitlement tracking, backing hierarchies
+- **Entry Points**:
+  - `src/engines/definitions/inferential_commitment_mapper_advanced.json`
+- **Theoretical Foundations**: Brandom, Sellars, McDowell
+- **Added**: 2026-01-29
+
+### Dialectical Structure Advanced
+- **Status**: Active
+- **Description**: Hegelian dialectics with thesis/antithesis/synthesis, sublation patterns, master-slave dynamics
+- **Entry Points**:
+  - `src/engines/definitions/dialectical_structure_advanced.json`
+- **Theoretical Foundations**: Hegel, Marx, Adorno
+- **Added**: 2026-01-30
+
+### Assumption Excavation Advanced
+- **Status**: Active
+- **Description**: Epistemological archaeology with hinge propositions, webs of belief, presuppositional depth
+- **Entry Points**:
+  - `src/engines/definitions/assumption_excavation_advanced.json`
+- **Theoretical Foundations**: Wittgenstein, Quine, Collingwood
+- **Added**: 2026-01-30
+
+### Conditions of Possibility Advanced
+- **Status**: Active
+- **Description**: Foucauldian archaeology/genealogy with epistemes, discursive formations, apparatus analysis
+- **Entry Points**:
+  - `src/engines/definitions/conditions_of_possibility_advanced.json`
+- **Theoretical Foundations**: Foucault, Deleuze, Agamben
+- **Added**: 2026-01-30
+
+### Epistemic Rupture Tracer Advanced
+- **Status**: Active
+- **Description**: History of science with paradigm shifts, epistemological obstacles, research programme dynamics
+- **Entry Points**:
+  - `src/engines/definitions/epistemic_rupture_tracer_advanced.json`
+- **Theoretical Foundations**: Bachelard, Kuhn, Lakatos, Canguilhem
+- **Added**: 2026-01-30
+
+### Rhetorical Strategy Advanced
+- **Status**: Active
+- **Description**: Dramatistic pentad, identification/division, terministic screens, presence techniques
+- **Entry Points**:
+  - `src/engines/definitions/rhetorical_strategy_advanced.json`
+- **Theoretical Foundations**: Burke, Aristotle, Perelman, Booth
+- **Added**: 2026-01-30
+
+### Metaphor Network Advanced
+- **Status**: Active
+- **Description**: Conceptual metaphor theory with image schemas, entailment chains, metaphor competitions
+- **Entry Points**:
+  - `src/engines/definitions/metaphor_network_advanced.json`
+- **Theoretical Foundations**: Lakoff, Johnson, Ricoeur, Black
+- **Added**: 2026-01-30
+
+### Argument Architecture Advanced
+- **Status**: Active
+- **Description**: Toulmin model + argumentation schemes, critical questions, dialectical obligations
+- **Entry Points**:
+  - `src/engines/definitions/argument_architecture_advanced.json`
+- **Theoretical Foundations**: Toulmin, Walton, van Eemeren, pragma-dialectics
+- **Added**: 2026-01-30
+
+### Intellectual Genealogy Advanced
+- **Status**: Active
+- **Description**: History of ideas with creative misreadings, transmission paths, unit-ideas
+- **Entry Points**:
+  - `src/engines/definitions/intellectual_genealogy_advanced.json`
+- **Theoretical Foundations**: Foucault, Lovejoy, Bloom, Skinner
+- **Added**: 2026-01-30
+
+### Incentive Structure Mapper Advanced
+- **Status**: Active
+- **Description**: Institutional economics with game theory, principal-agent problems, perverse incentives
+- **Entry Points**:
+  - `src/engines/definitions/incentive_structure_mapper_advanced.json`
+- **Theoretical Foundations**: Ostrom, Buchanan, Tullock, Olson
+- **Added**: 2026-01-30
+
+### Feedback Loop Mapper Advanced
+- **Status**: Active
+- **Description**: Systems dynamics with stocks/flows, leverage points, system archetypes, tipping points
+- **Entry Points**:
+  - `src/engines/definitions/feedback_loop_mapper_advanced.json`
+- **Theoretical Foundations**: Meadows, Senge, Sterman, Forrester
+- **Added**: 2026-01-30
+
 ## Paradigm Definitions
 
 ### Paradigm Registry

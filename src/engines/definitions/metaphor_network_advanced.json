@@ -1,0 +1,425 @@
+{
+  "engine_key": "metaphor_network_advanced",
+  "engine_name": "Metaphor Network Mapper (Advanced)",
+  "description": "Deep analysis of how we think through metaphor. Reveals the hidden comparisons that structure understanding, the systematic mappings that let us reason about abstractions, and what gets highlighted or hidden when we think one thing in terms of another. Uses sophisticated methods from Lakoff, Johnson, and cognitive linguistics but outputs in plain language anyone can understand.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "relational",
+  "reasoning_domain": "conceptual_metaphor_advanced",
+  "researcher_question": "What metaphors structure thinking here, and what do they reveal and hide?",
+  "canonical_schema": {
+    "conceptual_metaphors": [
+      {
+        "metaphor_id": "string (format: 'CM{N}')",
+        "name": "string (e.g., 'ARGUMENT IS WAR', 'TIME IS MONEY')",
+        "source_domain": "string (the concrete domain)",
+        "target_domain": "string (the abstract domain being understood)",
+        "grounding": "string (what experiential basis grounds this metaphor)",
+        "metaphor_type": "structural | orientational | ontological | primary | complex",
+        "level": "primary | compound | cultural",
+        "mappings": [
+          {
+            "mapping_id": "string",
+            "source_element": "string",
+            "target_element": "string",
+            "how_systematic": "central | peripheral | occasional"
+          }
+        ],
+        "entailments": [
+          {
+            "entailment_id": "string (format: 'ENT{N}')",
+            "the_entailment": "string (what follows from the metaphor)",
+            "how_strong": "necessary | typical | possible"
+          }
+        ],
+        "what_is_highlighted": ["string (aspects of target made salient)"],
+        "what_is_hidden": ["string (aspects of target obscured)"],
+        "is_conventional": "boolean (dead vs live metaphor)",
+        "frequency_in_corpus": "number",
+        "source_articles": ["string"],
+        "part_of_system": "system_id (SYS{N}) | null",
+        "entailed_by": ["metaphor_id (CM{N}) - parent metaphors"],
+        "entails": ["metaphor_id (CM{N}) - child metaphors"],
+        "competes_with": ["metaphor_id (CM{N})"],
+        "instantiated_by": ["expression_id (EXP{N})"]
+      }
+    ],
+    "metaphorical_expressions": [
+      {
+        "expression_id": "string (format: 'EXP{N}')",
+        "text": "string (the actual language)",
+        "conceptual_metaphor": "metaphor_id (CM{N})",
+        "expression_type": "conventional | novel | extended | mixed",
+        "creativity_level": "number (0-1)",
+        "source_article": "string",
+        "rhetorical_effect": "string",
+        "part_of_cluster": "cluster_id (CL{N}) | null"
+      }
+    ],
+    "metaphor_systems": [
+      {
+        "system_id": "string (format: 'SYS{N}')",
+        "name": "string (e.g., 'The Mind as Container System')",
+        "core_metaphor": "metaphor_id (CM{N})",
+        "subsidiary_metaphors": ["metaphor_id (CM{N})"],
+        "coherence_principle": "string (how they fit together)",
+        "systematic_mappings": [
+          {
+            "source_structure": "string",
+            "target_structure": "string"
+          }
+        ],
+        "domain_coverage": "number (0-1, how much of target is covered)",
+        "source_articles": ["string"]
+      }
+    ],
+    "image_schemas": [
+      {
+        "schema_id": "string (format: 'IS{N}')",
+        "name": "string (e.g., 'CONTAINER', 'PATH', 'FORCE', 'BALANCE')",
+        "schema_type": "container | path | force | balance | link | center_periphery | part_whole | up_down | front_back | cycle | scale | iteration | contact | surface | full_empty | near_far | source_path_goal | compulsion | blockage | counterforce | attraction | restraint_removal | enablement | splitting | merging | matching | superimposition",
+        "structure": "string (the basic gestalt)",
+        "experiential_basis": "string (bodily experience that grounds it)",
+        "inference_patterns": ["string (reasoning the schema enables)"],
+        "metaphors_using_this": ["metaphor_id (CM{N})"],
+        "source_articles": ["string"]
+      }
+    ],
+    "metaphor_coherence": [
+      {
+        "coherence_id": "string (format: 'COH{N}')",
+        "metaphors_involved": ["metaphor_id (CM{N})"],
+        "coherence_type": "systematic | overlapping | incompatible",
+        "shared_structure": "string (what they have in common)",
+        "tension_points": ["string (where they clash)"],
+        "how_resolved": "string | null",
+        "source_articles": ["string"]
+      }
+    ],
+    "highlighting_and_hiding": [
+      {
+        "highlight_id": "string (format: 'HH{N}')",
+        "metaphor_id": "metaphor_id (CM{N})",
+        "what_is_highlighted": {
+          "aspects": ["string"],
+          "why_highlighted": "string",
+          "consequences_of_highlighting": ["string"]
+        },
+        "what_is_hidden": {
+          "aspects": ["string"],
+          "why_hidden": "string",
+          "consequences_of_hiding": ["string"]
+        },
+        "who_benefits": ["string"],
+        "who_loses": ["string"],
+        "alternative_metaphor_would_show": "metaphor_id (CM{N}) | null"
+      }
+    ],
+    "metaphor_competitions": [
+      {
+        "competition_id": "string (format: 'COMP{N}')",
+        "contested_domain": "string (what target domain is at stake)",
+        "competing_metaphors": [
+          {
+            "metaphor_id": "metaphor_id (CM{N})",
+            "advocates": ["string"],
+            "framing_offered": "string",
+            "implications": ["string"]
+          }
+        ],
+        "current_dominant": "metaphor_id (CM{N}) | null",
+        "stakes": "string (what hangs on which metaphor wins)",
+        "source_articles": ["string"]
+      }
+    ],
+    "dead_vs_live_metaphors": [
+      {
+        "vitality_id": "string (format: 'VIT{N}')",
+        "metaphor_id": "metaphor_id (CM{N})",
+        "vitality_status": "dead | dying | conventional | live | novel",
+        "evidence_of_status": "string",
+        "revitalization_instances": [
+          {
+            "text": "string",
+            "how_revitalized": "string",
+            "source_article": "string"
+          }
+        ],
+        "when_died": "string | null (if dead)",
+        "original_vitality": "string | null"
+      }
+    ],
+    "metaphorical_reasoning": [
+      {
+        "reasoning_id": "string (format: 'MR{N}')",
+        "metaphor_used": "metaphor_id (CM{N})",
+        "reasoning_performed": "string (the inference made)",
+        "source_domain_logic": "string (what reasoning in source domain)",
+        "target_domain_application": "string (how applied to target)",
+        "validity": "valid | questionable | invalid",
+        "why_validity": "string",
+        "source_article": "string",
+        "supports_claim": "string | null"
+      }
+    ],
+    "primary_metaphors": [
+      {
+        "primary_id": "string (format: 'PM{N}')",
+        "name": "string (e.g., 'AFFECTION IS WARMTH', 'KNOWING IS SEEING')",
+        "experiential_correlation": "string (what co-occurs in experience)",
+        "source_domain": "string",
+        "target_domain": "string",
+        "universal_or_cultural": "universal | near_universal | cultural",
+        "developmental_basis": "string (how acquired)",
+        "compounds_into": ["metaphor_id (CM{N}) - complex metaphors built on this"]
+      }
+    ],
+    "metonymy_interactions": [
+      {
+        "interaction_id": "string (format: 'MTI{N}')",
+        "metonymy_involved": "string (the metonymy)",
+        "metonymy_type": "part_for_whole | whole_for_part | producer_for_product | place_for_institution | cause_for_effect | controller_for_controlled",
+        "metaphor_involved": "metaphor_id (CM{N})",
+        "interaction_type": "metonymy_within_metaphor | metonymy_enabling_metaphor | metaphor_enabling_metonymy",
+        "how_they_interact": "string",
+        "source_articles": ["string"]
+      }
+    ],
+    "analogies_extended": [
+      {
+        "analogy_id": "string (format: 'ANA{N}')",
+        "analog_source": "string (what is compared from)",
+        "analog_target": "string (what is compared to)",
+        "mapping_points": [
+          {
+            "source_element": "string",
+            "target_element": "string",
+            "strength": "number (0-1)"
+          }
+        ],
+        "analogy_type": "explanatory | argumentative | heuristic | constitutive",
+        "extends_to": "string (how far the analogy is pushed)",
+        "breakdown_points": ["string (where analogy fails)"],
+        "effectiveness": "number (0-1)",
+        "who_uses": ["string"],
+        "source_articles": ["string"],
+        "related_to_metaphor": "metaphor_id (CM{N}) | null"
+      }
+    ],
+    "cross_document_patterns": {
+      "shared_metaphors": [
+        {
+          "metaphor_id": "metaphor_id (CM{N})",
+          "shared_by": ["string (articles)"],
+          "variations": ["string"]
+        }
+      ],
+      "metaphor_contests": [
+        {
+          "competition_id": "string",
+          "articles_using_a": ["string"],
+          "articles_using_b": ["string"]
+        }
+      ],
+      "dominant_source_domains": ["string (most common sources)"],
+      "metaphor_evolution": [
+        {
+          "metaphor_id": "metaphor_id (CM{N})",
+          "early_use": "string",
+          "late_use": "string",
+          "change": "string"
+        }
+      ]
+    },
+    "relationship_graph": {
+      "nodes": [
+        {
+          "id": "string",
+          "type": "metaphor | expression | system | schema | competition | analogy | primary",
+          "label": "string",
+          "weight": "number (0-1)",
+          "is_source_domain": "boolean | null",
+          "is_target_domain": "boolean | null"
+        }
+      ],
+      "edges": [
+        {
+          "from_id": "string",
+          "to_id": "string",
+          "relationship": "maps_to | entails | competes_with | instantiates | part_of | uses_schema | highlights | hides | grounds | compounds_from",
+          "strength": "number (0-1)",
+          "bidirectional": "boolean",
+          "label": "string | null"
+        }
+      ],
+      "clusters": [
+        {
+          "cluster_id": "string",
+          "name": "string",
+          "member_ids": ["string"],
+          "coherence": "number (0-1)",
+          "shared_source_domain": "string | null",
+          "shared_target_domain": "string | null"
+        }
+      ]
+    },
+    "entailment_chains": [
+      {
+        "chain_id": "string (format: 'ECH{N}')",
+        "name": "string",
+        "starting_metaphor": "metaphor_id (CM{N})",
+        "sequence": [
+          {
+            "step": "number",
+            "metaphor_or_entailment": "string (id)",
+            "what_follows": "string"
+          }
+        ],
+        "final_implication": "string",
+        "chain_strength": "number (0-1, weakest link determines)"
+      }
+    ],
+    "meta": {
+      "total_conceptual_metaphors": "number",
+      "total_expressions": "number",
+      "total_systems": "number",
+      "total_competitions": "number",
+      "dominant_source_domains": ["string"],
+      "most_elaborated_metaphor": "metaphor_id",
+      "most_contested_target": "string",
+      "dead_vs_live_ratio": "number",
+      "metaphor_density": "number (per 1000 words)",
+      "most_hidden_aspect": "string",
+      "document_count": "number",
+      "total_relationships": "number",
+      "graph_density": "number (0-1)"
+    }
+  },
+  "extraction_focus": [
+    "conceptual_metaphors",
+    "metaphor_systems",
+    "highlighting_hiding",
+    "metaphor_competitions",
+    "image_schemas",
+    "metaphorical_reasoning",
+    "primary_metaphors",
+    "entailment_structures"
+  ],
+  "primary_output_modes": [
+    "gemini_network_graph",
+    "integrated_report",
+    "structured_text_report",
+    "smart_table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/metaphor_network_advanced.py",
+  "stage_context": {
+    "framework_key": "lakoff_johnson",
+    "additional_frameworks": ["ricoeur", "black", "kövecses"],
+    "extraction": {
+      "analysis_type": "conceptual metaphor",
+      "analysis_type_plural": "conceptual metaphors",
+      "core_question": "What metaphors structure thinking here, and what do they reveal and hide?",
+      "extraction_steps": [
+        "IDENTIFY METAPHORICAL EXPRESSIONS: Find all language that talks about one thing in terms of another. Don't just look for obvious comparisons - most metaphor is hidden in ordinary language ('spending time', 'defending a position')",
+        "ABSTRACT TO CONCEPTUAL METAPHORS: Group expressions into the underlying conceptual metaphors they instantiate. Find the A IS B pattern (TARGET IS SOURCE)",
+        "MAP THE MAPPINGS: For each conceptual metaphor, what elements of the source map onto what elements of the target? How systematic is it?",
+        "IDENTIFY ENTAILMENTS: What follows from the metaphor? If ARGUMENT IS WAR, then arguments can be won, lost, strategies work or fail, etc.",
+        "ANALYZE HIGHLIGHTING AND HIDING: What aspects of the target does the metaphor make salient? What does it hide? Who benefits from this?",
+        "FIND IMAGE SCHEMAS: What basic image schemas (CONTAINER, PATH, FORCE, etc.) underlie the metaphors?",
+        "BUILD METAPHOR SYSTEMS: How do metaphors cohere into larger systems? What's the organizing principle?",
+        "IDENTIFY PRIMARY METAPHORS: What universal, experientially-grounded metaphors are at work?",
+        "FIND METAPHOR COMPETITIONS: Where do different metaphors compete to frame the same domain? What's at stake?",
+        "ASSESS VITALITY: Which metaphors are dead (unnoticed), which are live (creative)?",
+        "ANALYZE METAPHORICAL REASONING: Where are inferences made based on metaphor? Are they valid?",
+        "BUILD THE RELATIONSHIP GRAPH: Connect metaphors, expressions, schemas, entailments"
+      ],
+      "key_fields": {
+        "metaphor_id": "The underlying conceptual metaphor (A IS B)",
+        "highlight_id": "What the metaphor reveals and conceals",
+        "system_id": "Coherent metaphor systems",
+        "competition_id": "Where metaphors compete for the same domain"
+      },
+      "id_field": "metaphor_id",
+      "key_relationships": [
+        "maps_to",
+        "entails",
+        "competes_with",
+        "instantiates",
+        "part_of",
+        "uses_schema",
+        "highlights",
+        "hides",
+        "grounds"
+      ],
+      "special_instructions": "CRITICAL: Most metaphor is invisible because it's conventional. 'Spending time' doesn't feel metaphorical, but it is (TIME IS MONEY). Look especially at the metaphors nobody notices - they often do the most ideological work. The highlighting/hiding analysis is crucial: every metaphor reveals some aspects while concealing others."
+    },
+    "curation": {
+      "item_type": "conceptual metaphor",
+      "item_type_plural": "conceptual metaphors",
+      "consolidation_rules": [
+        "CONSOLIDATE EQUIVALENT METAPHORS: Same underlying metaphor, different expressions - merge",
+        "IDENTIFY SHARED METAPHORS: What metaphors appear across documents?",
+        "MAP METAPHOR SYSTEMS: Build complete systems from individual metaphors",
+        "FIND METAPHOR CONTESTS: Where do documents use competing metaphors?",
+        "IDENTIFY DOMINANT SOURCE DOMAINS: What concrete domains do most metaphors draw from?",
+        "ANALYZE WHAT'S HIDDEN: What does the corpus's metaphor system collectively obscure?",
+        "Never mention Lakoff, Johnson, cognitive linguistics - lead with insights about how we think"
+      ],
+      "cross_doc_patterns": [
+        "shared_metaphors",
+        "metaphor_contests",
+        "dominant_source_domains",
+        "collective_hiding"
+      ],
+      "synthesis_outputs": [
+        "consolidated_metaphor_map",
+        "relationship_graph",
+        "cross_document_patterns",
+        "entailment_chains"
+      ],
+      "special_instructions": "The most powerful finding is often the highlighting/hiding analysis: what does the corpus's metaphor system collectively make visible vs invisible? This reveals ideological work."
+    },
+    "concretization": {
+      "id_examples": [
+        {"from": "CM1", "to": "ARGUMENT IS WAR (attacking positions, defending claims)"},
+        {"from": "CM2", "to": "TIME IS MONEY (spending, saving, wasting time)"},
+        {"from": "EXP1", "to": "'He shot down my argument'"},
+        {"from": "SYS1", "to": "The Mind as Container System"},
+        {"from": "HH1", "to": "LABOR IS RESOURCE hides worker agency"},
+        {"from": "COMP1", "to": "Contest: ECONOMY IS MACHINE vs ECONOMY IS ORGANISM"},
+        {"from": "IS1", "to": "CONTAINER schema underlying 'in a good mood'"}
+      ],
+      "naming_guidance": "Use ALL CAPS for conceptual metaphors (A IS B). Quote specific expressions. Be concrete.",
+      "recommended_table_types": ["metaphor_inventory", "mapping_matrix", "highlight_hide_analysis"],
+      "recommended_visual_patterns": ["source_target_diagram", "metaphor_system_tree", "competition_map"]
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "metaphor": "conceptual metaphor",
+        "mapping": "systematic correspondence",
+        "highlight": "entailment focus",
+        "schema": "image schema"
+      },
+      "analyst": {
+        "metaphor": "underlying comparison",
+        "mapping": "structural parallel",
+        "highlight": "what's emphasized",
+        "schema": "basic pattern"
+      },
+      "executive": {
+        "metaphor": "mental model",
+        "mapping": "analogy structure",
+        "highlight": "what we see",
+        "schema": "thinking pattern"
+      },
+      "activist": {
+        "metaphor": "framing device",
+        "mapping": "how they connect ideas",
+        "highlight": "what they show/hide",
+        "schema": "basic worldview"
+      }
+    },
+    "skip_concretization": false
+  }
+}

@@ -1,0 +1,481 @@
+{
+  "engine_key": "epistemic_rupture_tracer_advanced",
+  "engine_name": "Epistemic Rupture Tracer (Advanced)",
+  "description": "Deep analysis of how concepts are born through revolutionary breaks with the past. Reveals the obstacles that had to be overcome, the old ideas that had to die, and the surprising transformations that turned yesterday's nonsense into today's common sense. Uses sophisticated methods from Bachelard, Kuhn, and historical epistemology but outputs in plain language anyone can understand.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "historical_epistemology_advanced",
+  "researcher_question": "What revolutionary breaks created these concepts, and what had to be overcome for them to emerge?",
+  "canonical_schema": {
+    "concepts_under_investigation": [
+      {
+        "concept_id": "string (format: 'C{N}')",
+        "term": "string",
+        "current_meaning": "string",
+        "current_domain": "string (field where it operates)",
+        "emergence_date": "string",
+        "emergence_context": "string",
+        "current_status": "established | contested | evolving | declining",
+        "source_articles": ["string"],
+        "born_from_rupture": "rupture_id (RUP{N})",
+        "killed_predecessors": ["predecessor_id (PRED{N})"],
+        "inherited_from_predecessors": ["predecessor_id (PRED{N})"],
+        "blocked_by_obstacles": ["obstacle_id (OBS{N})"],
+        "part_of_paradigm": "paradigm_id (PAR{N})",
+        "generates_anomalies_for": ["paradigm_id (PAR{N})"],
+        "in_concept_family": ["concept_id (C{N})"]
+      }
+    ],
+    "the_ruptures": [
+      {
+        "rupture_id": "string (format: 'RUP{N}')",
+        "name": "string (e.g., 'The Lavoisier Revolution', 'The Relativistic Break')",
+        "when": "string (date range)",
+        "what_broke": "string (what continuity was shattered)",
+        "rupture_type": "complete_break | inversion | synthesis | differentiation | rectification | regional_recasting",
+        "magnitude": "revolutionary | major | significant | minor | regional",
+        "trigger_events": [
+          {
+            "event": "string",
+            "date": "string",
+            "how_it_triggered": "string"
+          }
+        ],
+        "key_figures": ["string (who enacted the rupture)"],
+        "source_articles": ["string"],
+        "within_paradigm_shift": "shift_id (SHIFT{N}) | null",
+        "concepts_born": ["concept_id (C{N})"],
+        "concepts_killed": ["concept_id (C{N}) or predecessor_id (PRED{N})"],
+        "concepts_transformed": ["concept_id (C{N})"],
+        "obstacles_overcome": ["obstacle_id (OBS{N})"],
+        "from_landscape": "landscape_id (LAND{N})",
+        "to_landscape": "landscape_id (LAND{N})",
+        "resistance_encountered": ["resistance_id (RES{N})"]
+      }
+    ],
+    "predecessor_concepts": [
+      {
+        "predecessor_id": "string (format: 'PRED{N}')",
+        "term": "string (might be same word, different meaning)",
+        "meaning_then": "string",
+        "when_dominant": "string (date range)",
+        "why_it_seemed_true": "string",
+        "what_was_right_about_it": "string (kernel of truth)",
+        "what_was_wrong": "string",
+        "how_it_died": "string",
+        "source_articles": ["string"],
+        "part_of_obstacle": "obstacle_id (OBS{N}) | null",
+        "part_of_paradigm": "paradigm_id (PAR{N})",
+        "succeeded_by": ["concept_id (C{N})"],
+        "relationship_to_successor": "replacement | refinement | inversion | splitting | merger",
+        "what_carried_forward": ["string (elements preserved)"],
+        "what_abandoned": ["string (elements rejected)"]
+      }
+    ],
+    "epistemological_obstacles": [
+      {
+        "obstacle_id": "string (format: 'OBS{N}')",
+        "name": "string (e.g., 'The Substance Fallacy', 'Verbal Generalization')",
+        "what_it_is": "string (the obstacle described)",
+        "obstacle_type": "first_experience | general_knowledge | verbal | substantialist | animist | quantitative_false | utilitarian | realistic | prior_scientific",
+        "why_it_blocks": "string (how it prevents understanding)",
+        "where_it_persists": ["string (domains where it still operates)"],
+        "how_it_seduces": "string (why it seems obviously true)",
+        "what_would_dissolve_it": "string",
+        "historical_examples": ["string"],
+        "source_articles": ["string"],
+        "blocked_concepts": ["concept_id (C{N})"],
+        "overcame_in_rupture": "rupture_id (RUP{N}) | null",
+        "residual_influence": "string (how it still affects thinking)",
+        "instantiated_as_predecessors": ["predecessor_id (PRED{N})"]
+      }
+    ],
+    "paradigms": [
+      {
+        "paradigm_id": "string (format: 'PAR{N}')",
+        "name": "string (e.g., 'Newtonian Mechanics', 'Classical Political Economy')",
+        "disciplinary_matrix": {
+          "symbolic_generalizations": ["string (shared equations, formalisms)"],
+          "metaphysical_commitments": ["string (beliefs about what exists)"],
+          "values": ["string (what counts as good science)"],
+          "exemplars": ["string (paradigmatic problem-solutions)"]
+        },
+        "normal_science_puzzles": ["string (problems the paradigm defines)"],
+        "what_it_can_see": ["string"],
+        "what_it_cannot_see": ["string (invisible to practitioners)"],
+        "dominant_period": "string",
+        "source_articles": ["string"],
+        "contains_concepts": ["concept_id (C{N})"],
+        "contains_predecessors": ["predecessor_id (PRED{N})"],
+        "generates_anomalies": ["anomaly_id (ANOM{N})"],
+        "in_crisis": "boolean",
+        "crisis_triggers": ["anomaly_id (ANOM{N})"],
+        "succeeded_by": "paradigm_id (PAR{N}) | null",
+        "preceded_by": "paradigm_id (PAR{N}) | null",
+        "incommensurable_with": ["paradigm_id (PAR{N})"]
+      }
+    ],
+    "anomalies": [
+      {
+        "anomaly_id": "string (format: 'ANOM{N}')",
+        "name": "string",
+        "what_is_anomalous": "string (what doesn't fit)",
+        "which_paradigm": "paradigm_id (PAR{N})",
+        "how_serious": "tolerable | troubling | crisis_inducing",
+        "responses_tried": [
+          {
+            "response": "string",
+            "success": "resolved | band_aid | failed"
+          }
+        ],
+        "accumulation_effect": "string (how anomalies pile up)",
+        "source_articles": ["string"],
+        "contributes_to_crisis": "boolean",
+        "resolved_in_rupture": "rupture_id (RUP{N}) | null"
+      }
+    ],
+    "paradigm_shifts": [
+      {
+        "shift_id": "string (format: 'SHIFT{N}')",
+        "name": "string (e.g., 'The Copernican Revolution')",
+        "from_paradigm": "paradigm_id (PAR{N})",
+        "to_paradigm": "paradigm_id (PAR{N})",
+        "when": "string",
+        "what_changed": {
+          "ontology_change": "string (what exists)",
+          "methodology_change": "string (how to investigate)",
+          "values_change": "string (what counts as good work)",
+          "problem_change": "string (what problems matter)"
+        },
+        "incommensurability_points": ["string (where translation fails)"],
+        "what_was_lost": ["string (genuine losses in the shift)"],
+        "what_was_gained": ["string"],
+        "key_converts": ["string (who switched sides)"],
+        "holdouts": ["string (who never accepted)"],
+        "source_articles": ["string"],
+        "includes_ruptures": ["rupture_id (RUP{N})"],
+        "social_dynamics": {
+          "generational_replacement": "boolean",
+          "institutional_battles": ["string"],
+          "rhetorical_strategies": ["string"]
+        }
+      }
+    ],
+    "resistances": [
+      {
+        "resistance_id": "string (format: 'RES{N}')",
+        "who_resisted": "string",
+        "what_was_resisted": "rupture_id (RUP{N}) or concept_id (C{N})",
+        "why_they_resisted": "string",
+        "resistance_type": "rational | institutional | psychological | ideological",
+        "was_resistance_reasonable": "yes | partially | no",
+        "what_resisters_could_see": "string (their valid concerns)",
+        "how_overcome": "string",
+        "source_articles": ["string"]
+      }
+    ],
+    "cognitive_landscapes": [
+      {
+        "landscape_id": "string (format: 'LAND{N}')",
+        "name": "string",
+        "period": "string",
+        "dominant_paradigm": "paradigm_id (PAR{N})",
+        "active_concepts": ["concept_id (C{N})"],
+        "active_obstacles": ["obstacle_id (OBS{N})"],
+        "characteristic_problems": ["string"],
+        "characteristic_methods": ["string"],
+        "blind_spots": ["string"],
+        "what_could_be_thought": ["string"],
+        "what_could_not_be_thought": ["string"],
+        "source_articles": ["string"],
+        "predecessor_landscape": "landscape_id (LAND{N}) | null",
+        "successor_landscape": "landscape_id (LAND{N}) | null",
+        "transition_rupture": "rupture_id (RUP{N}) | null"
+      }
+    ],
+    "concept_lineages": [
+      {
+        "lineage_id": "string (format: 'LIN{N}')",
+        "name": "string (e.g., 'The Energy Lineage')",
+        "stages": [
+          {
+            "stage": "number",
+            "period": "string",
+            "term": "string",
+            "meaning": "string",
+            "paradigm_context": "paradigm_id (PAR{N})"
+          }
+        ],
+        "continuity_type": "terminological | structural | functional | discontinuous",
+        "total_semantic_drift": "number (0-1, how much meaning changed)",
+        "key_transformations": ["rupture_id (RUP{N})"],
+        "source_articles": ["string"]
+      }
+    ],
+    "research_programmes": [
+      {
+        "programme_id": "string (format: 'RP{N}')",
+        "name": "string (following Lakatos)",
+        "hard_core": ["string (unfalsifiable commitments)"],
+        "protective_belt": ["string (auxiliary hypotheses that can change)"],
+        "positive_heuristic": ["string (research directions encouraged)"],
+        "negative_heuristic": ["string (what's not to be questioned)"],
+        "progressivity": "progressive | degenerating | stagnant",
+        "novel_predictions": ["string"],
+        "confirmed_predictions": ["string"],
+        "source_articles": ["string"],
+        "competing_with": ["programme_id (RP{N})"],
+        "contains_concepts": ["concept_id (C{N})"],
+        "absorbs_anomalies": ["anomaly_id (ANOM{N})"]
+      }
+    ],
+    "scientific_revolutions_structure": [
+      {
+        "revolution_id": "string (format: 'REV{N}')",
+        "name": "string",
+        "phases": {
+          "pre_paradigm": {
+            "description": "string",
+            "competing_schools": ["string"]
+          },
+          "normal_science": {
+            "paradigm": "paradigm_id (PAR{N})",
+            "puzzle_solving": ["string"],
+            "duration": "string"
+          },
+          "crisis": {
+            "anomalies": ["anomaly_id (ANOM{N})"],
+            "responses": ["string"],
+            "loosening_of_rules": "string"
+          },
+          "revolution": {
+            "new_paradigm": "paradigm_id (PAR{N})",
+            "ruptures": ["rupture_id (RUP{N})"],
+            "key_moments": ["string"]
+          },
+          "new_normal_science": {
+            "description": "string"
+          }
+        },
+        "source_articles": ["string"]
+      }
+    ],
+    "cross_document_analysis": {
+      "shared_paradigm": "paradigm_id (PAR{N}) | null",
+      "competing_paradigms": ["paradigm_id (PAR{N})"],
+      "consensus_on_ruptures": ["rupture_id (RUP{N}) - agreed upon breaks"],
+      "contested_ruptures": [
+        {
+          "rupture": "rupture_id (RUP{N})",
+          "documents_affirming": ["string"],
+          "documents_denying": ["string"]
+        }
+      ],
+      "shared_obstacles": ["obstacle_id (OBS{N})"],
+      "historiographical_disputes": [
+        {
+          "dispute": "string",
+          "positions": ["string"]
+        }
+      ]
+    },
+    "relationship_graph": {
+      "nodes": [
+        {
+          "id": "string",
+          "type": "concept | rupture | predecessor | obstacle | paradigm | anomaly | shift | landscape | lineage | programme",
+          "label": "string",
+          "weight": "number (0-1)",
+          "temporal_location": "string (date/period)"
+        }
+      ],
+      "edges": [
+        {
+          "from_id": "string",
+          "to_id": "string",
+          "relationship": "born_from | killed | transformed | blocked | overcame | part_of | preceded | succeeded | incommensurable | generated | resolved",
+          "strength": "number (0-1)",
+          "temporal": "boolean (true if relationship has temporal direction)",
+          "label": "string | null"
+        }
+      ],
+      "clusters": [
+        {
+          "cluster_id": "string",
+          "name": "string",
+          "member_ids": ["string"],
+          "period": "string",
+          "theme": "string"
+        }
+      ]
+    },
+    "transformation_chains": [
+      {
+        "chain_id": "string (format: 'TCH{N}')",
+        "name": "string",
+        "sequence": [
+          {
+            "step": "number",
+            "entity_id": "string (concept, predecessor, or paradigm)",
+            "period": "string",
+            "transformation_type": "emergence | rupture | crisis | shift | stabilization"
+          }
+        ],
+        "total_transformation": "number (0-1)",
+        "continuity_preserved": ["string"],
+        "continuity_broken": ["string"]
+      }
+    ],
+    "meta": {
+      "total_concepts": "number",
+      "total_ruptures": "number",
+      "total_obstacles": "number",
+      "total_paradigms": "number",
+      "total_anomalies": "number",
+      "total_shifts": "number",
+      "dominant_paradigm": "paradigm_id",
+      "most_transformative_rupture": "rupture_id",
+      "most_persistent_obstacle": "obstacle_id",
+      "most_transformed_concept": "concept_id",
+      "deepest_lineage": "lineage_id",
+      "temporal_span": "string",
+      "document_count": "number",
+      "total_relationships": "number",
+      "graph_density": "number (0-1)"
+    }
+  },
+  "extraction_focus": [
+    "epistemic_ruptures",
+    "conceptual_transformations",
+    "epistemological_obstacles",
+    "paradigm_structures",
+    "anomalies",
+    "paradigm_shifts",
+    "cognitive_landscapes",
+    "concept_genealogies",
+    "research_programmes"
+  ],
+  "primary_output_modes": [
+    "gemini_timeline",
+    "gemini_network_graph",
+    "integrated_report",
+    "structured_text_report",
+    "smart_table"
+  ],
+  "paradigm_keys": [
+    "hegelian_critical"
+  ],
+  "source_file": "analyzer/src/engines/epistemic_rupture_tracer_advanced.py",
+  "stage_context": {
+    "framework_key": "bachelardian",
+    "additional_frameworks": ["kuhnian", "lakatosian", "canguilhem"],
+    "extraction": {
+      "analysis_type": "epistemic rupture",
+      "analysis_type_plural": "epistemic ruptures",
+      "core_question": "What revolutionary breaks created these concepts, and what had to be overcome for them to emerge?",
+      "extraction_steps": [
+        "IDENTIFY THE CONCEPTS: What key concepts are at play? When did they emerge? What's their current meaning?",
+        "TRACE RUPTURES: Where are the discontinuities? What breaks mark 'before' and 'after'? Don't assume smooth evolution - look for revolutions",
+        "FIND PREDECESSORS: What concepts came before? Same word, different meaning? Different word, similar function? What was right about them? What was wrong?",
+        "IDENTIFY OBSTACLES (Bachelard): What epistemological obstacles blocked progress? First impressions? Verbal traps? Substantialist thinking? Prior scientific theories that became obstacles?",
+        "MAP PARADIGMS (Kuhn): What paradigms are at play? What's their disciplinary matrix? What normal science puzzles do they define? What can't they see?",
+        "IDENTIFY ANOMALIES: What doesn't fit the paradigm? How serious? How is it handled?",
+        "TRACE PARADIGM SHIFTS: Where did one paradigm replace another? What was incommensurable? What was lost? What was gained?",
+        "MAP RESISTANCE: Who resisted new ideas? Why? Was their resistance reasonable?",
+        "RECONSTRUCT COGNITIVE LANDSCAPES: What could be thought in each era? What couldn't?",
+        "BUILD CONCEPT LINEAGES: Trace how concepts evolved across periods - track semantic drift",
+        "ANALYZE RESEARCH PROGRAMMES (Lakatos): What are the hard cores? Protective belts? Is the programme progressive or degenerating?",
+        "BUILD THE RELATIONSHIP GRAPH: Connect concepts, ruptures, obstacles, paradigms with temporal relationships"
+      ],
+      "key_fields": {
+        "rupture_id": "The revolutionary breaks",
+        "obstacle_id": "What blocked progress",
+        "paradigm_id": "The frameworks within which science operates",
+        "lineage_id": "The path of concepts across time"
+      },
+      "id_field": "concept_id",
+      "key_relationships": [
+        "born_from",
+        "killed",
+        "transformed",
+        "blocked",
+        "overcame",
+        "part_of",
+        "preceded",
+        "succeeded",
+        "incommensurable",
+        "generated"
+      ],
+      "special_instructions": "CRITICAL: Avoid Whig history - don't assume progress was inevitable or that earlier thinkers were just 'wrong.' Understand why earlier views seemed compelling. Look for what was lost in transitions, not just what was gained. The history of science is not a triumphal march but a series of ruptures with both gains and losses."
+    },
+    "curation": {
+      "item_type": "epistemic rupture",
+      "item_type_plural": "epistemic ruptures",
+      "consolidation_rules": [
+        "CONSOLIDATE RUPTURES: Same break described differently - merge with fullest account",
+        "MAP SHARED PARADIGM: Do all documents operate within same paradigm? Different paradigms?",
+        "IDENTIFY CONSENSUS RUPTURES: Which breaks are agreed upon across documents?",
+        "FIND CONTESTED RUPTURES: Where do documents disagree about what counts as a break?",
+        "TRACE CROSS-DOCUMENT LINEAGES: Build complete concept genealogies",
+        "IDENTIFY PERSISTENT OBSTACLES: What obstacles appear across documents?",
+        "Never mention Bachelard, Kuhn, Lakatos - lead with historical insight, hide the methodology"
+      ],
+      "cross_doc_patterns": [
+        "shared_paradigm",
+        "competing_paradigms",
+        "consensus_ruptures",
+        "contested_ruptures"
+      ],
+      "synthesis_outputs": [
+        "consolidated_rupture_map",
+        "relationship_graph",
+        "cross_document_analysis",
+        "transformation_chains"
+      ],
+      "special_instructions": "The goal is to show how current concepts are historically contingent products of ruptures - not inevitable developments. Make the familiar strange by showing its revolutionary origins."
+    },
+    "concretization": {
+      "id_examples": [
+        {"from": "C1", "to": "Oxygen (Lavoisier 1789)"},
+        {"from": "PRED1", "to": "Phlogiston (pre-Lavoisier)"},
+        {"from": "RUP1", "to": "The Chemical Revolution (1770s-1780s)"},
+        {"from": "OBS1", "to": "The Substance Fallacy in Heat Theory"},
+        {"from": "PAR1", "to": "Classical Mechanics"},
+        {"from": "ANOM1", "to": "The Ultraviolet Catastrophe"},
+        {"from": "SHIFT1", "to": "The Quantum Revolution"},
+        {"from": "LIN1", "to": "The Energy Lineage: vis viva → work → energy"}
+      ],
+      "naming_guidance": "Use historically accurate, evocative names. Date concepts and ruptures when possible.",
+      "recommended_table_types": ["rupture_timeline", "paradigm_comparison", "obstacle_inventory"],
+      "recommended_visual_patterns": ["timeline", "concept_tree", "transformation_flowchart"]
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "rupture": "epistemological break (coupure)",
+        "obstacle": "epistemological obstacle",
+        "paradigm": "paradigm",
+        "shift": "paradigm shift"
+      },
+      "analyst": {
+        "rupture": "conceptual revolution",
+        "obstacle": "mental barrier",
+        "paradigm": "framework",
+        "shift": "framework change"
+      },
+      "executive": {
+        "rupture": "industry disruption",
+        "obstacle": "legacy thinking",
+        "paradigm": "mental model",
+        "shift": "market transformation"
+      },
+      "activist": {
+        "rupture": "breakthrough moment",
+        "obstacle": "ideological barrier",
+        "paradigm": "dominant worldview",
+        "shift": "consciousness change"
+      }
+    },
+    "skip_concretization": false
+  }
+}

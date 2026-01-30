@@ -6,6 +6,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **10 Advanced Engines** - Deep theoretical frameworks with cross-referencing ID systems
+  - `dialectical_structure_advanced.json` - Hegelian dialectics (Hegel, Marx, Adorno)
+  - `assumption_excavation_advanced.json` - Epistemological archaeology (Wittgenstein, Quine, Collingwood)
+  - `conditions_of_possibility_advanced.json` - Foucauldian archaeology/genealogy
+  - `epistemic_rupture_tracer_advanced.json` - History of science (Bachelard, Kuhn, Lakatos)
+  - `rhetorical_strategy_advanced.json` - Dramatistic pentad (Burke, Aristotle, Perelman)
+  - `metaphor_network_advanced.json` - Conceptual metaphor theory (Lakoff, Johnson, Ricoeur)
+  - `argument_architecture_advanced.json` - Toulmin model + argumentation schemes (Walton)
+  - `intellectual_genealogy_advanced.json` - History of ideas (Foucault, Lovejoy, Bloom)
+  - `incentive_structure_mapper_advanced.json` - Game theory/institutional economics (Ostrom, Buchanan)
+  - `feedback_loop_mapper_advanced.json` - Systems dynamics (Meadows, Senge, Sterman)
+  - All engines feature: relationship_graph (nodes/edges/clusters), rich stage_context, audience vocabulary calibration, comprehensive meta sections
 - **Engine Profile / About Feature** - Rich metadata for engines
   - `EngineProfile` Pydantic model with theoretical foundations, key thinkers, methodology, extracts, use cases, strengths, limitations, related engines, preamble
   - `engine_profile` optional field on `EngineDefinition`
