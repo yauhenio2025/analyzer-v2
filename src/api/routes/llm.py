@@ -174,7 +174,7 @@ Output ONLY valid JSON, no markdown code fences or other text."""
 
     try:
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model="claude-opus-4-5-20251101",
             max_tokens=4000,
             messages=[{"role": "user", "content": prompt}],
         )
@@ -356,7 +356,7 @@ Output ONLY valid JSON."""
 
     try:
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model="claude-opus-4-5-20251101",
             max_tokens=2000,
             messages=[{"role": "user", "content": prompt}],
         )
@@ -391,6 +391,6 @@ async def llm_status() -> dict:
     client = get_anthropic_client()
     return {
         "available": client is not None,
-        "model": "claude-sonnet-4-20250514" if client else None,
+        "model": "claude-opus-4-5-20251101" if client else None,
         "message": "LLM service ready" if client else "Set ANTHROPIC_API_KEY to enable LLM features",
     }
