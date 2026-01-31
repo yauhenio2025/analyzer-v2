@@ -1,6 +1,6 @@
 {
   "engine_key": "conditions_of_possibility_advanced",
-  "engine_name": "Conditions of Possibility Mapper (Advanced)",
+  "engine_name": "Conditions of Possibility Mapper v2",
   "description": "Deep analysis of what makes certain ideas thinkable and certain practices possible. Reveals the hidden rules that govern what can be said, the power arrangements that enable some discourses while silencing others, and the historical accidents that now seem inevitable. Uses sophisticated archaeological and genealogical methods from Foucault and critical theory but outputs in plain language anyone can understand.",
   "version": 1,
   "category": "epistemology",
@@ -17,10 +17,18 @@
         "when_it_emerged": "string (historical period)",
         "where_it_operates": "string (context, field)",
         "current_status": "dominant | contested | emerging | declining | naturalized",
-        "source_articles": ["string"],
-        "enabled_by_conditions": ["condition_id (various types)"],
-        "produces_effects": ["effect_id (EFF{N})"],
-        "creates_subject_positions": ["subject_id (SUB{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "enabled_by_conditions": [
+          "condition_id (various types)"
+        ],
+        "produces_effects": [
+          "effect_id (EFF{N})"
+        ],
+        "creates_subject_positions": [
+          "subject_id (SUB{N})"
+        ]
       }
     ],
     "the_episteme": [
@@ -28,16 +36,30 @@
         "episteme_id": "string (format: 'EP{N}')",
         "name": "string (e.g., 'The Classical Episteme', 'The Modern Episteme')",
         "historical_period": "string",
-        "what_can_be_known": ["string (types of knowledge possible)"],
+        "what_can_be_known": [
+          "string (types of knowledge possible)"
+        ],
         "how_knowledge_is_organized": "string (the underlying order)",
-        "what_counts_as_evidence": ["string"],
-        "what_counts_as_proof": ["string"],
-        "fundamental_concepts": ["string"],
-        "what_cannot_be_thought": ["string (the epistemic unconscious)"],
+        "what_counts_as_evidence": [
+          "string"
+        ],
+        "what_counts_as_proof": [
+          "string"
+        ],
+        "fundamental_concepts": [
+          "string"
+        ],
+        "what_cannot_be_thought": [
+          "string (the epistemic unconscious)"
+        ],
         "predecessor_episteme": "episteme_id (EP{N}) | null",
         "successor_episteme": "episteme_id (EP{N}) | null",
-        "transition_ruptures": ["rupture_id (RUP{N})"],
-        "enables_phenomena": ["phenomenon_id (PH{N})"]
+        "transition_ruptures": [
+          "rupture_id (RUP{N})"
+        ],
+        "enables_phenomena": [
+          "phenomenon_id (PH{N})"
+        ]
       }
     ],
     "discursive_formations": [
@@ -49,7 +71,9 @@
             "object_id": "string",
             "what_it_is": "string (what can be talked about)",
             "how_it_is_constituted": "string (how discourse creates this object)",
-            "surfaces_of_emergence": ["string (where this object appears)"]
+            "surfaces_of_emergence": [
+              "string (where this object appears)"
+            ]
           }
         ],
         "enunciative_modalities": [
@@ -72,15 +96,25 @@
           {
             "strategy_id": "string",
             "the_strategy": "string (what positions/choices the discourse enables)",
-            "who_benefits": ["string"],
-            "what_it_excludes": ["string"]
+            "who_benefits": [
+              "string"
+            ],
+            "what_it_excludes": [
+              "string"
+            ]
           }
         ],
         "archive_characteristics": "string (the total rules governing what appears)",
-        "source_articles": ["string"],
-        "enables_phenomena": ["phenomenon_id (PH{N})"],
+        "source_articles": [
+          "string"
+        ],
+        "enables_phenomena": [
+          "phenomenon_id (PH{N})"
+        ],
         "operates_within_episteme": "episteme_id (EP{N})",
-        "intersects_with_formations": ["formation_id (DF{N})"]
+        "intersects_with_formations": [
+          "formation_id (DF{N})"
+        ]
       }
     ],
     "the_rules_that_govern_what_can_be_said": [
@@ -90,13 +124,23 @@
         "the_rule": "string (what it permits/forbids)",
         "rule_type": "objects | enunciations | concepts | strategies | exclusion | limitation | appropriation",
         "how_it_operates": "string",
-        "who_enforces_it": ["string"],
-        "what_it_enables": ["string"],
-        "what_it_blocks": ["string"],
+        "who_enforces_it": [
+          "string"
+        ],
+        "what_it_enables": [
+          "string"
+        ],
+        "what_it_blocks": [
+          "string"
+        ],
         "is_visible": "boolean (do people know this rule exists?)",
-        "source_articles": ["string"],
+        "source_articles": [
+          "string"
+        ],
         "part_of_formation": "formation_id (DF{N})",
-        "produces_exclusions": ["exclusion_id (EXC{N})"]
+        "produces_exclusions": [
+          "exclusion_id (EXC{N})"
+        ]
       }
     ],
     "institutional_conditions": [
@@ -106,13 +150,27 @@
         "institution_type": "state_apparatus | professional_body | educational | economic | legal | medical | carceral | media",
         "what_it_does": "string",
         "when_established": "string",
-        "power_mechanisms": ["string (how it exercises power)"],
-        "what_knowledge_it_produces": ["string"],
-        "what_subjects_it_creates": ["subject_id (SUB{N})"],
-        "disciplinary_techniques": ["technique_id (TECH{N})"],
-        "source_articles": ["string"],
-        "enables_phenomena": ["phenomenon_id (PH{N})"],
-        "depends_on_institutions": ["institution_id (INST{N})"],
+        "power_mechanisms": [
+          "string (how it exercises power)"
+        ],
+        "what_knowledge_it_produces": [
+          "string"
+        ],
+        "what_subjects_it_creates": [
+          "subject_id (SUB{N})"
+        ],
+        "disciplinary_techniques": [
+          "technique_id (TECH{N})"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "enables_phenomena": [
+          "phenomenon_id (PH{N})"
+        ],
+        "depends_on_institutions": [
+          "institution_id (INST{N})"
+        ],
         "part_of_apparatus": "apparatus_id (APP{N}) | null"
       }
     ],
@@ -123,11 +181,21 @@
         "material_type": "technology | infrastructure | economic_arrangement | physical_space | communication_medium | body_technique",
         "what_it_is": "string",
         "when_it_emerged": "string",
-        "what_it_makes_possible": ["string"],
-        "what_it_makes_impossible": ["string"],
-        "source_articles": ["string"],
-        "enables_phenomena": ["phenomenon_id (PH{N})"],
-        "enables_techniques": ["technique_id (TECH{N})"],
+        "what_it_makes_possible": [
+          "string"
+        ],
+        "what_it_makes_impossible": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "enables_phenomena": [
+          "phenomenon_id (PH{N})"
+        ],
+        "enables_techniques": [
+          "technique_id (TECH{N})"
+        ],
         "part_of_apparatus": "apparatus_id (APP{N}) | null"
       }
     ],
@@ -138,12 +206,24 @@
         "what_knowledge_is_produced": "string",
         "what_power_relations_it_enables": "string",
         "how_knowledge_and_power_reinforce": "string",
-        "who_is_subjected": ["string"],
-        "who_subjects": ["string"],
-        "resistances_possible": ["string"],
-        "source_articles": ["string"],
-        "involves_institutions": ["institution_id (INST{N})"],
-        "produces_subjects": ["subject_id (SUB{N})"],
+        "who_is_subjected": [
+          "string"
+        ],
+        "who_subjects": [
+          "string"
+        ],
+        "resistances_possible": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "involves_institutions": [
+          "institution_id (INST{N})"
+        ],
+        "produces_subjects": [
+          "subject_id (SUB{N})"
+        ],
         "part_of_apparatus": "apparatus_id (APP{N}) | null"
       }
     ],
@@ -153,20 +233,42 @@
         "name": "string (e.g., 'The Security Apparatus', 'The Sexuality Apparatus')",
         "what_strategic_function": "string (what urgent need it responds to)",
         "heterogeneous_elements": {
-          "discourses": ["formation_id (DF{N})"],
-          "institutions": ["institution_id (INST{N})"],
-          "laws_and_regulations": ["string"],
-          "architectural_forms": ["string"],
-          "administrative_measures": ["string"],
-          "scientific_statements": ["string"],
-          "philosophical_propositions": ["string"],
-          "moral_pronouncements": ["string"]
+          "discourses": [
+            "formation_id (DF{N})"
+          ],
+          "institutions": [
+            "institution_id (INST{N})"
+          ],
+          "laws_and_regulations": [
+            "string"
+          ],
+          "architectural_forms": [
+            "string"
+          ],
+          "administrative_measures": [
+            "string"
+          ],
+          "scientific_statements": [
+            "string"
+          ],
+          "philosophical_propositions": [
+            "string"
+          ],
+          "moral_pronouncements": [
+            "string"
+          ]
         },
         "the_network": "string (how these elements connect)",
         "strategic_elaboration": "string (how it evolved to handle problems)",
-        "source_articles": ["string"],
-        "manages_phenomena": ["phenomenon_id (PH{N})"],
-        "produces_effects": ["effect_id (EFF{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "manages_phenomena": [
+          "phenomenon_id (PH{N})"
+        ],
+        "produces_effects": [
+          "effect_id (EFF{N})"
+        ]
       }
     ],
     "disciplinary_techniques": [
@@ -176,12 +278,22 @@
         "technique_type": "hierarchical_observation | normalizing_judgment | examination | enclosure | partitioning | functional_sites | time_control | body_training | panopticism",
         "how_it_works": "string",
         "what_it_produces": "string (docile bodies, normalized subjects, etc.)",
-        "where_deployed": ["institution_id (INST{N})"],
+        "where_deployed": [
+          "institution_id (INST{N})"
+        ],
         "historical_emergence": "string",
-        "source_articles": ["string"],
-        "enables_phenomena": ["phenomenon_id (PH{N})"],
-        "produces_subjects": ["subject_id (SUB{N})"],
-        "requires_materials": ["material_id (MAT{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "enables_phenomena": [
+          "phenomenon_id (PH{N})"
+        ],
+        "produces_subjects": [
+          "subject_id (SUB{N})"
+        ],
+        "requires_materials": [
+          "material_id (MAT{N})"
+        ]
       }
     ],
     "subject_positions_created": [
@@ -189,16 +301,32 @@
         "subject_id": "string (format: 'SUB{N}')",
         "name": "string (e.g., 'The Patient', 'The Criminal', 'The Entrepreneur')",
         "how_constituted": "string (through what practices/discourses)",
-        "what_subject_can_do": ["string"],
-        "what_subject_cannot_do": ["string"],
+        "what_subject_can_do": [
+          "string"
+        ],
+        "what_subject_cannot_do": [
+          "string"
+        ],
         "how_subject_knows_itself": "string (self-understanding imposed)",
-        "normalization_pressures": ["string"],
-        "resistance_possibilities": ["string"],
+        "normalization_pressures": [
+          "string"
+        ],
+        "resistance_possibilities": [
+          "string"
+        ],
         "historical_emergence": "string",
-        "source_articles": ["string"],
-        "produced_by_institutions": ["institution_id (INST{N})"],
-        "produced_by_techniques": ["technique_id (TECH{N})"],
-        "produced_by_discourse": ["formation_id (DF{N})"],
+        "source_articles": [
+          "string"
+        ],
+        "produced_by_institutions": [
+          "institution_id (INST{N})"
+        ],
+        "produced_by_techniques": [
+          "technique_id (TECH{N})"
+        ],
+        "produced_by_discourse": [
+          "formation_id (DF{N})"
+        ],
         "part_of_apparatus": "apparatus_id (APP{N}) | null"
       }
     ],
@@ -208,13 +336,25 @@
         "what_is_excluded": "string",
         "exclusion_type": "prohibition | division_and_rejection | will_to_truth | internal_control | rarefaction",
         "mechanism_of_exclusion": "string (how it's kept out)",
-        "who_is_excluded": ["string"],
+        "who_is_excluded": [
+          "string"
+        ],
         "what_discourse_is_blocked": "string",
-        "symptoms_of_return": ["string (where the excluded returns, distorted)"],
-        "who_benefits_from_exclusion": ["string"],
-        "source_articles": ["string"],
-        "produced_by_rules": ["rule_id (R{N})"],
-        "maintained_by_institutions": ["institution_id (INST{N})"]
+        "symptoms_of_return": [
+          "string (where the excluded returns, distorted)"
+        ],
+        "who_benefits_from_exclusion": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "produced_by_rules": [
+          "rule_id (R{N})"
+        ],
+        "maintained_by_institutions": [
+          "institution_id (INST{N})"
+        ]
       }
     ],
     "ruptures_and_discontinuities": [
@@ -224,15 +364,27 @@
         "when": "string (historical moment)",
         "what_broke": "string (what continuity was interrupted)",
         "rupture_type": "epistemic | institutional | discursive | technical | political",
-        "trigger_events": ["string"],
+        "trigger_events": [
+          "string"
+        ],
         "before_state": "string",
         "after_state": "string",
-        "what_became_thinkable": ["string"],
-        "what_became_unthinkable": ["string"],
-        "source_articles": ["string"],
+        "what_became_thinkable": [
+          "string"
+        ],
+        "what_became_unthinkable": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
         "affected_episteme": "episteme_id (EP{N}) | null",
-        "affected_formations": ["formation_id (DF{N})"],
-        "created_conditions_for": ["phenomenon_id (PH{N})"]
+        "affected_formations": [
+          "formation_id (DF{N})"
+        ],
+        "created_conditions_for": [
+          "phenomenon_id (PH{N})"
+        ]
       }
     ],
     "genealogical_threads": [
@@ -248,14 +400,18 @@
           }
         ],
         "emergence_context": {
-          "forces_at_play": ["string"],
+          "forces_at_play": [
+            "string"
+          ],
           "confrontation": "string (what struggle produced this)",
           "who_won": "string",
           "at_what_cost": "string"
         },
         "what_genealogy_reveals": "string (contingency, power, domination)",
         "what_seemed_necessary_but_wasnt": "string",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "effects_produced": [
@@ -265,10 +421,18 @@
         "effect_type": "knowledge_production | subject_formation | power_relation | normalization | resistance | counter_discourse",
         "what_is_produced": "string",
         "how_it_feeds_back": "string (reinforcing or undermining)",
-        "unintended_consequences": ["string"],
-        "source_articles": ["string"],
-        "produced_by_phenomena": ["phenomenon_id (PH{N})"],
-        "produced_by_apparatus": ["apparatus_id (APP{N})"]
+        "unintended_consequences": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "produced_by_phenomena": [
+          "phenomenon_id (PH{N})"
+        ],
+        "produced_by_apparatus": [
+          "apparatus_id (APP{N})"
+        ]
       }
     ],
     "cross_document_archaeology": {
@@ -281,11 +445,17 @@
           "current_dominance": "string"
         }
       ],
-      "shared_apparatus": ["apparatus_id (APP{N})"],
-      "invisible_conditions": ["string (conditions so naturalized nobody notices)"],
+      "shared_apparatus": [
+        "apparatus_id (APP{N})"
+      ],
+      "invisible_conditions": [
+        "string (conditions so naturalized nobody notices)"
+      ],
       "discontinuity_markers": [
         {
-          "between_documents": ["string"],
+          "between_documents": [
+            "string"
+          ],
           "rupture": "rupture_id (RUP{N})"
         }
       ]
@@ -313,7 +483,9 @@
         {
           "cluster_id": "string",
           "name": "string",
-          "member_ids": ["string"],
+          "member_ids": [
+            "string"
+          ],
           "coherence": "number (0-1)",
           "theme": "string"
         }
@@ -327,7 +499,9 @@
         "layers": [
           {
             "level": "number (1=deepest)",
-            "conditions": ["entity_id"],
+            "conditions": [
+              "entity_id"
+            ],
             "what_this_level_enables": "string"
           }
         ],
@@ -376,7 +550,10 @@
   "source_file": "analyzer/src/engines/conditions_of_possibility_advanced.py",
   "stage_context": {
     "framework_key": "foucauldian",
-    "additional_frameworks": ["genealogical", "archaeological"],
+    "additional_frameworks": [
+      "genealogical",
+      "archaeological"
+    ],
     "extraction": {
       "analysis_type": "condition of possibility",
       "analysis_type_plural": "conditions of possibility",
@@ -443,17 +620,46 @@
     },
     "concretization": {
       "id_examples": [
-        {"from": "PH1", "to": "The Practice of Performance Reviews"},
-        {"from": "DF1", "to": "The Discourse of Human Capital"},
-        {"from": "INST1", "to": "The HR Department as Disciplinary Institution"},
-        {"from": "TECH1", "to": "The Annual Review as Examination Technique"},
-        {"from": "SUB1", "to": "'The High-Performer' Subject Position"},
-        {"from": "EXC1", "to": "What Can't Be Said: Structural Causes of 'Poor Performance'"},
-        {"from": "APP1", "to": "The Performance Management Apparatus"}
+        {
+          "from": "PH1",
+          "to": "The Practice of Performance Reviews"
+        },
+        {
+          "from": "DF1",
+          "to": "The Discourse of Human Capital"
+        },
+        {
+          "from": "INST1",
+          "to": "The HR Department as Disciplinary Institution"
+        },
+        {
+          "from": "TECH1",
+          "to": "The Annual Review as Examination Technique"
+        },
+        {
+          "from": "SUB1",
+          "to": "'The High-Performer' Subject Position"
+        },
+        {
+          "from": "EXC1",
+          "to": "What Can't Be Said: Structural Causes of 'Poor Performance'"
+        },
+        {
+          "from": "APP1",
+          "to": "The Performance Management Apparatus"
+        }
       ],
       "naming_guidance": "Use concrete, vivid names. 'The HR Department as Normalizing Institution' not 'INST-HR'",
-      "recommended_table_types": ["condition_matrix", "formation_map", "exclusion_inventory"],
-      "recommended_visual_patterns": ["apparatus_diagram", "condition_layers", "power_network"]
+      "recommended_table_types": [
+        "condition_matrix",
+        "formation_map",
+        "exclusion_inventory"
+      ],
+      "recommended_visual_patterns": [
+        "apparatus_diagram",
+        "condition_layers",
+        "power_network"
+      ]
     },
     "audience_vocabulary": {
       "researcher": {

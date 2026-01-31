@@ -1,6 +1,6 @@
 {
   "engine_key": "dialectical_structure_advanced",
-  "engine_name": "Dialectical Structure Mapper (Advanced)",
+  "engine_name": "Dialectical Structure Mapper v2",
   "description": "Deep analysis of how ideas develop through contradiction and resolution. Reveals the hidden tensions that drive discourse, how opposites secretly depend on each other, and what gets preserved or destroyed when conflicts resolve. Uses sophisticated dialectical methods from Hegel, Marx, and critical theory but outputs in plain language anyone can understand.",
   "version": 1,
   "category": "argument",
@@ -16,14 +16,26 @@
         "why_they_cant_both_win": "string (what makes them genuinely opposed)",
         "how_deep": "surface | structural | foundational",
         "is_this_acknowledged": "boolean (do authors realize this tension exists?)",
-        "source_articles": ["string"],
+        "source_articles": [
+          "string"
+        ],
         "thesis_position": "position_id (POS{N})",
         "antithesis_position": "position_id (POS{N})",
-        "attempted_syntheses": ["synthesis_id (SYN{N})"],
-        "related_binaries": ["binary_id (BIN{N})"],
-        "generates_contradictions": ["contradiction_id (CON{N})"],
-        "part_of_larger_tensions": ["tension_id (T{N}) - parent tensions"],
-        "produces_sub_tensions": ["tension_id (T{N}) - child tensions"]
+        "attempted_syntheses": [
+          "synthesis_id (SYN{N})"
+        ],
+        "related_binaries": [
+          "binary_id (BIN{N})"
+        ],
+        "generates_contradictions": [
+          "contradiction_id (CON{N})"
+        ],
+        "part_of_larger_tensions": [
+          "tension_id (T{N}) - parent tensions"
+        ],
+        "produces_sub_tensions": [
+          "tension_id (T{N}) - child tensions"
+        ]
       }
     ],
     "positions_in_play": [
@@ -31,17 +43,31 @@
         "position_id": "string (format: 'POS{N}')",
         "name": "string (the position as a noun phrase)",
         "what_it_claims": "string (the thesis/claim)",
-        "who_holds_it": ["string (proponents, schools, authors)"],
+        "who_holds_it": [
+          "string (proponents, schools, authors)"
+        ],
         "what_it_gets_right": "string (genuine insights)",
         "what_it_misses": "string (blind spots)",
         "what_it_secretly_needs": "string (what it depends on but won't admit)",
         "historical_moment": "string (when/why this position emerged)",
-        "source_articles": ["string"],
-        "backed_by": ["backing_id (B{N})"],
-        "opposed_to": ["position_id (POS{N})"],
-        "depends_on_binaries": ["binary_id (BIN{N})"],
-        "vulnerable_to": ["contradiction_id (CON{N})"],
-        "could_sublate_into": ["synthesis_id (SYN{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "backed_by": [
+          "backing_id (B{N})"
+        ],
+        "opposed_to": [
+          "position_id (POS{N})"
+        ],
+        "depends_on_binaries": [
+          "binary_id (BIN{N})"
+        ],
+        "vulnerable_to": [
+          "contradiction_id (CON{N})"
+        ],
+        "could_sublate_into": [
+          "synthesis_id (SYN{N})"
+        ]
       }
     ],
     "the_binaries_at_work": [
@@ -55,11 +81,21 @@
         "is_this_binary_stable": "boolean",
         "what_would_destabilize_it": "string",
         "frequency_in_corpus": "number",
-        "source_articles": ["string"],
-        "structures_tensions": ["tension_id (T{N})"],
-        "enables_positions": ["position_id (POS{N})"],
-        "produces_exclusions": ["exclusion_id (EXC{N})"],
-        "related_binaries": ["binary_id (BIN{N}) - forming a system"]
+        "source_articles": [
+          "string"
+        ],
+        "structures_tensions": [
+          "tension_id (T{N})"
+        ],
+        "enables_positions": [
+          "position_id (POS{N})"
+        ],
+        "produces_exclusions": [
+          "exclusion_id (EXC{N})"
+        ],
+        "related_binaries": [
+          "binary_id (BIN{N}) - forming a system"
+        ]
       }
     ],
     "what_gets_preserved_and_destroyed": [
@@ -82,19 +118,37 @@
       {
         "synthesis_id": "string (format: 'SYN{N}')",
         "name": "string (evocative name)",
-        "what_it_tries_to_reconcile": ["tension_id (T{N})"],
+        "what_it_tries_to_reconcile": [
+          "tension_id (T{N})"
+        ],
         "the_synthesis_move": "string (how it claims to resolve the tension)",
         "does_it_work": "yes | partially | no | too_early_to_tell",
         "what_it_actually_achieves": "string (honest assessment)",
         "the_cost": "string (what gets lost or suppressed)",
-        "who_proposes_it": ["string"],
-        "source_articles": ["string"],
-        "incorporates_from_thesis": ["string (elements preserved)"],
-        "incorporates_from_antithesis": ["string (elements preserved)"],
-        "new_elements_added": ["string"],
-        "generates_new_tensions": ["tension_id (T{N}) - dialectic continues"],
-        "backed_by": ["backing_id (B{N})"],
-        "challenged_by": ["contradiction_id (CON{N})"]
+        "who_proposes_it": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "incorporates_from_thesis": [
+          "string (elements preserved)"
+        ],
+        "incorporates_from_antithesis": [
+          "string (elements preserved)"
+        ],
+        "new_elements_added": [
+          "string"
+        ],
+        "generates_new_tensions": [
+          "tension_id (T{N}) - dialectic continues"
+        ],
+        "backed_by": [
+          "backing_id (B{N})"
+        ],
+        "challenged_by": [
+          "contradiction_id (CON{N})"
+        ]
       }
     ],
     "where_things_break_down": [
@@ -103,15 +157,27 @@
         "what_contradicts_what": "string (plain language)",
         "contradiction_type": "logical | performative | practical | historical",
         "how_glaring": "blatant | subtle | buried",
-        "who_notices": ["string (authors who see it)"],
-        "who_ignores": ["string (authors who miss it)"],
+        "who_notices": [
+          "string (authors who see it)"
+        ],
+        "who_ignores": [
+          "string (authors who miss it)"
+        ],
         "what_it_reveals": "string (what the contradiction exposes)",
         "can_it_be_resolved": "yes | no | only_through_transformation",
         "resolution_would_require": "string",
-        "source_articles": ["string"],
-        "affects_positions": ["position_id (POS{N})"],
-        "challenges_syntheses": ["synthesis_id (SYN{N})"],
-        "exposes_binaries": ["binary_id (BIN{N})"],
+        "source_articles": [
+          "string"
+        ],
+        "affects_positions": [
+          "position_id (POS{N})"
+        ],
+        "challenges_syntheses": [
+          "synthesis_id (SYN{N})"
+        ],
+        "exposes_binaries": [
+          "binary_id (BIN{N})"
+        ],
         "could_generate_movement": "tension_id (T{N}) | null"
       }
     ],
@@ -121,10 +187,16 @@
         "what_is_excluded": "string (the suppressed third, the unthinkable option)",
         "excluded_by_which_binary": "binary_id (BIN{N})",
         "why_it_cant_appear": "string (what about the discourse blocks it)",
-        "symptoms_of_exclusion": ["string (where the excluded returns, distorted)"],
+        "symptoms_of_exclusion": [
+          "string (where the excluded returns, distorted)"
+        ],
         "what_including_it_would_change": "string",
-        "who_represents_it": ["string (marginalized voices, if any)"],
-        "source_articles": ["string"]
+        "who_represents_it": [
+          "string (marginalized voices, if any)"
+        ],
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "the_mediations": [
@@ -139,9 +211,15 @@
         "how_it_works": "string (the mechanism)",
         "is_mediation_successful": "boolean",
         "what_remains_immediate": "string (what resists mediation)",
-        "source_articles": ["string"],
-        "connects_to_tensions": ["tension_id (T{N})"],
-        "enables_syntheses": ["synthesis_id (SYN{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "connects_to_tensions": [
+          "tension_id (T{N})"
+        ],
+        "enables_syntheses": [
+          "synthesis_id (SYN{N})"
+        ]
       }
     ],
     "determinate_negations": [
@@ -153,7 +231,9 @@
         "negation_type": "abstract | determinate",
         "if_abstract_why": "string (what makes it merely abstract)",
         "what_emerges": "string (the positive result)",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "the_backings": [
@@ -161,10 +241,18 @@
         "backing_id": "string (format: 'B{N}')",
         "the_claim_backed": "string",
         "backing_type": "empirical | logical | historical | authoritative | pragmatic",
-        "source_of_authority": ["string"],
-        "what_would_undermine_it": ["string"],
-        "supports": ["position_id (POS{N}) or synthesis_id (SYN{N})"],
-        "contested_by": ["backing_id (B{N})"],
+        "source_of_authority": [
+          "string"
+        ],
+        "what_would_undermine_it": [
+          "string"
+        ],
+        "supports": [
+          "position_id (POS{N}) or synthesis_id (SYN{N})"
+        ],
+        "contested_by": [
+          "backing_id (B{N})"
+        ],
         "from_source": "string (article reference)"
       }
     ],
@@ -196,21 +284,33 @@
         "what_slave_learns": "string (knowledge/power gained through labor)",
         "reversal_potential": "high | medium | low | already_reversing",
         "what_would_trigger_reversal": "string",
-        "source_articles": ["string"],
-        "manifests_in_tensions": ["tension_id (T{N})"],
-        "structures_positions": ["position_id (POS{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "manifests_in_tensions": [
+          "tension_id (T{N})"
+        ],
+        "structures_positions": [
+          "position_id (POS{N})"
+        ]
       }
     ],
     "totality_and_fragments": [
       {
         "totality_id": "string (format: 'TOT{N}')",
         "claimed_totality": "string (what claims to be the whole)",
-        "what_it_excludes": ["exclusion_id (EXC{N})"],
+        "what_it_excludes": [
+          "exclusion_id (EXC{N})"
+        ],
         "is_totality_legitimate": "false_totality | partial_totality | genuine_totality",
-        "what_fragments_remain": ["string (irreducible particulars)"],
+        "what_fragments_remain": [
+          "string (irreducible particulars)"
+        ],
         "totalization_mechanism": "string (how it claims wholeness)",
         "critique_of_totality": "string",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "negative_moments": [
@@ -220,10 +320,18 @@
         "form_of_negativity": "contradiction | resistance | refusal | absence | limit",
         "productive_potential": "string (what new thing could emerge)",
         "current_status": "active | suppressed | latent | exhausted",
-        "who_embodies_negativity": ["string"],
-        "source_articles": ["string"],
-        "could_negate": ["position_id (POS{N})"],
-        "could_generate": ["synthesis_id (SYN{N})"]
+        "who_embodies_negativity": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "could_negate": [
+          "position_id (POS{N})"
+        ],
+        "could_generate": [
+          "synthesis_id (SYN{N})"
+        ]
       }
     ],
     "ideology_critique": [
@@ -231,12 +339,18 @@
         "ideology_id": "string (format: 'IDEO{N}')",
         "the_ideology": "string (what worldview/belief system)",
         "what_it_naturalizes": "string (what it makes seem inevitable)",
-        "whose_interests_served": ["string"],
-        "internal_contradictions": ["contradiction_id (CON{N})"],
+        "whose_interests_served": [
+          "string"
+        ],
+        "internal_contradictions": [
+          "contradiction_id (CON{N})"
+        ],
         "conditions_of_possibility": "string (what makes this ideology possible)",
         "what_it_cannot_see": "string (structural blind spot)",
         "immanent_critique": "string (how to critique it using its own standards)",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "cross_document_dialectics": {
@@ -244,9 +358,15 @@
         {
           "author_or_source": "string",
           "primary_position": "position_id (POS{N})",
-          "what_they_negate": ["position_id (POS{N})"],
-          "what_they_try_to_synthesize": ["synthesis_id (SYN{N})"],
-          "contradictions_they_embody": ["contradiction_id (CON{N})"]
+          "what_they_negate": [
+            "position_id (POS{N})"
+          ],
+          "what_they_try_to_synthesize": [
+            "synthesis_id (SYN{N})"
+          ],
+          "contradictions_they_embody": [
+            "contradiction_id (CON{N})"
+          ]
         }
       ],
       "debate_structure": [
@@ -266,7 +386,9 @@
           "sublation_achieved": "synthesis_id (SYN{N}) | null"
         }
       ],
-      "shared_assumptions": ["string (what all parties presuppose)"],
+      "shared_assumptions": [
+        "string (what all parties presuppose)"
+      ],
       "the_real_stakes": "string (what the debate is really about)"
     },
     "relationship_graph": {
@@ -292,7 +414,9 @@
         {
           "cluster_id": "string (format: 'CL{N}')",
           "name": "string (e.g., 'The Techno-Optimist Formation')",
-          "member_ids": ["string"],
+          "member_ids": [
+            "string"
+          ],
           "coherence": "number (0-1)",
           "internal_tension": "number (0-1, how contradictory internally)",
           "theme": "string"
@@ -321,7 +445,9 @@
       {
         "hierarchy_id": "string (format: 'TH{N}')",
         "root_tension": "tension_id (T{N}) - the foundational contradiction",
-        "derived_tensions": ["tension_id (T{N})"],
+        "derived_tensions": [
+          "tension_id (T{N})"
+        ],
         "depth": "number (levels)",
         "what_resolving_root_would_change": "string"
       }
@@ -342,12 +468,16 @@
       "dominant_ideology": "ideology_id",
       "most_excluded_position": "exclusion_id",
       "document_count": "number",
-      "authors_identified": ["string"],
+      "authors_identified": [
+        "string"
+      ],
       "total_relationships": "number",
       "graph_density": "number (0-1)",
       "longest_chain": "number",
       "hub_count": "number (entities with 5+ connections)",
-      "hub_entities": ["entity_id"]
+      "hub_entities": [
+        "entity_id"
+      ]
     }
   },
   "extraction_focus": [
@@ -374,7 +504,10 @@
   "source_file": "analyzer/src/engines/dialectical_structure_advanced.py",
   "stage_context": {
     "framework_key": "hegelian",
-    "additional_frameworks": ["marxist", "frankfurt_school"],
+    "additional_frameworks": [
+      "marxist",
+      "frankfurt_school"
+    ],
     "extraction": {
       "analysis_type": "dialectical structure",
       "analysis_type_plural": "dialectical structures",
@@ -440,17 +573,46 @@
     },
     "concretization": {
       "id_examples": [
-        {"from": "T1", "to": "The Innovation-Safety Standoff"},
-        {"from": "T1", "to": "Tension: Can't have maximum innovation AND maximum safety"},
-        {"from": "POS1", "to": "The Move-Fast-Break-Things Position"},
-        {"from": "BIN1", "to": "The Public/Private Binary"},
-        {"from": "SYN1", "to": "The 'Responsible Innovation' Compromise"},
-        {"from": "CON1", "to": "Saying 'safety first' while cutting safety budgets"},
-        {"from": "AUF1", "to": "What survived the AI Ethics Wave"}
+        {
+          "from": "T1",
+          "to": "The Innovation-Safety Standoff"
+        },
+        {
+          "from": "T1",
+          "to": "Tension: Can't have maximum innovation AND maximum safety"
+        },
+        {
+          "from": "POS1",
+          "to": "The Move-Fast-Break-Things Position"
+        },
+        {
+          "from": "BIN1",
+          "to": "The Public/Private Binary"
+        },
+        {
+          "from": "SYN1",
+          "to": "The 'Responsible Innovation' Compromise"
+        },
+        {
+          "from": "CON1",
+          "to": "Saying 'safety first' while cutting safety budgets"
+        },
+        {
+          "from": "AUF1",
+          "to": "What survived the AI Ethics Wave"
+        }
       ],
       "naming_guidance": "Use evocative, plain-language names that capture the drama of the conflict. Avoid academic jargon.",
-      "recommended_table_types": ["tension_matrix", "sublation_tracker", "position_landscape"],
-      "recommended_visual_patterns": ["greimas_square", "dialectical_spiral", "contradiction_network"]
+      "recommended_table_types": [
+        "tension_matrix",
+        "sublation_tracker",
+        "position_landscape"
+      ],
+      "recommended_visual_patterns": [
+        "greimas_square",
+        "dialectical_spiral",
+        "contradiction_network"
+      ]
     },
     "audience_vocabulary": {
       "researcher": {

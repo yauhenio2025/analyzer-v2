@@ -1,6 +1,6 @@
 {
   "engine_key": "metaphor_network_advanced",
-  "engine_name": "Metaphor Network Mapper (Advanced)",
+  "engine_name": "Metaphor Network Mapper v2",
   "description": "Deep analysis of how we think through metaphor. Reveals the hidden comparisons that structure understanding, the systematic mappings that let us reason about abstractions, and what gets highlighted or hidden when we think one thing in terms of another. Uses sophisticated methods from Lakoff, Johnson, and cognitive linguistics but outputs in plain language anyone can understand.",
   "version": 1,
   "category": "rhetoric",
@@ -32,16 +32,30 @@
             "how_strong": "necessary | typical | possible"
           }
         ],
-        "what_is_highlighted": ["string (aspects of target made salient)"],
-        "what_is_hidden": ["string (aspects of target obscured)"],
+        "what_is_highlighted": [
+          "string (aspects of target made salient)"
+        ],
+        "what_is_hidden": [
+          "string (aspects of target obscured)"
+        ],
         "is_conventional": "boolean (dead vs live metaphor)",
         "frequency_in_corpus": "number",
-        "source_articles": ["string"],
+        "source_articles": [
+          "string"
+        ],
         "part_of_system": "system_id (SYS{N}) | null",
-        "entailed_by": ["metaphor_id (CM{N}) - parent metaphors"],
-        "entails": ["metaphor_id (CM{N}) - child metaphors"],
-        "competes_with": ["metaphor_id (CM{N})"],
-        "instantiated_by": ["expression_id (EXP{N})"]
+        "entailed_by": [
+          "metaphor_id (CM{N}) - parent metaphors"
+        ],
+        "entails": [
+          "metaphor_id (CM{N}) - child metaphors"
+        ],
+        "competes_with": [
+          "metaphor_id (CM{N})"
+        ],
+        "instantiated_by": [
+          "expression_id (EXP{N})"
+        ]
       }
     ],
     "metaphorical_expressions": [
@@ -61,7 +75,9 @@
         "system_id": "string (format: 'SYS{N}')",
         "name": "string (e.g., 'The Mind as Container System')",
         "core_metaphor": "metaphor_id (CM{N})",
-        "subsidiary_metaphors": ["metaphor_id (CM{N})"],
+        "subsidiary_metaphors": [
+          "metaphor_id (CM{N})"
+        ],
         "coherence_principle": "string (how they fit together)",
         "systematic_mappings": [
           {
@@ -70,7 +86,9 @@
           }
         ],
         "domain_coverage": "number (0-1, how much of target is covered)",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "image_schemas": [
@@ -80,20 +98,32 @@
         "schema_type": "container | path | force | balance | link | center_periphery | part_whole | up_down | front_back | cycle | scale | iteration | contact | surface | full_empty | near_far | source_path_goal | compulsion | blockage | counterforce | attraction | restraint_removal | enablement | splitting | merging | matching | superimposition",
         "structure": "string (the basic gestalt)",
         "experiential_basis": "string (bodily experience that grounds it)",
-        "inference_patterns": ["string (reasoning the schema enables)"],
-        "metaphors_using_this": ["metaphor_id (CM{N})"],
-        "source_articles": ["string"]
+        "inference_patterns": [
+          "string (reasoning the schema enables)"
+        ],
+        "metaphors_using_this": [
+          "metaphor_id (CM{N})"
+        ],
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "metaphor_coherence": [
       {
         "coherence_id": "string (format: 'COH{N}')",
-        "metaphors_involved": ["metaphor_id (CM{N})"],
+        "metaphors_involved": [
+          "metaphor_id (CM{N})"
+        ],
         "coherence_type": "systematic | overlapping | incompatible",
         "shared_structure": "string (what they have in common)",
-        "tension_points": ["string (where they clash)"],
+        "tension_points": [
+          "string (where they clash)"
+        ],
         "how_resolved": "string | null",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "highlighting_and_hiding": [
@@ -101,17 +131,29 @@
         "highlight_id": "string (format: 'HH{N}')",
         "metaphor_id": "metaphor_id (CM{N})",
         "what_is_highlighted": {
-          "aspects": ["string"],
+          "aspects": [
+            "string"
+          ],
           "why_highlighted": "string",
-          "consequences_of_highlighting": ["string"]
+          "consequences_of_highlighting": [
+            "string"
+          ]
         },
         "what_is_hidden": {
-          "aspects": ["string"],
+          "aspects": [
+            "string"
+          ],
           "why_hidden": "string",
-          "consequences_of_hiding": ["string"]
+          "consequences_of_hiding": [
+            "string"
+          ]
         },
-        "who_benefits": ["string"],
-        "who_loses": ["string"],
+        "who_benefits": [
+          "string"
+        ],
+        "who_loses": [
+          "string"
+        ],
         "alternative_metaphor_would_show": "metaphor_id (CM{N}) | null"
       }
     ],
@@ -122,14 +164,20 @@
         "competing_metaphors": [
           {
             "metaphor_id": "metaphor_id (CM{N})",
-            "advocates": ["string"],
+            "advocates": [
+              "string"
+            ],
             "framing_offered": "string",
-            "implications": ["string"]
+            "implications": [
+              "string"
+            ]
           }
         ],
         "current_dominant": "metaphor_id (CM{N}) | null",
         "stakes": "string (what hangs on which metaphor wins)",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "dead_vs_live_metaphors": [
@@ -171,7 +219,9 @@
         "target_domain": "string",
         "universal_or_cultural": "universal | near_universal | cultural",
         "developmental_basis": "string (how acquired)",
-        "compounds_into": ["metaphor_id (CM{N}) - complex metaphors built on this"]
+        "compounds_into": [
+          "metaphor_id (CM{N}) - complex metaphors built on this"
+        ]
       }
     ],
     "metonymy_interactions": [
@@ -182,7 +232,9 @@
         "metaphor_involved": "metaphor_id (CM{N})",
         "interaction_type": "metonymy_within_metaphor | metonymy_enabling_metaphor | metaphor_enabling_metonymy",
         "how_they_interact": "string",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "analogies_extended": [
@@ -199,10 +251,16 @@
         ],
         "analogy_type": "explanatory | argumentative | heuristic | constitutive",
         "extends_to": "string (how far the analogy is pushed)",
-        "breakdown_points": ["string (where analogy fails)"],
+        "breakdown_points": [
+          "string (where analogy fails)"
+        ],
         "effectiveness": "number (0-1)",
-        "who_uses": ["string"],
-        "source_articles": ["string"],
+        "who_uses": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
         "related_to_metaphor": "metaphor_id (CM{N}) | null"
       }
     ],
@@ -210,18 +268,28 @@
       "shared_metaphors": [
         {
           "metaphor_id": "metaphor_id (CM{N})",
-          "shared_by": ["string (articles)"],
-          "variations": ["string"]
+          "shared_by": [
+            "string (articles)"
+          ],
+          "variations": [
+            "string"
+          ]
         }
       ],
       "metaphor_contests": [
         {
           "competition_id": "string",
-          "articles_using_a": ["string"],
-          "articles_using_b": ["string"]
+          "articles_using_a": [
+            "string"
+          ],
+          "articles_using_b": [
+            "string"
+          ]
         }
       ],
-      "dominant_source_domains": ["string (most common sources)"],
+      "dominant_source_domains": [
+        "string (most common sources)"
+      ],
       "metaphor_evolution": [
         {
           "metaphor_id": "metaphor_id (CM{N})",
@@ -256,7 +324,9 @@
         {
           "cluster_id": "string",
           "name": "string",
-          "member_ids": ["string"],
+          "member_ids": [
+            "string"
+          ],
           "coherence": "number (0-1)",
           "shared_source_domain": "string | null",
           "shared_target_domain": "string | null"
@@ -284,7 +354,9 @@
       "total_expressions": "number",
       "total_systems": "number",
       "total_competitions": "number",
-      "dominant_source_domains": ["string"],
+      "dominant_source_domains": [
+        "string"
+      ],
       "most_elaborated_metaphor": "metaphor_id",
       "most_contested_target": "string",
       "dead_vs_live_ratio": "number",
@@ -315,7 +387,11 @@
   "source_file": "analyzer/src/engines/metaphor_network_advanced.py",
   "stage_context": {
     "framework_key": "lakoff_johnson",
-    "additional_frameworks": ["ricoeur", "black", "kövecses"],
+    "additional_frameworks": [
+      "ricoeur",
+      "black",
+      "k\u00f6vecses"
+    ],
     "extraction": {
       "analysis_type": "conceptual metaphor",
       "analysis_type_plural": "conceptual metaphors",
@@ -382,17 +458,46 @@
     },
     "concretization": {
       "id_examples": [
-        {"from": "CM1", "to": "ARGUMENT IS WAR (attacking positions, defending claims)"},
-        {"from": "CM2", "to": "TIME IS MONEY (spending, saving, wasting time)"},
-        {"from": "EXP1", "to": "'He shot down my argument'"},
-        {"from": "SYS1", "to": "The Mind as Container System"},
-        {"from": "HH1", "to": "LABOR IS RESOURCE hides worker agency"},
-        {"from": "COMP1", "to": "Contest: ECONOMY IS MACHINE vs ECONOMY IS ORGANISM"},
-        {"from": "IS1", "to": "CONTAINER schema underlying 'in a good mood'"}
+        {
+          "from": "CM1",
+          "to": "ARGUMENT IS WAR (attacking positions, defending claims)"
+        },
+        {
+          "from": "CM2",
+          "to": "TIME IS MONEY (spending, saving, wasting time)"
+        },
+        {
+          "from": "EXP1",
+          "to": "'He shot down my argument'"
+        },
+        {
+          "from": "SYS1",
+          "to": "The Mind as Container System"
+        },
+        {
+          "from": "HH1",
+          "to": "LABOR IS RESOURCE hides worker agency"
+        },
+        {
+          "from": "COMP1",
+          "to": "Contest: ECONOMY IS MACHINE vs ECONOMY IS ORGANISM"
+        },
+        {
+          "from": "IS1",
+          "to": "CONTAINER schema underlying 'in a good mood'"
+        }
       ],
       "naming_guidance": "Use ALL CAPS for conceptual metaphors (A IS B). Quote specific expressions. Be concrete.",
-      "recommended_table_types": ["metaphor_inventory", "mapping_matrix", "highlight_hide_analysis"],
-      "recommended_visual_patterns": ["source_target_diagram", "metaphor_system_tree", "competition_map"]
+      "recommended_table_types": [
+        "metaphor_inventory",
+        "mapping_matrix",
+        "highlight_hide_analysis"
+      ],
+      "recommended_visual_patterns": [
+        "source_target_diagram",
+        "metaphor_system_tree",
+        "competition_map"
+      ]
     },
     "audience_vocabulary": {
       "researcher": {

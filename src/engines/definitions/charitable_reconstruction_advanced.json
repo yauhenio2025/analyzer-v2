@@ -1,6 +1,6 @@
 {
   "engine_key": "charitable_reconstruction_advanced",
-  "engine_name": "Charitable Reconstruction (Advanced)",
+  "engine_name": "Charitable Reconstruction v2",
   "description": "Deep analysis of arguments through the lens of interpretive charity. Applies Dennett's Rapoport Rules, Davidson's principle of charity, and Gadamer's hermeneutic circle to reconstruct arguments at their strongest before critique. Reveals implicit premises, identifies points of agreement, traces what can be learned from opposing views, and distinguishes legitimate criticism from strawmanning. Produces the best possible version of each argument\u2014the version the author would say 'I wish I'd put it that way.'",
   "version": 1,
   "category": "argument",

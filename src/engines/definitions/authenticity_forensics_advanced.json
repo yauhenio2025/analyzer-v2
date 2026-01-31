@@ -1,6 +1,6 @@
 {
   "engine_key": "authenticity_forensics_advanced",
-  "engine_name": "Authenticity Forensics (Advanced)",
+  "engine_name": "Authenticity Forensics v2",
   "description": "Deep forensic analysis of deception, manipulation, and disinformation using the RAND Firehose of Falsehood model and Sperber-Mercier Epistemic Vigilance Theory. Reveals how disinformation campaigns exploit cognitive shortcuts, how coordinated inauthentic behavior creates false consensus, and where epistemic vulnerabilities allow manipulation to succeed. Maps the full lifecycle from source manipulation through narrative laundering to repetition-induced belief. Essential for counter-disinformation analysis, prebunking strategy, and building epistemic resilience.",
   "version": 1,
   "category": "epistemology",

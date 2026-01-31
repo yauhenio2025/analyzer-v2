@@ -1,6 +1,6 @@
 {
   "engine_key": "intellectual_genealogy_advanced",
-  "engine_name": "Intellectual Genealogy Tracer (Advanced)",
+  "engine_name": "Intellectual Genealogy Tracer v2",
   "description": "Deep analysis of where ideas come from and how they travel. Reveals the hidden ancestry of concepts, the creative misreadings that transformed traditions, and the power struggles that determined which ideas survived. Uses sophisticated methods from Foucault, Lovejoy, and Bloom but outputs in plain language anyone can understand.",
   "version": 1,
   "category": "temporal",
@@ -14,9 +14,13 @@
         "name": "string",
         "dates": "string (birth-death or flourished)",
         "location": "string (geographic context)",
-        "institutional_context": ["string (universities, schools, movements)"],
+        "institutional_context": [
+          "string (universities, schools, movements)"
+        ],
         "primary_tradition": "tradition_id (TRAD{N})",
-        "secondary_traditions": ["tradition_id (TRAD{N})"],
+        "secondary_traditions": [
+          "tradition_id (TRAD{N})"
+        ],
         "key_works": [
           {
             "work_id": "string",
@@ -25,20 +29,40 @@
             "significance": "string"
           }
         ],
-        "key_contributions": ["string"],
-        "signature_concepts": ["concept_id (CON{N})"],
-        "signature_moves": ["string (characteristic intellectual moves)"],
-        "source_articles": ["string"],
-        "influenced_by": ["influence_id (INF{N})"],
-        "influences": ["influence_id (INF{N})"],
-        "rivals": ["thinker_id (TH{N})"],
-        "students": ["thinker_id (TH{N})"],
-        "teachers": ["thinker_id (TH{N})"],
+        "key_contributions": [
+          "string"
+        ],
+        "signature_concepts": [
+          "concept_id (CON{N})"
+        ],
+        "signature_moves": [
+          "string (characteristic intellectual moves)"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "influenced_by": [
+          "influence_id (INF{N})"
+        ],
+        "influences": [
+          "influence_id (INF{N})"
+        ],
+        "rivals": [
+          "thinker_id (TH{N})"
+        ],
+        "students": [
+          "thinker_id (TH{N})"
+        ],
+        "teachers": [
+          "thinker_id (TH{N})"
+        ],
         "reception_history": [
           {
             "period": "string",
             "how_received": "string",
-            "by_whom": ["string"]
+            "by_whom": [
+              "string"
+            ]
           }
         ]
       }
@@ -49,25 +73,47 @@
         "name": "string (e.g., 'German Idealism', 'Pragmatism', 'Structuralism')",
         "founding_period": "string",
         "geographic_center": "string",
-        "core_commitments": ["string (what you must believe to be in this tradition)"],
-        "characteristic_methods": ["string"],
-        "characteristic_problems": ["string"],
-        "canonical_texts": ["string"],
-        "founding_figures": ["thinker_id (TH{N})"],
-        "major_figures": ["thinker_id (TH{N})"],
+        "core_commitments": [
+          "string (what you must believe to be in this tradition)"
+        ],
+        "characteristic_methods": [
+          "string"
+        ],
+        "characteristic_problems": [
+          "string"
+        ],
+        "canonical_texts": [
+          "string"
+        ],
+        "founding_figures": [
+          "thinker_id (TH{N})"
+        ],
+        "major_figures": [
+          "thinker_id (TH{N})"
+        ],
         "schisms": [
           {
             "schism_id": "string",
             "when": "string",
             "what_split": "string",
-            "resulting_traditions": ["tradition_id (TRAD{N})"]
+            "resulting_traditions": [
+              "tradition_id (TRAD{N})"
+            ]
           }
         ],
-        "source_articles": ["string"],
+        "source_articles": [
+          "string"
+        ],
         "parent_tradition": "tradition_id (TRAD{N}) | null",
-        "child_traditions": ["tradition_id (TRAD{N})"],
-        "rival_traditions": ["tradition_id (TRAD{N})"],
-        "synthesis_with": ["tradition_id (TRAD{N})"]
+        "child_traditions": [
+          "tradition_id (TRAD{N})"
+        ],
+        "rival_traditions": [
+          "tradition_id (TRAD{N})"
+        ],
+        "synthesis_with": [
+          "tradition_id (TRAD{N})"
+        ]
       }
     ],
     "unit_ideas": [
@@ -80,16 +126,24 @@
             "period": "string",
             "thinker": "thinker_id (TH{N})",
             "formulation": "string",
-            "modifications": ["string"]
+            "modifications": [
+              "string"
+            ]
           }
         ],
         "longevity": "string (how long it persisted)",
         "explanatory_power": "string (what it explained)",
         "eventual_fate": "string (how it ended or transformed)",
-        "source_articles": ["string"],
+        "source_articles": [
+          "string"
+        ],
         "originated_with": "thinker_id (TH{N})",
-        "transmitted_through": ["thinker_id (TH{N})"],
-        "transformed_into": ["unit_idea_id (UI{N}) or concept_id (CON{N})"]
+        "transmitted_through": [
+          "thinker_id (TH{N})"
+        ],
+        "transformed_into": [
+          "unit_idea_id (UI{N}) or concept_id (CON{N})"
+        ]
       }
     ],
     "concepts_traced": [
@@ -109,10 +163,18 @@
         ],
         "etymology": "string | null",
         "semantic_drift": "number (0-1, total change)",
-        "source_articles": ["string"],
-        "descended_from": ["concept_id (CON{N}) or unit_idea_id (UI{N})"],
-        "split_into": ["concept_id (CON{N})"],
-        "merged_from": ["concept_id (CON{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "descended_from": [
+          "concept_id (CON{N}) or unit_idea_id (UI{N})"
+        ],
+        "split_into": [
+          "concept_id (CON{N})"
+        ],
+        "merged_from": [
+          "concept_id (CON{N})"
+        ]
       }
     ],
     "influences": [
@@ -122,14 +184,26 @@
         "to_thinker": "thinker_id (TH{N})",
         "influence_type": "direct | conceptual | methodological | critical | synthetic | agonistic",
         "mechanism": "personal_contact | reading | tradition | indirect | misreading",
-        "what_was_transmitted": ["string (ideas, methods, problems)"],
-        "what_was_transformed": ["string"],
-        "what_was_rejected": ["string"],
+        "what_was_transmitted": [
+          "string (ideas, methods, problems)"
+        ],
+        "what_was_transformed": [
+          "string"
+        ],
+        "what_was_rejected": [
+          "string"
+        ],
         "strength": "number (0-1)",
         "acknowledged_by_receiver": "boolean",
-        "source_articles": ["string"],
-        "mediated_by": ["thinker_id (TH{N}) | text"],
-        "involves_concepts": ["concept_id (CON{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "mediated_by": [
+          "thinker_id (TH{N}) | text"
+        ],
+        "involves_concepts": [
+          "concept_id (CON{N})"
+        ]
       }
     ],
     "creative_misreadings": [
@@ -141,10 +215,16 @@
         "how_misread": "string (the creative transformation)",
         "misreading_type": "clinamen | tessera | kenosis | daemonization | askesis | apophrades",
         "why_productive": "string (what the misreading enabled)",
-        "what_emerged": ["string (new ideas that came from misreading)"],
-        "source_articles": ["string"],
+        "what_emerged": [
+          "string (new ideas that came from misreading)"
+        ],
+        "source_articles": [
+          "string"
+        ],
         "produced_influence": "influence_id (INF{N})",
-        "produced_concepts": ["concept_id (CON{N})"]
+        "produced_concepts": [
+          "concept_id (CON{N})"
+        ]
       }
     ],
     "intellectual_debts": [
@@ -154,9 +234,13 @@
         "creditor": "thinker_id (TH{N})",
         "what_is_owed": "string",
         "acknowledged": "openly | partially | denied | suppressed",
-        "evidence_of_debt": ["string"],
+        "evidence_of_debt": [
+          "string"
+        ],
         "why_not_acknowledged": "string | null",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "transmission_paths": [
@@ -172,9 +256,15 @@
           }
         ],
         "fidelity": "number (0-1, how much original meaning preserved)",
-        "major_transformations": ["string"],
-        "breaks_in_transmission": ["string"],
-        "source_articles": ["string"]
+        "major_transformations": [
+          "string"
+        ],
+        "breaks_in_transmission": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "intellectual_conflicts": [
@@ -185,7 +275,9 @@
         "combatants": [
           {
             "side": "string",
-            "figures": ["thinker_id (TH{N})"],
+            "figures": [
+              "thinker_id (TH{N})"
+            ],
             "position": "string",
             "tradition": "tradition_id (TRAD{N})"
           }
@@ -193,8 +285,12 @@
         "what_was_at_stake": "string",
         "how_resolved": "string | null",
         "winner": "string | null",
-        "lasting_effects": ["string"],
-        "source_articles": ["string"]
+        "lasting_effects": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "genealogical_descent": [
@@ -206,14 +302,22 @@
             "moment": "string",
             "event": "string (accident, struggle, appropriation)",
             "what_happened": "string",
-            "who_involved": ["thinker_id (TH{N}) or institution"]
+            "who_involved": [
+              "thinker_id (TH{N}) or institution"
+            ]
           }
         ],
         "what_seemed_inevitable": "string",
         "what_was_actually_contingent": "string",
-        "whose_interests_served": ["string"],
-        "what_was_suppressed": ["string"],
-        "source_articles": ["string"]
+        "whose_interests_served": [
+          "string"
+        ],
+        "what_was_suppressed": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "canonical_texts": [
@@ -224,17 +328,25 @@
         "year": "string",
         "tradition": "tradition_id (TRAD{N})",
         "significance": "founding | transformative | synthesizing | critical | canonical",
-        "key_concepts_introduced": ["concept_id (CON{N})"],
+        "key_concepts_introduced": [
+          "concept_id (CON{N})"
+        ],
         "reception_history": [
           {
             "period": "string",
             "how_read": "string",
-            "by_whom": ["string"]
+            "by_whom": [
+              "string"
+            ]
           }
         ],
-        "influence_on": ["thinker_id (TH{N})"],
+        "influence_on": [
+          "thinker_id (TH{N})"
+        ],
         "citation_count_in_corpus": "number",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "institutional_contexts": [
@@ -245,25 +357,41 @@
         "period": "string",
         "location": "string",
         "associated_tradition": "tradition_id (TRAD{N}) | null",
-        "key_figures": ["thinker_id (TH{N})"],
-        "intellectual_output": ["string"],
-        "rivals": ["institution_id (INST{N})"],
-        "successors": ["institution_id (INST{N})"],
-        "source_articles": ["string"]
+        "key_figures": [
+          "thinker_id (TH{N})"
+        ],
+        "intellectual_output": [
+          "string"
+        ],
+        "rivals": [
+          "institution_id (INST{N})"
+        ],
+        "successors": [
+          "institution_id (INST{N})"
+        ],
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "cross_document_genealogy": {
       "shared_ancestors": [
         {
           "ancestor": "thinker_id (TH{N})",
-          "cited_by": ["string (articles)"],
-          "how_used": ["string"]
+          "cited_by": [
+            "string (articles)"
+          ],
+          "how_used": [
+            "string"
+          ]
         }
       ],
       "contested_legacies": [
         {
           "legacy_of": "thinker_id (TH{N})",
-          "claimed_by": ["string (articles/positions)"],
+          "claimed_by": [
+            "string (articles/positions)"
+          ],
           "how_contested": "string"
         }
       ],
@@ -271,7 +399,9 @@
         {
           "article": "string",
           "tradition_alignment": "tradition_id (TRAD{N})",
-          "evidence": ["string"]
+          "evidence": [
+            "string"
+          ]
         }
       ],
       "genealogical_disputes": [
@@ -307,7 +437,9 @@
         {
           "cluster_id": "string",
           "name": "string",
-          "member_ids": ["string"],
+          "member_ids": [
+            "string"
+          ],
           "period": "string",
           "tradition": "tradition_id (TRAD{N}) | null",
           "theme": "string"
@@ -327,8 +459,12 @@
           }
         ],
         "continuity_assessment": "strong | moderate | weak | broken",
-        "what_persists": ["string"],
-        "what_transforms": ["string"]
+        "what_persists": [
+          "string"
+        ],
+        "what_transforms": [
+          "string"
+        ]
       }
     ],
     "meta": {
@@ -370,7 +506,11 @@
   "source_file": "analyzer/src/engines/intellectual_genealogy_advanced.py",
   "stage_context": {
     "framework_key": "lovejoy",
-    "additional_frameworks": ["foucault_genealogy", "bloom", "skinner"],
+    "additional_frameworks": [
+      "foucault_genealogy",
+      "bloom",
+      "skinner"
+    ],
     "extraction": {
       "analysis_type": "intellectual genealogy",
       "analysis_type_plural": "intellectual genealogies",
@@ -439,17 +579,46 @@
     },
     "concretization": {
       "id_examples": [
-        {"from": "TH1", "to": "Michel Foucault (1926-1984)"},
-        {"from": "TRAD1", "to": "French Post-Structuralism"},
-        {"from": "INF1", "to": "Nietzsche → Foucault: Genealogical Method"},
-        {"from": "MIS1", "to": "Derrida's Creative Misreading of Husserl"},
-        {"from": "UI1", "to": "The Death of the Author (unit idea)"},
-        {"from": "PATH1", "to": "The Kantian Legacy in Anglo-American Ethics"},
-        {"from": "CONF1", "to": "The Habermas-Foucault Debate"}
+        {
+          "from": "TH1",
+          "to": "Michel Foucault (1926-1984)"
+        },
+        {
+          "from": "TRAD1",
+          "to": "French Post-Structuralism"
+        },
+        {
+          "from": "INF1",
+          "to": "Nietzsche \u2192 Foucault: Genealogical Method"
+        },
+        {
+          "from": "MIS1",
+          "to": "Derrida's Creative Misreading of Husserl"
+        },
+        {
+          "from": "UI1",
+          "to": "The Death of the Author (unit idea)"
+        },
+        {
+          "from": "PATH1",
+          "to": "The Kantian Legacy in Anglo-American Ethics"
+        },
+        {
+          "from": "CONF1",
+          "to": "The Habermas-Foucault Debate"
+        }
       ],
       "naming_guidance": "Use proper names, dates, and specific titles. Be historically precise.",
-      "recommended_table_types": ["influence_matrix", "tradition_tree", "reception_timeline"],
-      "recommended_visual_patterns": ["genealogy_tree", "influence_network", "temporal_map"]
+      "recommended_table_types": [
+        "influence_matrix",
+        "tradition_tree",
+        "reception_timeline"
+      ],
+      "recommended_visual_patterns": [
+        "genealogy_tree",
+        "influence_network",
+        "temporal_map"
+      ]
     },
     "audience_vocabulary": {
       "researcher": {

@@ -1,6 +1,6 @@
 {
   "engine_key": "epistemic_rupture_tracer_advanced",
-  "engine_name": "Epistemic Rupture Tracer (Advanced)",
+  "engine_name": "Epistemic Rupture Tracer v2",
   "description": "Deep analysis of how concepts are born through revolutionary breaks with the past. Reveals the obstacles that had to be overcome, the old ideas that had to die, and the surprising transformations that turned yesterday's nonsense into today's common sense. Uses sophisticated methods from Bachelard, Kuhn, and historical epistemology but outputs in plain language anyone can understand.",
   "version": 1,
   "category": "concepts",
@@ -17,14 +17,26 @@
         "emergence_date": "string",
         "emergence_context": "string",
         "current_status": "established | contested | evolving | declining",
-        "source_articles": ["string"],
+        "source_articles": [
+          "string"
+        ],
         "born_from_rupture": "rupture_id (RUP{N})",
-        "killed_predecessors": ["predecessor_id (PRED{N})"],
-        "inherited_from_predecessors": ["predecessor_id (PRED{N})"],
-        "blocked_by_obstacles": ["obstacle_id (OBS{N})"],
+        "killed_predecessors": [
+          "predecessor_id (PRED{N})"
+        ],
+        "inherited_from_predecessors": [
+          "predecessor_id (PRED{N})"
+        ],
+        "blocked_by_obstacles": [
+          "obstacle_id (OBS{N})"
+        ],
         "part_of_paradigm": "paradigm_id (PAR{N})",
-        "generates_anomalies_for": ["paradigm_id (PAR{N})"],
-        "in_concept_family": ["concept_id (C{N})"]
+        "generates_anomalies_for": [
+          "paradigm_id (PAR{N})"
+        ],
+        "in_concept_family": [
+          "concept_id (C{N})"
+        ]
       }
     ],
     "the_ruptures": [
@@ -42,16 +54,30 @@
             "how_it_triggered": "string"
           }
         ],
-        "key_figures": ["string (who enacted the rupture)"],
-        "source_articles": ["string"],
+        "key_figures": [
+          "string (who enacted the rupture)"
+        ],
+        "source_articles": [
+          "string"
+        ],
         "within_paradigm_shift": "shift_id (SHIFT{N}) | null",
-        "concepts_born": ["concept_id (C{N})"],
-        "concepts_killed": ["concept_id (C{N}) or predecessor_id (PRED{N})"],
-        "concepts_transformed": ["concept_id (C{N})"],
-        "obstacles_overcome": ["obstacle_id (OBS{N})"],
+        "concepts_born": [
+          "concept_id (C{N})"
+        ],
+        "concepts_killed": [
+          "concept_id (C{N}) or predecessor_id (PRED{N})"
+        ],
+        "concepts_transformed": [
+          "concept_id (C{N})"
+        ],
+        "obstacles_overcome": [
+          "obstacle_id (OBS{N})"
+        ],
         "from_landscape": "landscape_id (LAND{N})",
         "to_landscape": "landscape_id (LAND{N})",
-        "resistance_encountered": ["resistance_id (RES{N})"]
+        "resistance_encountered": [
+          "resistance_id (RES{N})"
+        ]
       }
     ],
     "predecessor_concepts": [
@@ -64,13 +90,21 @@
         "what_was_right_about_it": "string (kernel of truth)",
         "what_was_wrong": "string",
         "how_it_died": "string",
-        "source_articles": ["string"],
+        "source_articles": [
+          "string"
+        ],
         "part_of_obstacle": "obstacle_id (OBS{N}) | null",
         "part_of_paradigm": "paradigm_id (PAR{N})",
-        "succeeded_by": ["concept_id (C{N})"],
+        "succeeded_by": [
+          "concept_id (C{N})"
+        ],
         "relationship_to_successor": "replacement | refinement | inversion | splitting | merger",
-        "what_carried_forward": ["string (elements preserved)"],
-        "what_abandoned": ["string (elements rejected)"]
+        "what_carried_forward": [
+          "string (elements preserved)"
+        ],
+        "what_abandoned": [
+          "string (elements rejected)"
+        ]
       }
     ],
     "epistemological_obstacles": [
@@ -80,15 +114,25 @@
         "what_it_is": "string (the obstacle described)",
         "obstacle_type": "first_experience | general_knowledge | verbal | substantialist | animist | quantitative_false | utilitarian | realistic | prior_scientific",
         "why_it_blocks": "string (how it prevents understanding)",
-        "where_it_persists": ["string (domains where it still operates)"],
+        "where_it_persists": [
+          "string (domains where it still operates)"
+        ],
         "how_it_seduces": "string (why it seems obviously true)",
         "what_would_dissolve_it": "string",
-        "historical_examples": ["string"],
-        "source_articles": ["string"],
-        "blocked_concepts": ["concept_id (C{N})"],
+        "historical_examples": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "blocked_concepts": [
+          "concept_id (C{N})"
+        ],
         "overcame_in_rupture": "rupture_id (RUP{N}) | null",
         "residual_influence": "string (how it still affects thinking)",
-        "instantiated_as_predecessors": ["predecessor_id (PRED{N})"]
+        "instantiated_as_predecessors": [
+          "predecessor_id (PRED{N})"
+        ]
       }
     ],
     "paradigms": [
@@ -96,24 +140,50 @@
         "paradigm_id": "string (format: 'PAR{N}')",
         "name": "string (e.g., 'Newtonian Mechanics', 'Classical Political Economy')",
         "disciplinary_matrix": {
-          "symbolic_generalizations": ["string (shared equations, formalisms)"],
-          "metaphysical_commitments": ["string (beliefs about what exists)"],
-          "values": ["string (what counts as good science)"],
-          "exemplars": ["string (paradigmatic problem-solutions)"]
+          "symbolic_generalizations": [
+            "string (shared equations, formalisms)"
+          ],
+          "metaphysical_commitments": [
+            "string (beliefs about what exists)"
+          ],
+          "values": [
+            "string (what counts as good science)"
+          ],
+          "exemplars": [
+            "string (paradigmatic problem-solutions)"
+          ]
         },
-        "normal_science_puzzles": ["string (problems the paradigm defines)"],
-        "what_it_can_see": ["string"],
-        "what_it_cannot_see": ["string (invisible to practitioners)"],
+        "normal_science_puzzles": [
+          "string (problems the paradigm defines)"
+        ],
+        "what_it_can_see": [
+          "string"
+        ],
+        "what_it_cannot_see": [
+          "string (invisible to practitioners)"
+        ],
         "dominant_period": "string",
-        "source_articles": ["string"],
-        "contains_concepts": ["concept_id (C{N})"],
-        "contains_predecessors": ["predecessor_id (PRED{N})"],
-        "generates_anomalies": ["anomaly_id (ANOM{N})"],
+        "source_articles": [
+          "string"
+        ],
+        "contains_concepts": [
+          "concept_id (C{N})"
+        ],
+        "contains_predecessors": [
+          "predecessor_id (PRED{N})"
+        ],
+        "generates_anomalies": [
+          "anomaly_id (ANOM{N})"
+        ],
         "in_crisis": "boolean",
-        "crisis_triggers": ["anomaly_id (ANOM{N})"],
+        "crisis_triggers": [
+          "anomaly_id (ANOM{N})"
+        ],
         "succeeded_by": "paradigm_id (PAR{N}) | null",
         "preceded_by": "paradigm_id (PAR{N}) | null",
-        "incommensurable_with": ["paradigm_id (PAR{N})"]
+        "incommensurable_with": [
+          "paradigm_id (PAR{N})"
+        ]
       }
     ],
     "anomalies": [
@@ -130,7 +200,9 @@
           }
         ],
         "accumulation_effect": "string (how anomalies pile up)",
-        "source_articles": ["string"],
+        "source_articles": [
+          "string"
+        ],
         "contributes_to_crisis": "boolean",
         "resolved_in_rupture": "rupture_id (RUP{N}) | null"
       }
@@ -148,17 +220,35 @@
           "values_change": "string (what counts as good work)",
           "problem_change": "string (what problems matter)"
         },
-        "incommensurability_points": ["string (where translation fails)"],
-        "what_was_lost": ["string (genuine losses in the shift)"],
-        "what_was_gained": ["string"],
-        "key_converts": ["string (who switched sides)"],
-        "holdouts": ["string (who never accepted)"],
-        "source_articles": ["string"],
-        "includes_ruptures": ["rupture_id (RUP{N})"],
+        "incommensurability_points": [
+          "string (where translation fails)"
+        ],
+        "what_was_lost": [
+          "string (genuine losses in the shift)"
+        ],
+        "what_was_gained": [
+          "string"
+        ],
+        "key_converts": [
+          "string (who switched sides)"
+        ],
+        "holdouts": [
+          "string (who never accepted)"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "includes_ruptures": [
+          "rupture_id (RUP{N})"
+        ],
         "social_dynamics": {
           "generational_replacement": "boolean",
-          "institutional_battles": ["string"],
-          "rhetorical_strategies": ["string"]
+          "institutional_battles": [
+            "string"
+          ],
+          "rhetorical_strategies": [
+            "string"
+          ]
         }
       }
     ],
@@ -172,7 +262,9 @@
         "was_resistance_reasonable": "yes | partially | no",
         "what_resisters_could_see": "string (their valid concerns)",
         "how_overcome": "string",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "cognitive_landscapes": [
@@ -181,14 +273,30 @@
         "name": "string",
         "period": "string",
         "dominant_paradigm": "paradigm_id (PAR{N})",
-        "active_concepts": ["concept_id (C{N})"],
-        "active_obstacles": ["obstacle_id (OBS{N})"],
-        "characteristic_problems": ["string"],
-        "characteristic_methods": ["string"],
-        "blind_spots": ["string"],
-        "what_could_be_thought": ["string"],
-        "what_could_not_be_thought": ["string"],
-        "source_articles": ["string"],
+        "active_concepts": [
+          "concept_id (C{N})"
+        ],
+        "active_obstacles": [
+          "obstacle_id (OBS{N})"
+        ],
+        "characteristic_problems": [
+          "string"
+        ],
+        "characteristic_methods": [
+          "string"
+        ],
+        "blind_spots": [
+          "string"
+        ],
+        "what_could_be_thought": [
+          "string"
+        ],
+        "what_could_not_be_thought": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
         "predecessor_landscape": "landscape_id (LAND{N}) | null",
         "successor_landscape": "landscape_id (LAND{N}) | null",
         "transition_rupture": "rupture_id (RUP{N}) | null"
@@ -209,25 +317,49 @@
         ],
         "continuity_type": "terminological | structural | functional | discontinuous",
         "total_semantic_drift": "number (0-1, how much meaning changed)",
-        "key_transformations": ["rupture_id (RUP{N})"],
-        "source_articles": ["string"]
+        "key_transformations": [
+          "rupture_id (RUP{N})"
+        ],
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "research_programmes": [
       {
         "programme_id": "string (format: 'RP{N}')",
         "name": "string (following Lakatos)",
-        "hard_core": ["string (unfalsifiable commitments)"],
-        "protective_belt": ["string (auxiliary hypotheses that can change)"],
-        "positive_heuristic": ["string (research directions encouraged)"],
-        "negative_heuristic": ["string (what's not to be questioned)"],
+        "hard_core": [
+          "string (unfalsifiable commitments)"
+        ],
+        "protective_belt": [
+          "string (auxiliary hypotheses that can change)"
+        ],
+        "positive_heuristic": [
+          "string (research directions encouraged)"
+        ],
+        "negative_heuristic": [
+          "string (what's not to be questioned)"
+        ],
         "progressivity": "progressive | degenerating | stagnant",
-        "novel_predictions": ["string"],
-        "confirmed_predictions": ["string"],
-        "source_articles": ["string"],
-        "competing_with": ["programme_id (RP{N})"],
-        "contains_concepts": ["concept_id (C{N})"],
-        "absorbs_anomalies": ["anomaly_id (ANOM{N})"]
+        "novel_predictions": [
+          "string"
+        ],
+        "confirmed_predictions": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "competing_with": [
+          "programme_id (RP{N})"
+        ],
+        "contains_concepts": [
+          "concept_id (C{N})"
+        ],
+        "absorbs_anomalies": [
+          "anomaly_id (ANOM{N})"
+        ]
       }
     ],
     "scientific_revolutions_structure": [
@@ -237,46 +369,72 @@
         "phases": {
           "pre_paradigm": {
             "description": "string",
-            "competing_schools": ["string"]
+            "competing_schools": [
+              "string"
+            ]
           },
           "normal_science": {
             "paradigm": "paradigm_id (PAR{N})",
-            "puzzle_solving": ["string"],
+            "puzzle_solving": [
+              "string"
+            ],
             "duration": "string"
           },
           "crisis": {
-            "anomalies": ["anomaly_id (ANOM{N})"],
-            "responses": ["string"],
+            "anomalies": [
+              "anomaly_id (ANOM{N})"
+            ],
+            "responses": [
+              "string"
+            ],
             "loosening_of_rules": "string"
           },
           "revolution": {
             "new_paradigm": "paradigm_id (PAR{N})",
-            "ruptures": ["rupture_id (RUP{N})"],
-            "key_moments": ["string"]
+            "ruptures": [
+              "rupture_id (RUP{N})"
+            ],
+            "key_moments": [
+              "string"
+            ]
           },
           "new_normal_science": {
             "description": "string"
           }
         },
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "cross_document_analysis": {
       "shared_paradigm": "paradigm_id (PAR{N}) | null",
-      "competing_paradigms": ["paradigm_id (PAR{N})"],
-      "consensus_on_ruptures": ["rupture_id (RUP{N}) - agreed upon breaks"],
+      "competing_paradigms": [
+        "paradigm_id (PAR{N})"
+      ],
+      "consensus_on_ruptures": [
+        "rupture_id (RUP{N}) - agreed upon breaks"
+      ],
       "contested_ruptures": [
         {
           "rupture": "rupture_id (RUP{N})",
-          "documents_affirming": ["string"],
-          "documents_denying": ["string"]
+          "documents_affirming": [
+            "string"
+          ],
+          "documents_denying": [
+            "string"
+          ]
         }
       ],
-      "shared_obstacles": ["obstacle_id (OBS{N})"],
+      "shared_obstacles": [
+        "obstacle_id (OBS{N})"
+      ],
       "historiographical_disputes": [
         {
           "dispute": "string",
-          "positions": ["string"]
+          "positions": [
+            "string"
+          ]
         }
       ]
     },
@@ -304,7 +462,9 @@
         {
           "cluster_id": "string",
           "name": "string",
-          "member_ids": ["string"],
+          "member_ids": [
+            "string"
+          ],
           "period": "string",
           "theme": "string"
         }
@@ -323,8 +483,12 @@
           }
         ],
         "total_transformation": "number (0-1)",
-        "continuity_preserved": ["string"],
-        "continuity_broken": ["string"]
+        "continuity_preserved": [
+          "string"
+        ],
+        "continuity_broken": [
+          "string"
+        ]
       }
     ],
     "meta": {
@@ -369,7 +533,11 @@
   "source_file": "analyzer/src/engines/epistemic_rupture_tracer_advanced.py",
   "stage_context": {
     "framework_key": "bachelardian",
-    "additional_frameworks": ["kuhnian", "lakatosian", "canguilhem"],
+    "additional_frameworks": [
+      "kuhnian",
+      "lakatosian",
+      "canguilhem"
+    ],
     "extraction": {
       "analysis_type": "epistemic rupture",
       "analysis_type_plural": "epistemic ruptures",
@@ -437,18 +605,50 @@
     },
     "concretization": {
       "id_examples": [
-        {"from": "C1", "to": "Oxygen (Lavoisier 1789)"},
-        {"from": "PRED1", "to": "Phlogiston (pre-Lavoisier)"},
-        {"from": "RUP1", "to": "The Chemical Revolution (1770s-1780s)"},
-        {"from": "OBS1", "to": "The Substance Fallacy in Heat Theory"},
-        {"from": "PAR1", "to": "Classical Mechanics"},
-        {"from": "ANOM1", "to": "The Ultraviolet Catastrophe"},
-        {"from": "SHIFT1", "to": "The Quantum Revolution"},
-        {"from": "LIN1", "to": "The Energy Lineage: vis viva → work → energy"}
+        {
+          "from": "C1",
+          "to": "Oxygen (Lavoisier 1789)"
+        },
+        {
+          "from": "PRED1",
+          "to": "Phlogiston (pre-Lavoisier)"
+        },
+        {
+          "from": "RUP1",
+          "to": "The Chemical Revolution (1770s-1780s)"
+        },
+        {
+          "from": "OBS1",
+          "to": "The Substance Fallacy in Heat Theory"
+        },
+        {
+          "from": "PAR1",
+          "to": "Classical Mechanics"
+        },
+        {
+          "from": "ANOM1",
+          "to": "The Ultraviolet Catastrophe"
+        },
+        {
+          "from": "SHIFT1",
+          "to": "The Quantum Revolution"
+        },
+        {
+          "from": "LIN1",
+          "to": "The Energy Lineage: vis viva \u2192 work \u2192 energy"
+        }
       ],
       "naming_guidance": "Use historically accurate, evocative names. Date concepts and ruptures when possible.",
-      "recommended_table_types": ["rupture_timeline", "paradigm_comparison", "obstacle_inventory"],
-      "recommended_visual_patterns": ["timeline", "concept_tree", "transformation_flowchart"]
+      "recommended_table_types": [
+        "rupture_timeline",
+        "paradigm_comparison",
+        "obstacle_inventory"
+      ],
+      "recommended_visual_patterns": [
+        "timeline",
+        "concept_tree",
+        "transformation_flowchart"
+      ]
     },
     "audience_vocabulary": {
       "researcher": {

@@ -1,6 +1,6 @@
 {
   "engine_key": "path_dependency_analyzer_advanced",
-  "engine_name": "Path Dependency Analyzer (Advanced)",
+  "engine_name": "Path Dependency Analyzer v2",
   "description": "Deep analysis of how early choices and historical sequences constrain later possibilities. Grounded in Pierson's increasing returns theory, North's institutional economics, Arthur's lock-in mechanisms, and Mahoney's critical juncture methodology. Reveals why suboptimal arrangements persist, how small early events produce outsized long-term effects, when path-breaking change becomes possible, and what makes some institutions sticky while others evolve. Essential for understanding historical inefficiency, timing effects, and the difference between paths that could have been different versus those that were overdetermined.",
   "version": 1,
   "category": "temporal",

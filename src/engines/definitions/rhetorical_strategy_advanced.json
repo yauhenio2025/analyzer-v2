@@ -1,6 +1,6 @@
 {
   "engine_key": "rhetorical_strategy_advanced",
-  "engine_name": "Rhetorical Strategy Analyzer (Advanced)",
+  "engine_name": "Rhetorical Strategy Analyzer v2",
   "description": "Deep analysis of how texts persuade and what dramas they enact. Reveals the moves speakers make to win audiences, the characters and plots hidden in arguments, and the gap between what's said and what's really happening. Uses sophisticated methods from Aristotle, Burke, and Perelman but outputs in plain language anyone can understand.",
   "version": 1,
   "category": "rhetoric",
@@ -14,21 +14,41 @@
         "exigence": "string (the urgent problem calling for a response)",
         "audience": {
           "primary_audience": "string",
-          "secondary_audiences": ["string"],
-          "audience_beliefs": ["string (what they already believe)"],
-          "audience_values": ["string (what they care about)"],
+          "secondary_audiences": [
+            "string"
+          ],
+          "audience_beliefs": [
+            "string (what they already believe)"
+          ],
+          "audience_values": [
+            "string (what they care about)"
+          ],
           "audience_knowledge": "string (what they know/don't know)",
-          "resistance_points": ["string (where they'll push back)"]
+          "resistance_points": [
+            "string (where they'll push back)"
+          ]
         },
         "constraints": {
-          "genre_constraints": ["string"],
-          "institutional_constraints": ["string"],
+          "genre_constraints": [
+            "string"
+          ],
+          "institutional_constraints": [
+            "string"
+          ],
           "timing_constraints": "string",
-          "what_cant_be_said": ["string"]
+          "what_cant_be_said": [
+            "string"
+          ]
         },
-        "source_articles": ["string"],
-        "shapes_appeals": ["appeal_id (APP{N})"],
-        "shapes_strategies": ["strategy_id (STR{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "shapes_appeals": [
+          "appeal_id (APP{N})"
+        ],
+        "shapes_strategies": [
+          "strategy_id (STR{N})"
+        ]
       }
     ],
     "the_appeals": [
@@ -39,9 +59,13 @@
         "how_it_works": "string (mechanism)",
         "text_evidence": "string (quoted passage)",
         "effectiveness": "number (0-1)",
-        "problems_with_appeal": ["string (weaknesses, fallacies)"],
+        "problems_with_appeal": [
+          "string (weaknesses, fallacies)"
+        ],
         "source_article": "string",
-        "supports_claims": ["claim_id (CL{N})"],
+        "supports_claims": [
+          "claim_id (CL{N})"
+        ],
         "interacts_with_appeals": [
           {
             "appeal": "appeal_id (APP{N})",
@@ -64,11 +88,19 @@
           }
         ],
         "character_projected": "string (what kind of person they seem)",
-        "authority_claimed": ["string"],
-        "authority_sources": ["string (credentials, experience, institutional position)"],
-        "vulnerabilities": ["string (where ethos could be attacked)"],
+        "authority_claimed": [
+          "string"
+        ],
+        "authority_sources": [
+          "string (credentials, experience, institutional position)"
+        ],
+        "vulnerabilities": [
+          "string (where ethos could be attacked)"
+        ],
         "source_article": "string",
-        "enables_appeals": ["appeal_id (APP{N})"]
+        "enables_appeals": [
+          "appeal_id (APP{N})"
+        ]
       }
     ],
     "pathos_moves": [
@@ -83,8 +115,12 @@
         "legitimacy": "legitimate | manipulative | questionable",
         "why_this_emotion": "string (strategic reason for this emotion)",
         "source_article": "string",
-        "supports_appeals": ["appeal_id (APP{N})"],
-        "connects_to_values": ["string"]
+        "supports_appeals": [
+          "appeal_id (APP{N})"
+        ],
+        "connects_to_values": [
+          "string"
+        ]
       }
     ],
     "the_drama_being_staged": [
@@ -98,7 +134,9 @@
         "purpose": "string (why, toward what end)",
         "dominant_ratio": "string (which two terms are emphasized, e.g., 'agent-purpose')",
         "what_ratio_reveals": "string (what worldview the ratio implies)",
-        "what_ratio_conceals": ["string (what gets hidden)"],
+        "what_ratio_conceals": [
+          "string (what gets hidden)"
+        ],
         "alternative_ratios": [
           {
             "ratio": "string",
@@ -106,16 +144,24 @@
             "who_would_use_it": "string"
           }
         ],
-        "source_articles": ["string"],
-        "shapes_framing": ["frame_id (FR{N})"],
-        "implies_motives": ["motive_id (MOT{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "shapes_framing": [
+          "frame_id (FR{N})"
+        ],
+        "implies_motives": [
+          "motive_id (MOT{N})"
+        ]
       }
     ],
     "identification_and_division": [
       {
         "identification_id": "string (format: 'ID{N}')",
         "who_identifies_with_whom": "string",
-        "basis_of_identification": ["string (shared interests, values, enemies)"],
+        "basis_of_identification": [
+          "string (shared interests, values, enemies)"
+        ],
         "identification_type": "material | idealistic | formal | antithetical",
         "text_evidence": "string",
         "division_created": {
@@ -125,7 +171,9 @@
         },
         "scapegoat_if_any": "string | null (who gets blamed)",
         "source_article": "string",
-        "serves_strategy": ["strategy_id (STR{N})"]
+        "serves_strategy": [
+          "strategy_id (STR{N})"
+        ]
       }
     ],
     "the_frames_in_use": [
@@ -136,13 +184,25 @@
         "causal_interpretation": "string (what causes it)",
         "moral_evaluation": "string (is it good/bad, who's to blame)",
         "treatment_recommendation": "string (what to do about it)",
-        "what_frame_highlights": ["string"],
-        "what_frame_obscures": ["string"],
+        "what_frame_highlights": [
+          "string"
+        ],
+        "what_frame_obscures": [
+          "string"
+        ],
         "metaphor_at_core": "string | null",
-        "competing_frames": ["frame_id (FR{N})"],
-        "source_articles": ["string"],
-        "serves_whose_interests": ["string"],
-        "used_by": ["string (speakers, groups)"]
+        "competing_frames": [
+          "frame_id (FR{N})"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "serves_whose_interests": [
+          "string"
+        ],
+        "used_by": [
+          "string (speakers, groups)"
+        ]
       }
     ],
     "argumentative_moves": [
@@ -155,7 +215,9 @@
         "source_article": "string",
         "supports_claim": "claim_id (CL{N}) | null",
         "responds_to_move": "move_id (MOV{N}) | null",
-        "enables_moves": ["move_id (MOV{N})"]
+        "enables_moves": [
+          "move_id (MOV{N})"
+        ]
       }
     ],
     "rhetorical_devices": [
@@ -166,8 +228,12 @@
         "function": "string (what it accomplishes)",
         "effectiveness": "number (0-1)",
         "frequency": "number",
-        "source_articles": ["string"],
-        "supports_appeals": ["appeal_id (APP{N})"],
+        "source_articles": [
+          "string"
+        ],
+        "supports_appeals": [
+          "appeal_id (APP{N})"
+        ],
         "contributes_to_style": "style_id (STY{N})"
       }
     ],
@@ -179,7 +245,9 @@
         "how_it_misleads": "string",
         "severity": "minor | moderate | serious | egregious",
         "is_intentional": "clearly | probably | unclear | probably_not",
-        "who_benefits": ["string"],
+        "who_benefits": [
+          "string"
+        ],
         "source_article": "string",
         "undermines_appeal": "appeal_id (APP{N}) | null"
       }
@@ -193,8 +261,12 @@
         "who_would_accept": "string (which audiences)",
         "who_would_reject": "string",
         "source_article": "string",
-        "grounds_arguments": ["move_id (MOV{N})"],
-        "connects_to_values": ["string"]
+        "grounds_arguments": [
+          "move_id (MOV{N})"
+        ],
+        "connects_to_values": [
+          "string"
+        ]
       }
     ],
     "presence_techniques": [
@@ -215,7 +287,9 @@
         "stated_motive": "string (what they say they want)",
         "implied_motive": "string (what their rhetoric suggests)",
         "motive_gap": "string (difference between stated and implied)",
-        "evidence_for_implied": ["string"],
+        "evidence_for_implied": [
+          "string"
+        ],
         "source_article": "string",
         "revealed_by_pentad": "pentad_id (PENT{N}) | null",
         "revealed_by_frame": "frame_id (FR{N}) | null"
@@ -233,17 +307,25 @@
         "audience_relationship": "string (how style positions audience)",
         "source_article": "string",
         "supports_ethos": "ethos_id (ETH{N}) | null",
-        "devices_contributing": ["device_id (DEV{N})"]
+        "devices_contributing": [
+          "device_id (DEV{N})"
+        ]
       }
     ],
     "cross_document_rhetoric": {
       "rhetorical_communities": [
         {
           "community_id": "string",
-          "shared_frames": ["frame_id (FR{N})"],
-          "shared_starting_points": ["starting_point_id (SP{N})"],
+          "shared_frames": [
+            "frame_id (FR{N})"
+          ],
+          "shared_starting_points": [
+            "starting_point_id (SP{N})"
+          ],
           "shared_identification": "string",
-          "members": ["string (articles/authors)"]
+          "members": [
+            "string (articles/authors)"
+          ]
         }
       ],
       "rhetorical_contests": [
@@ -267,7 +349,9 @@
           ]
         }
       ],
-      "shared_topoi": ["string (common topics/arguments across corpus)"]
+      "shared_topoi": [
+        "string (common topics/arguments across corpus)"
+      ]
     },
     "relationship_graph": {
       "nodes": [
@@ -292,7 +376,9 @@
         {
           "cluster_id": "string",
           "name": "string",
-          "member_ids": ["string"],
+          "member_ids": [
+            "string"
+          ],
           "coherence": "number (0-1)",
           "strategic_function": "string"
         }
@@ -356,7 +442,11 @@
   "source_file": "analyzer/src/engines/rhetorical_strategy_advanced.py",
   "stage_context": {
     "framework_key": "burkean",
-    "additional_frameworks": ["aristotelian", "perelman", "booth"],
+    "additional_frameworks": [
+      "aristotelian",
+      "perelman",
+      "booth"
+    ],
     "extraction": {
       "analysis_type": "rhetorical strategy",
       "analysis_type_plural": "rhetorical strategies",
@@ -423,17 +513,46 @@
     },
     "concretization": {
       "id_examples": [
-        {"from": "APP1", "to": "Ethos Appeal: 'As a 20-year veteran...'"},
-        {"from": "PENT1", "to": "The Innovation Drama (Agent-Purpose dominant)"},
-        {"from": "ID1", "to": "Tech Founders vs. Regulators identification"},
-        {"from": "FR1", "to": "The Crisis Frame: 'We must act now or lose everything'"},
-        {"from": "FAL1", "to": "False Dilemma: 'Either innovate or die'"},
-        {"from": "PATH1", "to": "Fear Appeal: Automation anxiety"},
-        {"from": "MOT1", "to": "Stated: 'democratizing AI' / Implied: market dominance"}
+        {
+          "from": "APP1",
+          "to": "Ethos Appeal: 'As a 20-year veteran...'"
+        },
+        {
+          "from": "PENT1",
+          "to": "The Innovation Drama (Agent-Purpose dominant)"
+        },
+        {
+          "from": "ID1",
+          "to": "Tech Founders vs. Regulators identification"
+        },
+        {
+          "from": "FR1",
+          "to": "The Crisis Frame: 'We must act now or lose everything'"
+        },
+        {
+          "from": "FAL1",
+          "to": "False Dilemma: 'Either innovate or die'"
+        },
+        {
+          "from": "PATH1",
+          "to": "Fear Appeal: Automation anxiety"
+        },
+        {
+          "from": "MOT1",
+          "to": "Stated: 'democratizing AI' / Implied: market dominance"
+        }
       ],
       "naming_guidance": "Use vivid, concrete names. 'The Innovation Drama' not 'PENT1'. Quote key phrases.",
-      "recommended_table_types": ["appeal_breakdown", "frame_comparison", "fallacy_inventory"],
-      "recommended_visual_patterns": ["pentad_diagram", "identification_map", "persuasion_flow"]
+      "recommended_table_types": [
+        "appeal_breakdown",
+        "frame_comparison",
+        "fallacy_inventory"
+      ],
+      "recommended_visual_patterns": [
+        "pentad_diagram",
+        "identification_map",
+        "persuasion_flow"
+      ]
     },
     "audience_vocabulary": {
       "researcher": {

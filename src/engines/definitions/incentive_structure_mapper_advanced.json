@@ -1,6 +1,6 @@
 {
   "engine_key": "incentive_structure_mapper_advanced",
-  "engine_name": "Incentive Structure Mapper (Advanced)",
+  "engine_name": "Incentive Structure Mapper v2",
   "description": "Deep analysis of what behavior systems actually reward. Reveals the hidden incentives that drive actors, the principal-agent problems that create dysfunction, the collective action traps that make rational individuals produce irrational outcomes, and the perverse incentives that make well-intentioned policies backfire. Uses sophisticated methods from public choice, game theory, and institutional economics but outputs in plain language anyone can understand.",
   "version": 1,
   "category": "institutional",
@@ -13,17 +13,33 @@
         "actor_id": "string (format: 'ACT{N}')",
         "name": "string",
         "actor_type": "individual | organization | group | institution | role",
-        "interests": ["string (what they care about)"],
-        "resources": ["string (what they control)"],
-        "constraints": ["string (what limits them)"],
+        "interests": [
+          "string (what they care about)"
+        ],
+        "resources": [
+          "string (what they control)"
+        ],
+        "constraints": [
+          "string (what limits them)"
+        ],
         "information_access": "string (what they know/don't know)",
         "time_horizon": "short_term | medium_term | long_term | varies",
         "risk_preference": "risk_averse | risk_neutral | risk_seeking | varies",
-        "source_articles": ["string"],
-        "faces_incentives": ["incentive_id (INC{N})"],
-        "in_principal_agent": ["pa_id (PA{N})"],
-        "in_collective_action": ["ca_id (CA{N})"],
-        "plays_in_games": ["game_id (GAME{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "faces_incentives": [
+          "incentive_id (INC{N})"
+        ],
+        "in_principal_agent": [
+          "pa_id (PA{N})"
+        ],
+        "in_collective_action": [
+          "ca_id (CA{N})"
+        ],
+        "plays_in_games": [
+          "game_id (GAME{N})"
+        ]
       }
     ],
     "incentive_structures": [
@@ -49,9 +65,15 @@
           "proxy_vs_real": "direct_measure | proxy | poor_proxy",
           "gaming_vulnerability": "number (0-1)"
         },
-        "source_articles": ["string"],
-        "produces_behaviors": ["behavior_id (BEH{N})"],
-        "misaligned_with_goals": ["goal_id (GOAL{N})"],
+        "source_articles": [
+          "string"
+        ],
+        "produces_behaviors": [
+          "behavior_id (BEH{N})"
+        ],
+        "misaligned_with_goals": [
+          "goal_id (GOAL{N})"
+        ],
         "part_of_system": "system_id (SYS{N})"
       }
     ],
@@ -63,10 +85,18 @@
         "why_rational": "string (why this behavior makes sense given incentives)",
         "differs_from_intended": "string (how this differs from stated goals)",
         "likelihood": "certain | very_likely | likely | possible | unlikely",
-        "evidence_observed": ["string"],
-        "source_articles": ["string"],
-        "driven_by_incentives": ["incentive_id (INC{N})"],
-        "produces_outcomes": ["outcome_id (OUT{N})"]
+        "evidence_observed": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "driven_by_incentives": [
+          "incentive_id (INC{N})"
+        ],
+        "produces_outcomes": [
+          "outcome_id (OUT{N})"
+        ]
       }
     ],
     "principal_agent_problems": [
@@ -99,9 +129,15 @@
           }
         ],
         "residual_loss": "string (remaining inefficiency)",
-        "source_articles": ["string"],
-        "produces_behaviors": ["behavior_id (BEH{N})"],
-        "produces_outcomes": ["outcome_id (OUT{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "produces_behaviors": [
+          "behavior_id (BEH{N})"
+        ],
+        "produces_outcomes": [
+          "outcome_id (OUT{N})"
+        ]
       }
     ],
     "collective_action_problems": [
@@ -109,7 +145,9 @@
         "ca_id": "string (format: 'CA{N}')",
         "name": "string (e.g., 'The Tragedy of the Commons')",
         "problem_type": "public_goods | commons | assurance | coordination | chicken | volunteers_dilemma",
-        "actors_involved": ["actor_id (ACT{N})"],
+        "actors_involved": [
+          "actor_id (ACT{N})"
+        ],
         "shared_resource_or_goal": "string",
         "individual_incentive": "string (what's rational for each individual)",
         "collective_outcome": "string (what happens when everyone follows individual incentive)",
@@ -117,7 +155,9 @@
         "free_rider_opportunity": {
           "exists": "boolean",
           "how_manifests": "string",
-          "who_free_rides": ["actor_id (ACT{N})"]
+          "who_free_rides": [
+            "actor_id (ACT{N})"
+          ]
         },
         "coordination_failure": {
           "exists": "boolean",
@@ -132,9 +172,15 @@
             "who_must_implement": "string"
           }
         ],
-        "source_articles": ["string"],
-        "involves_incentives": ["incentive_id (INC{N})"],
-        "produces_outcomes": ["outcome_id (OUT{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "involves_incentives": [
+          "incentive_id (INC{N})"
+        ],
+        "produces_outcomes": [
+          "outcome_id (OUT{N})"
+        ]
       }
     ],
     "game_structures": [
@@ -142,11 +188,15 @@
         "game_id": "string (format: 'GAME{N}')",
         "name": "string (e.g., 'The Pricing Game')",
         "game_type": "prisoners_dilemma | chicken | assurance | coordination | zero_sum | positive_sum | negative_sum",
-        "players": ["actor_id (ACT{N})"],
+        "players": [
+          "actor_id (ACT{N})"
+        ],
         "strategies_available": [
           {
             "player": "actor_id (ACT{N})",
-            "strategies": ["string"]
+            "strategies": [
+              "string"
+            ]
           }
         ],
         "payoff_structure": "string (description of payoffs)",
@@ -164,8 +214,12 @@
           "conditions": "string | null",
           "enforcement_mechanism": "string | null"
         },
-        "source_articles": ["string"],
-        "produces_outcomes": ["outcome_id (OUT{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "produces_outcomes": [
+          "outcome_id (OUT{N})"
+        ]
       }
     ],
     "perverse_incentives": [
@@ -178,9 +232,15 @@
         "mechanism_of_perversion": "string (how the incentive backfires)",
         "why_not_anticipated": "string",
         "severity": "severe | significant | moderate | minor",
-        "historical_parallels": ["string"],
-        "source_articles": ["string"],
-        "produces_outcomes": ["outcome_id (OUT{N})"]
+        "historical_parallels": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "produces_outcomes": [
+          "outcome_id (OUT{N})"
+        ]
       }
     ],
     "gaming_opportunities": [
@@ -194,8 +254,12 @@
         "cost_to_stated_goals": "string",
         "detectability": "easy | moderate | difficult | nearly_impossible",
         "prevalence": "widespread | common | occasional | rare",
-        "examples": ["string"],
-        "source_articles": ["string"]
+        "examples": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "rent_seeking": [
@@ -208,9 +272,13 @@
         "value_extracted": "string (estimated magnitude)",
         "value_created": "string (what if anything is created)",
         "deadweight_loss": "string",
-        "who_pays": ["string"],
+        "who_pays": [
+          "string"
+        ],
         "political_economy": "string (how rent-seeking is sustained)",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "outcomes": [
@@ -219,14 +287,26 @@
         "name": "string",
         "outcome_type": "intended | unintended | perverse | emergent",
         "description": "string",
-        "who_benefits": ["actor_id (ACT{N}) or string"],
-        "who_loses": ["actor_id (ACT{N}) or string"],
+        "who_benefits": [
+          "actor_id (ACT{N}) or string"
+        ],
+        "who_loses": [
+          "actor_id (ACT{N}) or string"
+        ],
         "efficiency_assessment": "efficient | inefficient | severely_inefficient",
         "equity_assessment": "equitable | inequitable | severely_inequitable",
-        "source_articles": ["string"],
-        "produced_by_behaviors": ["behavior_id (BEH{N})"],
-        "produced_by_games": ["game_id (GAME{N})"],
-        "produced_by_problems": ["pa_id (PA{N}) or ca_id (CA{N}) or perverse_id (PERV{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "produced_by_behaviors": [
+          "behavior_id (BEH{N})"
+        ],
+        "produced_by_games": [
+          "game_id (GAME{N})"
+        ],
+        "produced_by_problems": [
+          "pa_id (PA{N}) or ca_id (CA{N}) or perverse_id (PERV{N})"
+        ]
       }
     ],
     "system_goals": [
@@ -238,10 +318,18 @@
         "actual_priority": "high | medium | low | rhetorical_only",
         "goal_type": "efficiency | equity | stability | growth | control | legitimacy",
         "measurability": "measurable | partially_measurable | unmeasurable",
-        "source_articles": ["string"],
-        "aligned_incentives": ["incentive_id (INC{N})"],
-        "misaligned_incentives": ["incentive_id (INC{N})"],
-        "achieved_outcomes": ["outcome_id (OUT{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "aligned_incentives": [
+          "incentive_id (INC{N})"
+        ],
+        "misaligned_incentives": [
+          "incentive_id (INC{N})"
+        ],
+        "achieved_outcomes": [
+          "outcome_id (OUT{N})"
+        ]
       }
     ],
     "system_structure": [
@@ -249,13 +337,23 @@
         "system_id": "string (format: 'SYS{N}')",
         "name": "string",
         "system_type": "market | hierarchy | network | hybrid",
-        "key_actors": ["actor_id (ACT{N})"],
-        "key_incentives": ["incentive_id (INC{N})"],
+        "key_actors": [
+          "actor_id (ACT{N})"
+        ],
+        "key_incentives": [
+          "incentive_id (INC{N})"
+        ],
         "governance_mechanism": "string",
-        "stated_goals": ["goal_id (GOAL{N})"],
-        "primary_problems": ["pa_id (PA{N}) or ca_id (CA{N})"],
+        "stated_goals": [
+          "goal_id (GOAL{N})"
+        ],
+        "primary_problems": [
+          "pa_id (PA{N}) or ca_id (CA{N})"
+        ],
         "overall_alignment": "number (0-1, how well incentives serve goals)",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "redesign_recommendations": [
@@ -267,17 +365,25 @@
         "mechanism": "string (how it would work)",
         "expected_improvement": "string",
         "potential_gaming": "string (how new structure might be gamed)",
-        "implementation_barriers": ["string"],
-        "who_would_resist": ["actor_id (ACT{N})"],
+        "implementation_barriers": [
+          "string"
+        ],
+        "who_would_resist": [
+          "actor_id (ACT{N})"
+        ],
         "feasibility": "number (0-1)",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "cross_document_patterns": {
       "shared_incentive_problems": [
         {
           "problem": "string",
-          "recognized_by": ["string (articles)"]
+          "recognized_by": [
+            "string (articles)"
+          ]
         }
       ],
       "contested_diagnoses": [
@@ -285,15 +391,23 @@
           "issue": "string",
           "diagnosis_a": "string",
           "diagnosis_b": "string",
-          "articles_supporting_a": ["string"],
-          "articles_supporting_b": ["string"]
+          "articles_supporting_a": [
+            "string"
+          ],
+          "articles_supporting_b": [
+            "string"
+          ]
         }
       ],
       "solution_debates": [
         {
           "problem": "string",
-          "proposed_solutions": ["string"],
-          "trade_offs": ["string"]
+          "proposed_solutions": [
+            "string"
+          ],
+          "trade_offs": [
+            "string"
+          ]
         }
       ]
     },
@@ -320,7 +434,9 @@
         {
           "cluster_id": "string",
           "name": "string",
-          "member_ids": ["string"],
+          "member_ids": [
+            "string"
+          ],
           "coherence": "number (0-1)",
           "theme": "string"
         }
@@ -381,7 +497,11 @@
   "source_file": "analyzer/src/engines/incentive_structure_mapper_advanced.py",
   "stage_context": {
     "framework_key": "public_choice",
-    "additional_frameworks": ["game_theory", "principal_agent", "new_institutional_economics"],
+    "additional_frameworks": [
+      "game_theory",
+      "principal_agent",
+      "new_institutional_economics"
+    ],
     "extraction": {
       "analysis_type": "incentive structure",
       "analysis_type_plural": "incentive structures",
@@ -446,17 +566,46 @@
     },
     "concretization": {
       "id_examples": [
-        {"from": "ACT1", "to": "Pharmaceutical Company Executives"},
-        {"from": "INC1", "to": "Stock Price Performance Bonus"},
-        {"from": "PA1", "to": "Shareholder-Executive Principal-Agent Problem"},
-        {"from": "CA1", "to": "Industry Safety Standards as Public Good"},
-        {"from": "PERV1", "to": "The Wells Fargo Fake Accounts Incentive"},
-        {"from": "GAM1", "to": "Teaching to the Test"},
-        {"from": "GAME1", "to": "Race to the Bottom on Environmental Standards"}
+        {
+          "from": "ACT1",
+          "to": "Pharmaceutical Company Executives"
+        },
+        {
+          "from": "INC1",
+          "to": "Stock Price Performance Bonus"
+        },
+        {
+          "from": "PA1",
+          "to": "Shareholder-Executive Principal-Agent Problem"
+        },
+        {
+          "from": "CA1",
+          "to": "Industry Safety Standards as Public Good"
+        },
+        {
+          "from": "PERV1",
+          "to": "The Wells Fargo Fake Accounts Incentive"
+        },
+        {
+          "from": "GAM1",
+          "to": "Teaching to the Test"
+        },
+        {
+          "from": "GAME1",
+          "to": "Race to the Bottom on Environmental Standards"
+        }
       ],
       "naming_guidance": "Use concrete, vivid names. Reference real-world examples when possible.",
-      "recommended_table_types": ["incentive_alignment_matrix", "actor_incentive_map", "problem_inventory"],
-      "recommended_visual_patterns": ["incentive_flow_diagram", "game_matrix", "misalignment_map"]
+      "recommended_table_types": [
+        "incentive_alignment_matrix",
+        "actor_incentive_map",
+        "problem_inventory"
+      ],
+      "recommended_visual_patterns": [
+        "incentive_flow_diagram",
+        "game_matrix",
+        "misalignment_map"
+      ]
     },
     "audience_vocabulary": {
       "researcher": {

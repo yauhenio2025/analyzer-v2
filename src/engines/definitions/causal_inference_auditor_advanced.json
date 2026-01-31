@@ -1,6 +1,6 @@
 {
   "engine_key": "causal_inference_auditor_advanced",
-  "engine_name": "Causal Inference Auditor (Advanced)",
+  "engine_name": "Causal Inference Auditor v2",
   "description": "Deep analysis of causal claims using Pearl's DAG framework and Rubin's potential outcomes model. Audits identification strategies, maps confounding structures, detects collider bias, evaluates assumption plausibility, and assesses whether causal conclusions are warranted. Reveals the hidden assumptions behind every causal claim, the backdoor paths that threaten validity, and the identification strategies that might (or might not) rescue inference.",
   "version": 1,
   "category": "methodology",

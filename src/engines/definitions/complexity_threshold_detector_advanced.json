@@ -1,6 +1,6 @@
 {
   "engine_key": "complexity_threshold_detector_advanced",
-  "engine_name": "Complexity Threshold Detector (Advanced)",
+  "engine_name": "Complexity Threshold Detector v2",
   "description": "Deep analysis of complexity dynamics using Snowden's Cynefin framework and Santa Fe complexity science. Detects domain positions (clear, complicated, complex, chaotic, confused), identifies threshold crossings and phase transitions, reveals fitness landscapes and attractor basins, maps adaptive agent co-evolution, and diagnoses method mismatches where linear approaches are misapplied to non-linear domains. Reveals where systems are poised at the edge of chaos, where positive feedback creates lock-in, and where requisite variety is insufficient for the complexity faced. Based on the work of Snowden, Kauffman, Holland, and Arthur.",
   "version": 1,
   "category": "systems",

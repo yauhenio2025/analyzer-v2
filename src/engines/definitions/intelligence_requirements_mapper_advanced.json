@@ -1,6 +1,6 @@
 {
   "engine_key": "intelligence_requirements_mapper_advanced",
-  "engine_name": "Intelligence Requirements Mapper (Advanced)",
+  "engine_name": "Intelligence Requirements Mapper v2",
   "description": "Deep analysis mapping intelligence findings to requirements using CIA Structured Analytic Techniques and NIE methodology. Applies Heuer's cognitive bias mitigation framework, Grabo's indications and warning methodology, Jervis's perception/misperception analysis, and tradecraft standards for source evaluation. Reveals which Priority Intelligence Requirements are addressed, identifies collection gaps, surfaces linchpin assumptions that could invalidate key judgments, generates alternative hypotheses, and assesses analytic confidence with explicit reasoning. Maps the full intelligence cycle from requirements through collection, analysis, and dissemination. Essential for all-source analysis, estimative intelligence, strategic warning, and intelligence gap identification.",
   "version": 1,
   "category": "methodology",

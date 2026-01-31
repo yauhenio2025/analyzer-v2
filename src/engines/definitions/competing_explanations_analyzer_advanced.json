@@ -1,6 +1,6 @@
 {
   "engine_key": "competing_explanations_analyzer_advanced",
-  "engine_name": "Competing Explanations Analyzer (Advanced)",
+  "engine_name": "Competing Explanations Analyzer v2",
   "description": "Deep analysis implementing Heuer's Analysis of Competing Hypotheses (ACH) and CIA Structured Analytic Techniques for rigorous hypothesis evaluation. Reveals confirmation bias, identifies truly diagnostic evidence, maps linchpin assumptions, and determines which explanations survive systematic disconfirmation testing. Uses Bayesian reasoning principles to weight evidence and calibrate confidence. Exposes the cognitive traps that lead analysts astray\u2014anchoring, availability, satisficing, and premature closure.",
   "version": 1,
   "category": "methodology",

@@ -1,6 +1,6 @@
 {
   "engine_key": "argument_architecture_advanced",
-  "engine_name": "Argument Architecture Mapper (Advanced)",
+  "engine_name": "Argument Architecture Mapper v2",
   "description": "Deep analysis of how arguments are built and how they interact. Reveals the hidden structure of reasoning, the unstated assumptions that hold arguments together, the argumentation schemes that shape how we reason, and where arguments succeed or fail. Uses sophisticated methods from Toulmin, Walton, and pragma-dialectics but outputs in plain language anyone can understand.",
   "version": 1,
   "category": "argument",
@@ -51,18 +51,30 @@
           "scope_limitation": "string | null"
         },
         "rebuttal": {
-          "conditions": ["string (conditions under which argument fails)"],
-          "exceptions": ["string (acknowledged exceptions)"],
+          "conditions": [
+            "string (conditions under which argument fails)"
+          ],
+          "exceptions": [
+            "string (acknowledged exceptions)"
+          ],
           "addressed": "boolean",
           "how_addressed": "string | null"
         },
-        "source_articles": ["string"],
+        "source_articles": [
+          "string"
+        ],
         "uses_scheme": "scheme_id (SCH{N})",
         "strength_score": "number (0-1)",
         "supports_claim": "claim_id (CL{N}) | null (if sub-argument)",
-        "attacked_by": ["attack_id (ATT{N})"],
-        "supports": ["argument_id (ARG{N})"],
-        "responds_to": ["argument_id (ARG{N})"]
+        "attacked_by": [
+          "attack_id (ATT{N})"
+        ],
+        "supports": [
+          "argument_id (ARG{N})"
+        ],
+        "responds_to": [
+          "argument_id (ARG{N})"
+        ]
       }
     ],
     "argumentation_schemes": [
@@ -84,9 +96,15 @@
           }
         ],
         "typical_strength": "strong | moderate | weak | depends",
-        "fallacy_risk": ["string (associated fallacies)"],
-        "source_articles": ["string"],
-        "used_by_arguments": ["argument_id (ARG{N})"]
+        "fallacy_risk": [
+          "string (associated fallacies)"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "used_by_arguments": [
+          "argument_id (ARG{N})"
+        ]
       }
     ],
     "attacks_and_rebuttals": [
@@ -100,7 +118,9 @@
         "attack_strength": "number (0-1)",
         "uses_critical_question": "question_id (CQ{N}) | null",
         "source_article": "string",
-        "defended_against": ["defense_id (DEF{N})"]
+        "defended_against": [
+          "defense_id (DEF{N})"
+        ]
       }
     ],
     "defenses": [
@@ -150,10 +170,18 @@
         "what_is_presumed": "string",
         "presumption_type": "legal | epistemic | practical | dialogical",
         "force": "strong | moderate | weak | defeasible",
-        "who_accepts": ["string"],
-        "what_would_defeat": ["string"],
-        "source_articles": ["string"],
-        "grounds_arguments": ["argument_id (ARG{N})"]
+        "who_accepts": [
+          "string"
+        ],
+        "what_would_defeat": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "grounds_arguments": [
+          "argument_id (ARG{N})"
+        ]
       }
     ],
     "dialectical_obligations": [
@@ -178,9 +206,15 @@
         "argumentation_stage": "string (how arguments were exchanged)",
         "concluding_stage": "string | null (how it resolved)",
         "current_status": "maintained | modified | retracted | undecided",
-        "source_articles": ["string"],
-        "supported_by_arguments": ["argument_id (ARG{N})"],
-        "attacked_by_arguments": ["argument_id (ARG{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "supported_by_arguments": [
+          "argument_id (ARG{N})"
+        ],
+        "attacked_by_arguments": [
+          "argument_id (ARG{N})"
+        ]
       }
     ],
     "fallacies": [
@@ -205,15 +239,21 @@
         "overall_score": "number (0-1)",
         "main_weakness": "string",
         "main_strength": "string",
-        "improvement_suggestions": ["string"]
+        "improvement_suggestions": [
+          "string"
+        ]
       }
     ],
     "cross_document_argumentation": {
       "shared_claims": [
         {
           "claim": "claim_id (CL{N})",
-          "supported_by": ["string (articles)"],
-          "attacked_by": ["string (articles)"]
+          "supported_by": [
+            "string (articles)"
+          ],
+          "attacked_by": [
+            "string (articles)"
+          ]
         }
       ],
       "argument_dialogues": [
@@ -230,7 +270,9 @@
           "current_winner": "string | null"
         }
       ],
-      "shared_schemes": ["scheme_id (SCH{N})"],
+      "shared_schemes": [
+        "scheme_id (SCH{N})"
+      ],
       "scheme_effectiveness": [
         {
           "scheme_id": "scheme_id (SCH{N})",
@@ -262,7 +304,9 @@
         {
           "cluster_id": "string",
           "name": "string",
-          "member_ids": ["string"],
+          "member_ids": [
+            "string"
+          ],
           "coherence": "number (0-1)",
           "overall_position": "string"
         }
@@ -275,7 +319,9 @@
         "levels": [
           {
             "level": "number (1=most immediate support)",
-            "arguments": ["argument_id (ARG{N})"],
+            "arguments": [
+              "argument_id (ARG{N})"
+            ],
             "collective_support": "number (0-1)"
           }
         ],
@@ -322,7 +368,11 @@
   "source_file": "analyzer/src/engines/argument_architecture_advanced.py",
   "stage_context": {
     "framework_key": "toulmin",
-    "additional_frameworks": ["walton", "pragma_dialectics", "informal_logic"],
+    "additional_frameworks": [
+      "walton",
+      "pragma_dialectics",
+      "informal_logic"
+    ],
     "extraction": {
       "analysis_type": "argument structure",
       "analysis_type_plural": "argument structures",
@@ -392,16 +442,42 @@
     },
     "concretization": {
       "id_examples": [
-        {"from": "ARG1", "to": "The Innovation-Requires-Deregulation Argument"},
-        {"from": "CL1", "to": "'AI will create more jobs than it destroys'"},
-        {"from": "W1", "to": "Implicit warrant: New technology always creates net employment"},
-        {"from": "SCH1", "to": "Argument from Precedent (past tech transitions)"},
-        {"from": "ATT1", "to": "Undercutter: 'This time is different because...'"},
-        {"from": "CQ1", "to": "Critical Q: Is this technology relevantly similar to past ones?"}
+        {
+          "from": "ARG1",
+          "to": "The Innovation-Requires-Deregulation Argument"
+        },
+        {
+          "from": "CL1",
+          "to": "'AI will create more jobs than it destroys'"
+        },
+        {
+          "from": "W1",
+          "to": "Implicit warrant: New technology always creates net employment"
+        },
+        {
+          "from": "SCH1",
+          "to": "Argument from Precedent (past tech transitions)"
+        },
+        {
+          "from": "ATT1",
+          "to": "Undercutter: 'This time is different because...'"
+        },
+        {
+          "from": "CQ1",
+          "to": "Critical Q: Is this technology relevantly similar to past ones?"
+        }
       ],
       "naming_guidance": "Use descriptive names that capture the argument's content. Quote key phrases from claims.",
-      "recommended_table_types": ["toulmin_breakdown", "scheme_inventory", "attack_defense_matrix"],
-      "recommended_visual_patterns": ["toulmin_diagram", "argument_map", "dialectical_tree"]
+      "recommended_table_types": [
+        "toulmin_breakdown",
+        "scheme_inventory",
+        "attack_defense_matrix"
+      ],
+      "recommended_visual_patterns": [
+        "toulmin_diagram",
+        "argument_map",
+        "dialectical_tree"
+      ]
     },
     "audience_vocabulary": {
       "researcher": {

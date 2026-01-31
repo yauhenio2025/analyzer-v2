@@ -1,6 +1,6 @@
 {
   "engine_key": "counterfactual_analyzer_advanced",
-  "engine_name": "Counterfactual Analyzer (Advanced)",
+  "engine_name": "Counterfactual Analyzer v2",
   "description": "Deep analysis of counterfactual reasoning using Lewis-Stalnaker possible worlds semantics and historical counterfactual methodology. Reveals whether 'what if' claims follow the minimal rewrite principle, identifies closest possible worlds, traces causal chains through counterfactual scenarios, and evaluates historical plausibility using Lebow/Tetlock criteria. Exposes butterfly effects, cotenability violations, and counterfactual abuse where authors slide between backtracking and non-backtracking readings to suit their arguments.",
   "version": 1,
   "category": "methodology",

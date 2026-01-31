@@ -1,6 +1,6 @@
 {
   "engine_key": "motte_bailey_detector_advanced",
-  "engine_name": "Motte-Bailey Detector (Advanced)",
+  "engine_name": "Motte-Bailey Detector v2",
   "description": "Deep analysis of argumentative evasion using Shackel's motte-bailey doctrine, van Eemeren's pragma-dialectics, and Walton's argumentation schemes. Reveals how arguers strategically retreat from bold claims to defensible positions when challenged, exploit ambiguity to avoid commitment, shift burden of proof, and violate dialectical obligations across discussion stages. Maps the full topology of evasive argumentation including definitional retreats, standpoint switching, goalpost movement, and related fallacies like no true Scotsman and bulverism.",
   "version": 1,
   "category": "argument",

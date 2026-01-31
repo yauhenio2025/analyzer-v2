@@ -1,6 +1,6 @@
 {
   "engine_key": "assumption_excavation_advanced",
-  "engine_name": "Assumption Excavator (Advanced)",
+  "engine_name": "Assumption Excavator v2",
   "description": "Deep analysis of the hidden beliefs that hold arguments together. Reveals the bedrock commitments that can't be questioned without everything collapsing, the web of beliefs where pulling one thread unravels many, and the 'obvious' truths that are actually controversial. Uses sophisticated philosophical methods from Wittgenstein, Quine, and Collingwood but outputs in plain language anyone can understand.",
   "version": 1,
   "category": "argument",
@@ -17,12 +17,20 @@
         "hinge_type": "logical | empirical | methodological | normative | metaphysical",
         "how_deep": "surface | structural | foundational | bedrock",
         "is_this_acknowledged": "boolean (do authors realize they're assuming this?)",
-        "who_would_disagree": ["string (traditions/thinkers who reject this)"],
+        "who_would_disagree": [
+          "string (traditions/thinkers who reject this)"
+        ],
         "what_questioning_it_opens_up": "string (new possibilities if challenged)",
-        "source_articles": ["string"],
-        "supports_assumptions": ["assumption_id (A{N}) that rest on this hinge"],
+        "source_articles": [
+          "string"
+        ],
+        "supports_assumptions": [
+          "assumption_id (A{N}) that rest on this hinge"
+        ],
         "part_of_framework": "framework_id (FW{N}) | null",
-        "in_tension_with_hinges": ["hinge_id (H{N}) - other bedrock beliefs that conflict"],
+        "in_tension_with_hinges": [
+          "hinge_id (H{N}) - other bedrock beliefs that conflict"
+        ],
         "inherited_from": "tradition_id (TRAD{N}) | null"
       }
     ],
@@ -33,14 +41,26 @@
         "what_is_assumed": "string (the assumption stated)",
         "assumption_type": "premise | definitional | methodological | normative | background | framing",
         "how_buried": "explicit | implicit | deeply_buried | presuppositional",
-        "what_depends_on_it": ["string (arguments, claims that need this assumption)"],
-        "source_articles": ["string"],
-        "rests_on_hinges": ["hinge_id (H{N})"],
-        "supports_claims": ["claim_id (CL{N})"],
-        "in_tension_with": ["assumption_id (A{N})"],
+        "what_depends_on_it": [
+          "string (arguments, claims that need this assumption)"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "rests_on_hinges": [
+          "hinge_id (H{N})"
+        ],
+        "supports_claims": [
+          "claim_id (CL{N})"
+        ],
+        "in_tension_with": [
+          "assumption_id (A{N})"
+        ],
         "part_of_web": "web_id (WEB{N})",
         "vulnerability": {
-          "challenge_vectors": ["challenge_id (CH{N})"],
+          "challenge_vectors": [
+            "challenge_id (CH{N})"
+          ],
           "if_false_impact": "collapses_argument | weakens_significantly | minor_revision | irrelevant"
         },
         "evidence_status": "empirically_supported | theoretically_grounded | just_assumed | contested"
@@ -50,20 +70,32 @@
       {
         "web_id": "string (format: 'WEB{N}')",
         "name": "string (e.g., 'The Neoclassical Economics Web')",
-        "core_assumptions": ["assumption_id (A{N}) - center of the web"],
-        "peripheral_assumptions": ["assumption_id (A{N}) - edge of the web"],
+        "core_assumptions": [
+          "assumption_id (A{N}) - center of the web"
+        ],
+        "peripheral_assumptions": [
+          "assumption_id (A{N}) - edge of the web"
+        ],
         "how_tightly_woven": "number (0-1, density of connections)",
-        "source_articles": ["string"],
+        "source_articles": [
+          "string"
+        ],
         "what_holds_it_together": "string (the organizing principle)",
-        "weak_points": ["string (where the web could tear)"],
-        "connected_to_webs": ["web_id (WEB{N})"],
+        "weak_points": [
+          "string (where the web could tear)"
+        ],
+        "connected_to_webs": [
+          "web_id (WEB{N})"
+        ],
         "revision_history": [
           {
             "revision_id": "string",
             "what_was_revised": "assumption_id (A{N})",
             "revision_type": "abandoned | modified | reinterpreted",
             "what_triggered_revision": "string",
-            "ripple_effects": ["assumption_id (A{N}) - what else changed"]
+            "ripple_effects": [
+              "assumption_id (A{N}) - what else changed"
+            ]
           }
         ]
       }
@@ -72,14 +104,28 @@
       {
         "framework_id": "string (format: 'FW{N}')",
         "name": "string",
-        "core_hinges": ["hinge_id (H{N})"],
-        "characteristic_assumptions": ["assumption_id (A{N})"],
-        "what_questions_it_enables": ["string"],
-        "what_questions_it_blocks": ["string"],
+        "core_hinges": [
+          "hinge_id (H{N})"
+        ],
+        "characteristic_assumptions": [
+          "assumption_id (A{N})"
+        ],
+        "what_questions_it_enables": [
+          "string"
+        ],
+        "what_questions_it_blocks": [
+          "string"
+        ],
         "historical_origins": "string",
-        "main_proponents": ["string"],
-        "competing_frameworks": ["framework_id (FW{N})"],
-        "source_articles": ["string"]
+        "main_proponents": [
+          "string"
+        ],
+        "competing_frameworks": [
+          "framework_id (FW{N})"
+        ],
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "the_challenges": [
@@ -89,12 +135,20 @@
         "the_challenge": "string (how it could be contested)",
         "challenge_type": "empirical | conceptual | normative | pragmatic | historical",
         "strength": "devastating | strong | moderate | weak",
-        "who_mounts_it": ["string (traditions, thinkers)"],
+        "who_mounts_it": [
+          "string (traditions, thinkers)"
+        ],
         "what_if_successful": "string (consequences of successful challenge)",
         "current_status": "unanswered | partially_answered | successfully_rebutted",
-        "source_articles": ["string"],
-        "would_also_affect": ["assumption_id (A{N}) - collateral damage"],
-        "blocked_by": ["defense_id (DEF{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "would_also_affect": [
+          "assumption_id (A{N}) - collateral damage"
+        ],
+        "blocked_by": [
+          "defense_id (DEF{N})"
+        ]
       }
     ],
     "the_defenses": [
@@ -104,10 +158,18 @@
         "defense_strategy": "empirical_support | theoretical_argument | pragmatic_necessity | definitional_truth | burden_shifting",
         "the_defense": "string",
         "how_strong": "number (0-1)",
-        "vulnerabilities": ["string"],
-        "source_articles": ["string"],
-        "blocks_challenges": ["challenge_id (CH{N})"],
-        "depends_on": ["assumption_id (A{N}) - what the defense assumes"]
+        "vulnerabilities": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "blocks_challenges": [
+          "challenge_id (CH{N})"
+        ],
+        "depends_on": [
+          "assumption_id (A{N}) - what the defense assumes"
+        ]
       }
     ],
     "definitional_choices": [
@@ -124,9 +186,15 @@
         ],
         "definition_type": "stipulative | persuasive | theoretical | ordinary_language",
         "stakes_of_choice": "string (what hangs on defining it this way)",
-        "source_articles": ["string"],
-        "enables_assumptions": ["assumption_id (A{N})"],
-        "blocks_assumptions": ["assumption_id (A{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "enables_assumptions": [
+          "assumption_id (A{N})"
+        ],
+        "blocks_assumptions": [
+          "assumption_id (A{N})"
+        ]
       }
     ],
     "question_begging_patterns": [
@@ -136,9 +204,15 @@
         "what_is_assumed": "string (the conclusion smuggled into premises)",
         "how_disguised": "string (how it hides the circularity)",
         "glaring_level": "blatant | subtle | deeply_concealed",
-        "source_articles": ["string"],
-        "involves_assumptions": ["assumption_id (A{N})"],
-        "involves_definitions": ["definition_id (DEF{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "involves_assumptions": [
+          "assumption_id (A{N})"
+        ],
+        "involves_definitions": [
+          "definition_id (DEF{N})"
+        ]
       }
     ],
     "presuppositional_triggers": [
@@ -148,7 +222,9 @@
         "presupposition_triggered": "string (what must be true for this to make sense)",
         "trigger_type": "definite_description | factive_verb | cleft_construction | change_of_state | iterative | comparative",
         "can_be_canceled": "boolean",
-        "source_articles": ["string"],
+        "source_articles": [
+          "string"
+        ],
         "reveals_assumption": "assumption_id (A{N})"
       }
     ],
@@ -157,12 +233,20 @@
         "absolute_id": "string (format: 'AP{N}')",
         "the_presupposition": "string (following Collingwood)",
         "historical_period": "string (when this was absolute)",
-        "what_questions_it_makes_possible": ["string"],
-        "what_questions_it_blocks": ["string"],
+        "what_questions_it_makes_possible": [
+          "string"
+        ],
+        "what_questions_it_blocks": [
+          "string"
+        ],
         "successor_presupposition": "absolute_id (AP{N}) | null",
         "predecessor_presupposition": "absolute_id (AP{N}) | null",
-        "source_articles": ["string"],
-        "instantiated_as_hinges": ["hinge_id (H{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "instantiated_as_hinges": [
+          "hinge_id (H{N})"
+        ]
       }
     ],
     "assumption_cascades": [
@@ -177,7 +261,9 @@
           }
         ],
         "total_damage": "number (how many assumptions fall)",
-        "what_survives": ["assumption_id (A{N})"],
+        "what_survives": [
+          "assumption_id (A{N})"
+        ],
         "probability_of_trigger": "number (0-1)"
       }
     ],
@@ -185,15 +271,23 @@
       "shared_bedrock": [
         {
           "hinge_id": "string",
-          "shared_by": ["string (articles)"],
-          "disagreement_on": ["assumption_id (A{N}) - agree on bedrock, disagree above"]
+          "shared_by": [
+            "string (articles)"
+          ],
+          "disagreement_on": [
+            "assumption_id (A{N}) - agree on bedrock, disagree above"
+          ]
         }
       ],
       "assumption_contests": [
         {
           "contested_assumption": "assumption_id (A{N})",
-          "articles_assuming": ["string"],
-          "articles_challenging": ["string"],
+          "articles_assuming": [
+            "string"
+          ],
+          "articles_challenging": [
+            "string"
+          ],
           "current_status": "consensus | contested | shifting"
         }
       ],
@@ -201,22 +295,38 @@
         {
           "framework_a": "framework_id (FW{N})",
           "framework_b": "framework_id (FW{N})",
-          "incompatible_hinges": ["hinge_id (H{N})"],
+          "incompatible_hinges": [
+            "hinge_id (H{N})"
+          ],
           "debate_locus": "string (where they clash)"
         }
       ],
-      "invisible_consensus": ["string (assumptions so shared nobody notices them)"]
+      "invisible_consensus": [
+        "string (assumptions so shared nobody notices them)"
+      ]
     },
     "traditions_map": [
       {
         "tradition_id": "string (format: 'TRAD{N}')",
         "name": "string (e.g., 'Kantian Epistemology', 'Pragmatism')",
-        "characteristic_hinges": ["hinge_id (H{N})"],
-        "characteristic_assumptions": ["assumption_id (A{N})"],
-        "key_thinkers": ["string"],
-        "what_it_takes_for_granted": ["string"],
-        "what_it_questions": ["string"],
-        "opposed_to_traditions": ["tradition_id (TRAD{N})"]
+        "characteristic_hinges": [
+          "hinge_id (H{N})"
+        ],
+        "characteristic_assumptions": [
+          "assumption_id (A{N})"
+        ],
+        "key_thinkers": [
+          "string"
+        ],
+        "what_it_takes_for_granted": [
+          "string"
+        ],
+        "what_it_questions": [
+          "string"
+        ],
+        "opposed_to_traditions": [
+          "tradition_id (TRAD{N})"
+        ]
       }
     ],
     "relationship_graph": {
@@ -243,7 +353,9 @@
         {
           "cluster_id": "string (format: 'CL{N}')",
           "name": "string",
-          "member_ids": ["string"],
+          "member_ids": [
+            "string"
+          ],
           "coherence": "number (0-1)",
           "theme": "string"
         }
@@ -253,7 +365,9 @@
       {
         "chain_id": "string (format: 'DCHAIN{N}')",
         "chain_name": "string",
-        "sequence": ["entity_id - from surface to bedrock"],
+        "sequence": [
+          "entity_id - from surface to bedrock"
+        ],
         "chain_type": "linear | branching | converging | circular",
         "depth": "number (how many levels)",
         "weakest_link": "entity_id",
@@ -275,7 +389,9 @@
       "average_assumption_depth": "number (1-5)",
       "longest_cascade": "number",
       "document_count": "number",
-      "authors_identified": ["string"],
+      "authors_identified": [
+        "string"
+      ],
       "total_relationships": "number",
       "graph_density": "number (0-1)",
       "invisible_consensus_count": "number"
@@ -305,7 +421,10 @@
   "source_file": "analyzer/src/engines/assumption_excavation_advanced.py",
   "stage_context": {
     "framework_key": "wittgensteinian",
-    "additional_frameworks": ["quinean", "collingwood"],
+    "additional_frameworks": [
+      "quinean",
+      "collingwood"
+    ],
     "extraction": {
       "analysis_type": "assumption",
       "analysis_type_plural": "assumptions",
@@ -373,16 +492,42 @@
     },
     "concretization": {
       "id_examples": [
-        {"from": "H1", "to": "The Bedrock: Human Behavior is Basically Rational"},
-        {"from": "A1", "to": "Markets clear efficiently (hidden assumption)"},
-        {"from": "WEB1", "to": "The Neoliberal Economics Web"},
-        {"from": "CH1", "to": "Challenge: Behavioral economics evidence"},
-        {"from": "CAS1", "to": "If rationality falls: 7 other assumptions collapse"},
-        {"from": "QB1", "to": "Circular: Defines efficiency as what markets produce"}
+        {
+          "from": "H1",
+          "to": "The Bedrock: Human Behavior is Basically Rational"
+        },
+        {
+          "from": "A1",
+          "to": "Markets clear efficiently (hidden assumption)"
+        },
+        {
+          "from": "WEB1",
+          "to": "The Neoliberal Economics Web"
+        },
+        {
+          "from": "CH1",
+          "to": "Challenge: Behavioral economics evidence"
+        },
+        {
+          "from": "CAS1",
+          "to": "If rationality falls: 7 other assumptions collapse"
+        },
+        {
+          "from": "QB1",
+          "to": "Circular: Defines efficiency as what markets produce"
+        }
       ],
       "naming_guidance": "Use plain language that captures what's actually being assumed. 'Markets are efficient' not 'EMH assumption'",
-      "recommended_table_types": ["assumption_depth_matrix", "vulnerability_ranking", "cascade_map"],
-      "recommended_visual_patterns": ["web_diagram", "depth_layers", "cascade_flowchart"]
+      "recommended_table_types": [
+        "assumption_depth_matrix",
+        "vulnerability_ranking",
+        "cascade_map"
+      ],
+      "recommended_visual_patterns": [
+        "web_diagram",
+        "depth_layers",
+        "cascade_flowchart"
+      ]
     },
     "audience_vocabulary": {
       "researcher": {

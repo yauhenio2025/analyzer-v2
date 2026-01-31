@@ -1,6 +1,6 @@
 {
   "engine_key": "feedback_loop_mapper_advanced",
-  "engine_name": "Feedback Loop Mapper (Advanced)",
+  "engine_name": "Feedback Loop Mapper v2",
   "description": "Deep analysis of how systems behave over time. Reveals the hidden feedback loops that drive growth and decline, the counterintuitive dynamics that make well-intentioned interventions backfire, and the leverage points where small changes can produce big effects. Uses sophisticated methods from Meadows, Senge, and system dynamics but outputs in plain language anyone can understand.",
   "version": 1,
   "category": "systems",
@@ -11,12 +11,20 @@
     "system_boundary": {
       "system_id": "string (format: 'SYS{N}')",
       "system_name": "string",
-      "what_is_included": ["string"],
-      "what_is_excluded": ["string"],
+      "what_is_included": [
+        "string"
+      ],
+      "what_is_excluded": [
+        "string"
+      ],
       "time_horizon": "string (how far into the future)",
       "key_purpose": "string (what the system is for)",
-      "boundary_judgments": ["string (why boundary drawn here)"],
-      "source_articles": ["string"]
+      "boundary_judgments": [
+        "string (why boundary drawn here)"
+      ],
+      "source_articles": [
+        "string"
+      ]
     },
     "stocks": [
       {
@@ -31,10 +39,18 @@
           "lower_limit": "string | null",
           "what_happens_at_limits": "string | null"
         },
-        "source_articles": ["string"],
-        "inflows": ["flow_id (FLW{N})"],
-        "outflows": ["flow_id (FLW{N})"],
-        "affects_loops": ["loop_id (R{N} or B{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "inflows": [
+          "flow_id (FLW{N})"
+        ],
+        "outflows": [
+          "flow_id (FLW{N})"
+        ],
+        "affects_loops": [
+          "loop_id (R{N} or B{N})"
+        ]
       }
     ],
     "flows": [
@@ -44,12 +60,18 @@
         "what_it_is": "string (the rate of change)",
         "flow_type": "inflow | outflow",
         "target_stock": "stock_id (STK{N})",
-        "rate_determining_factors": ["string (what affects the rate)"],
+        "rate_determining_factors": [
+          "string (what affects the rate)"
+        ],
         "current_rate": "string (high, medium, low)",
         "controllability": "controllable | partially_controllable | uncontrollable",
         "who_controls": "string | null",
-        "source_articles": ["string"],
-        "regulated_by": ["valve_id (VLV{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "regulated_by": [
+          "valve_id (VLV{N})"
+        ]
       }
     ],
     "feedback_loops": [
@@ -81,22 +103,34 @@
         "goal_if_balancing": "string | null (what it tries to maintain)",
         "growth_behavior_if_reinforcing": "exponential_growth | exponential_decline | collapse | explosion",
         "historical_behavior": "string (what it has done)",
-        "source_articles": ["string"],
-        "interacts_with_loops": ["loop_interaction_id (LI{N})"],
-        "involves_stocks": ["stock_id (STK{N})"],
-        "involves_delays": ["delay_id (DEL{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "interacts_with_loops": [
+          "loop_interaction_id (LI{N})"
+        ],
+        "involves_stocks": [
+          "stock_id (STK{N})"
+        ],
+        "involves_delays": [
+          "delay_id (DEL{N})"
+        ]
       }
     ],
     "loop_interactions": [
       {
         "interaction_id": "string (format: 'LI{N}')",
         "name": "string",
-        "loops_involved": ["loop_id (R{N} or B{N})"],
+        "loops_involved": [
+          "loop_id (R{N} or B{N})"
+        ],
         "interaction_type": "dominance_shift | reinforcement | cancellation | sequencing | oscillation",
         "what_happens": "string",
         "conditions_for_interaction": "string",
         "which_dominates_when": "string",
-        "source_articles": ["string"],
+        "source_articles": [
+          "string"
+        ],
         "produces_behavior": "behavior_id (BEHV{N})"
       }
     ],
@@ -113,9 +147,13 @@
           "oscillation_risk": "string",
           "policy_resistance": "string"
         },
-        "source_articles": ["string"],
+        "source_articles": [
+          "string"
+        ],
         "in_loop": "loop_id (R{N} or B{N})",
-        "affects_behavior": ["behavior_id (BEHV{N})"]
+        "affects_behavior": [
+          "behavior_id (BEHV{N})"
+        ]
       }
     ],
     "system_archetypes": [
@@ -124,13 +162,25 @@
         "archetype_name": "string (e.g., 'Limits to Growth', 'Shifting the Burden', 'Tragedy of the Commons')",
         "archetype_type": "limits_to_growth | shifting_burden | eroding_goals | escalation | success_to_successful | tragedy_of_commons | fixes_that_fail | growth_and_underinvestment | accidental_adversaries",
         "description": "string (the generic pattern)",
-        "loops_involved": ["loop_id (R{N} or B{N})"],
+        "loops_involved": [
+          "loop_id (R{N} or B{N})"
+        ],
         "characteristic_behavior": "string",
-        "warning_signs": ["string"],
-        "leverage_points": ["string (where to intervene)"],
-        "pitfalls": ["string (what not to do)"],
-        "source_articles": ["string"],
-        "instances_in_system": ["string (specific manifestations)"]
+        "warning_signs": [
+          "string"
+        ],
+        "leverage_points": [
+          "string (where to intervene)"
+        ],
+        "pitfalls": [
+          "string (what not to do)"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "instances_in_system": [
+          "string (specific manifestations)"
+        ]
       }
     ],
     "leverage_points": [
@@ -144,11 +194,21 @@
         "expected_effect": "string",
         "why_high_leverage": "string",
         "implementation_difficulty": "easy | moderate | difficult | very_difficult",
-        "resistance_expected": ["string (who/what will resist)"],
-        "unintended_consequences": ["string (possible backfires)"],
-        "source_articles": ["string"],
-        "affects_loops": ["loop_id (R{N} or B{N})"],
-        "affects_stocks": ["stock_id (STK{N})"]
+        "resistance_expected": [
+          "string (who/what will resist)"
+        ],
+        "unintended_consequences": [
+          "string (possible backfires)"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "affects_loops": [
+          "loop_id (R{N} or B{N})"
+        ],
+        "affects_stocks": [
+          "stock_id (STK{N})"
+        ]
       }
     ],
     "system_behaviors": [
@@ -158,12 +218,18 @@
         "behavior_type": "exponential_growth | exponential_decline | goal_seeking | oscillation | s_shaped_growth | overshoot_and_collapse | overshoot_and_oscillation | equilibrium | chaos",
         "description": "string",
         "time_pattern": "string (what happens over time)",
-        "driving_loops": ["loop_id (R{N} or B{N})"],
-        "driving_delays": ["delay_id (DEL{N})"],
+        "driving_loops": [
+          "loop_id (R{N} or B{N})"
+        ],
+        "driving_delays": [
+          "delay_id (DEL{N})"
+        ],
         "archetype_if_any": "archetype_id (ARCH{N}) | null",
         "stability": "stable | unstable | conditionally_stable",
         "reversibility": "reversible | irreversible | hysteresis",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "tipping_points": [
@@ -175,11 +241,19 @@
         "before_state": "string",
         "after_state": "string",
         "reversibility": "reversible | irreversible | partially_reversible",
-        "early_warning_signs": ["string"],
+        "early_warning_signs": [
+          "string"
+        ],
         "time_to_tip": "string (how fast once triggered)",
-        "source_articles": ["string"],
-        "involves_loops": ["loop_id (R{N} or B{N})"],
-        "involves_stocks": ["stock_id (STK{N})"]
+        "source_articles": [
+          "string"
+        ],
+        "involves_loops": [
+          "loop_id (R{N} or B{N})"
+        ],
+        "involves_stocks": [
+          "stock_id (STK{N})"
+        ]
       }
     ],
     "counterintuitive_dynamics": [
@@ -190,9 +264,15 @@
         "actual_behavior": "string (what really happens)",
         "why_counterintuitive": "string (the mechanism that creates surprise)",
         "policy_implication": "string (what this means for intervention)",
-        "source_articles": ["string"],
-        "involves_loops": ["loop_id (R{N} or B{N})"],
-        "involves_delays": ["delay_id (DEL{N})"],
+        "source_articles": [
+          "string"
+        ],
+        "involves_loops": [
+          "loop_id (R{N} or B{N})"
+        ],
+        "involves_delays": [
+          "delay_id (DEL{N})"
+        ],
         "involves_archetype": "archetype_id (ARCH{N}) | null"
       }
     ],
@@ -200,13 +280,19 @@
       {
         "model_id": "string (format: 'MM{N}')",
         "name": "string",
-        "held_by": ["string (who holds this mental model)"],
+        "held_by": [
+          "string (who holds this mental model)"
+        ],
         "model_content": "string (what they think the system is)",
         "matches_reality": "number (0-1, how accurate)",
-        "what_it_misses": ["string (important dynamics not captured)"],
+        "what_it_misses": [
+          "string (important dynamics not captured)"
+        ],
         "policy_implications": "string (what policies this model suggests)",
         "why_persistent": "string (why this model persists despite inaccuracy)",
-        "source_articles": ["string"]
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "intervention_analysis": [
@@ -217,19 +303,31 @@
         "intended_effect": "string",
         "actual_effect": "string",
         "time_horizon_of_effect": "immediate | short_term | medium_term | long_term",
-        "side_effects": ["string"],
+        "side_effects": [
+          "string"
+        ],
         "why_backfired": "string | null (if it backfired)",
-        "loops_activated": ["loop_id (R{N} or B{N})"],
-        "loops_deactivated": ["loop_id (R{N} or B{N})"],
-        "resistance_encountered": ["string"],
-        "source_articles": ["string"]
+        "loops_activated": [
+          "loop_id (R{N} or B{N})"
+        ],
+        "loops_deactivated": [
+          "loop_id (R{N} or B{N})"
+        ],
+        "resistance_encountered": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
       }
     ],
     "cross_document_dynamics": {
       "shared_loops": [
         {
           "loop_id": "loop_id (R{N} or B{N})",
-          "recognized_by": ["string (articles)"]
+          "recognized_by": [
+            "string (articles)"
+          ]
         }
       ],
       "contested_loop_interpretations": [
@@ -237,15 +335,23 @@
           "loop": "string (what loop/dynamic)",
           "interpretation_a": "string",
           "interpretation_b": "string",
-          "articles_supporting_a": ["string"],
-          "articles_supporting_b": ["string"]
+          "articles_supporting_a": [
+            "string"
+          ],
+          "articles_supporting_b": [
+            "string"
+          ]
         }
       ],
-      "shared_archetypes": ["archetype_id (ARCH{N})"],
+      "shared_archetypes": [
+        "archetype_id (ARCH{N})"
+      ],
       "leverage_point_debates": [
         {
           "issue": "string",
-          "proposed_leverage_points": ["leverage_id (LEV{N})"],
+          "proposed_leverage_points": [
+            "leverage_id (LEV{N})"
+          ],
           "disagreements": "string"
         }
       ]
@@ -275,7 +381,9 @@
         {
           "cluster_id": "string",
           "name": "string",
-          "member_ids": ["string"],
+          "member_ids": [
+            "string"
+          ],
           "cluster_type": "subsystem | archetype_instance | intervention_domain",
           "theme": "string"
         }
@@ -299,7 +407,9 @@
           "delay": "boolean"
         }
       ],
-      "loops_marked": ["loop_id (R{N} or B{N})"]
+      "loops_marked": [
+        "loop_id (R{N} or B{N})"
+      ]
     },
     "meta": {
       "total_stocks": "number",
@@ -309,7 +419,9 @@
       "total_delays": "number",
       "total_leverage_points": "number",
       "total_archetypes": "number",
-      "dominant_loops": ["loop_id"],
+      "dominant_loops": [
+        "loop_id"
+      ],
       "dominant_archetype": "archetype_id | null",
       "highest_leverage_point": "leverage_id",
       "most_dangerous_tipping_point": "tipping_id | null",
@@ -341,7 +453,11 @@
   "source_file": "analyzer/src/engines/feedback_loop_mapper_advanced.py",
   "stage_context": {
     "framework_key": "meadows",
-    "additional_frameworks": ["senge", "sterman", "forrester"],
+    "additional_frameworks": [
+      "senge",
+      "sterman",
+      "forrester"
+    ],
     "extraction": {
       "analysis_type": "feedback loop",
       "analysis_type_plural": "feedback loops",
@@ -408,18 +524,50 @@
     },
     "concretization": {
       "id_examples": [
-        {"from": "R1", "to": "The Success-Breeds-Success Reinforcing Loop"},
-        {"from": "B1", "to": "The Market Saturation Balancing Loop"},
-        {"from": "STK1", "to": "Customer Base (stock)"},
-        {"from": "DEL1", "to": "6-month Delay in Market Response"},
-        {"from": "ARCH1", "to": "Limits to Growth in Market Expansion"},
-        {"from": "LEV1", "to": "Leverage: Changing the Business Model (Level 4)"},
-        {"from": "TIP1", "to": "Market Share Tipping Point at 30%"},
-        {"from": "CI1", "to": "Counterintuitive: Marketing Push Slows Growth"}
+        {
+          "from": "R1",
+          "to": "The Success-Breeds-Success Reinforcing Loop"
+        },
+        {
+          "from": "B1",
+          "to": "The Market Saturation Balancing Loop"
+        },
+        {
+          "from": "STK1",
+          "to": "Customer Base (stock)"
+        },
+        {
+          "from": "DEL1",
+          "to": "6-month Delay in Market Response"
+        },
+        {
+          "from": "ARCH1",
+          "to": "Limits to Growth in Market Expansion"
+        },
+        {
+          "from": "LEV1",
+          "to": "Leverage: Changing the Business Model (Level 4)"
+        },
+        {
+          "from": "TIP1",
+          "to": "Market Share Tipping Point at 30%"
+        },
+        {
+          "from": "CI1",
+          "to": "Counterintuitive: Marketing Push Slows Growth"
+        }
       ],
       "naming_guidance": "Use evocative names that tell the loop's story. Include polarity indicators (+/-). Be concrete.",
-      "recommended_table_types": ["loop_inventory", "leverage_ranking", "archetype_matrix"],
-      "recommended_visual_patterns": ["causal_loop_diagram", "stock_flow_diagram", "behavior_over_time"]
+      "recommended_table_types": [
+        "loop_inventory",
+        "leverage_ranking",
+        "archetype_matrix"
+      ],
+      "recommended_visual_patterns": [
+        "causal_loop_diagram",
+        "stock_flow_diagram",
+        "behavior_over_time"
+      ]
     },
     "audience_vocabulary": {
       "researcher": {
