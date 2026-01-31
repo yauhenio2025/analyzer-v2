@@ -392,8 +392,7 @@
         "IDENTIFY PRESUMPTIONS: What is taken for granted? What would defeat these presumptions?",
         "FIND DIALECTICAL OBLIGATIONS: What must parties respond to? What obligations have they satisfied or failed?",
         "DETECT FALLACIES: What fallacies occur? How serious? What rule is violated?",
-        "ASSESS QUALITY: Relevance? Acceptability? Sufficiency? Overall strength?",
-        "BUILD THE RELATIONSHIP GRAPH: Connect all argumentative elements"
+        "ASSESS QUALITY: Relevance? Acceptability? Sufficiency? Overall strength?"
       ],
       "key_fields": {
         "argument_id": "Individual arguments with Toulmin structure",

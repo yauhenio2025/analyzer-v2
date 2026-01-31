@@ -553,8 +553,7 @@
         "MAP RESISTANCE: Who resisted new ideas? Why? Was their resistance reasonable?",
         "RECONSTRUCT COGNITIVE LANDSCAPES: What could be thought in each era? What couldn't?",
         "BUILD CONCEPT LINEAGES: Trace how concepts evolved across periods - track semantic drift",
-        "ANALYZE RESEARCH PROGRAMMES (Lakatos): What are the hard cores? Protective belts? Is the programme progressive or degenerating?",
-        "BUILD THE RELATIONSHIP GRAPH: Connect concepts, ruptures, obstacles, paradigms with temporal relationships"
+        "ANALYZE RESEARCH PROGRAMMES (Lakatos): What are the hard cores? Protective belts? Is the programme progressive or degenerating?"
       ],
       "key_fields": {
         "rupture_id": "The revolutionary breaks",

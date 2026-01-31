@@ -529,8 +529,7 @@
         "STEP 11: IDENTIFY STRENGTHENING MOVES - Document how you strengthened the argument: narrowed scope to defensible claims, added implicit evidence, resolved ambiguities charitably, preempted obvious objections. Each move should be explicit and justified.",
         "STEP 12: CONSTRUCT THE WEAKEST FORM (FOR CONTRAST) - Create the strawman version: the argument at its worst, most easily refuted. This isn't your interpretation\u2014it's what an uncharitable critic would attack. The contrast shows how much charitable reconstruction matters.",
         "STEP 13: EXECUTE RAPOPORT RULE 4 - NOW, and only now, identify legitimate critiques. These are problems that survive charitable reconstruction\u2014weaknesses in the argument at its best, not its worst. Critique the steelman, not the strawman.",
-        "STEP 14: ASSESS COHERENCE (DAVIDSON) - For each reconstruction, evaluate: internal logical consistency, fit with known facts, theoretical unity, pragmatic coherence with practices. Is this the maximally coherent reading? Are there alternative maximally coherent readings?",
-        "STEP 15: BUILD THE RELATIONSHIP GRAPH - Map how arguments connect: which share premises, which are in tension, where fusion points exist, which critiques apply to multiple arguments. Identify clusters of related arguments and the agreements that might bridge opposing positions."
+        "STEP 14: ASSESS COHERENCE (DAVIDSON) - For each reconstruction, evaluate: internal logical consistency, fit with known facts, theoretical unity, pragmatic coherence with practices. Is this the maximally coherent reading? Are there alternative maximally coherent readings?"
       ],
       "key_fields": {
         "reconstruction_id": "Steelmanned argument versions",

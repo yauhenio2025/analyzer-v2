@@ -475,8 +475,7 @@
         "IDENTIFY TIPPING POINTS: Where might the system tip into a different behavior mode? What are the early warnings?",
         "FIND COUNTERINTUITIVE DYNAMICS: Where does the system behave opposite to intuition? Why?",
         "ANALYZE INTERVENTIONS: What has been tried? What worked? What backfired? Why?",
-        "MAP MENTAL MODELS: What mental models do actors hold? How do they differ from reality?",
-        "BUILD THE RELATIONSHIP GRAPH: Connect stocks, flows, loops, delays, interventions"
+        "MAP MENTAL MODELS: What mental models do actors hold? How do they differ from reality?"
       ],
       "key_fields": {
         "loop_id": "Individual feedback loops (R for reinforcing, B for balancing)",

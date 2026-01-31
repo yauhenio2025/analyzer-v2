@@ -407,8 +407,7 @@
         "IDENTIFY PRIMARY METAPHORS: What universal, experientially-grounded metaphors are at work?",
         "FIND METAPHOR COMPETITIONS: Where do different metaphors compete to frame the same domain? What's at stake?",
         "ASSESS VITALITY: Which metaphors are dead (unnoticed), which are live (creative)?",
-        "ANALYZE METAPHORICAL REASONING: Where are inferences made based on metaphor? Are they valid?",
-        "BUILD THE RELATIONSHIP GRAPH: Connect metaphors, expressions, schemas, entailments"
+        "ANALYZE METAPHORICAL REASONING: Where are inferences made based on metaphor? Are they valid?"
       ],
       "key_fields": {
         "metaphor_id": "The underlying conceptual metaphor (A IS B)",

@@ -10,7 +10,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
   - Root cause: v2 engines had `relationship_graph` in schema but no instructions telling LLM how to populate it
   - Solution: Added comprehensive "BUILD THE RELATIONSHIP GRAPH" section to `src/stages/templates/extraction.md.j2`
   - Template dynamically uses engine's `key_fields` and `key_relationships` to generate engine-appropriate instructions
-  - Removed redundant engine-specific graph steps from `absent_center.json`, `motte_bailey_detector.json`, `path_dependency_analyzer.json`
+  - Removed redundant engine-specific graph steps from all 14 v2 engines:
+    - `absent_center`, `argument_architecture`, `assumption_excavation`, `charitable_reconstruction`
+    - `conditions_of_possibility`, `dialectical_structure`, `epistemic_rupture_tracer`
+    - `feedback_loop_mapper`, `incentive_structure_mapper`, `intellectual_genealogy`
+    - `metaphor_network`, `motte_bailey_detector`, `path_dependency_analyzer`, `rhetorical_strategy`
   - All engines now benefit from graph-building guidance without repeating it in each definition
   - This fixes the visual diversity/depth regression compared to inferential_commitment_mapper_advanced
 
