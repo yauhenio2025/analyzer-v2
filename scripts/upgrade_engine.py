@@ -377,35 +377,48 @@ def call_anthropic_api(prompt: str, dry_run: bool = False) -> tuple[str, str]:
 
 
 def fix_json_brackets(text: str) -> str:
-    """Fix unbalanced brackets in JSON by removing extras at specific positions."""
-    # Find positions of extra ] brackets (where they make depth negative)
-    extra_square = []
-    square_depth = 0
-    for i, c in enumerate(text):
-        if c == '[':
-            square_depth += 1
-        elif c == ']':
-            square_depth -= 1
-            if square_depth < 0:
-                extra_square.append(i)
-                square_depth = 0
+    """Fix unbalanced brackets in JSON by removing extras at specific positions.
 
-    # Find positions of extra } brackets
-    extra_curly = []
+    This is string-aware - brackets inside quoted strings are ignored.
+    """
+    # Track extra brackets outside of strings
+    extras = []
+    in_string = False
+    escape_next = False
     curly_depth = 0
+    square_depth = 0
+
     for i, c in enumerate(text):
+        if escape_next:
+            escape_next = False
+            continue
+        if c == '\\':
+            escape_next = True
+            continue
+        if c == '"':
+            in_string = not in_string
+            continue
+        if in_string:
+            continue
+
         if c == '{':
             curly_depth += 1
         elif c == '}':
             curly_depth -= 1
             if curly_depth < 0:
-                extra_curly.append(i)
+                extras.append(i)
                 curly_depth = 0
+        elif c == '[':
+            square_depth += 1
+        elif c == ']':
+            square_depth -= 1
+            if square_depth < 0:
+                extras.append(i)
+                square_depth = 0
 
     # Remove extras in reverse order to maintain positions
-    all_extras = sorted(extra_square + extra_curly, reverse=True)
     result = list(text)
-    for pos in all_extras:
+    for pos in sorted(extras, reverse=True):
         del result[pos]
 
     return ''.join(result)
