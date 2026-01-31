@@ -6,12 +6,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Fixed
-- **V2 Engines: Missing relationship_graph population instructions** - Added detailed graph-building extraction steps to v2 advanced engines
-  - `absent_center.json` - Added STEP 18 with entity-specific node/edge/cluster instructions for Derridean/Foucauldian analysis
-  - `motte_bailey_detector.json` - Expanded STEP 16 with detailed instructions for evasion pattern visualization
-  - `path_dependency_analyzer.json` - Added STEP 16 with temporal_order support for sequence visualization
-  - Each engine now has customized instructions for: creating typed nodes, building relationship edges with strength values, identifying thematic clusters
-  - This fixes the visual diversity/depth regression compared to inferential_commitment_mapper_advanced which had explicit graph-building steps (STEP 19)
+- **V2 Engines: Missing relationship_graph population instructions** - Added generic graph-building section to shared extraction template
+  - Root cause: v2 engines had `relationship_graph` in schema but no instructions telling LLM how to populate it
+  - Solution: Added comprehensive "BUILD THE RELATIONSHIP GRAPH" section to `src/stages/templates/extraction.md.j2`
+  - Template dynamically uses engine's `key_fields` and `key_relationships` to generate engine-appropriate instructions
+  - Removed redundant engine-specific graph steps from `absent_center.json`, `motte_bailey_detector.json`, `path_dependency_analyzer.json`
+  - All engines now benefit from graph-building guidance without repeating it in each definition
+  - This fixes the visual diversity/depth regression compared to inferential_commitment_mapper_advanced
 
 ### Added
 - **Engine Upgrade System** - Generate advanced engines via Claude API with extended thinking

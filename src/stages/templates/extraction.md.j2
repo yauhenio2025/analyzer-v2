@@ -85,11 +85,87 @@ Use the format `{{ extraction.id_field }}` for all identifiers.
 
 ---
 
+## BUILD THE RELATIONSHIP GRAPH (CRITICAL FOR VISUALIZATION)
+
+You MUST populate the `relationship_graph` structure with nodes, edges, and clusters. This enables visual analysis and pattern detection.
+
+### CREATE NODES
+
+For **every entity** you extract, create a corresponding node in `relationship_graph.nodes`:
+
+```json
+{
+  "id": "the entity's ID (e.g., {{ extraction.id_field.replace('_id', '').upper() }}1)",
+  "type": "the entity type",
+  "label": "short evocative name (2-5 words)",
+  "weight": 0.0-1.0 (centrality/importance in the analysis)
+}
+```
+
+{% if extraction.key_fields %}
+Entity types to create nodes for:
+{% for field, description in extraction.key_fields.items() %}
+- **{{ field | replace('_id', '') }}** ({{ field }}): {{ description }}
+{% endfor %}
+{% endif %}
+
+Weight guidance:
+- **1.0**: Central/foundational entities that organize the entire analysis
+- **0.7-0.9**: Important entities with many connections
+- **0.4-0.6**: Supporting entities with moderate significance
+- **0.1-0.3**: Peripheral entities with limited connections
+
+### CREATE EDGES
+
+For **every cross-reference** between entities, create an edge in `relationship_graph.edges`:
+
+```json
+{
+  "from_id": "source entity ID",
+  "to_id": "target entity ID",
+  "relationship": "relationship type",
+  "strength": 0.0-1.0,
+  "bidirectional": true/false,
+  "label": "optional edge annotation"
+}
+```
+
+{% if extraction.key_relationships %}
+Relationship types to use:
+{% for rel in extraction.key_relationships %}
+- **{{ rel }}**: strength 0.7-1.0 for strong structural relations, 0.4-0.6 for contingent associations
+{% endfor %}
+{% endif %}
+
+Strength guidance:
+- **1.0**: Necessary/definitional relationship (one entity requires the other)
+- **0.7-0.9**: Strong structural relationship
+- **0.4-0.6**: Contingent/associative relationship
+- **0.1-0.3**: Weak or speculative connection
+
+### IDENTIFY CLUSTERS
+
+Group tightly related entities into thematic clusters in `relationship_graph.clusters`:
+
+```json
+{
+  "cluster_id": "CL1",
+  "name": "evocative cluster name",
+  "member_ids": ["entity IDs in this cluster"],
+  "coherence": 0.0-1.0,
+  "theme": "what unifies this cluster"
+}
+```
+
+Name clusters based on what they reveal about the underlying {{ extraction.analysis_type }} structure.
+
+---
+
 ## OUTPUT REQUIREMENTS
 
 1. **Be comprehensive** - capture all significant {{ extraction.analysis_type_plural }}
 2. **Be precise** - each extraction should be clearly defined
-3. **Build relationships** - every entity should know its connections
+3. **Build the graph** - every entity becomes a node, every cross-reference becomes an edge
 4. **Match audience** - calibrate language to {{ audience }} level
 
 Extract with full analytical sophistication. Your output will be used for synthesis and visualization.
