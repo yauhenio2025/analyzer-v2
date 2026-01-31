@@ -298,7 +298,7 @@ def estimate_tokens(text: str) -> int:
 
 
 def call_anthropic_api(prompt: str, dry_run: bool = False) -> tuple[str, str]:
-    """Call Claude API with extended thinking. Returns (response_text, thinking_text)."""
+    """Call Claude API with extended thinking (streaming). Returns (response_text, thinking_text)."""
     if dry_run:
         return ("DRY RUN - no API call made", "DRY RUN - no thinking")
 
@@ -308,14 +308,18 @@ def call_anthropic_api(prompt: str, dry_run: bool = False) -> tuple[str, str]:
 
     client = anthropic.Anthropic(api_key=api_key)
 
-    print("Calling Claude API with extended thinking...")
+    print("Calling Claude API with extended thinking (streaming)...")
     print(f"  Model: claude-opus-4-5-20251101")
     print(f"  Thinking budget: 32,000 tokens")
     print(f"  Max output: 64,000 tokens")
     print(f"  Prompt size: ~{estimate_tokens(prompt):,} tokens")
     print("")
 
-    response = client.messages.create(
+    # Use streaming for extended thinking (required for long operations)
+    thinking_text = ""
+    response_text = ""
+
+    with client.messages.stream(
         model="claude-opus-4-5-20251101",
         max_tokens=64000,
         thinking={
@@ -325,23 +329,90 @@ def call_anthropic_api(prompt: str, dry_run: bool = False) -> tuple[str, str]:
         messages=[
             {"role": "user", "content": prompt}
         ],
-    )
+    ) as stream:
+        print("  Streaming response...")
+        current_block_type = None
+        for event in stream:
+            # Handle content block start
+            if hasattr(event, 'type'):
+                if event.type == 'content_block_start':
+                    if hasattr(event, 'content_block'):
+                        current_block_type = event.content_block.type
+                        if current_block_type == 'thinking':
+                            print("  [Thinking...]", end="", flush=True)
+                        elif current_block_type == 'text':
+                            print("\n  [Generating JSON...]", end="", flush=True)
+                elif event.type == 'content_block_delta':
+                    if hasattr(event, 'delta'):
+                        if hasattr(event.delta, 'thinking'):
+                            thinking_text += event.delta.thinking
+                        elif hasattr(event.delta, 'text'):
+                            response_text += event.delta.text
+                            # Print progress dots
+                            if len(response_text) % 5000 == 0:
+                                print(".", end="", flush=True)
+                elif event.type == 'content_block_stop':
+                    if current_block_type == 'thinking':
+                        print(f" ({len(thinking_text):,} chars)")
+                    elif current_block_type == 'text':
+                        print(f" ({len(response_text):,} chars)")
+                elif event.type == 'message_stop':
+                    print("  [Message complete]")
 
-    # Extract thinking and response
-    thinking_text = ""
-    response_text = ""
+        # Also try to get final message for verification
+        try:
+            final_message = stream.get_final_message()
+            # Extract from final message as backup
+            for block in final_message.content:
+                if block.type == "thinking" and not thinking_text:
+                    thinking_text = block.thinking
+                elif block.type == "text" and not response_text:
+                    response_text = block.text
+            print(f"  Final message stop reason: {final_message.stop_reason}")
+        except Exception as e:
+            print(f"  Warning: Could not get final message: {e}")
 
-    for block in response.content:
-        if block.type == "thinking":
-            thinking_text = block.thinking
-        elif block.type == "text":
-            response_text = block.text
-
+    print("")
     return response_text, thinking_text
 
 
+def fix_json_brackets(text: str) -> str:
+    """Fix unbalanced brackets in JSON by removing extras at specific positions."""
+    # Find positions of extra ] brackets (where they make depth negative)
+    extra_square = []
+    square_depth = 0
+    for i, c in enumerate(text):
+        if c == '[':
+            square_depth += 1
+        elif c == ']':
+            square_depth -= 1
+            if square_depth < 0:
+                extra_square.append(i)
+                square_depth = 0
+
+    # Find positions of extra } brackets
+    extra_curly = []
+    curly_depth = 0
+    for i, c in enumerate(text):
+        if c == '{':
+            curly_depth += 1
+        elif c == '}':
+            curly_depth -= 1
+            if curly_depth < 0:
+                extra_curly.append(i)
+                curly_depth = 0
+
+    # Remove extras in reverse order to maintain positions
+    all_extras = sorted(extra_square + extra_curly, reverse=True)
+    result = list(text)
+    for pos in all_extras:
+        del result[pos]
+
+    return ''.join(result)
+
+
 def extract_json_from_response(response_text: str) -> dict[str, Any]:
-    """Extract JSON from response, handling potential markdown fences."""
+    """Extract JSON from response, handling potential markdown fences and extra content."""
     text = response_text.strip()
 
     # Remove markdown code fences if present
@@ -355,17 +426,61 @@ def extract_json_from_response(response_text: str) -> dict[str, Any]:
             text = text[:-3]
         text = text.strip()
 
-    # Try to parse
+    # Fix common JSON issues from LLM output
+    # 1. Escaped single quotes (not valid JSON - single quotes don't need escaping)
+    text = text.replace("\\'", "'")
+
+    # 2. Fix unbalanced brackets (LLM sometimes adds extras)
+    text = fix_json_brackets(text)
+
+    # Try to parse directly
     try:
         return json.loads(text)
     except json.JSONDecodeError as e:
-        # Try to find JSON object in the text
-        match = re.search(r'\{[\s\S]*\}', text)
-        if match:
+        # If "Extra data" error, try to extract just the first JSON object
+        if "Extra data" in str(e):
+            # Find the position and try parsing up to there
             try:
-                return json.loads(match.group())
+                # Use raw_decode to get just the first valid JSON
+                decoder = json.JSONDecoder()
+                obj, _ = decoder.raw_decode(text)
+                return obj
             except json.JSONDecodeError:
                 pass
+
+        # Try to find balanced JSON object
+        if text.startswith("{"):
+            depth = 0
+            in_string = False
+            escape = False
+            end_pos = 0
+
+            for i, char in enumerate(text):
+                if escape:
+                    escape = False
+                    continue
+                if char == '\\' and in_string:
+                    escape = True
+                    continue
+                if char == '"' and not escape:
+                    in_string = not in_string
+                    continue
+                if in_string:
+                    continue
+                if char == '{':
+                    depth += 1
+                elif char == '}':
+                    depth -= 1
+                    if depth == 0:
+                        end_pos = i + 1
+                        break
+
+            if end_pos > 0:
+                try:
+                    return json.loads(text[:end_pos])
+                except json.JSONDecodeError:
+                    pass
+
         raise ValueError(f"Could not parse JSON from response: {e}")
 
 
@@ -504,6 +619,13 @@ def main():
         print(f"API Error: {e}")
         sys.exit(1)
 
+    # Save raw response for debugging
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    raw_path = OUTPUT_DIR / f"{args.engine_key}_advanced_raw.txt"
+    with open(raw_path, "w") as f:
+        f.write(response_text)
+    print(f"Raw response saved to: {raw_path}")
+
     # Parse response
     print("\nParsing response...")
     try:
@@ -511,8 +633,11 @@ def main():
         print(f"  - Parsed JSON with {len(engine_dict)} top-level keys")
     except ValueError as e:
         print(f"Error parsing response: {e}")
-        print("\nRaw response (first 2000 chars):")
+        print(f"\nRaw response saved to: {raw_path}")
+        print("\nFirst 2000 chars:")
         print(response_text[:2000])
+        print("\n\nLast 500 chars:")
+        print(response_text[-500:] if len(response_text) > 500 else response_text)
         sys.exit(1)
 
     # Validate
