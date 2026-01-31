@@ -5,6 +5,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+- **V2 Engines: Missing relationship_graph population instructions** - Added detailed graph-building extraction steps to v2 advanced engines
+  - `absent_center.json` - Added STEP 18 with entity-specific node/edge/cluster instructions for Derridean/Foucauldian analysis
+  - `motte_bailey_detector.json` - Expanded STEP 16 with detailed instructions for evasion pattern visualization
+  - `path_dependency_analyzer.json` - Added STEP 16 with temporal_order support for sequence visualization
+  - Each engine now has customized instructions for: creating typed nodes, building relationship edges with strength values, identifying thematic clusters
+  - This fixes the visual diversity/depth regression compared to inferential_commitment_mapper_advanced which had explicit graph-building steps (STEP 19)
+
 ### Added
 - **Engine Upgrade System** - Generate advanced engines via Claude API with extended thinking
   - `scripts/upgrade_engine.py` - Main CLI script for engine generation
