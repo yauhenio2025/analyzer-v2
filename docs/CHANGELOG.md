@@ -6,6 +6,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Engine Upgrade System** - Generate advanced engines via Claude API with extended thinking
+  - `scripts/upgrade_engine.py` - Main CLI script for engine generation
+  - `engine_upgrade_context/system_prompt.md` - Comprehensive engine system explanation
+  - `engine_upgrade_context/methodology_database.yaml` - 10 priority engines with theorists/concepts
+  - `engine_upgrade_context/examples/` - Example advanced engines for reference
+  - `outputs/upgraded_engines/` - Generated engine definitions land here
+  - Features: dry-run mode, token estimation, methodology override, Pydantic validation
+  - Uses Claude Opus 4.5 with 32k thinking tokens + 64k output tokens
 - **10 Advanced Engines** - Deep theoretical frameworks with cross-referencing ID systems
   - `dialectical_structure_advanced.json` - Hegelian dialectics (Hegel, Marx, Adorno)
   - `assumption_excavation_advanced.json` - Epistemological archaeology (Wittgenstein, Quine, Collingwood)

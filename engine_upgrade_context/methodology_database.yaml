@@ -1,0 +1,483 @@
+# Methodology Database for Engine Upgrade System
+# Maps priority engines to their theoretical foundations
+#
+# Each entry provides:
+# - primary_method: The main methodological approach
+# - key_theorists: Scholars and their contributions
+# - key_concepts: Technical terms the engine should use
+# - reasoning_domain: The domain string for the engine
+# - framework_key: The stage_context.framework_key to use
+
+# ============================================================================
+# 1. CAUSAL INFERENCE
+# ============================================================================
+causal_inference_auditor:
+  primary_method: "Rubin Causal Model + Pearl DAG Analysis"
+  key_theorists:
+    - name: "Judea Pearl"
+      contribution: "do-calculus, causal graphs, backdoor/frontdoor criteria"
+      key_works:
+        - "Causality: Models, Reasoning, and Inference (2000)"
+        - "The Book of Why (2018)"
+    - name: "Donald Rubin"
+      contribution: "potential outcomes framework, SUTVA, assignment mechanism"
+      key_works:
+        - "Causal Inference for Statistics, Social, and Biomedical Sciences (2015)"
+        - "Estimating Causal Effects of Treatments in Randomized and Nonrandomized Studies (1974)"
+    - name: "Joshua Angrist & Jörn-Steffen Pischke"
+      contribution: "credibility revolution, identification strategies, LATE"
+      key_works:
+        - "Mostly Harmless Econometrics (2009)"
+        - "Mastering Metrics (2014)"
+    - name: "Guido Imbens"
+      contribution: "LATE, instrumental variables refinement, RDD"
+      key_works:
+        - "Causal Inference for Statistics, Social, and Biomedical Sciences (with Rubin)"
+        - "Identification and Estimation of Local Average Treatment Effects (1994)"
+  key_concepts:
+    - confounding and selection bias
+    - collider bias and M-bias
+    - instrumental variables
+    - regression discontinuity design (RDD)
+    - difference-in-differences (DiD)
+    - synthetic control methods
+    - SUTVA (Stable Unit Treatment Value Assumption)
+    - positivity and overlap
+    - ignorability and unconfoundedness
+    - DAGs (Directed Acyclic Graphs)
+    - d-separation
+    - backdoor criterion
+    - frontdoor criterion
+    - mediators vs. confounders vs. colliders
+    - average treatment effect (ATE)
+    - average treatment effect on treated (ATT)
+    - local average treatment effect (LATE)
+  reasoning_domain: "causal_inference_advanced"
+  framework_key: "pearlian_rubin"
+
+# ============================================================================
+# 2. INTELLIGENCE ANALYSIS
+# ============================================================================
+intelligence_requirements_mapper:
+  primary_method: "CIA Structured Analytic Techniques + NIE Methodology"
+  key_theorists:
+    - name: "Richards Heuer"
+      contribution: "Psychology of Intelligence Analysis, cognitive biases in analysis"
+      key_works:
+        - "Psychology of Intelligence Analysis (1999)"
+        - "Structured Analytic Techniques for Intelligence Analysis (2010)"
+    - name: "Cynthia Grabo"
+      contribution: "Indications and Warning methodology, anticipating surprise"
+      key_works:
+        - "Anticipating Surprise: Analysis for Strategic Warning (2002)"
+    - name: "Robert Jervis"
+      contribution: "perception and misperception in international politics, intelligence failure"
+      key_works:
+        - "Why Intelligence Fails: Lessons from the Iranian Revolution and the Iraq War (2010)"
+        - "Perception and Misperception in International Politics (1976)"
+    - name: "CIA Tradecraft Primer"
+      contribution: "Key Intelligence Questions, Essential Elements, tradecraft standards"
+      key_works:
+        - "A Tradecraft Primer: Structured Analytic Techniques for Improving Intelligence Analysis (2009)"
+  key_concepts:
+    - Priority Intelligence Requirements (PIRs)
+    - Key Intelligence Questions (KIQs)
+    - Essential Elements of Information (EEIs)
+    - intelligence gaps
+    - collection requirements
+    - Indicators and Warning (I&W)
+    - indications
+    - warning intelligence
+    - current intelligence vs estimative intelligence
+    - National Intelligence Estimates (NIE)
+    - all-source analysis
+    - single-source reporting
+    - source reliability assessment
+    - information credibility assessment
+    - analytic confidence levels
+    - key assumptions check
+    - linchpin assumptions
+    - alternative hypotheses
+    - red team analysis
+    - devil's advocacy
+    - Team A/Team B
+  reasoning_domain: "intelligence_analysis_advanced"
+  framework_key: "cia_structured_analysis"
+
+# ============================================================================
+# 3. DISINFORMATION / AUTHENTICITY ANALYSIS
+# ============================================================================
+authenticity_forensics:
+  primary_method: "RAND Firehose Model + Epistemic Vigilance Theory"
+  key_theorists:
+    - name: "Christopher Paul & Miriam Matthews"
+      contribution: "Firehose of Falsehood model, propaganda characteristics"
+      key_works:
+        - "The Russian 'Firehose of Falsehood' Propaganda Model (RAND 2016)"
+    - name: "Dan Sperber & Hugo Mercier"
+      contribution: "Epistemic vigilance, argumentative theory of reasoning"
+      key_works:
+        - "The Enigma of Reason (2017)"
+        - "Epistemic Vigilance (2010)"
+    - name: "Gordon Pennycook"
+      contribution: "Bullshit receptivity, analytic thinking and fake news detection"
+      key_works:
+        - "The Psychology of Fake News (2021)"
+        - "Lazy, not biased: Susceptibility to partisan fake news (2019)"
+    - name: "Kate Starbird"
+      contribution: "Online rumoring, crisis informatics, coordinated disinformation"
+      key_works:
+        - "Disinformation as Collaborative Work: Surfacing the Participatory Nature of Strategic Information Operations"
+        - "Examining the Alternative Media Ecosystem through the Production of Alternative Narratives"
+  key_concepts:
+    - source manipulation vs content manipulation
+    - coordinated inauthentic behavior (CIB)
+    - epistemic vigilance cues
+    - firehose tactics (volume, rapid, continuous, multichannel)
+    - prebunking vs debunking
+    - inoculation theory
+    - credibility signals
+    - sockpuppets and bot networks
+    - astroturfing
+    - narrative laundering
+    - information laundering
+    - source heuristics
+    - content heuristics
+    - motivated reasoning
+    - illusory truth effect
+    - repetition-induced belief
+    - source-content decoupling
+    - adversarial narratives
+    - strategic ambiguity
+  reasoning_domain: "disinformation_analysis_advanced"
+  framework_key: "epistemic_forensics"
+
+# ============================================================================
+# 4. COUNTERFACTUAL REASONING
+# ============================================================================
+counterfactual_analyzer:
+  primary_method: "Lewis-Stalnaker Possible Worlds + Historical Counterfactuals"
+  key_theorists:
+    - name: "David Lewis"
+      contribution: "possible worlds semantics, similarity metrics for counterfactuals"
+      key_works:
+        - "Counterfactuals (1973)"
+        - "Causation (1973)"
+    - name: "Richard Ned Lebow"
+      contribution: "historical counterfactual methodology, contingency in history"
+      key_works:
+        - "Forbidden Fruit: Counterfactuals and International Relations (2010)"
+        - "What's So Different About a Counterfactual? (2000)"
+    - name: "Philip Tetlock"
+      contribution: "counterfactual thought experiments, expert judgment calibration"
+      key_works:
+        - "Unmaking the West: What-If Scenarios That Rewrite World History (2006)"
+        - "Expert Political Judgment (2005)"
+    - name: "Max Weber"
+      contribution: "objective possibility, adequate causation in social science"
+      key_works:
+        - "Methodology of Social Sciences (1903-1917)"
+  key_concepts:
+    - minimal rewrite principle
+    - miracle vs non-miracle changes
+    - second-order counterfactuals (counterfactuals of counterfactuals)
+    - cotenability constraints
+    - historical plausibility criteria
+    - possible worlds
+    - closest possible world
+    - similarity ordering
+    - backtracking counterfactuals
+    - non-backtracking counterfactuals
+    - counterfactual dependence
+    - causal chains in counterfactuals
+    - overdetermination
+    - preemption
+    - objective possibility
+    - adequate causation
+    - nomological possibility
+    - historical contingency vs necessity
+  reasoning_domain: "counterfactual_analysis_advanced"
+  framework_key: "lewisian_counterfactuals"
+
+# ============================================================================
+# 5. COMPLEXITY SCIENCE
+# ============================================================================
+complexity_threshold_detector:
+  primary_method: "Cynefin Framework + Santa Fe Complexity Science"
+  key_theorists:
+    - name: "Dave Snowden"
+      contribution: "Cynefin framework, sense-making in complex domains"
+      key_works:
+        - "A Leader's Framework for Decision Making (HBR 2007)"
+        - "Complex Acts of Knowing: Paradox and Descriptive Self-Awareness (2002)"
+    - name: "Stuart Kauffman"
+      contribution: "edge of chaos, self-organization, fitness landscapes"
+      key_works:
+        - "At Home in the Universe (1995)"
+        - "The Origins of Order (1993)"
+    - name: "John Holland"
+      contribution: "complex adaptive systems, emergence, genetic algorithms"
+      key_works:
+        - "Hidden Order: How Adaptation Builds Complexity (1995)"
+        - "Emergence: From Chaos to Order (1998)"
+    - name: "W. Brian Arthur"
+      contribution: "increasing returns, complexity economics, path dependence"
+      key_works:
+        - "Complexity and the Economy (2014)"
+        - "Increasing Returns and Path Dependence in the Economy (1994)"
+  key_concepts:
+    - Cynefin domains (clear, complicated, complex, chaotic, confused)
+    - probe-sense-respond vs sense-analyze-respond
+    - emergence and self-organization
+    - edge of chaos
+    - phase transitions
+    - requisite variety (Ashby's law)
+    - fitness landscapes
+    - attractors and basins of attraction
+    - bifurcation points
+    - sensitive dependence on initial conditions
+    - power laws and scale-free networks
+    - adaptive agents
+    - co-evolution
+    - positive feedback
+    - path dependence
+    - lock-in
+    - irreducible uncertainty
+    - distributed intelligence
+    - non-linearity
+  reasoning_domain: "complexity_science_advanced"
+  framework_key: "cynefin_complexity"
+
+# ============================================================================
+# 6. INTERPRETIVE CHARITY
+# ============================================================================
+charitable_reconstruction:
+  primary_method: "Dennett's Rapoport Rules + Davidsonian Charity"
+  key_theorists:
+    - name: "Daniel Dennett"
+      contribution: "Rapoport Rules for constructive criticism, intuition pumps"
+      key_works:
+        - "Intuition Pumps and Other Tools for Thinking (2013)"
+    - name: "Donald Davidson"
+      contribution: "principle of charity, radical interpretation, triangulation"
+      key_works:
+        - "Inquiries into Truth and Interpretation (1984)"
+        - "On the Very Idea of a Conceptual Scheme (1974)"
+    - name: "Hans-Georg Gadamer"
+      contribution: "hermeneutic circle, prejudice rehabilitation, fusion of horizons"
+      key_works:
+        - "Truth and Method (1960)"
+    - name: "Anatol Rapoport"
+      contribution: "original rules for constructive disagreement"
+      key_works:
+        - "Fights, Games, and Debates (1960)"
+  key_concepts:
+    - steelmanning vs strawmanning
+    - principle of charity
+    - principle of humanity
+    - best possible version reconstruction
+    - hermeneutic circle
+    - fusion of horizons
+    - prior probability of rationality
+    - Rapoport's Rules (restate, list agreements, mention learning, respond)
+    - charitable interpretation
+    - maximally coherent reading
+    - background assumptions
+    - implicit premises
+    - strongest form of argument
+    - weakest form of argument
+    - interpretive generosity
+    - prejudice as enabling condition
+    - pre-understanding
+    - effective historical consciousness
+  reasoning_domain: "interpretive_charity_advanced"
+  framework_key: "dennett_rapoport"
+
+# ============================================================================
+# 7. STRATEGIC ABSENCE / WHAT'S NOT SAID
+# ============================================================================
+absent_center:
+  primary_method: "Derridean Deconstruction + Foucauldian Archaeology"
+  key_theorists:
+    - name: "Jacques Derrida"
+      contribution: "différance, presence/absence, trace, supplement"
+      key_works:
+        - "Of Grammatology (1967)"
+        - "Writing and Difference (1967)"
+    - name: "Michel Foucault"
+      contribution: "archaeology of knowledge, discursive formations, epistemes"
+      key_works:
+        - "The Archaeology of Knowledge (1969)"
+        - "The Order of Things (1966)"
+    - name: "Jacques Lacan"
+      contribution: "the Real, structural lack, objet petit a, the unsymbolizable"
+      key_works:
+        - "Écrits (1966)"
+        - "The Four Fundamental Concepts of Psychoanalysis (1973)"
+    - name: "Gayatri Spivak"
+      contribution: "strategic essentialism, subaltern silence, epistemic violence"
+      key_works:
+        - "Can the Subaltern Speak? (1988)"
+  key_concepts:
+    - constitutive outside
+    - enabling absence
+    - discursive exclusion
+    - epistemic violence
+    - trace
+    - supplement
+    - différance
+    - the unsayable
+    - the unthinkable
+    - structural vs contingent absence
+    - presence and absence
+    - center and margin
+    - the Real (Lacanian)
+    - objet petit a
+    - discursive formation
+    - conditions of possibility
+    - conditions of impossibility
+    - archive
+    - statement (énoncé)
+    - strategic silence
+    - eloquent absence
+  reasoning_domain: "absence_analysis_advanced"
+  framework_key: "derridean_foucauldian"
+
+# ============================================================================
+# 8. ARGUMENTATIVE EVASION / MOTTE-BAILEY
+# ============================================================================
+motte_bailey_detector:
+  primary_method: "Shackel's Motte-Bailey + Pragma-Dialectics"
+  key_theorists:
+    - name: "Nicholas Shackel"
+      contribution: "motte-and-bailey doctrine original formulation"
+      key_works:
+        - "The Vacuity of Postmodernist Methodology (2005)"
+    - name: "Frans van Eemeren"
+      contribution: "pragma-dialectics, strategic maneuvering, argumentation stages"
+      key_works:
+        - "A Systematic Theory of Argumentation (2004)"
+        - "Strategic Maneuvering in Argumentative Discourse (2010)"
+    - name: "Douglas Walton"
+      contribution: "argumentation schemes, burden of proof, fallacy theory"
+      key_works:
+        - "Fundamentals of Critical Argumentation (2006)"
+        - "Argumentation Schemes (2008)"
+    - name: "Scott Alexander"
+      contribution: "popularized motte-bailey analysis, concrete examples"
+      key_works:
+        - "All in All, Another Brick in the Motte (2014)"
+  key_concepts:
+    - motte (defensible) vs bailey (desirable) positions
+    - strategic equivocation
+    - definitional retreat
+    - burden of proof shifting
+    - standpoint switching
+    - commitment dodging
+    - dialectical obligations
+    - critical discussion stages (confrontation, opening, argumentation, concluding)
+    - strategic maneuvering
+    - fallacy as derailed strategic maneuvering
+    - ambiguity exploitation
+    - moving the goalposts
+    - no true Scotsman
+    - weak man fallacy
+    - bulverism
+    - equivocation
+  reasoning_domain: "argumentative_evasion_advanced"
+  framework_key: "pragma_dialectics"
+
+# ============================================================================
+# 9. HYPOTHESIS EVALUATION (ACH)
+# ============================================================================
+competing_explanations_analyzer:
+  primary_method: "Analysis of Competing Hypotheses (ACH) + Structured Analytic Techniques"
+  key_theorists:
+    - name: "Richards Heuer"
+      contribution: "ACH methodology, cognitive debiasing in analysis"
+      key_works:
+        - "Psychology of Intelligence Analysis (1999)"
+    - name: "Rob Johnston"
+      contribution: "analytic culture, institutionalizing structured techniques"
+      key_works:
+        - "Analytic Culture in the US Intelligence Community (2005)"
+    - name: "CIA Directorate of Intelligence"
+      contribution: "SATs, tradecraft standards, analytic line evaluation"
+      key_works:
+        - "A Tradecraft Primer (2009)"
+        - "Structured Analytic Techniques Handbook"
+    - name: "Baruch Fischhoff"
+      contribution: "hindsight bias, debiasing techniques, calibration"
+      key_works:
+        - "Judgment and Decision Making (2012)"
+        - "Hindsight ≠ Foresight: The Effect of Outcome Knowledge on Judgment Under Uncertainty (1975)"
+  key_concepts:
+    - hypothesis generation
+    - evidence cataloging
+    - diagnosticity (what evidence discriminates between hypotheses?)
+    - consistency matrix
+    - disconfirming evidence weighting
+    - linchpin assumptions
+    - sensitivity analysis
+    - confirming vs disconfirming evidence
+    - absence of evidence vs evidence of absence
+    - prior probability
+    - likelihood ratio
+    - Bayesian updating (informal)
+    - cognitive biases in hypothesis evaluation
+    - confirmation bias
+    - anchoring
+    - availability heuristic
+    - satisficing
+    - premature closure
+  reasoning_domain: "hypothesis_evaluation_advanced"
+  framework_key: "ach_methodology"
+
+# ============================================================================
+# 10. INSTITUTIONAL PATH DEPENDENCE
+# ============================================================================
+path_dependency_analyzer:
+  primary_method: "Historical Institutionalism + Increasing Returns Theory"
+  key_theorists:
+    - name: "Paul Pierson"
+      contribution: "increasing returns in politics, timing and sequencing, institutional stickiness"
+      key_works:
+        - "Politics in Time: History, Institutions, and Social Analysis (2004)"
+        - "Increasing Returns, Path Dependence, and the Study of Politics (2000)"
+    - name: "Douglass North"
+      contribution: "institutions and path dependence, New Institutional Economics"
+      key_works:
+        - "Institutions, Institutional Change and Economic Performance (1990)"
+        - "Understanding the Process of Economic Change (2005)"
+    - name: "W. Brian Arthur"
+      contribution: "increasing returns, lock-in, QWERTY economics"
+      key_works:
+        - "Increasing Returns and Path Dependence in the Economy (1994)"
+    - name: "James Mahoney"
+      contribution: "path dependence mechanisms, critical junctures, reactive sequences"
+      key_works:
+        - "Path Dependence in Historical Sociology (2000)"
+        - "The Legacies of Liberalism: Path Dependence and Political Regimes in Central America (2001)"
+  key_concepts:
+    - increasing returns
+    - positive feedback
+    - critical junctures
+    - contingency
+    - lock-in
+    - switching costs
+    - reactive sequences
+    - self-reinforcing sequences
+    - institutional layering
+    - institutional conversion
+    - institutional drift
+    - institutional displacement
+    - path dependence vs path independence
+    - conjunctures
+    - antecedent conditions
+    - permissive vs productive conditions
+    - timing and sequencing
+    - historical inefficiency
+    - suboptimal equilibrium
+    - QWERTY effects
+  reasoning_domain: "path_dependence_advanced"
+  framework_key: "historical_institutionalism"

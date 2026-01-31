@@ -1,6 +1,25 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-01-30
+> Auto-maintained by Claude Code. Last updated: 2026-01-31
+
+## Engine Upgrade System
+
+### Engine Upgrade Script
+- **Status**: Active
+- **Description**: CLI tool to generate advanced engine definitions using Claude API with extended thinking
+- **Entry Points**:
+  - `scripts/upgrade_engine.py` - Main upgrade script with CLI interface
+  - `engine_upgrade_context/system_prompt.md` - Comprehensive system prompt for engine generation
+  - `engine_upgrade_context/methodology_database.yaml` - Database of 10 priority engines with theorists, concepts
+  - `engine_upgrade_context/examples/*.json` - Example advanced engines for few-shot learning
+  - `outputs/upgraded_engines/` - Output directory for generated definitions
+- **Dependencies**: Anthropic SDK, PyYAML, Pydantic v2
+- **Usage**:
+  - `python scripts/upgrade_engine.py causal_inference_auditor` - Generate advanced version
+  - `python scripts/upgrade_engine.py engine_key --dry-run` - Preview prompt without API call
+  - `python scripts/upgrade_engine.py engine_key --estimate-tokens` - Show token estimate
+- **Priority Engines in Database**: causal_inference_auditor, intelligence_requirements_mapper, authenticity_forensics, counterfactual_analyzer, complexity_threshold_detector, charitable_reconstruction, absent_center, motte_bailey_detector, competing_explanations_analyzer, path_dependency_analyzer
+- **Added**: 2026-01-31
 
 ## Engine Definitions
 
