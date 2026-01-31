@@ -1,6 +1,6 @@
 {
-  "engine_key": "metaphor_network_advanced",
-  "engine_name": "Metaphor Network Mapper v2",
+  "engine_key": "metaphor_network",
+  "engine_name": "Metaphor Network Mapper",
   "description": "Deep analysis of how we think through metaphor. Reveals the hidden comparisons that structure understanding, the systematic mappings that let us reason about abstractions, and what gets highlighted or hidden when we think one thing in terms of another. Uses sophisticated methods from Lakoff, Johnson, and cognitive linguistics but outputs in plain language anyone can understand.",
   "version": 1,
   "category": "rhetoric",

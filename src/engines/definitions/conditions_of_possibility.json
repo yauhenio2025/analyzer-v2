@@ -1,194 +1,691 @@
 {
   "engine_key": "conditions_of_possibility",
   "engine_name": "Conditions of Possibility Mapper",
-  "description": "Maps the preconditions that enable certain discourses, practices, and knowledge claims. Examines epistemic, institutional, material, discursive, and power conditions that must exist for something to be thinkable or sayable.",
+  "description": "Deep analysis of what makes certain ideas thinkable and certain practices possible. Reveals the hidden rules that govern what can be said, the power arrangements that enable some discourses while silencing others, and the historical accidents that now seem inevitable. Uses sophisticated archaeological and genealogical methods from Foucault and critical theory but outputs in plain language anyone can understand.",
   "version": 1,
   "category": "epistemology",
   "kind": "synthesis",
-  "reasoning_domain": "genealogical",
-  "researcher_question": "What conditions make this discourse/practice possible?",
+  "reasoning_domain": "foucauldian_archaeology_advanced",
+  "researcher_question": "What had to be true for these ideas to become thinkable and these practices possible?",
   "canonical_schema": {
-    "phenomena_analyzed": [
+    "what_is_being_analyzed": [
       {
-        "phenomenon_id": "string",
+        "phenomenon_id": "string (format: 'PH{N}')",
         "name": "string",
-        "description": "string",
-        "type": "discourse | practice | knowledge_claim | institution",
-        "emergence_period": "string",
+        "what_it_is": "string (description)",
+        "phenomenon_type": "discourse | practice | institution | knowledge_claim | subject_position | technology",
+        "when_it_emerged": "string (historical period)",
+        "where_it_operates": "string (context, field)",
+        "current_status": "dominant | contested | emerging | declining | naturalized",
+        "source_articles": [
+          "string"
+        ],
+        "enabled_by_conditions": [
+          "condition_id (various types)"
+        ],
+        "produces_effects": [
+          "effect_id (EFF{N})"
+        ],
+        "creates_subject_positions": [
+          "subject_id (SUB{N})"
+        ]
+      }
+    ],
+    "the_episteme": [
+      {
+        "episteme_id": "string (format: 'EP{N}')",
+        "name": "string (e.g., 'The Classical Episteme', 'The Modern Episteme')",
+        "historical_period": "string",
+        "what_can_be_known": [
+          "string (types of knowledge possible)"
+        ],
+        "how_knowledge_is_organized": "string (the underlying order)",
+        "what_counts_as_evidence": [
+          "string"
+        ],
+        "what_counts_as_proof": [
+          "string"
+        ],
+        "fundamental_concepts": [
+          "string"
+        ],
+        "what_cannot_be_thought": [
+          "string (the epistemic unconscious)"
+        ],
+        "predecessor_episteme": "episteme_id (EP{N}) | null",
+        "successor_episteme": "episteme_id (EP{N}) | null",
+        "transition_ruptures": [
+          "rupture_id (RUP{N})"
+        ],
+        "enables_phenomena": [
+          "phenomenon_id (PH{N})"
+        ]
+      }
+    ],
+    "discursive_formations": [
+      {
+        "formation_id": "string (format: 'DF{N}')",
+        "name": "string (e.g., 'The Clinical Discourse', 'The Economic Discourse')",
+        "objects_of_discourse": [
+          {
+            "object_id": "string",
+            "what_it_is": "string (what can be talked about)",
+            "how_it_is_constituted": "string (how discourse creates this object)",
+            "surfaces_of_emergence": [
+              "string (where this object appears)"
+            ]
+          }
+        ],
+        "enunciative_modalities": [
+          {
+            "modality_id": "string",
+            "who_can_speak": "string (authorized speaking positions)",
+            "from_where": "string (institutional sites)",
+            "with_what_authority": "string"
+          }
+        ],
+        "concepts_in_play": [
+          {
+            "concept_id": "string",
+            "the_concept": "string",
+            "rules_of_formation": "string (how concepts relate to each other)",
+            "transformations_allowed": "string"
+          }
+        ],
+        "strategies": [
+          {
+            "strategy_id": "string",
+            "the_strategy": "string (what positions/choices the discourse enables)",
+            "who_benefits": [
+              "string"
+            ],
+            "what_it_excludes": [
+              "string"
+            ]
+          }
+        ],
+        "archive_characteristics": "string (the total rules governing what appears)",
+        "source_articles": [
+          "string"
+        ],
+        "enables_phenomena": [
+          "phenomenon_id (PH{N})"
+        ],
+        "operates_within_episteme": "episteme_id (EP{N})",
+        "intersects_with_formations": [
+          "formation_id (DF{N})"
+        ]
+      }
+    ],
+    "the_rules_that_govern_what_can_be_said": [
+      {
+        "rule_id": "string (format: 'R{N}')",
+        "name": "string",
+        "the_rule": "string (what it permits/forbids)",
+        "rule_type": "objects | enunciations | concepts | strategies | exclusion | limitation | appropriation",
+        "how_it_operates": "string",
+        "who_enforces_it": [
+          "string"
+        ],
+        "what_it_enables": [
+          "string"
+        ],
+        "what_it_blocks": [
+          "string"
+        ],
+        "is_visible": "boolean (do people know this rule exists?)",
+        "source_articles": [
+          "string"
+        ],
+        "part_of_formation": "formation_id (DF{N})",
+        "produces_exclusions": [
+          "exclusion_id (EXC{N})"
+        ]
+      }
+    ],
+    "institutional_conditions": [
+      {
+        "institution_id": "string (format: 'INST{N}')",
+        "name": "string",
+        "institution_type": "state_apparatus | professional_body | educational | economic | legal | medical | carceral | media",
+        "what_it_does": "string",
+        "when_established": "string",
+        "power_mechanisms": [
+          "string (how it exercises power)"
+        ],
+        "what_knowledge_it_produces": [
+          "string"
+        ],
+        "what_subjects_it_creates": [
+          "subject_id (SUB{N})"
+        ],
+        "disciplinary_techniques": [
+          "technique_id (TECH{N})"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "enables_phenomena": [
+          "phenomenon_id (PH{N})"
+        ],
+        "depends_on_institutions": [
+          "institution_id (INST{N})"
+        ],
+        "part_of_apparatus": "apparatus_id (APP{N}) | null"
+      }
+    ],
+    "material_conditions": [
+      {
+        "material_id": "string (format: 'MAT{N}')",
+        "name": "string",
+        "material_type": "technology | infrastructure | economic_arrangement | physical_space | communication_medium | body_technique",
+        "what_it_is": "string",
+        "when_it_emerged": "string",
+        "what_it_makes_possible": [
+          "string"
+        ],
+        "what_it_makes_impossible": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "enables_phenomena": [
+          "phenomenon_id (PH{N})"
+        ],
+        "enables_techniques": [
+          "technique_id (TECH{N})"
+        ],
+        "part_of_apparatus": "apparatus_id (APP{N}) | null"
+      }
+    ],
+    "power_knowledge_nexus": [
+      {
+        "nexus_id": "string (format: 'PK{N}')",
+        "name": "string",
+        "what_knowledge_is_produced": "string",
+        "what_power_relations_it_enables": "string",
+        "how_knowledge_and_power_reinforce": "string",
+        "who_is_subjected": [
+          "string"
+        ],
+        "who_subjects": [
+          "string"
+        ],
+        "resistances_possible": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "involves_institutions": [
+          "institution_id (INST{N})"
+        ],
+        "produces_subjects": [
+          "subject_id (SUB{N})"
+        ],
+        "part_of_apparatus": "apparatus_id (APP{N}) | null"
+      }
+    ],
+    "the_apparatus": [
+      {
+        "apparatus_id": "string (format: 'APP{N}')",
+        "name": "string (e.g., 'The Security Apparatus', 'The Sexuality Apparatus')",
+        "what_strategic_function": "string (what urgent need it responds to)",
+        "heterogeneous_elements": {
+          "discourses": [
+            "formation_id (DF{N})"
+          ],
+          "institutions": [
+            "institution_id (INST{N})"
+          ],
+          "laws_and_regulations": [
+            "string"
+          ],
+          "architectural_forms": [
+            "string"
+          ],
+          "administrative_measures": [
+            "string"
+          ],
+          "scientific_statements": [
+            "string"
+          ],
+          "philosophical_propositions": [
+            "string"
+          ],
+          "moral_pronouncements": [
+            "string"
+          ]
+        },
+        "the_network": "string (how these elements connect)",
+        "strategic_elaboration": "string (how it evolved to handle problems)",
+        "source_articles": [
+          "string"
+        ],
+        "manages_phenomena": [
+          "phenomenon_id (PH{N})"
+        ],
+        "produces_effects": [
+          "effect_id (EFF{N})"
+        ]
+      }
+    ],
+    "disciplinary_techniques": [
+      {
+        "technique_id": "string (format: 'TECH{N}')",
+        "name": "string",
+        "technique_type": "hierarchical_observation | normalizing_judgment | examination | enclosure | partitioning | functional_sites | time_control | body_training | panopticism",
+        "how_it_works": "string",
+        "what_it_produces": "string (docile bodies, normalized subjects, etc.)",
+        "where_deployed": [
+          "institution_id (INST{N})"
+        ],
+        "historical_emergence": "string",
+        "source_articles": [
+          "string"
+        ],
+        "enables_phenomena": [
+          "phenomenon_id (PH{N})"
+        ],
+        "produces_subjects": [
+          "subject_id (SUB{N})"
+        ],
+        "requires_materials": [
+          "material_id (MAT{N})"
+        ]
+      }
+    ],
+    "subject_positions_created": [
+      {
+        "subject_id": "string (format: 'SUB{N}')",
+        "name": "string (e.g., 'The Patient', 'The Criminal', 'The Entrepreneur')",
+        "how_constituted": "string (through what practices/discourses)",
+        "what_subject_can_do": [
+          "string"
+        ],
+        "what_subject_cannot_do": [
+          "string"
+        ],
+        "how_subject_knows_itself": "string (self-understanding imposed)",
+        "normalization_pressures": [
+          "string"
+        ],
+        "resistance_possibilities": [
+          "string"
+        ],
+        "historical_emergence": "string",
+        "source_articles": [
+          "string"
+        ],
+        "produced_by_institutions": [
+          "institution_id (INST{N})"
+        ],
+        "produced_by_techniques": [
+          "technique_id (TECH{N})"
+        ],
+        "produced_by_discourse": [
+          "formation_id (DF{N})"
+        ],
+        "part_of_apparatus": "apparatus_id (APP{N}) | null"
+      }
+    ],
+    "exclusions_and_silences": [
+      {
+        "exclusion_id": "string (format: 'EXC{N}')",
+        "what_is_excluded": "string",
+        "exclusion_type": "prohibition | division_and_rejection | will_to_truth | internal_control | rarefaction",
+        "mechanism_of_exclusion": "string (how it's kept out)",
+        "who_is_excluded": [
+          "string"
+        ],
+        "what_discourse_is_blocked": "string",
+        "symptoms_of_return": [
+          "string (where the excluded returns, distorted)"
+        ],
+        "who_benefits_from_exclusion": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "produced_by_rules": [
+          "rule_id (R{N})"
+        ],
+        "maintained_by_institutions": [
+          "institution_id (INST{N})"
+        ]
+      }
+    ],
+    "ruptures_and_discontinuities": [
+      {
+        "rupture_id": "string (format: 'RUP{N}')",
+        "name": "string",
+        "when": "string (historical moment)",
+        "what_broke": "string (what continuity was interrupted)",
+        "rupture_type": "epistemic | institutional | discursive | technical | political",
+        "trigger_events": [
+          "string"
+        ],
+        "before_state": "string",
+        "after_state": "string",
+        "what_became_thinkable": [
+          "string"
+        ],
+        "what_became_unthinkable": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "affected_episteme": "episteme_id (EP{N}) | null",
+        "affected_formations": [
+          "formation_id (DF{N})"
+        ],
+        "created_conditions_for": [
+          "phenomenon_id (PH{N})"
+        ]
+      }
+    ],
+    "genealogical_threads": [
+      {
+        "thread_id": "string (format: 'GEN{N}')",
+        "name": "string (e.g., 'The Genealogy of the Prison')",
+        "what_is_traced": "phenomenon_id (PH{N})",
+        "descent_elements": [
+          {
+            "element": "string (accident, deviation, error that contributed)",
+            "when": "string",
+            "how_it_contributed": "string"
+          }
+        ],
+        "emergence_context": {
+          "forces_at_play": [
+            "string"
+          ],
+          "confrontation": "string (what struggle produced this)",
+          "who_won": "string",
+          "at_what_cost": "string"
+        },
+        "what_genealogy_reveals": "string (contingency, power, domination)",
+        "what_seemed_necessary_but_wasnt": "string",
         "source_articles": [
           "string"
         ]
       }
     ],
-    "epistemic_conditions": [
+    "effects_produced": [
       {
-        "condition_id": "string",
+        "effect_id": "string (format: 'EFF{N}')",
         "name": "string",
-        "description": "string",
-        "type": "conceptual_framework | methodology | rationality_type | knowledge_form",
-        "enables_phenomena": [
-          "phenomenon_id"
-        ],
-        "historical_emergence": "string"
-      }
-    ],
-    "institutional_conditions": [
-      {
-        "condition_id": "string",
-        "name": "string",
-        "description": "string",
-        "type": "organization | legal_framework | professional_body | state_apparatus",
-        "enables_phenomena": [
-          "phenomenon_id"
-        ],
-        "functions": [
+        "effect_type": "knowledge_production | subject_formation | power_relation | normalization | resistance | counter_discourse",
+        "what_is_produced": "string",
+        "how_it_feeds_back": "string (reinforcing or undermining)",
+        "unintended_consequences": [
           "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "produced_by_phenomena": [
+          "phenomenon_id (PH{N})"
+        ],
+        "produced_by_apparatus": [
+          "apparatus_id (APP{N})"
         ]
       }
     ],
-    "material_conditions": [
+    "cross_document_archaeology": {
+      "shared_episteme": "episteme_id (EP{N}) | null (if all documents operate within same episteme)",
+      "competing_formations": [
+        {
+          "domain": "string (what they're fighting over)",
+          "formation_a": "formation_id (DF{N})",
+          "formation_b": "formation_id (DF{N})",
+          "current_dominance": "string"
+        }
+      ],
+      "shared_apparatus": [
+        "apparatus_id (APP{N})"
+      ],
+      "invisible_conditions": [
+        "string (conditions so naturalized nobody notices)"
+      ],
+      "discontinuity_markers": [
+        {
+          "between_documents": [
+            "string"
+          ],
+          "rupture": "rupture_id (RUP{N})"
+        }
+      ]
+    },
+    "relationship_graph": {
+      "nodes": [
+        {
+          "id": "string",
+          "type": "phenomenon | episteme | formation | rule | institution | material | power_knowledge | apparatus | technique | subject | exclusion | rupture | effect",
+          "label": "string",
+          "weight": "number (0-1)"
+        }
+      ],
+      "edges": [
+        {
+          "from_id": "string",
+          "to_id": "string",
+          "relationship": "enables | produces | excludes | transforms | depends_on | operates_within | reinforces | resists | part_of | intersects",
+          "strength": "number (0-1)",
+          "bidirectional": "boolean",
+          "label": "string | null"
+        }
+      ],
+      "clusters": [
+        {
+          "cluster_id": "string",
+          "name": "string",
+          "member_ids": [
+            "string"
+          ],
+          "coherence": "number (0-1)",
+          "theme": "string"
+        }
+      ]
+    },
+    "condition_hierarchies": [
       {
-        "condition_id": "string",
+        "hierarchy_id": "string (format: 'HIER{N}')",
         "name": "string",
-        "description": "string",
-        "type": "technology | infrastructure | economic_arrangement | physical_space",
-        "enables_phenomena": [
-          "phenomenon_id"
+        "deepest_condition": "string (episteme or fundamental apparatus)",
+        "layers": [
+          {
+            "level": "number (1=deepest)",
+            "conditions": [
+              "entity_id"
+            ],
+            "what_this_level_enables": "string"
+          }
         ],
-        "when_emerged": "string"
-      }
-    ],
-    "discursive_conditions": [
-      {
-        "condition_id": "string",
-        "name": "string",
-        "description": "string",
-        "prior_discourses": [
-          "string"
-        ],
-        "concepts_inherited": [
-          "string"
-        ],
-        "enables_phenomena": [
-          "phenomenon_id"
-        ]
-      }
-    ],
-    "power_arrangements": [
-      {
-        "arrangement_id": "string",
-        "name": "string",
-        "description": "string",
-        "type": "sovereign | disciplinary | biopolitical | governmental",
-        "enables_phenomena": [
-          "phenomenon_id"
-        ],
-        "who_benefits": [
-          "string"
-        ],
-        "who_constrained": [
-          "string"
-        ]
-      }
-    ],
-    "exclusions": [
-      {
-        "exclusion_id": "string",
-        "what_excluded": "string",
-        "mechanism": "prohibition | separation | rejection",
-        "related_phenomena": [
-          "phenomenon_id"
-        ],
-        "alternative_suppressed": "string"
-      }
-    ],
-    "condition_dependencies": [
-      {
-        "dependency_id": "string",
-        "primary_condition": "string",
-        "depends_on": "string",
-        "relationship": "requires | enables | reinforces"
+        "for_phenomenon": "phenomenon_id (PH{N})"
       }
     ],
     "meta": {
       "total_phenomena": "number",
-      "total_conditions": "number",
-      "dominant_condition_type": "epistemic | institutional | material | discursive | power",
-      "analysis_depth": "surface | intermediate | deep"
+      "total_formations": "number",
+      "total_institutions": "number",
+      "total_exclusions": "number",
+      "total_ruptures": "number",
+      "total_subjects": "number",
+      "dominant_episteme": "episteme_id",
+      "most_powerful_apparatus": "apparatus_id",
+      "most_naturalized_condition": "string (most invisible)",
+      "most_excluded": "exclusion_id",
+      "deepest_genealogy": "thread_id",
+      "document_count": "number",
+      "total_relationships": "number",
+      "graph_density": "number (0-1)"
     }
   },
   "extraction_focus": [
-    "epistemic_conditions",
+    "conditions_of_possibility",
+    "discursive_formations",
+    "epistemic_structures",
+    "power_knowledge_relations",
     "institutional_conditions",
-    "material_conditions",
-    "discursive_conditions",
-    "power_arrangements",
-    "exclusions"
+    "disciplinary_techniques",
+    "subject_formation",
+    "exclusions",
+    "genealogical_descent"
   ],
   "primary_output_modes": [
+    "gemini_network_graph",
+    "integrated_report",
     "structured_text_report",
-    "gemini_concept_tree",
-    "mermaid_mindmap"
+    "smart_table",
+    "gemini_concept_tree"
   ],
-  "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/conditions_of_possibility.py",
+  "paradigm_keys": [
+    "marxist",
+    "hegelian_critical"
+  ],
+  "source_file": "analyzer/src/engines/conditions_of_possibility_advanced.py",
   "stage_context": {
-    "framework_key": null,
-    "additional_frameworks": [],
+    "framework_key": "foucauldian",
+    "additional_frameworks": [
+      "genealogical",
+      "archaeological"
+    ],
     "extraction": {
-      "analysis_type": "conditions of possibility",
-      "analysis_type_plural": "conditions of possibilitys",
-      "core_question": "What conditions make this discourse/practice possible?",
+      "analysis_type": "condition of possibility",
+      "analysis_type_plural": "conditions of possibility",
+      "core_question": "What had to be true for these ideas to become thinkable and these practices possible?",
       "extraction_steps": [
-        "PHENOMENA TO ANALYZE",
-        "EPISTEMIC CONDITIONS",
-        "INSTITUTIONAL CONDITIONS",
-        "MATERIAL CONDITIONS",
-        "DISCURSIVE CONDITIONS",
-        "POWER ARRANGEMENTS",
-        "EXCLUSIONS"
+        "IDENTIFY THE PHENOMENA: What discourses, practices, institutions, or knowledge claims are you analyzing? What is being taken for granted as if it were natural or inevitable?",
+        "MAP THE EPISTEME: What is the underlying order of knowledge in this domain? What can be known and how? What counts as evidence? What is literally unthinkable?",
+        "DESCRIBE DISCURSIVE FORMATIONS: What are the rules that govern what can be said? Who can speak? About what? From where? With what concepts? What objects does the discourse create?",
+        "IDENTIFY INSTITUTIONAL CONDITIONS: What institutions make this possible? When did they emerge? What power do they exercise? What knowledge do they produce?",
+        "MAP MATERIAL CONDITIONS: What technologies, infrastructures, economic arrangements, or physical spaces are required?",
+        "ANALYZE POWER-KNOWLEDGE: How do power and knowledge reinforce each other? What knowledge does power produce? What power does knowledge enable?",
+        "IDENTIFY THE APPARATUS: What heterogeneous ensemble (discourses, institutions, laws, techniques) responds to this strategic urgency?",
+        "MAP DISCIPLINARY TECHNIQUES: What techniques train bodies, organize space, control time, normalize behavior?",
+        "IDENTIFY SUBJECT POSITIONS: What kinds of persons does this discourse/practice create? How are they constituted? What can they do/say/be?",
+        "EXCAVATE EXCLUSIONS: What is forbidden, divided off, or rendered unspeakable? Who benefits from these exclusions?",
+        "TRACE DISCONTINUITIES: What ruptures created the conditions for this? What seemed continuous but was actually a break?",
+        "DO GENEALOGY: What accidents, conflicts, and power struggles produced what now seems natural? What is the hidden history?",
+        "BUILD THE RELATIONSHIP GRAPH: Connect all conditions to what they enable/produce"
       ],
-      "key_fields": {},
-      "id_field": "conditions_id",
+      "key_fields": {
+        "phenomenon_id": "What you're explaining the conditions for",
+        "formation_id": "The discursive rules at work",
+        "apparatus_id": "The heterogeneous ensemble",
+        "exclusion_id": "What is kept out"
+      },
+      "id_field": "phenomenon_id",
       "key_relationships": [
-        "depends_on"
+        "enables",
+        "produces",
+        "excludes",
+        "transforms",
+        "depends_on",
+        "operates_within",
+        "reinforces",
+        "resists"
       ],
-      "special_instructions": null
+      "special_instructions": "CRITICAL: The goal is to denaturalize what seems inevitable. Show that what appears natural, necessary, or universal is actually historical, contingent, and produced by specific power arrangements. The best analysis makes the familiar strange."
     },
     "curation": {
-      "item_type": "conditions of possibility",
-      "item_type_plural": "conditions of possibilitys",
+      "item_type": "condition of possibility",
+      "item_type_plural": "conditions of possibility",
       "consolidation_rules": [
-        "CONSOLIDATE PHENOMENA: Identify the key discourses/practices being analyzed",
-        "MAP EPISTEMIC CONDITIONS: - What knowledge frameworks are shared across the corpus?",
-        "MAP INSTITUTIONAL CONDITIONS: - What institutions appear repeatedly as enabling conditions?",
-        "MAP MATERIAL CONDITIONS: - What technologies and infrastructures are presupposed?",
-        "TRACE DISCURSIVE GENEALOGY: - What prior discourses are invoked across articles?",
-        "ANALYZE POWER ARRANGEMENTS: - What power configurations make this discourse possible?"
+        "IDENTIFY SHARED EPISTEME: Do all documents operate within the same basic order of knowledge?",
+        "CONSOLIDATE FORMATIONS: Map the discursive formations that operate across documents",
+        "MAP INSTITUTIONAL CONDITIONS: What institutions appear repeatedly as enabling conditions?",
+        "IDENTIFY SHARED APPARATUS: What strategic ensemble operates across the corpus?",
+        "FIND INVISIBLE CONDITIONS: What conditions are so naturalized that no document even mentions them?",
+        "TRACE RUPTURES: Do documents show discontinuity? Where?",
+        "Never mention Foucault, archaeology, genealogy - lead with insights about what makes things possible"
       ],
       "cross_doc_patterns": [
-        "shared_items",
-        "contested_items",
-        "response_network"
+        "shared_episteme",
+        "competing_formations",
+        "shared_apparatus",
+        "invisible_conditions"
       ],
       "synthesis_outputs": [
-        "consolidated_item_list",
-        "relationship_map",
-        "cross_document_dynamics"
+        "consolidated_conditions_map",
+        "relationship_graph",
+        "cross_document_archaeology",
+        "condition_hierarchies"
       ],
-      "special_instructions": null
+      "special_instructions": "The most valuable finding is often the condition so naturalized that it's never mentioned. Ask: What would have to be different for this entire discourse to become unthinkable?"
     },
     "concretization": {
-      "id_examples": [],
-      "naming_guidance": "",
-      "recommended_table_types": [],
-      "recommended_visual_patterns": []
+      "id_examples": [
+        {
+          "from": "PH1",
+          "to": "The Practice of Performance Reviews"
+        },
+        {
+          "from": "DF1",
+          "to": "The Discourse of Human Capital"
+        },
+        {
+          "from": "INST1",
+          "to": "The HR Department as Disciplinary Institution"
+        },
+        {
+          "from": "TECH1",
+          "to": "The Annual Review as Examination Technique"
+        },
+        {
+          "from": "SUB1",
+          "to": "'The High-Performer' Subject Position"
+        },
+        {
+          "from": "EXC1",
+          "to": "What Can't Be Said: Structural Causes of 'Poor Performance'"
+        },
+        {
+          "from": "APP1",
+          "to": "The Performance Management Apparatus"
+        }
+      ],
+      "naming_guidance": "Use concrete, vivid names. 'The HR Department as Normalizing Institution' not 'INST-HR'",
+      "recommended_table_types": [
+        "condition_matrix",
+        "formation_map",
+        "exclusion_inventory"
+      ],
+      "recommended_visual_patterns": [
+        "apparatus_diagram",
+        "condition_layers",
+        "power_network"
+      ]
     },
     "audience_vocabulary": {
-      "researcher": {},
-      "analyst": {},
-      "executive": {},
-      "activist": {}
+      "researcher": {
+        "formation": "discursive formation",
+        "episteme": "episteme",
+        "apparatus": "dispositif",
+        "technique": "disciplinary technique"
+      },
+      "analyst": {
+        "formation": "discourse rules",
+        "episteme": "knowledge framework",
+        "apparatus": "institutional system",
+        "technique": "management practice"
+      },
+      "executive": {
+        "formation": "industry discourse",
+        "episteme": "mental model",
+        "apparatus": "operational system",
+        "technique": "management tool"
+      },
+      "activist": {
+        "formation": "the dominant narrative",
+        "episteme": "how they think",
+        "apparatus": "the system",
+        "technique": "tool of control"
+      }
     },
     "skip_concretization": false
   }

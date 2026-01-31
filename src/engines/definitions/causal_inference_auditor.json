@@ -1,179 +1,750 @@
 {
   "engine_key": "causal_inference_auditor",
   "engine_name": "Causal Inference Auditor",
-  "description": "Audits causal claims and identification strategies. Identifies confounding, selection bias, reverse causation, and identification weaknesses. Essential for evaluating whether causal conclusions are warranted by the research design.",
+  "description": "Deep analysis of causal claims using Pearl's DAG framework and Rubin's potential outcomes model. Audits identification strategies, maps confounding structures, detects collider bias, evaluates assumption plausibility, and assesses whether causal conclusions are warranted. Reveals the hidden assumptions behind every causal claim, the backdoor paths that threaten validity, and the identification strategies that might (or might not) rescue inference.",
   "version": 1,
   "category": "methodology",
   "kind": "synthesis",
-  "reasoning_domain": "methodology",
-  "researcher_question": "Are causal claims warranted by the evidence?",
+  "reasoning_domain": "causal_inference_advanced",
+  "researcher_question": "What causal claims are being made, what identification strategies support them, and do those strategies actually close all the backdoor paths?",
   "canonical_schema": {
     "causal_claims": [
       {
-        "claim_id": "string - CL1, CL2, etc.",
-        "cause": "string - purported cause",
-        "effect": "string - purported effect",
-        "claim_strength": "correlational | suggestive | causal | strong_causal",
-        "evidence_type": "observational | quasi_experimental | experimental | natural_experiment",
-        "identification_strategy": "string - how causation is identified"
-      }
-    ],
-    "confounding_analysis": [
-      {
-        "confound_id": "string - CF1, CF2, etc.",
-        "claim_id": "string - which causal claim",
-        "confounder": "string - the confounding variable",
-        "mechanism": "string - how it affects both cause and effect",
-        "addressed": "yes | no | partially",
-        "method_of_control": "string - how confounder is handled",
-        "residual_concern": "string - remaining worry",
-        "severity": "minor | moderate | severe"
-      }
-    ],
-    "selection_threats": [
-      {
-        "threat_id": "string",
-        "claim_id": "string - which causal claim",
-        "selection_mechanism": "string - how selection operates",
-        "direction_of_bias": "string - inflates/deflates effect",
-        "addressed": "yes | no | partially",
-        "severity": "minor | moderate | severe"
-      }
-    ],
-    "reverse_causation": [
-      {
-        "reversal_id": "string",
-        "claim_id": "string - which causal claim",
-        "reverse_story": "string - how effect might cause cause",
-        "plausibility": "unlikely | possible | plausible | likely",
-        "addressed": "yes | no | partially",
-        "method": "string - how reverse causation is ruled out"
-      }
-    ],
-    "identification_assessment": [
-      {
-        "claim_id": "string - which causal claim",
-        "strategy": "string - identification strategy used",
-        "key_assumptions": [
-          "string - required assumptions"
+        "claim_id": "string (format: 'CC{N}' e.g., 'CC1', 'CC2')",
+        "claim_text": "string (the causal claim as stated or implied)",
+        "cause_variable": "variable_id (VAR{N})",
+        "effect_variable": "variable_id (VAR{N})",
+        "claimed_direction": "positive | negative | nonlinear | conditional",
+        "claimed_magnitude": "string (effect size if stated)",
+        "claim_type": "main_finding | secondary_finding | assumption | implication",
+        "explicitness": "explicit | implicit | buried_in_methods",
+        "who_makes_claim": "string (authors, cited sources)",
+        "confidence_expressed": "high | moderate | low | hedged",
+        "page_or_section": "string",
+        "source_articles": [
+          "string"
         ],
-        "testable_implications": [
-          "string - what can be tested"
+        "supported_by_dag": "dag_id (DAG{N})",
+        "identification_strategy": "strategy_id (IS{N})",
+        "relies_on_assumptions": [
+          "assumption_id (A{N})"
         ],
-        "assumption_plausibility": {
-          "assumption": "plausibility rating"
-        },
+        "treatment_effect_estimated": "effect_id (TE{N})",
+        "threatened_by": [
+          "threat_id (VT{N})"
+        ],
         "robustness_checks": [
-          "string - checks performed"
+          "check_id (RC{N})"
         ],
-        "overall_credibility": "high | medium | low"
+        "contradicts_claims": [
+          "claim_id (CC{N})"
+        ],
+        "supports_claims": [
+          "claim_id (CC{N})"
+        ],
+        "strength_of_evidence": "strong | moderate | weak | insufficient"
       }
     ],
-    "alternative_explanations": [
+    "variables": [
       {
-        "alternative_id": "string",
-        "claim_id": "string - which causal claim",
-        "alternative": "string - alternative causal story",
-        "mechanism": "string - how it would work",
-        "ruled_out": "yes | no | partially",
-        "residual_plausibility": "low | medium | high"
+        "variable_id": "string (format: 'VAR{N}')",
+        "name": "string (variable name as used in text)",
+        "operational_definition": "string (how it's measured)",
+        "variable_type": "treatment | outcome | confounder | collider | mediator | instrument | moderator | control | auxiliary",
+        "measurement_level": "continuous | ordinal | nominal | binary",
+        "observed_or_latent": "observed | latent | proxy",
+        "who_defines": "string (authors or cited source)",
+        "variation_source": "experimental | natural | observational",
+        "temporal_ordering": "string (when measured relative to others)",
+        "source_articles": [
+          "string"
+        ],
+        "appears_in_dags": [
+          "dag_id (DAG{N})"
+        ],
+        "causes": [
+          "variable_id (VAR{N})"
+        ],
+        "caused_by": [
+          "variable_id (VAR{N})"
+        ],
+        "confounds_relationships": [
+          "path_id (PATH{N})"
+        ],
+        "mediates_relationships": [
+          "path_id (PATH{N})"
+        ],
+        "collides_on_paths": [
+          "path_id (PATH{N})"
+        ],
+        "instruments_for": [
+          "variable_id (VAR{N})"
+        ],
+        "conditioned_on_in": [
+          "conditioning_set_id (CS{N})"
+        ]
       }
     ],
-    "overall_assessment": {
-      "strongest_claims": [
-        "string - claim_ids with best identification"
+    "causal_dags": [
+      {
+        "dag_id": "string (format: 'DAG{N}')",
+        "name": "string (descriptive name for this causal model)",
+        "what_it_represents": "string (the causal system being modeled)",
+        "completeness": "complete | partial | illustrative",
+        "who_drew_it": "authors_explicit | analyst_reconstructed | implied_by_methods",
+        "nodes": [
+          "variable_id (VAR{N})"
+        ],
+        "edges": [
+          {
+            "from_var": "variable_id (VAR{N})",
+            "to_var": "variable_id (VAR{N})",
+            "edge_type": "causal | selection | temporal",
+            "mechanism": "string (how cause produces effect)",
+            "time_lag": "immediate | short | medium | long | unspecified"
+          }
+        ],
+        "missing_variables": "string (what should be in DAG but isn't)",
+        "controversial_edges": "string (edges that could be questioned)",
+        "source_articles": [
+          "string"
+        ],
+        "supports_claims": [
+          "claim_id (CC{N})"
+        ],
+        "contains_paths": [
+          "path_id (PATH{N})"
+        ],
+        "identifies_confounders": [
+          "confounder_id (CONF{N})"
+        ],
+        "identifies_colliders": [
+          "collider_id (COLL{N})"
+        ],
+        "identifies_mediators": [
+          "mediator_id (MED{N})"
+        ]
+      }
+    ],
+    "causal_paths": [
+      {
+        "path_id": "string (format: 'PATH{N}')",
+        "path_type": "backdoor | frontdoor | direct | indirect | spurious",
+        "from_variable": "variable_id (VAR{N})",
+        "to_variable": "variable_id (VAR{N})",
+        "path_sequence": [
+          "variable_id (VAR{N}) in order"
+        ],
+        "path_notation": "string (e.g., 'X \u2190 C \u2192 Y' or 'X \u2192 M \u2192 Y')",
+        "is_blocked": "boolean",
+        "blocked_by": "conditioning_set_id (CS{N}) | null",
+        "would_be_opened_by": "string (what conditioning would open this path)",
+        "contains_collider": "boolean",
+        "collider_variable": "variable_id (VAR{N}) | null",
+        "path_length": "number",
+        "source_articles": [
+          "string"
+        ],
+        "in_dag": "dag_id (DAG{N})",
+        "threatens_claim": "claim_id (CC{N}) | null",
+        "blocked_by_strategy": "strategy_id (IS{N}) | null"
+      }
+    ],
+    "confounders": [
+      {
+        "confounder_id": "string (format: 'CONF{N}')",
+        "variable": "variable_id (VAR{N})",
+        "name": "string (confounder name)",
+        "what_it_is": "string (description of confounding variable)",
+        "confounds_relationship": "string (which X\u2192Y relationship)",
+        "mechanism_to_cause": "string (how it affects the cause variable)",
+        "mechanism_to_effect": "string (how it affects the effect variable)",
+        "acknowledged": "boolean",
+        "how_addressed": "controlled | instrumented | matched | differenced_out | ignored | assumed_away",
+        "adequacy_of_address": "adequate | partial | inadequate | unknown",
+        "measurability": "measured | unmeasured | unmeasurable",
+        "time_invariant": "boolean",
+        "source_articles": [
+          "string"
+        ],
+        "creates_backdoor_path": "path_id (PATH{N})",
+        "threatens_claim": "claim_id (CC{N})",
+        "blocked_by_conditioning": "conditioning_set_id (CS{N}) | null",
+        "addressed_by_strategy": "strategy_id (IS{N}) | null"
+      }
+    ],
+    "colliders": [
+      {
+        "collider_id": "string (format: 'COLL{N}')",
+        "variable": "variable_id (VAR{N})",
+        "name": "string (collider variable name)",
+        "what_it_is": "string (description)",
+        "collider_structure": "string (e.g., 'A \u2192 C \u2190 B')",
+        "why_dangerous": "string (what happens if conditioned on)",
+        "is_conditioned_on": "boolean",
+        "inappropriately_controlled": "boolean",
+        "creates_spurious_association": "string (what spurious path opens)",
+        "m_bias_pattern": "boolean (is this M-bias specifically)",
+        "source_articles": [
+          "string"
+        ],
+        "on_path": "path_id (PATH{N})",
+        "threatens_claim": "claim_id (CC{N})",
+        "conditioning_set_containing": "conditioning_set_id (CS{N}) | null"
+      }
+    ],
+    "mediators": [
+      {
+        "mediator_id": "string (format: 'MED{N}')",
+        "variable": "variable_id (VAR{N})",
+        "name": "string (mediator name)",
+        "what_it_is": "string (description)",
+        "mediates_relationship": "string (which X\u2192Y relationship)",
+        "mechanism": "string (how cause works through mediator)",
+        "proportion_mediated": "string (if estimated)",
+        "should_control": "boolean (should it be in conditioning set)",
+        "controlled_inappropriately": "boolean (controlled when shouldn't be)",
+        "source_articles": [
+          "string"
+        ],
+        "on_path": "path_id (PATH{N})",
+        "from_treatment": "variable_id (VAR{N})",
+        "to_outcome": "variable_id (VAR{N})",
+        "related_to_claim": "claim_id (CC{N})"
+      }
+    ],
+    "instruments": [
+      {
+        "instrument_id": "string (format: 'IV{N}')",
+        "variable": "variable_id (VAR{N})",
+        "name": "string (instrument name)",
+        "what_it_is": "string (description)",
+        "instruments_for": "variable_id (VAR{N}) (the endogenous treatment)",
+        "outcome_variable": "variable_id (VAR{N})",
+        "relevance_argument": "string (why instrument affects treatment)",
+        "exclusion_argument": "string (why instrument only affects outcome through treatment)",
+        "independence_argument": "string (why instrument is as-good-as-random)",
+        "relevance_strength": "strong | moderate | weak",
+        "exclusion_plausibility": "high | moderate | low | questionable",
+        "monotonicity_assumed": "boolean",
+        "defiers_possible": "string (who might be defiers)",
+        "weak_instrument_concern": "boolean",
+        "first_stage_f_stat": "string | null",
+        "source_articles": [
+          "string"
+        ],
+        "used_in_strategy": "strategy_id (IS{N})",
+        "identifies_late_for": "effect_id (TE{N})",
+        "relies_on_assumptions": [
+          "assumption_id (A{N})"
+        ]
+      }
+    ],
+    "identification_strategies": [
+      {
+        "strategy_id": "string (format: 'IS{N}')",
+        "name": "string (descriptive name)",
+        "strategy_type": "RCT | instrumental_variables | regression_discontinuity | difference_in_differences | synthetic_control | matching | selection_on_observables | panel_fixed_effects | bunching | event_study | other",
+        "what_it_does": "string (how it achieves identification)",
+        "identifying_variation": "string (source of exogenous variation)",
+        "key_assumption": "string (the critical identifying assumption)",
+        "comparison_group": "string (who/what is being compared)",
+        "treatment_group": "string (who/what received treatment)",
+        "bandwidth_or_window": "string (if applicable)",
+        "running_variable": "variable_id (VAR{N}) | null (for RDD)",
+        "cutoff_value": "string | null (for RDD)",
+        "pre_periods": "string | null (for DiD)",
+        "parallel_trends_evidence": "string | null (for DiD)",
+        "donor_pool": "string | null (for synthetic control)",
+        "matching_variables": [
+          "variable_id (VAR{N})"
+        ],
+        "credibility_assessment": "highly_credible | credible | questionable | not_credible",
+        "source_articles": [
+          "string"
+        ],
+        "identifies_claim": "claim_id (CC{N})",
+        "relies_on_assumptions": [
+          "assumption_id (A{N})"
+        ],
+        "blocks_paths": [
+          "path_id (PATH{N})"
+        ],
+        "addresses_confounders": [
+          "confounder_id (CONF{N})"
+        ],
+        "uses_instruments": [
+          "instrument_id (IV{N})"
+        ],
+        "produces_effect_estimate": "effect_id (TE{N})",
+        "validity_threats": [
+          "threat_id (VT{N})"
+        ]
+      }
+    ],
+    "causal_assumptions": [
+      {
+        "assumption_id": "string (format: 'A{N}')",
+        "name": "string (assumption name)",
+        "assumption_type": "SUTVA | ignorability | unconfoundedness | positivity | overlap | exclusion_restriction | relevance | monotonicity | parallel_trends | no_anticipation | common_support | exchangeability | consistency | no_interference | homogeneity | other",
+        "formal_statement": "string (precise statement of assumption)",
+        "plain_language": "string (what it means in plain terms)",
+        "testable": "boolean",
+        "how_tested": "string | null (if testable)",
+        "test_results": "string | null",
+        "plausibility_argument": "string (why authors think it holds)",
+        "plausibility_assessment": "highly_plausible | plausible | questionable | implausible | untestable",
+        "what_violates_it": "string (conditions that would violate)",
+        "source_articles": [
+          "string"
+        ],
+        "required_by_strategy": "strategy_id (IS{N})",
+        "required_for_claim": "claim_id (CC{N})",
+        "violations_identified": [
+          "violation_id (AV{N})"
+        ],
+        "sensitivity_analysis": "check_id (RC{N}) | null"
+      }
+    ],
+    "assumption_violations": [
+      {
+        "violation_id": "string (format: 'AV{N}')",
+        "assumption_violated": "assumption_id (A{N})",
+        "violation_description": "string (how assumption is violated)",
+        "violation_severity": "fatal | serious | moderate | minor | potential",
+        "evidence_of_violation": "string (what suggests violation)",
+        "acknowledged_by_authors": "boolean",
+        "how_authors_address": "string | null",
+        "adequacy_of_response": "adequate | partial | inadequate | not_addressed",
+        "impact_on_conclusions": "invalidates | weakens | uncertain | minimal",
+        "source_articles": [
+          "string"
+        ],
+        "threatens_claim": "claim_id (CC{N})",
+        "threatens_strategy": "strategy_id (IS{N})",
+        "suggested_by_check": "check_id (RC{N}) | null"
+      }
+    ],
+    "potential_outcomes": [
+      {
+        "outcome_id": "string (format: 'PO{N}')",
+        "unit_type": "string (what the units are)",
+        "treatment_variable": "variable_id (VAR{N})",
+        "outcome_variable": "variable_id (VAR{N})",
+        "y1_description": "string (potential outcome under treatment)",
+        "y0_description": "string (potential outcome under control)",
+        "fundamental_problem": "string (why we can't observe both)",
+        "what_we_observe": "string (which potential outcome is observed for whom)",
+        "treatment_assignment": "random | as_if_random | selection_on_observables | endogenous",
+        "assignment_mechanism": "string (how units get treated)",
+        "source_articles": [
+          "string"
+        ],
+        "framework_for_claim": "claim_id (CC{N})",
+        "treatment_effect": "effect_id (TE{N})",
+        "sutva_concerns": "string | null"
+      }
+    ],
+    "treatment_effects": [
+      {
+        "effect_id": "string (format: 'TE{N}')",
+        "name": "string (descriptive name for this effect)",
+        "effect_type": "ATE | ATT | ATU | LATE | CATE | ITT | TOT | MTE",
+        "estimand_definition": "string (precise definition of what's being estimated)",
+        "point_estimate": "string (if reported)",
+        "standard_error": "string | null",
+        "confidence_interval": "string | null",
+        "statistical_significance": "significant | not_significant | marginally_significant | not_reported",
+        "practical_significance": "large | moderate | small | negligible | unclear",
+        "effect_direction": "positive | negative | null | mixed",
+        "heterogeneity_examined": "boolean",
+        "heterogeneity_findings": "string | null",
+        "complier_population": "string | null (for LATE)",
+        "external_validity": "high | moderate | low | unknown",
+        "source_articles": [
+          "string"
+        ],
+        "estimated_for_claim": "claim_id (CC{N})",
+        "estimated_by_strategy": "strategy_id (IS{N})",
+        "for_treatment": "variable_id (VAR{N})",
+        "for_outcome": "variable_id (VAR{N})",
+        "relies_on_assumptions": [
+          "assumption_id (A{N})"
+        ],
+        "robustness_to_checks": [
+          "check_id (RC{N})"
+        ]
+      }
+    ],
+    "conditioning_sets": [
+      {
+        "set_id": "string (format: 'CS{N}')",
+        "name": "string (descriptive name)",
+        "variables_included": [
+          "variable_id (VAR{N})"
+        ],
+        "variables_excluded": "string (notable exclusions)",
+        "rationale": "string (why these variables)",
+        "sufficient_for_identification": "boolean",
+        "satisfies_backdoor": "boolean",
+        "contains_collider": "boolean (problematic if true)",
+        "contains_mediator": "boolean (problematic if controlling for mechanism)",
+        "overcontrol_concern": "boolean",
+        "undercontrol_concern": "boolean",
+        "source_articles": [
+          "string"
+        ],
+        "used_in_strategy": "strategy_id (IS{N})",
+        "blocks_paths": [
+          "path_id (PATH{N})"
+        ],
+        "opens_paths": [
+          "path_id (PATH{N})"
+        ],
+        "for_claim": "claim_id (CC{N})"
+      }
+    ],
+    "validity_threats": [
+      {
+        "threat_id": "string (format: 'VT{N}')",
+        "name": "string (threat name)",
+        "threat_type": "confounding | selection_bias | reverse_causation | measurement_error | simultaneity | omitted_variable | collider_bias | attrition | spillovers | SUTVA_violation | manipulation | bunching | external_validity | construct_validity | publication_bias | p_hacking | specification_searching | other",
+        "what_it_is": "string (description of the threat)",
+        "specific_concern": "string (how it applies here)",
+        "severity": "fatal | major | moderate | minor | speculative",
+        "direction_of_bias": "upward | downward | ambiguous | toward_null | away_from_null",
+        "acknowledged": "boolean",
+        "how_addressed": "string | null",
+        "adequacy_of_address": "fully_addressed | partially_addressed | inadequately_addressed | not_addressed",
+        "source_articles": [
+          "string"
+        ],
+        "threatens_claim": "claim_id (CC{N})",
+        "threatens_strategy": "strategy_id (IS{N})",
+        "involves_variable": "variable_id (VAR{N}) | null",
+        "creates_path": "path_id (PATH{N}) | null",
+        "related_assumption": "assumption_id (A{N}) | null",
+        "addressed_by_check": "check_id (RC{N}) | null"
+      }
+    ],
+    "selection_mechanisms": [
+      {
+        "mechanism_id": "string (format: 'SM{N}')",
+        "name": "string (descriptive name)",
+        "what_it_is": "string (how selection into treatment occurs)",
+        "selection_type": "random | stratified_random | as_if_random | self_selection | administrative | geographic | temporal | threshold_based",
+        "selection_variable": "variable_id (VAR{N}) | null",
+        "selection_criteria": "string (what determines selection)",
+        "selection_on_observables": "boolean",
+        "selection_on_unobservables": "boolean",
+        "unobserved_factors": "string (what unobserved factors drive selection)",
+        "creates_bias": "boolean",
+        "bias_direction": "upward | downward | ambiguous | null",
+        "sample_vs_population": "string (who's in sample vs target population)",
+        "generalizability_concern": "string",
+        "source_articles": [
+          "string"
+        ],
+        "affects_claim": "claim_id (CC{N})",
+        "addressed_by_strategy": "strategy_id (IS{N})",
+        "related_threat": "threat_id (VT{N}) | null"
+      }
+    ],
+    "robustness_checks": [
+      {
+        "check_id": "string (format: 'RC{N}')",
+        "name": "string (check name)",
+        "check_type": "placebo_test | falsification_test | sensitivity_analysis | bounds_analysis | alternative_specification | subsample_analysis | different_controls | different_bandwidth | different_functional_form | different_standard_errors | leave_one_out | pre_trend_test | balance_test | McCrary_test | permutation_test | other",
+        "what_it_tests": "string (what assumption or concern it addresses)",
+        "procedure": "string (how the check is done)",
+        "result": "passed | failed | inconclusive | mixed | not_performed",
+        "interpretation": "string (what result means)",
+        "how_robust": "very_robust | somewhat_robust | not_robust | unclear",
+        "concerning_findings": "string | null",
+        "source_articles": [
+          "string"
+        ],
+        "tests_assumption": "assumption_id (A{N}) | null",
+        "tests_strategy": "strategy_id (IS{N})",
+        "addresses_threat": "threat_id (VT{N}) | null",
+        "for_claim": "claim_id (CC{N})",
+        "suggests_violation": "violation_id (AV{N}) | null"
+      }
+    ],
+    "evidence_assessments": [
+      {
+        "assessment_id": "string (format: 'EA{N}')",
+        "claim_assessed": "claim_id (CC{N})",
+        "overall_credibility": "highly_credible | credible | uncertain | questionable | not_credible",
+        "identification_quality": "strong | adequate | weak | absent",
+        "assumption_plausibility": "high | moderate | low | untestable",
+        "evidence_quality": "experimental | quasi_experimental | observational_strong | observational_weak | theoretical",
+        "robustness": "highly_robust | moderately_robust | fragile | untested",
+        "key_strengths": [
+          "string"
+        ],
+        "key_weaknesses": [
+          "string"
+        ],
+        "what_would_change_assessment": "string (what evidence would update this)",
+        "comparison_to_related_work": "string (how does it compare to other findings)",
+        "bottom_line": "string (summary judgment)",
+        "source_articles": [
+          "string"
+        ],
+        "based_on_strategy": "strategy_id (IS{N})",
+        "accounts_for_threats": [
+          "threat_id (VT{N})"
+        ],
+        "accounts_for_assumptions": [
+          "assumption_id (A{N})"
+        ],
+        "considers_checks": [
+          "check_id (RC{N})"
+        ]
+      }
+    ],
+    "relationship_graph": {
+      "nodes": [
+        {
+          "id": "string (any entity ID)",
+          "type": "string (entity type: claim, variable, path, confounder, etc.)",
+          "label": "string (short display name, 2-5 words)",
+          "weight": "number (0-1, centrality/importance)"
+        }
       ],
-      "weakest_claims": [
-        "string - claim_ids with weak identification"
+      "edges": [
+        {
+          "from_id": "string (source entity ID)",
+          "to_id": "string (target entity ID)",
+          "relationship": "string (typed relationship from key_relationships)",
+          "strength": "number (0-1)",
+          "bidirectional": "boolean",
+          "label": "string (optional edge label)"
+        }
       ],
-      "most_serious_threats": [
-        "string - biggest validity threats"
-      ],
-      "causal_confidence_levels": {
-        "claim_id": "high | medium | low | very_low"
-      },
-      "recommendations": [
-        "string - how to strengthen causal inference"
+      "clusters": [
+        {
+          "cluster_id": "string (format: 'CL{N}')",
+          "name": "string (evocative cluster name like 'The Education-Income Nexus')",
+          "member_ids": [
+            "string (entity IDs)"
+          ],
+          "coherence": "number (0-1)",
+          "theme": "string (what ties this cluster together)"
+        }
       ]
     },
     "meta": {
-      "claims_analyzed": "number",
-      "confounders_identified": "number",
-      "severe_threats": "number",
-      "well_identified_claims": "number"
+      "total_causal_claims": "number",
+      "total_variables": "number",
+      "total_confounders_identified": "number",
+      "total_colliders_identified": "number",
+      "total_instruments": "number",
+      "total_identification_strategies": "number",
+      "total_assumptions": "number",
+      "total_assumption_violations": "number",
+      "total_validity_threats": "number",
+      "total_robustness_checks": "number",
+      "most_central_claim": "claim_id (CC{N}) - the claim everything hangs on",
+      "weakest_link": "string (the most problematic assumption or threat)",
+      "strongest_identification": "strategy_id (IS{N}) - most credible strategy",
+      "most_threatened_claim": "claim_id (CC{N}) - claim with most validity threats",
+      "unaddressed_confounders": [
+        "confounder_id (CONF{N})"
+      ],
+      "fatal_violations": [
+        "violation_id (AV{N})"
+      ],
+      "key_dag_insight": "string (most important thing the DAG reveals)",
+      "overall_causal_credibility": "highly_credible | credible | uncertain | questionable | not_credible",
+      "critical_untested_assumptions": [
+        "assumption_id (A{N})"
+      ],
+      "recommended_robustness_checks": "string (what additional checks would help)"
     }
   },
-  "extraction_focus": [
-    "causal_claims",
-    "identification_strategies",
-    "confounders",
-    "selection_issues",
-    "reverse_causation",
-    "threats_to_validity"
-  ],
-  "primary_output_modes": [
-    "structured_text_report",
-    "table"
-  ],
-  "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/causal_inference_auditor.py",
   "stage_context": {
-    "framework_key": null,
-    "additional_frameworks": [],
+    "framework_key": "pearlian_rubin",
+    "additional_frameworks": [
+      "angrist_pischke",
+      "imbens_wooldridge"
+    ],
     "extraction": {
-      "analysis_type": "causal inference auditor",
-      "analysis_type_plural": "causal inference auditors",
-      "core_question": "Are causal claims warranted by the evidence?",
+      "analysis_type": "causal inference audit",
+      "analysis_type_plural": "causal inference audits",
+      "core_question": "What causal claims are being made, what identification strategies support them, and do those strategies actually close all the backdoor paths?",
       "extraction_steps": [
-        "IDENTIFY CAUSAL CLAIMS",
-        "EXAMINE CONFOUNDING",
-        "ASSESS SELECTION",
-        "CONSIDER REVERSE CAUSATION",
-        "EVALUATE IDENTIFICATION STRATEGY",
-        "GENERATE ALTERNATIVE EXPLANATIONS",
-        "OVERALL ASSESSMENT"
+        "STEP 1 - IDENTIFY ALL CAUSAL CLAIMS: Find every statement claiming X causes Y, whether explicit ('increases', 'leads to', 'affects') or implicit (regression coefficients interpreted causally, policy recommendations implying effects). Record who makes each claim, how confidently, and what magnitude is claimed.",
+        "STEP 2 - EXTRACT ALL VARIABLES: List every variable mentioned - treatments, outcomes, controls, instruments, moderators. For each, note how it's measured, whether it's observed or latent, and its temporal ordering relative to other variables.",
+        "STEP 3 - DRAW THE CAUSAL DAG: Construct the directed acyclic graph implied by the authors' model and claims. Include all variables and draw arrows showing assumed causal relationships. Flag edges that are assumed but not defended, and variables that should be in the DAG but are missing.",
+        "STEP 4 - IDENTIFY ALL PATHS FROM TREATMENT TO OUTCOME: Enumerate every path connecting cause to effect variables. Classify each as: (a) direct causal path, (b) indirect/mediated path, (c) backdoor path (confounding), or (d) paths through colliders. Use Pearl's path notation (X \u2190 C \u2192 Y for backdoor, X \u2192 M \u2192 Y for mediated).",
+        "STEP 5 - APPLY THE BACKDOOR CRITERION: For each causal claim, ask: Is there a set of variables Z such that conditioning on Z blocks all backdoor paths from X to Y while not blocking the causal path and not opening any paths through colliders? If yes, identification is possible via conditioning. If no, document which paths remain open.",
+        "STEP 6 - CHECK FOR COLLIDER BIAS: Identify any variable that is a common effect (has two or more arrows pointing into it). If the analysis conditions on this variable, a spurious association may be opened. Check specifically for M-bias patterns (conditioning on a collider that opens a path through two confounders).",
+        "STEP 7 - IDENTIFY MEDIATORS AND CHECK FOR OVERCONTROL: Find variables on the causal path from X to Y. If these are controlled for, the total effect is not identified - only the direct effect remains. Assess whether authors want total or direct effects and whether their controls are appropriate.",
+        "STEP 8 - EVALUATE THE IDENTIFICATION STRATEGY: What is the claimed source of identifying variation? For RCT: Was randomization successful? For IV: Does the instrument satisfy relevance (strong first stage), exclusion (only affects outcome through treatment), and independence (as-good-as-random)? For RDD: Is there manipulation at the cutoff? Is the bandwidth choice justified? For DiD: Is parallel trends plausible? Are there pre-trends? For synthetic control: How good is the pre-treatment fit?",
+        "STEP 9 - ENUMERATE ALL CAUSAL ASSUMPTIONS: List every assumption required for the causal claim to be valid. For Rubin framework: SUTVA (no interference, no hidden versions of treatment), ignorability/unconfoundedness (no unmeasured confounders), positivity/overlap (all units have positive probability of treatment). For IV: relevance, exclusion, monotonicity. For RDD: continuity, no manipulation. For DiD: parallel trends, no anticipation.",
+        "STEP 10 - ASSESS ASSUMPTION PLAUSIBILITY: For each assumption, evaluate: Is it testable? If so, what does the test show? If not testable, how plausible is it given domain knowledge? What would violate it? Authors may assume unconfoundedness - what unmeasured variables might confound? They may assume no spillovers - could treated units affect controls?",
+        "STEP 11 - IDENTIFY TREATMENT EFFECT TYPE: What estimand is actually being identified? ATE (average effect for everyone)? ATT (effect on the treated only)? LATE (effect on compliers for IV)? Be precise: IV identifies LATE, not ATE. Selection-on-observables identifies ATT or ATE depending on assumptions. Note who the 'compliers' are for LATE.",
+        "STEP 12 - CATALOG VALIDITY THREATS: Document all threats to causal validity: (a) confounding - unmeasured common causes, (b) reverse causation - Y might cause X, (c) selection bias - who enters the sample, (d) attrition - who leaves, (e) spillovers - SUTVA violations, (f) measurement error - especially in treatment, (g) simultaneity - X and Y determined together.",
+        "STEP 13 - EVALUATE ROBUSTNESS CHECKS: What sensitivity analyses do the authors perform? Placebo tests (does the 'effect' appear where it shouldn't)? Falsification tests (does the effect disappear when it should)? Alternative specifications? Different bandwidths or control sets? Bounds analysis (Manski bounds, Oster's delta)? Assess whether checks address the most concerning threats.",
+        "STEP 14 - ASSESS OVERALL CREDIBILITY: Given everything above, how credible is each causal claim? Consider: (a) Is the DAG plausible? (b) Does the identification strategy close all backdoor paths? (c) Are assumptions testable and tested? (d) Do robustness checks pass? (e) What's the most likely direction of remaining bias? Assign overall credibility rating."
       ],
-      "key_fields": {},
+      "key_fields": {
+        "claim_id": "Individual causal claims being made",
+        "variable_id": "Variables in the causal system",
+        "dag_id": "Causal directed acyclic graphs",
+        "path_id": "Causal and non-causal paths",
+        "confounder_id": "Confounding variables",
+        "collider_id": "Collider variables",
+        "mediator_id": "Mediating variables",
+        "instrument_id": "Instrumental variables",
+        "strategy_id": "Identification strategies",
+        "assumption_id": "Causal assumptions required",
+        "violation_id": "Assumption violations identified",
+        "effect_id": "Treatment effects estimated",
+        "threat_id": "Validity threats",
+        "check_id": "Robustness checks performed"
+      },
       "id_field": "claim_id",
       "key_relationships": [
-        "relates_to"
+        "causes",
+        "confounds",
+        "mediates",
+        "collides_with",
+        "instruments",
+        "blocks_path",
+        "opens_path",
+        "conditions_on",
+        "violates_assumption",
+        "supports",
+        "contradicts",
+        "identifies",
+        "threatens",
+        "addresses",
+        "requires"
       ],
-      "special_instructions": null
+      "special_instructions": "CRITICAL: Always draw the DAG before evaluating identification. The DAG makes backdoor paths visible. Do not accept 'controlling for observables' as sufficient without verifying the backdoor criterion is satisfied. Be especially alert for collider bias - researchers often inappropriately control for post-treatment variables or common effects. For IV, scrutinize the exclusion restriction hard - it's the assumption most often violated. For DiD, demand evidence on parallel trends. Remember: correlation plus storytelling is not causation."
     },
     "curation": {
-      "item_type": "causal inference auditor",
-      "item_type_plural": "causal inference auditors",
+      "item_type": "causal claim",
+      "item_type_plural": "causal claims",
       "consolidation_rules": [
-        "COMPARE CLAIMS: Same causal claims across sources?",
-        "TRIANGULATE IDENTIFICATION: Do different strategies yield same answer?",
-        "CROSS-VALIDATE THREATS: Agreement on threats to validity?",
-        "ASSESS ROBUSTNESS: How robust is the causal conclusion?",
-        "SYNTHESIZE CONFIDENCE: Overall assessment of causal claims"
+        "RULE 1: Merge claims about the same causal relationship (same X\u2192Y) across documents, noting whether they agree or conflict",
+        "RULE 2: Consolidate DAGs that model the same system, creating a master DAG that includes all proposed confounders, mediators, and instruments",
+        "RULE 3: For conflicting identification strategies, present both with comparative credibility assessment",
+        "RULE 4: Aggregate validity threats - a threat raised by one author applies to all claims about that relationship",
+        "RULE 5: Pool robustness checks across documents to assess overall robustness of a causal claim",
+        "RULE 6: Track which assumptions are contested across authors - disagreement signals uncertain identification"
       ],
       "cross_doc_patterns": [
-        "shared_items",
-        "contested_items",
-        "response_network"
+        "shared_causal_claims",
+        "contested_causal_claims",
+        "complementary_identification_strategies",
+        "conflicting_dags",
+        "cumulative_evidence",
+        "assumption_consensus",
+        "assumption_disagreement"
       ],
       "synthesis_outputs": [
-        "consolidated_item_list",
-        "relationship_map",
-        "cross_document_dynamics"
+        "consolidated_causal_dag",
+        "claim_evidence_matrix",
+        "assumption_plausibility_assessment",
+        "cumulative_robustness_summary",
+        "identification_strategy_comparison",
+        "overall_credibility_verdict"
       ],
-      "special_instructions": null
+      "special_instructions": "When multiple documents address the same causal question with different identification strategies, this is valuable - different strategies have different assumptions, so convergent findings are more credible. Note when findings replicate and when they conflict."
     },
     "concretization": {
-      "id_examples": [],
-      "naming_guidance": "",
-      "recommended_table_types": [],
-      "recommended_visual_patterns": []
+      "id_examples": [
+        {
+          "from": "CC1",
+          "to": "The 'Education \u2192 Earnings' Claim"
+        },
+        {
+          "from": "VAR1",
+          "to": "Years of Schooling"
+        },
+        {
+          "from": "CONF1",
+          "to": "Parental Wealth (Unmeasured)"
+        },
+        {
+          "from": "IV1",
+          "to": "Quarter of Birth Instrument"
+        },
+        {
+          "from": "IS1",
+          "to": "Angrist-Krueger IV Strategy"
+        },
+        {
+          "from": "A1",
+          "to": "Exclusion Restriction for QoB"
+        },
+        {
+          "from": "VT1",
+          "to": "Weak Instrument Problem"
+        },
+        {
+          "from": "PATH1",
+          "to": "Education \u2190 Ability \u2192 Earnings Backdoor"
+        },
+        {
+          "from": "TE1",
+          "to": "LATE for Compulsory Schooling Compliers"
+        }
+      ],
+      "naming_guidance": "Use concrete variable names that a domain expert would recognize. Name strategies after their key identifying variation. Name threats specifically (not 'omitted variable bias' but 'unmeasured parental wealth'). Name assumptions by what they rule out ('No direct QoB-to-Earnings path').",
+      "recommended_table_types": [
+        "causal_claim_credibility_matrix",
+        "assumption_plausibility_table",
+        "identification_strategy_comparison",
+        "confounder_checklist",
+        "robustness_check_summary",
+        "path_analysis_table"
+      ],
+      "recommended_visual_patterns": [
+        "causal_dag_with_blocked_paths",
+        "assumption_dependency_map",
+        "evidence_credibility_heatmap",
+        "strategy_comparison_radar",
+        "threat_severity_matrix"
+      ]
     },
     "audience_vocabulary": {
-      "researcher": {},
-      "analyst": {},
-      "executive": {},
-      "activist": {}
-    },
-    "skip_concretization": false
+      "researcher": {
+        "confounding": "confounding",
+        "SUTVA": "SUTVA",
+        "LATE": "LATE",
+        "backdoor_criterion": "backdoor criterion",
+        "d_separation": "d-separation",
+        "unconfoundedness": "unconfoundedness"
+      },
+      "analyst": {
+        "confounding": "omitted variable bias",
+        "SUTVA": "no spillovers assumption",
+        "LATE": "effect on compliers",
+        "backdoor_criterion": "controlling for all common causes",
+        "d_separation": "path blocking",
+        "unconfoundedness": "selection on observables"
+      },
+      "executive": {
+        "confounding": "hidden factors driving both cause and effect",
+        "SUTVA": "treatment doesn't spill over to comparison group",
+        "LATE": "effect for people actually affected by the policy lever",
+        "backdoor_criterion": "have we really isolated the causal effect",
+        "d_separation": "have we accounted for all alternative explanations",
+        "unconfoundedness": "we've measured everything that matters"
+      },
+      "activist": {
+        "confounding": "what they're not accounting for",
+        "SUTVA": "whether effects leak across groups",
+        "LATE": "who this actually works for (and who it doesn't)",
+        "backdoor_criterion": "whether they've really proven causation",
+        "d_separation": "whether they've ruled out other explanations",
+        "unconfoundedness": "whether they're missing something important"
+      }
+    }
   }
 }

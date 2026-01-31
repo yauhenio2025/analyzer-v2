@@ -1,128 +1,671 @@
 {
   "engine_key": "motte_bailey_detector",
-  "engine_name": "Motte and Bailey Detector",
-  "description": "Identifies arguments that retreat from strong to weak claims when challenged. Detects bold claims, defensive retreats, strategic switching, and ambiguity exploitation. Essential for spotting evasion.",
+  "engine_name": "Motte-Bailey Detector",
+  "description": "Deep analysis of argumentative evasion using Shackel's motte-bailey doctrine, van Eemeren's pragma-dialectics, and Walton's argumentation schemes. Reveals how arguers strategically retreat from bold claims to defensible positions when challenged, exploit ambiguity to avoid commitment, shift burden of proof, and violate dialectical obligations across discussion stages. Maps the full topology of evasive argumentation including definitional retreats, standpoint switching, goalpost movement, and related fallacies like no true Scotsman and bulverism.",
   "version": 1,
-  "category": "rhetoric",
+  "category": "argument",
   "kind": "synthesis",
-  "reasoning_domain": "rhetoric",
-  "researcher_question": "Where do arguments retreat from strong to weak claims when challenged?",
+  "reasoning_domain": "argumentative_evasion_advanced",
+  "researcher_question": "What argumentative evasion patterns exist in this discourse, and how do arguers strategically retreat, equivocate, or shift commitments when their positions are challenged?",
   "canonical_schema": {
-    "motte_bailey_instances": [
+    "motte_bailey_structures": [
       {
-        "instance_id": "string - MB1, MB2, etc.",
-        "bailey_claim": "string - the bold claim",
-        "motte_claim": "string - the defensible claim",
-        "relationship": "string - how they're connected",
-        "switching_observed": "yes | implied | suspected",
-        "evidence": "string - what suggests the pattern"
+        "structure_id": "string (format: 'MB{N}' e.g., 'MB1', 'MB2')",
+        "name": "string (evocative name like 'The Racism Redefinition Fortress' or 'The Science Says Citadel')",
+        "what_is_being_defended": "string (the broader topic or claim area)",
+        "motte_position": "position_id (POS{N}) - the defensible retreat",
+        "bailey_position": "position_id (POS{N}) - the desirable but indefensible claim",
+        "rhetorical_advantage": "string (what the arguer gains from this structure)",
+        "how_connected": "string (what makes motte and bailey seem like the same position)",
+        "exploited_ambiguity": "ambiguity_id (AMB{N}) | null",
+        "frequency_of_switching": "rare | occasional | frequent | constant",
+        "awareness_level": "unconscious | semi_conscious | deliberate | cynical",
+        "structural_stability": "fragile | stable | deeply_entrenched",
+        "who_employs": [
+          "string (arguers, groups, or authors using this structure)"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "triggered_retreats": [
+          "retreat_id (SR{N})"
+        ],
+        "related_structures": [
+          "structure_id (MB{N}) - similar or nested structures"
+        ],
+        "enabled_by_equivocations": [
+          "equivocation_id (EQ{N})"
+        ],
+        "dialectical_violations": [
+          "obligation_id (DO{N})"
+        ]
       }
     ],
-    "bailey_claims": [
+    "positions": [
       {
-        "claim_id": "string - BC1, BC2, etc.",
-        "claim_text": "string",
-        "claim_strength": "very_bold | bold | moderately_bold",
-        "what_makes_it_bold": "string",
-        "vulnerability": "string - where it can be attacked"
+        "position_id": "string (format: 'POS{N}')",
+        "claim_text": "string (the position as stated)",
+        "position_type": "motte | bailey | intermediate | standalone",
+        "defensibility": "easily_defensible | defensible_with_work | weakly_defensible | indefensible",
+        "desirability": "highly_desirable | desirable | neutral | undesirable",
+        "what_it_would_commit_to": "string (what accepting this position entails)",
+        "who_could_disagree": "string (what kind of person would reject this)",
+        "rhetorical_appeal": "string (why this position is attractive to state)",
+        "actual_controversy": "uncontroversial | mildly_controversial | controversial | highly_controversial",
+        "claimed_controversy": "uncontroversial | mildly_controversial | controversial | highly_controversial",
+        "ambiguity_score": "number (0-1, how much interpretive flexibility exists)",
+        "source_articles": [
+          "string"
+        ],
+        "paired_with_in_mb": "structure_id (MB{N}) | null",
+        "backed_by_evidence": [
+          "evidence_id (TE{N})"
+        ],
+        "commitments_if_accepted": [
+          "commitment_id (COM{N})"
+        ],
+        "vulnerable_to_challenges": [
+          "string (types of challenges that threaten this)"
+        ],
+        "can_retreat_to": [
+          "position_id (POS{N}) - fallback positions"
+        ],
+        "can_advance_to": [
+          "position_id (POS{N}) - bolder versions"
+        ]
       }
     ],
-    "motte_claims": [
+    "strategic_retreats": [
       {
-        "claim_id": "string - MC1, MC2, etc.",
-        "claim_text": "string",
-        "defensibility": "highly_defensible | defensible | somewhat_defensible",
-        "relationship_to_bailey": "string - bailey_claim_id",
-        "what_makes_it_safe": "string"
+        "retreat_id": "string (format: 'SR{N}')",
+        "name": "string (evocative name like 'The Definitional Backstep' or 'The Quantifier Shift')",
+        "retreat_type": "definitional | scope_reduction | quantifier_weakening | modal_softening | audience_restriction | temporal_qualification | conditional_addition",
+        "from_position": "position_id (POS{N}) - bailey being abandoned",
+        "to_position": "position_id (POS{N}) - motte being retreated to",
+        "trigger_event": "string (what challenge prompted the retreat)",
+        "retreat_mechanism": "string (how the retreat is accomplished linguistically)",
+        "acknowledgment_of_retreat": "explicit | implicit | denied | claimed_consistent",
+        "face_saving_move": "string | null (how arguer preserves dignity)",
+        "what_is_sacrificed": "string (what the arguer gives up)",
+        "what_is_preserved": "string (what the arguer maintains)",
+        "reversibility": "permanent | reversible_with_new_audience | immediately_reversed",
+        "source_articles": [
+          "string"
+        ],
+        "part_of_structure": "structure_id (MB{N})",
+        "employs_maneuver": "maneuver_id (SM{N}) | null",
+        "violates_obligations": [
+          "obligation_id (DO{N})"
+        ],
+        "involves_equivocation": "equivocation_id (EQ{N}) | null",
+        "response_to_challenge": "string (the specific objection being evaded)"
       }
     ],
-    "switching_patterns": [
+    "equivocations": [
       {
-        "pattern_id": "string",
-        "instance_id": "string - motte_bailey instance",
-        "trigger": "string - what prompted retreat",
-        "retreat_mechanism": "string - how switch happens",
-        "return_to_bailey": "observed | likely | unknown"
+        "equivocation_id": "string (format: 'EQ{N}')",
+        "name": "string (evocative name like 'The Violence Vacillation' or 'The Freedom Flip')",
+        "equivocated_term": "string (the word or phrase being used ambiguously)",
+        "meaning_a": "string (first interpretation)",
+        "meaning_b": "string (second interpretation)",
+        "additional_meanings": [
+          "string (other interpretations if more than two)"
+        ],
+        "context_for_a": "string (when meaning A is invoked)",
+        "context_for_b": "string (when meaning B is invoked)",
+        "switching_pattern": "audience_dependent | challenge_dependent | convenience_dependent | systematic",
+        "awareness_level": "unconscious | semi_conscious | deliberate | cynical",
+        "detection_difficulty": "obvious | moderate | subtle | highly_obscured",
+        "frequency_in_corpus": "number",
+        "source_articles": [
+          "string"
+        ],
+        "enables_structures": [
+          "structure_id (MB{N})"
+        ],
+        "used_in_retreats": [
+          "retreat_id (SR{N})"
+        ],
+        "related_ambiguities": [
+          "ambiguity_id (AMB{N})"
+        ],
+        "violates_obligations": [
+          "obligation_id (DO{N})"
+        ]
       }
     ],
-    "ambiguity_exploitation": [
+    "definitional_maneuvers": [
       {
-        "ambiguity_id": "string",
-        "ambiguous_term": "string",
-        "bold_interpretation": "string - bailey reading",
-        "modest_interpretation": "string - motte reading",
-        "how_exploited": "string"
+        "maneuver_id": "string (format: 'DM{N}')",
+        "name": "string (evocative name like 'The Racism Redefinition' or 'The Science Scope Creep')",
+        "term_being_defined": "string",
+        "standard_definition": "string (common or dictionary meaning)",
+        "tactical_definition": "string (the strategic redefinition)",
+        "direction": "narrowing | broadening | shifting | technical_capture",
+        "rhetorical_purpose": "exclude_counterexamples | include_desired_cases | claim_authority | avoid_burden",
+        "who_gets_to_define": "string (the claimed authority for the new definition)",
+        "legitimacy_of_redefinition": "legitimate_technical | stipulative_acknowledged | stipulative_hidden | persuasive_definition",
+        "impact_on_argument": "string (how this changes the debate)",
+        "source_articles": [
+          "string"
+        ],
+        "enables_retreats": [
+          "retreat_id (SR{N})"
+        ],
+        "creates_equivocation": "equivocation_id (EQ{N}) | null",
+        "related_to_fallacy": "fallacy_id (FAL{N}) | null",
+        "violates_obligations": [
+          "obligation_id (DO{N})"
+        ]
       }
     ],
+    "burden_shifts": [
+      {
+        "shift_id": "string (format: 'BS{N}')",
+        "name": "string (evocative name like 'The Prove-A-Negative Trap')",
+        "original_burden_holder": "string (who should have burden)",
+        "new_burden_holder": "string (who burden is shifted to)",
+        "shift_mechanism": "demanding_proof_of_negative | appealing_to_ignorance | claiming_default_position | reframing_as_opposition | credential_demanding | impossible_evidence_standard",
+        "legitimacy": "legitimate | questionable | illegitimate",
+        "what_would_satisfy": "string (what evidence would discharge the shifted burden)",
+        "whether_satisfiable": "satisfiable | difficult_to_satisfy | impossible_to_satisfy",
+        "source_articles": [
+          "string"
+        ],
+        "benefits_structure": "structure_id (MB{N}) | null",
+        "part_of_retreat": "retreat_id (SR{N}) | null",
+        "violates_obligations": [
+          "obligation_id (DO{N})"
+        ],
+        "related_fallacy": "fallacy_id (FAL{N}) | null"
+      }
+    ],
+    "standpoint_switches": [
+      {
+        "switch_id": "string (format: 'SS{N}')",
+        "name": "string (evocative name like 'The Descriptive-Normative Shuffle')",
+        "from_standpoint": "string (original position type)",
+        "to_standpoint": "string (new position type)",
+        "switch_type": "descriptive_to_normative | normative_to_descriptive | universal_to_particular | particular_to_universal | causal_to_correlational | strong_to_weak_modal | position_to_meta_position",
+        "trigger": "string (what prompted the switch)",
+        "acknowledgment": "acknowledged | unacknowledged | denied",
+        "preserves_appearance_of": "string (what the switch pretends to maintain)",
+        "actual_change": "string (what actually changed)",
+        "source_articles": [
+          "string"
+        ],
+        "part_of_retreat": "retreat_id (SR{N}) | null",
+        "employs_equivocation": "equivocation_id (EQ{N}) | null",
+        "violates_obligations": [
+          "obligation_id (DO{N})"
+        ]
+      }
+    ],
+    "commitment_records": [
+      {
+        "commitment_id": "string (format: 'COM{N}')",
+        "commitment_text": "string (what the arguer is committed to)",
+        "commitment_type": "explicit | implicit | presupposed | denied_but_required",
+        "commitment_status": "acknowledged | dodged | violated | abandoned",
+        "source_of_commitment": "string (what created this commitment)",
+        "what_it_obligates": "string (what accepting this commits one to)",
+        "consistency_with_other_commitments": "consistent | tension | contradiction",
+        "source_articles": [
+          "string"
+        ],
+        "held_by": [
+          "string (arguers holding this commitment)"
+        ],
+        "entailed_by_position": "position_id (POS{N})",
+        "conflicts_with_commitments": [
+          "commitment_id (COM{N})"
+        ],
+        "dodged_via_retreat": "retreat_id (SR{N}) | null",
+        "would_block_retreat_to": [
+          "position_id (POS{N}) - positions inconsistent with this"
+        ]
+      }
+    ],
+    "dialectical_stages": [
+      {
+        "stage_id": "string (format: 'DS{N}')",
+        "stage_type": "confrontation | opening | argumentation | concluding",
+        "stage_description": "string (what should happen at this stage per pragma-dialectics)",
+        "what_happened": "string (what actually occurred)",
+        "proper_conduct": "string (van Eemeren's rules for this stage)",
+        "violations_observed": [
+          "obligation_id (DO{N})"
+        ],
+        "motte_bailey_relevance": "string (how MB tactics manifest at this stage)",
+        "source_articles": [
+          "string"
+        ],
+        "maneuvers_attempted": [
+          "maneuver_id (SM{N})"
+        ],
+        "retreats_triggered": [
+          "retreat_id (SR{N})"
+        ],
+        "follows_stage": "stage_id (DS{N}) | null",
+        "precedes_stage": "stage_id (DS{N}) | null"
+      }
+    ],
+    "strategic_maneuvers": [
+      {
+        "maneuver_id": "string (format: 'SM{N}')",
+        "name": "string (evocative name like 'The Audience Appeal Pivot')",
+        "maneuver_category": "topical_potential | audience_demand | presentational_devices",
+        "specific_technique": "string (the actual technique used)",
+        "dialectical_aim": "string (the legitimate goal being pursued)",
+        "rhetorical_aim": "string (the persuasive goal being pursued)",
+        "balance_achieved": "dialectical_dominant | rhetorical_dominant | balanced | derailed",
+        "derailment_type": "fallacy_type (if derailed) | null",
+        "effectiveness": "number (0-1)",
+        "ethicality": "legitimate | questionable | manipulative | fallacious",
+        "source_articles": [
+          "string"
+        ],
+        "used_in_retreats": [
+          "retreat_id (SR{N})"
+        ],
+        "occurs_in_stage": "stage_id (DS{N})",
+        "produces_fallacy": "fallacy_id (FAL{N}) | null",
+        "exploits_ambiguity": "ambiguity_id (AMB{N}) | null"
+      }
+    ],
+    "fallacy_instances": [
+      {
+        "fallacy_id": "string (format: 'FAL{N}')",
+        "fallacy_type": "no_true_scotsman | weak_man | bulverism | moving_goalposts | equivocation | appeal_to_motte | bailey_and_switch | straw_man | special_pleading | begging_question",
+        "name": "string (evocative instance name)",
+        "description": "string (what happened)",
+        "how_it_functions": "string (Walton's analysis of the fallacy)",
+        "surface_plausibility": "string (why it might seem legitimate)",
+        "what_makes_it_fallacious": "string (the norm violation)",
+        "detection_cues": [
+          "string (signs this fallacy is occurring)"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "part_of_structure": "structure_id (MB{N}) | null",
+        "triggered_by_retreat": "retreat_id (SR{N}) | null",
+        "result_of_maneuver": "maneuver_id (SM{N}) | null",
+        "violates_obligations": [
+          "obligation_id (DO{N})"
+        ],
+        "related_fallacies": [
+          "fallacy_id (FAL{N}) - often co-occurring"
+        ]
+      }
+    ],
+    "ambiguity_exploitations": [
+      {
+        "ambiguity_id": "string (format: 'AMB{N}')",
+        "ambiguous_element": "string (word, phrase, or construction)",
+        "ambiguity_type": "lexical | syntactic | referential | scope | modal | quantifier | presuppositional",
+        "possible_readings": [
+          {
+            "reading": "string",
+            "implications": "string",
+            "who_prefers": "string"
+          }
+        ],
+        "strategic_value": "string (why this ambiguity is useful)",
+        "resolution_avoided": "boolean (is disambiguation strategically avoided?)",
+        "clarification_response": "string | null (how arguer responds to requests for clarity)",
+        "source_articles": [
+          "string"
+        ],
+        "enables_equivocations": [
+          "equivocation_id (EQ{N})"
+        ],
+        "supports_structures": [
+          "structure_id (MB{N})"
+        ],
+        "exploited_in_retreats": [
+          "retreat_id (SR{N})"
+        ]
+      }
+    ],
+    "goalpost_movements": [
+      {
+        "movement_id": "string (format: 'GM{N}')",
+        "name": "string (evocative name like 'The Ever-Rising Evidence Bar')",
+        "original_criterion": "string (what was originally required)",
+        "new_criterion": "string (what is now required)",
+        "movement_direction": "raising_bar | shifting_topic | adding_conditions | changing_standards",
+        "trigger": "string (what prompted the movement)",
+        "acknowledgment": "acknowledged | unacknowledged | denied | claimed_clarification",
+        "legitimacy": "legitimate_refinement | questionable | illegitimate_evasion",
+        "cumulative_movements": "number (how many times goalposts have moved)",
+        "source_articles": [
+          "string"
+        ],
+        "part_of_structure": "structure_id (MB{N}) | null",
+        "related_to_retreat": "retreat_id (SR{N}) | null",
+        "violates_obligations": [
+          "obligation_id (DO{N})"
+        ],
+        "shifts_burden": "shift_id (BS{N}) | null"
+      }
+    ],
+    "dialectical_obligations": [
+      {
+        "obligation_id": "string (format: 'DO{N}')",
+        "obligation_type": "burden_of_proof | standpoint_clarity | consistency | relevance | closure | freedom | commitment_honoring",
+        "obligation_source": "pragma_dialectics | informal_logic | conversational_norms | scholarly_standards",
+        "what_is_required": "string (what the norm demands)",
+        "van_eemeren_rule": "string | null (specific pragma-dialectic rule reference)",
+        "walton_scheme": "string | null (relevant argumentation scheme)",
+        "source_articles": [
+          "string"
+        ],
+        "violated_by_retreats": [
+          "retreat_id (SR{N})"
+        ],
+        "violated_by_maneuvers": [
+          "maneuver_id (SM{N})"
+        ],
+        "violated_by_fallacies": [
+          "fallacy_id (FAL{N})"
+        ],
+        "relevant_at_stages": [
+          "stage_id (DS{N})"
+        ]
+      }
+    ],
+    "defense_patterns": [
+      {
+        "pattern_id": "string (format: 'DP{N}')",
+        "pattern_name": "string (evocative name)",
+        "pattern_type": "preemptive_motte | reactive_retreat | inoculation | false_middle | authority_appeal | consensus_claim | definition_control | meta_shift",
+        "how_it_works": "string (mechanism of the defense)",
+        "when_deployed": "string (conditions that trigger this pattern)",
+        "effectiveness_against": [
+          "string (types of challenges this counters)"
+        ],
+        "vulnerability_to": [
+          "string (types of challenges that defeat this)"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "protects_structures": [
+          "structure_id (MB{N})"
+        ],
+        "involves_retreats": [
+          "retreat_id (SR{N})"
+        ],
+        "employs_maneuvers": [
+          "maneuver_id (SM{N})"
+        ]
+      }
+    ],
+    "audience_effects": [
+      {
+        "effect_id": "string (format: 'AE{N}')",
+        "effect_type": "confusion | false_consensus | burden_acceptance | intimidation | credibility_transfer | plausible_deniability",
+        "target_audience": "string (who is being affected)",
+        "mechanism": "string (how the effect is achieved)",
+        "enables_what": "string (what the arguer can do because of this effect)",
+        "durability": "temporary | persistent | self_reinforcing",
+        "source_articles": [
+          "string"
+        ],
+        "produced_by_structures": [
+          "structure_id (MB{N})"
+        ],
+        "produced_by_maneuvers": [
+          "maneuver_id (SM{N})"
+        ],
+        "exploits_ambiguities": [
+          "ambiguity_id (AMB{N})"
+        ]
+      }
+    ],
+    "textual_evidence": [
+      {
+        "evidence_id": "string (format: 'TE{N}')",
+        "quote_or_paraphrase": "string",
+        "evidence_type": "direct_quote | paraphrase | pattern_observation | behavioral_evidence",
+        "what_it_demonstrates": "string",
+        "confidence": "certain | probable | possible | speculative",
+        "source_article": "string",
+        "page_or_location": "string | null",
+        "supports_positions": [
+          "position_id (POS{N})"
+        ],
+        "documents_retreats": [
+          "retreat_id (SR{N})"
+        ],
+        "illustrates_equivocations": [
+          "equivocation_id (EQ{N})"
+        ],
+        "shows_fallacies": [
+          "fallacy_id (FAL{N})"
+        ]
+      }
+    ],
+    "relationship_graph": {
+      "nodes": [
+        {
+          "id": "string (any entity ID from above)",
+          "type": "string (entity type: motte_bailey_structure | position | strategic_retreat | equivocation | definitional_maneuver | burden_shift | standpoint_switch | commitment_record | dialectical_stage | strategic_maneuver | fallacy_instance | ambiguity_exploitation | goalpost_movement | dialectical_obligation | defense_pattern | audience_effect | textual_evidence)",
+          "label": "string (short display name, 2-5 words)",
+          "weight": "number (0-1, centrality/importance)"
+        }
+      ],
+      "edges": [
+        {
+          "from_id": "string (source entity ID)",
+          "to_id": "string (target entity ID)",
+          "relationship": "string (typed relationship: enables | triggers | violates | retreats_to | advances_from | exploits | defends | produces | documents | part_of | conflicts_with | co_occurs_with)",
+          "strength": "number (0-1)",
+          "bidirectional": "boolean",
+          "label": "string (optional edge label for display)"
+        }
+      ],
+      "clusters": [
+        {
+          "cluster_id": "string (format: 'CL{N}')",
+          "name": "string (evocative cluster name like 'The Definition Wars' or 'The Burden Battleground')",
+          "member_ids": [
+            "string (entity IDs in this cluster)"
+          ],
+          "coherence": "number (0-1)",
+          "theme": "string (what unites this cluster)"
+        }
+      ]
+    },
     "meta": {
-      "instances_detected": "number",
-      "clear_cases": "number",
-      "suspected_cases": "number",
-      "overall_prevalence": "high | medium | low"
+      "total_structures": "number",
+      "total_positions": "number",
+      "total_retreats": "number",
+      "total_equivocations": "number",
+      "total_fallacies": "number",
+      "total_obligations_violated": "number",
+      "most_frequent_retreat_type": "string",
+      "most_exploited_ambiguity": "string",
+      "most_violated_obligation": "string",
+      "dominant_dialectical_stage_for_evasion": "string",
+      "sophistication_level": "naive | moderate | sophisticated | highly_sophisticated",
+      "key_findings": [
+        "string (3-5 most important discoveries)"
+      ],
+      "most_defensible_motte": "position_id (POS{N})",
+      "most_ambitious_bailey": "position_id (POS{N})",
+      "most_frequent_retreat_path": {
+        "from": "position_id (POS{N})",
+        "to": "position_id (POS{N})",
+        "frequency": "number"
+      },
+      "cross_document_patterns": [
+        "string (patterns appearing across multiple documents)"
+      ],
+      "recommended_challenges": [
+        "string (effective ways to expose these structures)"
+      ]
     }
   },
-  "extraction_focus": [
-    "bold_claims",
-    "defensive_claims",
-    "strategic_switching",
-    "ambiguity_patterns",
-    "retreat_triggers"
-  ],
-  "primary_output_modes": [
-    "structured_text_report",
-    "table"
-  ],
-  "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/motte_bailey_detector.py",
   "stage_context": {
-    "framework_key": null,
-    "additional_frameworks": [],
+    "framework_key": "pragma_dialectics",
+    "additional_frameworks": [
+      "walton_argumentation_schemes",
+      "shackel_motte_bailey"
+    ],
     "extraction": {
-      "analysis_type": "motte and bailey detector",
-      "analysis_type_plural": "motte and bailey detectors",
-      "core_question": "Where do arguments retreat from strong to weak claims when challenged?",
+      "analysis_type": "argumentative evasion",
+      "analysis_type_plural": "argumentative evasion patterns",
+      "core_question": "What argumentative evasion patterns exist, and how do arguers strategically retreat, equivocate, or shift commitments when challenged?",
       "extraction_steps": [
-        "IDENTIFY BOLD CLAIMS (BAILEYS)",
-        "IDENTIFY DEFENSIVE CLAIMS (MOTTES)",
-        "DETECT SWITCHING",
-        "IDENTIFY AMBIGUITY EXPLOITATION",
-        "ASSESS PATTERN"
+        "STEP 1 - IDENTIFY BOLD CLAIMS (BAILEYS): Scan for claims that would be controversial if stated plainly. Apply Shackel's test: Is this claim desirable to the arguer but difficult to defend? Would most people reject it if stated without hedging? These are candidate baileys. Mark the rhetorical advantage each would provide if accepted.",
+        "STEP 2 - IDENTIFY DEFENSIVE FALLBACKS (MOTTES): For each bailey, search for associated claims that are much easier to defend. Apply the defensibility test: Is this claim something almost no reasonable person would deny? Is it a truism, tautology, or heavily qualified version? These are candidate mottes. Note how the motte relates to the bailey.",
+        "STEP 3 - MAP MOTTE-BAILEY STRUCTURES: Connect mottes to their baileys. What linguistic or conceptual bridges make them appear to be the same position? What ambiguities allow movement between them? Apply Shackel's doctrine: the arguer benefits from the bailey's desirability while retreating to the motte's defensibility when challenged.",
+        "STEP 4 - TRACE STRATEGIC RETREATS: Find instances where arguers shift from bold to modest claims when challenged. Categorize retreat types: definitional retreat (changing what a term means), scope reduction (from 'all X' to 'some X'), modal softening (from 'must' to 'might'), quantifier weakening, temporal qualification, conditional addition. Note whether retreats are acknowledged or denied.",
+        "STEP 5 - ANALYZE EQUIVOCATION PATTERNS: Identify terms used with shifting meanings. For each equivocated term, document at least two distinct meanings and when each is deployed. Apply Walton's fallacy analysis: Is the shift in meaning acknowledged? Does it create an illusion of consistent argument? What would disambiguating the term reveal?",
+        "STEP 6 - MAP DEFINITIONAL MANEUVERS: Document how key terms are defined, redefined, or left strategically undefined. Categorize as narrowing (excluding counterexamples), broadening (including desired cases), technical capture (claiming expert authority), or stipulative (explicitly non-standard). Note who claims definitional authority.",
+        "STEP 7 - TRACK BURDEN OF PROOF: Apply Walton's burden of proof analysis. Who should bear the burden for each claim? Document shifts where burden is illegitimately transferred: demanding proof of negatives, claiming default positions, setting impossible evidence standards, credential demanding. Note what evidence would satisfy the shifted burden.",
+        "STEP 8 - IDENTIFY STANDPOINT SWITCHES: Using van Eemeren's standpoint theory, track switches between positions. Note descriptive-to-normative shifts, universal-to-particular retreats, causal-to-correlational downgrades, position-to-meta-position pivots. Document whether switches are acknowledged.",
+        "STEP 9 - RECORD COMMITMENT VIOLATIONS: List commitments explicitly or implicitly accepted by arguers. Track when commitments are honored, dodged, or violated. Apply pragma-dialectic commitment analysis: What is the arguer committed to by their statements? What commitments are they evading? What inconsistencies exist in their commitment set?",
+        "STEP 10 - MAP DIALECTICAL STAGE VIOLATIONS: Using van Eemeren's four-stage model, identify where violations occur. Confrontation stage: Are standpoints clearly stated? Opening stage: Are starting points and rules agreed? Argumentation stage: Are arguments relevant and responsive? Concluding stage: Is closure legitimate? Mark which stages show most evasion.",
+        "STEP 11 - ANALYZE STRATEGIC MANEUVERING: Apply van Eemeren's strategic maneuvering framework. For each argumentative move, identify the dialectical aim (reasonable persuasion) and rhetorical aim (effective persuasion). When does maneuvering derail into fallacy? What legitimate goals are being pursued by illegitimate means?",
+        "STEP 12 - CLASSIFY RELATED FALLACIES: Identify instances of No True Scotsman (redefining to exclude counterexamples), Weak Man (attacking weaker version of opponent's position), Bulverism (explaining why opponent believes X rather than addressing X), Moving Goalposts, Special Pleading, and related fallacies. Use Walton's fallacy identification criteria.",
+        "STEP 13 - TRACE AMBIGUITY EXPLOITATION: Document strategically maintained ambiguity. What terms, phrases, or constructions are left deliberately unclear? What interpretations are available? Which interpretation does the arguer invoke when? Is clarification requested and refused?",
+        "STEP 14 - DOCUMENT GOALPOST MOVEMENTS: Track when criteria for success change mid-argument. Note original criterion, new criterion, trigger for change, and whether change is acknowledged. Distinguish legitimate refinement from illegitimate evasion using Walton's criteria.",
+        "STEP 15 - ASSESS AUDIENCE EFFECTS: What does the motte-bailey structure do to audiences? Does it create false consensus (make bailey seem more accepted)? Transfer credibility (use motte's defensibility to defend bailey)? Shift burden to challengers? Provide plausible deniability? Document effects and mechanisms.",
+        "STEP 16 - BUILD RELATIONSHIP GRAPH: Connect all entities through typed relationships. Mottes-enable-retreats-from-baileys. Equivocations-enable-structures. Retreats-violate-obligations. Fallacies-result-from-maneuvers. Identify clusters of related evasion patterns."
       ],
-      "key_fields": {},
-      "id_field": "claim_id",
+      "key_fields": {
+        "structure_id": "Complete motte-bailey structures",
+        "position_id": "Individual motte and bailey positions",
+        "retreat_id": "Instances of strategic retreat",
+        "equivocation_id": "Strategic equivocation patterns",
+        "fallacy_id": "Related fallacy instances"
+      },
+      "id_field": "structure_id",
       "key_relationships": [
-        "relates_to"
+        "retreats_to",
+        "advances_from",
+        "enables",
+        "triggers",
+        "violates",
+        "exploits",
+        "defends",
+        "produces",
+        "documents",
+        "part_of",
+        "conflicts_with",
+        "equivocates_between",
+        "shifts_burden_to",
+        "derails_into"
       ],
-      "special_instructions": null
+      "special_instructions": "CRITICAL: Motte-bailey detection requires distinguishing legitimate clarification from evasive retreat. Apply Shackel's test: Would the arguer have made the modest claim first if not challenged? Does the arguer return to the bold claim once pressure subsides? The pattern of oscillation, not single instances, reveals the structure. Always document whether the connection between motte and bailey depends on ambiguity that the arguer refuses to resolve. Use van Eemeren's 'derailed strategic maneuvering' concept: the question is not whether rhetorical aims exist, but whether they override dialectical obligations."
     },
     "curation": {
-      "item_type": "motte and bailey detector",
-      "item_type_plural": "motte and bailey detectors",
-      "consolidation_rules": [],
+      "item_type": "argumentative evasion pattern",
+      "item_type_plural": "argumentative evasion patterns",
+      "consolidation_rules": [
+        "RULE 1: Merge motte-bailey structures that share the same core ambiguity, even if expressed differently across documents",
+        "RULE 2: Create unified position entries when the same claim appears in multiple documents, tracking whether it serves as motte or bailey in each context",
+        "RULE 3: Consolidate equivocations around the same term, documenting the full range of meanings across the corpus",
+        "RULE 4: Identify meta-patterns: Do the same retreat types appear across different topics? Do certain fallacies cluster together?",
+        "RULE 5: Build cross-document retreat maps: When Author A is challenged by Author B, trace the retreat pattern",
+        "RULE 6: Synthesize dialectical obligation violations into a severity ranking: Which norms are most frequently violated?",
+        "RULE 7: Identify 'fortress' structures - nested motte-baileys where the motte of one structure serves as bailey for a deeper retreat"
+      ],
       "cross_doc_patterns": [
-        "shared_items",
-        "contested_items",
-        "response_network"
+        "shared_structures",
+        "coordinated_retreats",
+        "contested_definitions",
+        "burden_ping_pong",
+        "escalating_mottes"
       ],
       "synthesis_outputs": [
-        "consolidated_item_list",
-        "relationship_map",
-        "cross_document_dynamics"
+        "consolidated_evasion_map",
+        "relationship_graph",
+        "retreat_pathway_diagram",
+        "equivocation_network",
+        "obligation_violation_matrix"
       ],
-      "special_instructions": null
+      "special_instructions": "Pay special attention to cross-document dynamics where Author A makes a bold claim, Author B challenges it, and Author A retreats to a defensible position while claiming consistency. This reveals the motte-bailey structure more clearly than single-document analysis. Also track when multiple authors coordinate on the same motte-bailey structure, suggesting shared rhetorical strategy."
     },
     "concretization": {
-      "id_examples": [],
-      "naming_guidance": "",
-      "recommended_table_types": [],
-      "recommended_visual_patterns": []
+      "id_examples": [
+        {
+          "from": "MB1",
+          "to": "The 'Racism is Power Plus Prejudice' Fortress"
+        },
+        {
+          "from": "POS1",
+          "to": "The Truism Motte: 'Some bias exists'"
+        },
+        {
+          "from": "POS2",
+          "to": "The Activist Bailey: 'All disparities are racism'"
+        },
+        {
+          "from": "SR1",
+          "to": "The Quantifier Retreat: 'All' becomes 'Some'"
+        },
+        {
+          "from": "EQ1",
+          "to": "The Violence Vacillation: Physical vs. Structural"
+        },
+        {
+          "from": "FAL1",
+          "to": "The 'Not Real Feminism' No True Scotsman"
+        },
+        {
+          "from": "DO1",
+          "to": "van Eemeren's Standpoint Clarity Rule"
+        },
+        {
+          "from": "GM1",
+          "to": "The Ever-Rising Evidence Bar"
+        }
+      ],
+      "naming_guidance": "Use concrete, evocative names that capture the evasive pattern. For structures, use 'Fortress' or 'Citadel' metaphors. For retreats, name the mechanism ('The Quantifier Retreat', 'The Definitional Backstep'). For fallacies, name the specific instance ('The 'Not Real X' Maneuver'). Names should be memorable and diagnostic.",
+      "recommended_table_types": [
+        "motte_bailey_comparison",
+        "retreat_pathway_matrix",
+        "equivocation_term_table",
+        "obligation_violation_checklist",
+        "fallacy_co_occurrence_matrix"
+      ],
+      "recommended_visual_patterns": [
+        "motte_bailey_fortress_diagram",
+        "retreat_flow_sankey",
+        "equivocation_network_graph",
+        "dialectical_stage_timeline",
+        "commitment_consistency_map"
+      ]
     },
     "audience_vocabulary": {
-      "researcher": {},
-      "analyst": {},
-      "executive": {},
-      "activist": {}
-    },
-    "skip_concretization": false
+      "researcher": {
+        "motte_bailey": "motte-and-bailey doctrine",
+        "retreat": "strategic position modification",
+        "equivocation": "semantic shift",
+        "burden_shift": "burden of proof transfer"
+      },
+      "analyst": {
+        "motte_bailey": "defensible-desirable position pair",
+        "retreat": "claim weakening",
+        "equivocation": "meaning shift",
+        "burden_shift": "proving requirement transfer"
+      },
+      "executive": {
+        "motte_bailey": "bold claim with backup position",
+        "retreat": "walking back claims",
+        "equivocation": "changing definitions",
+        "burden_shift": "making others prove things"
+      },
+      "activist": {
+        "motte_bailey": "the bait and switch",
+        "retreat": "backing down but claiming consistency",
+        "equivocation": "playing word games",
+        "burden_shift": "making you prove a negative"
+      }
+    }
   }
 }

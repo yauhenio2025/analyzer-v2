@@ -1,173 +1,637 @@
 {
   "engine_key": "incentive_structure_mapper",
   "engine_name": "Incentive Structure Mapper",
-  "description": "Maps incentive structures and predicts resulting behaviors. Identifies what behaviors are actually rewarded, incentive misalignment, gaming opportunities, and perverse incentives. Essential for understanding institutional behavior.",
+  "description": "Deep analysis of what behavior systems actually reward. Reveals the hidden incentives that drive actors, the principal-agent problems that create dysfunction, the collective action traps that make rational individuals produce irrational outcomes, and the perverse incentives that make well-intentioned policies backfire. Uses sophisticated methods from public choice, game theory, and institutional economics but outputs in plain language anyone can understand.",
   "version": 1,
   "category": "institutional",
   "kind": "synthesis",
-  "reasoning_domain": "institutional",
-  "researcher_question": "What behaviors do the incentives actually reward?",
+  "reasoning_domain": "institutional_economics_advanced",
+  "researcher_question": "What does this system actually reward, and why do people act the way they do?",
   "canonical_schema": {
-    "systems_analyzed": [
+    "actors": [
       {
-        "system_id": "string - SYS1, SYS2, etc.",
-        "system_name": "string",
-        "stated_goals": [
-          "string - what the system claims to achieve"
+        "actor_id": "string (format: 'ACT{N}')",
+        "name": "string",
+        "actor_type": "individual | organization | group | institution | role",
+        "interests": [
+          "string (what they care about)"
         ],
-        "key_actors": [
-          "string - who operates in this system"
+        "resources": [
+          "string (what they control)"
+        ],
+        "constraints": [
+          "string (what limits them)"
+        ],
+        "information_access": "string (what they know/don't know)",
+        "time_horizon": "short_term | medium_term | long_term | varies",
+        "risk_preference": "risk_averse | risk_neutral | risk_seeking | varies",
+        "source_articles": [
+          "string"
+        ],
+        "faces_incentives": [
+          "incentive_id (INC{N})"
+        ],
+        "in_principal_agent": [
+          "pa_id (PA{N})"
+        ],
+        "in_collective_action": [
+          "ca_id (CA{N})"
+        ],
+        "plays_in_games": [
+          "game_id (GAME{N})"
         ]
       }
     ],
     "incentive_structures": [
       {
-        "incentive_id": "string - INC1, INC2, etc.",
-        "system_id": "string",
-        "actor": "string - who faces this incentive",
-        "incentive_type": "financial | reputational | career | regulatory | social | other",
-        "what_rewarded": "string - what behavior gets rewarded",
-        "reward_mechanism": "string - how reward is delivered",
-        "what_punished": "string - what behavior gets punished",
-        "punishment_mechanism": "string - how punishment is delivered",
-        "measurement_basis": "string - what metrics drive rewards",
-        "time_horizon": "short_term | medium_term | long_term"
-      }
-    ],
-    "incentive_alignment": [
-      {
-        "alignment_id": "string",
-        "incentive_id": "string",
-        "stated_goal": "string - what the goal claims",
-        "alignment": "aligned | partially_aligned | misaligned | opposed",
-        "misalignment_description": "string - how they diverge",
-        "consequence": "string - what behavior results"
+        "incentive_id": "string (format: 'INC{N}')",
+        "name": "string",
+        "faces_actor": "actor_id (ACT{N})",
+        "incentive_type": "financial | reputational | career | social | regulatory | intrinsic | status | security",
+        "reward_structure": {
+          "what_is_rewarded": "string",
+          "reward_mechanism": "string (how reward is delivered)",
+          "reward_timing": "immediate | delayed | contingent",
+          "reward_visibility": "public | private | mixed"
+        },
+        "punishment_structure": {
+          "what_is_punished": "string",
+          "punishment_mechanism": "string",
+          "punishment_timing": "immediate | delayed | contingent",
+          "punishment_probability": "high | medium | low"
+        },
+        "measurement_basis": {
+          "what_is_measured": "string",
+          "proxy_vs_real": "direct_measure | proxy | poor_proxy",
+          "gaming_vulnerability": "number (0-1)"
+        },
+        "source_articles": [
+          "string"
+        ],
+        "produces_behaviors": [
+          "behavior_id (BEH{N})"
+        ],
+        "misaligned_with_goals": [
+          "goal_id (GOAL{N})"
+        ],
+        "part_of_system": "system_id (SYS{N})"
       }
     ],
     "predicted_behaviors": [
       {
-        "behavior_id": "string",
-        "actor": "string",
-        "predicted_behavior": "string - what actors will likely do",
-        "driving_incentives": [
-          "string - incentive_ids"
+        "behavior_id": "string (format: 'BEH{N}')",
+        "actor": "actor_id (ACT{N})",
+        "predicted_behavior": "string",
+        "why_rational": "string (why this behavior makes sense given incentives)",
+        "differs_from_intended": "string (how this differs from stated goals)",
+        "likelihood": "certain | very_likely | likely | possible | unlikely",
+        "evidence_observed": [
+          "string"
         ],
-        "differs_from_intended": "string - how this differs from stated goals",
-        "likelihood": "very_likely | likely | possible | unlikely",
-        "evidence": "string - support for this prediction"
+        "source_articles": [
+          "string"
+        ],
+        "driven_by_incentives": [
+          "incentive_id (INC{N})"
+        ],
+        "produces_outcomes": [
+          "outcome_id (OUT{N})"
+        ]
       }
     ],
-    "gaming_opportunities": [
+    "principal_agent_problems": [
       {
-        "gaming_id": "string",
-        "incentive_id": "string",
-        "gaming_strategy": "string - how actors might game the system",
-        "metric_manipulated": "string - what measure is exploited",
-        "cost_to_goal": "string - how this undermines actual objectives",
-        "detectability": "easy | moderate | difficult",
-        "examples": [
-          "string - cases where this occurs"
+        "pa_id": "string (format: 'PA{N}')",
+        "name": "string (e.g., 'Shareholder-Manager Problem')",
+        "principal": "actor_id (ACT{N})",
+        "agent": "actor_id (ACT{N})",
+        "what_principal_wants": "string",
+        "what_agent_wants": "string",
+        "information_asymmetry": {
+          "type": "hidden_action | hidden_information | both",
+          "what_agent_knows": "string (that principal doesn't)",
+          "what_principal_cannot_observe": "string"
+        },
+        "moral_hazard_risk": {
+          "risk_level": "high | medium | low",
+          "how_agent_might_shirk": "string",
+          "conditions_for_opportunism": "string"
+        },
+        "adverse_selection_risk": {
+          "risk_level": "high | medium | low",
+          "how_manifests": "string"
+        },
+        "alignment_mechanisms": [
+          {
+            "mechanism": "string (monitoring, bonding, incentive alignment)",
+            "effectiveness": "number (0-1)",
+            "cost": "string"
+          }
+        ],
+        "residual_loss": "string (remaining inefficiency)",
+        "source_articles": [
+          "string"
+        ],
+        "produces_behaviors": [
+          "behavior_id (BEH{N})"
+        ],
+        "produces_outcomes": [
+          "outcome_id (OUT{N})"
+        ]
+      }
+    ],
+    "collective_action_problems": [
+      {
+        "ca_id": "string (format: 'CA{N}')",
+        "name": "string (e.g., 'The Tragedy of the Commons')",
+        "problem_type": "public_goods | commons | assurance | coordination | chicken | volunteers_dilemma",
+        "actors_involved": [
+          "actor_id (ACT{N})"
+        ],
+        "shared_resource_or_goal": "string",
+        "individual_incentive": "string (what's rational for each individual)",
+        "collective_outcome": "string (what happens when everyone follows individual incentive)",
+        "why_suboptimal": "string",
+        "free_rider_opportunity": {
+          "exists": "boolean",
+          "how_manifests": "string",
+          "who_free_rides": [
+            "actor_id (ACT{N})"
+          ]
+        },
+        "coordination_failure": {
+          "exists": "boolean",
+          "type": "multiple_equilibria | no_equilibrium | bad_equilibrium",
+          "why_hard_to_coordinate": "string"
+        },
+        "potential_solutions": [
+          {
+            "solution": "string",
+            "mechanism": "privatization | regulation | social_norms | selective_incentives | institutional_design",
+            "feasibility": "number (0-1)",
+            "who_must_implement": "string"
+          }
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "involves_incentives": [
+          "incentive_id (INC{N})"
+        ],
+        "produces_outcomes": [
+          "outcome_id (OUT{N})"
+        ]
+      }
+    ],
+    "game_structures": [
+      {
+        "game_id": "string (format: 'GAME{N}')",
+        "name": "string (e.g., 'The Pricing Game')",
+        "game_type": "prisoners_dilemma | chicken | assurance | coordination | zero_sum | positive_sum | negative_sum",
+        "players": [
+          "actor_id (ACT{N})"
+        ],
+        "strategies_available": [
+          {
+            "player": "actor_id (ACT{N})",
+            "strategies": [
+              "string"
+            ]
+          }
+        ],
+        "payoff_structure": "string (description of payoffs)",
+        "nash_equilibrium": {
+          "exists": "boolean",
+          "equilibrium": "string (what it is)",
+          "is_optimal": "boolean (is it Pareto optimal?)"
+        },
+        "repeated_game": {
+          "is_repeated": "boolean",
+          "how_changes_dynamics": "string | null"
+        },
+        "cooperation_possibility": {
+          "possible": "boolean",
+          "conditions": "string | null",
+          "enforcement_mechanism": "string | null"
+        },
+        "source_articles": [
+          "string"
+        ],
+        "produces_outcomes": [
+          "outcome_id (OUT{N})"
         ]
       }
     ],
     "perverse_incentives": [
       {
-        "perverse_id": "string",
-        "incentive_id": "string",
-        "intended_outcome": "string - what was supposed to happen",
-        "actual_outcome": "string - what actually happens",
-        "mechanism": "string - how incentive creates opposite behavior",
+        "perverse_id": "string (format: 'PERV{N}')",
+        "name": "string (e.g., 'The Cobra Effect')",
+        "incentive_involved": "incentive_id (INC{N})",
+        "intended_outcome": "string",
+        "actual_outcome": "string",
+        "mechanism_of_perversion": "string (how the incentive backfires)",
+        "why_not_anticipated": "string",
         "severity": "severe | significant | moderate | minor",
         "historical_parallels": [
-          "string - similar cases"
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "produces_outcomes": [
+          "outcome_id (OUT{N})"
+        ]
+      }
+    ],
+    "gaming_opportunities": [
+      {
+        "gaming_id": "string (format: 'GAM{N}')",
+        "name": "string",
+        "incentive_gamed": "incentive_id (INC{N})",
+        "gaming_strategy": "string (how actors game the system)",
+        "metric_exploited": "string",
+        "letter_vs_spirit": "string (following letter while violating spirit)",
+        "cost_to_stated_goals": "string",
+        "detectability": "easy | moderate | difficult | nearly_impossible",
+        "prevalence": "widespread | common | occasional | rare",
+        "examples": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "rent_seeking": [
+      {
+        "rent_id": "string (format: 'RENT{N}')",
+        "name": "string",
+        "rent_seeker": "actor_id (ACT{N})",
+        "rent_type": "regulatory | monopoly | subsidy | licensing | tariff | other",
+        "mechanism": "string (how rent is extracted)",
+        "value_extracted": "string (estimated magnitude)",
+        "value_created": "string (what if anything is created)",
+        "deadweight_loss": "string",
+        "who_pays": [
+          "string"
+        ],
+        "political_economy": "string (how rent-seeking is sustained)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "outcome_id": "string (format: 'OUT{N}')",
+        "name": "string",
+        "outcome_type": "intended | unintended | perverse | emergent",
+        "description": "string",
+        "who_benefits": [
+          "actor_id (ACT{N}) or string"
+        ],
+        "who_loses": [
+          "actor_id (ACT{N}) or string"
+        ],
+        "efficiency_assessment": "efficient | inefficient | severely_inefficient",
+        "equity_assessment": "equitable | inequitable | severely_inequitable",
+        "source_articles": [
+          "string"
+        ],
+        "produced_by_behaviors": [
+          "behavior_id (BEH{N})"
+        ],
+        "produced_by_games": [
+          "game_id (GAME{N})"
+        ],
+        "produced_by_problems": [
+          "pa_id (PA{N}) or ca_id (CA{N}) or perverse_id (PERV{N})"
+        ]
+      }
+    ],
+    "system_goals": [
+      {
+        "goal_id": "string (format: 'GOAL{N}')",
+        "name": "string",
+        "stated_goal": "string",
+        "whose_goal": "string (who articulates this goal)",
+        "actual_priority": "high | medium | low | rhetorical_only",
+        "goal_type": "efficiency | equity | stability | growth | control | legitimacy",
+        "measurability": "measurable | partially_measurable | unmeasurable",
+        "source_articles": [
+          "string"
+        ],
+        "aligned_incentives": [
+          "incentive_id (INC{N})"
+        ],
+        "misaligned_incentives": [
+          "incentive_id (INC{N})"
+        ],
+        "achieved_outcomes": [
+          "outcome_id (OUT{N})"
+        ]
+      }
+    ],
+    "system_structure": [
+      {
+        "system_id": "string (format: 'SYS{N}')",
+        "name": "string",
+        "system_type": "market | hierarchy | network | hybrid",
+        "key_actors": [
+          "actor_id (ACT{N})"
+        ],
+        "key_incentives": [
+          "incentive_id (INC{N})"
+        ],
+        "governance_mechanism": "string",
+        "stated_goals": [
+          "goal_id (GOAL{N})"
+        ],
+        "primary_problems": [
+          "pa_id (PA{N}) or ca_id (CA{N})"
+        ],
+        "overall_alignment": "number (0-1, how well incentives serve goals)",
+        "source_articles": [
+          "string"
         ]
       }
     ],
     "redesign_recommendations": [
       {
-        "recommendation_id": "string",
-        "problem_addressed": "string - which misalignment",
-        "current_incentive": "string",
+        "recommendation_id": "string (format: 'REC{N}')",
+        "problem_addressed": "string",
+        "current_structure": "string",
         "proposed_change": "string",
+        "mechanism": "string (how it would work)",
         "expected_improvement": "string",
-        "potential_gaming": "string - how new structure might be gamed"
+        "potential_gaming": "string (how new structure might be gamed)",
+        "implementation_barriers": [
+          "string"
+        ],
+        "who_would_resist": [
+          "actor_id (ACT{N})"
+        ],
+        "feasibility": "number (0-1)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "cross_document_patterns": {
+      "shared_incentive_problems": [
+        {
+          "problem": "string",
+          "recognized_by": [
+            "string (articles)"
+          ]
+        }
+      ],
+      "contested_diagnoses": [
+        {
+          "issue": "string",
+          "diagnosis_a": "string",
+          "diagnosis_b": "string",
+          "articles_supporting_a": [
+            "string"
+          ],
+          "articles_supporting_b": [
+            "string"
+          ]
+        }
+      ],
+      "solution_debates": [
+        {
+          "problem": "string",
+          "proposed_solutions": [
+            "string"
+          ],
+          "trade_offs": [
+            "string"
+          ]
+        }
+      ]
+    },
+    "relationship_graph": {
+      "nodes": [
+        {
+          "id": "string",
+          "type": "actor | incentive | behavior | pa_problem | ca_problem | game | perverse | gaming | rent | outcome | goal | system",
+          "label": "string",
+          "weight": "number (0-1)"
+        }
+      ],
+      "edges": [
+        {
+          "from_id": "string",
+          "to_id": "string",
+          "relationship": "faces | produces | misaligned_with | solves | games | causes | benefits | harms | part_of | governs",
+          "strength": "number (0-1)",
+          "bidirectional": "boolean",
+          "label": "string | null"
+        }
+      ],
+      "clusters": [
+        {
+          "cluster_id": "string",
+          "name": "string",
+          "member_ids": [
+            "string"
+          ],
+          "coherence": "number (0-1)",
+          "theme": "string"
+        }
+      ]
+    },
+    "incentive_cascades": [
+      {
+        "cascade_id": "string (format: 'CASC{N}')",
+        "name": "string",
+        "trigger": "incentive_id (INC{N}) or change",
+        "sequence": [
+          {
+            "step": "number",
+            "what_happens": "string",
+            "entity_affected": "string (actor, incentive, behavior, outcome)"
+          }
+        ],
+        "final_outcome": "string",
+        "total_effect": "positive | negative | mixed"
       }
     ],
     "meta": {
-      "systems_analyzed": "number",
-      "incentives_mapped": "number",
-      "aligned_incentives": "number",
-      "misaligned_incentives": "number",
-      "perverse_incentives_found": "number",
-      "overall_alignment_quality": "high | medium | low"
+      "total_actors": "number",
+      "total_incentives": "number",
+      "total_pa_problems": "number",
+      "total_ca_problems": "number",
+      "total_perverse_incentives": "number",
+      "total_gaming_opportunities": "number",
+      "overall_alignment": "number (0-1)",
+      "most_misaligned_incentive": "incentive_id",
+      "most_severe_problem": "string (pa_id, ca_id, or perverse_id)",
+      "most_gamed_metric": "string",
+      "document_count": "number",
+      "total_relationships": "number",
+      "graph_density": "number (0-1)"
     }
   },
   "extraction_focus": [
     "incentive_structures",
-    "reward_mechanisms",
-    "behavioral_predictions",
+    "principal_agent_problems",
+    "collective_action_problems",
+    "game_structures",
+    "perverse_incentives",
     "gaming_opportunities",
-    "perverse_incentives"
+    "rent_seeking",
+    "behavioral_predictions"
   ],
   "primary_output_modes": [
+    "gemini_network_graph",
+    "integrated_report",
     "structured_text_report",
-    "table"
+    "smart_table"
   ],
   "paradigm_keys": [
     "marxist",
     "pragmatist_praxis"
   ],
-  "source_file": "analyzer/src/engines/incentive_structure_mapper.py",
+  "source_file": "analyzer/src/engines/incentive_structure_mapper_advanced.py",
   "stage_context": {
-    "framework_key": null,
-    "additional_frameworks": [],
+    "framework_key": "public_choice",
+    "additional_frameworks": [
+      "game_theory",
+      "principal_agent",
+      "new_institutional_economics"
+    ],
     "extraction": {
       "analysis_type": "incentive structure",
       "analysis_type_plural": "incentive structures",
-      "core_question": "What behaviors do the incentives actually reward?",
+      "core_question": "What does this system actually reward, and why do people act the way they do?",
       "extraction_steps": [
-        "IDENTIFY SYSTEMS AND ACTORS",
-        "MAP INCENTIVE STRUCTURES",
-        "ASSESS ALIGNMENT",
-        "PREDICT BEHAVIORS",
-        "IDENTIFY GAMING OPPORTUNITIES",
-        "FIND PERVERSE INCENTIVES",
-        "SUGGEST REDESIGN"
+        "IDENTIFY ACTORS: Who are the key players? What are their interests, resources, constraints? What do they know? What's their time horizon?",
+        "MAP INCENTIVE STRUCTURES: For each actor, what behaviors are rewarded? How? What's measured? What's punished?",
+        "PREDICT BEHAVIORS: Given incentives, what will actors rationally do? How does this differ from intended behavior?",
+        "FIND PRINCIPAL-AGENT PROBLEMS: Where do information asymmetries create moral hazard or adverse selection? Who's the principal? Who's the agent? What can't the principal observe?",
+        "FIND COLLECTIVE ACTION PROBLEMS: Where do individual rationality and collective rationality diverge? Public goods? Commons? Coordination failures? Free rider problems?",
+        "ANALYZE GAME STRUCTURES: What games are actors playing? What's the payoff structure? Where's the Nash equilibrium? Is cooperation possible?",
+        "IDENTIFY PERVERSE INCENTIVES: Where do incentives backfire? Where does rewarding X produce less of X or more of Y?",
+        "FIND GAMING OPPORTUNITIES: How can the system be gamed? What metrics can be manipulated? Who's gaming?",
+        "IDENTIFY RENT-SEEKING: Where are actors extracting value without creating it? What political economy sustains this?",
+        "ASSESS ALIGNMENT: How well do incentives serve stated goals? Where's the misalignment?",
+        "TRACE OUTCOMES: What behaviors produce what outcomes? Who benefits? Who loses?",
+        "PROPOSE REDESIGNS: How could incentives be restructured? What gaming would the new structure invite?",
+        "BUILD THE RELATIONSHIP GRAPH: Connect actors, incentives, behaviors, outcomes"
       ],
-      "key_fields": {},
+      "key_fields": {
+        "incentive_id": "Individual incentive structures",
+        "pa_id": "Principal-agent problems",
+        "ca_id": "Collective action problems",
+        "perverse_id": "Perverse incentives"
+      },
       "id_field": "incentive_id",
       "key_relationships": [
-        "supports"
+        "faces",
+        "produces",
+        "misaligned_with",
+        "solves",
+        "games",
+        "causes",
+        "benefits",
+        "harms"
       ],
-      "special_instructions": null
+      "special_instructions": "CRITICAL: The key insight is usually about misalignment - where what's rewarded differs from what's wanted. Don't assume actors are irrational or malicious; assume they're responding rationally to incentives. If behavior seems irrational, look harder at the actual incentives. The perverse incentive or gaming opportunity is often the most valuable finding."
     },
     "curation": {
       "item_type": "incentive structure",
       "item_type_plural": "incentive structures",
-      "consolidation_rules": [],
+      "consolidation_rules": [
+        "IDENTIFY SHARED INCENTIVE PROBLEMS: What problems are recognized across documents?",
+        "MAP CONTESTED DIAGNOSES: Where do documents disagree about what's causing problems?",
+        "CONSOLIDATE ACTORS: Build complete profiles across documents",
+        "MAP SOLUTION DEBATES: What solutions are proposed? What trade-offs?",
+        "ASSESS OVERALL SYSTEM: How misaligned is the system overall?",
+        "Never mention public choice, game theory, principal-agent - lead with concrete incentive analysis"
+      ],
       "cross_doc_patterns": [
-        "shared_items",
-        "contested_items",
-        "response_network"
+        "shared_incentive_problems",
+        "contested_diagnoses",
+        "solution_debates"
       ],
       "synthesis_outputs": [
-        "consolidated_item_list",
-        "relationship_map",
-        "cross_document_dynamics"
+        "consolidated_incentive_map",
+        "relationship_graph",
+        "cross_document_patterns",
+        "incentive_cascades"
       ],
-      "special_instructions": null
+      "special_instructions": "The most valuable finding is often the perverse incentive nobody has noticed - where a policy creates exactly the opposite of its intended effect. Also look for gaming that has become normalized."
     },
     "concretization": {
-      "id_examples": [],
-      "naming_guidance": "",
-      "recommended_table_types": [],
-      "recommended_visual_patterns": []
+      "id_examples": [
+        {
+          "from": "ACT1",
+          "to": "Pharmaceutical Company Executives"
+        },
+        {
+          "from": "INC1",
+          "to": "Stock Price Performance Bonus"
+        },
+        {
+          "from": "PA1",
+          "to": "Shareholder-Executive Principal-Agent Problem"
+        },
+        {
+          "from": "CA1",
+          "to": "Industry Safety Standards as Public Good"
+        },
+        {
+          "from": "PERV1",
+          "to": "The Wells Fargo Fake Accounts Incentive"
+        },
+        {
+          "from": "GAM1",
+          "to": "Teaching to the Test"
+        },
+        {
+          "from": "GAME1",
+          "to": "Race to the Bottom on Environmental Standards"
+        }
+      ],
+      "naming_guidance": "Use concrete, vivid names. Reference real-world examples when possible.",
+      "recommended_table_types": [
+        "incentive_alignment_matrix",
+        "actor_incentive_map",
+        "problem_inventory"
+      ],
+      "recommended_visual_patterns": [
+        "incentive_flow_diagram",
+        "game_matrix",
+        "misalignment_map"
+      ]
     },
     "audience_vocabulary": {
-      "researcher": {},
-      "analyst": {},
-      "executive": {},
-      "activist": {}
+      "researcher": {
+        "pa_problem": "principal-agent problem",
+        "ca_problem": "collective action problem",
+        "perverse": "perverse incentive",
+        "gaming": "metric gaming"
+      },
+      "analyst": {
+        "pa_problem": "delegation problem",
+        "ca_problem": "coordination failure",
+        "perverse": "backfiring incentive",
+        "gaming": "gaming the system"
+      },
+      "executive": {
+        "pa_problem": "agency cost",
+        "ca_problem": "collective action challenge",
+        "perverse": "unintended consequence",
+        "gaming": "metric manipulation"
+      },
+      "activist": {
+        "pa_problem": "who watches the watchmen",
+        "ca_problem": "why we can't organize",
+        "perverse": "how their incentives hurt us",
+        "gaming": "how they cheat the system"
+      }
     },
     "skip_concretization": false
   }

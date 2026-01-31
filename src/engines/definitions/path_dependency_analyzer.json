@@ -1,195 +1,861 @@
 {
   "engine_key": "path_dependency_analyzer",
   "engine_name": "Path Dependency Analyzer",
-  "description": "Analyzes path dependency and historical constraints on choices. Identifies critical junctures, increasing returns, and lock-in effects. Essential for understanding why inefficient arrangements persist and when path-breaking change is possible.",
+  "description": "Deep analysis of how early choices and historical sequences constrain later possibilities. Grounded in Pierson's increasing returns theory, North's institutional economics, Arthur's lock-in mechanisms, and Mahoney's critical juncture methodology. Reveals why suboptimal arrangements persist, how small early events produce outsized long-term effects, when path-breaking change becomes possible, and what makes some institutions sticky while others evolve. Essential for understanding historical inefficiency, timing effects, and the difference between paths that could have been different versus those that were overdetermined.",
   "version": 1,
-  "category": "institutional",
+  "category": "temporal",
   "kind": "synthesis",
-  "reasoning_domain": "institutional_analysis",
-  "researcher_question": "How does history constrain current choices?",
+  "reasoning_domain": "path_dependence_advanced",
+  "researcher_question": "How did early choices and historical sequences constrain later possibilities, and what would it take to break out of the current path?",
   "canonical_schema": {
-    "path_context": {
-      "path_domain": "string - what institution/technology/practice",
-      "current_arrangement": "string - present state",
-      "alternative_arrangements": [
-        "string - what could exist instead"
-      ],
-      "efficiency_of_current": "efficient | suboptimal | inefficient"
-    },
-    "critical_junctures": [
-      {
-        "juncture_id": "string - CJ1, CJ2, etc.",
-        "when": "string - timing",
-        "what_happened": "string - the choice made",
-        "alternatives": [
-          "string - paths not taken"
-        ],
-        "why_this_path": "string - what determined the choice",
-        "contingency": "highly_contingent | moderately_contingent | largely_determined",
-        "path_set": "string - what this juncture determined",
-        "evidence": [
-          "string - sources"
-        ]
-      }
-    ],
-    "increasing_returns": [
-      {
-        "mechanism_id": "string - IR1, IR2, etc.",
-        "mechanism_type": "learning | coordination | adaptive_expectations | network_effects | sunk_costs | complementary_institutions",
-        "description": "string - how positive feedback works",
-        "strength": "weak | moderate | strong",
-        "beneficiaries": [
-          "string - who benefits from staying on path"
-        ],
-        "evidence": [
-          "string - supporting observations"
-        ]
-      }
-    ],
-    "lock_in_analysis": {
-      "lock_in_present": "yes | no | partial",
-      "lock_in_type": "technological | institutional | cognitive | all",
-      "switching_costs": {
-        "financial": "string - monetary costs of switching",
-        "coordination": "string - coordination costs",
-        "learning": "string - learning costs",
-        "political": "string - political costs"
-      },
-      "total_switching_cost": "low | moderate | high | prohibitive",
-      "who_bears_costs": [
-        "string - who would pay to switch"
+    "critical_junctures": {
+      "description": "Moments of genuine contingency when multiple paths were possible and actors had real agency to select among alternatives. Following Mahoney: the choice must have been genuinely open, the selection consequential, and the path thereafter difficult to reverse.",
+      "items": [
+        {
+          "juncture_id": "string (format: 'CJ{N}' e.g., 'CJ1', 'CJ2')",
+          "name": "string (evocative name like 'The 1979 Regulatory Crossroads')",
+          "what_happened": "string (the decision or event that occurred)",
+          "when": "string (temporal marker - date, period, or sequence position)",
+          "duration": "string (how long the window of opportunity remained open)",
+          "what_was_at_stake": "string (what was being decided)",
+          "why_this_was_a_juncture": "string (what made this moment special - crisis, opening, convergence)",
+          "alternatives_available": [
+            {
+              "alternative_id": "string (PA{N})",
+              "path_description": "string",
+              "why_viable": "string",
+              "who_advocated": "string"
+            }
+          ],
+          "what_was_chosen": "string (the actual selection)",
+          "why_this_was_chosen": "string (proximate causes of selection)",
+          "degree_of_contingency": "high | moderate | low",
+          "contingency_explanation": "string (what could easily have been different)",
+          "decision_makers": [
+            "string (actors with agency at this moment)"
+          ],
+          "constraints_on_choice": "string (what limited the option set)",
+          "source_articles": [
+            "string"
+          ],
+          "preceded_by_conditions": [
+            "condition_id (AC{N} or PC{N})"
+          ],
+          "enabled_by_permissive_conditions": [
+            "condition_id (PC{N})"
+          ],
+          "caused_by_productive_conditions": [
+            "condition_id (PDC{N})"
+          ],
+          "initiated_path": "path_segment_id (PS{N})",
+          "foreclosed_alternatives": [
+            "alternative_id (PA{N})"
+          ],
+          "triggered_sequences": [
+            "sequence_id (RS{N} or SRS{N})"
+          ],
+          "part_of_conjuncture": "conjuncture_id (CONJ{N}) | null"
+        }
       ]
     },
-    "path_stability": {
-      "reinforcing_mechanisms": [
-        "string - what maintains path"
-      ],
-      "destabilizing_forces": [
-        "string - what might disrupt path"
-      ],
-      "reactive_sequences": [
-        "string - how path triggers responses"
-      ],
-      "path_stability_assessment": "highly_stable | stable | vulnerable | unstable"
-    },
-    "path_breaking_analysis": {
-      "historical_breaks": [
-        "string - when path was broken before"
-      ],
-      "current_break_possibilities": [
+    "path_segments": {
+      "description": "Periods of relative stability where a particular institutional arrangement, policy trajectory, or behavioral pattern dominates. Characterized by reproduction mechanisms that make the path self-sustaining.",
+      "items": [
         {
-          "trigger": "string - what could break path",
-          "mechanism": "string - how break would occur",
-          "likelihood": "low | medium | high",
-          "barriers": [
-            "string - what resists break"
+          "segment_id": "string (format: 'PS{N}')",
+          "name": "string (evocative name like 'The Era of Regulated Competition')",
+          "what_characterizes_this_path": "string (the dominant pattern)",
+          "path_type": "institutional | technological | policy | behavioral | ideological | market_structure",
+          "beginning": "string (when this path began)",
+          "ending": "string (when it ended, or 'ongoing')",
+          "duration": "string (how long it lasted)",
+          "originated_from": "juncture_id (CJ{N}) | segment_id (PS{N})",
+          "why_this_path_persists": "string (reproduction mechanisms)",
+          "who_benefits": [
+            "string (actors advantaged by this path)"
+          ],
+          "who_loses": [
+            "string (actors disadvantaged)"
+          ],
+          "efficiency_assessment": "optimal | suboptimal | highly_inefficient | contested",
+          "what_makes_it_inefficient": "string | null (if suboptimal, why)",
+          "qwerty_characteristics": "string | null (classic lock-in despite better alternatives)",
+          "stability": "highly_stable | stable | weakening | contested",
+          "source_articles": [
+            "string"
+          ],
+          "locked_in_by": [
+            "mechanism_id (LM{N})"
+          ],
+          "reinforced_by_sequences": [
+            "sequence_id (SRS{N})"
+          ],
+          "increasing_returns_from": [
+            "source_id (IRS{N})"
+          ],
+          "switching_costs": [
+            "cost_id (SC{N})"
+          ],
+          "layered_upon": "segment_id (PS{N}) | null",
+          "converted_from": "segment_id (PS{N}) | null",
+          "drifting_from_original": "boolean",
+          "displacement_attempts": [
+            "attempt_id (PBA{N})"
+          ],
+          "preceded_by": "segment_id (PS{N}) | juncture_id (CJ{N})",
+          "followed_by": "segment_id (PS{N}) | juncture_id (CJ{N}) | null"
+        }
+      ]
+    },
+    "antecedent_conditions": {
+      "description": "Conditions that existed prior to a critical juncture and shaped what was possible. Following Mahoney: these set the stage but don't determine outcomes.",
+      "items": [
+        {
+          "condition_id": "string (format: 'AC{N}')",
+          "name": "string (the condition)",
+          "what_it_was": "string (description of the condition)",
+          "condition_type": "structural | ideational | material | relational | institutional | demographic | technological",
+          "temporal_depth": "recent | medium_term | long_standing | deep_historical",
+          "how_it_shaped_options": "string (what it enabled or constrained)",
+          "was_this_recognized": "boolean (did actors perceive this condition)",
+          "source_articles": [
+            "string"
+          ],
+          "preceded_junctures": [
+            "juncture_id (CJ{N})"
+          ],
+          "produced_by_earlier_path": "segment_id (PS{N}) | null",
+          "combined_with": [
+            "condition_id (AC{N} or PC{N} or PDC{N})"
+          ],
+          "part_of_conjuncture": "conjuncture_id (CONJ{N}) | null"
+        }
+      ]
+    },
+    "permissive_conditions": {
+      "description": "Conditions that made change possible by loosening prior constraints or creating openings. They allow but do not directly cause transformation.",
+      "items": [
+        {
+          "condition_id": "string (format: 'PC{N}')",
+          "name": "string (the condition)",
+          "what_it_was": "string (description)",
+          "how_it_loosened_constraints": "string (what previously blocked path was removed)",
+          "what_it_permitted": "string (what became possible)",
+          "condition_type": "crisis | external_shock | legitimacy_collapse | coalition_fracture | resource_shift | ideological_opening",
+          "timing": "string (when this condition emerged)",
+          "duration": "string (how long the window stayed open)",
+          "source_articles": [
+            "string"
+          ],
+          "enabled_junctures": [
+            "juncture_id (CJ{N})"
+          ],
+          "combined_with_productive": [
+            "condition_id (PDC{N})"
+          ],
+          "part_of_conjuncture": "conjuncture_id (CONJ{N}) | null"
+        }
+      ]
+    },
+    "productive_conditions": {
+      "description": "Conditions that actively produced change by generating the specific outcome. They causally drive the result rather than merely permitting it.",
+      "items": [
+        {
+          "condition_id": "string (format: 'PDC{N}')",
+          "name": "string (the condition)",
+          "what_it_was": "string (description)",
+          "how_it_produced_outcome": "string (the causal mechanism)",
+          "condition_type": "actor_mobilization | ideological_project | coalition_formation | resource_deployment | strategic_action | demonstration_effect",
+          "agents_involved": [
+            "string (who enacted this)"
+          ],
+          "source_articles": [
+            "string"
+          ],
+          "produced_outcomes_at": [
+            "juncture_id (CJ{N})"
+          ],
+          "combined_with_permissive": [
+            "condition_id (PC{N})"
+          ],
+          "depended_on_antecedents": [
+            "condition_id (AC{N})"
+          ],
+          "part_of_conjuncture": "conjuncture_id (CONJ{N}) | null"
+        }
+      ]
+    },
+    "conjunctures": {
+      "description": "The coming together of multiple independent causal chains at a particular moment. Following Mahoney and Pierson: the intersection of streams that creates transformative potential.",
+      "items": [
+        {
+          "conjuncture_id": "string (format: 'CONJ{N}')",
+          "name": "string (evocative name like 'The Perfect Storm of 2008')",
+          "what_converged": "string (what streams came together)",
+          "why_convergence_mattered": "string (what the combination produced)",
+          "timing": "string (when)",
+          "probability_of_convergence": "low | moderate | high",
+          "would_components_alone_suffice": "boolean",
+          "source_articles": [
+            "string"
+          ],
+          "component_conditions": [
+            "condition_id (AC{N}, PC{N}, or PDC{N})"
+          ],
+          "produced_juncture": "juncture_id (CJ{N}) | null",
+          "component_sequences": [
+            "sequence_id (RS{N})"
+          ],
+          "external_events": [
+            "event_id (CE{N})"
           ]
         }
-      ],
-      "required_conditions": [
-        "string - what's needed for path-break"
       ]
     },
-    "counterfactual_analysis": {
-      "alternative_paths": [
+    "lock_in_mechanisms": {
+      "description": "The specific mechanisms that make paths difficult to exit. Following Arthur and Pierson: large setup costs, learning effects, coordination effects, and adaptive expectations.",
+      "items": [
         {
-          "path": "string - alternative that could have been",
-          "efficiency_comparison": "better | similar | worse",
-          "why_not_taken": "string - why this path wasn't chosen",
-          "accessibility_now": "impossible | difficult | possible"
+          "mechanism_id": "string (format: 'LM{N}')",
+          "name": "string (evocative name like 'The Sunk Cost Trap')",
+          "mechanism_type": "setup_costs | learning_effects | coordination_effects | adaptive_expectations | institutional_complementarity | power_asymmetry | legitimation | cognitive_lock_in | network_effects | increasing_returns_to_adoption",
+          "how_it_works": "string (the causal logic)",
+          "what_it_locks_in": "string (what becomes difficult to change)",
+          "strength": "weak | moderate | strong | overwhelming",
+          "who_maintains_it": [
+            "string (actors invested in reproduction)"
+          ],
+          "could_it_be_overcome": "string (what would break this lock)",
+          "source_articles": [
+            "string"
+          ],
+          "locks_in_paths": [
+            "segment_id (PS{N})"
+          ],
+          "generates_returns": [
+            "source_id (IRS{N})"
+          ],
+          "creates_switching_costs": [
+            "cost_id (SC{N})"
+          ],
+          "reinforces_sequences": [
+            "sequence_id (SRS{N})"
+          ]
         }
       ]
     },
-    "path_dependency_assessment": {
-      "path_dependency_strength": "weak | moderate | strong",
-      "key_junctures": [
-        "string - most important juncture_ids"
+    "increasing_returns_sources": {
+      "description": "Specific sources of positive feedback that make staying on path increasingly attractive. Following Arthur: these create the 'gravitational pull' of established paths.",
+      "items": [
+        {
+          "source_id": "string (format: 'IRS{N}')",
+          "name": "string (the source of returns)",
+          "returns_type": "scale_economies | learning_by_doing | network_externalities | signaling_effects | complementary_investments | political_returns | ideological_returns | coordination_benefits | legitimacy_accumulation",
+          "how_returns_increase": "string (the mechanism of amplification)",
+          "beneficiaries": [
+            "string (who captures the returns)"
+          ],
+          "magnitude": "small | moderate | large | transformative",
+          "timing_of_returns": "immediate | delayed | cumulative | threshold_triggered",
+          "evidence_of_returns": "string (how we know returns are increasing)",
+          "source_articles": [
+            "string"
+          ],
+          "reinforces_path": [
+            "segment_id (PS{N})"
+          ],
+          "generated_by_mechanisms": [
+            "mechanism_id (LM{N})"
+          ],
+          "feeds_into_sequences": [
+            "sequence_id (SRS{N})"
+          ]
+        }
+      ]
+    },
+    "switching_costs": {
+      "description": "The costs that must be paid to exit the current path and transition to an alternative. These can be material, political, cognitive, or social.",
+      "items": [
+        {
+          "cost_id": "string (format: 'SC{N}')",
+          "name": "string (the cost)",
+          "cost_type": "sunk_investment_loss | retraining_costs | coordination_costs | political_costs | legitimacy_costs | cognitive_costs | transition_uncertainty | stranded_assets | relationship_costs | identity_costs",
+          "magnitude": "trivial | modest | significant | prohibitive",
+          "who_would_bear_cost": [
+            "string (actors who would pay)"
+          ],
+          "how_calculated": "string (what goes into the cost assessment)",
+          "is_cost_real_or_perceived": "real | perceived | both",
+          "who_benefits_from_high_costs": [
+            "string (actors invested in high switching costs)"
+          ],
+          "could_costs_be_reduced": "string (what would lower them)",
+          "source_articles": [
+            "string"
+          ],
+          "blocks_exit_from": [
+            "segment_id (PS{N})"
+          ],
+          "prevents_transition_to": [
+            "alternative_id (PA{N})"
+          ],
+          "created_by_mechanisms": [
+            "mechanism_id (LM{N})"
+          ],
+          "factors_in_attempts": [
+            "attempt_id (PBA{N})"
+          ]
+        }
+      ]
+    },
+    "self_reinforcing_sequences": {
+      "description": "Sequences where an initial event triggers a chain of reactions that amplify and entrench the original pattern. Following Mahoney: each step makes the next more likely and reversal less likely.",
+      "items": [
+        {
+          "sequence_id": "string (format: 'SRS{N}')",
+          "name": "string (evocative name like 'The Virtuous Cycle of Expertise')",
+          "sequence_type": "institutional_reproduction | power_accumulation | legitimacy_building | resource_concentration | expectation_formation | skill_deepening | network_densification",
+          "story": "string (narrative of how reinforcement works)",
+          "steps": [
+            {
+              "step_number": "number",
+              "what_happens": "string",
+              "how_it_reinforces": "string",
+              "time_lag": "string"
+            }
+          ],
+          "amplification_rate": "slow | moderate | rapid | explosive",
+          "current_strength": "nascent | building | dominant | saturated",
+          "turning_points": "string (moments when sequence could have been interrupted)",
+          "what_would_break_it": "string",
+          "source_articles": [
+            "string"
+          ],
+          "reinforces_path": [
+            "segment_id (PS{N})"
+          ],
+          "driven_by_mechanisms": [
+            "mechanism_id (LM{N})"
+          ],
+          "fed_by_returns": [
+            "source_id (IRS{N})"
+          ],
+          "triggered_by_juncture": "juncture_id (CJ{N}) | null",
+          "interacts_with_sequences": [
+            "sequence_id (SRS{N} or RS{N})"
+          ]
+        }
+      ]
+    },
+    "reactive_sequences": {
+      "description": "Sequences where each event is a reaction to preceding events, creating chains of causally connected steps. Following Mahoney: temporally ordered events where early events trigger later ones.",
+      "items": [
+        {
+          "sequence_id": "string (format: 'RS{N}')",
+          "name": "string (evocative name like 'The Regulatory Backlash Chain')",
+          "sequence_type": "action_reaction | mobilization_countermobilization | unintended_consequence_chain | institutional_adaptation | conflict_escalation | reform_and_retrenchment",
+          "story": "string (narrative of the reactive chain)",
+          "steps": [
+            {
+              "step_number": "number",
+              "event": "string",
+              "reaction_to": "string (previous step)",
+              "what_it_triggered": "string",
+              "time_lag": "string"
+            }
+          ],
+          "was_outcome_intended": "boolean",
+          "what_was_intended_vs_actual": "string | null",
+          "reversibility": "reversible | partially_reversible | irreversible",
+          "source_articles": [
+            "string"
+          ],
+          "initiated_by": "juncture_id (CJ{N}) | event_id (CE{N})",
+          "part_of_path": "segment_id (PS{N}) | null",
+          "produces_conditions_for": [
+            "condition_id (AC{N} or PC{N})"
+          ],
+          "contributes_to_conjuncture": "conjuncture_id (CONJ{N}) | null",
+          "interacts_with_sequences": [
+            "sequence_id (SRS{N} or RS{N})"
+          ]
+        }
+      ]
+    },
+    "contingent_events": {
+      "description": "Small events whose occurrence was not determined by prior conditions but which had outsized long-term effects. These are the 'accidents of history' that path dependence theory takes seriously.",
+      "items": [
+        {
+          "event_id": "string (format: 'CE{N}')",
+          "name": "string (the event)",
+          "what_happened": "string",
+          "when": "string",
+          "why_contingent": "string (what made this not determined by prior conditions)",
+          "probability_assessment": "highly_unlikely | unlikely | uncertain | plausible",
+          "counterfactual": "string (what would have happened otherwise)",
+          "magnitude_of_effect": "minor | moderate | major | transformative",
+          "time_to_effect": "immediate | short_term | long_term | very_long_term",
+          "mechanism_of_amplification": "string (how small cause became large effect)",
+          "source_articles": [
+            "string"
+          ],
+          "triggered_juncture": "juncture_id (CJ{N}) | null",
+          "initiated_sequence": "sequence_id (RS{N} or SRS{N}) | null",
+          "part_of_conjuncture": "conjuncture_id (CONJ{N}) | null",
+          "affected_path": "segment_id (PS{N}) | null"
+        }
+      ]
+    },
+    "institutional_arrangements": {
+      "description": "The formal and informal institutions that constitute the path. Following North: the rules of the game that structure incentives and shape behavior.",
+      "items": [
+        {
+          "arrangement_id": "string (format: 'IA{N}')",
+          "name": "string (the institution)",
+          "what_it_is": "string (description of the arrangement)",
+          "institution_type": "formal_rule | informal_norm | organizational_form | governance_structure | property_rights | contract_form | regulatory_regime | constitutional_provision",
+          "when_established": "string",
+          "how_established": "string (origins)",
+          "what_it_governs": "string (domain of application)",
+          "who_designed_it": [
+            "string"
+          ],
+          "who_enforces_it": [
+            "string"
+          ],
+          "incentives_created": "string (behavioral effects)",
+          "distributional_effects": "string (who wins, who loses)",
+          "complementarities": [
+            "arrangement_id (IA{N}) - institutions it works with"
+          ],
+          "contradictions": [
+            "arrangement_id (IA{N}) - institutions it conflicts with"
+          ],
+          "stability": "stable | contested | evolving | eroding",
+          "source_articles": [
+            "string"
+          ],
+          "part_of_path": "segment_id (PS{N})",
+          "created_at_juncture": "juncture_id (CJ{N}) | null",
+          "layered_upon": "arrangement_id (IA{N}) | null",
+          "converted_from": "arrangement_id (IA{N}) | null",
+          "subject_to_drift": "boolean",
+          "change_trajectory": "change_id (IC{N}) | null"
+        }
+      ]
+    },
+    "institutional_changes": {
+      "description": "Changes to institutional arrangements short of wholesale replacement. Following Streeck and Thelen: layering, conversion, drift, and displacement.",
+      "items": [
+        {
+          "change_id": "string (format: 'IC{N}')",
+          "name": "string (evocative name)",
+          "change_type": "layering | conversion | drift | displacement",
+          "what_changed": "string (description of the change)",
+          "mechanism": "string (how change happened)",
+          "layering_description": "string | null (if layering: what was added on top)",
+          "conversion_description": "string | null (if conversion: how purpose was redirected)",
+          "drift_description": "string | null (if drift: how context changed while rules stayed same)",
+          "displacement_description": "string | null (if displacement: what replaced what)",
+          "agents_of_change": [
+            "string"
+          ],
+          "was_change_intended": "boolean",
+          "beneficiaries": [
+            "string"
+          ],
+          "losers": [
+            "string"
+          ],
+          "source_articles": [
+            "string"
+          ],
+          "affects_arrangement": "arrangement_id (IA{N})",
+          "affects_path": "segment_id (PS{N})",
+          "preceded_juncture": "juncture_id (CJ{N}) | null",
+          "triggered_by_event": "event_id (CE{N}) | null"
+        }
+      ]
+    },
+    "path_alternatives": {
+      "description": "Paths that were possible but not taken. Essential for establishing genuine contingency and assessing the counterfactual costs of the actual path.",
+      "items": [
+        {
+          "alternative_id": "string (format: 'PA{N}')",
+          "name": "string (evocative name like 'The European Model')",
+          "what_this_path_would_have_been": "string (description of the alternative)",
+          "why_it_was_viable": "string (what made this a real option)",
+          "who_supported_it": [
+            "string"
+          ],
+          "why_it_was_not_chosen": "string (proximate causes of non-selection)",
+          "when_foreclosed": "string (when this option closed)",
+          "why_foreclosed": "string (what made it no longer viable)",
+          "comparative_efficiency": "more_efficient | equally_efficient | less_efficient | contested",
+          "distributional_comparison": "string (who would have won/lost differently)",
+          "counterfactual_assessment": "string (best guess of how things would have developed)",
+          "could_it_be_revived": "yes | possibly | unlikely | no",
+          "what_would_revive_it": "string | null",
+          "source_articles": [
+            "string"
+          ],
+          "available_at_juncture": "juncture_id (CJ{N})",
+          "foreclosed_by": "juncture_id (CJ{N}) | mechanism_id (LM{N})",
+          "blocked_by_costs": [
+            "cost_id (SC{N})"
+          ],
+          "advocated_by": [
+            "string"
+          ]
+        }
+      ]
+    },
+    "path_breaking_attempts": {
+      "description": "Efforts to exit the current path, whether successful or failed. Understanding why some succeed reveals the conditions for path-breaking change.",
+      "items": [
+        {
+          "attempt_id": "string (format: 'PBA{N}')",
+          "name": "string (evocative name like 'The 1994 Reform Push')",
+          "what_was_attempted": "string (the effort to change paths)",
+          "when": "string",
+          "who_attempted": [
+            "string (actors driving the attempt)"
+          ],
+          "what_they_sought": "string (target alternative path)",
+          "strategy": "string (how they tried to break the path)",
+          "resources_mobilized": "string (what they brought to bear)",
+          "obstacles_encountered": [
+            "string"
+          ],
+          "outcome": "succeeded | partially_succeeded | failed | ongoing",
+          "why_this_outcome": "string (explanation of success/failure)",
+          "what_changed": "string (if any path alteration occurred)",
+          "unintended_consequences": "string | null",
+          "source_articles": [
+            "string"
+          ],
+          "targeted_path": "segment_id (PS{N})",
+          "sought_alternative": "alternative_id (PA{N}) | null",
+          "faced_mechanisms": [
+            "mechanism_id (LM{N})"
+          ],
+          "faced_costs": [
+            "cost_id (SC{N})"
+          ],
+          "exploited_conditions": [
+            "condition_id (PC{N} or PDC{N})"
+          ],
+          "produced_juncture": "juncture_id (CJ{N}) | null",
+          "triggered_sequence": "sequence_id (RS{N}) | null"
+        }
+      ]
+    },
+    "inefficiency_traps": {
+      "description": "Situations where the current path is demonstrably suboptimal but switching costs or lock-in mechanisms prevent exit. Classic QWERTY dynamics.",
+      "items": [
+        {
+          "trap_id": "string (format: 'IT{N}')",
+          "name": "string (evocative name like 'The QWERTY of American Healthcare')",
+          "what_is_inefficient": "string (the suboptimal arrangement)",
+          "compared_to_what": "string (the more efficient alternative)",
+          "evidence_of_inefficiency": "string (how we know it's suboptimal)",
+          "efficiency_gap": "small | moderate | large | enormous",
+          "why_it_persists": "string (what maintains the inefficiency)",
+          "who_is_harmed": [
+            "string"
+          ],
+          "who_benefits_from_persistence": [
+            "string"
+          ],
+          "awareness": "widely_recognized | contested | unrecognized",
+          "reform_attempts": [
+            "attempt_id (PBA{N})"
+          ],
+          "source_articles": [
+            "string"
+          ],
+          "characterizes_path": "segment_id (PS{N})",
+          "maintained_by_mechanisms": [
+            "mechanism_id (LM{N})"
+          ],
+          "blocked_by_costs": [
+            "cost_id (SC{N})"
+          ],
+          "alternative_blocked": "alternative_id (PA{N})"
+        }
+      ]
+    },
+    "temporal_sequences": {
+      "description": "The ordering and timing of events, which per Pierson matters enormously for outcomes. Captures the 'when' and 'in what order' of historical development.",
+      "items": [
+        {
+          "sequence_id": "string (format: 'TS{N}')",
+          "name": "string (the sequence)",
+          "events_in_order": [
+            {
+              "order": "number",
+              "event": "string (what happened)",
+              "timing": "string (when)",
+              "event_reference": "juncture_id or event_id or segment_id"
+            }
+          ],
+          "why_order_mattered": "string (how sequence affected outcomes)",
+          "counterfactual_reordering": "string (what would have happened with different timing)",
+          "pierson_timing_effects": "string (specific timing mechanisms: early lock-in, sequence effects, conjunctural effects)",
+          "source_articles": [
+            "string"
+          ],
+          "encompasses_junctures": [
+            "juncture_id (CJ{N})"
+          ],
+          "encompasses_segments": [
+            "segment_id (PS{N})"
+          ],
+          "encompasses_events": [
+            "event_id (CE{N})"
+          ]
+        }
+      ]
+    },
+    "relationship_graph": {
+      "nodes": [
+        {
+          "id": "string (any entity ID from above)",
+          "type": "string (entity type: critical_juncture, path_segment, lock_in_mechanism, etc.)",
+          "label": "string (short display name, 2-5 words)",
+          "weight": "number (0-1, centrality/importance in the path dependence story)"
+        }
       ],
-      "dominant_mechanisms": [
-        "string - main increasing returns"
+      "edges": [
+        {
+          "from_id": "string (source entity ID)",
+          "to_id": "string (target entity ID)",
+          "relationship": "string (from key_relationships: initiates, locks_in, reinforces, etc.)",
+          "strength": "number (0-1)",
+          "bidirectional": "boolean",
+          "label": "string (optional edge label)",
+          "temporal_order": "number | null (if sequence matters)"
+        }
       ],
-      "implications": "string - what path dependency means for future",
-      "recommendations": [
-        "string - what can be done"
+      "clusters": [
+        {
+          "cluster_id": "string (format: 'CL{N}')",
+          "name": "string (evocative cluster name like 'The Founding Lock-In Complex')",
+          "member_ids": [
+            "string (entity IDs)"
+          ],
+          "coherence": "number (0-1)",
+          "theme": "string (what unifies this cluster)",
+          "temporal_period": "string | null (if cluster is temporally bounded)"
+        }
       ]
     },
     "meta": {
-      "junctures_identified": "number",
-      "increasing_returns_mechanisms": "number",
-      "path_breaks_found": "number"
+      "total_junctures": "number",
+      "total_path_segments": "number",
+      "total_lock_in_mechanisms": "number",
+      "total_increasing_returns_sources": "number",
+      "total_switching_costs": "number",
+      "total_sequences": "number (SRS + RS combined)",
+      "total_institutional_arrangements": "number",
+      "total_path_alternatives": "number",
+      "total_breaking_attempts": "number",
+      "total_inefficiency_traps": "number",
+      "dominant_path": "segment_id (PS{N}) - the main path being analyzed",
+      "deepest_lock_in": "mechanism_id (LM{N}) - strongest lock-in mechanism",
+      "highest_switching_cost": "cost_id (SC{N})",
+      "most_consequential_juncture": "juncture_id (CJ{N})",
+      "most_contingent_event": "event_id (CE{N})",
+      "primary_inefficiency": "trap_id (IT{N}) | null",
+      "path_stability_assessment": "highly_stable | stable | weakening | vulnerable | in_crisis",
+      "most_promising_breaking_point": "string (assessment of where change might occur)",
+      "key_insight": "string (2-3 sentence summary of the path dependence analysis)"
     }
   },
-  "extraction_focus": [
-    "historical_sequences",
-    "critical_junctures",
-    "increasing_returns",
-    "lock_in_effects",
-    "path_breaking"
-  ],
-  "primary_output_modes": [
-    "structured_text_report",
-    "table"
-  ],
-  "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/path_dependency_analyzer.py",
   "stage_context": {
-    "framework_key": null,
-    "additional_frameworks": [],
+    "framework_key": "historical_institutionalism",
+    "additional_frameworks": [
+      "increasing_returns_economics",
+      "institutional_change_theory"
+    ],
     "extraction": {
-      "analysis_type": "path dependency",
-      "analysis_type_plural": "path dependencys",
-      "core_question": "How does history constrain current choices?",
+      "analysis_type": "path dependence analysis",
+      "analysis_type_plural": "path dependence analyses",
+      "core_question": "How did early choices and sequences constrain later possibilities, and what sustains the current path?",
       "extraction_steps": [
-        "IDENTIFY THE PATH",
-        "FIND CRITICAL JUNCTURES",
-        "IDENTIFY INCREASING RETURNS",
-        "ASSESS LOCK-IN",
-        "EVALUATE PATH STABILITY",
-        "ANALYZE PATH-BREAKING",
-        "COUNTERFACTUAL ANALYSIS",
-        "OVERALL ASSESSMENT"
+        "STEP 1: IDENTIFY CRITICAL JUNCTURES - Following Mahoney, locate moments of genuine contingency where multiple paths were possible. Ask: Was there a real choice? Did the selection have lasting consequences? Did it become increasingly difficult to reverse? A true juncture requires all three.",
+        "STEP 2: ESTABLISH ANTECEDENT CONDITIONS - Map what existed before each juncture. Following Pierson, distinguish between conditions that were themselves path-dependent (from earlier sequences) versus those exogenous to the process. These set the stage but don't determine outcomes.",
+        "STEP 3: SEPARATE PERMISSIVE FROM PRODUCTIVE CONDITIONS - Following Mahoney's causal analysis: Permissive conditions (PC) loosen constraints and create openings but don't directly cause change. Productive conditions (PDC) actively generate outcomes. A crisis might be permissive; actor mobilization is productive.",
+        "STEP 4: MAP CONJUNCTURES - Identify where multiple independent causal streams converged. Following Pierson: path dependence often emerges from the intersection of processes, not single causes. Ask: What came together here? Would each stream alone have produced this outcome?",
+        "STEP 5: TRACE INCREASING RETURNS SOURCES - Apply Arthur's four sources: (1) Large setup/fixed costs creating scale economies (2) Learning effects deepening expertise with use (3) Coordination effects making alignment valuable (4) Adaptive expectations creating self-fulfilling prophecies. Identify which operate on each path.",
+        "STEP 6: IDENTIFY LOCK-IN MECHANISMS - Beyond increasing returns, map political lock-in per Pierson: institutional density, veto points, asset specificity, collective action problems, power asymmetries, legitimation. What makes exit costly even when the path is suboptimal?",
+        "STEP 7: CALCULATE SWITCHING COSTS - Enumerate what would have to be paid to transition: sunk investments lost, coordination costs, political opposition, uncertainty costs, identity costs. Who bears these costs? This explains persistence even with recognized inefficiency.",
+        "STEP 8: TRACE SELF-REINFORCING SEQUENCES - Map sequences where each step reinforces the previous pattern. Following Mahoney: institutional reproduction through utilitarian, functional, power, or legitimation mechanisms. Identify the reproduction logic.",
+        "STEP 9: TRACE REACTIVE SEQUENCES - Map chains where each event is a reaction to preceding events. Unlike self-reinforcing sequences, these can transform rather than reproduce. Identify the chain logic: backlash, unintended consequences, adaptation.",
+        "STEP 10: IDENTIFY CONTINGENT EVENTS - Find 'small' events with outsized effects. Apply Arthur's test: Was the event determined by prior conditions? If not, but it had major consequences, this is genuine contingency. Document the amplification mechanism.",
+        "STEP 11: ASSESS PATH ALTERNATIVES - For each juncture, identify paths not taken. Were they genuinely viable? Who supported them? What foreclosed them? This establishes counterfactual benchmark for assessing current path efficiency.",
+        "STEP 12: IDENTIFY QWERTY EFFECTS - Look for suboptimal lock-in following Arthur. Are there more efficient alternatives that switching costs block? Document the inefficiency trap: what's lost, who's harmed, why it persists.",
+        "STEP 13: MAP INSTITUTIONAL CHANGES - Apply Streeck/Thelen typology: Layering (new elements added without removing old), Conversion (old forms repurposed), Drift (context changes while rules stay same), Displacement (new models marginalize old). These show how paths evolve without breaking.",
+        "STEP 14: ANALYZE PATH-BREAKING ATTEMPTS - For each effort to exit the path, analyze: What was attempted? What obstacles were faced? Why did it succeed/fail? Following Pierson, path-breaking requires either major external shock or gradual accumulation of pressures that overcome lock-in.",
+        "STEP 15: ASSESS CURRENT PATH STABILITY - Synthesize: How strong is lock-in? What are switching costs? Are there accumulating pressures? Are conditions emerging for new juncture? Identify the most vulnerable points in the current path."
       ],
-      "key_fields": {},
-      "id_field": "path_id",
+      "key_fields": {
+        "juncture_id": "Critical decision points",
+        "segment_id": "Periods of path stability",
+        "mechanism_id": "What maintains lock-in",
+        "source_id": "Where increasing returns come from",
+        "sequence_id": "Causal chains over time"
+      },
+      "id_field": "juncture_id",
       "key_relationships": [
-        "relates_to"
+        "initiates (juncture -> path segment)",
+        "locks_in (mechanism -> path)",
+        "reinforces (source -> path)",
+        "forecloses (juncture -> alternative)",
+        "reacts_to (sequence step -> previous step)",
+        "amplifies (sequence -> sequence)",
+        "layers_upon (institution -> institution)",
+        "converts (change -> institution)",
+        "displaces (new -> old)",
+        "enables (permissive condition -> juncture)",
+        "produces (productive condition -> outcome)",
+        "creates_cost (mechanism -> switching cost)",
+        "blocks_exit (cost -> path)",
+        "triggered_by (juncture -> event)",
+        "preceded_by (segment -> segment)",
+        "part_of (entity -> conjuncture)"
       ],
-      "special_instructions": null
+      "special_instructions": "CRITICAL: Path dependence is NOT mere persistence or historical influence. It requires INCREASING RETURNS - the dynamics that make staying on path progressively more attractive and switching progressively costlier. Always identify the specific increasing returns mechanism. Also distinguish SELF-REINFORCING sequences (reproduction of pattern) from REACTIVE sequences (chains of responses). Map both types explicitly."
     },
     "curation": {
-      "item_type": "path dependency",
-      "item_type_plural": "path dependencys",
+      "item_type": "path element",
+      "item_type_plural": "path elements",
       "consolidation_rules": [
-        "TRIANGULATE JUNCTURES: Multiple sources confirm same critical moments?",
-        "COMPARE MECHANISMS: Agreement on increasing returns?",
-        "ASSESS LOCK-IN: Consistent view of switching costs?",
-        "EVALUATE BREAKS: When has path-breaking occurred?",
-        "SYNTHESIZE: Overall path dependency assessment"
+        "RULE 1: Merge junctures that are essentially the same decision point described differently across sources",
+        "RULE 2: Connect path segments across documents that describe the same institutional trajectory",
+        "RULE 3: Identify where different sources disagree about degree of contingency - some may see determination where others see choice",
+        "RULE 4: Consolidate lock-in mechanisms by type - same mechanism type operating on same path should be merged",
+        "RULE 5: Flag disagreements about path efficiency - is this arrangement suboptimal? Sources may differ",
+        "RULE 6: Connect reactive sequences that continue across documents",
+        "RULE 7: Build comprehensive timeline integrating junctures, segments, and sequences chronologically"
       ],
       "cross_doc_patterns": [
-        "shared_items",
-        "contested_items",
-        "response_network"
+        "shared_juncture_interpretations",
+        "contested_contingency_claims",
+        "competing_path_efficiency_assessments",
+        "complementary_sequence_coverage",
+        "disagreements_about_lock_in_strength",
+        "different_reform_proposals"
       ],
       "synthesis_outputs": [
-        "consolidated_item_list",
-        "relationship_map",
-        "cross_document_dynamics"
+        "consolidated_path_timeline",
+        "integrated_mechanism_map",
+        "comprehensive_relationship_graph",
+        "counterfactual_analysis"
       ],
-      "special_instructions": null
+      "special_instructions": "When consolidating, pay special attention to TIMING claims. Different sources may place junctures at different moments or disagree about sequence. Build integrated timeline noting where dating is contested."
     },
     "concretization": {
-      "id_examples": [],
-      "naming_guidance": "",
-      "recommended_table_types": [],
-      "recommended_visual_patterns": []
+      "id_examples": [
+        {
+          "from": "CJ1",
+          "to": "The 1910 Flexner Moment in Medical Education"
+        },
+        {
+          "from": "PS1",
+          "to": "The Era of Hospital-Centric Medicine"
+        },
+        {
+          "from": "LM1",
+          "to": "The Medical School Bottleneck"
+        },
+        {
+          "from": "IRS1",
+          "to": "The Legitimacy Premium of MD Credentials"
+        },
+        {
+          "from": "SC1",
+          "to": "The Stranded Curriculum Investment"
+        },
+        {
+          "from": "SRS1",
+          "to": "The Expertise Deepening Spiral"
+        },
+        {
+          "from": "RS1",
+          "to": "The Insurance Adaptation Chain"
+        },
+        {
+          "from": "IT1",
+          "to": "The Primary Care Shortage Trap"
+        },
+        {
+          "from": "PA1",
+          "to": "The British NHS Alternative"
+        },
+        {
+          "from": "PBA1",
+          "to": "The 1993 Clinton Health Reform Attempt"
+        }
+      ],
+      "naming_guidance": "Use concrete historical markers - specific dates, names, events. Path dependence is inherently historical, so names should evoke the specific history. For mechanisms, use metaphors that capture the logic ('bottleneck', 'trap', 'spiral', 'ratchet').",
+      "recommended_table_types": [
+        "path_timeline_table (chronological sequence of junctures and segments)",
+        "lock_in_inventory (all mechanisms maintaining current path)",
+        "switching_cost_matrix (who bears what costs to exit)",
+        "path_comparison_table (actual vs. alternative paths)",
+        "juncture_contingency_assessment (how open was each choice)",
+        "reform_attempt_tracker (attempts and outcomes)"
+      ],
+      "recommended_visual_patterns": [
+        "path_branching_diagram (tree showing junctures and foreclosed alternatives)",
+        "sequence_timeline (events with causal arrows)",
+        "lock_in_mechanism_map (what reinforces what)",
+        "increasing_returns_flow (how returns accumulate)",
+        "counterfactual_comparison (parallel timelines of actual vs. alternative)"
+      ]
     },
     "audience_vocabulary": {
-      "researcher": {},
-      "analyst": {},
-      "executive": {},
-      "activist": {}
-    },
-    "skip_concretization": false
+      "researcher": {
+        "critical_juncture": "critical juncture",
+        "increasing_returns": "increasing returns",
+        "lock_in": "institutional lock-in",
+        "switching_costs": "switching costs",
+        "reactive_sequence": "reactive sequence",
+        "self_reinforcing_sequence": "self-reinforcing sequence",
+        "conjuncture": "conjuncture",
+        "contingency": "contingency"
+      },
+      "analyst": {
+        "critical_juncture": "turning point",
+        "increasing_returns": "compounding advantages",
+        "lock_in": "institutional stickiness",
+        "switching_costs": "change barriers",
+        "reactive_sequence": "chain reaction",
+        "self_reinforcing_sequence": "feedback loop",
+        "conjuncture": "perfect storm",
+        "contingency": "historical accident"
+      },
+      "executive": {
+        "critical_juncture": "decision point",
+        "increasing_returns": "accumulated advantage",
+        "lock_in": "structural constraint",
+        "switching_costs": "change costs",
+        "reactive_sequence": "ripple effects",
+        "self_reinforcing_sequence": "virtuous/vicious cycle",
+        "conjuncture": "convergence",
+        "contingency": "unpredictable event"
+      },
+      "activist": {
+        "critical_juncture": "moment of choice",
+        "increasing_returns": "rigged game getting more rigged",
+        "lock_in": "why the system won't change",
+        "switching_costs": "what they'll say we'll lose",
+        "reactive_sequence": "how we got here",
+        "self_reinforcing_sequence": "how they keep winning",
+        "conjuncture": "window of opportunity",
+        "contingency": "proof it could have been different"
+      }
+    }
   }
 }

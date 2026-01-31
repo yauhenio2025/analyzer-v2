@@ -1,222 +1,940 @@
 {
   "engine_key": "authenticity_forensics",
   "engine_name": "Authenticity Forensics",
-  "description": "Detects markers of deception, manipulation, and disinformation. Analyzes source authenticity, content manipulation, psychological tactics, logical fallacies, and narrative manipulation patterns. Assesses likelihood of intentional deception vs. honest error. Essential for counter-disinformation analysis.",
+  "description": "Deep forensic analysis of deception, manipulation, and disinformation using the RAND Firehose of Falsehood model and Sperber-Mercier Epistemic Vigilance Theory. Reveals how disinformation campaigns exploit cognitive shortcuts, how coordinated inauthentic behavior creates false consensus, and where epistemic vulnerabilities allow manipulation to succeed. Maps the full lifecycle from source manipulation through narrative laundering to repetition-induced belief. Essential for counter-disinformation analysis, prebunking strategy, and building epistemic resilience.",
   "version": 1,
-  "category": "rhetoric",
+  "category": "epistemology",
   "kind": "synthesis",
-  "reasoning_domain": "rhetoric",
-  "researcher_question": "Are there signs this content may be manipulative, deceptive, or part of a disinformation campaign?",
+  "reasoning_domain": "disinformation_analysis_advanced",
+  "researcher_question": "What deception is occurring here, how is it being executed, what makes it effective, and where can it be countered?",
   "canonical_schema": {
-    "overall_assessment": {
-      "authenticity_score": "number (0-1) - 1 is fully authentic, 0 is entirely manipulated",
-      "manipulation_likelihood": "none detected | low | medium | high | confirmed",
-      "primary_concern_type": "string - main category of manipulation if any",
-      "confidence_in_assessment": "high | medium | low"
-    },
-    "source_manipulation_indicators": {
-      "detected": "boolean",
-      "indicators": [
-        {
-          "indicator_type": "fake_source | misattributed | sock_puppet | astroturfing | anonymity_abuse | credential_inflation | impersonation",
-          "description": "string - what was found",
-          "evidence": "string - specific textual evidence",
-          "severity": "low | medium | high",
-          "confidence": "low | medium | high"
-        }
-      ],
-      "source_authenticity_score": "number (0-1)"
-    },
-    "content_manipulation_indicators": {
-      "detected": "boolean",
-      "indicators": [
-        {
-          "indicator_type": "fabrication | selective_editing | out_of_context | doctored_evidence | false_attribution | synthetic_content | cherry_picking | quote_mining",
-          "description": "string",
-          "evidence": "string",
-          "original_vs_manipulated": "string - if determinable, what was changed",
-          "severity": "low | medium | high",
-          "confidence": "low | medium | high"
-        }
-      ],
-      "content_integrity_score": "number (0-1)"
-    },
-    "psychological_manipulation_indicators": {
-      "detected": "boolean",
-      "indicators": [
-        {
-          "indicator_type": "fear_appeal | false_urgency | emotional_manipulation | identity_appeal | authority_abuse | bandwagon | outrage_bait | tribal_activation | moral_panic",
-          "description": "string",
-          "evidence": "string",
-          "target_emotion": "string - fear, anger, pride, etc.",
-          "severity": "low | medium | high"
-        }
-      ],
-      "manipulation_intensity": "subtle | moderate | aggressive"
-    },
-    "logical_manipulation_indicators": {
-      "detected": "boolean",
-      "indicators": [
-        {
-          "indicator_type": "false_dichotomy | strawman | ad_hominem | appeal_to_authority | circular_reasoning | false_equivalence | slippery_slope | whataboutism | gish_gallop | moving_goalposts",
-          "description": "string",
-          "evidence": "string",
-          "apparent_intent": "string - what conclusion does this push toward"
-        }
-      ],
-      "logical_integrity_score": "number (0-1)"
-    },
-    "narrative_manipulation_indicators": {
-      "detected": "boolean",
-      "indicators": [
-        {
-          "indicator_type": "conspiracy_framing | scapegoating | us_vs_them | victimhood_narrative | hero_narrative | decline_narrative | hidden_enemy | simple_solution_complex_problem",
-          "description": "string",
-          "evidence": "string",
-          "target_group": "string - who is being scapegoated/othered",
-          "beneficiary": "string - whose interests does this narrative serve"
-        }
-      ],
-      "narrative_patterns": [
-        "string - recurring patterns"
-      ]
-    },
-    "temporal_manipulation_indicators": {
-      "detected": "boolean",
-      "indicators": [
-        {
-          "indicator_type": "false_timeline | anachronism | manufactured_recency | outdated_presented_as_current | event_ordering_manipulation | false_precedent",
-          "description": "string",
-          "evidence": "string",
-          "actual_vs_claimed": "string - correct information if known"
-        }
-      ]
-    },
-    "coordinated_campaign_indicators": {
-      "detected": "boolean",
-      "indicators": [
-        {
-          "indicator_type": "synchronized_messaging | common_talking_points | artificial_amplification | cross_platform_coordination | bot_indicators | troll_farm_patterns",
-          "description": "string",
-          "evidence": "string",
-          "attributed_to": "string - suspected origin if identifiable",
-          "confidence": "low | medium | high"
-        }
-      ],
-      "campaign_assessment": "string - overall campaign analysis if applicable"
-    },
-    "intent_analysis": {
-      "likely_intent": "inform | persuade | deceive | manipulate | unknown",
-      "deception_vs_error": {
-        "assessment": "intentional deception | negligent error | honest mistake | cannot determine",
-        "rationale": "string"
-      },
-      "apparent_objectives": [
-        {
-          "objective": "string",
-          "evidence": "string",
-          "confidence": "low | medium | high"
-        }
-      ],
-      "target_audience": "string - who appears to be the intended audience",
-      "beneficiaries": [
-        "string - who benefits if this content is believed"
-      ]
-    },
-    "counterfactual_analysis": {
-      "if_authentic_implications": "string - what follows if content is genuine",
-      "if_manipulated_implications": "string - what follows if content is manipulated",
-      "verification_pathways": [
-        {
-          "claim": "string",
-          "how_to_verify": "string",
-          "difficulty": "easy | moderate | difficult | impossible"
-        }
-      ]
-    },
-    "known_pattern_matches": [
+    "deceptive_claims": [
       {
-        "pattern_name": "string - e.g., 'Firehose of Falsehood', 'Dead Cat Strategy'",
-        "match_confidence": "low | medium | high",
-        "description": "string"
+        "claim_id": "string (format: 'DC{N}' e.g., 'DC1', 'DC2')",
+        "claim_text": "string (the claim as stated)",
+        "claim_type": "outright_fabrication | misleading_framing | selective_omission | false_context | manipulated_content | satirical_misrepresented | false_connection | imposter_content",
+        "what_makes_it_deceptive": "string (why this fails truthfulness standards)",
+        "deception_target": "string (what belief/behavior it aims to produce)",
+        "kernel_of_truth": "string | null (any real element being exploited)",
+        "verifiability_status": "easily_verifiable | difficult_to_verify | unfalsifiable | deliberately_vague",
+        "current_spread": "isolated | spreading | viral | endemic",
+        "first_appearance": "string | null (earliest known instance)",
+        "persistence_pattern": "one_time | recurring | mutating | evergreen",
+        "source_articles": [
+          "string"
+        ],
+        "propagated_by": [
+          "source_actor_id (SA{N})"
+        ],
+        "part_of_narratives": [
+          "narrative_thread_id (NT{N})"
+        ],
+        "uses_tactics": [
+          "tactic_id (MT{N})"
+        ],
+        "exploits_vulnerabilities": [
+          "vulnerability_id (EV{N})"
+        ],
+        "laundered_through": [
+          "laundering_chain_id (ILC{N})"
+        ],
+        "repeated_in_clusters": [
+          "repetition_cluster_id (RC{N})"
+        ],
+        "counter_evidence": [
+          "verification_checkpoint_id (VC{N})"
+        ]
       }
     ],
+    "source_actors": [
+      {
+        "actor_id": "string (format: 'SA{N}')",
+        "actor_name": "string (name or identifier)",
+        "actor_type": "individual | organization | state_actor | bot_account | sockpuppet | astroturf_persona | unwitting_amplifier | useful_idiot | true_believer",
+        "role_in_ecosystem": "originator | amplifier | legitimizer | launderer | distributor | coordinator",
+        "apparent_credibility": "high | medium | low",
+        "actual_credibility": "high | medium | low | unknown",
+        "credibility_gap": "string (why apparent differs from actual)",
+        "attribution_confidence": "confirmed | probable | possible | suspected | unknown",
+        "operational_pattern": "continuous | campaign_based | reactive | opportunistic",
+        "audience_reach": "string (estimated reach/influence)",
+        "deception_awareness": "knowing_deceiver | self_deceived | unwitting | unclear",
+        "source_articles": [
+          "string"
+        ],
+        "disseminates_claims": [
+          "claim_id (DC{N})"
+        ],
+        "part_of_networks": [
+          "network_id (CN{N})"
+        ],
+        "uses_credibility_signals": [
+          "signal_id (CS{N})"
+        ],
+        "exhibits_bot_signatures": [
+          "signature_id (BNS{N})"
+        ],
+        "participates_in_astroturfing": [
+          "campaign_id (AC{N})"
+        ],
+        "opposed_by": [
+          "actor_id (SA{N}) - adversarial actors"
+        ],
+        "amplifies": [
+          "actor_id (SA{N}) - downstream actors"
+        ]
+      }
+    ],
+    "coordination_networks": [
+      {
+        "network_id": "string (format: 'CN{N}')",
+        "network_name": "string (evocative name like 'The Baltic Bot Farm' or 'The Think Tank Amplification Ring')",
+        "network_type": "bot_network | sockpuppet_cluster | cross_platform_coordination | state_sponsored | commercial_disinformation | ideological_network | organic_amplification",
+        "coordinated_inauthentic_behavior_indicators": {
+          "temporal_synchronization": "boolean (do accounts act in coordinated time patterns)",
+          "content_synchronization": "boolean (identical or near-identical content)",
+          "behavioral_fingerprints": "string (shared patterns like posting times, response patterns)",
+          "network_artifacts": "string (shared infrastructure, creation patterns)",
+          "narrative_convergence": "boolean (multiple 'independent' sources reaching same conclusions)"
+        },
+        "scale": "small | medium | large | massive",
+        "estimated_accounts": "string (number range)",
+        "operational_since": "string | null",
+        "platforms_active": [
+          "string"
+        ],
+        "sophistication_level": "crude | moderate | sophisticated | state_level",
+        "detectability": "easily_detected | requires_analysis | difficult_to_detect | plausibly_deniable",
+        "source_articles": [
+          "string"
+        ],
+        "member_actors": [
+          "actor_id (SA{N})"
+        ],
+        "pushes_narratives": [
+          "narrative_id (NT{N})"
+        ],
+        "disseminates_claims": [
+          "claim_id (DC{N})"
+        ],
+        "uses_amplification_patterns": [
+          "pattern_id (AP{N})"
+        ],
+        "exhibits_firehose_characteristics": {
+          "high_volume": "boolean",
+          "rapid_production": "boolean",
+          "continuous_operation": "boolean",
+          "multichannel_presence": "boolean",
+          "uncommitted_to_truth": "boolean"
+        }
+      }
+    ],
+    "manipulation_tactics": [
+      {
+        "tactic_id": "string (format: 'MT{N}')",
+        "tactic_name": "string (e.g., 'Firehose Volume Flooding', 'Source Laundering', 'Emotional Hijacking')",
+        "tactic_category": "source_manipulation | content_manipulation | distribution_manipulation | cognitive_exploitation | social_proof_fabrication | credibility_theft | context_manipulation | timing_exploitation",
+        "how_it_works": "string (mechanism of the tactic)",
+        "what_it_exploits": "string (cognitive bias or system vulnerability)",
+        "theoretical_basis": "string (which researcher/theory explains why this works)",
+        "firehose_alignment": {
+          "contributes_to_volume": "boolean",
+          "contributes_to_speed": "boolean",
+          "contributes_to_continuity": "boolean",
+          "contributes_to_multichannel": "boolean"
+        },
+        "detection_difficulty": "easy | moderate | difficult | very_difficult",
+        "detection_signals": [
+          "string (what to look for)"
+        ],
+        "counter_tactics": [
+          "string (how to neutralize)"
+        ],
+        "effectiveness_conditions": "string (when this tactic works best)",
+        "source_articles": [
+          "string"
+        ],
+        "employed_in_claims": [
+          "claim_id (DC{N})"
+        ],
+        "exploits_vulnerabilities": [
+          "vulnerability_id (EV{N})"
+        ],
+        "used_by_actors": [
+          "actor_id (SA{N})"
+        ],
+        "countered_by_inoculation": [
+          "inoculation_target_id (IT{N})"
+        ],
+        "related_tactics": [
+          "tactic_id (MT{N}) - often used together"
+        ]
+      }
+    ],
+    "narrative_threads": [
+      {
+        "narrative_id": "string (format: 'NT{N}')",
+        "narrative_name": "string (evocative name like 'The Deep State Conspiracy' or 'The Victimhood Inversion')",
+        "core_message": "string (the central claim or worldview)",
+        "narrative_function": "delegitimize | polarize | confuse | mobilize | demobilize | distract | launder | normalize",
+        "target_audience": "string (who is meant to believe this)",
+        "desired_effect": "string (what behavior/belief change is sought)",
+        "adversarial_target": "string (what/who the narrative attacks)",
+        "strategic_ambiguity_elements": [
+          "string (deliberately vague elements that allow multiple interpretations)"
+        ],
+        "emotional_hooks": [
+          "string (feelings being triggered)"
+        ],
+        "identity_appeals": [
+          "string (group identities being activated)"
+        ],
+        "narrative_lifecycle": "emerging | established | dominant | declining | dormant | recurring",
+        "mutation_history": "string (how the narrative has evolved)",
+        "source_articles": [
+          "string"
+        ],
+        "contains_claims": [
+          "claim_id (DC{N})"
+        ],
+        "pushed_by_networks": [
+          "network_id (CN{N})"
+        ],
+        "exploits_vulnerabilities": [
+          "vulnerability_id (EV{N})"
+        ],
+        "uses_ambiguities": [
+          "ambiguity_id (SAM{N})"
+        ],
+        "counter_narrative_opportunities": [
+          "opportunity_id (CNO{N})"
+        ],
+        "competes_with_narratives": [
+          "narrative_id (NT{N})"
+        ],
+        "parent_narratives": [
+          "narrative_id (NT{N}) - larger narratives this fits within"
+        ],
+        "child_narratives": [
+          "narrative_id (NT{N}) - sub-narratives"
+        ]
+      }
+    ],
+    "credibility_signals": [
+      {
+        "signal_id": "string (format: 'CS{N}')",
+        "signal_name": "string (e.g., 'Academic Citation', 'Official-Looking Website', 'Expert Testimonial')",
+        "signal_type": "authentic | fabricated | hijacked | mimicked | misappropriated",
+        "signal_category": "source_heuristic | content_heuristic | social_proof | authority_marker | visual_credibility | institutional_affiliation",
+        "how_it_creates_credibility": "string (what makes recipients trust this)",
+        "epistemic_vigilance_response": "string (how a vigilant reasoner would evaluate this - per Sperber/Mercier)",
+        "vigilance_bypass_method": "string | null (how this signal circumvents normal scrutiny)",
+        "authenticity_assessment": "genuine | counterfeit | stolen | exaggerated | context_shifted",
+        "verification_method": "string (how to check if signal is legitimate)",
+        "source_articles": [
+          "string"
+        ],
+        "used_by_actors": [
+          "actor_id (SA{N})"
+        ],
+        "attached_to_claims": [
+          "claim_id (DC{N})"
+        ],
+        "part_of_laundering": [
+          "laundering_chain_id (ILC{N})"
+        ],
+        "exploits_vulnerability": "vulnerability_id (EV{N}) | null",
+        "countered_by_checkpoint": "verification_checkpoint_id (VC{N}) | null"
+      }
+    ],
+    "epistemic_vulnerabilities": [
+      {
+        "vulnerability_id": "string (format: 'EV{N}')",
+        "vulnerability_name": "string (e.g., 'Illusory Truth Susceptibility', 'Source-Content Decoupling Failure')",
+        "vulnerability_type": "cognitive_bias | motivated_reasoning | epistemic_laziness | social_pressure | information_overload | trust_heuristic | identity_protection | emotional_reasoning",
+        "theoretical_source": "string (which theorist identified this - Pennycook, Sperber, Mercier, etc.)",
+        "mechanism": "string (how this vulnerability works)",
+        "what_it_makes_people_do": "string (behavioral result)",
+        "who_is_most_vulnerable": "string (population characteristics)",
+        "situational_amplifiers": [
+          "string (conditions that increase vulnerability)"
+        ],
+        "cognitive_system": "system_1 | system_2 | both (per dual-process theory)",
+        "pennycook_lazy_vs_biased": "lazy | biased | both (does this reflect lazy thinking or motivated reasoning)",
+        "can_be_inoculated": "boolean",
+        "inoculation_approach": "string | null",
+        "source_articles": [
+          "string"
+        ],
+        "exploited_by_tactics": [
+          "tactic_id (MT{N})"
+        ],
+        "exploited_by_claims": [
+          "claim_id (DC{N})"
+        ],
+        "targeted_by_narratives": [
+          "narrative_id (NT{N})"
+        ],
+        "addressed_by_inoculation": [
+          "inoculation_target_id (IT{N})"
+        ],
+        "related_vulnerabilities": [
+          "vulnerability_id (EV{N}) - often co-occur"
+        ]
+      }
+    ],
+    "information_laundering_chains": [
+      {
+        "chain_id": "string (format: 'ILC{N}')",
+        "chain_name": "string (e.g., 'The Academic Legitimization Pipeline', 'The Think Tank Wash Cycle')",
+        "laundering_type": "source_laundering | narrative_laundering | credential_laundering | platform_laundering | citation_laundering",
+        "origin_source": {
+          "source_type": "string (where the disinfo originated)",
+          "credibility_level": "low | discredited | unknown | foreign_state",
+          "source_actor": "actor_id (SA{N}) | null"
+        },
+        "laundering_stages": [
+          {
+            "stage_number": "number",
+            "intermediary_type": "string (blog, fringe outlet, think tank, academic, mainstream, etc.)",
+            "credibility_added": "string (what legitimacy this stage provides)",
+            "transformation": "string (how the content changes)",
+            "actor_involved": "actor_id (SA{N}) | null"
+          }
+        ],
+        "destination_credibility": "string (final perceived legitimacy)",
+        "total_stages": "number",
+        "time_to_mainstream": "string | null (how long the laundering took)",
+        "starbird_participatory_elements": "string (how unwitting participants contributed - per Kate Starbird)",
+        "source_articles": [
+          "string"
+        ],
+        "launders_claims": [
+          "claim_id (DC{N})"
+        ],
+        "uses_credibility_signals": [
+          "signal_id (CS{N})"
+        ],
+        "involves_actors": [
+          "actor_id (SA{N})"
+        ],
+        "detected_by_checkpoints": [
+          "verification_checkpoint_id (VC{N})"
+        ]
+      }
+    ],
+    "amplification_patterns": [
+      {
+        "pattern_id": "string (format: 'AP{N}')",
+        "pattern_name": "string (e.g., 'Bot Swarm Seeding', 'Outrage Cascade', 'Cross-Platform Hopscotch')",
+        "pattern_type": "coordinated_amplification | organic_viral | algorithmic_boost | influencer_cascade | astroturf_seeding | cross_platform_migration",
+        "mechanism": "string (how content spreads through this pattern)",
+        "platforms_involved": [
+          "string"
+        ],
+        "typical_timeline": "string (how long amplification takes)",
+        "velocity_characteristics": "slow_burn | rapid_spike | sustained_wave | pulse_pattern",
+        "volume_characteristics": "low_volume_high_impact | high_volume_saturation | targeted_precision",
+        "firehose_characteristics": {
+          "volume_contribution": "string",
+          "speed_contribution": "string",
+          "continuity_contribution": "string",
+          "multichannel_contribution": "string"
+        },
+        "detection_indicators": [
+          "string (signals of this pattern)"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "used_by_networks": [
+          "network_id (CN{N})"
+        ],
+        "amplifies_claims": [
+          "claim_id (DC{N})"
+        ],
+        "amplifies_narratives": [
+          "narrative_id (NT{N})"
+        ],
+        "involves_actors": [
+          "actor_id (SA{N})"
+        ],
+        "exploits_platform_features": [
+          "string (algorithmic or design features exploited)"
+        ]
+      }
+    ],
+    "inoculation_targets": [
+      {
+        "inoculation_id": "string (format: 'IT{N}')",
+        "inoculation_name": "string (e.g., 'Pre-Bunking Emotional Manipulation', 'Technique Inoculation for Bot Detection')",
+        "inoculation_type": "technique_based | topic_based | source_based | narrative_based",
+        "target_vulnerability": "vulnerability_id (EV{N})",
+        "target_tactic": "tactic_id (MT{N}) | null",
+        "prebunk_vs_debunk": "prebunk | debunk | both",
+        "inoculation_message": "string (what people need to understand)",
+        "cognitive_mechanism": "string (why inoculation works here - per inoculation theory)",
+        "target_audience": "string (who needs this inoculation)",
+        "delivery_method": "string (how to deliver the inoculation)",
+        "effectiveness_evidence": "string | null (research supporting this approach)",
+        "booster_requirements": "string | null (ongoing reinforcement needed)",
+        "source_articles": [
+          "string"
+        ],
+        "protects_against_claims": [
+          "claim_id (DC{N})"
+        ],
+        "counters_tactics": [
+          "tactic_id (MT{N})"
+        ],
+        "addresses_vulnerabilities": [
+          "vulnerability_id (EV{N})"
+        ],
+        "supports_counter_narratives": [
+          "opportunity_id (CNO{N})"
+        ]
+      }
+    ],
+    "verification_checkpoints": [
+      {
+        "checkpoint_id": "string (format: 'VC{N}')",
+        "checkpoint_name": "string (e.g., 'Reverse Image Search Gate', 'Source Independence Verification')",
+        "checkpoint_type": "source_verification | content_verification | network_detection | temporal_analysis | cross_reference | provenance_trace | technical_forensics",
+        "what_it_checks": "string (what aspect of authenticity)",
+        "how_to_perform": "string (step-by-step verification method)",
+        "epistemic_vigilance_principle": "string (which Sperber/Mercier principle this implements)",
+        "tools_required": [
+          "string (verification tools needed)"
+        ],
+        "skill_level_required": "basic | intermediate | advanced | expert",
+        "false_positive_risk": "low | medium | high",
+        "false_negative_risk": "low | medium | high",
+        "time_required": "string",
+        "source_articles": [
+          "string"
+        ],
+        "detects_claims": [
+          "claim_id (DC{N})"
+        ],
+        "detects_actors": [
+          "actor_id (SA{N})"
+        ],
+        "detects_networks": [
+          "network_id (CN{N})"
+        ],
+        "detects_laundering": [
+          "laundering_chain_id (ILC{N})"
+        ],
+        "verifies_signals": [
+          "signal_id (CS{N})"
+        ],
+        "part_of_verification_chain": [
+          "checkpoint_id (VC{N}) - related checks"
+        ]
+      }
+    ],
+    "repetition_clusters": [
+      {
+        "cluster_id": "string (format: 'RC{N}')",
+        "cluster_name": "string (e.g., 'The Endless Election Fraud Echo', 'The Vaccine Danger Drumbeat')",
+        "repeated_claim": "claim_id (DC{N})",
+        "repetition_count": "number | string (estimated)",
+        "repetition_pattern": "constant | periodic | event_triggered | coordinated_burst",
+        "illusory_truth_risk": "low | medium | high | critical",
+        "pennycook_mechanism": "string (how repetition creates belief per Pennycook's research)",
+        "variation_in_repetition": "identical | minor_variations | significant_mutations | complete_reframes",
+        "apparent_independence": "obviously_coordinated | appears_independent | genuinely_independent",
+        "source_diversity_illusion": "boolean (do many sources create false sense of verification)",
+        "temporal_span": "string (how long repetition has occurred)",
+        "platforms_involved": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "involves_claims": [
+          "claim_id (DC{N})"
+        ],
+        "propagated_by_actors": [
+          "actor_id (SA{N})"
+        ],
+        "coordinated_by_networks": [
+          "network_id (CN{N})"
+        ],
+        "exploits_vulnerability": "vulnerability_id (EV{N})",
+        "countered_by_inoculation": "inoculation_target_id (IT{N}) | null"
+      }
+    ],
+    "strategic_ambiguities": [
+      {
+        "ambiguity_id": "string (format: 'SAM{N}')",
+        "ambiguity_name": "string (e.g., 'The Plausible Deniability Hedge', 'The Dog Whistle')",
+        "ambiguous_element": "string (the deliberately vague content)",
+        "possible_interpretations": [
+          {
+            "interpretation": "string",
+            "audience_segment": "string (who reads it this way)",
+            "intended_for_this_audience": "boolean | suspected"
+          }
+        ],
+        "strategic_function": "plausible_deniability | audience_segmentation | flexibility | memetic_mutation | coalition_maintenance",
+        "who_benefits": "string",
+        "disambiguation_triggers": "string (what would force clarity)",
+        "source_articles": [
+          "string"
+        ],
+        "part_of_claims": [
+          "claim_id (DC{N})"
+        ],
+        "part_of_narratives": [
+          "narrative_id (NT{N})"
+        ],
+        "employed_by_actors": [
+          "actor_id (SA{N})"
+        ],
+        "exploits_vulnerabilities": [
+          "vulnerability_id (EV{N})"
+        ]
+      }
+    ],
+    "bot_network_signatures": [
+      {
+        "signature_id": "string (format: 'BNS{N}')",
+        "signature_name": "string (e.g., 'Sequential Account Creation', 'Posting Time Clustering')",
+        "signature_type": "temporal | behavioral | content | network | technical | linguistic",
+        "what_it_indicates": "string (what this pattern suggests)",
+        "detection_method": "string (how to find this signature)",
+        "false_positive_rate": "low | medium | high",
+        "sophistication_to_evade": "basic | moderate | advanced (how hard to avoid detection)",
+        "platforms_where_visible": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "exhibited_by_actors": [
+          "actor_id (SA{N})"
+        ],
+        "indicates_networks": [
+          "network_id (CN{N})"
+        ],
+        "detected_by_checkpoints": [
+          "verification_checkpoint_id (VC{N})"
+        ]
+      }
+    ],
+    "astroturfing_campaigns": [
+      {
+        "campaign_id": "string (format: 'AC{N}')",
+        "campaign_name": "string (e.g., 'The Grassroots Energy Deception', 'The Consumer Choice Front')",
+        "apparent_grassroots_identity": "string (what it pretends to be)",
+        "actual_sponsor": "string (who is really behind it)",
+        "campaign_objective": "string (what it aims to achieve)",
+        "fake_authenticity_markers": [
+          "string (how it mimics genuine movements)"
+        ],
+        "real_coordination_evidence": [
+          "string (what reveals its artificial nature)"
+        ],
+        "success_level": "failed | limited | moderate | successful | highly_successful",
+        "discovery_status": "undiscovered | partially_exposed | fully_exposed",
+        "source_articles": [
+          "string"
+        ],
+        "involves_actors": [
+          "actor_id (SA{N})"
+        ],
+        "part_of_networks": [
+          "network_id (CN{N})"
+        ],
+        "pushes_narratives": [
+          "narrative_id (NT{N})"
+        ],
+        "uses_tactics": [
+          "tactic_id (MT{N})"
+        ],
+        "detected_by_checkpoints": [
+          "verification_checkpoint_id (VC{N})"
+        ]
+      }
+    ],
+    "motivated_reasoning_hooks": [
+      {
+        "hook_id": "string (format: 'MRH{N}')",
+        "hook_name": "string (e.g., 'The Partisan Identity Trigger', 'The Threatened Worldview Activator')",
+        "targeted_motivation": "identity_protection | worldview_defense | ingroup_loyalty | outgroup_hostility | self_interest | emotional_need | cognitive_ease",
+        "hook_mechanism": "string (how it activates motivated reasoning)",
+        "pennycook_analysis": "string (lazy or biased, per Pennycook's framework)",
+        "what_people_want_to_believe": "string",
+        "why_they_want_to_believe_it": "string",
+        "resistance_to_correction": "low | medium | high | extreme",
+        "backfire_risk": "boolean (does correction strengthen the belief)",
+        "identity_groups_targeted": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "exploited_by_claims": [
+          "claim_id (DC{N})"
+        ],
+        "exploited_by_narratives": [
+          "narrative_id (NT{N})"
+        ],
+        "constitutes_vulnerability": "vulnerability_id (EV{N})",
+        "requires_inoculation_approach": "inoculation_target_id (IT{N}) | null"
+      }
+    ],
+    "counter_narrative_opportunities": [
+      {
+        "opportunity_id": "string (format: 'CNO{N}')",
+        "opportunity_name": "string (e.g., 'The Credibility Gap Exposure', 'The Alternative Explanation Opening')",
+        "opportunity_type": "prebunking | debunking | reframing | truth_sandwich | source_exposure | narrative_substitution | inoculation_delivery",
+        "what_can_be_countered": "string",
+        "why_this_is_an_opening": "string (what makes this a good intervention point)",
+        "counter_message_elements": [
+          "string"
+        ],
+        "target_audience": "string",
+        "timing_considerations": "string",
+        "risk_of_backfire": "low | medium | high",
+        "evidence_available": [
+          "string"
+        ],
+        "messengers_needed": "string (who should deliver the counter)",
+        "source_articles": [
+          "string"
+        ],
+        "counters_claims": [
+          "claim_id (DC{N})"
+        ],
+        "counters_narratives": [
+          "narrative_id (NT{N})"
+        ],
+        "addresses_vulnerabilities": [
+          "vulnerability_id (EV{N})"
+        ],
+        "uses_inoculation": [
+          "inoculation_target_id (IT{N})"
+        ],
+        "requires_checkpoints": [
+          "verification_checkpoint_id (VC{N})"
+        ]
+      }
+    ],
+    "source_content_pairings": [
+      {
+        "pairing_id": "string (format: 'SCP{N}')",
+        "source_actor": "actor_id (SA{N})",
+        "claim": "claim_id (DC{N})",
+        "source_credibility_assessment": "high | medium | low | discredited",
+        "content_quality_assessment": "true | mostly_true | mixed | mostly_false | false",
+        "decoupling_phenomenon": "string | null (if source credibility doesn't match content quality, explain)",
+        "mercier_sperber_analysis": "string (how epistemic vigilance should respond to this pairing)",
+        "trust_transfer_risk": "string (risk that source credibility legitimizes bad content)",
+        "contamination_risk": "string (risk that bad source delegitimizes good content)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "relationship_graph": {
+      "nodes": [
+        {
+          "id": "string (any entity ID)",
+          "type": "string (entity type: deceptive_claim | source_actor | coordination_network | manipulation_tactic | narrative_thread | credibility_signal | epistemic_vulnerability | laundering_chain | amplification_pattern | inoculation_target | verification_checkpoint | repetition_cluster | strategic_ambiguity | bot_signature | astroturfing_campaign | motivated_reasoning_hook | counter_narrative_opportunity | source_content_pairing)",
+          "label": "string (short display name, 2-5 words)",
+          "weight": "number (0-1, centrality based on connections and impact)"
+        }
+      ],
+      "edges": [
+        {
+          "from_id": "string (source entity ID)",
+          "to_id": "string (target entity ID)",
+          "relationship": "string (from key_relationships)",
+          "strength": "number (0-1)",
+          "bidirectional": "boolean",
+          "label": "string (optional edge label)"
+        }
+      ],
+      "clusters": [
+        {
+          "cluster_id": "string (format: 'CL{N}')",
+          "name": "string (evocative cluster name)",
+          "member_ids": [
+            "string (entity IDs)"
+          ],
+          "coherence": "number (0-1)",
+          "theme": "string (what unifies this cluster)"
+        }
+      ]
+    },
     "meta": {
-      "total_indicators_detected": "number",
-      "categories_affected": [
-        "string"
+      "total_deceptive_claims": "number",
+      "total_source_actors": "number",
+      "total_coordination_networks": "number",
+      "total_manipulation_tactics": "number",
+      "total_narrative_threads": "number",
+      "total_credibility_signals": "number",
+      "total_epistemic_vulnerabilities": "number",
+      "total_laundering_chains": "number",
+      "total_amplification_patterns": "number",
+      "total_inoculation_targets": "number",
+      "total_verification_checkpoints": "number",
+      "total_repetition_clusters": "number",
+      "total_strategic_ambiguities": "number",
+      "total_bot_signatures": "number",
+      "total_astroturfing_campaigns": "number",
+      "total_motivated_reasoning_hooks": "number",
+      "total_counter_narrative_opportunities": "number",
+      "most_dangerous_claims": [
+        "claim_id (DC{N}) - highest spread + lowest verifiability"
       ],
-      "highest_severity_indicators": [
-        "string - descriptions of worst findings"
+      "most_exploited_vulnerabilities": [
+        "vulnerability_id (EV{N}) - most frequently targeted"
       ],
-      "requires_further_investigation": [
-        "string - areas needing more analysis"
+      "most_active_networks": [
+        "network_id (CN{N}) - most coordinated activity"
       ],
-      "analyst_confidence": "high | medium | low"
+      "highest_priority_inoculations": [
+        "inoculation_id (IT{N}) - most urgent prebunking needs"
+      ],
+      "firehose_assessment": {
+        "volume_level": "low | moderate | high | overwhelming",
+        "velocity_level": "slow | moderate | rapid | firehose",
+        "continuity_level": "sporadic | periodic | sustained | continuous",
+        "multichannel_level": "single_channel | few_channels | many_channels | omnipresent",
+        "overall_firehose_score": "number (0-1, how closely this matches Paul/Matthews model)"
+      },
+      "epistemic_vigilance_assessment": {
+        "source_heuristic_attacks": [
+          "string (which source heuristics are being exploited)"
+        ],
+        "content_heuristic_attacks": [
+          "string (which content heuristics are being exploited)"
+        ],
+        "vigilance_bypass_sophistication": "crude | moderate | sophisticated | highly_sophisticated",
+        "overall_vigilance_challenge": "string (summary of epistemic challenge)"
+      },
+      "counter_disinformation_priorities": [
+        {
+          "priority_rank": "number",
+          "target": "string (what to counter)",
+          "approach": "prebunk | debunk | inoculate | expose | reframe",
+          "urgency": "low | medium | high | critical",
+          "feasibility": "low | medium | high"
+        }
+      ]
     }
   },
-  "extraction_focus": [
-    "deception_indicators",
-    "manipulation_techniques",
-    "source_authenticity",
-    "narrative_patterns",
-    "psychological_tactics"
-  ],
-  "primary_output_modes": [
-    "structured_text_report",
-    "table"
-  ],
-  "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/authenticity_forensics.py",
   "stage_context": {
-    "framework_key": null,
-    "additional_frameworks": [],
+    "framework_key": "epistemic_forensics",
+    "additional_frameworks": [
+      "firehose_model",
+      "inoculation_theory",
+      "dual_process_cognition"
+    ],
     "extraction": {
-      "analysis_type": "authenticity forensics",
-      "analysis_type_plural": "authenticity forensics",
-      "core_question": "Are there signs this content may be manipulative, deceptive, or part of a disinformation campaign?",
+      "analysis_type": "authenticity forensic analysis",
+      "analysis_type_plural": "authenticity forensic analyses",
+      "core_question": "What deception is occurring, how is it being executed, what makes it effective, and where can it be countered?",
       "extraction_steps": [
-        "Describe specifically what you found",
-        "Quote the relevant evidence",
-        "Assess severity (low/medium/high)",
-        "Assess confidence in the detection",
-        "Consider intent: manipulation or honest error?"
+        "STEP 1 - APPLY PAUL & MATTHEWS FIREHOSE TEST: Check for the four characteristics of propaganda: (a) High volume - are there many messages being produced? (b) Rapid production - is new content appearing quickly? (c) Continuous stream - is it sustained over time? (d) Multichannel dissemination - is it appearing across multiple platforms simultaneously? (e) Lack of commitment to truth - is there inconsistency suggesting truth isn't the goal? Rate each dimension.",
+        "STEP 2 - IDENTIFY DECEPTIVE CLAIMS: Catalog all claims that may be false, misleading, or manipulative. For each, determine the TYPE: outright fabrication, misleading framing, selective omission, false context, manipulated content, satirical misrepresented, false connection, or imposter content. Note any kernel of truth being exploited.",
+        "STEP 3 - MAP SOURCE ACTORS: Identify who is making or spreading each claim. Classify as: originator (created the disinfo), amplifier (spreads it), legitimizer (adds credibility), launderer (cleans its origins), or unwitting participant. Assess apparent vs. actual credibility gap.",
+        "STEP 4 - DETECT COORDINATED INAUTHENTIC BEHAVIOR (per Kate Starbird): Look for coordination signatures: (a) Temporal synchronization - do posts appear in coordinated time patterns? (b) Content synchronization - identical or near-identical phrasing? (c) Behavioral fingerprints - shared patterns in posting times, response rates, following behavior? (d) Network artifacts - accounts created around same time, shared infrastructure? (e) Narrative convergence - multiple 'independent' sources reaching same conclusions suspiciously quickly?",
+        "STEP 5 - APPLY SPERBER-MERCIER EPISTEMIC VIGILANCE FRAMEWORK: Analyze which SOURCE HEURISTICS are being exploited (competence signals, benevolence signals, familiarity, consensus) and which CONTENT HEURISTICS are being bypassed (coherence checking, consistency with prior beliefs, plausibility assessment). Identify where normal epistemic vigilance would catch the deception and how the deception circumvents it.",
+        "STEP 6 - ASSESS COGNITIVE EXPLOITATION (per Gordon Pennycook): Determine if deception targets 'lazy' thinking (System 1 heuristics, low analytic engagement) or 'biased' thinking (motivated reasoning, identity-protective cognition). Apply Pennycook's key insight: most susceptibility is laziness not bias - is this deception exploiting cognitive ease rather than partisan motivation?",
+        "STEP 7 - TRACE INFORMATION LAUNDERING CHAINS: Follow how information gains credibility through intermediaries. Map the chain from low-credibility origin through increasingly legitimate-seeming sources. Identify each stage: fringe blog \u2192 alternative media \u2192 think tank \u2192 academic citation \u2192 mainstream coverage. Note the Starbird 'participatory' element - how do unwitting legitimate actors contribute to laundering?",
+        "STEP 8 - ANALYZE MANIPULATION TACTICS: Catalog specific tactics being used. For each, identify: (a) Whether it's source manipulation, content manipulation, or distribution manipulation (b) What cognitive bias or vulnerability it exploits (c) How sophisticated/detectable it is (d) What counter-tactic could neutralize it.",
+        "STEP 9 - IDENTIFY ILLUSORY TRUTH PATTERNS: Per Pennycook's research on repetition-induced belief, find repetition clusters where the same claim appears multiple times, creating false sense of validity. Note whether repetition creates illusion of independent confirmation (many sources saying the same thing suggests it's true, even when sources are coordinated).",
+        "STEP 10 - MAP STRATEGIC AMBIGUITIES: Identify deliberately vague content that allows multiple interpretations. Determine the strategic function: plausible deniability, audience segmentation (dog whistles), flexibility for mutation, or coalition maintenance. Note who benefits from the ambiguity.",
+        "STEP 11 - ASSESS NARRATIVE ARCHITECTURE: Map the larger narrative threads that individual claims support. Identify: target audience, desired effect, adversarial target, emotional hooks, identity appeals. Classify narrative function: delegitimize, polarize, confuse, mobilize, demobilize, distract, launder, or normalize.",
+        "STEP 12 - IDENTIFY MOTIVATED REASONING HOOKS: Find elements designed to activate identity-protective cognition. What do people WANT to believe? Why do they want to believe it? What identity or worldview would be threatened by the truth? Assess backfire risk - would correction strengthen the false belief?",
+        "STEP 13 - BUILD VERIFICATION CHECKPOINTS: For each deceptive element, specify how it can be verified/debunked. What checks would epistemic vigilance prescribe? What tools are needed? What skill level is required? What are false positive/negative risks?",
+        "STEP 14 - DESIGN INOCULATION STRATEGIES (per inoculation theory): For key vulnerabilities and tactics, design prebunking approaches. Per inoculation theory, weak exposure to manipulation techniques builds resistance. Specify: what technique to expose, what audience to target, what delivery method to use, what boosters are needed.",
+        "STEP 15 - IDENTIFY COUNTER-NARRATIVE OPPORTUNITIES: Find openings for effective counter-messaging. Apply truth sandwich principle (lead with truth, then mention falsehood, then return to truth). Identify credibility gaps that can be exposed. Assess backfire risks. Specify appropriate messengers and timing."
       ],
-      "key_fields": {},
-      "id_field": "authenticity_id",
+      "key_fields": {
+        "deceptive_claims": "Individual false, misleading, or manipulative claims",
+        "source_actors": "Entities creating, spreading, or legitimizing deception",
+        "coordination_networks": "Coordinated inauthentic behavior clusters",
+        "manipulation_tactics": "Specific techniques of deception",
+        "narrative_threads": "Larger narratives being advanced",
+        "epistemic_vulnerabilities": "Cognitive weaknesses being exploited",
+        "information_laundering_chains": "Paths through which disinfo gains credibility",
+        "inoculation_targets": "Prebunking and resistance-building opportunities",
+        "verification_checkpoints": "Methods to detect and confirm deception"
+      },
+      "id_field": "claim_id",
       "key_relationships": [
-        "supports"
+        "propagates",
+        "amplifies",
+        "launders",
+        "coordinates_with",
+        "exploits",
+        "counters",
+        "legitimizes",
+        "inoculates_against",
+        "detects",
+        "part_of_network",
+        "pushes_narrative",
+        "uses_tactic",
+        "triggers_vulnerability",
+        "masquerades_as",
+        "competes_with",
+        "mutates_into",
+        "debunks",
+        "prebunks"
       ],
-      "special_instructions": null
+      "special_instructions": "CRITICAL: This engine operationalizes specific academic frameworks. Always reference the theoretical basis: Paul & Matthews for firehose characteristics, Sperber & Mercier for epistemic vigilance analysis, Pennycook for lazy vs. biased thinking, Starbird for coordination detection. Do not use generic 'looks suspicious' assessments - specify WHICH heuristic is being exploited and HOW. Distinguish clearly between SOURCE manipulation and CONTENT manipulation. Remember Pennycook's key finding: most fake news susceptibility is laziness (failure to think), not bias (motivated reasoning) - assess which is operative in each case."
     },
     "curation": {
-      "item_type": "authenticity forensics",
-      "item_type_plural": "authenticity forensics",
-      "consolidation_rules": [],
+      "item_type": "deceptive claim",
+      "item_type_plural": "deceptive claims",
+      "consolidation_rules": [
+        "RULE 1: Merge variant versions of the same core claim (mutations of same falsehood)",
+        "RULE 2: Link claims that are part of the same narrative thread",
+        "RULE 3: Connect actors that show coordination signatures across documents",
+        "RULE 4: Identify cross-document laundering chains (same disinfo appearing in progressively more credible sources)",
+        "RULE 5: Consolidate vulnerability exploitations - if multiple claims target same cognitive bias, note the pattern",
+        "RULE 6: Track narrative evolution across documents - how do claims mutate over time?",
+        "RULE 7: Identify contradictions in the disinformation (firehose model predicts internal inconsistency)",
+        "RULE 8: Map the ecosystem - which sources cite which, creating the appearance of independent confirmation"
+      ],
       "cross_doc_patterns": [
-        "shared_items",
-        "contested_items",
-        "response_network"
+        "coordinated_timing",
+        "shared_narratives",
+        "laundering_chains",
+        "mutation_tracking",
+        "source_network_mapping",
+        "vulnerability_exploitation_patterns",
+        "firehose_volume_assessment"
       ],
       "synthesis_outputs": [
-        "consolidated_item_list",
-        "relationship_map",
-        "cross_document_dynamics"
+        "consolidated_deception_map",
+        "coordination_network_graph",
+        "narrative_ecosystem_map",
+        "vulnerability_exploitation_matrix",
+        "laundering_chain_diagrams",
+        "relationship_graph"
       ],
-      "special_instructions": null
+      "special_instructions": "Pay special attention to the PARTICIPATORY nature of disinformation (per Starbird). Many actors in the ecosystem are unwitting amplifiers, not knowing deceivers. Distinguish between: (1) Knowing originators, (2) Knowing amplifiers, (3) Unwitting amplifiers, (4) Manipulated legitimizers. This affects counter-strategy - unwitting participants can potentially be recruited as allies against disinfo they unknowingly spread."
     },
     "concretization": {
-      "id_examples": [],
-      "naming_guidance": "",
-      "recommended_table_types": [],
-      "recommended_visual_patterns": []
+      "id_examples": [
+        {
+          "from": "DC1",
+          "to": "The '5G Causes COVID' Fabrication"
+        },
+        {
+          "from": "SA1",
+          "to": "The Bot Farm Operator"
+        },
+        {
+          "from": "SA2",
+          "to": "The Unwitting Local News Amplifier"
+        },
+        {
+          "from": "CN1",
+          "to": "The Eastern European Troll Network"
+        },
+        {
+          "from": "MT1",
+          "to": "The Firehose Volume Flooding Tactic"
+        },
+        {
+          "from": "MT2",
+          "to": "The False Expert Credentialing Trick"
+        },
+        {
+          "from": "NT1",
+          "to": "The 'Deep State' Master Narrative"
+        },
+        {
+          "from": "EV1",
+          "to": "The Illusory Truth Vulnerability"
+        },
+        {
+          "from": "EV2",
+          "to": "The Partisan Identity Protection Bias"
+        },
+        {
+          "from": "ILC1",
+          "to": "The Academic Citation Washing Pipeline"
+        },
+        {
+          "from": "IT1",
+          "to": "The Bot Detection Inoculation"
+        },
+        {
+          "from": "VC1",
+          "to": "The Reverse Image Search Gate"
+        },
+        {
+          "from": "RC1",
+          "to": "The Endless Vaccine Danger Drumbeat"
+        },
+        {
+          "from": "CNO1",
+          "to": "The Source Credibility Gap Exposure Opportunity"
+        }
+      ],
+      "naming_guidance": "Use vivid, memorable names that tell a story. Claims should be named for their content ('The Stolen Election Myth'). Actors should be named for their role ('The Unwitting Academic Legitimizer'). Tactics should be named for their mechanism ('The Gish Gallop Overwhelm'). Networks should be named for their character ('The Cross-Platform Astroturf Ring'). Vulnerabilities should be named for what they make people do ('The Confirmation Craving Trap').",
+      "recommended_table_types": [
+        "claim_verification_status_matrix",
+        "actor_role_credibility_table",
+        "tactic_vulnerability_exploitation_matrix",
+        "narrative_ecosystem_map",
+        "firehose_characteristics_scorecard",
+        "inoculation_priority_ranking",
+        "laundering_chain_stage_table",
+        "coordination_evidence_checklist"
+      ],
+      "recommended_visual_patterns": [
+        "coordination_network_graph",
+        "information_laundering_flowchart",
+        "narrative_hierarchy_tree",
+        "firehose_radar_chart",
+        "vulnerability_exploitation_heatmap",
+        "temporal_coordination_timeline",
+        "source_credibility_scatter_plot",
+        "inoculation_coverage_matrix"
+      ]
     },
     "audience_vocabulary": {
-      "researcher": {},
-      "analyst": {},
-      "executive": {},
-      "activist": {}
-    },
-    "skip_concretization": false
+      "researcher": {
+        "coordinated_inauthentic_behavior": "coordinated inauthentic behavior (CIB)",
+        "epistemic_vigilance": "epistemic vigilance",
+        "illusory_truth_effect": "illusory truth effect",
+        "motivated_reasoning": "motivated reasoning",
+        "firehose_model": "firehose of falsehood model",
+        "inoculation_theory": "inoculation theory"
+      },
+      "analyst": {
+        "coordinated_inauthentic_behavior": "coordinated fake accounts",
+        "epistemic_vigilance": "critical evaluation",
+        "illusory_truth_effect": "repetition creating false belief",
+        "motivated_reasoning": "believing what you want to believe",
+        "firehose_model": "high-volume disinformation flooding",
+        "inoculation_theory": "prebunking/resistance building"
+      },
+      "executive": {
+        "coordinated_inauthentic_behavior": "organized influence operation",
+        "epistemic_vigilance": "source verification",
+        "illusory_truth_effect": "repetition effect",
+        "motivated_reasoning": "confirmation bias",
+        "firehose_model": "propaganda saturation campaign",
+        "inoculation_theory": "proactive defense training"
+      },
+      "activist": {
+        "coordinated_inauthentic_behavior": "astroturfing / sock puppets",
+        "epistemic_vigilance": "calling out BS",
+        "illusory_truth_effect": "lies becoming 'common knowledge'",
+        "motivated_reasoning": "tribal thinking",
+        "firehose_model": "flooding the zone with shit",
+        "inoculation_theory": "building community resilience"
+      }
+    }
   }
 }

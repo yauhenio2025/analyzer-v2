@@ -1,174 +1,879 @@
 {
   "engine_key": "absent_center",
   "engine_name": "Strategic Absence Detector",
-  "description": "Detects strategic silences and gaps. Identifies what's not being said, conspicuous absences, avoided topics, marginalized perspectives, and structural blindspots in the discourse.",
+  "description": "Deep analysis of strategic silences, structural absences, and constitutive exclusions using Derridean deconstruction, Foucauldian archaeology, and Lacanian theory. Reveals the constitutive outsides that make meaning possible, the traces of what was excluded, the supplements that expose original lacks, the epistemic violence that renders certain subjects unspeakable, and the diff\u00e9rance that perpetually defers the presence texts claim to possess. Surfaces what discourse cannot say, will not say, and structurally cannot think.",
   "version": 1,
   "category": "epistemology",
   "kind": "synthesis",
-  "reasoning_domain": "epistemology",
-  "researcher_question": "What's missing from this discourse that should be present?",
+  "reasoning_domain": "absence_analysis_advanced",
+  "researcher_question": "What is structurally absent, strategically silenced, or rendered unspeakable\u2014and how do these absences constitute what is present?",
   "canonical_schema": {
-    "conspicuous_absences": [
+    "absent_centers": [
       {
-        "absence_id": "string",
-        "topic": "string",
-        "expected_presence": "string",
-        "why_expected": "string",
-        "absence_type": "complete | partial | superficial",
-        "significance": "number (0-1)",
-        "possible_reasons": [
-          "string"
+        "center_id": "string (format: 'AC{N}' e.g., 'AC1', 'AC2')",
+        "name": "string (evocative name like 'The Missing Worker' or 'The Unspoken Colonial Past')",
+        "what_is_absent": "string (plain language description of what's not there)",
+        "how_it_organizes": "string (how the discourse arranges itself around this absence)",
+        "why_it_must_stay_absent": "string (what would collapse if it became present)",
+        "absence_type": "structural | strategic | contingent | epistemic",
+        "depth": "surface | discursive | epistemic | ontological",
+        "is_acknowledged": "boolean (does the text know something is missing?)",
+        "traces_of_presence": [
+          "string (residual marks that hint at the absence)"
         ],
-        "noted_in_articles": [
-          "string"
-        ]
-      }
-    ],
-    "avoided_topics": [
-      {
-        "topic_id": "string",
-        "topic_name": "string",
-        "avoidance_indicators": [
-          "string"
-        ],
-        "proximity_to_discussion": "string",
-        "stakeholders_benefiting": [
-          "string"
-        ],
-        "significance": "number (0-1)"
-      }
-    ],
-    "marginalized_perspectives": [
-      {
-        "perspective_id": "string",
-        "group": "string",
-        "perspective_description": "string",
-        "degree_of_marginalization": "absent | tokenized | minimized",
-        "expected_relevance": "string",
-        "noted_mentions": [
-          "string"
-        ]
-      }
-    ],
-    "structural_blindspots": [
-      {
-        "blindspot_id": "string",
-        "description": "string",
-        "systemic_cause": "string",
-        "affected_analysis": [
-          "string"
-        ],
-        "correction_needed": "string"
-      }
-    ],
-    "deflection_patterns": [
-      {
-        "pattern_id": "string",
-        "from_topic": "string",
-        "to_topic": "string",
-        "deflection_mechanism": "string",
-        "frequency": "number",
+        "what_fills_the_gap": "string (what substitutes/supplements the absence)",
         "source_articles": [
           "string"
+        ],
+        "produces_traces": [
+          "trace_id (TR{N})"
+        ],
+        "requires_supplements": [
+          "supplement_id (SUP{N})"
+        ],
+        "structures_binaries": [
+          "binary_id (BIN{N})"
+        ],
+        "silences_positions": [
+          "subaltern_id (SUB{N})"
+        ],
+        "enables_presences": [
+          "presence_id (PRES{N})"
+        ],
+        "forecloses": [
+          "unthinkable_id (UTH{N})"
         ]
       }
     ],
+    "traces": [
+      {
+        "trace_id": "string (format: 'TR{N}')",
+        "name": "string (evocative name like 'The Palimpsest of Slavery')",
+        "what_it_traces": "string (what absent thing left this mark)",
+        "where_it_appears": "string (the textual location/form of the trace)",
+        "how_to_read_it": "string (interpretive key to seeing the trace)",
+        "trace_type": "lexical | structural | tonal | figural | symptomatic",
+        "visibility": "overt | latent | encrypted | spectral",
+        "what_would_make_it_legible": "string (conditions for reading the trace)",
+        "source_articles": [
+          "string"
+        ],
+        "traces_back_to": "absent_center_id (AC{N}) | constitutive_outside_id (CO{N})",
+        "appears_in_supplements": [
+          "supplement_id (SUP{N})"
+        ],
+        "haunts_presences": [
+          "presence_id (PRES{N})"
+        ],
+        "related_traces": [
+          "trace_id (TR{N})"
+        ]
+      }
+    ],
+    "supplements": [
+      {
+        "supplement_id": "string (format: 'SUP{N}')",
+        "name": "string (evocative name like 'The Footnote That Swallows the Text')",
+        "what_it_supplements": "string (what it claims to complete)",
+        "what_lack_it_reveals": "string (the original incompleteness it exposes)",
+        "supplement_logic": "string (how addition reveals lack\u2014Derrida's dangerous supplement)",
+        "supplement_type": "additive | substitutive | parasitic | pharmacological",
+        "is_dangerous": "boolean (does it threaten what it supplements?)",
+        "how_it_threatens": "string | null",
+        "source_articles": [
+          "string"
+        ],
+        "supplements_presence": "presence_id (PRES{N})",
+        "exposes_absence": "absent_center_id (AC{N})",
+        "carries_traces": [
+          "trace_id (TR{N})"
+        ],
+        "participates_in_differance": [
+          "differance_id (DIF{N})"
+        ]
+      }
+    ],
+    "constitutive_outsides": [
+      {
+        "outside_id": "string (format: 'CO{N}')",
+        "name": "string (evocative name like 'The Excluded Feminine')",
+        "what_is_excluded": "string (what must be outside)",
+        "what_it_constitutes": "string (what identity depends on this exclusion)",
+        "exclusion_mechanism": "string (how the boundary is maintained)",
+        "border_character": "rigid | porous | contested | unstable",
+        "what_threatens_it": "string (what could breach the boundary)",
+        "historical_contingency": "string (when/how this exclusion was established)",
+        "could_it_be_otherwise": "boolean",
+        "source_articles": [
+          "string"
+        ],
+        "enables_identities": [
+          "presence_id (PRES{N})"
+        ],
+        "produces_binaries": [
+          "binary_id (BIN{N})"
+        ],
+        "creates_subalterns": [
+          "subaltern_id (SUB{N})"
+        ],
+        "leaves_traces": [
+          "trace_id (TR{N})"
+        ],
+        "enforced_by": [
+          "epistemic_violence_id (EV{N})"
+        ],
+        "related_outsides": [
+          "outside_id (CO{N})"
+        ]
+      }
+    ],
+    "discursive_exclusions": [
+      {
+        "exclusion_id": "string (format: 'DE{N}')",
+        "name": "string (evocative name)",
+        "what_cannot_be_said": "string (the excluded statement)",
+        "within_which_formation": "string (the discursive formation that excludes it)",
+        "exclusion_type": "prohibition | division | will_to_truth | archive_limit",
+        "foucault_procedure": "ritual | fellowship | doctrine | social_appropriation | other",
+        "who_enforces": "string (institutions, authorities)",
+        "penalty_for_transgression": "string (what happens if someone says it anyway)",
+        "historical_period": "string",
+        "source_articles": [
+          "string"
+        ],
+        "enforced_by_formation": "formation_id (DF{N})",
+        "creates_unsayable": [
+          "unsayable_id (US{N})"
+        ],
+        "produces_silences": [
+          "silence_id (SS{N})"
+        ],
+        "enables_statements": [
+          "statement_id (ST{N})"
+        ],
+        "related_exclusions": [
+          "exclusion_id (DE{N})"
+        ]
+      }
+    ],
+    "strategic_silences": [
+      {
+        "silence_id": "string (format: 'SS{N}')",
+        "name": "string (evocative name like 'The Unmentioned Funding Source')",
+        "what_is_silenced": "string (topic/fact/perspective not mentioned)",
+        "who_benefits": [
+          "string (who gains from this silence)"
+        ],
+        "who_is_harmed": [
+          "string (who loses from this silence)"
+        ],
+        "silence_type": "omission | euphemism | deflection | misdirection | naturalization",
+        "intentionality": "deliberate | habitual | structural | unconscious",
+        "how_detected": "string (what made the silence visible)",
+        "what_would_happen_if_spoken": "string",
+        "source_articles": [
+          "string"
+        ],
+        "benefits_presence": [
+          "presence_id (PRES{N})"
+        ],
+        "silences_subaltern": [
+          "subaltern_id (SUB{N})"
+        ],
+        "enabled_by_formation": "formation_id (DF{N})",
+        "related_silences": [
+          "silence_id (SS{N})"
+        ],
+        "contested_by": [
+          "counter_discourse_id (CD{N})"
+        ]
+      }
+    ],
+    "eloquent_absences": [
+      {
+        "eloquence_id": "string (format: 'EA{N}')",
+        "name": "string (evocative name like 'The Dog That Didn't Bark')",
+        "what_is_conspicuously_absent": "string",
+        "why_it_is_conspicuous": "string (what makes the absence noticeable)",
+        "what_it_tells_us": "string (what the absence communicates)",
+        "eloquence_type": "expectation_violation | comparative_absence | generic_deviation | symptomatic_gap",
+        "loudness": "whisper | murmur | statement | shout",
+        "source_articles": [
+          "string"
+        ],
+        "points_to_center": "absent_center_id (AC{N})",
+        "reveals_silence": "silence_id (SS{N}) | null",
+        "detected_by_comparison_with": [
+          "string (other texts/contexts)"
+        ],
+        "produces_traces": [
+          "trace_id (TR{N})"
+        ]
+      }
+    ],
+    "epistemic_violences": [
+      {
+        "violence_id": "string (format: 'EV{N}')",
+        "name": "string (evocative name like 'The Categorical Erasure of Indigenous Knowledge')",
+        "what_is_violated": "string (whose epistemology is attacked)",
+        "how_violence_operates": "string (mechanism of epistemic harm\u2014Spivak)",
+        "violence_type": "silencing | appropriation | distortion | erasure | othering | infantilizing",
+        "who_perpetrates": "string",
+        "institutional_basis": "string (what institutions enable this)",
+        "is_acknowledged": "boolean",
+        "what_would_redress_it": "string",
+        "source_articles": [
+          "string"
+        ],
+        "creates_subalterns": [
+          "subaltern_id (SUB{N})"
+        ],
+        "enforces_outside": [
+          "outside_id (CO{N})"
+        ],
+        "produces_unsayable": [
+          "unsayable_id (US{N})"
+        ],
+        "maintains_binary": [
+          "binary_id (BIN{N})"
+        ],
+        "contested_by": [
+          "counter_discourse_id (CD{N})"
+        ]
+      }
+    ],
+    "subaltern_positions": [
+      {
+        "subaltern_id": "string (format: 'SUB{N}')",
+        "name": "string (evocative name)",
+        "who_is_subaltern": "string (those who cannot speak within the discourse)",
+        "why_they_cannot_speak": "string (structural barriers\u2014Spivak's analysis)",
+        "can_they_speak_at_all": "no | only_through_translation | only_in_distorted_form | emerging",
+        "who_speaks_for_them": "string (representatives, ventriloquists)",
+        "distortion_in_representation": "string (how their voice is changed)",
+        "conditions_for_speech": "string (what would need to change)",
+        "source_articles": [
+          "string"
+        ],
+        "silenced_by_violences": [
+          "violence_id (EV{N})"
+        ],
+        "excluded_by_outsides": [
+          "outside_id (CO{N})"
+        ],
+        "rendered_unspeakable_by": [
+          "formation_id (DF{N})"
+        ],
+        "represented_by": [
+          "string (speakers who claim to speak for them)"
+        ],
+        "could_speak_through": [
+          "counter_discourse_id (CD{N})"
+        ],
+        "related_subalterns": [
+          "subaltern_id (SUB{N})"
+        ]
+      }
+    ],
+    "the_unsayable": [
+      {
+        "unsayable_id": "string (format: 'US{N}')",
+        "name": "string (evocative name like 'The Class War No One Names')",
+        "what_cannot_be_said": "string",
+        "why_it_cannot_be_said": "string (the prohibition)",
+        "unsayability_type": "taboo | inarticulable | contradictory | traumatic | hegemonic",
+        "could_it_ever_be_said": "never | after_transformation | in_other_discourse | already_said_elsewhere",
+        "closest_approach": "string (how discourse gets near it without saying it)",
+        "symptoms_of_unsayability": [
+          "string (textual symptoms of the prohibition)"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "produced_by_exclusion": "exclusion_id (DE{N})",
+        "within_formation": "formation_id (DF{N})",
+        "related_to_unthinkable": "unthinkable_id (UTH{N}) | null",
+        "generates_silences": [
+          "silence_id (SS{N})"
+        ],
+        "leaves_traces": [
+          "trace_id (TR{N})"
+        ]
+      }
+    ],
+    "the_unthinkable": [
+      {
+        "unthinkable_id": "string (format: 'UTH{N}')",
+        "name": "string (evocative name like 'A World Without Private Property')",
+        "what_cannot_be_thought": "string",
+        "why_it_is_unthinkable": "string (epistemic foreclosure)",
+        "unthinkability_level": "conceptual | categorial | epochal | ontological",
+        "what_episteme_forecloses_it": "string (the conditions of impossibility\u2014Foucault)",
+        "symptoms_of_unthinkability": [
+          "string (how we can detect what can't be thought)"
+        ],
+        "who_can_think_it": "string (those outside the episteme, if anyone)",
+        "what_would_make_it_thinkable": "string (epistemic transformation required)",
+        "source_articles": [
+          "string"
+        ],
+        "foreclosed_by_episteme": "episteme_id (EP{N})",
+        "lies_beyond_unsayable": [
+          "unsayable_id (US{N})"
+        ],
+        "related_to_real": "lacanian_real_id (LR{N}) | null",
+        "approached_via_traces": [
+          "trace_id (TR{N})"
+        ]
+      }
+    ],
+    "presence_claims": [
+      {
+        "presence_id": "string (format: 'PRES{N}')",
+        "name": "string (evocative name)",
+        "what_claims_presence": "string (the identity/meaning/truth that claims to be present)",
+        "presence_rhetoric": "string (how presence is claimed\u2014Derrida's logocentrism)",
+        "presence_type": "self_presence | full_meaning | origin | foundation | natural_kind | essence",
+        "what_absence_enables_it": "string (the hidden absence)",
+        "metaphysics_of_presence": "string (the philosophical operation at work)",
+        "deconstructive_vulnerability": "string (where deconstruction can intervene)",
+        "source_articles": [
+          "string"
+        ],
+        "depends_on_absence": "absent_center_id (AC{N})",
+        "requires_supplements": [
+          "supplement_id (SUP{N})"
+        ],
+        "haunted_by_traces": [
+          "trace_id (TR{N})"
+        ],
+        "maintains_binary": [
+          "binary_id (BIN{N})"
+        ],
+        "constituted_by_outside": [
+          "outside_id (CO{N})"
+        ],
+        "subject_to_differance": [
+          "differance_id (DIF{N})"
+        ]
+      }
+    ],
+    "binary_hierarchies": [
+      {
+        "binary_id": "string (format: 'BIN{N}')",
+        "term_a": "string (the privileged term)",
+        "term_b": "string (the subordinated term)",
+        "which_is_privileged": "term_a | term_b | unstable",
+        "how_hierarchy_operates": "string (the mechanism of subordination)",
+        "what_is_excluded_entirely": "string (the third term that cannot exist\u2014Derrida)",
+        "deconstruction_strategy": "string (how to reverse/displace this binary)",
+        "what_term_b_secretly_provides": "string (the supplement logic)",
+        "historical_contingency": "string (when this hierarchy was established)",
+        "source_articles": [
+          "string"
+        ],
+        "structures_absence": "absent_center_id (AC{N})",
+        "produced_by_outside": "outside_id (CO{N})",
+        "maintained_by_violence": [
+          "violence_id (EV{N})"
+        ],
+        "positions_subalterns": [
+          "subaltern_id (SUB{N})"
+        ],
+        "related_binaries": [
+          "binary_id (BIN{N})"
+        ],
+        "could_be_displaced_by": [
+          "counter_discourse_id (CD{N})"
+        ]
+      }
+    ],
+    "differance_operations": [
+      {
+        "differance_id": "string (format: 'DIF{N}')",
+        "name": "string (evocative name like 'The Perpetually Deferred Definition of Democracy')",
+        "what_is_deferred": "string (the meaning that never arrives)",
+        "chain_of_deferrals": [
+          "string (the sequence of substitutions)"
+        ],
+        "how_difference_operates": "string (spatial differentiation)",
+        "how_deferral_operates": "string (temporal postponement)",
+        "what_presence_is_promised": "string (the presence that is always to come)",
+        "why_it_never_arrives": "string (the structural impossibility)",
+        "source_articles": [
+          "string"
+        ],
+        "defers_presence": "presence_id (PRES{N})",
+        "produces_supplements": [
+          "supplement_id (SUP{N})"
+        ],
+        "generates_traces": [
+          "trace_id (TR{N})"
+        ],
+        "related_differance": [
+          "differance_id (DIF{N})"
+        ]
+      }
+    ],
+    "lacanian_reals": [
+      {
+        "real_id": "string (format: 'LR{N}')",
+        "name": "string (evocative name like 'The Traumatic Kernel of History')",
+        "what_resists_symbolization": "string (that which cannot enter the symbolic order)",
+        "how_it_manifests": "string (symptoms, repetitions, eruptions)",
+        "real_type": "traumatic | impossible | remainder | void",
+        "objet_petit_a": "string (the object-cause of desire that circles this Real)",
+        "symbolic_failures_around_it": [
+          "string (where symbolization breaks down)"
+        ],
+        "what_discourse_does_instead": "string (fantasies, disavowals, symptoms)",
+        "source_articles": [
+          "string"
+        ],
+        "lies_beyond_unthinkable": [
+          "unthinkable_id (UTH{N})"
+        ],
+        "produces_symptoms_in": [
+          "presence_id (PRES{N})"
+        ],
+        "approached_via_traces": [
+          "trace_id (TR{N})"
+        ],
+        "generates_repetitions": [
+          "string (compulsive returns)"
+        ]
+      }
+    ],
+    "discursive_formations": [
+      {
+        "formation_id": "string (format: 'DF{N}')",
+        "name": "string (evocative name)",
+        "what_can_be_said": "string (the positive rules\u2014Foucault)",
+        "what_cannot_be_said": "string (the exclusions)",
+        "formation_rules": {
+          "objects": "string (what objects can be spoken of)",
+          "enunciative_modalities": "string (who can speak)",
+          "concepts": "string (what concepts are available)",
+          "strategies": "string (what theoretical choices are possible)"
+        },
+        "archive_characteristics": "string (the system of statements)",
+        "historical_a_priori": "string (the conditions of possibility)",
+        "episteme_context": "string (the broader epistemic field)",
+        "source_articles": [
+          "string"
+        ],
+        "produces_exclusions": [
+          "exclusion_id (DE{N})"
+        ],
+        "enables_statements": [
+          "statement_id (ST{N})"
+        ],
+        "creates_unsayables": [
+          "unsayable_id (US{N})"
+        ],
+        "silences_subalterns": [
+          "subaltern_id (SUB{N})"
+        ],
+        "contested_by": [
+          "counter_discourse_id (CD{N})"
+        ]
+      }
+    ],
+    "epistemes": [
+      {
+        "episteme_id": "string (format: 'EP{N}')",
+        "name": "string (evocative name like 'The Modern Episteme')",
+        "what_can_be_known": "string (conditions of possibility for knowledge\u2014Foucault)",
+        "what_cannot_be_known": "string (conditions of impossibility)",
+        "fundamental_codes": "string (the deep ordering principles)",
+        "historical_period": "string",
+        "what_preceded_it": "string | null",
+        "what_threatens_it": "string (cracks, limits, transformations)",
+        "source_articles": [
+          "string"
+        ],
+        "governs_formations": [
+          "formation_id (DF{N})"
+        ],
+        "forecloses_unthinkables": [
+          "unthinkable_id (UTH{N})"
+        ],
+        "produces_fundamental_binaries": [
+          "binary_id (BIN{N})"
+        ],
+        "epistemic_breaks_with": [
+          "episteme_id (EP{N})"
+        ]
+      }
+    ],
+    "statements_enonces": [
+      {
+        "statement_id": "string (format: 'ST{N}')",
+        "statement_content": "string (what is actually said)",
+        "enunciative_function": "string (what makes this a statement in Foucault's sense)",
+        "who_can_say_it": "string (subject positions authorized)",
+        "institutional_site": "string (where it can be said)",
+        "what_it_presupposes": [
+          "string (conditions of possibility)"
+        ],
+        "what_it_excludes": [
+          "string (what it makes impossible to say)"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "enabled_by_formation": "formation_id (DF{N})",
+        "creates_silences": [
+          "silence_id (SS{N})"
+        ],
+        "presupposes_absences": [
+          "absent_center_id (AC{N})"
+        ],
+        "related_statements": [
+          "statement_id (ST{N})"
+        ]
+      }
+    ],
+    "counter_discourses": [
+      {
+        "counter_id": "string (format: 'CD{N}')",
+        "name": "string (evocative name)",
+        "what_it_contests": "string (the dominant discourse it challenges)",
+        "how_it_speaks_the_unsaid": "string (strategy for articulating the silenced)",
+        "subject_position": "string (from where it speaks)",
+        "counter_strategy": "reversal | displacement | excavation | amplification | invention",
+        "effectiveness": "marginal | emerging | contested | transformative",
+        "risks": "string (dangers of recuperation, distortion)",
+        "source_articles": [
+          "string"
+        ],
+        "contests_formation": "formation_id (DF{N})",
+        "speaks_for_subalterns": [
+          "subaltern_id (SUB{N})"
+        ],
+        "makes_sayable": [
+          "unsayable_id (US{N})"
+        ],
+        "exposes_silences": [
+          "silence_id (SS{N})"
+        ],
+        "displaces_binaries": [
+          "binary_id (BIN{N})"
+        ]
+      }
+    ],
+    "spectral_presences": [
+      {
+        "spectral_id": "string (format: 'SP{N}')",
+        "name": "string (evocative name like 'The Ghost of Colonialism')",
+        "what_haunts": "string (the ghost/revenant)",
+        "what_is_haunted": "string (the text/discourse/present)",
+        "hauntology_logic": "string (Derrida's hauntology\u2014neither present nor absent)",
+        "when_it_appears": "string (conditions of spectral return)",
+        "what_it_demands": "string (the ghost's claim on the present)",
+        "how_discourse_responds": "denial | repression | exorcism | mourning | acknowledgment",
+        "source_articles": [
+          "string"
+        ],
+        "ghost_of_absence": "absent_center_id (AC{N})",
+        "returns_via_traces": [
+          "trace_id (TR{N})"
+        ],
+        "haunts_presences": [
+          "presence_id (PRES{N})"
+        ],
+        "related_specters": [
+          "spectral_id (SP{N})"
+        ]
+      }
+    ],
+    "archive_limits": [
+      {
+        "limit_id": "string (format: 'AL{N}')",
+        "name": "string (evocative name)",
+        "what_archive_cannot_contain": "string (the unarchivable)",
+        "why_it_cannot_be_archived": "string (structural limit of the archive\u2014Derrida)",
+        "limit_type": "technical | political | ontological | temporal",
+        "what_falls_outside": [
+          "string (lost, destroyed, never recorded)"
+        ],
+        "archive_fever_symptom": "string (how the limit manifests)",
+        "source_articles": [
+          "string"
+        ],
+        "limits_formation": "formation_id (DF{N})",
+        "excludes_what": [
+          "subaltern_id (SUB{N})",
+          "unthinkable_id (UTH{N})"
+        ],
+        "produces_silences": [
+          "silence_id (SS{N})"
+        ],
+        "related_limits": [
+          "limit_id (AL{N})"
+        ]
+      }
+    ],
+    "relationship_graph": {
+      "nodes": [
+        {
+          "id": "string (any entity ID from above)",
+          "type": "string (entity type: absent_center | trace | supplement | etc.)",
+          "label": "string (short display name, 2-5 words)",
+          "weight": "number (0-1, centrality/importance in the absence structure)"
+        }
+      ],
+      "edges": [
+        {
+          "from_id": "string (source entity ID)",
+          "to_id": "string (target entity ID)",
+          "relationship": "string (from key_relationships)",
+          "strength": "number (0-1)",
+          "bidirectional": "boolean",
+          "label": "string (optional edge annotation)"
+        }
+      ],
+      "clusters": [
+        {
+          "cluster_id": "string (format: 'CL{N}')",
+          "name": "string (evocative cluster name like 'The Colonial Silence Complex')",
+          "member_ids": [
+            "string (entity IDs that form this cluster)"
+          ],
+          "coherence": "number (0-1)",
+          "theme": "string (what unites this cluster)",
+          "central_absence": "absent_center_id (AC{N}) | null"
+        }
+      ]
+    },
     "meta": {
       "total_absences_identified": "number",
-      "most_significant_absence": "string",
-      "marginalized_groups_count": "number",
-      "blindspot_severity": "number (0-1)"
+      "total_traces_found": "number",
+      "total_silences_detected": "number",
+      "total_subalterns_identified": "number",
+      "total_binary_hierarchies": "number",
+      "dominant_absence_type": "structural | strategic | epistemic | contingent",
+      "most_central_absence": {
+        "center_id": "string (AC{N})",
+        "name": "string",
+        "why_central": "string"
+      },
+      "most_violent_exclusion": {
+        "violence_id": "string (EV{N})",
+        "name": "string",
+        "severity": "string"
+      },
+      "deepest_unthinkable": {
+        "unthinkable_id": "string (UTH{N})",
+        "name": "string",
+        "depth": "string"
+      },
+      "primary_discursive_formation": {
+        "formation_id": "string (DF{N})",
+        "name": "string"
+      },
+      "key_findings": [
+        "string (3-5 major discoveries about what's absent)"
+      ],
+      "deconstructive_opportunities": [
+        "string (where the text is most vulnerable to deconstruction)"
+      ],
+      "what_could_not_be_said": [
+        "string (summary of the unsayable)"
+      ]
     }
   },
-  "extraction_focus": [
-    "silences",
-    "gaps",
-    "absences",
-    "avoidances",
-    "marginalization"
-  ],
-  "primary_output_modes": [
-    "structured_text_report",
-    "table"
-  ],
-  "paradigm_keys": [],
-  "source_file": "analyzer/src/engines/absent_center.py",
   "stage_context": {
-    "framework_key": null,
-    "additional_frameworks": [],
+    "framework_key": "derridean_foucauldian",
+    "additional_frameworks": [
+      "lacanian_psychoanalysis",
+      "spivak_postcolonial"
+    ],
     "extraction": {
-      "analysis_type": "strategic absence detector",
-      "analysis_type_plural": "strategic absence detectors",
-      "core_question": "What's missing from this discourse that should be present?",
+      "analysis_type": "absence analysis",
+      "analysis_type_plural": "absence analyses",
+      "core_question": "What is structurally absent, strategically silenced, or rendered unspeakable\u2014and how do these absences constitute what is present?",
       "extraction_steps": [
-        "CONSPICUOUS ABSENCES",
-        "AVOIDED TOPICS",
-        "MARGINALIZED PERSPECTIVES",
-        "STRUCTURAL BLINDSPOTS",
-        "DEFLECTION PATTERNS"
+        "STEP 1 - LOCATE THE ABSENT CENTER: Apply Derrida's insight that every structure has a center that is paradoxically absent. Ask: What organizes this discourse without being fully present? What is the 'hole' around which meaning arranges itself? Look for concepts that are constantly referenced but never defined, origins that are presupposed but never shown, foundations that are asserted but never grounded.",
+        "STEP 2 - READ FOR TRACES (DERRIDA): The trace is the mark of what was excluded. Read for: lexical traces (words that carry absent meanings), structural traces (forms that imply missing content), tonal traces (affects that suggest suppressed material), symptomatic traces (slips, contradictions, over-emphases that point elsewhere). Ask: What absent thing left this mark?",
+        "STEP 3 - IDENTIFY SUPPLEMENTS (DERRIDA): The supplement both adds to and substitutes for an original that was never complete. Find what is presented as 'mere addition' or 'external support'\u2014these reveal the lack they claim to complete. Apply the logic of the 'dangerous supplement': what claims to be outside and secondary is actually inside and essential.",
+        "STEP 4 - MAP CONSTITUTIVE OUTSIDES: Every identity requires an outside it is not. Ask: What must be excluded for this concept/position/identity to exist? What is the 'constitutive outside' without which the inside could not cohere? How is the boundary maintained? What threatens to breach it?",
+        "STEP 5 - EXCAVATE DISCURSIVE EXCLUSIONS (FOUCAULT): Apply Foucault's archaeology. What are the rules of this discursive formation? What can be said, and crucially, what cannot? Identify the three procedures of exclusion: prohibition (what is forbidden), the division between reason and madness (what is dismissed as irrational), and the will to truth (what is ruled out as false).",
+        "STEP 6 - DETECT STRATEGIC SILENCES: Some silences are tactical. Who benefits from what is not said? Look for: conspicuous omissions, euphemisms that replace direct speech, deflections that change the subject, misdirections that point away, naturalizations that make the constructed seem inevitable.",
+        "STEP 7 - IDENTIFY ELOQUENT ABSENCES: Some absences 'speak loudly.' Apply the Sherlock Holmes principle: What is the dog that didn't bark? What should be here given the genre, context, or argument, but isn't? What does the absence communicate?",
+        "STEP 8 - ANALYZE EPISTEMIC VIOLENCE (SPIVAK): Where does the discourse do violence to other ways of knowing? How are subaltern epistemologies silenced, appropriated, distorted, or erased? Who is rendered unable to speak within the terms of this discourse? Remember Spivak: the subaltern cannot speak not because they are silent but because the structure cannot hear.",
+        "STEP 9 - MAP SUBALTERN POSITIONS: Who is structurally positioned as unable to speak? Not silenced individuals but subject positions that the discourse cannot accommodate. Who speaks 'for' them and with what distortions? What would need to change for them to speak?",
+        "STEP 10 - ARTICULATE THE UNSAYABLE: What does the discourse structurally prevent from being said? Not just what is forbidden (taboo) but what is literally inarticulable within its terms (the unsayable proper). What are the symptoms of this unsayability\u2014circumlocutions, hesitations, contradictions?",
+        "STEP 11 - IDENTIFY THE UNTHINKABLE (FOUCAULT): Go beyond the unsayable to the unthinkable. What lies outside the episteme entirely? What are the 'conditions of impossibility'\u2014what the conditions of possibility necessarily foreclose? This is not what people choose not to think but what cannot be thought within this epistemic configuration.",
+        "STEP 12 - DECONSTRUCT PRESENCE CLAIMS (DERRIDA): Where does the text claim presence, self-evidence, origin, foundation, or natural status? Apply deconstruction: show how each presence depends on absence, how each origin is derived, how each foundation is groundless. Locate the 'metaphysics of presence' at work.",
+        "STEP 13 - ANALYZE BINARY HIERARCHIES (DERRIDA): Identify the binary oppositions that structure the discourse. Which term is privileged? How does the subordinated term secretly constitute and enable the privileged one? What 'third term' is entirely excluded by the binary? Map strategies for reversal and displacement.",
+        "STEP 14 - TRACE DIFF\u00c9RANCE: Where does meaning perpetually defer? Apply Derrida's diff\u00e9rance (difference + deferral). Find the chains of substitution where meaning is endlessly postponed. What presence is always promised but never arrives? Why can it never arrive?",
+        "STEP 15 - APPROACH THE REAL (LACAN): What resists symbolization entirely? This is not the unsayable (which could theoretically be said) but the Real that cannot enter the symbolic order. Look for: traumatic repetitions, points where discourse breaks down, the 'impossible' that keeps returning. Identify the objet petit a\u2014the object-cause of desire that circles this void.",
+        "STEP 16 - DETECT SPECTRAL PRESENCES (DERRIDA): What ghosts haunt this discourse? Apply Derrida's hauntology: what is neither present nor simply absent but spectrally returns? What past exclusions continue to haunt? What demands do these specters make on the present?",
+        "STEP 17 - SYNTHESIZE THE ABSENCE STRUCTURE: Map the relationships between absences. How do they form a system? Which absence is most central (organizing the others)? Which is most violent? Which is deepest? What would happen if any of these absences were made present?"
       ],
-      "key_fields": {},
-      "id_field": "absent_id",
+      "key_fields": {
+        "center_id": "The central structuring absences",
+        "trace_id": "Marks of what was excluded",
+        "supplement_id": "Additions that reveal lack",
+        "outside_id": "Constitutive exclusions",
+        "exclusion_id": "Discursive prohibitions",
+        "silence_id": "Strategic silences",
+        "violence_id": "Epistemic violence",
+        "subaltern_id": "Positions that cannot speak",
+        "unsayable_id": "What cannot be said",
+        "unthinkable_id": "What cannot be thought"
+      },
+      "id_field": "center_id",
       "key_relationships": [
-        "relates_to"
+        "constitutes",
+        "excludes",
+        "silences",
+        "haunts",
+        "supplements",
+        "defers",
+        "traces_back_to",
+        "enables",
+        "forecloses",
+        "violates",
+        "positions_as_subaltern",
+        "maintains",
+        "threatens",
+        "displaces"
       ],
-      "special_instructions": null
+      "special_instructions": "CRITICAL: Absence analysis requires reading against the grain. Do not take the text at its word about what it includes\u2014look for what it must exclude to say what it says. The most important absences are structural, not accidental. Always ask: What must NOT be here for this to be here? Apply the principle of 'constitutive outside'\u2014every identity depends on what it excludes. Remember Derrida's insight: presence is always contaminated by absence, the inside always depends on the outside, the center is always elsewhere. Work from the margins inward."
     },
     "curation": {
-      "item_type": "strategic absence detector",
-      "item_type_plural": "strategic absence detectors",
+      "item_type": "absence",
+      "item_type_plural": "absences",
       "consolidation_rules": [
-        "MAP SYSTEMATIC ABSENCES: What's missing across the corpus?",
-        "TRACK AVOIDED TOPICS: What gets consistently skirted?",
-        "CATALOG MARGINALIZED PERSPECTIVES: Who's not heard?",
-        "IDENTIFY STRUCTURAL BLINDSPOTS: What can't the discourse see?",
-        "MAP DEFLECTION PATTERNS: Where does discourse redirect?"
+        "RULE 1: Merge absences that refer to the same structural gap across documents\u2014these are the same absent center appearing in different texts",
+        "RULE 2: Distinguish structural absences (necessary for the discourse to function) from contingent absences (could be otherwise)",
+        "RULE 3: Link traces to the absences they trace\u2014build the trace\u2192absence relationship",
+        "RULE 4: Identify shared constitutive outsides\u2014the same exclusion operating across texts",
+        "RULE 5: Connect subaltern positions to the epistemic violence that creates them",
+        "RULE 6: Map relationships between discursive formations\u2014shared exclusion rules",
+        "RULE 7: Identify counter-discourses that contest the same silences across documents",
+        "RULE 8: Build the hierarchy of absences\u2014which is deepest? (unthinkable > unsayable > silenced > omitted)"
       ],
       "cross_doc_patterns": [
-        "shared_items",
-        "contested_items",
-        "response_network"
+        "shared_absences",
+        "shared_constitutive_outsides",
+        "common_subaltern_positions",
+        "systematic_exclusions",
+        "contested_silences",
+        "competing_presence_claims"
       ],
       "synthesis_outputs": [
-        "consolidated_item_list",
-        "relationship_map",
-        "cross_document_dynamics"
+        "consolidated_absence_map",
+        "constitutive_outside_network",
+        "subaltern_position_matrix",
+        "binary_hierarchy_system",
+        "relationship_graph"
       ],
-      "special_instructions": null
+      "special_instructions": "In consolidation, prioritize structural over contingent absences. The goal is to surface the systematic architecture of exclusion, not catalog every omission. Look for the SAME absence appearing across texts in different guises\u2014this indicates a constitutive rather than accidental exclusion."
     },
     "concretization": {
       "id_examples": [
         {
-          "from": "A1",
-          "to": "Absent: Worker displacement costs in automation debates"
+          "from": "AC1",
+          "to": "The Missing Indigenous Perspective"
         },
         {
-          "from": "T1",
-          "to": "Avoided: Executive compensation in productivity discussions"
+          "from": "TR1",
+          "to": "The Trace of Colonial Violence in 'Development' Discourse"
         },
         {
-          "from": "P1",
-          "to": "Marginalized: Gig economy workers' perspectives"
+          "from": "SUP1",
+          "to": "Technology as Dangerous Supplement to Human Nature"
         },
         {
-          "from": "B1",
-          "to": "Blindspot: Global South perspectives on AI governance"
+          "from": "CO1",
+          "to": "The Constitutive Exclusion of Emotion from Rationality"
         },
         {
-          "from": "D1",
-          "to": "Deflection: From job losses TO new job creation narratives"
+          "from": "SS1",
+          "to": "The Strategic Silence on Climate Costs"
+        },
+        {
+          "from": "EV1",
+          "to": "The Epistemic Violence of 'Objective' News Framing"
+        },
+        {
+          "from": "SUB1",
+          "to": "The Position of the Unheard Worker"
+        },
+        {
+          "from": "US1",
+          "to": "The Unsayable Class Dimension"
+        },
+        {
+          "from": "UTH1",
+          "to": "The Unthinkable End of Capitalism"
+        },
+        {
+          "from": "BIN1",
+          "to": "The Nature/Culture Binary"
+        },
+        {
+          "from": "DIF1",
+          "to": "The Perpetual Deferral of 'Real Democracy'"
+        },
+        {
+          "from": "SP1",
+          "to": "The Specter of Slavery Haunting Meritocracy"
         }
       ],
-      "naming_guidance": "",
-      "recommended_table_types": [],
-      "recommended_visual_patterns": []
+      "naming_guidance": "Names should be evocative and specific, capturing what is absent and its structural significance. Use 'The [Adjective] [Absence/Silence/Exclusion/Ghost] of [What's Missing]' pattern. Make absences vivid\u2014name what ISN'T there in a way that makes its absence palpable. Avoid vague names like 'Key Absence 1'\u2014instead, 'The Unmentioned Genocide' or 'The Structurally Silenced Victim.'",
+      "recommended_table_types": [
+        "absence_hierarchy_table (from omission to unthinkable)",
+        "constitutive_outside_matrix (what excludes what to constitute what)",
+        "subaltern_position_roster (who cannot speak and why)",
+        "binary_system_map (interlocking hierarchical oppositions)",
+        "trace_evidence_table (traces and what they trace back to)",
+        "silence_beneficiary_matrix (who benefits from what silences)"
+      ],
+      "recommended_visual_patterns": [
+        "absence_network_graph (absences and their relationships)",
+        "inside_outside_diagram (constitutive exclusion visualization)",
+        "binary_hierarchy_tree (nested oppositions)",
+        "hauntology_timeline (what ghosts return from which pasts)",
+        "subaltern_speech_map (who speaks for whom with what distortions)"
+      ]
     },
     "audience_vocabulary": {
-      "researcher": {},
-      "analyst": {},
-      "executive": {},
-      "activist": {}
-    },
-    "skip_concretization": false
+      "researcher": {
+        "constitutive_outside": "constitutive outside",
+        "differance": "diff\u00e9rance",
+        "epistemic_violence": "epistemic violence",
+        "subaltern": "subaltern position",
+        "trace": "trace",
+        "supplement": "supplement logic"
+      },
+      "analyst": {
+        "constitutive_outside": "necessary exclusion",
+        "differance": "deferred meaning",
+        "epistemic_violence": "knowledge-based harm",
+        "subaltern": "silenced group",
+        "trace": "residual mark",
+        "supplement": "revealing addition"
+      },
+      "executive": {
+        "constitutive_outside": "what we exclude to define ourselves",
+        "differance": "meaning that never settles",
+        "epistemic_violence": "dismissing other perspectives",
+        "subaltern": "voices we can't hear",
+        "trace": "hidden evidence",
+        "supplement": "crutch that shows weakness"
+      },
+      "activist": {
+        "constitutive_outside": "who we define ourselves against",
+        "differance": "promises they keep deferring",
+        "epistemic_violence": "violence of their categories",
+        "subaltern": "those they won't let speak",
+        "trace": "evidence they couldn't erase",
+        "supplement": "what they add to hide what's missing"
+      }
+    }
   }
 }
