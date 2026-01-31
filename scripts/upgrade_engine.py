@@ -430,7 +430,10 @@ def extract_json_from_response(response_text: str) -> dict[str, Any]:
     # 1. Escaped single quotes (not valid JSON - single quotes don't need escaping)
     text = text.replace("\\'", "'")
 
-    # 2. Fix unbalanced brackets (LLM sometimes adds extras)
+    # 2. Fix stray quotes after array close: ]", -> ],
+    text = re.sub(r'\]"(,)', r']\1', text)
+
+    # 3. Fix unbalanced brackets (LLM sometimes adds extras)
     text = fix_json_brackets(text)
 
     # Try to parse directly
