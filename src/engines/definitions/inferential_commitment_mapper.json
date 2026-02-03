@@ -572,9 +572,98 @@
           "to": "The 'Can't Have Both' choice: automation vs. accountability"
         }
       ],
-      "naming_guidance": "",
-      "recommended_table_types": [],
-      "recommended_visual_patterns": []
+      "naming_guidance": "Use evocative names that capture what is at stake. Make the implications visceral.",
+      "recommended_table_types": [
+        "commitment_cascade_table",
+        "either_or_matrix",
+        "package_deal_summary"
+      ],
+      "recommended_visual_patterns": [
+        "commitment_network",
+        "inference_tree",
+        "package_deal_diagram"
+      ],
+      "semantic_visual_intent": {
+        "primary_concept": "inferential_chain",
+        "concept_description": "The hidden logical connections between ideas - what you are really committing to when you accept a position. The insight is that ideas come bundled: accept one, and you are stuck with others whether you realize it or not.",
+        "visual_grammar": {
+          "core_metaphor": "logical_entailment_and_bundling",
+          "essence": "The visual must make COMMITMENT CHAINS visible - not just that ideas are related, but that accepting one FORCES you to accept others",
+          "key_visual_elements": [
+            {
+              "element": "entailment_arrows",
+              "purpose": "Show that accepting A commits you to B",
+              "encoding": "Directed arrows with 'commits to' or 'entails' labels, thickness for strength"
+            },
+            {
+              "element": "conflict_markers",
+              "purpose": "Show ideas that cannot both be held",
+              "encoding": "Red crossing lines or X markers between incompatible commitments"
+            },
+            {
+              "element": "package_clusters",
+              "purpose": "Show ideas that come bundled together",
+              "encoding": "Grouped nodes within a boundary showing 'if you take one, you get all'"
+            },
+            {
+              "element": "hidden_commitment_highlighting",
+              "purpose": "Show commitments people do not realize they are making",
+              "encoding": "Dashed or glowing nodes for non-obvious implications"
+            },
+            {
+              "element": "choice_points",
+              "purpose": "Show where you must choose between incompatible positions",
+              "encoding": "Fork/branch structures with 'either/or' markers"
+            }
+          ],
+          "anti_patterns": [
+            "generic_concept_cloud - Ideas floating without directional entailment",
+            "simple_list_diagram - Just enumerating commitments without showing logical structure",
+            "undirected_network - Connections without showing which way commitment flows",
+            "flat_hierarchy - All commitments shown as equal when some are foundational"
+          ],
+          "design_principles": [
+            "DIRECTION MATTERS - Commitment flows one way; A entails B does not mean B entails A",
+            "SHOW THE CASCADE - One commitment leads to another leads to another",
+            "MAKE INCOMPATIBILITY STARK - Cannot-have-both choices should be visually obvious",
+            "REVEAL THE HIDDEN - The value is showing commitments people did not realize they were making",
+            "BUNDLES ARE REAL - Some ideas only come in packages; show what you are buying into"
+          ]
+        },
+        "gemini_semantic_prompt": "You are visualizing INFERENTIAL COMMITMENTS from a philosophical analysis.\n\nThis is NOT a concept map of related ideas. This is a COMMITMENT NETWORK showing what you are FORCED to accept when you endorse certain positions.\n\nCRITICAL REQUIREMENTS:\n1. Show ENTAILMENT with directed arrows - if you accept A, you must accept B\n2. Show INCOMPATIBILITY with crossing/conflict markers - you cannot hold both X and Y\n3. Show PACKAGE DEALS by clustering commitments that come bundled together\n4. HIGHLIGHT hidden commitments that people do not realize they are making (use dashed lines or glow)\n5. Show CHOICE POINTS where you must pick between incompatible positions\n6. Use arrow THICKNESS to show strength of entailment (locked_in vs loosely)\n\nWHAT NOT TO DO:\n- Do NOT create a generic concept cloud with undirected associations\n- Do NOT make all commitments look equally important\n- Do NOT omit the directional nature of entailment\n- Do NOT hide the forcing function (the 'you must also accept' aspect)\n\nThe goal: Someone looking at this should SEE what they are really signing up for - the cascade of commitments that flow from accepting key positions.",
+        "recommended_forms": [
+          {
+            "form_key": "commitment_cascade",
+            "name": "Commitment Cascade Diagram",
+            "when_to_use": "Default for showing chains of entailment",
+            "data_requirements": ["commitments", "entailment relationships", "strength indicators"],
+            "gemini_template": "Create a cascade/domino diagram showing how accepting one commitment forces you into others. Arrange as a directed flow from foundational commitments to downstream implications. Use arrow thickness for entailment strength. Highlight the 'hidden' commitments that are not obvious."
+          },
+          {
+            "form_key": "either_or_landscape",
+            "name": "Either-Or Choice Landscape",
+            "when_to_use": "When the analysis reveals major incompatible positions",
+            "data_requirements": ["either_or_choices", "what each choice commits you to"],
+            "gemini_template": "Create a landscape divided into territories representing incompatible positions. Show what commitments come with each territory. Make the boundary stark - you cannot be in both territories. Show what you gain and what you lose with each choice."
+          },
+          {
+            "form_key": "package_deal_map",
+            "name": "Package Deal Map",
+            "when_to_use": "When ideas come in bundled packages",
+            "data_requirements": ["package_deals", "package contents", "package incompatibilities"],
+            "gemini_template": "Create a map showing idea packages - bundles of commitments that come together. Each package is a bounded region containing its commitments. Show which packages are incompatible with which. Make clear: buy into one idea in the package, you get all of them."
+          }
+        ],
+        "form_selection_logic": {
+          "default": "commitment_cascade",
+          "if_has_either_or_choices": "either_or_landscape",
+          "if_has_package_deals": "package_deal_map"
+        },
+        "style_affinity": {
+          "primary": "tufte",
+          "rationale": "Logical structure benefits from clear, precise visualization without decoration"
+        }
+      }
     },
     "audience_vocabulary": {
       "researcher": {},

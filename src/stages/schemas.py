@@ -132,6 +132,89 @@ class CurationContext(BaseModel):
     )
 
 
+class VisualElement(BaseModel):
+    """A key visual element for semantic visualization."""
+    element: str = Field(..., description="Element name (e.g., 'circular_arrows')")
+    purpose: str = Field(..., description="What this element conveys")
+    encoding: str = Field(..., description="How to visually encode it")
+
+
+class VisualGrammar(BaseModel):
+    """Visual grammar specification for semantic visualization."""
+    core_metaphor: str = Field(
+        ...,
+        description="The central visual metaphor (e.g., 'cycles_and_loops', 'transformation_through_contradiction')",
+    )
+    essence: str = Field(
+        default="",
+        description="What the visual MUST convey - the non-negotiable insight",
+    )
+    key_visual_elements: list[VisualElement] = Field(
+        default_factory=list,
+        description="Visual elements that encode the analytical meaning",
+    )
+    anti_patterns: list[str] = Field(
+        default_factory=list,
+        description="Visual forms to AVOID (e.g., 'generic_radial_layout', 'static_category_wheel')",
+    )
+    design_principles: list[str] = Field(
+        default_factory=list,
+        description="Core design principles for this type of analysis",
+    )
+
+
+class RecommendedForm(BaseModel):
+    """A recommended visual form with usage guidance."""
+    form_key: str = Field(..., description="Unique identifier (e.g., 'causal_loop_diagram')")
+    name: str = Field(..., description="Human-readable name")
+    when_to_use: str = Field(..., description="Conditions when this form is appropriate")
+    data_requirements: list[str] = Field(
+        default_factory=list,
+        description="What data must be present to use this form",
+    )
+    gemini_template: str = Field(
+        default="",
+        description="Gemini prompt template for this specific form",
+    )
+
+
+class SemanticVisualIntent(BaseModel):
+    """Semantic visual intent specification.
+
+    This bridges analytical MEANING to visual FORM - telling the Visualizer
+    not just what data structure exists, but what the analysis MEANS and
+    how to make that meaning visible.
+    """
+    primary_concept: str = Field(
+        ...,
+        description="The core analytical concept (e.g., 'feedback_dynamics', 'dialectical_movement')",
+    )
+    concept_description: str = Field(
+        default="",
+        description="Explanation of what this concept means and why visualization matters",
+    )
+    visual_grammar: VisualGrammar = Field(
+        default_factory=VisualGrammar,
+        description="The visual grammar for this analytical concept",
+    )
+    gemini_semantic_prompt: str = Field(
+        default="",
+        description="Meaning-focused Gemini prompt that encodes semantic intent",
+    )
+    recommended_forms: list[RecommendedForm] = Field(
+        default_factory=list,
+        description="Visual forms recommended for this type of analysis",
+    )
+    form_selection_logic: dict[str, str] = Field(
+        default_factory=dict,
+        description="Logic for selecting among forms (e.g., 'if_has_cycles': 'causal_loop_diagram')",
+    )
+    style_affinity: dict[str, str] = Field(
+        default_factory=dict,
+        description="Preferred dataviz styles (e.g., 'primary': 'tufte', 'secondary': 'stefaner')",
+    )
+
+
 class ConcretizationContext(BaseModel):
     """Engine-specific context for concretization stage template.
 
@@ -161,10 +244,16 @@ class ConcretizationContext(BaseModel):
         description="Table types recommended for this engine's output",
     )
 
-    # Visual patterns for graphs
+    # Visual patterns for graphs (LEGACY - use semantic_visual_intent instead)
     recommended_visual_patterns: list[str] = Field(
         default_factory=list,
-        description="Visual patterns for network/diagram output",
+        description="Visual patterns for network/diagram output (legacy, prefer semantic_visual_intent)",
+    )
+
+    # NEW: Semantic visual intent - bridges meaning to form
+    semantic_visual_intent: Optional[SemanticVisualIntent] = Field(
+        default=None,
+        description="Semantic visual intent specification - tells Visualizer what the analysis MEANS",
     )
 
 

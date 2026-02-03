@@ -813,7 +813,86 @@
         "lock_in_mechanism_map (what reinforces what)",
         "increasing_returns_flow (how returns accumulate)",
         "counterfactual_comparison (parallel timelines of actual vs. alternative)"
-      ]
+      ],
+      "semantic_visual_intent": {
+        "primary_concept": "path_dependency",
+        "concept_description": "How historical choices constrain future options. The insight is that we are not always free to choose - past decisions create lock-ins, increasing returns, and switching costs that make some paths nearly impossible to exit.",
+        "visual_grammar": {
+          "core_metaphor": "branching_paths_and_foreclosed_alternatives",
+          "essence": "The visual must show TIME and CONSTRAINT - how choices at critical junctures closed off alternatives, and how mechanisms keep us locked in",
+          "key_visual_elements": [
+            {
+              "element": "branching_junctures",
+              "purpose": "Show moments when multiple paths were open",
+              "encoding": "Branch points where multiple futures were possible, with chosen path highlighted"
+            },
+            {
+              "element": "foreclosed_alternatives",
+              "purpose": "Show paths that were not taken and are now closed",
+              "encoding": "Faded, crossed-out, or grayed branches representing paths no longer available"
+            },
+            {
+              "element": "lock_in_indicators",
+              "purpose": "Show what mechanisms maintain the current path",
+              "encoding": "Chains, barriers, or reinforcing arrows showing what keeps us on this path"
+            },
+            {
+              "element": "temporal_flow",
+              "purpose": "Show that this is historical - time moves forward",
+              "encoding": "Left-to-right or top-to-bottom flow showing temporal sequence"
+            },
+            {
+              "element": "switching_cost_markers",
+              "purpose": "Show how hard it would be to change paths now",
+              "encoding": "Barriers or cost indicators at potential exit points"
+            }
+          ],
+          "anti_patterns": [
+            "atemporal_network - Connections without temporal direction",
+            "free_choice_diagram - Making it look like all options are still open",
+            "simple_timeline - Just events without showing foreclosed alternatives"
+          ],
+          "design_principles": [
+            "TIME FLOWS FORWARD - Path dependency is inherently historical; show temporal direction",
+            "SHOW WHAT WAS LOST - The counterfactual paths that were foreclosed are as important as what was chosen",
+            "LOCK-IN IS VISIBLE - Show the mechanisms that trap us on the current path",
+            "JUNCTURES ARE SPECIAL - Critical moments when things could have gone differently should stand out"
+          ]
+        },
+        "gemini_semantic_prompt": "You are visualizing PATH DEPENDENCY analysis.\n\nThis is NOT just a timeline. This is a diagram of CONSTRAINED HISTORICAL CHOICE showing how past decisions limit present options.\n\nCRITICAL REQUIREMENTS:\n1. Show CRITICAL JUNCTURES as branch points where multiple paths were possible\n2. Show FORECLOSED ALTERNATIVES - paths that were not taken and are now closed (faded/crossed out)\n3. Show LOCK-IN MECHANISMS - what keeps us on the current path (chains, barriers, reinforcing loops)\n4. Show TEMPORAL FLOW - time moves in one direction; past constrains future\n5. Show SWITCHING COSTS - how hard it would be to change paths now\n\nWHAT NOT TO DO:\n- Do NOT create an atemporal concept map\n- Do NOT make it look like all options are equally available today\n- Do NOT hide the foreclosed alternatives - they are key to understanding path dependency\n\nThe goal: Someone looking at this should SEE how history constrains choice - what was possible, what was chosen, what was lost, and why it is hard to change now.",
+        "recommended_forms": [
+          {
+            "form_key": "path_branching_tree",
+            "name": "Path Branching Diagram",
+            "when_to_use": "Default for showing junctures and foreclosed alternatives",
+            "data_requirements": ["critical junctures", "chosen paths", "alternative paths", "foreclosure dates"],
+            "gemini_template": "Create a branching tree diagram flowing left to right (or top to bottom) through time. At each critical juncture, show the branch point with the path taken (solid, colored) and alternatives not taken (faded, dashed, or crossed out). Label why alternatives were foreclosed."
+          },
+          {
+            "form_key": "lock_in_mechanism_diagram",
+            "name": "Lock-In Mechanism Map",
+            "when_to_use": "When focusing on what maintains the current path",
+            "data_requirements": ["current path segment", "lock-in mechanisms", "mechanism strength"],
+            "gemini_template": "Create a diagram showing the current institutional path with all the mechanisms that reinforce it. Use chains, barriers, or feedback arrows to show what makes exit difficult. Size mechanisms by their constraining power."
+          },
+          {
+            "form_key": "counterfactual_comparison",
+            "name": "Parallel Timelines Comparison",
+            "when_to_use": "When comparing actual path to alternative that was not taken",
+            "data_requirements": ["actual path events", "counterfactual path events", "divergence point"],
+            "gemini_template": "Create parallel timelines showing actual history and the counterfactual alternative. Start from the divergence point and trace how each would have developed differently. Highlight key differences in outcomes."
+          }
+        ],
+        "form_selection_logic": {
+          "default": "path_branching_tree",
+          "if_focus_on_lock_in": "lock_in_mechanism_diagram",
+          "if_has_counterfactuals": "counterfactual_comparison"
+        },
+        "style_affinity": {
+          "primary": "ft_burn_murdoch",
+          "rationale": "Historical analysis benefits from FT style - restrained elegance, time series expertise"
+        }
+      }
     },
     "audience_vocabulary": {
       "researcher": {

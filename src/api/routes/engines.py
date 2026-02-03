@@ -293,6 +293,55 @@ async def get_stage_context(engine_key: str) -> dict:
     return engine.stage_context.model_dump()
 
 
+@router.get("/{engine_key}/visual-intent")
+async def get_visual_intent(engine_key: str) -> dict:
+    """Get semantic visual intent for an engine.
+
+    Returns the semantic_visual_intent specification that tells the Visualizer
+    what this analysis MEANS and how to make that meaning visible.
+
+    This bridges analytical meaning to visual form - not just "this data has
+    nodes and edges" but "this is feedback analysis, show actual loops with
+    reinforcing/balancing indicators."
+
+    Returns:
+        - primary_concept: The core analytical concept
+        - visual_grammar: Core metaphor, key elements, anti-patterns
+        - gemini_semantic_prompt: Meaning-focused prompt for Gemini
+        - recommended_forms: Visual forms appropriate for this analysis
+        - form_selection_logic: Logic for choosing among forms
+        - style_affinity: Preferred dataviz styles
+
+    Returns empty dict with has_semantic_intent=false if engine has no
+    semantic visual intent specified.
+    """
+    registry = get_engine_registry()
+    engine = registry.get(engine_key)
+    if engine is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Engine not found: {engine_key}",
+        )
+
+    concretization = engine.stage_context.concretization
+    semantic_intent = concretization.semantic_visual_intent
+
+    if semantic_intent is None:
+        return {
+            "engine_key": engine_key,
+            "has_semantic_intent": False,
+            "semantic_visual_intent": None,
+            # Fall back to legacy recommended_visual_patterns if available
+            "legacy_visual_patterns": concretization.recommended_visual_patterns or [],
+        }
+
+    return {
+        "engine_key": engine_key,
+        "has_semantic_intent": True,
+        "semantic_visual_intent": semantic_intent.model_dump(),
+    }
+
+
 @router.get("/{engine_key}/profile", response_model=EngineProfileResponse)
 async def get_engine_profile(engine_key: str) -> EngineProfileResponse:
     """Get rich profile/about section for an engine.

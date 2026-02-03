@@ -566,7 +566,93 @@
         "causal_loop_diagram",
         "stock_flow_diagram",
         "behavior_over_time"
-      ]
+      ],
+      "semantic_visual_intent": {
+        "primary_concept": "feedback_dynamics",
+        "concept_description": "Self-reinforcing and self-correcting cycles in complex systems. The core insight is that effects loop back to influence their causes, creating dynamic patterns of amplification (reinforcing loops) and stability (balancing loops).",
+        "visual_grammar": {
+          "core_metaphor": "cycles_and_loops",
+          "essence": "The visual must make CYCLICAL CAUSALITY visible - not just show that things are related, but HOW effects feed back into causes",
+          "key_visual_elements": [
+            {
+              "element": "circular_arrows",
+              "purpose": "Show that effects loop back to causes",
+              "encoding": "Arrows that complete a circuit, not just point A to B"
+            },
+            {
+              "element": "loop_polarity_markers",
+              "purpose": "Distinguish reinforcing from balancing loops",
+              "encoding": "R or + for reinforcing (amplifies change), B or - for balancing (resists change)"
+            },
+            {
+              "element": "causal_direction",
+              "purpose": "Show which way causality flows",
+              "encoding": "Arrowheads on edges, consistent direction within each loop"
+            },
+            {
+              "element": "loop_strength",
+              "purpose": "Show which loops dominate",
+              "encoding": "Edge thickness or color intensity for stronger loops"
+            },
+            {
+              "element": "delay_markers",
+              "purpose": "Show where effects are delayed",
+              "encoding": "Double lines or clock symbols on edges with significant delays"
+            },
+            {
+              "element": "leverage_points",
+              "purpose": "Show where intervention would have most effect",
+              "encoding": "Highlighted nodes at strategic positions in dominant loops"
+            }
+          ],
+          "anti_patterns": [
+            "generic_radial_layout - Concepts arranged in a circle with no directional meaning",
+            "static_category_wheel - Sectors/slices that just categorize without showing dynamics",
+            "undirected_blob_map - Venn-like overlaps without causal arrows",
+            "symmetric_network - Equal node sizes/positions that hide which elements dominate"
+          ],
+          "design_principles": [
+            "LOOPS MUST BE VISIBLE - If you cannot trace a complete circuit with your finger, it is wrong",
+            "DIRECTION MATTERS - Every edge shows which way causality flows",
+            "POLARITY IS KEY - R vs B loops have fundamentally different system behavior",
+            "DOMINANCE IS ENCODED - Not all loops are equal; show which ones drive the system",
+            "TIME IS IMPLIED - Feedback involves temporal dynamics; consider showing delays"
+          ]
+        },
+        "gemini_semantic_prompt": "You are visualizing FEEDBACK LOOPS from a systems analysis.\n\nThis is NOT a concept map or category diagram. This is a CAUSAL LOOP DIAGRAM showing how effects feed back into their causes.\n\nCRITICAL REQUIREMENTS:\n1. Draw ACTUAL LOOPS - arrows that complete circuits back to their origin\n2. Mark each loop as REINFORCING (R) if it amplifies change, or BALANCING (B) if it resists change\n3. Show CAUSAL DIRECTION with arrowheads - which way does influence flow?\n4. Use edge THICKNESS to show which loops are stronger/more dominant\n5. Highlight LEVERAGE POINTS - nodes where intervention would propagate through multiple loops\n\nWHAT NOT TO DO:\n- Do NOT create a radial/circular layout just because loops are circular\n- Do NOT create a static Venn diagram or category wheel\n- Do NOT make all nodes the same size/weight\n- Do NOT omit directional arrows\n\nThe goal: Someone looking at this should immediately SEE the feedback dynamics - which loops reinforce, which balance, where to intervene.",
+        "recommended_forms": [
+          {
+            "form_key": "causal_loop_diagram",
+            "name": "Causal Loop Diagram",
+            "when_to_use": "Default for feedback analysis - shows loops with R/B polarity",
+            "data_requirements": ["loops with members", "edge directions", "loop polarity"],
+            "gemini_template": "Create a causal loop diagram in the style of system dynamics. Each loop should be clearly traceable as a closed circuit. Place an 'R' in the center of reinforcing loops (where effects amplify) and 'B' in balancing loops (where effects counteract). Use consistent arrow directions showing causal flow. Make dominant loops more prominent through thicker lines or bolder colors."
+          },
+          {
+            "form_key": "stock_flow_diagram",
+            "name": "Stock and Flow Diagram",
+            "when_to_use": "When the analysis identifies accumulations (stocks) and rates of change (flows)",
+            "data_requirements": ["stocks/accumulators", "inflows", "outflows", "feedback connections"],
+            "gemini_template": "Create a stock-and-flow diagram using system dynamics notation: rectangles for STOCKS (things that accumulate), pipes with valves for FLOWS (rates of change), clouds for sources/sinks outside the system boundary. Connect with arrows showing how stocks influence flows and how flows change stocks."
+          },
+          {
+            "form_key": "leverage_point_map",
+            "name": "Leverage Point Map",
+            "when_to_use": "When analysis identifies intervention points",
+            "data_requirements": ["nodes", "loops", "leverage point rankings"],
+            "gemini_template": "Create a map showing where to intervene in the system for maximum effect. Position leverage points by strength: weak (parameters) to strong (paradigms). Show which loops each leverage point affects. Use size or color to indicate leverage strength."
+          }
+        ],
+        "form_selection_logic": {
+          "default": "causal_loop_diagram",
+          "if_has_stocks_flows": "stock_flow_diagram",
+          "if_has_leverage_points": "leverage_point_map"
+        },
+        "style_affinity": {
+          "primary": "stefaner_truth_beauty",
+          "rationale": "Feedback systems are complex and benefit from visualization that reveals emergent structure"
+        }
+      }
     },
     "audience_vocabulary": {
       "researcher": {

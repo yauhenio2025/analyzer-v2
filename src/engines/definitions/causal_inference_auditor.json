@@ -710,7 +710,78 @@
         "evidence_credibility_heatmap",
         "strategy_comparison_radar",
         "threat_severity_matrix"
-      ]
+      ],
+      "semantic_visual_intent": {
+        "primary_concept": "causal_identification",
+        "concept_description": "The challenge of establishing causation rather than mere correlation. The insight is that causal claims require identifying assumptions - and every identification strategy has vulnerabilities that can undermine the claim.",
+        "visual_grammar": {
+          "core_metaphor": "paths_and_blocked_paths",
+          "essence": "The visual must show CAUSAL PATHS and what BLOCKS or CONFOUNDS them - not just variables connected, but which paths are credibly identified and which are threatened",
+          "key_visual_elements": [
+            {
+              "element": "directed_causal_arrows",
+              "purpose": "Show direction of causal effect",
+              "encoding": "Arrows pointing from cause to effect, solid for claimed, dashed for assumed"
+            },
+            {
+              "element": "confounding_paths",
+              "purpose": "Show backdoor paths that threaten identification",
+              "encoding": "Red/dashed paths showing alternative explanations (X <- C -> Y)"
+            },
+            {
+              "element": "blocked_path_markers",
+              "purpose": "Show where identification strategy blocks confounding",
+              "encoding": "X marks or breaks in confounding paths where strategy claims to block"
+            },
+            {
+              "element": "assumption_nodes",
+              "purpose": "Show what must be true for identification to work",
+              "encoding": "Diamond or highlighted nodes representing untestable assumptions"
+            },
+            {
+              "element": "credibility_indicators",
+              "purpose": "Show how credible each causal claim is",
+              "encoding": "Color gradients or confidence bars on paths"
+            }
+          ],
+          "anti_patterns": [
+            "simple_correlation_network - Undirected connections that do not distinguish cause from effect",
+            "black_box_diagram - Just X -> Y without showing identification strategy",
+            "assumption_free_visualization - Making it look like causation is established without showing what must be assumed"
+          ],
+          "design_principles": [
+            "DIRECTION IS EVERYTHING - Causal arrows must be directed; X->Y is not the same as X<-Y",
+            "SHOW THE THREATS - Every identification strategy has vulnerabilities; make them visible",
+            "ASSUMPTIONS ARE FIRST CLASS - What must be true for the causal claim to hold?",
+            "CREDIBILITY VARIES - Not all causal claims are equally well-identified; encode confidence"
+          ]
+        },
+        "gemini_semantic_prompt": "You are visualizing CAUSAL INFERENCE analysis.\n\nThis is NOT a simple cause-effect diagram. This is a CAUSAL IDENTIFICATION map showing what must be true for causal claims to be credible.\n\nCRITICAL REQUIREMENTS:\n1. Draw DIRECTED causal arrows - cause to effect, with arrowheads showing direction\n2. Show CONFOUNDING PATHS (backdoor paths) that threaten causal identification\n3. Mark where IDENTIFICATION STRATEGIES claim to BLOCK confounding\n4. Highlight ASSUMPTIONS that must hold for identification to work\n5. Use color/thickness to show CREDIBILITY of different causal claims\n\nWHAT NOT TO DO:\n- Do NOT draw undirected correlation lines\n- Do NOT hide the threats to identification\n- Do NOT make it look like causation is straightforward when it is not\n\nThe goal: Someone looking at this should SEE what causal claims are being made, what threatens them, and how credible the identification is.",
+        "recommended_forms": [
+          {
+            "form_key": "causal_dag",
+            "name": "Causal DAG with Identification",
+            "when_to_use": "Default for showing causal structure with threats and blocks",
+            "data_requirements": ["variables", "causal paths", "confounding paths", "identification strategy"],
+            "gemini_template": "Create a Directed Acyclic Graph (DAG) showing causal structure. Use solid arrows for claimed causal effects, dashed for backdoor/confounding paths. Mark where identification strategy blocks confounding with X symbols. Highlight untested assumptions."
+          },
+          {
+            "form_key": "threat_assessment_map",
+            "name": "Identification Threat Map",
+            "when_to_use": "When focusing on vulnerabilities in causal claims",
+            "data_requirements": ["causal claims", "threats to each claim", "threat severity"],
+            "gemini_template": "Create a map centered on the main causal claim, with threats radiating outward. Size/color threats by severity. Show which threats are addressed by the identification strategy and which remain open."
+          }
+        ],
+        "form_selection_logic": {
+          "default": "causal_dag",
+          "if_focus_on_threats": "threat_assessment_map"
+        },
+        "style_affinity": {
+          "primary": "tufte",
+          "rationale": "Causal inference requires precision and clarity; Tufte style supports rigorous visualization"
+        }
+      }
     },
     "audience_vocabulary": {
       "researcher": {

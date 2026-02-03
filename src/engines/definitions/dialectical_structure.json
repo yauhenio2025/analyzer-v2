@@ -611,7 +611,88 @@
         "greimas_square",
         "dialectical_spiral",
         "contradiction_network"
-      ]
+      ],
+      "semantic_visual_intent": {
+        "primary_concept": "dialectical_movement",
+        "concept_description": "The dynamic process by which contradictions generate movement and transformation. Not just 'there are opposing positions' but HOW opposition drives change through thesis-antithesis-synthesis movement, where contradictions are preserved-and-overcome (aufgehoben).",
+        "visual_grammar": {
+          "core_metaphor": "transformation_through_contradiction",
+          "essence": "The visual must show MOVEMENT and TRANSFORMATION - how positions don't just oppose each other but generate new positions through their conflict",
+          "key_visual_elements": [
+            {
+              "element": "thesis_antithesis_synthesis_flow",
+              "purpose": "Show the dialectical movement pattern",
+              "encoding": "Directed flow showing thesis challenged by antithesis resolved in synthesis"
+            },
+            {
+              "element": "contradiction_markers",
+              "purpose": "Show where genuine contradictions exist (not just differences)",
+              "encoding": "Tension lines, opposing arrows, or force vectors showing incompatibility"
+            },
+            {
+              "element": "sublation_indicators",
+              "purpose": "Show how contradictions are preserved-and-overcome",
+              "encoding": "Synthesis nodes that visually contain/incorporate elements from both thesis and antithesis"
+            },
+            {
+              "element": "dialectical_levels",
+              "purpose": "Show ascending movement to higher synthesis",
+              "encoding": "Vertical arrangement or spiral showing progression from lower to higher resolutions"
+            },
+            {
+              "element": "unresolved_tension_markers",
+              "purpose": "Show contradictions that remain active",
+              "encoding": "Pulsing, jagged, or incomplete elements showing ongoing conflict"
+            }
+          ],
+          "anti_patterns": [
+            "static_position_map - Just showing where different positions 'are' without showing movement",
+            "simple_pro_con_table - Binary opposition without transformation",
+            "venn_overlap_diagram - Suggests compatibility rather than productive contradiction",
+            "radial_category_wheel - No sense of dialectical progression or levels"
+          ],
+          "design_principles": [
+            "MOVEMENT IS ESSENTIAL - Dialectics is dynamic; the visual must show transformation, not just positions",
+            "CONTRADICTION GENERATES - Opposition is not just difference; it is the engine of change",
+            "SYNTHESIS IS NOT COMPROMISE - The higher unity preserves the truth of both moments while overcoming their limitations",
+            "LEVELS MATTER - Dialectical movement often spirals upward to more comprehensive syntheses",
+            "SOME CONTRADICTIONS REMAIN - Not everything is resolved; show active tensions"
+          ]
+        },
+        "gemini_semantic_prompt": "You are visualizing DIALECTICAL STRUCTURE from a philosophical analysis.\n\nThis is NOT a concept map showing that different positions exist. This is a DIALECTICAL DIAGRAM showing how contradictions drive transformation.\n\nCRITICAL REQUIREMENTS:\n1. Show THESIS to ANTITHESIS to SYNTHESIS movement with clear directional flow\n2. Mark CONTRADICTIONS as genuine incompatibilities (not just differences)\n3. Show SYNTHESIS as containing/preserving elements of both thesis and antithesis (not as a compromise or middle ground)\n4. Use VERTICAL or SPIRAL arrangement to show dialectical progression to higher levels\n5. Distinguish RESOLVED contradictions (synthesized) from UNRESOLVED tensions (still active)\n6. Identify the FOUNDATIONAL CONTRADICTION that drives the whole dialectic\n\nWHAT NOT TO DO:\n- Do NOT create a static map of positions without movement\n- Do NOT show thesis and antithesis as simply 'different views'\n- Do NOT make synthesis look like averaging or compromise\n- Do NOT use a flat radial layout - dialectics has levels/progression\n\nThe goal: Someone looking at this should SEE the dialectical movement - how contradictions generate new positions, which syntheses resolve which tensions, and where contradictions remain active.",
+        "recommended_forms": [
+          {
+            "form_key": "dialectical_spiral",
+            "name": "Dialectical Spiral",
+            "when_to_use": "Default for showing thesis-antithesis-synthesis progression through multiple levels",
+            "data_requirements": ["dialectical_movements with thesis/antithesis/synthesis", "levels or stages"],
+            "gemini_template": "Create a spiral or ascending diagram showing dialectical movement. Each turn of the spiral shows: (1) a THESIS position, (2) its ANTITHESIS that contradicts it, (3) the SYNTHESIS that preserves-and-overcomes both. Use upward movement to show progression to more comprehensive positions."
+          },
+          {
+            "form_key": "contradiction_force_field",
+            "name": "Contradiction Force Field",
+            "when_to_use": "When focusing on active tensions and their relative strengths",
+            "data_requirements": ["contradictions", "positions in tension", "tension strength"],
+            "gemini_template": "Create a force field diagram showing contradictions as opposing forces. Position contradicting elements on opposite sides with tension lines between them. Use visual weight to show strength of contradiction. Show resolved contradictions differently from active ones."
+          },
+          {
+            "form_key": "sublation_tree",
+            "name": "Sublation Tree",
+            "when_to_use": "When showing how multiple lower contradictions feed into higher syntheses",
+            "data_requirements": ["thesis/antithesis pairs", "synthesis relationships", "hierarchy"],
+            "gemini_template": "Create a tree structure where leaves are thesis/antithesis pairs and internal nodes are syntheses that sublate them. The root represents the highest synthesis. Use visual containment to show how synthesis preserves what it overcomes."
+          }
+        ],
+        "form_selection_logic": {
+          "default": "dialectical_spiral",
+          "if_focus_on_tensions": "contradiction_force_field",
+          "if_hierarchical_structure": "sublation_tree"
+        },
+        "style_affinity": {
+          "primary": "lupi_data_humanism",
+          "rationale": "Dialectical content is philosophical and benefits from humanistic, crafted visualization that honors complexity"
+        }
+      }
     },
     "audience_vocabulary": {
       "researcher": {
