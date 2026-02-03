@@ -1,6 +1,6 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-01-31
+> Auto-maintained by Claude Code. Last updated: 2026-02-03
 
 ## Engine Upgrade System
 
@@ -233,6 +233,40 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
 - **Entry Points**:
   - `scripts/migrate_engines_to_stages.py` - Migration script with dry-run support
 - **Added**: 2026-01-29
+
+## Semantic Visual Intent
+
+### Visual Intent Schema
+- **Status**: Active
+- **Description**: Schema for specifying semantic visual intent - bridges analytical MEANING to visual FORM
+- **Entry Points**:
+  - `src/stages/schemas.py:280-350` - SemanticVisualIntent, VisualGrammar, VisualElement, RecommendedForm models
+- **Dependencies**: Pydantic v2
+- **Added**: 2026-02-03
+
+### Visual Intent API Endpoint
+- **Status**: Active
+- **Description**: Returns semantic visual intent for visualization systems
+- **Entry Points**:
+  - `src/api/routes/engines.py:380-410` - GET /v1/engines/{key}/visual-intent endpoint
+- **API Response**: `{engine_key, has_semantic_intent, semantic_visual_intent, legacy_visual_patterns}`
+- **Added**: 2026-02-03
+
+### Engines with Semantic Visual Intent
+- **Status**: Active (5 engines)
+- **Description**: Priority engines enriched with semantic visual intent specifications
+- **Engines**:
+  - `feedback_loop_mapper` - feedback_dynamics → causal loop diagrams, stock-flow diagrams
+  - `dialectical_structure` - dialectical_movement → dialectical spirals, force fields
+  - `inferential_commitment_mapper` - inferential_chain → commitment cascades, either-or landscapes
+  - `causal_inference_auditor` - causal_identification → causal DAGs, threat assessment maps
+  - `path_dependency_analyzer` - path_dependency → path branching trees, lock-in diagrams
+- **Each Intent Includes**:
+  - Visual grammar (core metaphor, key visual elements, anti-patterns, design principles)
+  - Recommended forms with Gemini prompt templates
+  - Form selection logic (conditional rules)
+  - Style affinities (dataviz school recommendations)
+- **Added**: 2026-02-03
 
 ## API
 

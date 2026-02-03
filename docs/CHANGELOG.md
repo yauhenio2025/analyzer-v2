@@ -5,6 +5,21 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+- **Semantic Visual Intent System** - Bridges analytical meaning to visual form
+  - `SemanticVisualIntent` schema in `src/stages/schemas.py` with visual grammar specification
+  - New endpoint `GET /v1/engines/{key}/visual-intent` returns semantic intent for visualization
+  - Added `semantic_visual_intent` to 5 priority engines:
+    - `feedback_loop_mapper` - feedback_dynamics concept → causal loop diagrams
+    - `dialectical_structure` - dialectical_movement concept → dialectical spirals
+    - `inferential_commitment_mapper` - inferential_chain concept → commitment cascades
+    - `causal_inference_auditor` - causal_identification concept → causal DAGs
+    - `path_dependency_analyzer` - path_dependency concept → path branching trees
+  - Each intent includes: visual grammar (core metaphor, key elements, anti-patterns),
+    recommended forms with Gemini templates, form selection logic, style affinities
+  - Purpose: Enable Visualizer to select visualizations based on MEANING not just data STRUCTURE
+    (e.g., feedback loops → actual loop diagrams, not generic radial layouts)
+
 ### Fixed
 - **V2 Engines: Missing relationship_graph population instructions** - Added generic graph-building section to shared extraction template
   - Root cause: v2 engines had `relationship_graph` in schema but no instructions telling LLM how to populate it
