@@ -1,0 +1,116 @@
+{
+  "engine": {
+    "_description": "Engine-to-style affinity mappings. First style is most preferred.",
+    "_default": ["nyt_cox", "tufte"],
+
+    "stakeholder_power_interest": ["ft_burn_murdoch", "nyt_cox"],
+    "opportunity_vulnerability_matrix": ["ft_burn_murdoch", "tufte"],
+    "competitive_landscape": ["stefaner_truth_beauty", "ft_burn_murdoch"],
+
+    "resource_flow_asymmetry": ["tufte", "stefaner_truth_beauty"],
+    "value_chain_dynamics": ["tufte", "ft_burn_murdoch"],
+
+    "event_timeline_causal": ["ft_burn_murdoch", "nyt_cox"],
+    "concept_evolution": ["stefaner_truth_beauty", "lupi_data_humanism"],
+
+    "citation_network": ["stefaner_truth_beauty", "tufte"],
+    "intellectual_genealogy": ["stefaner_truth_beauty", "lupi_data_humanism"],
+    "metaphor_analogy_network": ["lupi_data_humanism", "stefaner_truth_beauty"],
+    "metaphor_network": ["lupi_data_humanism", "stefaner_truth_beauty"],
+
+    "argument_architecture": ["tufte", "nyt_cox"],
+    "dialectical_structure": ["lupi_data_humanism", "stefaner_truth_beauty"],
+    "assumption_challenge": ["tufte", "nyt_cox"],
+    "assumption_excavation": ["tufte", "nyt_cox"],
+
+    "thematic_synthesis": ["lupi_data_humanism", "nyt_cox"],
+    "narrative_structure": ["lupi_data_humanism", "nyt_cox"],
+    "emotional_arc": ["lupi_data_humanism", "nyt_cox"],
+
+    "evidence_quality_assessment": ["tufte", "ft_burn_murdoch"],
+    "confidence_calibration": ["tufte", "ft_burn_murdoch"],
+    "source_verification": ["tufte", "nyt_cox"],
+
+    "feedback_loop_mapper": ["stefaner_truth_beauty", "tufte"],
+    "causal_inference_auditor": ["tufte", "nyt_cox"],
+    "path_dependency_analyzer": ["stefaner_truth_beauty", "nyt_cox"],
+    "counterfactual_analyzer": ["nyt_cox", "tufte"],
+
+    "inferential_commitment_mapper": ["tufte", "stefaner_truth_beauty"],
+    "epistemic_rupture_tracer": ["stefaner_truth_beauty", "lupi_data_humanism"],
+    "conditions_of_possibility": ["lupi_data_humanism", "stefaner_truth_beauty"],
+
+    "rhetorical_strategy": ["nyt_cox", "lupi_data_humanism"],
+    "incentive_structure_mapper": ["ft_burn_murdoch", "tufte"],
+
+    "motte_bailey_detector": ["nyt_cox", "tufte"],
+    "charitable_reconstruction": ["nyt_cox", "lupi_data_humanism"],
+    "competing_explanations_analyzer": ["tufte", "nyt_cox"],
+    "complexity_threshold_detector": ["stefaner_truth_beauty", "tufte"],
+    "intelligence_requirements_mapper": ["ft_burn_murdoch", "tufte"],
+    "absent_center": ["lupi_data_humanism", "stefaner_truth_beauty"],
+    "authenticity_forensics": ["tufte", "ft_burn_murdoch"]
+  },
+
+  "format": {
+    "_description": "Visual format-to-style affinity mappings.",
+    "_default": ["nyt_cox", "tufte"],
+
+    "network_graph": ["stefaner_truth_beauty", "tufte"],
+    "chord_diagram": ["lupi_data_humanism", "stefaner_truth_beauty"],
+    "hierarchical_tree": ["tufte", "nyt_cox"],
+    "radial_tree": ["lupi_data_humanism", "stefaner_truth_beauty"],
+
+    "sankey": ["tufte", "ft_burn_murdoch"],
+    "alluvial": ["stefaner_truth_beauty", "lupi_data_humanism"],
+    "flowchart": ["nyt_cox", "tufte"],
+    "value_stream": ["tufte", "ft_burn_murdoch"],
+
+    "timeline": ["nyt_cox", "ft_burn_murdoch"],
+    "gantt": ["tufte", "ft_burn_murdoch"],
+    "parallel_timelines": ["stefaner_truth_beauty", "nyt_cox"],
+    "cycle_diagram": ["lupi_data_humanism", "nyt_cox"],
+
+    "matrix_heatmap": ["tufte", "stefaner_truth_beauty"],
+    "quadrant_chart": ["ft_burn_murdoch", "nyt_cox"],
+    "radar_chart": ["tufte", "lupi_data_humanism"],
+    "bar_chart": ["ft_burn_murdoch", "tufte"],
+
+    "treemap": ["tufte", "nyt_cox"],
+    "sunburst": ["lupi_data_humanism", "stefaner_truth_beauty"],
+    "stacked_bar": ["ft_burn_murdoch", "tufte"],
+    "waterfall": ["ft_burn_murdoch", "nyt_cox"],
+
+    "ach_matrix": ["tufte", "nyt_cox"],
+    "confidence_thermometer": ["nyt_cox", "ft_burn_murdoch"],
+    "indicator_dashboard": ["ft_burn_murdoch", "nyt_cox"],
+    "gap_analysis_visual": ["nyt_cox", "tufte"],
+
+    "argument_tree": ["tufte", "nyt_cox"],
+    "scenario_cone": ["nyt_cox", "stefaner_truth_beauty"],
+    "dialectical_map": ["lupi_data_humanism", "stefaner_truth_beauty"],
+
+    "causal_loop_diagram": ["stefaner_truth_beauty", "tufte"],
+    "stock_flow_diagram": ["tufte", "ft_burn_murdoch"],
+    "path_branching_tree": ["nyt_cox", "stefaner_truth_beauty"],
+    "semiotic_square": ["lupi_data_humanism", "tufte"],
+    "commitment_cascade": ["stefaner_truth_beauty", "tufte"]
+  },
+
+  "audience": {
+    "_description": "Audience-to-style affinity mappings.",
+    "_default": ["nyt_cox", "tufte"],
+
+    "executive": ["nyt_cox", "ft_burn_murdoch"],
+    "analyst": ["tufte", "ft_burn_murdoch"],
+    "researcher": ["tufte", "stefaner_truth_beauty"],
+    "general_public": ["nyt_cox", "lupi_data_humanism"],
+    "journalist": ["ft_burn_murdoch", "nyt_cox"],
+    "academic": ["tufte", "stefaner_truth_beauty"],
+    "creative": ["lupi_data_humanism", "stefaner_truth_beauty"],
+    "activist": ["activist_agitprop", "lupi_data_humanism"],
+    "policymaker": ["nyt_cox", "ft_burn_murdoch"],
+    "investor": ["ft_burn_murdoch", "tufte"],
+    "student": ["nyt_cox", "lupi_data_humanism"]
+  }
+}

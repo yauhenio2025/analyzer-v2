@@ -6,6 +6,24 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Visual Styles System** - Centralized dataviz style definitions and affinity mappings
+  - New `src/styles/` module with schemas, registry, and JSON definitions
+  - 6 dataviz school definitions with color palettes, typography, layout principles, Gemini modifiers:
+    - Tufte (classic statistical graphics)
+    - NYT/Amanda Cox (explanatory graphics)
+    - FT/Burn-Murdoch (restrained elegance)
+    - Giorgia Lupi (data humanism)
+    - Moritz Stefaner (truth & beauty)
+    - Activist/Agitprop (mobilization graphics)
+  - Affinity mappings: 37 engine→style, 32 format→style, 11 audience→style
+  - New API endpoints at `/v1/styles/*`:
+    - `GET /v1/styles` - List style schools
+    - `GET /v1/styles/schools/{key}` - Get full style guide with palette, typography, Gemini modifiers
+    - `GET /v1/styles/affinities/engine` - Engine affinity mappings
+    - `GET /v1/styles/affinities/format` - Format affinity mappings
+    - `GET /v1/styles/affinities/audience` - Audience affinity mappings
+    - `GET /v1/styles/engine-mappings` - All engines with style affinities (for UI)
+  - Purpose: Centralize style knowledge for Visualizer to consume via API
 - **Semantic Visual Intent System** - Bridges analytical meaning to visual form
   - `SemanticVisualIntent` schema in `src/stages/schemas.py` with visual grammar specification
   - New endpoint `GET /v1/engines/{key}/visual-intent` returns semantic intent for visualization

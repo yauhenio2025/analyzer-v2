@@ -268,16 +268,50 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
   - Style affinities (dataviz school recommendations)
 - **Added**: 2026-02-03
 
+## Visual Styles
+
+### Style Registry
+- **Status**: Active
+- **Description**: Serves visual style definitions (6 dataviz schools) and affinity mappings
+- **Entry Points**:
+  - `src/styles/schemas.py:1-100` - StyleSchool enum, StyleGuide, ColorPalette, Typography models
+  - `src/styles/registry.py:1-150` - StyleRegistry class for loading definitions
+  - `src/styles/definitions/schools/*.json` - 6 style school definition files
+  - `src/styles/definitions/affinities.json` - Engine/format/audience affinity mappings
+  - `src/api/routes/styles.py:1-130` - Style API endpoints
+- **Dataviz Schools**:
+  - `tufte` - Classic statistical graphics (Tufte), data-ink ratio maximization
+  - `nyt_cox` - NYT/Amanda Cox explanatory graphics, reader-friendly annotations
+  - `ft_burn_murdoch` - FT/Burn-Murdoch restrained elegance, salmon pink signature
+  - `lupi_data_humanism` - Giorgia Lupi data humanism, organic hand-crafted feel
+  - `stefaner_truth_beauty` - Moritz Stefaner complex networks, emergent structure
+  - `activist_agitprop` - Activist mobilization graphics, high contrast provocation
+- **Affinity Mappings**:
+  - 37 engine-to-style affinities
+  - 32 format-to-style affinities
+  - 11 audience-to-style affinities
+- **API Endpoints**:
+  - `GET /v1/styles` - List all style schools
+  - `GET /v1/styles/schools/{key}` - Get full style guide
+  - `GET /v1/styles/affinities/engine` - Engine affinity mappings
+  - `GET /v1/styles/affinities/format` - Format affinity mappings
+  - `GET /v1/styles/affinities/audience` - Audience affinity mappings
+  - `GET /v1/styles/engine-mappings` - All engines with their style affinities
+  - `GET /v1/styles/for-engine/{key}` - Preferred styles for an engine
+- **Dependencies**: Pydantic v2
+- **Added**: 2026-02-05
+
 ## API
 
 ### FastAPI Application
 - **Status**: Active
 - **Description**: REST API serving definitions at /v1/*
 - **Entry Points**:
-  - `src/api/main.py:1-175` - FastAPI app with CORS, health check
+  - `src/api/main.py:1-180` - FastAPI app with CORS, health check
   - `src/api/routes/engines.py` - Engine endpoints (incl. profile CRUD)
   - `src/api/routes/paradigms.py` - Paradigm endpoints
   - `src/api/routes/chains.py` - Chain endpoints
+  - `src/api/routes/styles.py` - Visual style endpoints
   - `src/api/routes/llm.py` - LLM-powered profile generation
 - **Dependencies**: FastAPI, Uvicorn, Pydantic v2, Anthropic SDK (optional)
-- **Added**: 2026-01-26 | **Modified**: 2026-01-30
+- **Added**: 2026-01-26 | **Modified**: 2026-02-05

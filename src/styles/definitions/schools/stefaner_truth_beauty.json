@@ -1,0 +1,67 @@
+{
+  "key": "stefaner_truth_beauty",
+  "name": "Moritz Stefaner / Truth & Beauty",
+  "philosophy": "Moritz Stefaner's 'Truth and Beauty Operator' approach: Complex systems deserve complex visualizations. Interactivity as a core principle (even in static hints). Scientific rigor meets aesthetic ambition. Large-scale pattern revelation. Cultural data visualization - music, art, society. Network thinking applied everywhere. The 'Aha!' moment when structure emerges from chaos. Technical sophistication visible in the result. Visualization as scientific instrument.",
+  "color_palette": {
+    "primary": "#2c3e50",
+    "secondary": "#e74c3c",
+    "tertiary": "#3498db",
+    "accent": "#9b59b6",
+    "background": "#ecf0f1",
+    "text": "#2c3e50",
+    "highlight": "#f1c40f",
+    "muted": "#95a5a6",
+    "series_palette": ["#e74c3c", "#3498db", "#2ecc71", "#f1c40f", "#9b59b6", "#e67e22"]
+  },
+  "typography": {
+    "primary_font": "Source Sans Pro, Roboto, sans-serif",
+    "title_font": "Montserrat, sans-serif",
+    "caption_font": "Source Sans Pro, sans-serif",
+    "number_font": "Source Code Pro, monospace",
+    "title_size": "20-28px",
+    "label_size": "10-12px",
+    "annotation_size": "11-13px",
+    "line_height": "1.4",
+    "title_weight": "300"
+  },
+  "layout_principles": [
+    "Force-directed and physics-based layouts",
+    "Reveal structure through computation",
+    "Dense information displays that emerge from exploration",
+    "Interactive affordances even in static form",
+    "Dark mode can be powerful for drama",
+    "Precise geometric constructions",
+    "Hierarchy through size and position",
+    "Technical sophistication visible",
+    "Works at multiple zoom levels",
+    "Credits computational method used"
+  ],
+  "annotation_style": "Technical but accessible. Explain the visualization method. Include 'how to read this' guidance. Reference computational approach where relevant. Annotations can discuss the emergence of patterns. Scale and context information prominent. Hover-state-style annotations for key elements. Technical precision in language.",
+  "gemini_modifiers": "STYLE INSTRUCTIONS (Moritz Stefaner / Truth & Beauty):\n- Create a visualization that reveals EMERGENT STRUCTURE\n- Technical sophistication is visible and appreciated\n- Color palette: deep blue-gray (#2c3e50), coral (#e74c3c), bright blue (#3498db)\n- Light gray background (#ecf0f1) OR dramatic dark (#1a1a2e)\n- Force-directed, physics-based, or algorithmically-derived layouts\n- Network and systems thinking applied\n- Dense information that rewards exploration\n- Modern sans-serif typography (Montserrat, Source Sans Pro)\n- Precise geometric construction\n- Include 'how to read this' annotation\n- Works at multiple zoom levels\n- Scientific instrument aesthetic\n- Patterns should EMERGE from data, not be imposed\n- Technical language acceptable",
+  "best_for": [
+    "Complex networks and systems",
+    "Large-scale pattern discovery",
+    "Cultural and social data (music, art, society)",
+    "Scientific and research contexts",
+    "Interactive design (even static hints)",
+    "Citation and influence networks",
+    "Competitive landscape mapping",
+    "Emergence and self-organization"
+  ],
+  "avoid_for": [
+    "Simple data that doesn't need complexity",
+    "Traditional business/financial audiences",
+    "Readers uncomfortable with technical aesthetics",
+    "Quick-read news contexts"
+  ],
+  "practitioners": [
+    "Moritz Stefaner",
+    "Jan Willem Tulp",
+    "Santiago Ortiz"
+  ],
+  "references": [
+    "Truth & Beauty blog",
+    "Selfiecity project",
+    "NotCot network visualizations"
+  ]
+}

@@ -12,10 +12,11 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import chains, engines, llm, paradigms
+from src.api.routes import chains, engines, llm, paradigms, styles
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
 from src.paradigms.registry import get_paradigm_registry
+from src.styles.registry import get_style_registry
 
 # Configure logging
 logging.basicConfig(
@@ -40,6 +41,11 @@ async def lifespan(app: FastAPI):
     logger.info("Loading chain definitions...")
     chain_registry = get_chain_registry()
     logger.info(f"Loaded {chain_registry.count()} chains")
+
+    logger.info("Loading style definitions...")
+    style_registry = get_style_registry()
+    style_stats = style_registry.get_stats()
+    logger.info(f"Loaded {style_stats['styles_loaded']} styles, {style_stats['engine_affinities']} engine affinities")
 
     logger.info("Analyzer v2 API ready")
     yield
@@ -86,6 +92,7 @@ app.add_middleware(
 app.include_router(engines.router, prefix="/v1")
 app.include_router(paradigms.router, prefix="/v1")
 app.include_router(chains.router, prefix="/v1")
+app.include_router(styles.router, prefix="/v1")
 app.include_router(llm.router, prefix="/v1")
 
 
@@ -101,6 +108,7 @@ async def root():
             "engines": "/v1/engines",
             "paradigms": "/v1/paradigms",
             "chains": "/v1/chains",
+            "styles": "/v1/styles",
         },
     }
 
@@ -111,12 +119,16 @@ async def health():
     engine_registry = get_engine_registry()
     paradigm_registry = get_paradigm_registry()
     chain_registry = get_chain_registry()
+    style_registry = get_style_registry()
+    style_stats = style_registry.get_stats()
 
     return {
         "status": "healthy",
         "engines_loaded": engine_registry.count(),
         "paradigms_loaded": paradigm_registry.count(),
         "chains_loaded": chain_registry.count(),
+        "styles_loaded": style_stats["styles_loaded"],
+        "style_affinities": style_stats["engine_affinities"],
     }
 
 
@@ -126,6 +138,8 @@ async def api_v1_root():
     engine_registry = get_engine_registry()
     paradigm_registry = get_paradigm_registry()
     chain_registry = get_chain_registry()
+    style_registry = get_style_registry()
+    style_stats = style_registry.get_stats()
 
     return {
         "version": "v1",
@@ -158,6 +172,20 @@ async def api_v1_root():
                     "GET /v1/chains/{key}",
                     "GET /v1/chains/category/{category}",
                     "POST /v1/chains/recommend",
+                ],
+            },
+            "styles": {
+                "count": style_stats["styles_loaded"],
+                "engine_affinities": style_stats["engine_affinities"],
+                "format_affinities": style_stats["format_affinities"],
+                "endpoints": [
+                    "GET /v1/styles",
+                    "GET /v1/styles/schools/{key}",
+                    "GET /v1/styles/affinities/engine",
+                    "GET /v1/styles/affinities/format",
+                    "GET /v1/styles/affinities/audience",
+                    "GET /v1/styles/engine-mappings",
+                    "GET /v1/styles/for-engine/{engine_key}",
                 ],
             },
         },

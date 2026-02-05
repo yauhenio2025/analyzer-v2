@@ -1,0 +1,69 @@
+{
+  "key": "activist_agitprop",
+  "name": "Activist / Agitprop / Mobilization Graphics",
+  "philosophy": "Inspired by Soviet constructivism, protest graphics, and movement media: PROVOKE - Design to evoke emotional response and urgency. CONTRAST - Stark visual opposition between heroes and villains. BOLD - High-contrast, attention-grabbing compositions. CLEAR - One unmistakable message per visualization. ACTION - Every graphic implies 'what you should do'. SHAREABLE - Optimized for social media impact and virality. RIGHTEOUS - Frame the issue as moral imperative, not neutral analysis.",
+  "color_palette": {
+    "primary": "#CC0000",
+    "secondary": "#000000",
+    "tertiary": "#FFFFFF",
+    "accent": "#FFD700",
+    "background": "#1a1a1a",
+    "text": "#FFFFFF",
+    "highlight": "#FF4500",
+    "positive": "#228B22",
+    "muted": "#666666"
+  },
+  "typography": {
+    "primary_font": "Impact, Helvetica Black, Arial Black, sans-serif",
+    "title_font": "Impact, Helvetica Black, sans-serif",
+    "caption_font": "Arial, Helvetica, sans-serif",
+    "number_font": "Impact, Arial Black, sans-serif",
+    "title_size": "48-72px",
+    "label_size": "14-16px",
+    "annotation_size": "14-18px",
+    "line_height": "1.2",
+    "title_weight": "900"
+  },
+  "layout_principles": [
+    "MAXIMUM visual impact - fill the frame",
+    "One dominant visual element - no visual democracy",
+    "Text should SHOUT - use all caps for key messages",
+    "High contrast ratios - nothing subtle",
+    "Arrows and visual direction guide the eye to the point",
+    "Use stark visual metaphors (chains, scales, clocks, etc.)",
+    "Social media optimized aspect ratios",
+    "Shareable at small sizes",
+    "Call to action always visible",
+    "Red for danger/urgency, gold for hope/value"
+  ],
+  "annotation_style": "Bold callouts, accusatory arrows, stark labels. Frame villains with red, heroes with white/gold. Short, punchy phrases. Imperative mood: 'Stop this' 'Act now' 'Share this'. Statistics as shocking numbers in large type. Attribution to authority figures ('Experts say...'). No nuance - clarity over complexity.",
+  "gemini_modifiers": "STYLE INSTRUCTIONS (Activist / Agitprop / Mobilization Graphics):\n\nTONE:\n- This is NOT neutral analysis - take a clear moral position\n- Frame as INJUSTICE that demands response\n- Use power/victim dynamics explicitly\n- Imply urgency: 'This is happening NOW'\n\nVISUAL APPROACH:\n- HIGH CONTRAST: Red/Black/White dominant palette\n- BOLD typography: Impact font, all caps for key messages\n- ONE CLEAR MESSAGE per visual\n- Stark visual metaphors: chains, scales, targets, crosshairs, clocks\n- Villains in red/dark, victims/heroes in white/gold\n- Dramatic lighting effects\n- Fill the frame - no empty space\n\nCOMPOSITION:\n- Social media optimized (square or 4:5 ratio)\n- Works at thumbnail size\n- Central focal point\n- Call to action visible",
+  "best_for": [
+    "Social media advocacy campaigns",
+    "Movement mobilization",
+    "Exposing injustice or corruption",
+    "Fundraising appeals",
+    "Political messaging",
+    "Crisis response communications",
+    "Protest graphics",
+    "Shareable statistics"
+  ],
+  "avoid_for": [
+    "Nuanced policy analysis",
+    "Academic or research contexts",
+    "Corporate communications",
+    "Balanced journalism",
+    "Audiences expecting neutrality"
+  ],
+  "practitioners": [
+    "Shepard Fairey",
+    "Robbie Conal",
+    "Soviet constructivists (Rodchenko, El Lissitzky)",
+    "Emory Douglas (Black Panther Party)"
+  ],
+  "references": [
+    "OBEY Giant",
+    "Soviet propaganda posters",
+    "Movement graphics archives"
+  ]
+}
