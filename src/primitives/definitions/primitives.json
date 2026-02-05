@@ -1,0 +1,141 @@
+{
+  "_meta": {
+    "description": "Analytical primitives - the trading zone between engines and visual styles",
+    "purpose": "Soft guidance for Gemini about what visual/aesthetic approaches tend to work"
+  },
+
+  "primitives": [
+    {
+      "key": "cyclical_causation",
+      "name": "Cyclical Causation",
+      "description": "Effects loop back to influence their causes. Systems where A affects B which affects A again, creating reinforcing spirals or balancing dampeners.",
+      "visual_hint": "Show the loop structure explicitly. Arrows should curve back. Mark whether loops reinforce (+) or balance (-).",
+      "visual_forms": ["causal_loop_diagram", "stock_flow_diagram", "feedback_spiral"],
+      "style_hint": "Works well with technical precision that reveals emergent patterns. Avoid over-decoration that obscures the loop logic.",
+      "style_leanings": ["stefaner_truth_beauty", "tufte"],
+      "gemini_guidance": "This analysis reveals FEEDBACK LOOPS - cycles where effects become causes. Visually: make the circular/cyclical structure obvious. Use curved arrows that return to their origin. Consider marking reinforcing loops (R or +) vs balancing loops (B or -). The insight is in seeing HOW things connect back, not just THAT they connect.",
+      "associated_engines": ["feedback_loop_mapper", "systems_dynamics_analyzer", "reinforcing_pattern_detector"]
+    },
+    {
+      "key": "hierarchical_support",
+      "name": "Hierarchical Support",
+      "description": "Claims rest on other claims in a tree-like structure. Arguments have warrants, backings, and grounds that support conclusions.",
+      "visual_hint": "Show the support structure as a tree or pyramid. What's on top depends on what's below. Make the logical dependency clear.",
+      "visual_forms": ["argument_tree", "toulmin_diagram", "backing_cascade", "support_hierarchy"],
+      "style_hint": "Clarity is paramount - the logical structure should be immediately readable. Annotations help explain why each support matters.",
+      "style_leanings": ["tufte", "nyt_cox"],
+      "gemini_guidance": "This analysis reveals ARGUMENTATIVE STRUCTURE - how claims support other claims. Visually: use vertical hierarchy (conclusions above, grounds below) or clear directional flow. The insight is seeing what would collapse if you removed a supporting element. Consider Toulmin structure: claim, grounds, warrant, backing, qualifier, rebuttal.",
+      "associated_engines": ["argument_architecture", "evidence_synthesis", "backing_hierarchy_mapper", "warrant_analyzer"]
+    },
+    {
+      "key": "dialectical_tension",
+      "name": "Dialectical Tension",
+      "description": "Opposing forces in productive contradiction. Not just disagreement, but tensions that drive transformation through thesis-antithesis-synthesis.",
+      "visual_hint": "Show opposition and movement. Semiotic squares, force fields, or spirals that capture how contradictions generate change.",
+      "visual_forms": ["semiotic_square", "force_field", "dialectical_spiral", "contradiction_network"],
+      "style_hint": "Tension feels organic and human. Warmth and flow work better than cold precision. Show the dynamism.",
+      "style_leanings": ["lupi_data_humanism", "stefaner_truth_beauty"],
+      "gemini_guidance": "This analysis reveals DIALECTICAL MOVEMENT - how contradictions drive transformation. Visually: show OPPOSITION (thesis vs antithesis) and MOVEMENT (toward synthesis). Consider semiotic squares (A, B, not-A, not-B), force diagrams with arrows showing tension, or spirals showing aufhebung (preservation-through-overcoming). The insight is that contradiction is productive, not just conflict.",
+      "associated_engines": ["dialectical_structure", "contradiction_mapper", "synthesis_tracer"]
+    },
+    {
+      "key": "branching_foreclosure",
+      "name": "Branching & Foreclosure",
+      "description": "Choices eliminate other choices. Path dependency where historical decisions constrain future options through lock-in and increasing returns.",
+      "visual_hint": "Show the branching tree with paths taken and paths foreclosed. Make visible what options were lost at each juncture.",
+      "visual_forms": ["path_branching_tree", "counterfactual_comparison", "lock_in_diagram", "decision_tree"],
+      "style_hint": "Narrative clarity helps - this is about roads not taken. Explanatory annotations at key junctures work well.",
+      "style_leanings": ["nyt_cox", "stefaner_truth_beauty"],
+      "gemini_guidance": "This analysis reveals PATH DEPENDENCY - how past choices constrain future options. Visually: show branching points where decisions were made, with foreclosed paths fading or crossed out. Consider parallel timelines (actual vs counterfactual) or trees where branches get pruned. The insight is about CONSTRAINT and CONTINGENCY - things could have been otherwise, but now they can't.",
+      "associated_engines": ["path_dependency_analyzer", "counterfactual_analyzer", "lock_in_detector", "juncture_mapper"]
+    },
+    {
+      "key": "inferential_bundling",
+      "name": "Inferential Bundling",
+      "description": "Ideas come packaged together. Accepting one commitment pulls in others whether you realize it or not. Logical entailment chains.",
+      "visual_hint": "Show the package deals - what you're really signing up for when you accept a position. Cascading commitments.",
+      "visual_forms": ["commitment_cascade", "entailment_network", "package_deal_diagram", "inference_chain"],
+      "style_hint": "Precision matters - these are logical connections. But also show the 'aha' of hidden bundling.",
+      "style_leanings": ["tufte", "stefaner_truth_beauty"],
+      "gemini_guidance": "This analysis reveals INFERENTIAL COMMITMENTS - the hidden logical bundles behind positions. Visually: show what accepting A commits you to (B, C, D...). Use cascading flows or networks where one node being 'activated' lights up connected nodes. The insight is that ideas aren't atomic - they come with entailments you might not have noticed.",
+      "associated_engines": ["inferential_commitment_mapper", "entailment_tracer", "commitment_analyzer"]
+    },
+    {
+      "key": "strategic_interaction",
+      "name": "Strategic Interaction",
+      "description": "Actors responding to each other's incentives. Game-theoretic situations where your best move depends on what others do.",
+      "visual_hint": "Show the payoff structure and strategic considerations. Matrices, game trees, or incentive flows.",
+      "visual_forms": ["payoff_matrix", "game_tree", "incentive_flow", "strategic_landscape"],
+      "style_hint": "Financial/analytical precision fits well. This is about calculated moves, not emotional narratives.",
+      "style_leanings": ["ft_burn_murdoch", "tufte"],
+      "gemini_guidance": "This analysis reveals STRATEGIC STRUCTURE - how actors' incentives interact. Visually: consider payoff matrices (showing outcomes for each combination of choices), game trees (showing sequential moves), or flow diagrams showing how incentives propagate. The insight is about INTERDEPENDENCE - my best move depends on yours.",
+      "associated_engines": ["incentive_structure_mapper", "game_theoretic_analyzer", "principal_agent_mapper", "strategic_dynamics"]
+    },
+    {
+      "key": "epistemic_layering",
+      "name": "Epistemic Layering",
+      "description": "Knowledge rests on assumptions which rest on deeper assumptions. Presuppositions, hinge propositions, and foundational beliefs.",
+      "visual_hint": "Show the depth - what's on the surface vs what's buried. Archaeological metaphor of layers.",
+      "visual_forms": ["assumption_archaeology", "presupposition_layers", "epistemic_depth_diagram", "foundation_stack"],
+      "style_hint": "Depth and discovery feel organic. Show the excavation journey from surface to foundation.",
+      "style_leanings": ["lupi_data_humanism", "nyt_cox"],
+      "gemini_guidance": "This analysis reveals EPISTEMIC FOUNDATIONS - the buried assumptions beneath surface claims. Visually: use depth/layering metaphors - what's visible on top, what's beneath. Consider archaeological cross-sections or nested boxes showing presuppositional depth. The insight is that every claim stands on hidden ground that could be questioned.",
+      "associated_engines": ["assumption_excavation", "presupposition_mapper", "hinge_proposition_detector", "conditions_of_possibility"]
+    },
+    {
+      "key": "temporal_evolution",
+      "name": "Temporal Evolution",
+      "description": "How things change over time. Concept drift, paradigm shifts, genealogical development of ideas.",
+      "visual_hint": "Show time flowing. Timelines, evolution diagrams, or genealogical trees with temporal axis.",
+      "visual_forms": ["timeline", "evolution_diagram", "genealogical_tree", "concept_drift_flow"],
+      "style_hint": "Narrative clarity helps tell the story of change. Explanatory annotations at key transitions.",
+      "style_leanings": ["nyt_cox", "ft_burn_murdoch"],
+      "gemini_guidance": "This analysis reveals TEMPORAL CHANGE - how things evolved over time. Visually: make time explicit as an axis or flow direction. Mark key transitions, ruptures, or inflection points. Consider genealogical trees (who influenced whom over time) or timelines with branching. The insight is about BECOMING - things weren't always this way.",
+      "associated_engines": ["concept_evolution", "intellectual_genealogy", "epistemic_rupture_tracer", "paradigm_shift_detector"]
+    },
+    {
+      "key": "comparative_positioning",
+      "name": "Comparative Positioning",
+      "description": "Where things stand relative to each other. Mapping positions in a space defined by key dimensions or criteria.",
+      "visual_hint": "Show the space and where things sit in it. Quadrants, landscapes, or multi-dimensional positioning.",
+      "visual_forms": ["quadrant_chart", "positioning_map", "competitive_landscape", "criteria_matrix"],
+      "style_hint": "Clarity in the axes/dimensions. Reader should immediately grasp what the space means.",
+      "style_leanings": ["ft_burn_murdoch", "tufte"],
+      "gemini_guidance": "This analysis reveals RELATIVE POSITIONING - where things stand compared to each other. Visually: define a space (usually 2D quadrant or matrix) with meaningful axes, then place items in that space. The insight is about COMPARISON and DIFFERENTIATION - not just what something is, but how it differs from alternatives.",
+      "associated_engines": ["competitive_landscape", "stakeholder_positioning", "option_comparison", "quadrant_analysis"]
+    },
+    {
+      "key": "flow_transformation",
+      "name": "Flow & Transformation",
+      "description": "How resources, value, or influence flow through a system and transform along the way.",
+      "visual_hint": "Show the flow with width indicating volume/importance. Sankey diagrams, alluvial flows, value streams.",
+      "visual_forms": ["sankey_diagram", "alluvial_flow", "value_stream", "transformation_pipeline"],
+      "style_hint": "Flow should feel dynamic. Width encodes quantity. Show where things split, merge, or transform.",
+      "style_leanings": ["tufte", "stefaner_truth_beauty"],
+      "gemini_guidance": "This analysis reveals FLOWS - how things move through a system. Visually: use flow diagrams where width indicates volume/importance. Show splitting (one source to many destinations), merging (many sources to one), and transformation (input becomes different output). The insight is about MOVEMENT and TRANSFORMATION - where does value/power/influence actually go?",
+      "associated_engines": ["resource_flow_mapper", "value_chain_analyzer", "influence_flow_tracer", "transformation_mapper"]
+    },
+    {
+      "key": "rhetorical_architecture",
+      "name": "Rhetorical Architecture",
+      "description": "How persuasion is constructed. The moves, appeals, and structures that make arguments compelling (or manipulative).",
+      "visual_hint": "Show the persuasion machinery. What moves are being made, what appeals deployed, what audience assumed.",
+      "visual_forms": ["rhetorical_move_diagram", "appeal_structure", "persuasion_flow", "audience_mapping"],
+      "style_hint": "Can go explanatory (NYT - teaching rhetoric) or humanistic (Lupi - rhetoric as human drama).",
+      "style_leanings": ["nyt_cox", "lupi_data_humanism"],
+      "gemini_guidance": "This analysis reveals RHETORICAL STRUCTURE - how persuasion works. Visually: show the moves being made (ethos/pathos/logos appeals), the assumed audience, the strategic choices. Consider Burke's pentad (act, scene, agent, agency, purpose) or Aristotelian appeals mapped to a diagram. The insight is about HOW arguments work on us, not just WHAT they claim.",
+      "associated_engines": ["rhetorical_strategy", "persuasion_mapper", "audience_analysis", "appeal_detector"]
+    },
+    {
+      "key": "network_influence",
+      "name": "Network & Influence",
+      "description": "How entities connect to and influence each other. Citation networks, influence graphs, relationship structures.",
+      "visual_hint": "Show the network with meaningful node sizing and edge weights. Clusters, bridges, and central nodes.",
+      "visual_forms": ["network_graph", "influence_map", "citation_network", "relationship_diagram"],
+      "style_hint": "Technical precision reveals emergent structure. Let the network topology speak.",
+      "style_leanings": ["stefaner_truth_beauty", "tufte"],
+      "gemini_guidance": "This analysis reveals NETWORK STRUCTURE - who connects to whom and how influence flows. Visually: use node-link diagrams with meaningful sizing (importance) and clustering (communities). Highlight bridges between clusters, central nodes, and isolated peripheries. The insight is about STRUCTURE BEYOND INDIVIDUALS - the network has properties no single node has.",
+      "associated_engines": ["citation_network", "influence_mapper", "relationship_analyzer", "intellectual_genealogy"]
+    }
+  ]
+}
