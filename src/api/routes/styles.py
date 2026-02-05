@@ -91,22 +91,19 @@ async def get_all_engine_style_mappings():
     engine_registry = get_engine_registry()
 
     mappings = []
-    for engine in engine_registry.list_engines():
+    for engine in engine_registry.list_summaries():
         # Check if engine has semantic visual intent
-        full_engine = engine_registry.get_engine(engine.key)
+        full_engine = engine_registry.get(engine.engine_key)
         has_semantic = False
         visual_patterns = []
 
-        if full_engine:
-            has_semantic = (
-                full_engine.stage_context is not None
-                and full_engine.stage_context.semantic_visual_intent is not None
-            )
-            visual_patterns = full_engine.recommended_visual_patterns or []
+        if full_engine and full_engine.stage_context and full_engine.stage_context.concretization:
+            has_semantic = full_engine.stage_context.concretization.semantic_visual_intent is not None
+            visual_patterns = full_engine.stage_context.concretization.recommended_visual_patterns or []
 
         mapping = style_registry.get_engine_style_mapping(
-            engine_key=engine.key,
-            engine_name=engine.name,
+            engine_key=engine.engine_key,
+            engine_name=engine.engine_name,
             has_semantic_intent=has_semantic,
             recommended_visual_patterns=visual_patterns,
         )
@@ -121,15 +118,15 @@ async def get_engine_style_mapping(engine_key: str):
     style_registry = get_style_registry()
     engine_registry = get_engine_registry()
 
-    engine = engine_registry.get_engine(engine_key)
+    engine = engine_registry.get(engine_key)
     if not engine:
         raise HTTPException(status_code=404, detail=f"Engine '{engine_key}' not found")
 
-    has_semantic = (
-        engine.stage_context is not None
-        and engine.stage_context.semantic_visual_intent is not None
-    )
-    visual_patterns = engine.recommended_visual_patterns or []
+    has_semantic = False
+    visual_patterns = []
+    if engine.stage_context and engine.stage_context.concretization:
+        has_semantic = engine.stage_context.concretization.semantic_visual_intent is not None
+        visual_patterns = engine.stage_context.concretization.recommended_visual_patterns or []
 
     return style_registry.get_engine_style_mapping(
         engine_key=engine_key,
