@@ -12,12 +12,13 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import chains, engines, llm, paradigms, styles, primitives
+from src.api.routes import chains, engines, llm, paradigms, styles, primitives, display
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
 from src.paradigms.registry import get_paradigm_registry
 from src.styles.registry import get_style_registry
 from src.primitives.registry import get_primitives_registry
+from src.display.registry import DisplayRegistry
 
 # Configure logging
 logging.basicConfig(
@@ -52,6 +53,11 @@ async def lifespan(app: FastAPI):
     primitives_registry = get_primitives_registry()
     prim_stats = primitives_registry.get_stats()
     logger.info(f"Loaded {prim_stats['primitives_loaded']} primitives, {prim_stats['engines_with_primitives']} engine associations")
+
+    logger.info("Loading display configuration...")
+    display_registry = DisplayRegistry()
+    display_stats = display.router.display_registry.get_visual_formats()
+    logger.info(f"Loaded {len(display_stats.categories)} format categories, {sum(len(c.formats) for c in display_stats.categories)} visual formats")
 
     logger.info("Analyzer v2 API ready")
     yield
@@ -100,6 +106,7 @@ app.include_router(paradigms.router, prefix="/v1")
 app.include_router(chains.router, prefix="/v1")
 app.include_router(styles.router, prefix="/v1")
 app.include_router(primitives.router, prefix="/v1")
+app.include_router(display.router, prefix="/v1")
 app.include_router(llm.router, prefix="/v1")
 
 
@@ -117,6 +124,7 @@ async def root():
             "chains": "/v1/chains",
             "styles": "/v1/styles",
             "primitives": "/v1/primitives",
+            "display": "/v1/display",
         },
     }
 

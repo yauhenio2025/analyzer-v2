@@ -6,6 +6,25 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Display Configuration Module** - Centralized Gemini formatting rules from Visualizer
+  - New `src/display/` module with schemas, registry, and JSON definitions
+  - Display instructions: branding rules, label formatting, numeric display, field cleanup
+  - Hidden fields configuration: 23 field names + 5 suffixes that should never appear on visualizations
+  - Numeric-to-label conversion: Transforms 0-1 scores to "Very Strong", "Strong", "Moderate", "Weak", "Very Weak"
+  - Visual format typology: 40 formats in 8 categories with Gemini prompt patterns
+  - Data type mappings: 11 data structure patterns → recommended formats
+  - Quality criteria: Must-have, should-have, and avoid lists for visualization quality
+  - New API endpoints at `/v1/display/*`:
+    - `GET /v1/display/config` - Complete display configuration
+    - `GET /v1/display/instructions` - Gemini formatting instructions
+    - `GET /v1/display/hidden-fields` - Fields to hide from visualizations
+    - `GET /v1/display/formats` - Visual format categories
+    - `GET /v1/display/formats/{key}` - Specific format with prompt pattern
+    - `GET /v1/display/mappings` - Data type → format recommendations
+    - `GET /v1/display/quality-criteria` - Visualization quality checklist
+  - Purpose: Make Gemini formatting rules transparent and centrally managed
+  - Source: Extracted from visualizer/analyzer/display_utils.py and visualizer/docs/VISUAL_FORMAT_TYPOLOGY.md
+
 - **Analytical Primitives** - Trading zone between engines and visual styles
   - New `src/primitives/` module bridging analytical meaning to visual form
   - 12 primitives: cyclical_causation, hierarchical_support, dialectical_tension,

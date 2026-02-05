@@ -299,6 +299,50 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
 - **Purpose**: Soft guidance for Gemini about visual approaches
 - **Added**: 2026-02-05
 
+## Display Configuration
+
+### Display Registry
+- **Status**: Active
+- **Description**: Centralized display formatting rules, hidden fields, and visual format typology from Visualizer
+- **Entry Points**:
+  - `src/display/schemas.py:1-80` - DisplayConfig, VisualFormat, DataTypeMapping models
+  - `src/display/registry.py:1-140` - DisplayRegistry class
+  - `src/display/definitions/display_config.json` - Display configuration (hidden fields, instructions)
+  - `src/display/definitions/visual_formats.json` - 40 visual formats in 8 categories
+  - `src/api/routes/display.py:1-220` - Display API endpoints
+- **Configuration Includes**:
+  - Display instructions for Gemini (branding rules, label formatting, numeric display)
+  - 23 hidden field names + 5 hidden suffixes (confidence, score, weight, etc.)
+  - Numeric-to-label rules (0.85 → "Strong", 0.45 → "Weak")
+  - Acronyms that stay uppercase in Title Case
+- **Visual Format Categories** (8 total, 40 formats):
+  - Relational/Network (5): network_graph, chord_diagram, hierarchical_tree, radial_tree, force_directed
+  - Flow/Process (5): sankey_diagram, alluvial_diagram, flowchart, process_flow, value_stream_map
+  - Temporal (5): timeline, gantt_chart, parallel_timelines, cycle_diagram, sparklines
+  - Comparative (6): matrix_heatmap, quadrant_chart, radar_chart, bar_chart, grouped_bar_chart, dot_plot
+  - Part-of-Whole (5): treemap, sunburst, stacked_bar, waterfall_chart, marimekko
+  - Spatial/Set (4): venn_diagram, euler_diagram, positioning_map, bubble_chart
+  - Evidence/Analytical (5): ach_matrix, confidence_thermometer, evidence_quality_matrix, indicator_dashboard, gap_analysis
+  - Argumentative/Logical (5): argument_tree, toulmin_diagram, dialectical_map, assumption_web, scenario_cone
+- **Data Type Mappings**: 11 data structure → format recommendations
+- **API Endpoints**:
+  - `GET /v1/display/config` - Complete display configuration
+  - `GET /v1/display/instructions` - Display instructions for Gemini
+  - `GET /v1/display/instructions/text` - Plain text instructions
+  - `GET /v1/display/hidden-fields` - Hidden fields and suffixes
+  - `POST /v1/display/check-field` - Check if field should be hidden
+  - `POST /v1/display/numeric-label` - Convert numeric to descriptive label
+  - `GET /v1/display/formats` - List format categories
+  - `GET /v1/display/formats/all` - All formats flat list
+  - `GET /v1/display/formats/category/{key}` - Category with all formats
+  - `GET /v1/display/formats/{key}` - Specific format
+  - `GET /v1/display/formats/{key}/prompt` - Gemini prompt pattern for format
+  - `GET /v1/display/mappings` - Data type → format mappings
+  - `GET /v1/display/quality-criteria` - Must-have, should-have, avoid lists
+  - `GET /v1/display/stats` - Display statistics
+- **Purpose**: Centralize Gemini formatting rules from Visualizer for transparency
+- **Added**: 2026-02-05
+
 ## Visual Styles
 
 ### Style Registry

@@ -1,0 +1,382 @@
+{
+  "_description": "Visual format typology centralized from visualizer/docs/VISUAL_FORMAT_TYPOLOGY.md",
+  "categories": [
+    {
+      "key": "relational_network",
+      "name": "Relational / Network Visualizations",
+      "description": "Visualizations showing relationships between entities",
+      "formats": [
+        {
+          "key": "network_graph",
+          "name": "Network Graph",
+          "data_structure": "{nodes[], edges[]}",
+          "use_when": "Showing relationships between entities (actors, concepts, citations)",
+          "gemini_prompt_pattern": "Create a network graph showing [entities] as nodes connected by edges representing [relationship]. Use node size for [importance]. Color-code by [category].",
+          "example_prompt": "Create a network graph visualization.\n\nNODES: [list of entities with optional attributes for size/color]\nEDGES: [list of connections with optional weights]\n\n- Node size represents [importance/centrality/mentions]\n- Node color indicates [category/type/sentiment]\n- Edge thickness shows [strength/frequency]\n- Cluster related nodes spatially\n- Label significant nodes"
+        },
+        {
+          "key": "chord_diagram",
+          "name": "Chord Diagram",
+          "data_structure": "{entities[], flows_between[]}",
+          "use_when": "Showing bilateral relationships with magnitude (trade, communication, co-occurrence)",
+          "gemini_prompt_pattern": "Create a chord diagram showing flows between [entities]. Arc thickness represents [magnitude]. Color each entity distinctly."
+        },
+        {
+          "key": "hierarchical_tree",
+          "name": "Hierarchical Tree",
+          "data_structure": "{nodes[], parent_child[]}",
+          "use_when": "Showing hierarchies, taxonomies, org charts",
+          "gemini_prompt_pattern": "Create a hierarchical tree diagram with [root] at top. Show [levels] of hierarchy. Use consistent spacing."
+        },
+        {
+          "key": "radial_tree",
+          "name": "Radial Tree",
+          "data_structure": "{center, branches[]}",
+          "use_when": "Showing influence radiating from center, concept maps",
+          "gemini_prompt_pattern": "Create a radial tree with [center_concept] at center. Branches extend outward to [related_concepts]. Size branches by [importance]."
+        },
+        {
+          "key": "force_directed",
+          "name": "Force-Directed Layout",
+          "data_structure": "{nodes[], edges[], weights[]}",
+          "use_when": "Showing organic clustering and community structure",
+          "gemini_prompt_pattern": "Create a force-directed network layout where related nodes cluster together. Show communities through spatial grouping."
+        }
+      ]
+    },
+    {
+      "key": "flow_process",
+      "name": "Flow / Process Visualizations",
+      "description": "Visualizations showing flows, processes, and transformations",
+      "formats": [
+        {
+          "key": "sankey_diagram",
+          "name": "Sankey Diagram",
+          "data_structure": "{sources[], targets[], values[]}",
+          "use_when": "Showing flows with quantities (money, resources, conversions)",
+          "gemini_prompt_pattern": "Create a Sankey diagram showing flows from [sources] to [targets]. Width represents [value]. Color flows by [category].",
+          "example_prompt": "Create a Sankey diagram showing resource flows.\n\nFLOWS:\n[source] → [target]: [value]\n[source] → [target]: [value]\n\n- Flow width proportional to value\n- Color flows by [source category / destination / value range]\n- Order sources and targets logically\n- Label flows with values"
+        },
+        {
+          "key": "alluvial_diagram",
+          "name": "Alluvial Diagram",
+          "data_structure": "{stages[], entities[], flows[]}",
+          "use_when": "Showing how entities change category over time",
+          "gemini_prompt_pattern": "Create an alluvial diagram showing how [entities] transition between [categories] across [time_periods]."
+        },
+        {
+          "key": "flowchart",
+          "name": "Flowchart",
+          "data_structure": "{steps[], decisions[], paths[]}",
+          "use_when": "Showing processes, decision trees, algorithms",
+          "gemini_prompt_pattern": "Create a flowchart showing the process from [start] to [end]. Diamond shapes for decisions. Arrows show flow direction."
+        },
+        {
+          "key": "process_flow",
+          "name": "Process Flow",
+          "data_structure": "{stages[], inputs[], outputs[]}",
+          "use_when": "Showing transformation processes",
+          "gemini_prompt_pattern": "Create a process flow diagram showing [process_name]. Each stage receives [inputs] and produces [outputs]."
+        },
+        {
+          "key": "value_stream_map",
+          "name": "Value Stream Map",
+          "data_structure": "{steps[], cycle_times[], wait_times[]}",
+          "use_when": "Showing process efficiency and bottlenecks",
+          "gemini_prompt_pattern": "Create a value stream map showing [process]. Indicate cycle time and wait time at each step. Highlight bottlenecks."
+        }
+      ]
+    },
+    {
+      "key": "temporal",
+      "name": "Temporal Visualizations",
+      "description": "Visualizations showing time-based data and sequences",
+      "formats": [
+        {
+          "key": "timeline",
+          "name": "Timeline",
+          "data_structure": "{events[], dates[], categories[]}",
+          "use_when": "Showing sequence of events over time",
+          "gemini_prompt_pattern": "Create a horizontal timeline from [start_date] to [end_date]. Place events at their dates. Color-code by [category]."
+        },
+        {
+          "key": "gantt_chart",
+          "name": "Gantt Chart",
+          "data_structure": "{tasks[], start_dates[], end_dates[], dependencies[]}",
+          "use_when": "Showing overlapping durations, project schedules",
+          "gemini_prompt_pattern": "Create a Gantt chart showing [tasks] with start and end dates. Show dependencies as arrows."
+        },
+        {
+          "key": "parallel_timelines",
+          "name": "Parallel Timelines",
+          "data_structure": "{tracks[], events_per_track[]}",
+          "use_when": "Showing simultaneous developments across domains",
+          "gemini_prompt_pattern": "Create parallel timelines for [domains]. Show synchronous events aligned vertically. Each track labeled."
+        },
+        {
+          "key": "cycle_diagram",
+          "name": "Cycle Diagram",
+          "data_structure": "{phases[], transitions[], recurrence}",
+          "use_when": "Showing recurring patterns, boom-bust cycles",
+          "gemini_prompt_pattern": "Create a circular cycle diagram showing [phases] in sequence. Indicate typical duration of each phase."
+        },
+        {
+          "key": "sparklines",
+          "name": "Sparklines",
+          "data_structure": "{series[], time_points[]}",
+          "use_when": "Showing trends compactly (inline with data)",
+          "gemini_prompt_pattern": "Create small sparkline charts showing trend for each [entity]. Highlight peaks and troughs."
+        }
+      ]
+    },
+    {
+      "key": "comparative",
+      "name": "Comparative Visualizations",
+      "description": "Visualizations for comparing entities or values",
+      "formats": [
+        {
+          "key": "matrix_heatmap",
+          "name": "Matrix / Heatmap",
+          "data_structure": "{rows[], columns[], values[][]}",
+          "use_when": "Showing values across two dimensions",
+          "gemini_prompt_pattern": "Create a heatmap with [row_entities] as rows and [column_entities] as columns. Color intensity represents [value]. Include legend."
+        },
+        {
+          "key": "quadrant_chart",
+          "name": "Quadrant Chart",
+          "data_structure": "{items[], x_scores[], y_scores[]}",
+          "use_when": "Showing position on two dimensions (power-interest, impact-effort)",
+          "gemini_prompt_pattern": "Create a 2x2 quadrant chart with [x_axis_label] horizontal and [y_axis_label] vertical. Plot [items] as labeled points.",
+          "example_prompt": "Create a 2x2 quadrant chart.\n\nX-AXIS: [dimension] (low to high)\nY-AXIS: [dimension] (low to high)\n\nITEMS:\n[item]: x=[score], y=[score]\n\n- Plot items as labeled circles\n- Size circles by [optional third dimension]\n- Label quadrants: [TL, TR, BL, BR names]\n- Show axis labels and values"
+        },
+        {
+          "key": "radar_chart",
+          "name": "Radar / Spider Chart",
+          "data_structure": "{entities[], dimensions[], scores[]}",
+          "use_when": "Comparing multiple entities across multiple dimensions",
+          "gemini_prompt_pattern": "Create a radar chart comparing [entities] across [dimensions]. Each entity is a different colored polygon."
+        },
+        {
+          "key": "bar_chart",
+          "name": "Bar Chart",
+          "data_structure": "{categories[], values[]}",
+          "use_when": "Showing ranked comparisons",
+          "gemini_prompt_pattern": "Create a horizontal bar chart showing [categories] ranked by [value]. Include value labels."
+        },
+        {
+          "key": "grouped_bar_chart",
+          "name": "Grouped Bar Chart",
+          "data_structure": "{categories[], groups[], values[][]}",
+          "use_when": "Comparing groups across categories",
+          "gemini_prompt_pattern": "Create a grouped bar chart comparing [groups] across [categories]. Use distinct colors per group."
+        },
+        {
+          "key": "dot_plot",
+          "name": "Dot Plot / Strip Plot",
+          "data_structure": "{items[], values[], categories[]}",
+          "use_when": "Showing distribution within categories",
+          "gemini_prompt_pattern": "Create a dot plot showing [items] positioned by [value] within each [category] strip."
+        }
+      ]
+    },
+    {
+      "key": "part_of_whole",
+      "name": "Part-of-Whole Visualizations",
+      "description": "Visualizations showing composition and hierarchical breakdowns",
+      "formats": [
+        {
+          "key": "treemap",
+          "name": "Treemap",
+          "data_structure": "{categories[], sizes[], hierarchy[]}",
+          "use_when": "Showing hierarchical composition by size",
+          "gemini_prompt_pattern": "Create a treemap showing [hierarchy]. Rectangle size represents [value]. Color-code by [top_level_category]."
+        },
+        {
+          "key": "sunburst",
+          "name": "Sunburst",
+          "data_structure": "{levels[], sizes[]}",
+          "use_when": "Showing hierarchical composition radially",
+          "gemini_prompt_pattern": "Create a sunburst diagram with [root] at center. Concentric rings show hierarchy levels. Arc size represents [value]."
+        },
+        {
+          "key": "stacked_bar",
+          "name": "Stacked Bar",
+          "data_structure": "{categories[], components[], values[][]}",
+          "use_when": "Showing composition across categories",
+          "gemini_prompt_pattern": "Create a stacked bar chart showing composition of [components] for each [category]."
+        },
+        {
+          "key": "waterfall_chart",
+          "name": "Waterfall Chart",
+          "data_structure": "{start_value, additions[], subtractions[], end_value}",
+          "use_when": "Showing cumulative effect of sequential changes",
+          "gemini_prompt_pattern": "Create a waterfall chart starting at [start]. Show each [change] as addition or subtraction leading to [end]."
+        },
+        {
+          "key": "marimekko",
+          "name": "Marimekko",
+          "data_structure": "{rows[], columns[], values[][]}",
+          "use_when": "Showing two-dimensional part-of-whole",
+          "gemini_prompt_pattern": "Create a Marimekko chart where bar width represents [x_total] and segments represent [y_composition]."
+        }
+      ]
+    },
+    {
+      "key": "spatial_set",
+      "name": "Spatial / Set Visualizations",
+      "description": "Visualizations showing set relationships and positioning",
+      "formats": [
+        {
+          "key": "venn_diagram",
+          "name": "Venn Diagram",
+          "data_structure": "{sets[], overlaps[]}",
+          "use_when": "Showing set relationships (2-4 sets max)",
+          "gemini_prompt_pattern": "Create a Venn diagram showing overlap between [sets]. Label each region with [contents_or_count]."
+        },
+        {
+          "key": "euler_diagram",
+          "name": "Euler Diagram",
+          "data_structure": "{sets[], overlaps[], exclusions[]}",
+          "use_when": "Showing set relationships without false implications",
+          "gemini_prompt_pattern": "Create an Euler diagram showing [sets] with accurate overlaps. Non-overlapping sets should not touch."
+        },
+        {
+          "key": "positioning_map",
+          "name": "Positioning Map",
+          "data_structure": "{items[], x_positions[], y_positions[]}",
+          "use_when": "Showing competitive/conceptual positioning",
+          "gemini_prompt_pattern": "Create a positioning map with [x_dimension] and [y_dimension] as axes. Plot [items] at their positions."
+        },
+        {
+          "key": "bubble_chart",
+          "name": "Bubble Chart",
+          "data_structure": "{items[], x[], y[], sizes[]}",
+          "use_when": "Showing three dimensions (two position + size)",
+          "gemini_prompt_pattern": "Create a bubble chart with [x_axis] horizontal, [y_axis] vertical. Bubble size represents [third_dimension]."
+        }
+      ]
+    },
+    {
+      "key": "evidence_analytical",
+      "name": "Evidence / Analytical Visualizations",
+      "description": "Visualizations for intelligence and evidence analysis",
+      "formats": [
+        {
+          "key": "ach_matrix",
+          "name": "ACH Matrix",
+          "data_structure": "{hypotheses[], evidence[], consistency[][]}",
+          "use_when": "Showing Analysis of Competing Hypotheses",
+          "gemini_prompt_pattern": "Create an ACH matrix with hypotheses as columns and evidence as rows. Color cells: green=consistent, red=inconsistent, gray=neutral."
+        },
+        {
+          "key": "confidence_thermometer",
+          "name": "Confidence Thermometer",
+          "data_structure": "{findings[], confidence_levels[]}",
+          "use_when": "Showing confidence levels for key findings",
+          "gemini_prompt_pattern": "Create a vertical confidence scale from 'Remote' to 'Almost Certain'. Plot [findings] at their confidence levels."
+        },
+        {
+          "key": "evidence_quality_matrix",
+          "name": "Evidence Quality Matrix",
+          "data_structure": "{sources[], reliability[], validity[]}",
+          "use_when": "Showing source credibility",
+          "gemini_prompt_pattern": "Create a matrix with source reliability (A-F) as rows and information validity (1-6) as columns. Plot sources."
+        },
+        {
+          "key": "indicator_dashboard",
+          "name": "Indicator Dashboard",
+          "data_structure": "{indicators[], status[], trends[]}",
+          "use_when": "Showing warning indicator status",
+          "gemini_prompt_pattern": "Create an indicator dashboard with traffic light status for each [indicator]. Include trend arrows."
+        },
+        {
+          "key": "gap_analysis",
+          "name": "Gap Analysis Visual",
+          "data_structure": "{current[], desired[], gaps[]}",
+          "use_when": "Showing gap between current and desired state",
+          "gemini_prompt_pattern": "Create a gap analysis chart showing [current_state] vs [desired_state] for each [dimension]. Highlight largest gaps."
+        }
+      ]
+    },
+    {
+      "key": "argumentative_logical",
+      "name": "Argumentative / Logical Visualizations",
+      "description": "Visualizations for arguments, logic, and reasoning structures",
+      "formats": [
+        {
+          "key": "argument_tree",
+          "name": "Argument Tree",
+          "data_structure": "{claims[], premises[], warrants[]}",
+          "use_when": "Showing logical structure of arguments",
+          "gemini_prompt_pattern": "Create an argument tree with main [claim] at top. Supporting premises below. Show warrant links."
+        },
+        {
+          "key": "toulmin_diagram",
+          "name": "Toulmin Diagram",
+          "data_structure": "{claim, grounds, warrant, backing, qualifier, rebuttal}",
+          "use_when": "Showing full argument structure",
+          "gemini_prompt_pattern": "Create a Toulmin model diagram for this argument. Show all six components with connecting arrows."
+        },
+        {
+          "key": "dialectical_map",
+          "name": "Dialectical Map",
+          "data_structure": "{thesis, antithesis, synthesis, tensions[]}",
+          "use_when": "Showing thesis-antithesis-synthesis",
+          "gemini_prompt_pattern": "Create a dialectical map showing [thesis] and [antithesis] as opposing positions, with [synthesis] emerging from their tension."
+        },
+        {
+          "key": "assumption_web",
+          "name": "Assumption Web",
+          "data_structure": "{conclusions[], assumptions[], dependencies[]}",
+          "use_when": "Showing hidden assumptions underlying conclusions",
+          "gemini_prompt_pattern": "Create a web diagram with [conclusions] at top, supported by chains of [assumptions] below. Show dependencies."
+        },
+        {
+          "key": "scenario_cone",
+          "name": "Scenario Cone",
+          "data_structure": "{present, futures[], probabilities[], branches[]}",
+          "use_when": "Showing multiple possible futures",
+          "gemini_prompt_pattern": "Create a cone of plausibility diagram from [present]. Show branching paths to different [futures]. Width indicates probability."
+        }
+      ]
+    }
+  ],
+  "data_mappings": [
+    {"data_type": "{nodes[], edges[]}", "primary_format": "network_graph", "secondary_formats": ["chord_diagram", "matrix_heatmap"], "avoid": ["pie", "timeline"]},
+    {"data_type": "{flows[], sources[], targets[], values[]}", "primary_format": "sankey_diagram", "secondary_formats": ["chord_diagram", "alluvial_diagram"], "avoid": ["bar_chart", "pie"]},
+    {"data_type": "{events[], dates[]}", "primary_format": "timeline", "secondary_formats": ["gantt_chart", "table"], "avoid": ["network_graph", "pie"]},
+    {"data_type": "{items[], scores_x[], scores_y[]}", "primary_format": "quadrant_chart", "secondary_formats": ["scatter", "positioning_map"], "avoid": ["pie", "timeline"]},
+    {"data_type": "{entities[], dimensions[], scores[]}", "primary_format": "radar_chart", "secondary_formats": ["bar_chart", "matrix_heatmap"], "avoid": ["pie", "network_graph"]},
+    {"data_type": "{categories[], sizes[]}", "primary_format": "bar_chart", "secondary_formats": ["treemap", "pie"], "avoid": ["network_graph", "timeline"]},
+    {"data_type": "{hierarchy[], sizes[]}", "primary_format": "treemap", "secondary_formats": ["sunburst", "hierarchical_tree"], "avoid": ["network_graph", "bar_chart"]},
+    {"data_type": "{hypotheses[], evidence[], consistency[][]}", "primary_format": "ach_matrix", "secondary_formats": ["matrix_heatmap"], "avoid": ["network_graph", "flow"]},
+    {"data_type": "{actors[], power[], interest[]}", "primary_format": "quadrant_chart", "secondary_formats": ["network_graph", "table"], "avoid": ["timeline", "flow"]},
+    {"data_type": "{stages[], entities[], transitions[]}", "primary_format": "alluvial_diagram", "secondary_formats": ["sankey_diagram", "process_flow"], "avoid": ["bar_chart", "pie"]},
+    {"data_type": "{claims[], premises[], logical_structure}", "primary_format": "argument_tree", "secondary_formats": ["flowchart"], "avoid": ["network_graph", "bar_chart"]}
+  ],
+  "quality_criteria": {
+    "must_have": [
+      "Clear title stating what is shown",
+      "All elements labeled or in legend",
+      "Professional color palette",
+      "Sufficient contrast for readability",
+      "Logical layout and grouping",
+      "Scale/axis labels where applicable"
+    ],
+    "should_have": [
+      "Visual hierarchy (most important stands out)",
+      "Consistent styling throughout",
+      "White space for clarity",
+      "Color-blind friendly palette",
+      "Source attribution if applicable"
+    ],
+    "avoid": [
+      "3D effects that distort perception",
+      "Decorative elements that add no information",
+      "Too many colors (>7 distinct)",
+      "Overlapping labels",
+      "Truncated axes that mislead",
+      "Pie charts for >5 categories"
+    ]
+  }
+}

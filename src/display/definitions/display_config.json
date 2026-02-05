@@ -1,0 +1,52 @@
+{
+  "_description": "Display configuration centralized from visualizer/analyzer/display_utils.py",
+  "instructions": {
+    "branding_rules": "DO NOT include any publication logos (no FT, NYT, WSJ, Bloomberg, etc.). DO NOT include journalist names or bylines (no 'John Burn-Murdoch', 'Amanda Cox', etc.). DO NOT include fake credits or attributions. DO NOT use copyrighted masthead designs or typography. The visualization must be ORIGINAL work, not attributed to any publication. Title should describe the CONTENT (e.g., 'Stakeholder Power Analysis') NOT mimic a publication. This is a LEGAL requirement - violating it creates trademark/copyright issues.",
+    "label_formatting": "Convert ALL snake_case and kebab-case identifiers to Title Case with spaces. Example: 'technofascism_trajectory' → 'Technofascism Trajectory'. Example: 'rentier_capitalism_framework' → 'Rentier Capitalism Framework'. NEVER display underscores or hyphens in labels visible to users.",
+    "numeric_display": "NEVER show raw decimal numbers like 0.85, 0.75, 0.9 on the visualization. NEVER display 'THICKNESS: 0.85' or similar labels on edges - this is FORBIDDEN. NEVER include 'weight:', 'strength:', 'confidence:', 'score:' with numbers. These are internal processing values and should NOT appear on edges, nodes, or labels. If edge/relationship strength must be shown, use visual encoding ONLY: Line thickness (thicker = stronger) - but NO numeric thickness labels; Line style (solid = strong, dashed = moderate, dotted = weak); Color intensity (darker = stronger). If you absolutely must show strength as text, use ONLY descriptive terms: 'Strong', 'Moderate', 'Weak'. Edge labels should describe the RELATIONSHIP TYPE (e.g., 'Influenced', 'Derived from') NOT numeric values.",
+    "field_cleanup": "Replace underscores with spaces in all visible text. Use proper capitalization (Title Case for labels, headings). Abbreviations like 'ID', 'API', 'AI' should remain uppercase.",
+    "full_text": "## DISPLAY FORMATTING REQUIREMENTS (CRITICAL)\n\n⚠️ BRANDING & ATTRIBUTION - ABSOLUTELY FORBIDDEN:\n- DO NOT include any publication logos (no FT, NYT, WSJ, Bloomberg, etc.)\n- DO NOT include journalist names or bylines (no \"John Burn-Murdoch\", \"Amanda Cox\", etc.)\n- DO NOT include fake credits or attributions\n- DO NOT use copyrighted masthead designs or typography\n- The visualization must be ORIGINAL work, not attributed to any publication\n- Title should describe the CONTENT (e.g., \"Stakeholder Power Analysis\") NOT mimic a publication\n- This is a LEGAL requirement - violating it creates trademark/copyright issues\n\nLABEL FORMATTING:\n- Convert ALL snake_case and kebab-case identifiers to Title Case with spaces\n- Example: \"technofascism_trajectory\" → \"Technofascism Trajectory\"\n- Example: \"rentier_capitalism_framework\" → \"Rentier Capitalism Framework\"\n- Example: \"argument_architecture\" → \"Argument Architecture\"\n- NEVER display underscores or hyphens in labels visible to users\n\nNUMERIC SCORES - DO NOT DISPLAY (CRITICAL):\n- NEVER show raw decimal numbers like 0.85, 0.75, 0.9 on the visualization\n- NEVER display \"THICKNESS: 0.85\" or similar labels on edges - this is FORBIDDEN\n- NEVER include \"weight:\", \"strength:\", \"confidence:\", \"score:\" with numbers\n- These are internal processing values and should NOT appear on edges, nodes, or labels\n- If edge/relationship strength must be shown, use visual encoding ONLY:\n  * Line thickness (thicker = stronger) - but NO numeric thickness labels\n  * Line style (solid = strong, dashed = moderate, dotted = weak)\n  * Color intensity (darker = stronger)\n- If you absolutely must show strength as text, use ONLY descriptive terms: \"Strong\", \"Moderate\", \"Weak\"\n- Edge labels should describe the RELATIONSHIP TYPE (e.g., \"Influenced\", \"Derived from\") NOT numeric values\n\nFIELD NAME CLEANUP:\n- Replace underscores with spaces in all visible text\n- Use proper capitalization (Title Case for labels, headings)\n- Abbreviations like \"ID\", \"API\", \"AI\" should remain uppercase"
+  },
+  "hidden_fields": {
+    "hidden_fields": [
+      "confidence",
+      "confidence_score",
+      "confidence_level",
+      "strength",
+      "relationship_strength",
+      "connection_strength",
+      "weight",
+      "edge_weight",
+      "link_weight",
+      "score",
+      "similarity_score",
+      "relevance_score",
+      "influence_score",
+      "power_score",
+      "interest_score",
+      "centrality",
+      "betweenness",
+      "pagerank",
+      "probability",
+      "likelihood",
+      "ratio",
+      "percentage",
+      "proportion"
+    ],
+    "hidden_suffixes": [
+      "_score",
+      "_strength",
+      "_weight",
+      "_confidence",
+      "_probability"
+    ]
+  },
+  "numeric_rules": [
+    {"min_value": 0.9, "max_value": 1.0, "label": "Very Strong"},
+    {"min_value": 0.75, "max_value": 0.9, "label": "Strong"},
+    {"min_value": 0.5, "max_value": 0.75, "label": "Moderate"},
+    {"min_value": 0.25, "max_value": 0.5, "label": "Weak"},
+    {"min_value": 0.0, "max_value": 0.25, "label": "Very Weak"}
+  ],
+  "acronyms": ["API", "URL", "ID", "AI", "ML", "NLP", "LLM", "EU", "US", "UK", "UN"]
+}
