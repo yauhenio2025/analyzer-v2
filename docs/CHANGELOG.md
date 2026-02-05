@@ -6,6 +6,21 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Analytical Primitives** - Trading zone between engines and visual styles
+  - New `src/primitives/` module bridging analytical meaning to visual form
+  - 12 primitives: cyclical_causation, hierarchical_support, dialectical_tension,
+    branching_foreclosure, inferential_bundling, strategic_interaction,
+    epistemic_layering, temporal_evolution, comparative_positioning,
+    flow_transformation, rhetorical_architecture, network_influence
+  - Each primitive has: description, visual_hint, visual_forms, style_hint,
+    style_leanings, gemini_guidance, associated_engines
+  - 44 engine associations across primitives
+  - API endpoints at `/v1/primitives/*`:
+    - `GET /v1/primitives` - List all primitives
+    - `GET /v1/primitives/{key}` - Get specific primitive
+    - `GET /v1/primitives/for-engine/{key}/guidance` - Get Gemini guidance text
+  - Purpose: Soft guidance for Gemini about what visual approaches work
+
 - **Visual Styles System** - Centralized dataviz style definitions and affinity mappings
   - New `src/styles/` module with schemas, registry, and JSON definitions
   - 6 dataviz school definitions with color palettes, typography, layout principles, Gemini modifiers:

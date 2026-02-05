@@ -268,6 +268,37 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
   - Style affinities (dataviz school recommendations)
 - **Added**: 2026-02-03
 
+## Analytical Primitives
+
+### Primitives Registry
+- **Status**: Active
+- **Description**: Trading zone between engines and visual styles - bridges analytical meaning to visual form
+- **Entry Points**:
+  - `src/primitives/schemas.py:1-60` - AnalyticalPrimitive, PrimitiveSummary models
+  - `src/primitives/registry.py:1-100` - PrimitivesRegistry class
+  - `src/primitives/definitions/primitives.json` - 12 primitive definitions
+  - `src/api/routes/primitives.py:1-80` - Primitives API endpoints
+- **Primitives** (12 total):
+  - `cyclical_causation` - Feedback loops, self-reinforcement
+  - `hierarchical_support` - Argument trees, warrant structures
+  - `dialectical_tension` - Contradictions, thesis-antithesis-synthesis
+  - `branching_foreclosure` - Path dependency, lock-in
+  - `inferential_bundling` - Commitment chains, package deals
+  - `strategic_interaction` - Game theory, payoff structures
+  - `epistemic_layering` - Assumptions, presuppositions
+  - `temporal_evolution` - Change over time, genealogy
+  - `comparative_positioning` - Quadrants, landscapes
+  - `flow_transformation` - Sankeys, value streams
+  - `rhetorical_architecture` - Persuasion structures
+  - `network_influence` - Citation networks, influence graphs
+- **API Endpoints**:
+  - `GET /v1/primitives` - List primitives
+  - `GET /v1/primitives/{key}` - Get primitive details
+  - `GET /v1/primitives/for-engine/{key}` - Primitives for an engine
+  - `GET /v1/primitives/for-engine/{key}/guidance` - Gemini guidance text
+- **Purpose**: Soft guidance for Gemini about visual approaches
+- **Added**: 2026-02-05
+
 ## Visual Styles
 
 ### Style Registry
