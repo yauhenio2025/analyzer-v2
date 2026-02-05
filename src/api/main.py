@@ -55,9 +55,9 @@ async def lifespan(app: FastAPI):
     logger.info(f"Loaded {prim_stats['primitives_loaded']} primitives, {prim_stats['engines_with_primitives']} engine associations")
 
     logger.info("Loading display configuration...")
-    display_registry = DisplayRegistry()
-    display_stats = display.router.display_registry.get_visual_formats()
-    logger.info(f"Loaded {len(display_stats.categories)} format categories, {sum(len(c.formats) for c in display_stats.categories)} visual formats")
+    display_reg = DisplayRegistry()
+    display_formats = display_reg.get_visual_formats()
+    logger.info(f"Loaded {len(display_formats.categories)} format categories, {sum(len(c.formats) for c in display_formats.categories)} visual formats")
 
     logger.info("Analyzer v2 API ready")
     yield
