@@ -208,5 +208,8 @@
       "activist": {}
     },
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

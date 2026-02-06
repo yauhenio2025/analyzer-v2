@@ -26,7 +26,9 @@
       "explicit_count": "number",
       "implicit_count": "number",
       "denied_count": "number",
-      "key_findings": ["string"]
+      "key_findings": [
+        "string"
+      ]
     }
   },
   "extraction_focus": [
@@ -34,7 +36,10 @@
     "silent_agreements",
     "implicit_retreats"
   ],
-  "primary_output_modes": ["structured_text_report", "table"],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
   "paradigm_keys": [],
   "source_file": "the-critic/analyzer/analyze_concessions.py",
   "stage_context": {
@@ -51,26 +56,49 @@
         "IDENTIFY TRIGGER: Determine what critique prompted the concession",
         "ASSESS ACKNOWLEDGMENT: Note whether concession is admitted"
       ],
-      "key_fields": {"concession_id": "Instance of concession"},
+      "key_fields": {
+        "concession_id": "Instance of concession"
+      },
       "id_field": "concession_id",
-      "key_relationships": ["concedes", "weakens", "abandons"],
+      "key_relationships": [
+        "concedes",
+        "weakens",
+        "abandons"
+      ],
       "special_instructions": "The most valuable findings are unacknowledged concessions - where the author gives ground while claiming consistency."
     },
     "curation": {
       "item_type": "concession",
       "item_type_plural": "concessions",
-      "consolidation_rules": ["Group by acknowledgment level", "Prioritize major concessions"],
-      "cross_doc_patterns": ["systematic_retreat"],
-      "synthesis_outputs": ["concession_map"],
+      "consolidation_rules": [
+        "Group by acknowledgment level",
+        "Prioritize major concessions"
+      ],
+      "cross_doc_patterns": [
+        "systematic_retreat"
+      ],
+      "synthesis_outputs": [
+        "concession_map"
+      ],
       "special_instructions": null
     },
     "concretization": {
-      "id_examples": [{"from": "CONC1", "to": "Concession: Automation optimism quietly abandoned"}],
+      "id_examples": [
+        {
+          "from": "CONC1",
+          "to": "Concession: Automation optimism quietly abandoned"
+        }
+      ],
       "naming_guidance": "Name by what was conceded",
-      "recommended_table_types": ["before_after_comparison"],
+      "recommended_table_types": [
+        "before_after_comparison"
+      ],
       "recommended_visual_patterns": []
     },
     "audience_vocabulary": {},
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

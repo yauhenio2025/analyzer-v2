@@ -19,8 +19,12 @@
         }
       ],
       "logical_flow": "string - how sections connect",
-      "strong_points": ["string - particularly effective arguments"],
-      "gaps": ["string - areas needing development"],
+      "strong_points": [
+        "string - particularly effective arguments"
+      ],
+      "gaps": [
+        "string - areas needing development"
+      ],
       "full_synthesis": "string - 400-600 word narrative summary"
     }
   },
@@ -30,7 +34,9 @@
     "logical_flow",
     "strength_assessment"
   ],
-  "primary_output_modes": ["structured_text_report"],
+  "primary_output_modes": [
+    "structured_text_report"
+  ],
   "paradigm_keys": [],
   "source_file": "the-critic/api/prompts.py",
   "stage_context": {
@@ -47,7 +53,9 @@
         "ASSESS STRENGTH: Identify strong and weak areas",
         "GENERATE SYNTHESIS: Create narrative summary"
       ],
-      "key_fields": {"full_synthesis": "The synthesis text"},
+      "key_fields": {
+        "full_synthesis": "The synthesis text"
+      },
       "id_field": "outline_title",
       "key_relationships": [],
       "special_instructions": "400-600 words. Help reader understand full argument without reading detailed outline."
@@ -60,8 +68,16 @@
       "synthesis_outputs": [],
       "special_instructions": null
     },
-    "concretization": {"id_examples": [], "naming_guidance": "", "recommended_table_types": [], "recommended_visual_patterns": []},
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
     "audience_vocabulary": {},
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

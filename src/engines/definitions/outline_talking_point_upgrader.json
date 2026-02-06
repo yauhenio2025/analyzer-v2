@@ -11,7 +11,9 @@
     "upgrade": {
       "original_text": "string - the original talking point",
       "upgraded_text": "string - the improved version",
-      "improvements": ["string - what was improved"],
+      "improvements": [
+        "string - what was improved"
+      ],
       "integration_notes": "string - how it now fits better"
     }
   },
@@ -20,7 +22,9 @@
     "integration",
     "redundancy_elimination"
   ],
-  "primary_output_modes": ["text"],
+  "primary_output_modes": [
+    "text"
+  ],
   "paradigm_keys": [],
   "source_file": "the-critic/api/prompts.py",
   "stage_context": {
@@ -36,7 +40,9 @@
         "IDENTIFY IMPROVEMENTS: Find ways to sharpen",
         "UPGRADE: Produce improved version"
       ],
-      "key_fields": {"upgraded_text": "The improved text"},
+      "key_fields": {
+        "upgraded_text": "The improved text"
+      },
       "id_field": "upgraded_text",
       "key_relationships": [],
       "special_instructions": "Preserve core insight. Make sharper, more direct. Avoid redundancy with siblings."
@@ -49,8 +55,16 @@
       "synthesis_outputs": [],
       "special_instructions": null
     },
-    "concretization": {"id_examples": [], "naming_guidance": "", "recommended_table_types": [], "recommended_visual_patterns": []},
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
     "audience_vocabulary": {},
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

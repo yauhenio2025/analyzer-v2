@@ -100,5 +100,8 @@
       "activist": {}
     },
     "skip_concretization": true
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

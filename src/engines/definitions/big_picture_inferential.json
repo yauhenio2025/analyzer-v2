@@ -13,7 +13,9 @@
         "thesis_id": "string (format: 'TH{N}')",
         "thesis_statement": "string - the core claim",
         "thesis_type": "descriptive | normative | methodological | ontological",
-        "supporting_arguments": ["string"],
+        "supporting_arguments": [
+          "string"
+        ],
         "textual_evidence": "string",
         "source": "string"
       }
@@ -22,7 +24,9 @@
       {
         "package_id": "string (format: 'CP{N}')",
         "package_name": "string - evocative name for this bundle",
-        "commitments": ["string - individual commitments in this package"],
+        "commitments": [
+          "string - individual commitments in this package"
+        ],
         "internal_logic": "string - how commitments relate to each other",
         "what_accepting_entails": "string - downstream implications"
       }
@@ -51,7 +55,9 @@
       {
         "stake_id": "string (format: 'PS{N}')",
         "stake_description": "string - what's at stake practically",
-        "who_affected": ["string"],
+        "who_affected": [
+          "string"
+        ],
         "implications_if_true": "string",
         "implications_if_false": "string"
       }
@@ -62,7 +68,9 @@
       "total_incompatibilities": "number",
       "total_tensions": "number",
       "dominant_thesis_type": "string",
-      "key_findings": ["string - top 3 insights"]
+      "key_findings": [
+        "string - top 3 insights"
+      ]
     }
   },
   "extraction_focus": [
@@ -125,14 +133,29 @@
     },
     "concretization": {
       "id_examples": [
-        {"from": "TH1", "to": "Core Thesis: Technology is not neutral"},
-        {"from": "CP1", "to": "The Deliberative Package: democracy, participation, allocation"}
+        {
+          "from": "TH1",
+          "to": "Core Thesis: Technology is not neutral"
+        },
+        {
+          "from": "CP1",
+          "to": "The Deliberative Package: democracy, participation, allocation"
+        }
       ],
       "naming_guidance": "Use descriptive names that capture the essence",
-      "recommended_table_types": ["thesis_comparison", "commitment_matrix"],
-      "recommended_visual_patterns": ["commitment_map", "tension_diagram"]
+      "recommended_table_types": [
+        "thesis_comparison",
+        "commitment_matrix"
+      ],
+      "recommended_visual_patterns": [
+        "commitment_map",
+        "tension_diagram"
+      ]
     },
     "audience_vocabulary": {},
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

@@ -666,5 +666,8 @@
         "burden_shift": "making you prove a negative"
       }
     }
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

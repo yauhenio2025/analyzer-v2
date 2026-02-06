@@ -15,15 +15,21 @@
         "critique_source": "string - location in critique",
         "response_gap": "string - how the response fails to address this",
         "why_this_matters": "string - significance of the avoided point",
-        "possible_reasons_for_silence": ["string"],
+        "possible_reasons_for_silence": [
+          "string"
+        ],
         "severity": "high | medium | low"
       }
     ],
     "meta": {
       "total_silences": "number",
       "high_severity_count": "number",
-      "themes_avoided": ["string - topics systematically avoided"],
-      "key_findings": ["string"]
+      "themes_avoided": [
+        "string - topics systematically avoided"
+      ],
+      "key_findings": [
+        "string"
+      ]
     }
   },
   "extraction_focus": [
@@ -31,7 +37,10 @@
     "strategic_silences",
     "avoided_topics"
   ],
-  "primary_output_modes": ["structured_text_report", "table"],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
   "paradigm_keys": [],
   "source_file": "the-critic/analyzer/analyze_silence.py",
   "stage_context": {
@@ -48,26 +57,48 @@
         "ASSESS SIGNIFICANCE: Evaluate how central each silence is",
         "HYPOTHESIZE REASONS: Consider why these points are avoided"
       ],
-      "key_fields": {"silence_id": "Instance of strategic silence"},
+      "key_fields": {
+        "silence_id": "Instance of strategic silence"
+      },
       "id_field": "silence_id",
-      "key_relationships": ["avoids", "ignores"],
+      "key_relationships": [
+        "avoids",
+        "ignores"
+      ],
       "special_instructions": "Distinguish between reasonable scope limitations and strategic avoidance of inconvenient challenges."
     },
     "curation": {
       "item_type": "strategic silence",
       "item_type_plural": "strategic silences",
-      "consolidation_rules": ["Group by theme", "Prioritize central challenges"],
-      "cross_doc_patterns": ["systematic_avoidance"],
-      "synthesis_outputs": ["silence_map"],
+      "consolidation_rules": [
+        "Group by theme",
+        "Prioritize central challenges"
+      ],
+      "cross_doc_patterns": [
+        "systematic_avoidance"
+      ],
+      "synthesis_outputs": [
+        "silence_map"
+      ],
       "special_instructions": null
     },
     "concretization": {
-      "id_examples": [{"from": "SIL1", "to": "Silence: No response to labor allocation critique"}],
+      "id_examples": [
+        {
+          "from": "SIL1",
+          "to": "Silence: No response to labor allocation critique"
+        }
+      ],
       "naming_guidance": "Name by the avoided challenge",
-      "recommended_table_types": ["challenge_response_matrix"],
+      "recommended_table_types": [
+        "challenge_response_matrix"
+      ],
       "recommended_visual_patterns": []
     },
     "audience_vocabulary": {},
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

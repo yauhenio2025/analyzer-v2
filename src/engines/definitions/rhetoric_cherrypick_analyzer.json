@@ -24,8 +24,12 @@
     ],
     "meta": {
       "total_cherrypicks": "number",
-      "distortion_types": ["string - types of context omission"],
-      "key_findings": ["string"]
+      "distortion_types": [
+        "string - types of context omission"
+      ],
+      "key_findings": [
+        "string"
+      ]
     }
   },
   "extraction_focus": [
@@ -33,7 +37,10 @@
     "context_omission",
     "meaning_distortion"
   ],
-  "primary_output_modes": ["structured_text_report", "table"],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
   "paradigm_keys": [],
   "source_file": "the-critic/analyzer/analyze_cherrypicks.py",
   "stage_context": {
@@ -50,26 +57,48 @@
         "ANALYZE DISTORTION: Determine how meaning changes without context",
         "DOCUMENT INTERPRETATION: Note what author claims vs. actual meaning"
       ],
-      "key_fields": {"cherrypick_id": "Instance of cherrypicking"},
+      "key_fields": {
+        "cherrypick_id": "Instance of cherrypicking"
+      },
       "id_field": "cherrypick_id",
-      "key_relationships": ["distorts", "omits"],
+      "key_relationships": [
+        "distorts",
+        "omits"
+      ],
       "special_instructions": "Focus on cases where omitted context materially changes the meaning of the quoted passage."
     },
     "curation": {
       "item_type": "cherrypick",
       "item_type_plural": "cherrypicks",
-      "consolidation_rules": ["Group by distortion type", "Prioritize material distortions"],
-      "cross_doc_patterns": ["systematic_decontextualization"],
-      "synthesis_outputs": ["cherrypick_inventory"],
+      "consolidation_rules": [
+        "Group by distortion type",
+        "Prioritize material distortions"
+      ],
+      "cross_doc_patterns": [
+        "systematic_decontextualization"
+      ],
+      "synthesis_outputs": [
+        "cherrypick_inventory"
+      ],
       "special_instructions": null
     },
     "concretization": {
-      "id_examples": [{"from": "CP1", "to": "Cherrypick: Quote omits 'however' clause reversing meaning"}],
+      "id_examples": [
+        {
+          "from": "CP1",
+          "to": "Cherrypick: Quote omits 'however' clause reversing meaning"
+        }
+      ],
       "naming_guidance": "Name by the key distortion",
-      "recommended_table_types": ["quote_vs_context"],
+      "recommended_table_types": [
+        "quote_vs_context"
+      ],
       "recommended_visual_patterns": []
     },
     "audience_vocabulary": {},
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

@@ -48,6 +48,9 @@ async def list_engines(
     paradigm: Optional[str] = Query(
         None, description="Filter by associated paradigm key"
     ),
+    app: Optional[str] = Query(
+        None, description="Filter by app that uses the engine (e.g., 'critic')"
+    ),
     search: Optional[str] = Query(
         None, description="Search in name and description"
     ),
@@ -64,6 +67,10 @@ async def list_engines(
     else:
         engines = registry.list_all()
 
+    # Apply app filter if specified
+    if app:
+        engines = [e for e in engines if app in e.apps]
+
     return [
         EngineSummary(
             engine_key=e.engine_key,
@@ -74,6 +81,7 @@ async def list_engines(
             version=e.version,
             paradigm_keys=e.paradigm_keys,
             has_profile=e.engine_profile is not None,
+            apps=e.apps,
         )
         for e in engines
     ]
@@ -93,6 +101,16 @@ async def get_engine_count() -> dict[str, int]:
     return {"count": registry.count()}
 
 
+@router.get("/apps", response_model=list[str])
+async def list_apps() -> list[str]:
+    """List all unique app tags used across engines."""
+    registry = get_engine_registry()
+    apps = set()
+    for engine in registry.list_all():
+        apps.update(engine.apps)
+    return sorted(apps)
+
+
 @router.get("/category/{category}", response_model=list[EngineSummary])
 async def list_engines_by_category(
     category: EngineCategory,
@@ -110,6 +128,7 @@ async def list_engines_by_category(
             version=e.version,
             paradigm_keys=e.paradigm_keys,
             has_profile=e.engine_profile is not None,
+            apps=e.apps,
         )
         for e in engines
     ]

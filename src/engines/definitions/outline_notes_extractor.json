@@ -26,7 +26,9 @@
     "distinct_claims",
     "section_assignment"
   ],
-  "primary_output_modes": ["structured_text_report"],
+  "primary_output_modes": [
+    "structured_text_report"
+  ],
   "paradigm_keys": [],
   "source_file": "the-critic/api/prompts.py",
   "stage_context": {
@@ -42,7 +44,9 @@
         "SHARPEN: Transform into essay-ready sentences",
         "ASSIGN SECTIONS: Determine appropriate section for each"
       ],
-      "key_fields": {"text": "Extracted point text"},
+      "key_fields": {
+        "text": "Extracted point text"
+      },
       "id_field": "text",
       "key_relationships": [],
       "special_instructions": "Extract 3-10 distinct points depending on note density. Each must be one crisp sentence."
@@ -55,8 +59,16 @@
       "synthesis_outputs": [],
       "special_instructions": null
     },
-    "concretization": {"id_examples": [], "naming_guidance": "", "recommended_table_types": [], "recommended_visual_patterns": []},
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
     "audience_vocabulary": {},
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

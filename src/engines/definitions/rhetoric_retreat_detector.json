@@ -22,8 +22,12 @@
     ],
     "meta": {
       "total_retreats": "number",
-      "patterns": ["string - recurring retreat strategies"],
-      "key_findings": ["string"]
+      "patterns": [
+        "string - recurring retreat strategies"
+      ],
+      "key_findings": [
+        "string"
+      ]
     }
   },
   "extraction_focus": [
@@ -31,7 +35,10 @@
     "position_weakening",
     "disguised_retreats"
   ],
-  "primary_output_modes": ["structured_text_report", "table"],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
   "paradigm_keys": [],
   "source_file": "the-critic/analyzer/analyze_retreats.py",
   "stage_context": {
@@ -48,26 +55,48 @@
         "ANALYZE FRAMING: Note how the retreat is disguised",
         "DOCUMENT PATTERN: Identify recurring retreat strategies"
       ],
-      "key_fields": {"retreat_id": "Instance of strategic retreat"},
+      "key_fields": {
+        "retreat_id": "Instance of strategic retreat"
+      },
       "id_field": "retreat_id",
-      "key_relationships": ["weakens", "retreats_from"],
+      "key_relationships": [
+        "weakens",
+        "retreats_from"
+      ],
       "special_instructions": "Focus on cases where 'clarification' language masks genuine retreat. The tell is when the 'clarified' position is materially weaker than the original."
     },
     "curation": {
       "item_type": "strategic retreat",
       "item_type_plural": "strategic retreats",
-      "consolidation_rules": ["Group by retreat type", "Identify systematic patterns"],
-      "cross_doc_patterns": ["clarification_retreat_pattern"],
-      "synthesis_outputs": ["retreat_inventory"],
+      "consolidation_rules": [
+        "Group by retreat type",
+        "Identify systematic patterns"
+      ],
+      "cross_doc_patterns": [
+        "clarification_retreat_pattern"
+      ],
+      "synthesis_outputs": [
+        "retreat_inventory"
+      ],
       "special_instructions": null
     },
     "concretization": {
-      "id_examples": [{"from": "RET1", "to": "Retreat: 'What I actually meant was...' weakens claim"}],
+      "id_examples": [
+        {
+          "from": "RET1",
+          "to": "Retreat: 'What I actually meant was...' weakens claim"
+        }
+      ],
       "naming_guidance": "Name by the original claim being weakened",
-      "recommended_table_types": ["original_vs_clarified"],
+      "recommended_table_types": [
+        "original_vs_clarified"
+      ],
       "recommended_visual_patterns": []
     },
     "audience_vocabulary": {},
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

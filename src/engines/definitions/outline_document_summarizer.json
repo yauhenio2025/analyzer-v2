@@ -11,10 +11,18 @@
     "summary": {
       "document_title": "string",
       "core_thesis": "string - the main argument",
-      "key_moves": ["string - main conceptual moves"],
-      "key_terms": ["string - important concepts defined"],
-      "evidence_types": ["string - types of support used"],
-      "tensions_noted": ["string - acknowledged limitations"],
+      "key_moves": [
+        "string - main conceptual moves"
+      ],
+      "key_terms": [
+        "string - important concepts defined"
+      ],
+      "evidence_types": [
+        "string - types of support used"
+      ],
+      "tensions_noted": [
+        "string - acknowledged limitations"
+      ],
       "full_summary": "string - 300-400 word summary"
     }
   },
@@ -24,7 +32,9 @@
     "key_concepts",
     "evidence_patterns"
   ],
-  "primary_output_modes": ["structured_text_report"],
+  "primary_output_modes": [
+    "structured_text_report"
+  ],
   "paradigm_keys": [],
   "source_file": "the-critic/api/prompts.py",
   "stage_context": {
@@ -41,7 +51,9 @@
         "ASSESS EVIDENCE: What support is provided",
         "SYNTHESIZE: Create concise summary"
       ],
-      "key_fields": {"full_summary": "The summary text"},
+      "key_fields": {
+        "full_summary": "The summary text"
+      },
       "id_field": "document_title",
       "key_relationships": [],
       "special_instructions": "300-400 words maximum. Focus on argument structure, not just content."
@@ -54,8 +66,16 @@
       "synthesis_outputs": [],
       "special_instructions": null
     },
-    "concretization": {"id_examples": [], "naming_guidance": "", "recommended_table_types": [], "recommended_visual_patterns": []},
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
     "audience_vocabulary": {},
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

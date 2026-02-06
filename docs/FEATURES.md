@@ -53,6 +53,21 @@
 - **Dependencies**: Current Analyzer at /home/evgeny/projects/analyzer
 - **Added**: 2026-01-26
 
+### App Tagging System
+- **Status**: Active
+- **Description**: Filter engines by consuming application (e.g., "critic", "visualizer")
+- **Entry Points**:
+  - `src/engines/schemas.py:152-157` - `apps` field on EngineDefinition
+  - `src/engines/schemas.py:210` - `apps` field on EngineSummary
+  - `src/api/routes/engines.py:50-51` - `app` query parameter on list endpoint
+  - `src/api/routes/engines.py:103-110` - `/v1/engines/apps` endpoint
+  - `scripts/tag_critic_engines.py` - Bulk tagging script
+- **API Usage**:
+  - `GET /v1/engines?app=critic` - Filter to engines used by The Critic
+  - `GET /v1/engines/apps` - List all unique app tags
+- **Tagged Apps**: `critic` (63 engines)
+- **Added**: 2026-02-07
+
 ## Advanced Engines
 
 Ten advanced engines with deep theoretical foundations, cross-referencing ID systems, relationship graphs, and rich stage contexts.

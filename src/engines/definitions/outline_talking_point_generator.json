@@ -20,7 +20,9 @@
     "key_insights",
     "essay_ready_statements"
   ],
-  "primary_output_modes": ["text"],
+  "primary_output_modes": [
+    "text"
+  ],
   "paradigm_keys": [],
   "source_file": "the-critic/api/prompts.py",
   "stage_context": {
@@ -36,21 +38,37 @@
         "SHARPEN: Make it action-oriented, assertive, one sentence",
         "CONTEXTUALIZE: Consider how it fits the broader essay arc"
       ],
-      "key_fields": {"text": "The talking point text"},
+      "key_fields": {
+        "text": "The talking point text"
+      },
       "id_field": "text",
-      "key_relationships": ["supports_thesis", "refutes"],
+      "key_relationships": [
+        "supports_thesis",
+        "refutes"
+      ],
       "special_instructions": "One sentence only. Active voice. Present tense. No hedging. Make claims, not questions."
     },
     "curation": {
       "item_type": "talking point",
       "item_type_plural": "talking points",
-      "consolidation_rules": ["Group by section", "Eliminate redundancy"],
+      "consolidation_rules": [
+        "Group by section",
+        "Eliminate redundancy"
+      ],
       "cross_doc_patterns": [],
       "synthesis_outputs": [],
       "special_instructions": null
     },
-    "concretization": {"id_examples": [], "naming_guidance": "", "recommended_table_types": [], "recommended_visual_patterns": []},
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
     "audience_vocabulary": {},
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

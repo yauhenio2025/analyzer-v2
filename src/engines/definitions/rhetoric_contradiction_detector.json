@@ -30,7 +30,9 @@
         "moving_goalposts": "number",
         "silent_retreat": "number"
       },
-      "key_findings": ["string"]
+      "key_findings": [
+        "string"
+      ]
     }
   },
   "extraction_focus": [
@@ -38,7 +40,10 @@
     "goalpost_movements",
     "silent_reversals"
   ],
-  "primary_output_modes": ["structured_text_report", "table"],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
   "paradigm_keys": [],
   "source_file": "the-critic/analyzer/analyze_contradictions.py",
   "stage_context": {
@@ -55,26 +60,49 @@
         "CLASSIFY CONTRADICTION TYPE: Determine if reversal, qualification, or scope change",
         "ASSESS ACKNOWLEDGMENT: Note whether the change is admitted or denied"
       ],
-      "key_fields": {"contradiction_id": "Instance of contradiction"},
+      "key_fields": {
+        "contradiction_id": "Instance of contradiction"
+      },
       "id_field": "contradiction_id",
-      "key_relationships": ["contradicts", "modifies", "reverses"],
+      "key_relationships": [
+        "contradicts",
+        "modifies",
+        "reverses"
+      ],
       "special_instructions": "Pay attention to subtle shifts in scope, quantifiers, and qualifications that may not be acknowledged."
     },
     "curation": {
       "item_type": "contradiction",
       "item_type_plural": "contradictions",
-      "consolidation_rules": ["Group by contradiction type", "Prioritize unacknowledged contradictions"],
-      "cross_doc_patterns": ["systematic_retreat"],
-      "synthesis_outputs": ["contradiction_map"],
+      "consolidation_rules": [
+        "Group by contradiction type",
+        "Prioritize unacknowledged contradictions"
+      ],
+      "cross_doc_patterns": [
+        "systematic_retreat"
+      ],
+      "synthesis_outputs": [
+        "contradiction_map"
+      ],
       "special_instructions": null
     },
     "concretization": {
-      "id_examples": [{"from": "CON1", "to": "Contradiction: Labor theory claim reversed"}],
+      "id_examples": [
+        {
+          "from": "CON1",
+          "to": "Contradiction: Labor theory claim reversed"
+        }
+      ],
       "naming_guidance": "Name by the claim that shifted",
-      "recommended_table_types": ["position_comparison"],
+      "recommended_table_types": [
+        "position_comparison"
+      ],
       "recommended_visual_patterns": []
     },
     "audience_vocabulary": {},
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

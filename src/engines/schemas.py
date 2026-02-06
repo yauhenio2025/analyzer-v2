@@ -156,6 +156,13 @@ class EngineDefinition(BaseModel):
         description="Rich 'About' section with theoretical foundations, methodology, use cases",
     )
 
+    # App tagging - which apps use this engine
+    apps: list[str] = Field(
+        default_factory=list,
+        description="Apps that use this engine (e.g., 'critic', 'visualizer', 'ie')",
+        examples=[["critic"], ["critic", "visualizer"]],
+    )
+
     class Config:
         json_schema_extra = {
             "example": {
@@ -202,6 +209,7 @@ class EngineSummary(BaseModel):
     version: int
     paradigm_keys: list[str] = Field(default_factory=list)
     has_profile: bool = Field(default=False, description="Whether this engine has a rich profile")
+    apps: list[str] = Field(default_factory=list, description="Apps that use this engine")
 
 
 class EnginePromptResponse(BaseModel):

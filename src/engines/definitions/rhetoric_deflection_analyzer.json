@@ -26,7 +26,9 @@
         "pattern_id": "string",
         "description": "string - recurring deflection pattern",
         "frequency": "number",
-        "examples": ["deflection_id"]
+        "examples": [
+          "deflection_id"
+        ]
       }
     ],
     "meta": {
@@ -35,7 +37,9 @@
       "medium_severity_count": "number",
       "low_severity_count": "number",
       "dominant_deflection_type": "string",
-      "key_findings": ["string - top 3 most significant deflections"]
+      "key_findings": [
+        "string - top 3 most significant deflections"
+      ]
     }
   },
   "extraction_focus": [
@@ -115,5 +119,8 @@
       "activist": {}
     },
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

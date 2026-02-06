@@ -936,5 +936,8 @@
         "inoculation_theory": "building community resilience"
       }
     }
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }

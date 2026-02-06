@@ -29,6 +29,20 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 - **12-Phase Concept Chain** - `concept_analysis_12_phase` chain linking all concept analysis phases from semantic constellation through synthesis
 
+- **App Tagging System** - Filter engines by consuming app
+  - New `apps` field on EngineDefinition schema (list of app names)
+  - New `apps` field on EngineSummary for API responses
+  - New `app` query parameter on `GET /v1/engines?app=critic`
+  - New `GET /v1/engines/apps` endpoint lists all unique app tags
+  - Tagged 63 Critic-related engines with `"apps": ["critic"]`:
+    - 7 debate rhetoric engines
+    - 9 vulnerability engines
+    - 5 outline editor engines
+    - 1 big picture engine
+    - 39 concept analysis engines
+    - 4 existing rhetoric engines (tu_quoque_tracker, motte_bailey_detector, etc.)
+  - `scripts/tag_critic_engines.py` - Script for bulk tagging engines
+
 ### Changed
 - **Visual Styles Rebranding** - Renamed all 6 dataviz styles to be independent of person/organization names
   - `tufte` → `minimalist_precision` (Minimalist Precision Graphics)

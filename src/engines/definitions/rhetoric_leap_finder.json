@@ -29,7 +29,9 @@
         "unfounded_imputation": "number",
         "scope_expansion": "number"
       },
-      "key_findings": ["string"]
+      "key_findings": [
+        "string"
+      ]
     }
   },
   "extraction_focus": [
@@ -37,7 +39,10 @@
     "actual_text_comparison",
     "strawman_constructions"
   ],
-  "primary_output_modes": ["structured_text_report", "table"],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
   "paradigm_keys": [],
   "source_file": "the-critic/analyzer/analyze_leaps.py",
   "stage_context": {
@@ -54,26 +59,48 @@
         "CLASSIFY LEAP TYPE: Determine if strawman, phantom premise, etc.",
         "DOCUMENT ACTUAL ARGUMENT: State what the critic actually argues"
       ],
-      "key_fields": {"leap_id": "Instance of logical leap"},
+      "key_fields": {
+        "leap_id": "Instance of logical leap"
+      },
       "id_field": "leap_id",
-      "key_relationships": ["mischaracterizes", "attributes"],
+      "key_relationships": [
+        "mischaracterizes",
+        "attributes"
+      ],
       "special_instructions": "Focus on cases where the gap between attribution and actual text is demonstrable through quotation."
     },
     "curation": {
       "item_type": "logical leap",
       "item_type_plural": "logical leaps",
-      "consolidation_rules": ["Group by type", "Prioritize demonstrable strawmen"],
-      "cross_doc_patterns": ["systematic_mischaracterization"],
-      "synthesis_outputs": ["leap_inventory"],
+      "consolidation_rules": [
+        "Group by type",
+        "Prioritize demonstrable strawmen"
+      ],
+      "cross_doc_patterns": [
+        "systematic_mischaracterization"
+      ],
+      "synthesis_outputs": [
+        "leap_inventory"
+      ],
       "special_instructions": null
     },
     "concretization": {
-      "id_examples": [{"from": "LEAP1", "to": "Leap: Attributed 'technology is neutral' claim"}],
+      "id_examples": [
+        {
+          "from": "LEAP1",
+          "to": "Leap: Attributed 'technology is neutral' claim"
+        }
+      ],
       "naming_guidance": "Name by the phantom premise attributed",
-      "recommended_table_types": ["attribution_vs_actual"],
+      "recommended_table_types": [
+        "attribution_vs_actual"
+      ],
       "recommended_visual_patterns": []
     },
     "audience_vocabulary": {},
     "skip_concretization": false
-  }
+  },
+  "apps": [
+    "critic"
+  ]
 }
