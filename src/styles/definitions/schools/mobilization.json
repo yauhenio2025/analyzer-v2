@@ -1,0 +1,82 @@
+{
+  "key": "mobilization",
+  "name": "Mobilization Graphics",
+  "philosophy": "PROVOKE: Design to evoke emotional response and urgency. CONTRAST: Stark visual opposition that clarifies stakes. BOLD: High-contrast, attention-grabbing compositions that cut through noise. CLEAR: One unmistakable message per visualization. ACTION: Every graphic implies 'what you should do next'. SHAREABLE: Optimized for social media impact and virality. RIGHTEOUS: Frame the issue as moral imperative, not neutral analysis. This is advocacy design—persuade, don't just inform.",
+  "color_palette": {
+    "primary": "#CC0000",
+    "secondary": "#000000",
+    "tertiary": "#FFFFFF",
+    "accent": "#FFD700",
+    "background": "#1a1a1a",
+    "text": "#FFFFFF",
+    "highlight": "#FF4500",
+    "positive": "#228B22",
+    "muted": "#666666"
+  },
+  "typography": {
+    "primary_font": "Impact, Helvetica Black, Arial Black, sans-serif",
+    "title_font": "Impact, Helvetica Black, sans-serif",
+    "caption_font": "Arial, Helvetica, sans-serif",
+    "number_font": "Impact, Arial Black, sans-serif",
+    "title_size": "48-72px",
+    "label_size": "14-16px",
+    "annotation_size": "14-18px",
+    "line_height": "1.2",
+    "title_weight": "900"
+  },
+  "layout_principles": [
+    "MAXIMUM visual impact—fill the frame",
+    "One dominant visual element—no visual democracy",
+    "Text should SHOUT—use all caps for key messages",
+    "High contrast ratios—nothing subtle",
+    "Arrows and visual direction guide the eye to the point",
+    "Use stark visual metaphors (chains, scales, clocks, etc.)",
+    "Social media optimized aspect ratios",
+    "Shareable at small sizes",
+    "Call to action always visible",
+    "Red for danger/urgency, gold for hope/value"
+  ],
+  "annotation_style": "Bold callouts, emphatic arrows, stark labels. Frame tensions with contrasting colors. Short, punchy phrases. Imperative mood: 'Stop this' 'Act now' 'Share this'. Statistics as shocking numbers in large type. Appeal to authority when useful. No nuance—clarity over complexity.",
+  "gemini_modifiers": "STYLE INSTRUCTIONS (Mobilization Graphics):\n\nTONE:\n- This is NOT neutral analysis—take a clear position\n- Frame as URGENCY that demands response\n- Use power dynamics explicitly\n- Imply urgency: 'This is happening NOW'\n\nVISUAL APPROACH:\n- HIGH CONTRAST: Red/Black/White dominant palette\n- BOLD typography: Impact font, all caps for key messages\n- ONE CLEAR MESSAGE per visual\n- Stark visual metaphors: chains, scales, targets, crosshairs, clocks\n- Dramatic color coding for opposing sides\n- Dramatic lighting effects\n- Fill the frame—no empty space\n\nCOMPOSITION:\n- Social media optimized (square or 4:5 ratio)\n- Works at thumbnail size\n- Central focal point\n- Call to action visible",
+  "best_for": [
+    "Social media advocacy campaigns",
+    "Movement mobilization",
+    "Exposing injustice or corruption",
+    "Fundraising appeals",
+    "Political messaging",
+    "Crisis response communications",
+    "Protest graphics",
+    "Shareable statistics"
+  ],
+  "avoid_for": [
+    "Nuanced policy analysis",
+    "Academic or research contexts",
+    "Corporate communications",
+    "Balanced journalism",
+    "Audiences expecting neutrality"
+  ],
+  "influences": {
+    "tradition_note": "This approach draws from a century of political graphic design—Soviet constructivism, labor movement posters, civil rights graphics, and contemporary digital activism. The tradition prioritizes emotional impact and call-to-action over balanced presentation, treating design as a tool for social change.",
+    "exemplars": [
+      {
+        "name": "Soviet Constructivists (Rodchenko, El Lissitzky)",
+        "contribution": "Revolutionary graphic language: bold geometry, limited palette, dynamic composition"
+      },
+      {
+        "name": "Shepard Fairey",
+        "contribution": "Contemporary synthesis of street art and political graphics (OBEY, Hope poster)"
+      },
+      {
+        "name": "Emory Douglas",
+        "contribution": "Black Panther Party graphics—urgent, provocative, community-centered"
+      }
+    ],
+    "key_works": [
+      "Soviet propaganda poster tradition",
+      "OBEY Giant / Shepard Fairey portfolio",
+      "The Black Panther newspaper graphics",
+      "ACT UP and AIDS activism graphics",
+      "Contemporary climate activism visual language"
+    ]
+  }
+}

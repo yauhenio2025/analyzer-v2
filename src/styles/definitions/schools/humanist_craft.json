@@ -1,0 +1,81 @@
+{
+  "key": "humanist_craft",
+  "name": "Humanist Data Craft",
+  "philosophy": "Data represents REAL people and phenomena—never lose sight of the human stories within. Imperfection and hand-crafted feel communicate authenticity and care. Complex is not complicated: embrace visual richness that rewards patient exploration. Surface personal and emotional dimensions of data. Each data point has a story worth honoring. Visual complexity that reveals itself through exploration. Beauty as a form of respect for the data and its subjects. Context and narrative as primary concerns. Data as intimate diary rather than clinical record.",
+  "color_palette": {
+    "primary": "#2c2c2c",
+    "secondary": "#8b4513",
+    "tertiary": "#c0a080",
+    "accent": "#c41e3a",
+    "accent_alt": "#1e5631",
+    "background": "#faf7f2",
+    "highlight": "#e6b800",
+    "text": "#2c2c2c",
+    "muted": "#b8a99a",
+    "series_palette": ["#c41e3a", "#1e5631", "#1e4d8c", "#c0a080", "#8b4513"]
+  },
+  "typography": {
+    "primary_font": "Garamond, Georgia, serif",
+    "title_font": "Didot, Bodoni, serif",
+    "caption_font": "Gill Sans, Optima, sans-serif",
+    "number_font": "Garamond, serif",
+    "title_size": "24-32px",
+    "label_size": "9-11px",
+    "annotation_size": "10-12px",
+    "line_height": "1.6",
+    "title_weight": "normal"
+  },
+  "layout_principles": [
+    "Organic, flowing layouts—not rigid grids",
+    "Hand-drawn aesthetic even in digital form",
+    "Radial and circular arrangements",
+    "Each element can be unique—no strict template",
+    "Negative space as compositional element",
+    "Layering for depth and discovery",
+    "Key/legend as beautiful design element",
+    "Small details reward close reading",
+    "Title as almost calligraphic element",
+    "Works as art piece on the wall"
+  ],
+  "annotation_style": "Narrative and personal. Write as if telling a story. Annotations can be longer, more contemplative. Hand-lettered aesthetic even if typeset. Legend as a beautiful decoded key, placed thoughtfully. Encourage exploration: 'if you look closely...' Connect data to human experience in annotations. Poetic register is acceptable.",
+  "gemini_modifiers": "STYLE INSTRUCTIONS (Humanist Data Craft):\n- Create a visualization that feels HUMAN and CRAFTED\n- Warm, organic color palette: cream background (#faf7f2), deep reds, forest greens, gold accents\n- Hand-drawn aesthetic—not rigid or mechanical\n- Organic, flowing layouts—radial, circular, or freeform\n- Each element can have unique character\n- Typography: elegant serifs (Garamond, Didot style)\n- Think of this as DATA ART—beautiful enough to hang on a wall\n- Legend/key as a beautiful design element, not just utilitarian\n- Embrace complexity—layers reward exploration\n- Annotations can be narrative, even poetic\n- Small details for those who look closely\n- NO stark, corporate, or mechanical feel\n- Warm and inviting, not cold and clinical",
+  "best_for": [
+    "Personal or human-scale data",
+    "Narrative and story-driven presentations",
+    "Cultural and humanities subjects",
+    "Data art and installations",
+    "Annual reports and brand storytelling",
+    "Conceptual relationships",
+    "When data represents individual humans",
+    "Thematic and qualitative analysis"
+  ],
+  "avoid_for": [
+    "Financial/technical precision requirements",
+    "Fast-consumption news graphics",
+    "Expert audiences wanting efficiency",
+    "Large-scale statistical comparisons"
+  ],
+  "influences": {
+    "tradition_note": "This approach draws from the Data Humanism movement, which advocates for visualization that honors the human stories within data. It connects to broader traditions in information design, data art, and participatory data practices that emphasize craft, intimacy, and emotional resonance.",
+    "exemplars": [
+      {
+        "name": "Giorgia Lupi",
+        "contribution": "Articulated the Data Humanism philosophy and demonstrated hand-crafted data visualization"
+      },
+      {
+        "name": "Stefanie Posavec",
+        "contribution": "Pioneered intimate, personal data visualization through the Dear Data project"
+      },
+      {
+        "name": "Nicholas Felton",
+        "contribution": "Annual reports as personal data art, demonstrating quantified self as aesthetic practice"
+      }
+    ],
+    "key_works": [
+      "Dear Data",
+      "Data Humanism manifesto",
+      "Feltron Annual Reports",
+      "Observe, Collect, Draw! (Lupi & Posavec)"
+    ]
+  }
+}

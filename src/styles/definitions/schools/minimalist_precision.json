@@ -1,0 +1,78 @@
+{
+  "key": "minimalist_precision",
+  "name": "Minimalist Precision Graphics",
+  "philosophy": "Maximize the data-ink ratio: every visual element should convey information. Eliminate chartjunk—no decorative grids, unnecessary frames, or ornament. Use small multiples to enable comparison across dimensions. Sparklines embed word-sized graphics in running text. Show the data, minimize imposed interpretation. Micro/macro readings work at glance AND on close inspection. Graphical integrity means no lie factors, no misleading perspectives. The goal is clear, honest, dense communication.",
+  "color_palette": {
+    "primary": "#1a1a1a",
+    "secondary": "#666666",
+    "tertiary": "#999999",
+    "accent": "#b8860b",
+    "background": "#ffffff",
+    "highlight": "#cc0000",
+    "text": "#333333",
+    "muted": "#cccccc"
+  },
+  "typography": {
+    "primary_font": "Georgia, serif",
+    "title_font": "Georgia, serif",
+    "caption_font": "Georgia, serif",
+    "number_font": "Georgia, serif",
+    "title_size": "18-24px",
+    "label_size": "10-12px",
+    "annotation_size": "10-11px",
+    "line_height": "1.4",
+    "title_weight": "normal"
+  },
+  "layout_principles": [
+    "Remove all borders and boxes around charts",
+    "Use white space instead of lines to separate elements",
+    "Direct labeling on data points instead of legends",
+    "Axis lines only if absolutely necessary—often remove them",
+    "No grid lines unless essential for reading values",
+    "Small multiples arranged in tight grids with shared axes",
+    "Data should touch the frame or float in white space",
+    "No 3D effects ever",
+    "No shadows or gradients",
+    "Aspect ratio should match the nature of the data"
+  ],
+  "annotation_style": "Minimal and precise. Labels directly on data points where possible. No separate legend if elements can be labeled directly. Annotations as small, precise notes without boxes or callouts. Use thin lines to connect annotations to data if needed. Words integrated with graphics, not separated.",
+  "gemini_modifiers": "STYLE INSTRUCTIONS (Minimalist Precision Graphics):\n- Use MAXIMUM data-ink ratio: every pixel should convey information\n- NO chartjunk: no decorative grids, 3D effects, shadows, or gradients\n- Color palette: near-black (#1a1a1a) for data, white background, minimal gray for structure\n- Remove all unnecessary borders, boxes, and frames\n- Direct label data points instead of using legends\n- Axis lines minimal or absent if scale is clear from data\n- Use small multiples if showing comparisons\n- Typography: Georgia or classic serif, normal weight, no bold titles\n- White space as separator, not lines\n- Precision over decoration\n- If uncertain, remove rather than add",
+  "best_for": [
+    "Statistical analysis results",
+    "Time series with multiple variables",
+    "Comparisons across many categories",
+    "Academic and research presentations",
+    "Financial data for sophisticated audiences",
+    "Small multiples showing change over time",
+    "Data-dense displays for expert readers"
+  ],
+  "avoid_for": [
+    "General public audiences needing guidance",
+    "Emotional or narrative-driven content",
+    "Brand-heavy corporate communications",
+    "Content requiring visual impact over precision"
+  ],
+  "influences": {
+    "tradition_note": "This approach draws from decades of statistical graphics theory and practice, emphasizing quantitative rigor and visual honesty. The principles emerged from critiques of misleading charts in media and business, advocating for graphics that respect both data and audience intelligence.",
+    "exemplars": [
+      {
+        "name": "Edward Tufte",
+        "contribution": "Foundational work on data-ink ratio, chartjunk elimination, and graphical integrity"
+      },
+      {
+        "name": "William Cleveland",
+        "contribution": "Scientific basis for graphical perception and statistical graphics"
+      },
+      {
+        "name": "John Tukey",
+        "contribution": "Exploratory data analysis and the philosophy of letting data speak"
+      }
+    ],
+    "key_works": [
+      "The Visual Display of Quantitative Information",
+      "Envisioning Information",
+      "The Elements of Graphing Data",
+      "Semiology of Graphics (Jacques Bertin)"
+    ]
+  }
+}

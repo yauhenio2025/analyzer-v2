@@ -349,18 +349,22 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
 - **Status**: Active
 - **Description**: Serves visual style definitions (6 dataviz schools) and affinity mappings
 - **Entry Points**:
-  - `src/styles/schemas.py:1-100` - StyleSchool enum, StyleGuide, ColorPalette, Typography models
-  - `src/styles/registry.py:1-150` - StyleRegistry class for loading definitions
+  - `src/styles/schemas.py:1-110` - StyleSchool enum, StyleGuide, StyleInfluences, ColorPalette, Typography models
+  - `src/styles/registry.py:1-190` - StyleRegistry class for loading definitions
   - `src/styles/definitions/schools/*.json` - 6 style school definition files
   - `src/styles/definitions/affinities.json` - Engine/format/audience affinity mappings
-  - `src/api/routes/styles.py:1-130` - Style API endpoints
-- **Dataviz Schools**:
-  - `tufte` - Classic statistical graphics (Tufte), data-ink ratio maximization
-  - `nyt_cox` - NYT/Amanda Cox explanatory graphics, reader-friendly annotations
-  - `ft_burn_murdoch` - FT/Burn-Murdoch restrained elegance, salmon pink signature
-  - `lupi_data_humanism` - Giorgia Lupi data humanism, organic hand-crafted feel
-  - `stefaner_truth_beauty` - Moritz Stefaner complex networks, emergent structure
-  - `activist_agitprop` - Activist mobilization graphics, high contrast provocation
+  - `src/api/routes/styles.py:1-145` - Style API endpoints
+- **Dataviz Schools** (independent names, proper attribution via influences):
+  - `minimalist_precision` - Data-ink ratio maximization, chartjunk elimination
+  - `explanatory_narrative` - Reader-friendly annotations, teaching moments
+  - `restrained_elegance` - Financial journalism aesthetic, warm signature palette
+  - `humanist_craft` - Organic hand-crafted feel, data as human stories
+  - `emergent_systems` - Complex networks, structure revelation
+  - `mobilization` - Activist graphics, high contrast provocation
+- **Influences System** (each style includes):
+  - `tradition_note` - How the style draws from broader design traditions
+  - `exemplars` - People/organizations who exemplify this approach (with contributions)
+  - `key_works` - Foundational texts and projects
 - **Affinity Mappings**:
   - 37 engine-to-style affinities
   - 32 format-to-style affinities
@@ -374,7 +378,7 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
   - `GET /v1/styles/engine-mappings` - All engines with their style affinities
   - `GET /v1/styles/for-engine/{key}` - Preferred styles for an engine
 - **Dependencies**: Pydantic v2
-- **Added**: 2026-02-05
+- **Added**: 2026-02-05 | **Modified**: 2026-02-06
 
 ## API
 

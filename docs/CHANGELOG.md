@@ -5,6 +5,23 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+- **Visual Styles Rebranding** - Renamed all 6 dataviz styles to be independent of person/organization names
+  - `tufte` → `minimalist_precision` (Minimalist Precision Graphics)
+  - `nyt_cox` → `explanatory_narrative` (Explanatory Narrative Graphics)
+  - `ft_burn_murdoch` → `restrained_elegance` (Restrained Elegance)
+  - `lupi_data_humanism` → `humanist_craft` (Humanist Data Craft)
+  - `stefaner_truth_beauty` → `emergent_systems` (Emergent Systems Visualization)
+  - `activist_agitprop` → `mobilization` (Mobilization Graphics)
+  - Philosophies rewritten to describe the approach independently without implying IP copying
+  - New `influences` section with proper attribution:
+    - `tradition_note`: Explains how the style draws from broader traditions
+    - `exemplars`: Lists people/organizations whose work exemplifies this approach, with contributions
+    - `key_works`: Foundational texts and projects in this tradition
+  - Updated schema: Added `StyleInfluences` and `StyleExemplar` models
+  - Removed old `practitioners` and `references` fields
+  - All engine/format/audience affinity mappings updated with new keys
+
 ### Added
 - **Display Configuration Module** - Centralized Gemini formatting rules from Visualizer
   - New `src/display/` module with schemas, registry, and JSON definitions
@@ -43,12 +60,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 - **Visual Styles System** - Centralized dataviz style definitions and affinity mappings
   - New `src/styles/` module with schemas, registry, and JSON definitions
   - 6 dataviz school definitions with color palettes, typography, layout principles, Gemini modifiers:
-    - Tufte (classic statistical graphics)
-    - NYT/Amanda Cox (explanatory graphics)
-    - FT/Burn-Murdoch (restrained elegance)
-    - Giorgia Lupi (data humanism)
-    - Moritz Stefaner (truth & beauty)
-    - Activist/Agitprop (mobilization graphics)
+    - Minimalist Precision (data-ink ratio maximization)
+    - Explanatory Narrative (reader-friendly annotations)
+    - Restrained Elegance (financial journalism aesthetic)
+    - Humanist Data Craft (organic, human-centered)
+    - Emergent Systems (complex networks, structure revelation)
+    - Mobilization (activist graphics)
+  - Each style includes `influences` section with tradition_note, exemplars, key_works
   - Affinity mappings: 37 engine→style, 32 format→style, 11 audience→style
   - New API endpoints at `/v1/styles/*`:
     - `GET /v1/styles` - List style schools

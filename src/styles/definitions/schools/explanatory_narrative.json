@@ -1,0 +1,81 @@
+{
+  "key": "explanatory_narrative",
+  "name": "Explanatory Narrative Graphics",
+  "philosophy": "Graphics that EXPLAIN, not just display. Guide the reader's eye through a story with clear visual hierarchy. Annotations serve as teaching moments, not mere labels. Design for accessibility to general audiences while respecting their intelligence. Apply interactive principles even in static form—suggest where to look, what to compare. Aim for the 'aha moment' when the visualization reveals insight. Clarity is kindness to the reader. Every chart answers a specific question.",
+  "color_palette": {
+    "primary": "#333333",
+    "secondary": "#666666",
+    "tertiary": "#aaaaaa",
+    "accent": "#d63232",
+    "accent_alt": "#1e90ff",
+    "background": "#f7f7f5",
+    "highlight": "#ffcc00",
+    "positive": "#3a9d23",
+    "negative": "#d63232",
+    "text": "#333333",
+    "muted": "#bbbbbb"
+  },
+  "typography": {
+    "primary_font": "Franklin Gothic, Arial, sans-serif",
+    "title_font": "Georgia, serif",
+    "caption_font": "Franklin Gothic, Arial, sans-serif",
+    "number_font": "Franklin Gothic, Arial, sans-serif",
+    "title_size": "22-28px",
+    "label_size": "11-13px",
+    "annotation_size": "12-14px",
+    "line_height": "1.5",
+    "title_weight": "700"
+  },
+  "layout_principles": [
+    "Clear headline that states the finding",
+    "Subhead or dek that elaborates on the insight",
+    "Annotations guide the eye through key points",
+    "Source and credit prominently displayed",
+    "Generous white space for breathing room",
+    "Legend only when direct labeling impossible",
+    "Call-out boxes highlight crucial data points",
+    "Responsive sizing in mind",
+    "Clear visual hierarchy: what to read first is obvious",
+    "Axes labeled clearly with units"
+  ],
+  "annotation_style": "Generous and explanatory. Use callout boxes with subtle backgrounds. Annotations should TEACH the reader something—not just label. Answer 'What does this mean?' at key inflection points. Use arrows or thin lines to connect annotations to data. Write in complete sentences when explaining significance. Header + body pattern for major annotations. Keep tone conversational but authoritative.",
+  "gemini_modifiers": "STYLE INSTRUCTIONS (Explanatory Narrative Graphics):\n- Create an EXPLANATORY visualization that teaches the reader\n- Include a clear HEADLINE that states the key finding\n- Use ANNOTATIONS to guide the reader's eye through important points\n- Color palette: #333333 for data, #d63232 for emphasis, warm #f7f7f5 background\n- Typography: Sans-serif (Franklin Gothic style) for labels, serif for titles\n- Add callout boxes with pale backgrounds to highlight crucial insights\n- Write annotations as teaching moments, not just labels\n- Include clear axis labels with units\n- Source attribution visible at bottom\n- Visual hierarchy guides: what to read first, second, third\n- Think about what question this chart answers\n- Generous white space between elements",
+  "best_for": [
+    "General public audiences",
+    "News and journalism contexts",
+    "Complex data that needs explanation",
+    "Stories with a clear narrative arc",
+    "Interactive-inspired static graphics",
+    "Election results, economic indicators",
+    "Scientific findings for lay audiences"
+  ],
+  "avoid_for": [
+    "Expert audiences who find annotations patronizing",
+    "Data-dense displays for specialists",
+    "Abstract conceptual relationships",
+    "Speed-reading contexts (too much annotation)"
+  ],
+  "influences": {
+    "tradition_note": "This approach emerged from the tradition of news graphics and explanatory journalism, where visualizations must quickly communicate findings to diverse audiences. It synthesizes principles from educational design, journalism ethics, and interactive media into a coherent approach to static graphics.",
+    "exemplars": [
+      {
+        "name": "The New York Times Graphics Desk",
+        "contribution": "Decades of pioneering work in explanatory news visualization"
+      },
+      {
+        "name": "Amanda Cox",
+        "contribution": "Influential voice on reader-centered design and the 'aha moment' in visualization"
+      },
+      {
+        "name": "Alberto Cairo",
+        "contribution": "Theoretical foundations of explanatory visualization and visual truthfulness"
+      }
+    ],
+    "key_works": [
+      "The Functional Art (Alberto Cairo)",
+      "The Truthful Art (Alberto Cairo)",
+      "D3.js and the modern interactive graphics toolkit",
+      "The Upshot and explanatory journalism tradition"
+    ]
+  }
+}

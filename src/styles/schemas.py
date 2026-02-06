@@ -9,12 +9,34 @@ from pydantic import BaseModel, Field
 
 class StyleSchool(str, Enum):
     """The 6 major dataviz style schools."""
-    TUFTE = "tufte"
-    NYT_COX = "nyt_cox"
-    FT_BURN_MURDOCH = "ft_burn_murdoch"
-    LUPI_DATA_HUMANISM = "lupi_data_humanism"
-    STEFANER_TRUTH_BEAUTY = "stefaner_truth_beauty"
-    ACTIVIST_AGITPROP = "activist_agitprop"
+    MINIMALIST_PRECISION = "minimalist_precision"
+    EXPLANATORY_NARRATIVE = "explanatory_narrative"
+    RESTRAINED_ELEGANCE = "restrained_elegance"
+    HUMANIST_CRAFT = "humanist_craft"
+    EMERGENT_SYSTEMS = "emergent_systems"
+    MOBILIZATION = "mobilization"
+
+
+class StyleExemplar(BaseModel):
+    """A person or organization whose work exemplifies this style tradition."""
+    name: str = Field(..., description="Name of the person or organization")
+    contribution: str = Field(..., description="What aspect of the style they exemplify")
+
+
+class StyleInfluences(BaseModel):
+    """Influences, exemplars, and key works in this style tradition."""
+    tradition_note: str = Field(
+        ...,
+        description="Explanation of how this style draws from a broader tradition"
+    )
+    exemplars: list[StyleExemplar] = Field(
+        ...,
+        description="People/organizations whose work exemplifies this approach"
+    )
+    key_works: list[str] = Field(
+        default_factory=list,
+        description="Foundational texts, projects, or artifacts in this tradition"
+    )
 
 
 class ColorPalette(BaseModel):
@@ -60,9 +82,11 @@ class StyleGuide(BaseModel):
     gemini_modifiers: str = Field(..., description="Instructions to append to Gemini prompts")
     best_for: list[str] = Field(..., description="Contexts where this style excels")
     avoid_for: list[str] = Field(..., description="Contexts to avoid this style")
-    # Metadata
-    practitioners: Optional[list[str]] = Field(None, description="Key practitioners of this style")
-    references: Optional[list[str]] = Field(None, description="Key books/articles about this style")
+    # Influences - proper attribution without implying we're copying IP
+    influences: Optional[StyleInfluences] = Field(
+        None,
+        description="Tradition, exemplars, and key works that inform this style approach"
+    )
 
 
 class StyleGuideSummary(BaseModel):

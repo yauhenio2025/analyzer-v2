@@ -1,0 +1,80 @@
+{
+  "key": "emergent_systems",
+  "name": "Emergent Systems Visualization",
+  "philosophy": "Complex systems deserve complex visualizations that reveal their structure. Interactivity as a core principle—even static work hints at exploration affordances. Scientific rigor meets aesthetic ambition. Large-scale pattern revelation is the goal: seeing structure emerge from apparent chaos. Network thinking applied to cultural, social, and scientific data. The 'Aha!' moment when hidden relationships become visible. Technical sophistication should be evident in the result. Visualization as scientific instrument, not mere decoration.",
+  "color_palette": {
+    "primary": "#2c3e50",
+    "secondary": "#e74c3c",
+    "tertiary": "#3498db",
+    "accent": "#9b59b6",
+    "background": "#ecf0f1",
+    "text": "#2c3e50",
+    "highlight": "#f1c40f",
+    "muted": "#95a5a6",
+    "series_palette": ["#e74c3c", "#3498db", "#2ecc71", "#f1c40f", "#9b59b6", "#e67e22"]
+  },
+  "typography": {
+    "primary_font": "Source Sans Pro, Roboto, sans-serif",
+    "title_font": "Montserrat, sans-serif",
+    "caption_font": "Source Sans Pro, sans-serif",
+    "number_font": "Source Code Pro, monospace",
+    "title_size": "20-28px",
+    "label_size": "10-12px",
+    "annotation_size": "11-13px",
+    "line_height": "1.4",
+    "title_weight": "300"
+  },
+  "layout_principles": [
+    "Force-directed and physics-based layouts",
+    "Reveal structure through computation",
+    "Dense information displays that emerge from exploration",
+    "Interactive affordances even in static form",
+    "Dark mode can be powerful for drama",
+    "Precise geometric constructions",
+    "Hierarchy through size and position",
+    "Technical sophistication visible",
+    "Works at multiple zoom levels",
+    "Credits computational method used"
+  ],
+  "annotation_style": "Technical but accessible. Explain the visualization method. Include 'how to read this' guidance. Reference computational approach where relevant. Annotations can discuss the emergence of patterns. Scale and context information prominent. Hover-state-style annotations for key elements. Technical precision in language.",
+  "gemini_modifiers": "STYLE INSTRUCTIONS (Emergent Systems Visualization):\n- Create a visualization that reveals EMERGENT STRUCTURE\n- Technical sophistication is visible and appreciated\n- Color palette: deep blue-gray (#2c3e50), coral (#e74c3c), bright blue (#3498db)\n- Light gray background (#ecf0f1) OR dramatic dark (#1a1a2e)\n- Force-directed, physics-based, or algorithmically-derived layouts\n- Network and systems thinking applied\n- Dense information that rewards exploration\n- Modern sans-serif typography (Montserrat, Source Sans Pro)\n- Precise geometric construction\n- Include 'how to read this' annotation\n- Works at multiple zoom levels\n- Scientific instrument aesthetic\n- Patterns should EMERGE from data, not be imposed\n- Technical language acceptable",
+  "best_for": [
+    "Complex networks and systems",
+    "Large-scale pattern discovery",
+    "Cultural and social data (music, art, society)",
+    "Scientific and research contexts",
+    "Interactive design (even static hints)",
+    "Citation and influence networks",
+    "Competitive landscape mapping",
+    "Emergence and self-organization"
+  ],
+  "avoid_for": [
+    "Simple data that doesn't need complexity",
+    "Traditional business/financial audiences",
+    "Readers uncomfortable with technical aesthetics",
+    "Quick-read news contexts"
+  ],
+  "influences": {
+    "tradition_note": "This approach draws from network science, complexity theory, and the tradition of scientific visualization. It applies computational methods to reveal hidden structures in data, treating visualization as a form of scientific inquiry rather than mere presentation.",
+    "exemplars": [
+      {
+        "name": "Moritz Stefaner",
+        "contribution": "Pioneered the 'Truth and Beauty Operator' approach—rigorous yet aesthetic systems visualization"
+      },
+      {
+        "name": "Manuel Lima",
+        "contribution": "Theoretical foundations of network visualization and visual complexity"
+      },
+      {
+        "name": "Jer Thorp",
+        "contribution": "Large-scale data art and the aesthetics of computational visualization"
+      }
+    ],
+    "key_works": [
+      "Visual Complexity (Manuel Lima)",
+      "The Book of Trees (Manuel Lima)",
+      "Truth & Beauty Operations portfolio",
+      "Processing and the creative coding movement"
+    ]
+  }
+}

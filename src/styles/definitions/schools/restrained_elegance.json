@@ -1,0 +1,78 @@
+{
+  "key": "restrained_elegance",
+  "name": "Restrained Elegance",
+  "philosophy": "Extreme restraint lets the data command attention. A signature warm background provides distinctive identity. Line charts serve as the primary vehicle for showing change over time. Multiple series compared with clear differentiation through color alone. Annotations minimal but precisely placed at inflection points only. Professional gravitas appropriate for financial and business audiences. Charts work beautifully at print column width. Emphasis achieved through prominence, not decoration.",
+  "color_palette": {
+    "primary": "#0f5499",
+    "secondary": "#990f3d",
+    "tertiary": "#66a8cd",
+    "accent": "#ff7f0e",
+    "background": "#fff1e5",
+    "text": "#333333",
+    "muted": "#cec6b9",
+    "highlight": "#000000",
+    "series_palette": ["#0f5499", "#990f3d", "#ff7f0e", "#4d8076", "#96cccc"]
+  },
+  "typography": {
+    "primary_font": "Metric, Financier Sans, sans-serif",
+    "title_font": "Georgia, serif",
+    "caption_font": "Metric, Arial, sans-serif",
+    "number_font": "Metric, sans-serif",
+    "title_size": "18-22px",
+    "label_size": "10-12px",
+    "annotation_size": "10-11px",
+    "line_height": "1.35",
+    "title_weight": "600"
+  },
+  "layout_principles": [
+    "Chart area on white, framed by warm background",
+    "Minimal but precise grid lines in muted tones",
+    "Line charts prioritized for time series",
+    "Direct labeling at line endpoints",
+    "Axis labels rotated if needed for readability",
+    "Source always credited bottom left",
+    "Compact but not cramped",
+    "Works at print column width (small)",
+    "Few colors—usually 2-3 series maximum",
+    "One series in black or bold if it's the focus"
+  ],
+  "annotation_style": "Minimal, surgical. Annotations only at critical inflection points. Short phrases, not sentences. Data points labeled directly. Use thin rules to connect annotation to data. No boxes or backgrounds on annotations. Let the data speak—annotations are whispers, not shouts. End-of-line series labels preferred over legends.",
+  "gemini_modifiers": "STYLE INSTRUCTIONS (Restrained Elegance):\n- Use SIGNATURE color scheme: warm salmon/cream background (#fff1e5), white chart area\n- Primary series in deep blue (#0f5499), secondary in burgundy (#990f3d)\n- RESTRAINT is key—minimal annotation, let data speak\n- Prioritize LINE CHARTS for time series data\n- Direct labeling at line endpoints, no legend if possible\n- Thin, muted grid lines (#cec6b9) if needed\n- Sans-serif typography for labels\n- Source attribution bottom left\n- Works at small size—readable at 300px width\n- Maximum 3-4 series for clarity\n- One series can be emphasized in black/bold\n- Annotations as short phrases at inflection points only\n- Professional, financial gravitas\n- No decorative elements whatsoever",
+  "best_for": [
+    "Time series and line charts",
+    "Financial and economic data",
+    "Professional/business audiences",
+    "Print-ready graphics (column width)",
+    "Comparisons across countries/entities over time",
+    "Trajectory and trend charts",
+    "Market movements and indicators"
+  ],
+  "avoid_for": [
+    "General public needing more context",
+    "Network and relationship data",
+    "Part-of-whole compositions",
+    "Emotional or narrative-driven content"
+  ],
+  "influences": {
+    "tradition_note": "This approach represents the mature tradition of financial journalism graphics, refined over decades to serve readers who need rapid, accurate comprehension of economic data. The style balances information density with visual clarity, optimized for both print and digital contexts.",
+    "exemplars": [
+      {
+        "name": "Financial Times Visual Journalism",
+        "contribution": "Developed the signature restrained aesthetic for financial data visualization"
+      },
+      {
+        "name": "John Burn-Murdoch",
+        "contribution": "Demonstrated the power of simple, clear line charts for complex time-series comparisons"
+      },
+      {
+        "name": "The Economist graphics tradition",
+        "contribution": "Decades of refined, print-optimized data visualization for informed readers"
+      }
+    ],
+    "key_works": [
+      "FT Visual Vocabulary",
+      "The Economist Style Guide (graphics section)",
+      "Comparative pandemic trajectory visualizations (2020-2021)"
+    ]
+  }
+}

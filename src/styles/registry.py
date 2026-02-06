@@ -116,7 +116,7 @@ class StyleRegistry:
         return AffinitySet(
             category="engine",
             affinities=self._engine_affinities,
-            default=self._engine_affinities.get("_default", [StyleSchool.NYT_COX, StyleSchool.TUFTE]),
+            default=self._engine_affinities.get("_default", [StyleSchool.EXPLANATORY_NARRATIVE, StyleSchool.MINIMALIST_PRECISION]),
         )
 
     def get_format_affinities(self) -> AffinitySet:
@@ -124,7 +124,7 @@ class StyleRegistry:
         return AffinitySet(
             category="format",
             affinities=self._format_affinities,
-            default=self._format_affinities.get("_default", [StyleSchool.NYT_COX, StyleSchool.TUFTE]),
+            default=self._format_affinities.get("_default", [StyleSchool.EXPLANATORY_NARRATIVE, StyleSchool.MINIMALIST_PRECISION]),
         )
 
     def get_audience_affinities(self) -> AffinitySet:
@@ -132,28 +132,28 @@ class StyleRegistry:
         return AffinitySet(
             category="audience",
             affinities=self._audience_affinities,
-            default=self._audience_affinities.get("_default", [StyleSchool.NYT_COX, StyleSchool.TUFTE]),
+            default=self._audience_affinities.get("_default", [StyleSchool.EXPLANATORY_NARRATIVE, StyleSchool.MINIMALIST_PRECISION]),
         )
 
     def get_styles_for_engine(self, engine_key: str) -> list[StyleSchool]:
         """Get preferred styles for an engine."""
         return self._engine_affinities.get(
             engine_key,
-            self._engine_affinities.get("_default", [StyleSchool.NYT_COX, StyleSchool.TUFTE])
+            self._engine_affinities.get("_default", [StyleSchool.EXPLANATORY_NARRATIVE, StyleSchool.MINIMALIST_PRECISION])
         )
 
     def get_styles_for_format(self, format_key: str) -> list[StyleSchool]:
         """Get preferred styles for a visual format."""
         return self._format_affinities.get(
             format_key,
-            self._format_affinities.get("_default", [StyleSchool.NYT_COX, StyleSchool.TUFTE])
+            self._format_affinities.get("_default", [StyleSchool.EXPLANATORY_NARRATIVE, StyleSchool.MINIMALIST_PRECISION])
         )
 
     def get_styles_for_audience(self, audience: str) -> list[StyleSchool]:
         """Get preferred styles for an audience type."""
         return self._audience_affinities.get(
             audience,
-            self._audience_affinities.get("_default", [StyleSchool.NYT_COX, StyleSchool.TUFTE])
+            self._audience_affinities.get("_default", [StyleSchool.EXPLANATORY_NARRATIVE, StyleSchool.MINIMALIST_PRECISION])
         )
 
     # Combined Engine Mapping (for UI)
