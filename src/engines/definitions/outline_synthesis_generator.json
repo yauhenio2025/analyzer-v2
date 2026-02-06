@@ -1,0 +1,67 @@
+{
+  "engine_key": "outline_synthesis_generator",
+  "engine_name": "Outline Synthesis Generator",
+  "description": "Synthesizes complex essay outlines into coherent narrative summaries. Captures overall thesis, argumentative arc, and logical flow across sections.",
+  "version": 1,
+  "category": "outline",
+  "kind": "synthesis",
+  "reasoning_domain": "essay_construction",
+  "researcher_question": "What is the overall argument and flow of this outline?",
+  "canonical_schema": {
+    "synthesis": {
+      "outline_title": "string",
+      "core_thesis": "string - emerging thesis from talking points",
+      "section_summaries": [
+        {
+          "section_id": "string",
+          "section_title": "string",
+          "summary": "string - synthesis of section's points"
+        }
+      ],
+      "logical_flow": "string - how sections connect",
+      "strong_points": ["string - particularly effective arguments"],
+      "gaps": ["string - areas needing development"],
+      "full_synthesis": "string - 400-600 word narrative summary"
+    }
+  },
+  "extraction_focus": [
+    "thesis_emergence",
+    "argument_synthesis",
+    "logical_flow",
+    "strength_assessment"
+  ],
+  "primary_output_modes": ["structured_text_report"],
+  "paradigm_keys": [],
+  "source_file": "the-critic/api/prompts.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "outline synthesis",
+      "analysis_type_plural": "outline syntheses",
+      "core_question": "What is the overall argument and flow?",
+      "extraction_steps": [
+        "IDENTIFY THESIS: What core thesis emerges from points",
+        "SYNTHESIZE SECTIONS: Summarize each section's contribution",
+        "MAP FLOW: Trace logical progression",
+        "ASSESS STRENGTH: Identify strong and weak areas",
+        "GENERATE SYNTHESIS: Create narrative summary"
+      ],
+      "key_fields": {"full_synthesis": "The synthesis text"},
+      "id_field": "outline_title",
+      "key_relationships": [],
+      "special_instructions": "400-600 words. Help reader understand full argument without reading detailed outline."
+    },
+    "curation": {
+      "item_type": "outline synthesis",
+      "item_type_plural": "outline syntheses",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [],
+      "synthesis_outputs": [],
+      "special_instructions": null
+    },
+    "concretization": {"id_examples": [], "naming_guidance": "", "recommended_table_types": [], "recommended_visual_patterns": []},
+    "audience_vocabulary": {},
+    "skip_concretization": false
+  }
+}

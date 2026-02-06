@@ -1,0 +1,80 @@
+{
+  "engine_key": "rhetoric_contradiction_detector",
+  "engine_name": "Contradiction Detector",
+  "description": "Identifies instances where an author's response contradicts their original position. Detects moving goalposts, silent reversals, and positions that shift when challenged.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "synthesis",
+  "reasoning_domain": "debate_response_analysis",
+  "researcher_question": "Where does the author's response contradict their original stated position?",
+  "canonical_schema": {
+    "contradictions": [
+      {
+        "contradiction_id": "string (format: 'CON{N}')",
+        "original_claim": "string - exact quote from original work",
+        "original_source": "string - location in original",
+        "response_claim": "string - contradicting quote from response",
+        "response_source": "string - location in response",
+        "contradiction_type": "reversal | qualification | scope_change | moving_goalposts | silent_retreat",
+        "acknowledgment": "acknowledged | denied | unaddressed",
+        "analysis": "string - how these positions conflict",
+        "severity": "high | medium | low"
+      }
+    ],
+    "meta": {
+      "total_contradictions": "number",
+      "by_type": {
+        "reversal": "number",
+        "qualification": "number",
+        "scope_change": "number",
+        "moving_goalposts": "number",
+        "silent_retreat": "number"
+      },
+      "key_findings": ["string"]
+    }
+  },
+  "extraction_focus": [
+    "position_changes",
+    "goalpost_movements",
+    "silent_reversals"
+  ],
+  "primary_output_modes": ["structured_text_report", "table"],
+  "paradigm_keys": [],
+  "source_file": "the-critic/analyzer/analyze_contradictions.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "contradiction",
+      "analysis_type_plural": "contradictions",
+      "core_question": "Where does the author's response contradict their original position?",
+      "extraction_steps": [
+        "IDENTIFY RESPONSE CLAIMS: Find key claims made in the response",
+        "TRACE ORIGINAL POSITIONS: Locate the corresponding positions in original work",
+        "COMPARE POSITIONS: Identify discrepancies between original and response",
+        "CLASSIFY CONTRADICTION TYPE: Determine if reversal, qualification, or scope change",
+        "ASSESS ACKNOWLEDGMENT: Note whether the change is admitted or denied"
+      ],
+      "key_fields": {"contradiction_id": "Instance of contradiction"},
+      "id_field": "contradiction_id",
+      "key_relationships": ["contradicts", "modifies", "reverses"],
+      "special_instructions": "Pay attention to subtle shifts in scope, quantifiers, and qualifications that may not be acknowledged."
+    },
+    "curation": {
+      "item_type": "contradiction",
+      "item_type_plural": "contradictions",
+      "consolidation_rules": ["Group by contradiction type", "Prioritize unacknowledged contradictions"],
+      "cross_doc_patterns": ["systematic_retreat"],
+      "synthesis_outputs": ["contradiction_map"],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [{"from": "CON1", "to": "Contradiction: Labor theory claim reversed"}],
+      "naming_guidance": "Name by the claim that shifted",
+      "recommended_table_types": ["position_comparison"],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {},
+    "skip_concretization": false
+  }
+}

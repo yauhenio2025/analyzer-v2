@@ -1,0 +1,62 @@
+{
+  "engine_key": "outline_notes_extractor",
+  "engine_name": "Notes Extractor",
+  "description": "Extracts structured talking points from raw notes and dictations. Identifies distinct argumentative insights and organizes them into outline sections.",
+  "version": 1,
+  "category": "outline",
+  "kind": "extraction",
+  "reasoning_domain": "essay_construction",
+  "researcher_question": "What distinct argumentative insights can be extracted from these notes?",
+  "canonical_schema": {
+    "extracted_points": [
+      {
+        "text": "string - one sentence talking point",
+        "section_id": "string - which outline section this belongs to",
+        "confidence": "number (0-1)"
+      }
+    ],
+    "meta": {
+      "total_extracted": "number",
+      "by_section": {},
+      "notes_coverage": "string - how much of notes was captured"
+    }
+  },
+  "extraction_focus": [
+    "argumentative_insights",
+    "distinct_claims",
+    "section_assignment"
+  ],
+  "primary_output_modes": ["structured_text_report"],
+  "paradigm_keys": [],
+  "source_file": "the-critic/api/prompts.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "notes extraction",
+      "analysis_type_plural": "notes extractions",
+      "core_question": "What distinct argumentative insights are in these notes?",
+      "extraction_steps": [
+        "PARSE NOTES: Identify distinct thoughts and insights",
+        "FILTER REDUNDANCY: Remove overlapping points",
+        "SHARPEN: Transform into essay-ready sentences",
+        "ASSIGN SECTIONS: Determine appropriate section for each"
+      ],
+      "key_fields": {"text": "Extracted point text"},
+      "id_field": "text",
+      "key_relationships": [],
+      "special_instructions": "Extract 3-10 distinct points depending on note density. Each must be one crisp sentence."
+    },
+    "curation": {
+      "item_type": "extracted point",
+      "item_type_plural": "extracted points",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [],
+      "synthesis_outputs": [],
+      "special_instructions": null
+    },
+    "concretization": {"id_examples": [], "naming_guidance": "", "recommended_table_types": [], "recommended_visual_patterns": []},
+    "audience_vocabulary": {},
+    "skip_concretization": false
+  }
+}

@@ -1,6 +1,6 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-02-03
+> Auto-maintained by Claude Code. Last updated: 2026-02-06
 
 ## Engine Upgrade System
 
@@ -25,13 +25,14 @@
 
 ### Engine Registry
 - **Status**: Active
-- **Description**: Loads and serves 123+ engine definitions from JSON files
+- **Description**: Loads and serves 178+ engine definitions from JSON files
 - **Entry Points**:
   - `src/engines/registry.py:1-100` - EngineRegistry class
   - `src/engines/schemas.py:1-150` - EngineDefinition Pydantic model
-  - `src/engines/definitions/*.json` - 123 engine definition files
+  - `src/engines/definitions/*.json` - 178 engine definition files
+- **Categories**: 14 categories (ARGUMENT, EPISTEMOLOGY, METHODOLOGY, SYSTEMS, CONCEPTS, EVIDENCE, TEMPORAL, POWER, INSTITUTIONAL, MARKET, RHETORIC, SCHOLARLY, VULNERABILITY, OUTLINE)
 - **Dependencies**: Pydantic v2
-- **Added**: 2026-01-26
+- **Added**: 2026-01-26 | **Modified**: 2026-02-06
 
 ### Engine Profile (About Section)
 - **Status**: Active
@@ -195,6 +196,91 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
 - **Entry Points**:
   - `src/chains/definitions/critical_analysis_chain.json`
 - **Added**: 2026-01-26
+
+### 12-Phase Concept Analysis Chain
+- **Status**: Active
+- **Description**: Comprehensive 12-phase deep concept analysis pipeline from The Critic
+- **Entry Points**:
+  - `src/chains/definitions/concept_analysis_12_phase.json`
+- **Phases**: semantic_constellation → structural_landscape → argument_formalization → chain_building → taxonomy → causal → conditional → weight → vulnerability → cross_text → quotes → synthesis
+- **Added**: 2026-02-06
+
+## The Critic Extraction
+
+### Rhetoric Engines (7 new)
+- **Status**: Active
+- **Description**: Debate response analysis engines from The Critic
+- **Entry Points**:
+  - `src/engines/definitions/rhetoric_deflection_analyzer.json` - Claims of misunderstanding when engaged
+  - `src/engines/definitions/rhetoric_contradiction_detector.json` - Position changes between original & response
+  - `src/engines/definitions/rhetoric_leap_finder.json` - Phantom premise attribution
+  - `src/engines/definitions/rhetoric_silence_mapper.json` - Unanswered challenges
+  - `src/engines/definitions/rhetoric_concession_tracker.json` - Silent position shifts
+  - `src/engines/definitions/rhetoric_retreat_detector.json` - Clarifications that weaken claims
+  - `src/engines/definitions/rhetoric_cherrypick_analyzer.json` - Selective quotation out of context
+- **Source**: The Critic analyzer/analyze_*.py
+- **Added**: 2026-02-06
+
+### Vulnerability Engines (9 new)
+- **Status**: Active
+- **Description**: Counter-response self-analysis engines for identifying weaknesses
+- **Entry Points**:
+  - `src/engines/definitions/vulnerability_strawman_risk.json` - Potential mischaracterization
+  - `src/engines/definitions/vulnerability_inconsistency.json` - Internal contradictions
+  - `src/engines/definitions/vulnerability_logic_gap.json` - Non-sequiturs
+  - `src/engines/definitions/vulnerability_unanswered.json` - Valid points not addressed
+  - `src/engines/definitions/vulnerability_overconcession.json` - Conceding too much ground
+  - `src/engines/definitions/vulnerability_overreach.json` - Claims beyond evidence
+  - `src/engines/definitions/vulnerability_undercitation.json` - Lacking textual grounding
+  - `src/engines/definitions/vulnerability_weak_authority.json` - Authorities that don't support claims
+  - `src/engines/definitions/vulnerability_exposed_flank.json` - Tu quoque vulnerabilities
+- **Category**: VULNERABILITY (new)
+- **Source**: The Critic analyzer
+- **Added**: 2026-02-06
+
+### Outline Editor Engines (5 new)
+- **Status**: Active
+- **Description**: Essay construction operations from The Critic
+- **Entry Points**:
+  - `src/engines/definitions/outline_talking_point_generator.json` - Transform annotations to talking points
+  - `src/engines/definitions/outline_notes_extractor.json` - Extract structured points from notes
+  - `src/engines/definitions/outline_talking_point_upgrader.json` - Improve points with outline context
+  - `src/engines/definitions/outline_document_summarizer.json` - Create document summaries
+  - `src/engines/definitions/outline_synthesis_generator.json` - Synthesize outlines into narratives
+- **Category**: OUTLINE (new)
+- **Source**: The Critic api/prompts.py
+- **Added**: 2026-02-06
+
+### Big Picture Engine
+- **Status**: Active
+- **Description**: Pre-conceptual document-level analysis for core theses, commitments, tensions
+- **Entry Points**:
+  - `src/engines/definitions/big_picture_inferential.json`
+- **Source**: The Critic analyzer
+- **Added**: 2026-02-06
+
+## Workflows
+
+### Workflow Registry
+- **Status**: Active
+- **Description**: Multi-pass analysis pipelines that differ from chains (intermediate state, caching, resumability)
+- **Entry Points**:
+  - `src/workflows/schemas.py:1-100` - WorkflowDefinition, WorkflowPass, WorkflowCategory
+  - `src/workflows/registry.py:1-100` - WorkflowRegistry class
+  - `src/workflows/definitions/*.json` - 3 workflow definitions
+  - `src/api/routes/workflows.py:1-80` - Workflow API endpoints
+- **Workflows** (3 total):
+  - `lines_of_attack` - Extract targeted critiques from external thinkers (2 passes)
+  - `anxiety_of_influence` - Analyze intellectual debt fidelity (5 passes)
+  - `outline_editor` - AI-assisted essay construction (4 passes)
+- **API Endpoints**:
+  - `GET /v1/workflows` - List all workflows
+  - `GET /v1/workflows/{key}` - Get workflow definition
+  - `GET /v1/workflows/{key}/passes` - Get workflow passes
+  - `GET /v1/workflows/category/{category}` - Filter by category
+- **Dependencies**: Pydantic v2
+- **Source**: The Critic
+- **Added**: 2026-02-06
 
 ## Stage Prompt Composition
 

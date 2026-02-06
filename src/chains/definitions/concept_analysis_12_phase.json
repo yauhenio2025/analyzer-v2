@@ -1,0 +1,107 @@
+{
+  "chain_key": "concept_analysis_12_phase",
+  "chain_name": "12-Phase Concept Analysis",
+  "description": "Comprehensive 12-phase deep concept analysis pipeline matching The Critic's concept analyzer. Progresses from semantic understanding through structural analysis to synthesis.",
+  "version": 1,
+  "engine_keys": [
+    "concept_semantic_constellation",
+    "concept_structural_landscape",
+    "concept_argument_formalization",
+    "concept_chain_building",
+    "concept_taxonomy_function",
+    "concept_causal_mechanisms",
+    "concept_conditional_web",
+    "concept_argumentative_weight",
+    "concept_vulnerability_inferential_gaps",
+    "concept_cross_text_comparison",
+    "concept_quote_retrieval",
+    "concept_synthesis"
+  ],
+  "blend_mode": "sequential",
+  "selection_criteria": null,
+  "max_engines": null,
+  "merge_strategy": "accumulate",
+  "pass_context": true,
+  "category": "concepts",
+  "phases": [
+    {
+      "phase_number": 1,
+      "phase_name": "Semantic Constellation",
+      "engine_key": "concept_semantic_constellation",
+      "description": "Map concept meaning across contexts, related terms, semantic field"
+    },
+    {
+      "phase_number": 2,
+      "phase_name": "Structural Landscape",
+      "engine_key": "concept_structural_landscape",
+      "description": "Analyze argument structures involving the concept"
+    },
+    {
+      "phase_number": 3,
+      "phase_name": "Argument Formalization",
+      "engine_key": "concept_argument_formalization",
+      "description": "Extract formal logical structures (premises, conclusions, warrants)"
+    },
+    {
+      "phase_number": 4,
+      "phase_name": "Chain Building",
+      "engine_key": "concept_chain_building",
+      "description": "Build argumentative chains - multi-step reasoning paths"
+    },
+    {
+      "phase_number": 5,
+      "phase_name": "Chain Taxonomy",
+      "engine_key": "concept_taxonomy_function",
+      "description": "Classify chains by type, function, and role"
+    },
+    {
+      "phase_number": 6,
+      "phase_name": "Causal Architecture",
+      "engine_key": "concept_causal_mechanisms",
+      "description": "Map causal relationships and mechanisms involving concept"
+    },
+    {
+      "phase_number": 7,
+      "phase_name": "Conditional Web",
+      "engine_key": "concept_conditional_web",
+      "description": "Map conditional statements - if/then relationships"
+    },
+    {
+      "phase_number": 8,
+      "phase_name": "Argumentative Weight",
+      "engine_key": "concept_argumentative_weight",
+      "description": "Assess weight and importance of each argument"
+    },
+    {
+      "phase_number": 9,
+      "phase_name": "Vulnerability Analysis",
+      "engine_key": "concept_vulnerability_inferential_gaps",
+      "description": "Identify logical vulnerabilities and weak points"
+    },
+    {
+      "phase_number": 10,
+      "phase_name": "Cross-Text Comparison",
+      "engine_key": "concept_cross_text_comparison",
+      "description": "Compare how concept differs/evolves across documents"
+    },
+    {
+      "phase_number": 11,
+      "phase_name": "Quote Retrieval",
+      "engine_key": "concept_quote_retrieval",
+      "description": "Retrieve most relevant supporting quotes for findings"
+    },
+    {
+      "phase_number": 12,
+      "phase_name": "Synthesis",
+      "engine_key": "concept_synthesis",
+      "description": "Synthesize all phase results into coherent output"
+    }
+  ],
+  "recommended_for": [
+    "deep concept analysis",
+    "scholarly critique",
+    "theoretical examination",
+    "cross-document concept tracking"
+  ],
+  "source_project": "the-critic"
+}

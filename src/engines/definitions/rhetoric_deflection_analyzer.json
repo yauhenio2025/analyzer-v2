@@ -1,0 +1,119 @@
+{
+  "engine_key": "rhetoric_deflection_analyzer",
+  "engine_name": "Deflection Analyzer",
+  "description": "Identifies instances where an author claims their critic misunderstands their argument, but the critique actually addresses those very points textually. Exposes the rhetorical strategy of shifting from substantive engagement to meta-debates about reading comprehension.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "synthesis",
+  "reasoning_domain": "debate_response_analysis",
+  "researcher_question": "Where does the author claim to be misunderstood when the critic actually addressed their point directly?",
+  "canonical_schema": {
+    "deflections": [
+      {
+        "deflection_id": "string (format: 'DEF{N}')",
+        "subject_complaint": "string - exact quote where author claims misunderstanding",
+        "subject_source": "string - location in author's response",
+        "critique_addresses": "string - exact quote(s) from critique addressing this point",
+        "critique_source": "string - location in critique",
+        "analysis": "string - how critique text demonstrates engagement with the point",
+        "avoided_critique": "string - substantive critique being dodged",
+        "severity": "high | medium | low",
+        "recommendation": "string - draft passage for counter-response"
+      }
+    ],
+    "patterns": [
+      {
+        "pattern_id": "string",
+        "description": "string - recurring deflection pattern",
+        "frequency": "number",
+        "examples": ["deflection_id"]
+      }
+    ],
+    "meta": {
+      "total_deflections": "number",
+      "high_severity_count": "number",
+      "medium_severity_count": "number",
+      "low_severity_count": "number",
+      "dominant_deflection_type": "string",
+      "key_findings": ["string - top 3 most significant deflections"]
+    }
+  },
+  "extraction_focus": [
+    "misunderstanding_claims",
+    "textual_engagement_evidence",
+    "avoided_substance",
+    "rhetorical_deflection_patterns"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "the-critic/analyzer/analyze_deflections.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "deflection pattern",
+      "analysis_type_plural": "deflection patterns",
+      "core_question": "Where does the author claim misunderstanding when the critic actually engaged with the point?",
+      "extraction_steps": [
+        "IDENTIFY MISUNDERSTANDING CLAIMS: Find all instances where the author claims the critic misunderstands, misreads, or misrepresents their position",
+        "LOCATE CRITIQUE ENGAGEMENT: For each claim, search the critique for textual engagement with that exact point",
+        "ASSESS TEXTUAL EVIDENCE: Compare the author's claim of misunderstanding with what the critique actually says",
+        "IDENTIFY AVOIDED SUBSTANCE: Determine what substantive critique is being sidestepped",
+        "RATE SEVERITY: Evaluate how central the avoided critique is to the overall argument"
+      ],
+      "key_fields": {
+        "deflection_id": "Instance of deflection",
+        "subject_complaint": "The misunderstanding claim",
+        "critique_addresses": "Evidence of actual engagement"
+      },
+      "id_field": "deflection_id",
+      "key_relationships": [
+        "deflects",
+        "avoids",
+        "sidesteps"
+      ],
+      "special_instructions": "Focus on the gap between claimed misunderstanding and actual textual engagement. The most valuable findings are where the critic clearly anticipated and addressed the objection the author now raises."
+    },
+    "curation": {
+      "item_type": "deflection pattern",
+      "item_type_plural": "deflection patterns",
+      "consolidation_rules": [
+        "Group deflections by type of avoided critique",
+        "Identify recurring deflection patterns",
+        "Prioritize high-severity deflections involving central arguments"
+      ],
+      "cross_doc_patterns": [
+        "repeated_deflection_types",
+        "escalating_deflections"
+      ],
+      "synthesis_outputs": [
+        "deflection_inventory",
+        "avoided_substance_map"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "DEF1",
+          "to": "Deflection: 'Morozov misses that I distinguish X from Y'"
+        }
+      ],
+      "naming_guidance": "Use the key claim from each deflection as the name",
+      "recommended_table_types": [
+        "deflection_comparison"
+      ],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  }
+}

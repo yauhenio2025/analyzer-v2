@@ -1,0 +1,56 @@
+{
+  "engine_key": "outline_talking_point_generator",
+  "engine_name": "Talking Point Generator",
+  "description": "Transforms annotations, comments, and findings into crisp, argumentative talking points suitable for essay outlines. Produces one-sentence action-oriented claims.",
+  "version": 1,
+  "category": "outline",
+  "kind": "synthesis",
+  "reasoning_domain": "essay_construction",
+  "researcher_question": "How can I transform this annotation into a sharp talking point for my essay?",
+  "canonical_schema": {
+    "talking_point": {
+      "text": "string - one sentence, crisp argumentative claim",
+      "source_type": "annotation | finding | comment | note",
+      "section_fit": "intro | critique | response | conclusion",
+      "strength": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "argumentative_claims",
+    "key_insights",
+    "essay_ready_statements"
+  ],
+  "primary_output_modes": ["text"],
+  "paradigm_keys": [],
+  "source_file": "the-critic/api/prompts.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "talking point",
+      "analysis_type_plural": "talking points",
+      "core_question": "How to transform this into a sharp essay talking point?",
+      "extraction_steps": [
+        "ANALYZE SOURCE: Understand the annotation, finding, or comment",
+        "IDENTIFY CORE INSIGHT: Extract the key argumentative claim",
+        "SHARPEN: Make it action-oriented, assertive, one sentence",
+        "CONTEXTUALIZE: Consider how it fits the broader essay arc"
+      ],
+      "key_fields": {"text": "The talking point text"},
+      "id_field": "text",
+      "key_relationships": ["supports_thesis", "refutes"],
+      "special_instructions": "One sentence only. Active voice. Present tense. No hedging. Make claims, not questions."
+    },
+    "curation": {
+      "item_type": "talking point",
+      "item_type_plural": "talking points",
+      "consolidation_rules": ["Group by section", "Eliminate redundancy"],
+      "cross_doc_patterns": [],
+      "synthesis_outputs": [],
+      "special_instructions": null
+    },
+    "concretization": {"id_examples": [], "naming_guidance": "", "recommended_table_types": [], "recommended_visual_patterns": []},
+    "audience_vocabulary": {},
+    "skip_concretization": false
+  }
+}

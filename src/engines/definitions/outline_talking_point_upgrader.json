@@ -1,0 +1,56 @@
+{
+  "engine_key": "outline_talking_point_upgrader",
+  "engine_name": "Talking Point Upgrader",
+  "description": "Improves existing talking points by making them sharper and better integrated with the full outline context. Preserves core insights while enhancing expression.",
+  "version": 1,
+  "category": "outline",
+  "kind": "synthesis",
+  "reasoning_domain": "essay_construction",
+  "researcher_question": "How can this talking point be made sharper and better integrated?",
+  "canonical_schema": {
+    "upgrade": {
+      "original_text": "string - the original talking point",
+      "upgraded_text": "string - the improved version",
+      "improvements": ["string - what was improved"],
+      "integration_notes": "string - how it now fits better"
+    }
+  },
+  "extraction_focus": [
+    "sharpening",
+    "integration",
+    "redundancy_elimination"
+  ],
+  "primary_output_modes": ["text"],
+  "paradigm_keys": [],
+  "source_file": "the-critic/api/prompts.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "talking point upgrade",
+      "analysis_type_plural": "talking point upgrades",
+      "core_question": "How can this point be sharper and better integrated?",
+      "extraction_steps": [
+        "ANALYZE ORIGINAL: Understand the core insight",
+        "CONSIDER CONTEXT: Review full outline arc",
+        "IDENTIFY IMPROVEMENTS: Find ways to sharpen",
+        "UPGRADE: Produce improved version"
+      ],
+      "key_fields": {"upgraded_text": "The improved text"},
+      "id_field": "upgraded_text",
+      "key_relationships": [],
+      "special_instructions": "Preserve core insight. Make sharper, more direct. Avoid redundancy with siblings."
+    },
+    "curation": {
+      "item_type": "upgrade",
+      "item_type_plural": "upgrades",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [],
+      "synthesis_outputs": [],
+      "special_instructions": null
+    },
+    "concretization": {"id_examples": [], "naming_guidance": "", "recommended_table_types": [], "recommended_visual_patterns": []},
+    "audience_vocabulary": {},
+    "skip_concretization": false
+  }
+}

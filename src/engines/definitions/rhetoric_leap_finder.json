@@ -1,0 +1,79 @@
+{
+  "engine_key": "rhetoric_leap_finder",
+  "engine_name": "Logical Leap Finder",
+  "description": "Identifies instances where an author attributes phantom premises or implications to their critic that aren't present in the text. Detects strawman constructions and unfounded imputations.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "synthesis",
+  "reasoning_domain": "debate_response_analysis",
+  "researcher_question": "Where does the author attribute claims to the critic that aren't actually in the critique?",
+  "canonical_schema": {
+    "leaps": [
+      {
+        "leap_id": "string (format: 'LEAP{N}')",
+        "author_claim": "string - what author says critic implies/argues",
+        "author_source": "string - location in response",
+        "critique_actual_text": "string - what critic actually wrote",
+        "critique_source": "string - location in critique",
+        "what_critic_actually_argues": "string - accurate characterization",
+        "leap_type": "strawman | phantom_premise | unfounded_imputation | scope_expansion",
+        "analysis": "string - how the attribution is unfounded",
+        "severity": "high | medium | low"
+      }
+    ],
+    "meta": {
+      "total_leaps": "number",
+      "by_type": {
+        "strawman": "number",
+        "phantom_premise": "number",
+        "unfounded_imputation": "number",
+        "scope_expansion": "number"
+      },
+      "key_findings": ["string"]
+    }
+  },
+  "extraction_focus": [
+    "attributed_claims",
+    "actual_text_comparison",
+    "strawman_constructions"
+  ],
+  "primary_output_modes": ["structured_text_report", "table"],
+  "paradigm_keys": [],
+  "source_file": "the-critic/analyzer/analyze_leaps.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "logical leap",
+      "analysis_type_plural": "logical leaps",
+      "core_question": "Where does the author attribute claims to the critic that aren't in the text?",
+      "extraction_steps": [
+        "IDENTIFY ATTRIBUTIONS: Find where author characterizes what critic argues or implies",
+        "LOCATE ACTUAL TEXT: Find corresponding passages in critic's actual work",
+        "COMPARE: Assess whether attribution matches the actual text",
+        "CLASSIFY LEAP TYPE: Determine if strawman, phantom premise, etc.",
+        "DOCUMENT ACTUAL ARGUMENT: State what the critic actually argues"
+      ],
+      "key_fields": {"leap_id": "Instance of logical leap"},
+      "id_field": "leap_id",
+      "key_relationships": ["mischaracterizes", "attributes"],
+      "special_instructions": "Focus on cases where the gap between attribution and actual text is demonstrable through quotation."
+    },
+    "curation": {
+      "item_type": "logical leap",
+      "item_type_plural": "logical leaps",
+      "consolidation_rules": ["Group by type", "Prioritize demonstrable strawmen"],
+      "cross_doc_patterns": ["systematic_mischaracterization"],
+      "synthesis_outputs": ["leap_inventory"],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [{"from": "LEAP1", "to": "Leap: Attributed 'technology is neutral' claim"}],
+      "naming_guidance": "Name by the phantom premise attributed",
+      "recommended_table_types": ["attribution_vs_actual"],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {},
+    "skip_concretization": false
+  }
+}

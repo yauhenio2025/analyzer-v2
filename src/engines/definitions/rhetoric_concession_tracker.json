@@ -1,0 +1,76 @@
+{
+  "engine_key": "rhetoric_concession_tracker",
+  "engine_name": "Concession Tracker",
+  "description": "Identifies silent or implicit concessions where an author's response tacitly abandons or weakens positions from their original work without acknowledgment.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "synthesis",
+  "reasoning_domain": "debate_response_analysis",
+  "researcher_question": "Where does the author silently concede ground without admitting it?",
+  "canonical_schema": {
+    "concessions": [
+      {
+        "concession_id": "string (format: 'CONC{N}')",
+        "original_position": "string - the original strong claim",
+        "original_source": "string - location in original work",
+        "response_position": "string - the weakened/abandoned position",
+        "response_source": "string - location in response",
+        "what_is_conceded": "string - what ground has been given up",
+        "acknowledgment_level": "explicit | implicit | denied | hidden",
+        "trigger": "string - what critique prompted this concession",
+        "severity": "high | medium | low"
+      }
+    ],
+    "meta": {
+      "total_concessions": "number",
+      "explicit_count": "number",
+      "implicit_count": "number",
+      "denied_count": "number",
+      "key_findings": ["string"]
+    }
+  },
+  "extraction_focus": [
+    "position_weakening",
+    "silent_agreements",
+    "implicit_retreats"
+  ],
+  "primary_output_modes": ["structured_text_report", "table"],
+  "paradigm_keys": [],
+  "source_file": "the-critic/analyzer/analyze_concessions.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "concession",
+      "analysis_type_plural": "concessions",
+      "core_question": "Where does the author silently concede ground without admitting it?",
+      "extraction_steps": [
+        "IDENTIFY ORIGINAL STRONG CLAIMS: Find bold positions in original work",
+        "TRACE IN RESPONSE: Find how these claims appear (or don't) in response",
+        "DETECT WEAKENING: Note qualifications, scope reductions, or absences",
+        "IDENTIFY TRIGGER: Determine what critique prompted the concession",
+        "ASSESS ACKNOWLEDGMENT: Note whether concession is admitted"
+      ],
+      "key_fields": {"concession_id": "Instance of concession"},
+      "id_field": "concession_id",
+      "key_relationships": ["concedes", "weakens", "abandons"],
+      "special_instructions": "The most valuable findings are unacknowledged concessions - where the author gives ground while claiming consistency."
+    },
+    "curation": {
+      "item_type": "concession",
+      "item_type_plural": "concessions",
+      "consolidation_rules": ["Group by acknowledgment level", "Prioritize major concessions"],
+      "cross_doc_patterns": ["systematic_retreat"],
+      "synthesis_outputs": ["concession_map"],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [{"from": "CONC1", "to": "Concession: Automation optimism quietly abandoned"}],
+      "naming_guidance": "Name by what was conceded",
+      "recommended_table_types": ["before_after_comparison"],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {},
+    "skip_concretization": false
+  }
+}

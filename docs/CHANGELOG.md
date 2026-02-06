@@ -5,6 +5,30 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+- **The Critic Sections Extraction** - Extracted analytical operations from The Critic into analyzer-v2
+  - **New Engine Categories** (2 new):
+    - `VULNERABILITY` - Counter-response self-analysis, exposed flanks (9 engines)
+    - `OUTLINE` - Essay construction operations (5 engines)
+  - **Rhetoric Engines** (7 new): `rhetoric_deflection_analyzer`, `rhetoric_contradiction_detector`, `rhetoric_leap_finder`, `rhetoric_silence_mapper`, `rhetoric_concession_tracker`, `rhetoric_retreat_detector`, `rhetoric_cherrypick_analyzer`
+  - **Vulnerability Engines** (9 new): `vulnerability_strawman_risk`, `vulnerability_inconsistency`, `vulnerability_logic_gap`, `vulnerability_unanswered`, `vulnerability_overconcession`, `vulnerability_overreach`, `vulnerability_undercitation`, `vulnerability_weak_authority`, `vulnerability_exposed_flank`
+  - **Big Picture Engine** (1 new): `big_picture_inferential` - Pre-conceptual document-level analysis
+  - **Outline Editor Engines** (5 new): `outline_talking_point_generator`, `outline_notes_extractor`, `outline_talking_point_upgrader`, `outline_document_summarizer`, `outline_synthesis_generator`
+  - Engine count increased from ~156 to 178
+
+- **Workflows Module** - Multi-pass analysis pipelines
+  - New `src/workflows/` module for complex multi-pass pipelines
+  - `WorkflowDefinition` and `WorkflowPass` schemas
+  - `WorkflowRegistry` for loading workflow definitions
+  - 3 workflows: `lines_of_attack`, `anxiety_of_influence`, `outline_editor`
+  - API endpoints at `/v1/workflows/*`:
+    - `GET /v1/workflows` - List all workflows
+    - `GET /v1/workflows/{key}` - Get workflow definition
+    - `GET /v1/workflows/{key}/passes` - Get workflow passes
+    - `GET /v1/workflows/category/{category}` - Filter by category
+
+- **12-Phase Concept Chain** - `concept_analysis_12_phase` chain linking all concept analysis phases from semantic constellation through synthesis
+
 ### Changed
 - **Visual Styles Rebranding** - Renamed all 6 dataviz styles to be independent of person/organization names
   - `tufte` → `minimalist_precision` (Minimalist Precision Graphics)

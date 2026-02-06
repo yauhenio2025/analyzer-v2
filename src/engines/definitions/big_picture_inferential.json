@@ -1,0 +1,138 @@
+{
+  "engine_key": "big_picture_inferential",
+  "engine_name": "Big Picture Inferential Analysis",
+  "description": "Pre-conceptual document-level analysis that maps core theses, commitment packages, incompatibilities, internal tensions, and practical stakes before diving into specific concepts.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "document_level_analysis",
+  "researcher_question": "What are the core commitments and tensions in this document before we analyze specific concepts?",
+  "canonical_schema": {
+    "core_theses": [
+      {
+        "thesis_id": "string (format: 'TH{N}')",
+        "thesis_statement": "string - the core claim",
+        "thesis_type": "descriptive | normative | methodological | ontological",
+        "supporting_arguments": ["string"],
+        "textual_evidence": "string",
+        "source": "string"
+      }
+    ],
+    "commitment_packages": [
+      {
+        "package_id": "string (format: 'CP{N}')",
+        "package_name": "string - evocative name for this bundle",
+        "commitments": ["string - individual commitments in this package"],
+        "internal_logic": "string - how commitments relate to each other",
+        "what_accepting_entails": "string - downstream implications"
+      }
+    ],
+    "incompatibilities": [
+      {
+        "incompatibility_id": "string (format: 'INC{N}')",
+        "commitment_a": "string",
+        "commitment_b": "string",
+        "nature_of_conflict": "string - why these can't both be true",
+        "which_dominates": "string - which the author prioritizes",
+        "severity": "high | medium | low"
+      }
+    ],
+    "internal_tensions": [
+      {
+        "tension_id": "string (format: 'TEN{N}')",
+        "tension_description": "string - what's in tension",
+        "pole_a": "string - one side",
+        "pole_b": "string - other side",
+        "how_author_manages": "string - resolution strategy if any",
+        "unresolved_remainder": "string - what remains unresolved"
+      }
+    ],
+    "practical_stakes": [
+      {
+        "stake_id": "string (format: 'PS{N}')",
+        "stake_description": "string - what's at stake practically",
+        "who_affected": ["string"],
+        "implications_if_true": "string",
+        "implications_if_false": "string"
+      }
+    ],
+    "meta": {
+      "total_theses": "number",
+      "total_commitment_packages": "number",
+      "total_incompatibilities": "number",
+      "total_tensions": "number",
+      "dominant_thesis_type": "string",
+      "key_findings": ["string - top 3 insights"]
+    }
+  },
+  "extraction_focus": [
+    "core_theses",
+    "commitment_bundles",
+    "logical_incompatibilities",
+    "internal_tensions",
+    "practical_implications"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "the-critic/analyzer/analyze_big_picture_inferential.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "big picture analysis",
+      "analysis_type_plural": "big picture analyses",
+      "core_question": "What are the core commitments and tensions before analyzing specific concepts?",
+      "extraction_steps": [
+        "IDENTIFY CORE THESES: Find the main claims being advanced",
+        "MAP COMMITMENT PACKAGES: Group related commitments into bundles",
+        "DETECT INCOMPATIBILITIES: Find commitments that can't all be true",
+        "TRACE INTERNAL TENSIONS: Identify unresolved tensions within the framework",
+        "ASSESS PRACTICAL STAKES: Determine real-world implications"
+      ],
+      "key_fields": {
+        "thesis_id": "Core thesis",
+        "package_id": "Commitment package",
+        "tension_id": "Internal tension"
+      },
+      "id_field": "thesis_id",
+      "key_relationships": [
+        "entails",
+        "conflicts_with",
+        "tensions_with"
+      ],
+      "special_instructions": "This is pre-conceptual analysis - map the document's architecture before diving into specific terms."
+    },
+    "curation": {
+      "item_type": "big picture element",
+      "item_type_plural": "big picture elements",
+      "consolidation_rules": [
+        "Link related theses across documents",
+        "Compare commitment packages for compatibility",
+        "Map tensions that span multiple documents"
+      ],
+      "cross_doc_patterns": [
+        "shared_commitments",
+        "cross_document_tensions"
+      ],
+      "synthesis_outputs": [
+        "commitment_map",
+        "tension_diagram"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {"from": "TH1", "to": "Core Thesis: Technology is not neutral"},
+        {"from": "CP1", "to": "The Deliberative Package: democracy, participation, allocation"}
+      ],
+      "naming_guidance": "Use descriptive names that capture the essence",
+      "recommended_table_types": ["thesis_comparison", "commitment_matrix"],
+      "recommended_visual_patterns": ["commitment_map", "tension_diagram"]
+    },
+    "audience_vocabulary": {},
+    "skip_concretization": false
+  }
+}

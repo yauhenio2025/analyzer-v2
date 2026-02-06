@@ -32,11 +32,13 @@ class EngineKind(str, Enum):
 class EngineCategory(str, Enum):
     """Semantic category for engine organization.
 
-    12-Category Architecture:
+    14-Category Architecture:
     - ANALYTICAL FOUNDATIONS: ARGUMENT, EPISTEMOLOGY, METHODOLOGY, SYSTEMS
     - SUBJECT DOMAINS: CONCEPTS, EVIDENCE, TEMPORAL
     - ACTOR & STRUCTURE: POWER, INSTITUTIONAL, MARKET
     - DISCOURSE ANALYSIS: RHETORIC, SCHOLARLY
+    - CRITICAL ANALYSIS: VULNERABILITY (self-analysis of weaknesses)
+    - SYNTHESIS: OUTLINE (essay construction operations)
     """
 
     # Analytical Foundations (how to reason)
@@ -58,6 +60,12 @@ class EngineCategory(str, Enum):
     # Discourse Analysis (how it's said)
     RHETORIC = "rhetoric"
     SCHOLARLY = "scholarly"
+
+    # Critical Analysis (self-examination)
+    VULNERABILITY = "vulnerability"  # Counter-response self-analysis, exposed flanks
+
+    # Synthesis (construction operations)
+    OUTLINE = "outline"  # Essay construction, talking points, outline management
 
 
 class EngineDefinition(BaseModel):

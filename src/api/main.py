@@ -12,13 +12,14 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import chains, engines, llm, paradigms, styles, primitives, display
+from src.api.routes import chains, engines, llm, paradigms, styles, primitives, display, workflows
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
 from src.paradigms.registry import get_paradigm_registry
 from src.styles.registry import get_style_registry
 from src.primitives.registry import get_primitives_registry
 from src.display.registry import DisplayRegistry
+from src.workflows.registry import get_workflow_registry
 
 # Configure logging
 logging.basicConfig(
@@ -58,6 +59,10 @@ async def lifespan(app: FastAPI):
     display_reg = DisplayRegistry()
     display_formats = display_reg.get_visual_formats()
     logger.info(f"Loaded {len(display_formats.categories)} format categories, {sum(len(c.formats) for c in display_formats.categories)} visual formats")
+
+    logger.info("Loading workflow definitions...")
+    workflow_registry = get_workflow_registry()
+    logger.info(f"Loaded {workflow_registry.count()} workflows")
 
     logger.info("Analyzer v2 API ready")
     yield
@@ -107,6 +112,7 @@ app.include_router(chains.router, prefix="/v1")
 app.include_router(styles.router, prefix="/v1")
 app.include_router(primitives.router, prefix="/v1")
 app.include_router(display.router, prefix="/v1")
+app.include_router(workflows.router, prefix="/v1")
 app.include_router(llm.router, prefix="/v1")
 
 
@@ -122,6 +128,7 @@ async def root():
             "engines": "/v1/engines",
             "paradigms": "/v1/paradigms",
             "chains": "/v1/chains",
+            "workflows": "/v1/workflows",
             "styles": "/v1/styles",
             "primitives": "/v1/primitives",
             "display": "/v1/display",
@@ -135,6 +142,7 @@ async def health():
     engine_registry = get_engine_registry()
     paradigm_registry = get_paradigm_registry()
     chain_registry = get_chain_registry()
+    workflow_registry = get_workflow_registry()
     style_registry = get_style_registry()
     style_stats = style_registry.get_stats()
 
@@ -143,6 +151,7 @@ async def health():
         "engines_loaded": engine_registry.count(),
         "paradigms_loaded": paradigm_registry.count(),
         "chains_loaded": chain_registry.count(),
+        "workflows_loaded": workflow_registry.count(),
         "styles_loaded": style_stats["styles_loaded"],
         "style_affinities": style_stats["engine_affinities"],
     }
@@ -154,6 +163,7 @@ async def api_v1_root():
     engine_registry = get_engine_registry()
     paradigm_registry = get_paradigm_registry()
     chain_registry = get_chain_registry()
+    workflow_registry = get_workflow_registry()
     style_registry = get_style_registry()
     style_stats = style_registry.get_stats()
 
@@ -188,6 +198,15 @@ async def api_v1_root():
                     "GET /v1/chains/{key}",
                     "GET /v1/chains/category/{category}",
                     "POST /v1/chains/recommend",
+                ],
+            },
+            "workflows": {
+                "count": workflow_registry.count(),
+                "endpoints": [
+                    "GET /v1/workflows",
+                    "GET /v1/workflows/{key}",
+                    "GET /v1/workflows/{key}/passes",
+                    "GET /v1/workflows/category/{category}",
                 ],
             },
             "styles": {

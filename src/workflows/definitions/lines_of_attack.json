@@ -1,0 +1,54 @@
+{
+  "workflow_key": "lines_of_attack",
+  "workflow_name": "Lines of Attack Analysis",
+  "description": "Multi-pass workflow to extract targeted critiques from external thinker texts. Identifies lines of attack that can be deployed against an author's framework.",
+  "category": "synthesis",
+  "version": 1,
+  "passes": [
+    {
+      "pass_number": 1,
+      "pass_name": "Per-File Extraction",
+      "pass_description": "Extract potential lines of attack from each external thinker's text individually",
+      "engine_key": null,
+      "requires_external_docs": true,
+      "caches_result": true,
+      "depends_on_passes": [],
+      "output_schema": {
+        "lines": [
+          {
+            "line_id": "string",
+            "thinker": "string",
+            "attack_vector": "string",
+            "target_claim": "string",
+            "supporting_quote": "string"
+          }
+        ]
+      }
+    },
+    {
+      "pass_number": 2,
+      "pass_name": "Synthesis",
+      "pass_description": "Synthesize extracted lines across all thinkers into coherent attack strategies",
+      "engine_key": null,
+      "requires_external_docs": false,
+      "caches_result": true,
+      "depends_on_passes": [1],
+      "output_schema": {
+        "attack_strategies": [
+          {
+            "strategy_id": "string",
+            "strategy_name": "string",
+            "contributing_lines": ["string"],
+            "target_claims": ["string"],
+            "strength": "high | medium | low"
+          }
+        ]
+      }
+    }
+  ],
+  "required_inputs": ["corpus", "external_texts"],
+  "optional_inputs": ["target_claims"],
+  "output_description": "Structured lines of attack with supporting evidence from external thinkers",
+  "estimated_passes": 2,
+  "source_project": "the-critic"
+}
