@@ -111,6 +111,17 @@ async def list_apps() -> list[str]:
     return sorted(apps)
 
 
+@router.get("/categories")
+async def list_categories() -> dict[str, dict[str, int]]:
+    """Get engine counts by category."""
+    registry = get_engine_registry()
+    counts: dict[str, int] = {}
+    for engine in registry.list_all():
+        cat = engine.category.value
+        counts[cat] = counts.get(cat, 0) + 1
+    return {"categories": counts}
+
+
 @router.get("/category/{category}", response_model=list[EngineSummary])
 async def list_engines_by_category(
     category: EngineCategory,
