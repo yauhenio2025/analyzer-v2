@@ -1,0 +1,203 @@
+{
+  "engine_key": "concept_semantic_field",
+  "engine_name": "Semantic Field Analyzer",
+  "description": "Maps the complete semantic field of a concept: what it means, where its boundaries lie, how meaning varies across contexts, and what distinguishes it from related terms. Reveals the meaning-space the concept occupies.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "semantic_analysis",
+  "researcher_question": "What is the full meaning-space of this concept - its boundaries, neighbors, and variations?",
+  "canonical_schema": {
+    "concept_analyzed": {
+      "term": "string - the target concept",
+      "core_meaning": "string - the central, uncontested meaning",
+      "meaning_stability": "stable | contested | evolving | fragmented"
+    },
+    "semantic_neighbors": [
+      {
+        "neighbor_id": "string (format: 'SN{N}')",
+        "term": "string",
+        "relationship": "synonym | near_synonym | hypernym | hyponym | meronym | antonym | complement | contrast | related",
+        "semantic_distance": "number (0-1, where 0 = identical, 1 = maximally distant)",
+        "key_difference": "string - what distinguishes this from the target",
+        "usage_contexts": ["string - contexts where this term is preferred"],
+        "substitutability": "freely_substitutable | context_dependent | never_substitutable",
+        "quote_example": "string - example from text showing relationship"
+      }
+    ],
+    "boundary_analysis": {
+      "boundary_sharpness": "sharp | gradient | vague | context_dependent",
+      "boundary_type": "extensional | intensional | prototypical | family_resemblance",
+      "inclusion_criteria": [
+        {
+          "criterion_id": "string",
+          "criterion": "string - what makes something fall under this concept",
+          "criterion_type": "necessary | sufficient | necessary_and_sufficient | typical_feature",
+          "explicitness": "explicit | implicit | tacit",
+          "contested": "boolean"
+        }
+      ],
+      "exclusion_criteria": [
+        {
+          "criterion_id": "string",
+          "excludes": "string - what is excluded",
+          "rationale": "string - why it's excluded"
+        }
+      ],
+      "edge_cases": [
+        {
+          "case_id": "string",
+          "case": "string - the borderline case",
+          "why_borderline": "string",
+          "author_verdict": "include | exclude | undecided | varies",
+          "quote": "string - relevant quote if any"
+        }
+      ]
+    },
+    "definitional_variations": [
+      {
+        "variation_id": "string (format: 'DV{N}')",
+        "definition": "string - how the concept is defined in this context",
+        "context": "string - where this definition appears",
+        "source_document": "string",
+        "emphasis": "string - what this definition emphasizes",
+        "contrast_with_others": "string - how it differs from other definitions"
+      }
+    ],
+    "semantic_field_map": {
+      "core_terms": ["string - terms closest to the target"],
+      "adjacent_terms": ["string - closely related but distinct"],
+      "peripheral_terms": ["string - loosely related"],
+      "opposed_terms": ["string - antonyms and contrasts"],
+      "superordinate": "string - broader category containing this concept",
+      "subordinates": ["string - more specific instances"]
+    },
+    "usage_patterns": {
+      "typical_collocations": ["string - words that commonly appear with this concept"],
+      "grammatical_roles": ["subject | object | predicate | modifier"],
+      "register_variations": {
+        "technical": "string - how used in technical contexts",
+        "popular": "string - how used in everyday contexts",
+        "author_specific": "string - author's distinctive usage"
+      }
+    },
+    "meta": {
+      "total_neighbors": "number",
+      "semantic_richness": "number (0-1) - how dense the semantic field is",
+      "boundary_clarity": "number (0-1) - how clear the boundaries are",
+      "definitional_consensus": "number (0-1) - how much agreement on meaning",
+      "key_insight": "string - most important finding about this concept's meaning"
+    }
+  },
+  "extraction_focus": [
+    "semantic_relationships",
+    "concept_boundaries",
+    "definitional_variations",
+    "usage_patterns",
+    "edge_cases"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "smart_table",
+    "gemini_concept_map"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer-v2 (synthesized from concept_semantic_constellation + concept_demarcation_analyzer)",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "semantic field",
+      "analysis_type_plural": "semantic fields",
+      "core_question": "What is the full meaning-space of this concept?",
+      "extraction_steps": [
+        "IDENTIFY CORE MEANING: What is the uncontested, central meaning of this concept?",
+        "MAP SEMANTIC NEIGHBORS: Find synonyms, related terms, contrasts, hypernyms, hyponyms",
+        "ANALYZE BOUNDARIES: Where does this concept end? What's included/excluded?",
+        "DOCUMENT EDGE CASES: What borderline cases reveal about the concept's limits?",
+        "TRACK DEFINITIONAL VARIATIONS: How does the meaning shift across contexts?",
+        "MAP USAGE PATTERNS: How is the concept typically used grammatically and collocationally?"
+      ],
+      "key_fields": {
+        "neighbor_id": "Semantic neighbor identifier",
+        "term": "The related term",
+        "relationship": "Type of semantic relationship",
+        "semantic_distance": "How close in meaning"
+      },
+      "id_field": "neighbor_id",
+      "key_relationships": [
+        "synonym_of",
+        "antonym_of",
+        "broader_than",
+        "narrower_than",
+        "related_to",
+        "contrasts_with"
+      ],
+      "special_instructions": "Focus on how the AUTHOR uses this concept, not just dictionary definitions. Look for places where the author explicitly or implicitly draws boundaries, distinguishes from other terms, or reveals what they take the concept to mean."
+    },
+    "curation": {
+      "item_type": "semantic relationship",
+      "item_type_plural": "semantic relationships",
+      "consolidation_rules": [
+        "Group neighbors by relationship type",
+        "Identify consensus vs contested boundaries",
+        "Track definitional drift across documents",
+        "Highlight most revealing edge cases"
+      ],
+      "cross_doc_patterns": [
+        "definitional_evolution",
+        "boundary_contests",
+        "semantic_drift"
+      ],
+      "synthesis_outputs": [
+        "semantic_field_summary",
+        "boundary_map",
+        "usage_profile"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "SN1",
+          "to": "'efficiency' ~ 'productivity' (near-synonym, distance: 0.2)"
+        },
+        {
+          "from": "DV1",
+          "to": "Efficiency as 'output/input ratio' (technical)"
+        }
+      ],
+      "naming_guidance": "Use the term plus relationship type and distance",
+      "recommended_table_types": [
+        "semantic_neighbor_table",
+        "boundary_specification_table"
+      ],
+      "recommended_visual_patterns": [
+        "semantic_field_radial",
+        "concept_boundary_diagram"
+      ]
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "semantic_distance": "semantic distance",
+        "hypernym": "hypernym",
+        "meronym": "meronym"
+      },
+      "analyst": {
+        "semantic_distance": "meaning similarity",
+        "hypernym": "broader category",
+        "meronym": "part of"
+      },
+      "executive": {
+        "semantic_distance": "how similar",
+        "hypernym": "general category",
+        "meronym": "component"
+      },
+      "activist": {}
+    },
+    "skip_concretization": false
+  },
+  "apps": [
+    "critic"
+  ]
+}

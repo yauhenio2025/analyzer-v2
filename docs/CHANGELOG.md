@@ -6,6 +6,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Concept Analysis Tab Engines** (3 new) - New analysis types for multi-tab concept breakdown
+  - `concept_semantic_field` - Maps meaning-space: boundaries, neighbors, definitional variations
+  - `concept_causal_architecture` - Maps causal role: causes, effects, mechanisms, feedback loops, conditions
+  - `concept_metaphorical_ground` - Maps metaphorical understanding: root metaphors, source domains, competing framings
+  - Each has rich output schemas (7-9 top-level sections) for multi-faceted display
+  - Complements existing Inferential Role, Logical Structure, Assumption Excavator tabs
+  - Engine count: 183 -> 186
+
 - **Influence Pass Engines** (5 new) - Engine definitions for the anxiety_of_influence workflow
   - `influence_pass1_thinker_identification` - Identify all cited thinkers and invocation patterns
   - `influence_pass2_hypothesis_generation` - Generate hypotheses about potential misuse

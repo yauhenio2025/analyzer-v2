@@ -1,0 +1,242 @@
+{
+  "engine_key": "concept_metaphorical_ground",
+  "engine_name": "Metaphorical Ground Analyzer",
+  "description": "Maps the metaphors and analogies that structure understanding of a concept: root metaphors, source domains, conceptual mappings, and competing metaphorical framings. Reveals the imaginative infrastructure underlying how the concept is understood.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "conceptual_metaphor_analysis",
+  "researcher_question": "What metaphors structure how this concept is understood - and what do they reveal or conceal?",
+  "canonical_schema": {
+    "concept_analyzed": {
+      "term": "string - the target concept",
+      "metaphor_density": "low | moderate | high | saturated",
+      "dominant_source_domain": "string - the main metaphorical frame"
+    },
+    "root_metaphors": [
+      {
+        "metaphor_id": "string (format: 'RM{N}')",
+        "metaphor_formula": "string - CONCEPT IS SOURCE (e.g., 'ARGUMENT IS WAR')",
+        "source_domain": "string - where the metaphor draws from",
+        "target_domain": "string - the concept being understood",
+        "prevalence": "dominant | common | occasional | rare",
+        "mappings": [
+          {
+            "source_element": "string - element in source domain",
+            "target_element": "string - what it maps to in target",
+            "example_expression": "string - linguistic expression showing mapping"
+          }
+        ],
+        "entailments": [
+          "string - what the metaphor implies or suggests"
+        ],
+        "hidings": [
+          "string - what the metaphor conceals or de-emphasizes"
+        ],
+        "quotes": ["string - example quotes showing this metaphor"]
+      }
+    ],
+    "explicit_analogies": [
+      {
+        "analogy_id": "string (format: 'AN{N}')",
+        "analogy_text": "string - the explicit comparison",
+        "source_analog": "string - what the concept is compared to",
+        "mapping_points": ["string - shared features emphasized"],
+        "purpose": "explanatory | persuasive | exploratory | cautionary",
+        "effectiveness": "number (0-1)",
+        "limitations_acknowledged": "boolean",
+        "quote": "string",
+        "source_document": "string"
+      }
+    ],
+    "metaphor_clusters": [
+      {
+        "cluster_id": "string (format: 'MC{N}')",
+        "cluster_name": "string - name for this family of metaphors",
+        "source_domain": "string",
+        "member_metaphors": ["string - metaphor_ids"],
+        "coherence": "number (0-1) - how well the metaphors work together",
+        "dominant_framing": "string - overall picture this cluster creates"
+      }
+    ],
+    "competing_framings": [
+      {
+        "competition_id": "string (format: 'CF{N}')",
+        "contested_aspect": "string - what's being framed differently",
+        "framing_a": {
+          "metaphor": "string - metaphor formula",
+          "source_domain": "string",
+          "advocates": ["string - who uses this framing"],
+          "implications": ["string - what this framing suggests"],
+          "values_served": ["string - what values this framing promotes"]
+        },
+        "framing_b": {
+          "metaphor": "string",
+          "source_domain": "string",
+          "advocates": ["string"],
+          "implications": ["string"],
+          "values_served": ["string"]
+        },
+        "stakes": "string - what's at stake in the framing contest",
+        "author_preference": "framing_a | framing_b | neutral | ambivalent"
+      }
+    ],
+    "dead_metaphors": [
+      {
+        "dead_metaphor_id": "string (format: 'DM{N}')",
+        "expression": "string - the conventionalized expression",
+        "original_source_domain": "string - where it came from",
+        "current_status": "completely_dead | mostly_dead | revivable",
+        "author_revives": "boolean - does author make it live again"
+      }
+    ],
+    "metaphor_extensions": [
+      {
+        "extension_id": "string (format: 'EX{N}')",
+        "base_metaphor": "metaphor_id - which root metaphor",
+        "extension": "string - how the author extends the metaphor",
+        "novel": "boolean - is this extension original to the author",
+        "effectiveness": "number (0-1)",
+        "quote": "string"
+      }
+    ],
+    "source_domain_analysis": {
+      "primary_domains": ["string - main source domains used"],
+      "domain_characteristics": [
+        {
+          "domain": "string",
+          "domain_type": "spatial | temporal | physical | biological | mechanical | economic | military | social | natural",
+          "what_it_highlights": ["string"],
+          "what_it_obscures": ["string"],
+          "ideological_valence": "string - political/value implications"
+        }
+      ]
+    },
+    "meta": {
+      "total_metaphors": "number",
+      "total_analogies": "number",
+      "root_metaphor_count": "number",
+      "competing_framings_count": "number",
+      "dominant_source_domain": "string",
+      "metaphorical_coherence": "number (0-1) - do the metaphors work together",
+      "key_insight": "string - most important finding about metaphorical understanding"
+    }
+  },
+  "extraction_focus": [
+    "conceptual_metaphors",
+    "explicit_analogies",
+    "source_domains",
+    "metaphor_mappings",
+    "competing_framings",
+    "metaphor_entailments"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "smart_table",
+    "gemini_metaphor_map"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer-v2 (synthesized from metaphor_analogy_network + metaphorical_infrastructure_mapper)",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "metaphorical ground",
+      "analysis_type_plural": "metaphorical grounds",
+      "core_question": "What metaphors structure understanding of this concept?",
+      "extraction_steps": [
+        "IDENTIFY ROOT METAPHORS: What underlying CONCEPT IS X patterns structure understanding? Look for systematic mappings, not just isolated expressions",
+        "FIND EXPLICIT ANALOGIES: Where does the author explicitly compare the concept to something else? Look for 'like', 'as if', 'similar to', 'just as X, so Y'",
+        "MAP SOURCE DOMAINS: What domains does the author draw metaphors from? (war, journey, container, machine, organism, etc.)",
+        "TRACE MAPPINGS: For each metaphor, what elements map from source to target? What does the metaphor imply about the concept?",
+        "IDENTIFY HIDINGS: What does each metaphor obscure or de-emphasize about the concept?",
+        "FIND COMPETING FRAMINGS: Are there rival metaphors for the same aspect of the concept? What's at stake?",
+        "NOTE DEAD METAPHORS: What conventionalized expressions reveal forgotten metaphorical origins?"
+      ],
+      "key_fields": {
+        "metaphor_id": "Metaphor identifier",
+        "metaphor_formula": "The CONCEPT IS SOURCE formula",
+        "source_domain": "Where the metaphor comes from",
+        "entailments": "What the metaphor implies"
+      },
+      "id_field": "metaphor_id",
+      "key_relationships": [
+        "maps_to",
+        "entails",
+        "hides",
+        "competes_with",
+        "extends"
+      ],
+      "special_instructions": "Look beyond obvious similes to systematic conceptual metaphors. A metaphor isn't just a turn of phrase but a way of understanding one thing in terms of another. Pay attention to what each metaphor makes easy to think and what it makes hard to think."
+    },
+    "curation": {
+      "item_type": "metaphor",
+      "item_type_plural": "metaphors",
+      "consolidation_rules": [
+        "Group expressions by underlying conceptual metaphor",
+        "Identify dominant vs marginal framings",
+        "Map metaphor clusters by source domain",
+        "Highlight framing contests with high stakes",
+        "Note original vs conventional metaphors"
+      ],
+      "cross_doc_patterns": [
+        "metaphor_evolution",
+        "framing_contests",
+        "metaphor_adoption"
+      ],
+      "synthesis_outputs": [
+        "metaphor_inventory",
+        "source_domain_analysis",
+        "framing_contest_map"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "RM1",
+          "to": "EFFICIENCY IS A MACHINE (mechanical source domain)"
+        },
+        {
+          "from": "CF1",
+          "to": "Labor: RESOURCE vs PARTNER (competing framings)"
+        }
+      ],
+      "naming_guidance": "Use CONCEPT IS SOURCE format for root metaphors",
+      "recommended_table_types": [
+        "metaphor_inventory_table",
+        "mapping_table"
+      ],
+      "recommended_visual_patterns": [
+        "metaphor_map",
+        "source_domain_diagram"
+      ]
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "conceptual_metaphor": "conceptual metaphor",
+        "source_domain": "source domain",
+        "entailment": "metaphorical entailment"
+      },
+      "analyst": {
+        "conceptual_metaphor": "underlying comparison",
+        "source_domain": "comparison source",
+        "entailment": "implication"
+      },
+      "executive": {
+        "conceptual_metaphor": "mental model",
+        "source_domain": "comparison",
+        "entailment": "what it suggests"
+      },
+      "activist": {
+        "conceptual_metaphor": "framing",
+        "source_domain": "what it's compared to",
+        "entailment": "what it makes you think"
+      }
+    },
+    "skip_concretization": false
+  },
+  "apps": [
+    "critic"
+  ]
+}

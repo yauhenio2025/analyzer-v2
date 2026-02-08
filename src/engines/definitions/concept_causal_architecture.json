@@ -1,0 +1,252 @@
+{
+  "engine_key": "concept_causal_architecture",
+  "engine_name": "Causal Architecture Analyzer",
+  "description": "Maps how a concept figures in causal claims: what it causes, what causes it, feedback loops, necessary/sufficient conditions, and causal mechanisms. Reveals the concept's role in the author's causal reasoning.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "causal_analysis",
+  "researcher_question": "How does this concept figure in causal claims - what does it cause and what causes it?",
+  "canonical_schema": {
+    "concept_analyzed": {
+      "term": "string - the target concept",
+      "causal_profile": "primarily_cause | primarily_effect | bidirectional | condition | mechanism",
+      "causal_prominence": "number (0-1) - how central is this concept to the author's causal reasoning"
+    },
+    "as_cause": [
+      {
+        "claim_id": "string (format: 'CC{N}')",
+        "concept_causes": "string - the target concept",
+        "effect": "string - what it causes",
+        "causal_verb": "string - how causation is expressed (causes, leads to, produces, enables, etc.)",
+        "directness": "direct | mediated | distal",
+        "certainty": "certain | probable | possible | speculative",
+        "mechanism": "string - how causation works (if specified)",
+        "conditions": "string - under what conditions (if specified)",
+        "quote": "string - supporting quote",
+        "source_document": "string"
+      }
+    ],
+    "as_effect": [
+      {
+        "claim_id": "string (format: 'CE{N}')",
+        "cause": "string - what causes the concept",
+        "concept_as_effect": "string - the target concept",
+        "causal_verb": "string",
+        "directness": "direct | mediated | distal",
+        "certainty": "certain | probable | possible | speculative",
+        "mechanism": "string",
+        "conditions": "string",
+        "quote": "string",
+        "source_document": "string"
+      }
+    ],
+    "feedback_loops": [
+      {
+        "loop_id": "string (format: 'FL{N}')",
+        "loop_type": "reinforcing | balancing | complex",
+        "elements": ["string - concepts in the loop"],
+        "loop_description": "string - how the loop works",
+        "stability": "stable | unstable | tipping_point",
+        "quote": "string",
+        "source_document": "string"
+      }
+    ],
+    "conditions": {
+      "necessary_conditions": [
+        {
+          "condition_id": "string (format: 'NC{N}')",
+          "condition": "string - what must be present",
+          "for_what": "string - for the concept to obtain/operate",
+          "explicitness": "explicit | implicit | inferred",
+          "quote": "string"
+        }
+      ],
+      "sufficient_conditions": [
+        {
+          "condition_id": "string (format: 'SC{N}')",
+          "condition": "string - what guarantees the concept",
+          "produces": "string - what is produced",
+          "explicitness": "explicit | implicit | inferred",
+          "quote": "string"
+        }
+      ],
+      "enabling_conditions": [
+        {
+          "condition_id": "string (format: 'EC{N}')",
+          "condition": "string - what enables but doesn't guarantee",
+          "enables": "string",
+          "quote": "string"
+        }
+      ],
+      "blocking_conditions": [
+        {
+          "condition_id": "string (format: 'BC{N}')",
+          "condition": "string - what prevents or blocks",
+          "blocks": "string",
+          "quote": "string"
+        }
+      ]
+    },
+    "causal_mechanisms": [
+      {
+        "mechanism_id": "string (format: 'CM{N}')",
+        "mechanism_name": "string",
+        "mechanism_type": "physical | social | psychological | economic | institutional | logical",
+        "how_it_works": "string - description of the mechanism",
+        "key_steps": ["string - steps in the causal process"],
+        "intervening_variables": ["string - mediating factors"],
+        "scope_conditions": "string - when the mechanism operates",
+        "quote": "string"
+      }
+    ],
+    "causal_counterfactuals": [
+      {
+        "counterfactual_id": "string (format: 'CF{N}')",
+        "antecedent": "string - if X had not occurred",
+        "consequent": "string - then Y would not have occurred",
+        "concept_role": "antecedent | consequent | both",
+        "quote": "string"
+      }
+    ],
+    "causal_network": {
+      "upstream_causes": ["string - concepts that cause the target"],
+      "downstream_effects": ["string - concepts the target causes"],
+      "co_causes": ["string - concepts that work alongside"],
+      "causal_hubs": ["string - concepts with many causal connections"],
+      "causal_chains": [
+        {
+          "chain_id": "string",
+          "chain": ["string - sequence of causes"],
+          "length": "number"
+        }
+      ]
+    },
+    "meta": {
+      "total_causal_claims": "number",
+      "as_cause_count": "number",
+      "as_effect_count": "number",
+      "feedback_loop_count": "number",
+      "mechanism_count": "number",
+      "causal_certainty_average": "number (0-1)",
+      "most_frequent_effect": "string",
+      "most_frequent_cause": "string",
+      "key_insight": "string"
+    }
+  },
+  "extraction_focus": [
+    "causal_claims",
+    "cause_effect_relationships",
+    "causal_mechanisms",
+    "feedback_loops",
+    "conditions",
+    "counterfactuals"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "smart_table",
+    "gemini_causal_diagram"
+  ],
+  "paradigm_keys": [
+    "marxist"
+  ],
+  "source_file": "analyzer-v2 (synthesized from concept_causal_* family)",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "causal architecture",
+      "analysis_type_plural": "causal architectures",
+      "core_question": "How does this concept figure in causal claims?",
+      "extraction_steps": [
+        "FIND CONCEPT AS CAUSE: Where does the author claim this concept causes other things? Look for causal verbs: causes, leads to, produces, generates, enables, drives, results in",
+        "FIND CONCEPT AS EFFECT: Where is this concept treated as caused by other things? Look for: caused by, results from, produced by, enabled by, determined by",
+        "IDENTIFY FEEDBACK LOOPS: Where does the concept appear in circular causal relationships? Look for mutual causation, self-reinforcing dynamics",
+        "EXTRACT CONDITIONS: What are the necessary, sufficient, enabling, or blocking conditions? Look for: requires, depends on, only if, whenever, unless, prevents",
+        "MAP MECHANISMS: How does causation work? Look for process descriptions, intervening steps, mediating factors",
+        "NOTE COUNTERFACTUALS: Where does the author use 'if X then Y' reasoning about the concept?"
+      ],
+      "key_fields": {
+        "claim_id": "Causal claim identifier",
+        "effect": "What is caused",
+        "cause": "What does the causing",
+        "mechanism": "How causation works"
+      },
+      "id_field": "claim_id",
+      "key_relationships": [
+        "causes",
+        "caused_by",
+        "enables",
+        "prevents",
+        "requires",
+        "mediates"
+      ],
+      "special_instructions": "Pay attention to causal language: explicit causal verbs, conditional statements, counterfactuals, and mechanism descriptions. Distinguish between correlation claims and causation claims. Note the author's certainty level for each claim."
+    },
+    "curation": {
+      "item_type": "causal claim",
+      "item_type_plural": "causal claims",
+      "consolidation_rules": [
+        "Group by causal direction (as cause vs as effect)",
+        "Identify causal chains (A->B->C)",
+        "Find feedback loops (A->B->A)",
+        "Rank by certainty and centrality",
+        "Highlight mechanisms vs mere correlations"
+      ],
+      "cross_doc_patterns": [
+        "causal_consensus",
+        "causal_disputes",
+        "mechanism_debates"
+      ],
+      "synthesis_outputs": [
+        "causal_summary",
+        "mechanism_catalog",
+        "causal_network_map"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "CC1",
+          "to": "Efficiency -> Unemployment (direct, probable)"
+        },
+        {
+          "from": "FL1",
+          "to": "Automation -> Efficiency -> Investment -> Automation (reinforcing)"
+        }
+      ],
+      "naming_guidance": "Use cause -> effect format with certainty",
+      "recommended_table_types": [
+        "causal_claims_table",
+        "mechanism_table"
+      ],
+      "recommended_visual_patterns": [
+        "causal_diagram",
+        "feedback_loop_diagram"
+      ]
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "mechanism": "causal mechanism",
+        "counterfactual": "counterfactual"
+      },
+      "analyst": {
+        "mechanism": "how it works",
+        "counterfactual": "what-if scenario"
+      },
+      "executive": {
+        "mechanism": "process",
+        "counterfactual": "alternative scenario"
+      },
+      "activist": {
+        "mechanism": "how it happens",
+        "counterfactual": "what could have been different"
+      }
+    },
+    "skip_concretization": false
+  },
+  "apps": [
+    "critic"
+  ]
+}

@@ -2,6 +2,27 @@
 
 > Auto-maintained by Claude Code. Last updated: 2026-02-08
 
+## Concept Analysis Tabs
+
+### New Concept Analysis Engines (3 new tab types)
+- **Status**: Active
+- **Description**: Three new concept analysis types for multi-tab breakdown alongside Inferential Role, Logical Structure, and Assumption Excavator
+- **Entry Points**:
+  - `src/engines/definitions/concept_semantic_field.json` - Semantic Field tab
+  - `src/engines/definitions/concept_causal_architecture.json` - Causal Architecture tab
+  - `src/engines/definitions/concept_metaphorical_ground.json` - Metaphorical Ground tab
+- **Tab Strategy**:
+  - **Semantic Field**: What does this concept mean? Maps boundaries, neighbors, definitional variations
+  - **Causal Architecture**: How does it figure in causal claims? Maps causes, effects, mechanisms, conditions
+  - **Metaphorical Ground**: What metaphors structure understanding? Maps root metaphors, source domains, framings
+- **Each Engine Includes**:
+  - Rich canonical_schema with multiple output sections
+  - Detailed extraction_steps for the LLM
+  - Audience vocabulary calibration
+  - Concretization examples
+- **Category**: CONCEPTS
+- **Added**: 2026-02-08
+
 ## Engine Upgrade System
 
 ### Engine Upgrade Script
