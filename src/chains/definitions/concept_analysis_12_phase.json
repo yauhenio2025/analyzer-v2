@@ -19,7 +19,6 @@
   ],
   "blend_mode": "sequential",
   "selection_criteria": null,
-  "max_engines": null,
   "merge_strategy": "accumulate",
   "pass_context": true,
   "category": "concepts",
