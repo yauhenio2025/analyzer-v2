@@ -5,6 +5,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+- **Semantic Field Engine v3** - Massively expanded for close textual analysis
+  - All quote fields now support multiple quotes per item (arrays instead of strings)
+  - Every quote requires 3-6 sentences minimum context
+  - Each quote must have detailed close reading analysis (3-5 sentences)
+  - Expanded descriptions from brief labels to 2-5 sentence analytical prose
+  - New textual_evidence objects with {quote, source, analysis} structure
+  - New fields: close_reading (4-8 sentences), tension_analysis (5-8 sentences)
+  - New fields: how_surfaced, what_denying_it_costs, evolution_significance
+  - 10 critical requirements in special_instructions for rigorous analysis
+  - Designed for nuclear-mode analysis: Opus 4.6, 64k tokens, 32k thinking
+
 ### Added
 - **Concept Analysis Tab Engines** (2 new) - New analysis types for multi-tab concept breakdown
   - `concept_semantic_field` - Maps meaning-space: boundaries, neighbors, definitional variations
