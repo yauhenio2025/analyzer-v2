@@ -2,7 +2,7 @@
   "engine_key": "concept_semantic_field",
   "engine_name": "Semantic Field Analyzer",
   "description": "Deep semantic mapping of a concept: meaning boundaries, semantic neighbors, rhetorical deployments, conceptual tensions, strategic ambiguities, argumentative functions, and cross-document evolution. Reveals not just what a concept means, but how it works as a tool of thought and persuasion.",
-  "version": 2,
+  "version": 3,
   "category": "concepts",
   "kind": "synthesis",
   "reasoning_domain": "semantic_analysis",
@@ -10,14 +10,38 @@
   "canonical_schema": {
     "concept_analyzed": {
       "term": "string - the target concept",
-      "core_meaning": "string - the central, uncontested meaning",
+      "core_meaning": "string (2-4 sentences) - the central, uncontested meaning with sufficient elaboration",
       "meaning_stability": "stable | contested | evolving | fragmented | strategically_ambiguous",
       "conceptual_genealogy": {
-        "intellectual_origins": ["string - philosophical/theoretical traditions this concept draws from"],
-        "key_thinkers": ["string - thinkers whose usage shapes this concept"],
-        "historical_layers": ["string - accumulated meanings over time that the author inherits or rejects"]
+        "intellectual_origins": [
+          {
+            "tradition": "string - philosophical/theoretical tradition",
+            "how_inherited": "string (2-3 sentences) - how the author draws from this tradition",
+            "key_quote": "string (full sentence or multi-sentence passage from text)"
+          }
+        ],
+        "key_thinkers": [
+          {
+            "thinker": "string - name of thinker",
+            "influence_description": "string (2-3 sentences) - how this thinker's usage shapes the concept",
+            "explicit_reference": "string - quote where author references or echoes this thinker, if present"
+          }
+        ],
+        "historical_layers": [
+          {
+            "layer": "string - accumulated meaning",
+            "inherited_or_rejected": "inherited | rejected | transformed",
+            "textual_evidence": "string (full passage showing this)"
+          }
+        ]
       },
-      "author_innovation": "string - what's distinctive about THIS author's use of the concept"
+      "author_innovation": "string (3-5 sentences) - detailed explanation of what's distinctive about THIS author's use of the concept, with specific textual grounding",
+      "author_innovation_quotes": [
+        {
+          "quote": "string (substantial passage - aim for 2-4 sentences minimum)",
+          "what_it_shows": "string (2-3 sentences) - explicit analytical explanation of how this quote demonstrates the author's distinctive usage"
+        }
+      ]
     },
     "semantic_neighbors": [
       {
@@ -25,132 +49,230 @@
         "term": "string",
         "relationship": "synonym | near_synonym | hypernym | hyponym | meronym | antonym | complement | contrast | related | precondition | consequence | transforms_into",
         "semantic_distance": "number (0-1, where 0 = identical, 1 = maximally distant)",
-        "key_difference": "string - what distinguishes this from the target",
-        "usage_contexts": ["string - contexts where this term is preferred"],
+        "key_difference": "string (2-3 sentences) - substantive explanation of what distinguishes this from the target concept",
+        "usage_contexts": ["string - contexts where this term is preferred over the target"],
         "substitutability": "freely_substitutable | context_dependent | never_substitutable | substitutable_with_loss",
-        "what_substitution_loses": "string - what nuance is lost if you substitute",
-        "quote_example": "string - example from text showing relationship",
-        "argumentative_relationship": "string - how does using one vs the other change the argument?"
+        "what_substitution_loses": "string (2-3 sentences) - detailed explanation of what nuance, connotation, or argumentative force is lost if you substitute this term for the target",
+        "textual_evidence": [
+          {
+            "quote": "string (SUBSTANTIAL passage - minimum 2 sentences, preferably 3-5 sentences providing full context)",
+            "source_location": "string - document name and section/paragraph if available",
+            "analysis": "string (3-5 sentences) - close reading explaining EXACTLY how this quote demonstrates the relationship between the target concept and this neighbor. Be explicit: what specific words, phrases, or argumentative moves show the relationship? Don't just assert - demonstrate."
+          }
+        ],
+        "argumentative_relationship": "string (2-4 sentences) - how does choosing the target concept instead of this neighbor change the argument? What commitments, implications, or rhetorical effects differ?",
+        "co_occurrence_patterns": "string - do these terms appear together? In opposition? Does one prepare for the other?"
       }
     ],
     "rhetorical_deployments": [
       {
         "deployment_id": "string (format: 'RD{N}')",
-        "deployment_context": "string - situation where the concept is invoked",
-        "rhetorical_function": "legitimation | critique | reframing | boundary_drawing | coalition_building | opponent_characterization | bridge_concept | pivot_point",
-        "what_it_accomplishes": "string - what work does using this concept do here?",
-        "quote": "string - the passage where this deployment occurs",
-        "source_document": "string",
-        "alternative_framing": "string - how could this point be made without this concept?"
+        "deployment_context": "string (2-3 sentences) - the argumentative situation where the concept is invoked, with enough context to understand the stakes",
+        "rhetorical_function": "legitimation | critique | reframing | boundary_drawing | coalition_building | opponent_characterization | bridge_concept | pivot_point | authority_appeal | common_sense_invocation | technical_mystification | normative_smuggling",
+        "what_it_accomplishes": "string (3-5 sentences) - detailed explanation of what work invoking this concept does here. Be specific about the rhetorical effect.",
+        "primary_quote": {
+          "text": "string (EXTENDED passage - aim for 3-6 sentences providing full argumentative context)",
+          "source_document": "string",
+          "source_location": "string - section/paragraph/page if available"
+        },
+        "supporting_quotes": [
+          {
+            "text": "string (substantial passage)",
+            "source_document": "string",
+            "how_it_reinforces": "string (2-3 sentences) - how this additional quote shows the same deployment pattern or adds nuance"
+          }
+        ],
+        "close_reading": "string (4-8 sentences) - detailed textual analysis of the primary quote. What specific words, phrases, sentence structures, or argumentative moves accomplish the rhetorical work? How does the concept function grammatically and semantically in this passage? What is implied but not stated?",
+        "alternative_framing": "string (2-4 sentences) - how could this point be made without this concept? What would be gained or lost?",
+        "audience_positioning": "string - how does this deployment position the intended audience? What does it assume they value or believe?"
       }
     ],
     "conceptual_tensions": [
       {
         "tension_id": "string (format: 'CT{N}')",
-        "tension_type": "internal_contradiction | scope_ambiguity | level_mixing | normative_descriptive_blur | implicit_value_judgment | definitional_instability",
-        "description": "string - what the tension is",
+        "tension_type": "internal_contradiction | scope_ambiguity | level_mixing | normative_descriptive_blur | implicit_value_judgment | definitional_instability | register_conflict | temporal_inconsistency",
+        "description": "string (3-5 sentences) - thorough explanation of what the tension is and why it matters for the concept's coherence",
         "manifestation_1": {
-          "quote": "string",
-          "interpretation": "string - what the concept seems to mean here"
+          "quotes": [
+            {
+              "text": "string (EXTENDED passage - 3-6 sentences)",
+              "source_document": "string",
+              "source_location": "string"
+            }
+          ],
+          "interpretation": "string (3-5 sentences) - what the concept seems to mean in these passages, with close attention to specific word choices and argumentative context"
         },
         "manifestation_2": {
-          "quote": "string",
-          "interpretation": "string - what it seems to mean here (in tension with above)"
+          "quotes": [
+            {
+              "text": "string (EXTENDED passage - 3-6 sentences)",
+              "source_document": "string",
+              "source_location": "string"
+            }
+          ],
+          "interpretation": "string (3-5 sentences) - what the concept seems to mean HERE (in tension with above), with specific textual grounding"
         },
+        "tension_analysis": "string (5-8 sentences) - detailed comparative analysis. Walk through exactly how the two usages conflict. What specific words or claims are incompatible? Is this a surface tension or a deep contradiction? Could a sympathetic reader resolve it?",
         "is_tension_acknowledged": "boolean - does the author recognize this tension?",
-        "how_author_manages": "string - if acknowledged, how do they handle it?",
-        "exploitation_potential": "string - could a critic exploit this tension?"
+        "how_author_manages": "string (2-4 sentences) - if acknowledged, how do they handle it? If unacknowledged, does the text show any signs of strain?",
+        "exploitation_potential": "string (2-4 sentences) - how could a critic exploit this tension? What would be the strongest objection?"
       }
     ],
     "strategic_ambiguities": [
       {
         "ambiguity_id": "string (format: 'SA{N}')",
-        "ambiguous_aspect": "string - what's left vague",
-        "possible_readings": ["string - different ways to interpret"],
-        "what_ambiguity_enables": "string - what argumentative flexibility does vagueness provide?",
-        "what_ambiguity_conceals": "string - what hard questions does vagueness avoid?",
-        "quote_example": "string"
+        "ambiguous_aspect": "string (2-3 sentences) - what exactly is left vague or underdetermined",
+        "possible_readings": [
+          {
+            "reading": "string - one way to interpret the ambiguous aspect",
+            "textual_support": "string (substantial quote supporting this reading)",
+            "what_this_reading_implies": "string (2-3 sentences)"
+          }
+        ],
+        "what_ambiguity_enables": "string (3-5 sentences) - what argumentative flexibility does this vagueness provide? How does it help the author?",
+        "what_ambiguity_conceals": "string (3-5 sentences) - what hard questions does vagueness allow the author to avoid answering? What commitments remain hidden?",
+        "textual_evidence": [
+          {
+            "quote": "string (EXTENDED passage - 3-5 sentences)",
+            "source_document": "string",
+            "analysis": "string (3-5 sentences) - close reading showing exactly where and how the ambiguity operates in this passage"
+          }
+        ],
+        "disambiguation_test": "string (2-4 sentences) - what question could you ask that would force the author to disambiguate? What would happen to the argument if they had to choose one reading?"
       }
     ],
     "argumentative_functions": [
       {
         "function_id": "string (format: 'AF{N}')",
-        "function_type": "premise_supplier | conclusion_anchor | bridge_term | contrast_term | legitimacy_marker | critique_tool | normative_standard | descriptive_category | explanatory_key",
-        "description": "string - how the concept functions in arguments",
-        "example_argument_pattern": "string - sketch of an argument that uses the concept this way",
-        "quote": "string",
-        "indispensability": "essential | helpful | ornamental - could the argument work without this concept?"
+        "function_type": "premise_supplier | conclusion_anchor | bridge_term | contrast_term | legitimacy_marker | critique_tool | normative_standard | descriptive_category | explanatory_key | question_begging_term | scope_shifter | register_marker",
+        "description": "string (3-5 sentences) - detailed explanation of how the concept functions in arguments",
+        "example_argument_pattern": "string (4-6 sentences) - sketch of a complete argument that uses the concept this way, showing its structural role",
+        "textual_instances": [
+          {
+            "quote": "string (EXTENDED passage - 3-6 sentences showing the concept in argumentative action)",
+            "source_document": "string",
+            "analysis": "string (4-6 sentences) - close reading of how the concept functions in THIS specific argument. What logical role does it play? What would happen if you removed it or replaced it?"
+          }
+        ],
+        "indispensability": "essential | helpful | ornamental",
+        "indispensability_explanation": "string (2-4 sentences) - justify your assessment. If essential, what breaks without it? If ornamental, how could the argument proceed without it?"
       }
     ],
     "boundary_analysis": {
       "boundary_sharpness": "sharp | gradient | vague | context_dependent | strategically_flexible",
       "boundary_type": "extensional | intensional | prototypical | family_resemblance | normative",
+      "boundary_narrative": "string (4-6 sentences) - overall description of how the concept's boundaries work and why they matter",
       "inclusion_criteria": [
         {
           "criterion_id": "string",
-          "criterion": "string - what makes something fall under this concept",
+          "criterion": "string (2-3 sentences) - what makes something fall under this concept",
           "criterion_type": "necessary | sufficient | necessary_and_sufficient | typical_feature | normative_ideal",
           "explicitness": "explicit | implicit | tacit | contested",
+          "textual_evidence": {
+            "quote": "string (substantial passage showing this criterion in action)",
+            "source_document": "string",
+            "analysis": "string (2-4 sentences) - how does this passage establish or invoke this criterion?"
+          },
           "contested": "boolean",
-          "who_contests": "string - if contested, what position contests it?"
+          "who_contests": "string - if contested, what position contests it and why?"
         }
       ],
       "exclusion_criteria": [
         {
           "criterion_id": "string",
-          "excludes": "string - what is excluded",
-          "rationale": "string - why it's excluded",
-          "is_exclusion_polemical": "boolean - is this exclusion doing argumentative work?"
+          "excludes": "string - what is excluded from the concept",
+          "rationale": "string (2-3 sentences) - why it's excluded, according to the text's logic",
+          "textual_evidence": {
+            "quote": "string (passage showing the exclusion)",
+            "source_document": "string",
+            "analysis": "string (2-3 sentences)"
+          },
+          "is_exclusion_polemical": "boolean",
+          "polemical_stakes": "string - if polemical, what argumentative work does the exclusion do?"
         }
       ],
       "boundary_policing": [
         {
           "instance_id": "string",
-          "what_is_policed": "string - what's being kept in or out",
-          "stakes": "string - why does it matter where the boundary is?",
-          "quote": "string"
+          "what_is_policed": "string (2-3 sentences) - what's being kept in or out of the concept",
+          "stakes": "string (2-4 sentences) - why does it matter where the boundary is? What rides on this?",
+          "textual_evidence": [
+            {
+              "quote": "string (extended passage showing boundary policing)",
+              "source_document": "string",
+              "analysis": "string (3-5 sentences) - how does this passage police the concept's boundaries?"
+            }
+          ]
         }
       ],
       "edge_cases": [
         {
           "case_id": "string",
-          "case": "string - the borderline case",
-          "why_borderline": "string",
+          "case": "string (2-3 sentences) - the borderline case and why it's borderline",
+          "why_borderline": "string (2-4 sentences) - what features pull it toward inclusion, what features toward exclusion?",
           "author_verdict": "include | exclude | undecided | varies | strategically_ambiguous",
-          "quote": "string - relevant quote if any",
-          "what_verdict_reveals": "string - what does this judgment tell us about the concept?"
+          "textual_evidence": [
+            {
+              "quote": "string (passage relevant to this edge case)",
+              "source_document": "string",
+              "analysis": "string (2-4 sentences)"
+            }
+          ],
+          "what_verdict_reveals": "string (2-4 sentences) - what does this judgment tell us about the concept's essential features or the author's priorities?"
         }
       ]
     },
     "definitional_variations": [
       {
         "variation_id": "string (format: 'DV{N}')",
-        "definition": "string - how the concept is defined in this context",
-        "context": "string - where this definition appears",
+        "definition_in_context": "string (3-5 sentences) - how the concept is defined or characterized in this context, with sufficient elaboration",
+        "context_description": "string (2-3 sentences) - the argumentative or textual context where this definition appears",
         "source_document": "string",
-        "emphasis": "string - what this definition emphasizes",
-        "what_it_downplays": "string - what this definition de-emphasizes or obscures",
-        "contrast_with_others": "string - how it differs from other definitions",
-        "rhetorical_advantage": "string - what does defining it this way enable argumentatively?"
+        "source_location": "string - section/paragraph if available",
+        "definitional_quotes": [
+          {
+            "quote": "string (EXTENDED passage - 3-6 sentences where the definition is articulated or implied)",
+            "analysis": "string (3-5 sentences) - close reading of how this passage defines or characterizes the concept. What specific words or phrases are doing the definitional work?"
+          }
+        ],
+        "emphasis": "string (2-3 sentences) - what aspects this definition foregrounds or privileges",
+        "what_it_downplays": "string (2-3 sentences) - what aspects this definition de-emphasizes, marginalizes, or obscures entirely",
+        "contrast_with_others": "string (3-5 sentences) - detailed comparison with other definitional variations. What specifically differs? What implications follow from the difference?",
+        "rhetorical_advantage": "string (2-4 sentences) - what does defining it this way enable argumentatively? What becomes easier to say or harder to contest?"
       }
     ],
     "presuppositions": [
       {
         "presupposition_id": "string (format: 'PS{N}')",
-        "presupposition": "string - what you must accept to use the concept this way",
-        "type": "ontological | epistemological | normative | empirical | conceptual",
+        "presupposition": "string (2-4 sentences) - what you must accept to use the concept this way, stated explicitly",
+        "type": "ontological | epistemological | normative | empirical | conceptual | methodological",
         "explicitness": "explicit | implicit | deeply_buried",
+        "how_surfaced": "string (2-4 sentences) - how did you identify this presupposition? What textual or logical moves revealed it?",
         "contestability": "widely_shared | disciplinary_consensus | controversial | highly_contested",
-        "quote_revealing_presupposition": "string"
+        "textual_evidence": [
+          {
+            "quote": "string (EXTENDED passage - 3-5 sentences where the presupposition is operating)",
+            "source_document": "string",
+            "analysis": "string (3-5 sentences) - how does this passage rely on or reveal the presupposition? What would change if someone rejected this presupposition?"
+          }
+        ],
+        "what_denying_it_costs": "string (2-4 sentences) - if someone rejected this presupposition, what happens to the argument or concept?"
       }
     ],
     "counter_concepts": [
       {
         "counter_id": "string (format: 'CC{N}')",
-        "counter_concept": "string - concept that this one implicitly argues against",
-        "relationship": "replaces | critiques | subsumes | complicates | inverts",
-        "what_using_target_rejects": "string - using THIS concept implies rejecting THAT framework",
-        "quote": "string"
+        "counter_concept": "string - concept that the target implicitly argues against or displaces",
+        "relationship": "replaces | critiques | subsumes | complicates | inverts | marginalizes",
+        "what_using_target_rejects": "string (3-5 sentences) - using the TARGET concept implies rejecting or marginalizing WHAT framework, assumption, or alternative? Be specific about what's excluded.",
+        "textual_evidence": [
+          {
+            "quote": "string (EXTENDED passage - 3-5 sentences showing the target concept working against the counter-concept)",
+            "source_document": "string",
+            "analysis": "string (3-5 sentences) - how does this passage implicitly or explicitly position the target concept against the counter-concept?"
+          }
+        ],
+        "what_counter_concept_would_reveal": "string (2-4 sentences) - if someone insisted on using the counter-concept instead, what aspects of the situation would become visible that the target concept obscures?"
       }
     ],
     "metaphorical_substrate": {
@@ -159,69 +281,166 @@
           "metaphor_id": "string",
           "metaphor": "string - e.g., 'efficiency as machine optimization'",
           "source_domain": "string - where the metaphor comes from",
-          "what_it_highlights": "string - aspects it makes salient",
-          "what_it_hides": "string - aspects it obscures",
-          "entailments": ["string - what follows if you accept this metaphor"]
+          "what_it_highlights": "string (2-4 sentences) - aspects it makes salient, with specific examples",
+          "what_it_hides": "string (2-4 sentences) - aspects it obscures, with specific examples of what gets lost",
+          "entailments": [
+            {
+              "entailment": "string - what follows if you accept this metaphor",
+              "textual_evidence": "string (quote showing this entailment operating)"
+            }
+          ],
+          "textual_instances": [
+            {
+              "quote": "string (passage where the metaphor is active)",
+              "source_document": "string",
+              "analysis": "string (2-4 sentences) - how is the metaphor operating in this passage?"
+            }
+          ]
         }
       ],
-      "competing_metaphors": ["string - alternative metaphorical framings the author rejects or ignores"]
+      "competing_metaphors": [
+        {
+          "metaphor": "string - alternative metaphorical framing",
+          "what_it_would_emphasize": "string (2-3 sentences)",
+          "why_author_avoids": "string (2-3 sentences) - why does the author not use this framing?"
+        }
+      ]
     },
     "cross_document_evolution": [
       {
         "evolution_id": "string (format: 'EV{N}')",
         "from_document": "string",
         "to_document": "string",
-        "what_changes": "string - how the concept's use shifts",
-        "what_stays_constant": "string - what remains stable",
-        "driver_of_change": "string - what motivates the shift (responding to criticism, context change, etc.)"
+        "what_changes": "string (3-5 sentences) - detailed description of how the concept's use shifts",
+        "what_stays_constant": "string (2-3 sentences) - what core features remain stable across the shift",
+        "driver_of_change": "string (2-4 sentences) - what motivates the shift (responding to criticism, context change, strategic repositioning, etc.)",
+        "before_quotes": [
+          {
+            "quote": "string (substantial passage from earlier document)",
+            "analysis": "string (2-3 sentences) - how the concept functions here"
+          }
+        ],
+        "after_quotes": [
+          {
+            "quote": "string (substantial passage from later document)",
+            "analysis": "string (2-3 sentences) - how the concept functions here (showing the change)"
+          }
+        ],
+        "evolution_significance": "string (2-4 sentences) - what does this evolution tell us about the concept's flexibility, the author's strategic adjustments, or the concept's inherent instability?"
       }
     ],
     "semantic_field_map": {
-      "core_terms": ["string - terms closest to the target"],
-      "adjacent_terms": ["string - closely related but distinct"],
-      "peripheral_terms": ["string - loosely related"],
-      "opposed_terms": ["string - antonyms and contrasts"],
-      "superordinate": "string - broader category containing this concept",
-      "subordinates": ["string - more specific instances"],
-      "conceptual_allies": ["string - concepts that work together with this one"],
-      "conceptual_enemies": ["string - concepts this one is deployed against"]
+      "core_terms": [
+        {
+          "term": "string - term closest to the target",
+          "relationship_note": "string (1-2 sentences) - brief note on the relationship"
+        }
+      ],
+      "adjacent_terms": [
+        {
+          "term": "string - closely related but distinct",
+          "distinction_note": "string (1-2 sentences) - what distinguishes it"
+        }
+      ],
+      "peripheral_terms": [
+        {
+          "term": "string - loosely related",
+          "connection_note": "string (1-2 sentences) - the loose connection"
+        }
+      ],
+      "opposed_terms": [
+        {
+          "term": "string - antonym or contrast",
+          "opposition_note": "string (1-2 sentences) - nature of the opposition"
+        }
+      ],
+      "superordinate": {
+        "term": "string - broader category containing this concept",
+        "relationship_note": "string (1-2 sentences)"
+      },
+      "subordinates": [
+        {
+          "term": "string - more specific instance",
+          "specification_note": "string (1-2 sentences)"
+        }
+      ],
+      "conceptual_allies": [
+        {
+          "term": "string - concept that works together with this one",
+          "alliance_note": "string (1-2 sentences) - how they work together"
+        }
+      ],
+      "conceptual_enemies": [
+        {
+          "term": "string - concept this one is deployed against",
+          "enmity_note": "string (1-2 sentences) - the nature of the opposition"
+        }
+      ],
+      "field_map_narrative": "string (4-8 sentences) - prose description of the overall semantic field, how the concept sits within it, and what the field structure reveals about the concept's function"
     },
     "usage_patterns": {
-      "typical_collocations": ["string - words that commonly appear with this concept"],
-      "grammatical_roles": ["subject | object | predicate | modifier"],
+      "typical_collocations": [
+        {
+          "collocation": "string - words that commonly appear with this concept",
+          "example_quote": "string (passage showing the collocation)",
+          "significance": "string (1-2 sentences) - what does this collocation reveal?"
+        }
+      ],
+      "grammatical_roles": ["subject | object | predicate | modifier | nominalization"],
+      "grammatical_analysis": "string (2-4 sentences) - what do the grammatical patterns reveal about how the concept is positioned?",
       "register_variations": {
-        "technical": "string - how used in technical contexts",
-        "popular": "string - how used in everyday contexts",
-        "author_specific": "string - author's distinctive usage",
-        "polemical": "string - how used when arguing against opponents"
+        "technical": {
+          "description": "string (2-3 sentences) - how used in technical contexts",
+          "example_quote": "string"
+        },
+        "popular": {
+          "description": "string (2-3 sentences) - how used in everyday or accessible contexts",
+          "example_quote": "string"
+        },
+        "author_specific": {
+          "description": "string (2-3 sentences) - author's distinctive usage patterns",
+          "example_quote": "string"
+        },
+        "polemical": {
+          "description": "string (2-3 sentences) - how used when arguing against opponents",
+          "example_quote": "string"
+        }
       },
       "frequency_patterns": {
-        "most_concentrated": "string - where does the concept appear most densely?",
-        "notably_absent": "string - where might you expect it but it doesn't appear?"
+        "most_concentrated": "string (2-3 sentences) - where does the concept appear most densely? What does this suggest?",
+        "notably_absent": "string (2-3 sentences) - where might you expect it but it doesn't appear? What does absence signify?"
       }
     },
     "operationalization_analysis": {
-      "abstract_meaning": "string - the concept at its most general",
+      "abstract_meaning": "string (2-4 sentences) - the concept at its most general and theoretical",
       "concrete_applications": [
         {
           "application_id": "string",
-          "application": "string - specific use/measurement/criterion",
-          "gap_from_abstract": "string - what's lost in translation from abstract to concrete?",
-          "quote": "string"
+          "application": "string (2-3 sentences) - specific use, measurement, or criterion",
+          "gap_from_abstract": "string (2-4 sentences) - what's lost in translation from abstract to concrete? What aspects are impossible to operationalize?",
+          "textual_evidence": {
+            "quote": "string (substantial passage showing the operationalization)",
+            "source_document": "string",
+            "analysis": "string (2-4 sentences) - how does the abstract concept become concrete here? What slippage occurs?"
+          }
         }
       ],
-      "operationalization_tensions": "string - conflicts between how concept is defined vs how it's applied"
+      "operationalization_tensions": "string (3-5 sentences) - conflicts between how concept is defined abstractly vs how it's applied concretely. Are the applications consistent with the definition?"
     },
     "meta": {
       "total_neighbors": "number",
       "total_deployments": "number",
       "total_tensions": "number",
-      "semantic_richness": "number (0-1) - how dense the semantic field is",
-      "boundary_clarity": "number (0-1) - how clear the boundaries are",
-      "definitional_consensus": "number (0-1) - how much agreement on meaning",
-      "strategic_flexibility": "number (0-1) - how much the concept shifts to serve arguments",
-      "key_insight": "string - most important finding about this concept's meaning and deployment",
-      "vulnerability_summary": "string - where could a critic attack this concept's use?"
+      "total_definitional_variations": "number",
+      "total_presuppositions": "number",
+      "semantic_richness": "number (0-1) - how dense and complex the semantic field is",
+      "boundary_clarity": "number (0-1) - how clear and consistent the concept's boundaries are",
+      "definitional_consensus": "number (0-1) - how much internal agreement on meaning across uses",
+      "strategic_flexibility": "number (0-1) - how much the concept shifts to serve different argumentative purposes",
+      "textual_grounding": "number (0-1) - how well-supported by extensive quotes is this analysis",
+      "key_insight": "string (4-8 sentences) - the most important finding about this concept's meaning and deployment. This should be a substantive analytical claim, not a summary.",
+      "vulnerability_summary": "string (4-8 sentences) - where could a critic most effectively attack this concept's use? What are the weakest points? What would a devastating objection look like?",
+      "interpretive_confidence": "string (2-4 sentences) - how confident are you in this analysis? What would strengthen or weaken it? What alternative interpretations did you consider?"
     }
   },
   "extraction_focus": [
@@ -252,27 +471,26 @@
       "analysis_type_plural": "semantic fields",
       "core_question": "What is the full meaning-space of this concept, and how is it deployed strategically?",
       "extraction_steps": [
-        "IDENTIFY CORE MEANING: What is the central meaning? Where does it come from intellectually?",
-        "MAP SEMANTIC NEIGHBORS: Find synonyms, related terms, contrasts - note what substitution would lose",
-        "ANALYZE RHETORICAL DEPLOYMENTS: How is the concept used to persuade? What work does it do?",
-        "IDENTIFY CONCEPTUAL TENSIONS: Where does the concept pull in different directions? Internal contradictions?",
-        "MAP STRATEGIC AMBIGUITIES: What's left vague, and what does vagueness enable?",
-        "TRACE ARGUMENTATIVE FUNCTIONS: What role does the concept play in arguments? Is it essential?",
-        "ANALYZE BOUNDARIES: Where does this concept end? Who contests the boundary and why?",
-        "DOCUMENT EDGE CASES: What borderline cases reveal about the concept's limits?",
-        "TRACK DEFINITIONAL VARIATIONS: How does meaning shift across contexts? What does each definition enable?",
-        "SURFACE PRESUPPOSITIONS: What must you already believe to use this concept this way?",
-        "IDENTIFY COUNTER-CONCEPTS: What frameworks does using this concept implicitly reject?",
-        "ANALYZE METAPHORICAL SUBSTRATE: What root metaphors shape understanding? What do they hide?",
-        "TRACK CROSS-DOCUMENT EVOLUTION: How does the concept's use shift across texts?",
-        "ASSESS OPERATIONALIZATION: Gap between abstract definition and concrete application?"
+        "IDENTIFY CORE MEANING: What is the central meaning? Where does it come from intellectually? Provide substantial quotes showing the concept's core usage.",
+        "MAP SEMANTIC NEIGHBORS: For EACH neighbor, provide MULTIPLE quotes (2-4) showing the relationship. Explain in 3-5 sentences exactly how each quote demonstrates the relationship. Don't just assert - prove it through close reading.",
+        "ANALYZE RHETORICAL DEPLOYMENTS: For each deployment, provide an EXTENDED primary quote (3-6 sentences) plus supporting quotes. Write 4-8 sentences of close reading explaining exactly what words, phrases, and moves accomplish the rhetorical work.",
+        "IDENTIFY CONCEPTUAL TENSIONS: Show tensions through EXTENDED quotes from both manifestations. Write detailed comparative analysis (5-8 sentences) walking through exactly how the usages conflict.",
+        "MAP STRATEGIC AMBIGUITIES: Provide multiple possible readings with textual support for each. Explain in detail what the ambiguity enables and conceals.",
+        "TRACE ARGUMENTATIVE FUNCTIONS: Show the concept in argumentative action through extended quotes. Analyze specifically what logical role it plays and what would happen without it.",
+        "ANALYZE BOUNDARIES: Document inclusion/exclusion criteria with substantial textual evidence. Explore edge cases with quotes showing how the author handles borderline instances.",
+        "DOCUMENT DEFINITIONAL VARIATIONS: For each variation, provide MULTIPLE extended quotes (3-6 sentences each). Write detailed close readings (3-5 sentences) of how each passage defines or characterizes the concept.",
+        "SURFACE PRESUPPOSITIONS: Identify hidden assumptions with extended quotes showing them operating. Explain in detail how denial would affect the argument.",
+        "IDENTIFY COUNTER-CONCEPTS: Show what using this concept implicitly rejects, with substantial textual evidence and analysis.",
+        "ANALYZE METAPHORICAL SUBSTRATE: Identify root metaphors with quotes showing them in action. Explain what they highlight and hide.",
+        "TRACK CROSS-DOCUMENT EVOLUTION: Compare usage across documents with before/after quotes and detailed analysis of what changes and why."
       ],
       "key_fields": {
         "neighbor_id": "Semantic neighbor identifier",
         "term": "The related term",
         "relationship": "Type of semantic relationship",
         "semantic_distance": "How close in meaning",
-        "rhetorical_function": "What persuasive work does deployment do"
+        "rhetorical_function": "What persuasive work does deployment do",
+        "textual_evidence": "CRITICAL: Array of quotes with close reading analysis"
       },
       "id_field": "neighbor_id",
       "key_relationships": [
@@ -286,7 +504,7 @@
         "presupposes",
         "undermines"
       ],
-      "special_instructions": "Go beyond dictionary definitions. Focus on how the AUTHOR deploys this concept strategically. Look for tensions, ambiguities, and rhetorical functions. Find places where the concept does argumentative work. Identify what using this concept commits the author to, and what it allows them to avoid. Be critical - find the weak points."
+      "special_instructions": "CRITICAL REQUIREMENTS FOR CLOSE TEXTUAL ANALYSIS:\n\n1. QUOTE LENGTH: Every quote must be SUBSTANTIAL. Minimum 2 sentences, preferably 3-6 sentences. Short phrases are insufficient. We need enough context to see the concept operating in its argumentative environment.\n\n2. MULTIPLE QUOTES: For every major claim about a semantic neighbor, rhetorical deployment, tension, or definitional variation, provide MULTIPLE quotes (2-4). One quote is rarely enough to establish a pattern.\n\n3. CLOSE READING: Every quote must be accompanied by DETAILED ANALYSIS (3-5 sentences minimum). Don't just say 'this shows X.' Walk through exactly what words, phrases, sentence structures, or argumentative moves demonstrate your point. Be specific. Point to particular formulations. Explain the logic step by step.\n\n4. EXPLICIT CONNECTIONS: Never leave connections implicit. If you claim a quote demonstrates something, explain exactly HOW it demonstrates it. What specifically in the quote supports your claim? A reader should be able to follow your reasoning.\n\n5. ANALYTICAL NARRATIVE: Descriptions and explanations should be 2-5 sentences minimum, not brief labels. We want substantive analytical prose that teaches the reader something.\n\n6. AVOID SHALLOW ASSERTIONS: Phrases like 'this shows that...' or 'demonstrates how...' without detailed follow-through are insufficient. Earn your claims through textual evidence and explicit reasoning.\n\n7. CONTEXTUAL GROUNDING: Quotes should include enough surrounding text that we understand the argumentative context. Don't excerpt so narrowly that meaning is lost.\n\n8. CRITICAL STANCE: Look for tensions, ambiguities, weak points. Find places where the concept does questionable argumentative work. Be a critical reader, not a summarizer.\n\n9. DEFINITIONAL RICHNESS: For definitional variations, show how the same concept takes on different meanings in different contexts. Multiple extended quotes per variation, each with analysis.\n\n10. PRESUPPOSITIONAL DEPTH: Surface hidden assumptions by showing how the text relies on unstated premises. Quote passages where presuppositions are operating and explain what would change if they were rejected.\n\nTHE GOAL: A reader of this analysis should gain deep insight into how the concept functions as a tool of thought and persuasion, grounded in extensive textual evidence and rigorous close reading. This is scholarly analysis, not summary."
     },
     "curation": {
       "item_type": "semantic relationship",
