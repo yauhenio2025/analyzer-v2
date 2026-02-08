@@ -6,6 +6,22 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Influence Pass Engines** (5 new) - Engine definitions for the anxiety_of_influence workflow
+  - `influence_pass1_thinker_identification` - Identify all cited thinkers and invocation patterns
+  - `influence_pass2_hypothesis_generation` - Generate hypotheses about potential misuse
+  - `influence_pass3_textual_sampling` - Sample passages from original thinker works
+  - `influence_pass4_deep_engagement` - Compare author usage vs thinker's actual positions
+  - `influence_pass5_report_generation` - Synthesize comprehensive influence fidelity report
+  - Engine count increased from 178 to 183
+
+- **Workflow CRUD Endpoints** - Full create/read/update/delete operations for workflows
+  - `POST /v1/workflows` - Create new workflow
+  - `PUT /v1/workflows/{key}` - Update workflow definition
+  - `PUT /v1/workflows/{key}/pass/{n}` - Update single pass
+  - `DELETE /v1/workflows/{key}` - Delete workflow
+  - `GET /v1/workflows/{key}/pass/{n}/prompt` - Get composed prompt for engine-backed passes
+  - WorkflowRegistry now has `save()`, `update_pass()`, `delete()`, `reload()` methods
+
 - **The Critic Sections Extraction** - Extracted analytical operations from The Critic into analyzer-v2
   - **New Engine Categories** (2 new):
     - `VULNERABILITY` - Counter-response self-analysis, exposed flanks (9 engines)

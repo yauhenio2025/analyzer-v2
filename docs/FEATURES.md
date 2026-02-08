@@ -1,6 +1,6 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-02-06
+> Auto-maintained by Claude Code. Last updated: 2026-02-08
 
 ## Engine Upgrade System
 
@@ -280,22 +280,42 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
 - **Status**: Active
 - **Description**: Multi-pass analysis pipelines that differ from chains (intermediate state, caching, resumability)
 - **Entry Points**:
-  - `src/workflows/schemas.py:1-100` - WorkflowDefinition, WorkflowPass, WorkflowCategory
-  - `src/workflows/registry.py:1-100` - WorkflowRegistry class
+  - `src/workflows/schemas.py:1-123` - WorkflowDefinition, WorkflowPass, WorkflowCategory
+  - `src/workflows/registry.py:1-175` - WorkflowRegistry class with save/update/delete methods
   - `src/workflows/definitions/*.json` - 3 workflow definitions
-  - `src/api/routes/workflows.py:1-80` - Workflow API endpoints
+  - `src/api/routes/workflows.py:1-230` - Workflow API endpoints with full CRUD
 - **Workflows** (3 total):
   - `lines_of_attack` - Extract targeted critiques from external thinkers (2 passes)
-  - `anxiety_of_influence` - Analyze intellectual debt fidelity (5 passes)
-  - `outline_editor` - AI-assisted essay construction (4 passes)
+  - `anxiety_of_influence` - Analyze intellectual debt fidelity (5 passes, engine-backed)
+  - `outline_editor` - AI-assisted essay construction (4 passes, engine-backed)
 - **API Endpoints**:
   - `GET /v1/workflows` - List all workflows
   - `GET /v1/workflows/{key}` - Get workflow definition
   - `GET /v1/workflows/{key}/passes` - Get workflow passes
+  - `GET /v1/workflows/{key}/pass/{n}` - Get specific pass
+  - `GET /v1/workflows/{key}/pass/{n}/prompt` - Get composed prompt for a pass
   - `GET /v1/workflows/category/{category}` - Filter by category
+  - `POST /v1/workflows` - Create new workflow
+  - `PUT /v1/workflows/{key}` - Update workflow definition
+  - `PUT /v1/workflows/{key}/pass/{n}` - Update single pass
+  - `DELETE /v1/workflows/{key}` - Delete workflow
+  - `POST /v1/workflows/reload` - Force reload from disk
 - **Dependencies**: Pydantic v2
 - **Source**: The Critic
-- **Added**: 2026-02-06
+- **Added**: 2026-02-06 | **Modified**: 2026-02-08
+
+### Influence Pass Engines (5 new)
+- **Status**: Active
+- **Description**: Engine definitions for the anxiety_of_influence workflow passes
+- **Entry Points**:
+  - `src/engines/definitions/influence_pass1_thinker_identification.json` - Identify cited thinkers
+  - `src/engines/definitions/influence_pass2_hypothesis_generation.json` - Generate usage hypotheses
+  - `src/engines/definitions/influence_pass3_textual_sampling.json` - Sample original texts
+  - `src/engines/definitions/influence_pass4_deep_engagement.json` - Compare usage vs actual
+  - `src/engines/definitions/influence_pass5_report_generation.json` - Synthesize final report
+- **Category**: SCHOLARLY
+- **Source**: The Critic prompts_influence.py
+- **Added**: 2026-02-08
 
 ## Stage Prompt Composition
 

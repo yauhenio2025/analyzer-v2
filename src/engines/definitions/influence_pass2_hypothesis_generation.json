@@ -1,0 +1,106 @@
+{
+  "engine_key": "influence_pass2_hypothesis_generation",
+  "engine_name": "Influence Pass 2: Hypothesis Generation",
+  "description": "Second pass of influence analysis: generates hypotheses about how each cited thinker is being used, potentially misused, or strategically invoked. Identifies potential 'scholarly sins' to investigate.",
+  "version": 1,
+  "category": "scholarly",
+  "kind": "synthesis",
+  "reasoning_domain": "influence_analysis",
+  "researcher_question": "What might be problematic about how this author uses their cited thinkers?",
+  "canonical_schema": {
+    "hypotheses": [
+      {
+        "hypothesis_id": "string (format: 'HYP{N}')",
+        "thinker": "string - thinker name (links to Pass 1)",
+        "hypothesis_type": "misappropriation | selective_reading | strawman | name_drop | strategic_invocation | legitimate_use",
+        "hypothesis": "string - specific hypothesis about the use",
+        "textual_basis": "string - what in the text suggests this",
+        "evidence_needed": "string - what external texts would verify/refute",
+        "priority": "high | medium | low",
+        "scholarly_sin_type": "string - if applicable (e.g., 'Bloomian misprision', 'appeal to authority')"
+      }
+    ],
+    "investigation_plan": {
+      "high_priority_hypotheses": ["string - hypothesis IDs"],
+      "external_texts_needed": ["string - specific works to consult"],
+      "key_questions": ["string - questions to answer with external texts"]
+    },
+    "meta": {
+      "total_hypotheses": "number",
+      "high_priority_count": "number"
+    }
+  },
+  "extraction_focus": [
+    "usage_hypotheses",
+    "scholarly_sins",
+    "verification_needs"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "the-critic/analyzer/prompts_influence.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "influence hypothesis",
+      "analysis_type_plural": "influence hypotheses",
+      "core_question": "What hypotheses can we generate about potential misuse of cited thinkers?",
+      "extraction_steps": [
+        "REVIEW THINKER LIST: Consider each thinker from Pass 1",
+        "GENERATE HYPOTHESES: For each, hypothesize potential issues",
+        "ASSESS PLAUSIBILITY: Rate likelihood based on textual evidence",
+        "IDENTIFY EVIDENCE NEEDS: What external texts would verify/refute",
+        "PRIORITIZE: Rank hypotheses by importance and testability"
+      ],
+      "key_fields": {
+        "hypothesis_id": "Unique identifier",
+        "thinker": "Which thinker this concerns",
+        "hypothesis": "The hypothesis itself"
+      },
+      "id_field": "hypothesis_id",
+      "key_relationships": [
+        "concerns_thinker",
+        "requires_verification"
+      ],
+      "special_instructions": "Be charitable but thorough. Generate hypotheses even for seemingly legitimate uses - the verification step will confirm. Consider Bloomian 'anxiety of influence' patterns."
+    },
+    "curation": {
+      "item_type": "hypothesis",
+      "item_type_plural": "hypotheses",
+      "consolidation_rules": [
+        "Group by hypothesis type",
+        "Prioritize by verifiability",
+        "Identify overlapping hypotheses"
+      ],
+      "cross_doc_patterns": [],
+      "synthesis_outputs": [
+        "investigation_plan"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "HYP1",
+          "to": "Foucault: possible selective reading of 'discipline'"
+        }
+      ],
+      "naming_guidance": "Use thinker name and hypothesis type",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  },
+  "apps": [
+    "critic"
+  ]
+}

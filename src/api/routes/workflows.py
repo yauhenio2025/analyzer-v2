@@ -1,9 +1,14 @@
-"""Workflow API routes."""
+"""Workflow API routes.
 
-from typing import Optional
+Provides CRUD operations for workflow definitions and pass prompt composition.
+"""
+
+from typing import Literal, Optional
 
 from fastapi import APIRouter, HTTPException, Query
 
+from src.engines.registry import get_engine_registry
+from src.stages.composer import StageComposer
 from src.workflows.registry import get_workflow_registry
 from src.workflows.schemas import (
     WorkflowCategory,
@@ -11,6 +16,20 @@ from src.workflows.schemas import (
     WorkflowPass,
     WorkflowSummary,
 )
+
+# Lazy-loaded composer for pass prompt composition
+_composer: Optional[StageComposer] = None
+
+
+def get_composer() -> StageComposer:
+    """Get or create the StageComposer singleton."""
+    global _composer
+    if _composer is None:
+        _composer = StageComposer()
+    return _composer
+
+
+AudienceType = Literal["researcher", "analyst", "executive", "activist"]
 
 router = APIRouter(prefix="/workflows", tags=["workflows"])
 
@@ -74,3 +93,225 @@ async def get_workflow_passes(workflow_key: str) -> list[WorkflowPass]:
             detail=f"Workflow not found: {workflow_key}",
         )
     return workflow.passes
+
+
+@router.get("/{workflow_key}/pass/{pass_number}")
+async def get_workflow_pass(workflow_key: str, pass_number: int) -> WorkflowPass:
+    """Get a specific pass from a workflow."""
+    registry = get_workflow_registry()
+    workflow = registry.get(workflow_key)
+    if workflow is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Workflow not found: {workflow_key}",
+        )
+    if pass_number < 1 or pass_number > len(workflow.passes):
+        raise HTTPException(
+            status_code=404,
+            detail=f"Pass {pass_number} not found in workflow {workflow_key}",
+        )
+    return workflow.passes[pass_number - 1]
+
+
+@router.get("/{workflow_key}/pass/{pass_number}/prompt")
+async def get_workflow_pass_prompt(
+    workflow_key: str,
+    pass_number: int,
+    audience: AudienceType = Query(
+        "analyst",
+        description="Target audience for vocabulary calibration",
+    ),
+) -> dict:
+    """Get the composed prompt for a workflow pass.
+
+    If the pass has an engine_key, composes the extraction prompt for that engine.
+    If the pass has a custom prompt_template, returns that template.
+    Returns an error if neither is defined.
+    """
+    workflow_registry = get_workflow_registry()
+    workflow = workflow_registry.get(workflow_key)
+    if workflow is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Workflow not found: {workflow_key}",
+        )
+    if pass_number < 1 or pass_number > len(workflow.passes):
+        raise HTTPException(
+            status_code=404,
+            detail=f"Pass {pass_number} not found in workflow {workflow_key}",
+        )
+
+    pass_def = workflow.passes[pass_number - 1]
+
+    # If pass has an engine_key, compose the engine's extraction prompt
+    if pass_def.engine_key:
+        engine_registry = get_engine_registry()
+        engine = engine_registry.get(pass_def.engine_key)
+        if engine is None:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Engine not found: {pass_def.engine_key}",
+            )
+
+        composer = get_composer()
+        try:
+            composed = composer.compose(
+                stage="extraction",
+                engine_key=pass_def.engine_key,
+                stage_context=engine.stage_context,
+                audience=audience,
+                canonical_schema=engine.canonical_schema,
+            )
+        except ValueError as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to compose prompt: {e}",
+            )
+
+        return {
+            "workflow_key": workflow_key,
+            "pass_number": pass_number,
+            "pass_name": pass_def.pass_name,
+            "engine_key": pass_def.engine_key,
+            "prompt_type": "extraction",
+            "prompt": composed.prompt,
+            "audience": audience,
+            "framework_used": composed.framework_used,
+        }
+
+    # If pass has a custom prompt template, return it
+    if pass_def.prompt_template:
+        return {
+            "workflow_key": workflow_key,
+            "pass_number": pass_number,
+            "pass_name": pass_def.pass_name,
+            "engine_key": None,
+            "prompt_type": "custom_template",
+            "prompt": pass_def.prompt_template,
+            "audience": audience,
+            "framework_used": None,
+        }
+
+    # Neither engine nor template defined
+    raise HTTPException(
+        status_code=404,
+        detail=f"Pass {pass_number} has no engine_key or prompt_template defined",
+    )
+
+
+@router.post("", response_model=WorkflowDefinition)
+async def create_workflow(definition: WorkflowDefinition) -> WorkflowDefinition:
+    """Create a new workflow definition.
+
+    The workflow_key in the definition is used as the identifier.
+    Returns an error if a workflow with that key already exists.
+    """
+    registry = get_workflow_registry()
+
+    # Check if workflow already exists
+    existing = registry.get(definition.workflow_key)
+    if existing is not None:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Workflow already exists: {definition.workflow_key}",
+        )
+
+    success = registry.save(definition.workflow_key, definition)
+    if not success:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to create workflow: {definition.workflow_key}",
+        )
+
+    return definition
+
+
+@router.put("/{workflow_key}", response_model=WorkflowDefinition)
+async def update_workflow(
+    workflow_key: str, definition: WorkflowDefinition
+) -> WorkflowDefinition:
+    """Update an existing workflow definition.
+
+    The workflow_key in the URL must match the definition's workflow_key.
+    """
+    if workflow_key != definition.workflow_key:
+        raise HTTPException(
+            status_code=400,
+            detail="URL workflow_key must match definition's workflow_key",
+        )
+
+    registry = get_workflow_registry()
+
+    # Check if workflow exists
+    existing = registry.get(workflow_key)
+    if existing is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Workflow not found: {workflow_key}",
+        )
+
+    success = registry.save(workflow_key, definition)
+    if not success:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to update workflow: {workflow_key}",
+        )
+
+    return definition
+
+
+@router.put("/{workflow_key}/pass/{pass_number}", response_model=WorkflowPass)
+async def update_workflow_pass(
+    workflow_key: str, pass_number: int, pass_def: WorkflowPass
+) -> WorkflowPass:
+    """Update a single pass in a workflow.
+
+    The pass_number in the URL must match the pass_def's pass_number.
+    """
+    if pass_number != pass_def.pass_number:
+        raise HTTPException(
+            status_code=400,
+            detail="URL pass_number must match pass definition's pass_number",
+        )
+
+    registry = get_workflow_registry()
+
+    success = registry.update_pass(workflow_key, pass_number, pass_def)
+    if not success:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to update pass {pass_number} in workflow {workflow_key}",
+        )
+
+    return pass_def
+
+
+@router.delete("/{workflow_key}")
+async def delete_workflow(workflow_key: str) -> dict:
+    """Delete a workflow definition."""
+    registry = get_workflow_registry()
+
+    # Check if workflow exists
+    existing = registry.get(workflow_key)
+    if existing is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Workflow not found: {workflow_key}",
+        )
+
+    success = registry.delete(workflow_key)
+    if not success:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to delete workflow: {workflow_key}",
+        )
+
+    return {"status": "deleted", "workflow_key": workflow_key}
+
+
+@router.post("/reload")
+async def reload_workflows() -> dict:
+    """Force reload all workflow definitions from disk."""
+    registry = get_workflow_registry()
+    registry.reload()
+    return {"status": "reloaded", "count": registry.count()}

@@ -1,0 +1,102 @@
+{
+  "engine_key": "influence_pass3_textual_sampling",
+  "engine_name": "Influence Pass 3: Textual Sampling",
+  "description": "Third pass of influence analysis: samples and annotates relevant passages from the cited thinkers' actual works. Gathers evidence for hypothesis verification in Pass 4.",
+  "version": 1,
+  "category": "scholarly",
+  "kind": "extraction",
+  "reasoning_domain": "influence_analysis",
+  "researcher_question": "What do the cited thinkers actually say about the topics the author invokes them for?",
+  "canonical_schema": {
+    "samples": [
+      {
+        "sample_id": "string (format: 'SAMP{N}')",
+        "thinker": "string - thinker name",
+        "hypothesis_id": "string - which hypothesis this samples for",
+        "source_work": "string - title of the source work",
+        "source_location": "string - page, chapter, section",
+        "passage": "string - the relevant passage (quoted or summarized)",
+        "relevance": "string - why this passage is relevant to the hypothesis",
+        "initial_assessment": "supports_hypothesis | refutes_hypothesis | complicates | insufficient"
+      }
+    ],
+    "coverage": {
+      "hypotheses_sampled": ["string - hypothesis IDs with samples"],
+      "hypotheses_unsampled": ["string - hypothesis IDs lacking samples"],
+      "thinkers_with_texts": ["string - thinkers whose works were available"],
+      "thinkers_without_texts": ["string - thinkers whose works were not available"]
+    },
+    "meta": {
+      "total_samples": "number",
+      "samples_by_thinker": "object - thinker name to count"
+    }
+  },
+  "extraction_focus": [
+    "original_passages",
+    "hypothesis_evidence",
+    "source_verification"
+  ],
+  "primary_output_modes": [
+    "structured_text_report"
+  ],
+  "paradigm_keys": [],
+  "source_file": "the-critic/analyzer/prompts_influence.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "textual sample",
+      "analysis_type_plural": "textual samples",
+      "core_question": "What passages from the original thinkers are relevant to our hypotheses?",
+      "extraction_steps": [
+        "REVIEW HYPOTHESES: Consider each hypothesis from Pass 2",
+        "IDENTIFY RELEVANT WORKS: Determine which source texts to consult",
+        "LOCATE PASSAGES: Find passages relevant to the hypothesis",
+        "QUOTE OR SUMMARIZE: Extract the key content",
+        "ASSESS INITIAL RELEVANCE: Note how the passage bears on the hypothesis"
+      ],
+      "key_fields": {
+        "sample_id": "Unique identifier",
+        "thinker": "Source thinker",
+        "passage": "The sampled text"
+      },
+      "id_field": "sample_id",
+      "key_relationships": [
+        "samples_for",
+        "supports",
+        "refutes"
+      ],
+      "special_instructions": "Quote directly when possible. Be accurate about source locations. If texts are unavailable, note this clearly. Sample broadly - get multiple passages per hypothesis when possible."
+    },
+    "curation": {
+      "item_type": "sample",
+      "item_type_plural": "samples",
+      "consolidation_rules": [
+        "Group by hypothesis",
+        "Order by relevance",
+        "Flag contradictory samples"
+      ],
+      "cross_doc_patterns": [],
+      "synthesis_outputs": [
+        "sample_catalog"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  },
+  "apps": [
+    "critic"
+  ]
+}

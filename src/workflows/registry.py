@@ -1,10 +1,13 @@
 """Workflow registry for loading and managing workflow definitions."""
 
 import json
+import logging
 from pathlib import Path
 from typing import Optional
 
-from .schemas import WorkflowDefinition, WorkflowSummary, WorkflowCategory
+from .schemas import WorkflowDefinition, WorkflowSummary, WorkflowCategory, WorkflowPass
+
+logger = logging.getLogger(__name__)
 
 
 class WorkflowRegistry:
@@ -36,7 +39,7 @@ class WorkflowRegistry:
                 workflow = WorkflowDefinition.model_validate(data)
                 self._workflows[workflow.workflow_key] = workflow
             except Exception as e:
-                print(f"Warning: Failed to load workflow {json_file}: {e}")
+                logger.error(f"Failed to load workflow {json_file}: {e}")
 
         self._loaded = True
 
@@ -85,6 +88,107 @@ class WorkflowRegistry:
         """Get total number of workflows."""
         self.load()
         return len(self._workflows)
+
+    def save(self, workflow_key: str, definition: WorkflowDefinition) -> bool:
+        """Save a workflow definition to a JSON file.
+
+        Creates a new file if the workflow doesn't exist, or updates existing.
+
+        Args:
+            workflow_key: Key for the workflow
+            definition: The workflow definition to save
+
+        Returns:
+            True if save was successful, False otherwise
+        """
+        self.load()
+
+        json_file = self.definitions_dir / f"{workflow_key}.json"
+
+        try:
+            # Ensure definitions directory exists
+            self.definitions_dir.mkdir(parents=True, exist_ok=True)
+
+            # Save to file
+            with open(json_file, "w") as f:
+                json.dump(definition.model_dump(), f, indent=2)
+
+            # Update in-memory cache
+            self._workflows[workflow_key] = definition
+
+            logger.info(f"Saved workflow: {workflow_key}")
+            return True
+
+        except Exception as e:
+            logger.error(f"Failed to save workflow {workflow_key}: {e}")
+            return False
+
+    def update_pass(
+        self, workflow_key: str, pass_number: int, pass_def: WorkflowPass
+    ) -> bool:
+        """Update a single pass in a workflow.
+
+        Args:
+            workflow_key: Key of the workflow
+            pass_number: 1-indexed pass number to update
+            pass_def: The updated pass definition
+
+        Returns:
+            True if update was successful, False otherwise
+        """
+        self.load()
+        workflow = self._workflows.get(workflow_key)
+        if workflow is None:
+            logger.error(f"Workflow not found: {workflow_key}")
+            return False
+
+        if pass_number < 1 or pass_number > len(workflow.passes):
+            logger.error(f"Invalid pass number {pass_number} for workflow {workflow_key}")
+            return False
+
+        # Update the pass
+        workflow.passes[pass_number - 1] = pass_def
+
+        # Save the updated workflow
+        return self.save(workflow_key, workflow)
+
+    def delete(self, workflow_key: str) -> bool:
+        """Delete a workflow definition.
+
+        Removes both the file and the in-memory entry.
+
+        Args:
+            workflow_key: Key of the workflow to delete
+
+        Returns:
+            True if delete was successful, False otherwise
+        """
+        self.load()
+
+        if workflow_key not in self._workflows:
+            logger.warning(f"Workflow not found for deletion: {workflow_key}")
+            return False
+
+        json_file = self.definitions_dir / f"{workflow_key}.json"
+
+        try:
+            if json_file.exists():
+                json_file.unlink()
+
+            del self._workflows[workflow_key]
+
+            logger.info(f"Deleted workflow: {workflow_key}")
+            return True
+
+        except Exception as e:
+            logger.error(f"Failed to delete workflow {workflow_key}: {e}")
+            return False
+
+    def reload(self) -> None:
+        """Force reload all definitions."""
+        self._loaded = False
+        self._workflows.clear()
+        self.load()
 
 
 # Global registry instance

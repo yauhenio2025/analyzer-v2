@@ -1,0 +1,118 @@
+{
+  "engine_key": "influence_pass4_deep_engagement",
+  "engine_name": "Influence Pass 4: Deep Engagement Analysis",
+  "description": "Fourth pass of influence analysis: compares the author's use of each thinker against the thinker's actual positions. Verifies hypotheses, assesses fidelity, and documents misappropriations.",
+  "version": 1,
+  "category": "scholarly",
+  "kind": "synthesis",
+  "reasoning_domain": "influence_analysis",
+  "researcher_question": "How faithfully does the author represent the thinkers they cite?",
+  "canonical_schema": {
+    "engagements": [
+      {
+        "engagement_id": "string (format: 'ENG{N}')",
+        "thinker": "string - thinker name",
+        "hypothesis_id": "string - which hypothesis was being tested",
+        "author_claim": "string - what the author claims the thinker says/means",
+        "author_source": "string - location in author's text",
+        "thinker_actual": "string - what the thinker actually argues",
+        "thinker_source": "string - source work and location",
+        "fidelity": "faithful | selective | distorted | invented | contested",
+        "analysis": "string - detailed analysis of the gap (if any)",
+        "significance": "high | medium | low - how important is this discrepancy",
+        "type_of_misuse": "string - if applicable (e.g., 'strawman', 'cherry-pick', 'creative misreading')"
+      }
+    ],
+    "fidelity_summary": {
+      "faithful_uses": "number",
+      "selective_uses": "number",
+      "distorted_uses": "number",
+      "invented_uses": "number",
+      "contested_uses": "number"
+    },
+    "meta": {
+      "most_problematic_thinker": "string - thinker with most fidelity issues",
+      "most_faithful_thinker": "string - thinker with most faithful usage",
+      "key_findings": ["string"]
+    }
+  },
+  "extraction_focus": [
+    "fidelity_assessment",
+    "misuse_documentation",
+    "comparative_analysis"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "the-critic/analyzer/prompts_influence.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "deep engagement assessment",
+      "analysis_type_plural": "deep engagement assessments",
+      "core_question": "Does the author's use of each thinker match what the thinker actually argued?",
+      "extraction_steps": [
+        "PAIR CLAIMS: Match author's claims about thinkers with sampled passages",
+        "COMPARE: Assess agreement or divergence between author's use and thinker's actual position",
+        "CLASSIFY FIDELITY: Rate as faithful, selective, distorted, or invented",
+        "ANALYZE GAPS: For non-faithful uses, explain the nature of the discrepancy",
+        "ASSESS SIGNIFICANCE: Determine how important each discrepancy is"
+      ],
+      "key_fields": {
+        "engagement_id": "Unique identifier",
+        "fidelity": "Fidelity classification",
+        "analysis": "Detailed gap analysis"
+      },
+      "id_field": "engagement_id",
+      "key_relationships": [
+        "compares",
+        "verifies",
+        "refutes"
+      ],
+      "special_instructions": "Be rigorous but fair. 'Selective' means choosing real aspects but ignoring others. 'Distorted' means getting it partially wrong. 'Invented' means attributing positions the thinker never held. Some creative reinterpretation may be legitimate - note these as 'contested'."
+    },
+    "curation": {
+      "item_type": "engagement assessment",
+      "item_type_plural": "engagement assessments",
+      "consolidation_rules": [
+        "Group by fidelity level",
+        "Prioritize high-significance discrepancies",
+        "Identify patterns of misuse"
+      ],
+      "cross_doc_patterns": [
+        "systematic_misreading",
+        "consistent_distortion"
+      ],
+      "synthesis_outputs": [
+        "fidelity_report"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "ENG1",
+          "to": "Foucault on discipline: DISTORTED - author conflates surveillance with punishment"
+        }
+      ],
+      "naming_guidance": "Use thinker name, topic, and fidelity level",
+      "recommended_table_types": [
+        "fidelity_comparison"
+      ],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  },
+  "apps": [
+    "critic"
+  ]
+}

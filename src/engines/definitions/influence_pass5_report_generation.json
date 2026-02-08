@@ -1,0 +1,122 @@
+{
+  "engine_key": "influence_pass5_report_generation",
+  "engine_name": "Influence Pass 5: Synthesis Report",
+  "description": "Final pass of influence analysis: synthesizes all previous passes into a comprehensive influence analysis report. Summarizes findings, patterns, and recommendations.",
+  "version": 1,
+  "category": "scholarly",
+  "kind": "synthesis",
+  "reasoning_domain": "influence_analysis",
+  "researcher_question": "What is the overall assessment of this author's intellectual debts and how faithfully are they acknowledged?",
+  "canonical_schema": {
+    "report": {
+      "executive_summary": "string - 2-3 paragraph overall assessment",
+      "overall_fidelity_grade": "A | B | C | D | F - overall faithfulness to sources",
+      "faithful_uses": [
+        {
+          "thinker": "string",
+          "description": "string - how they are used well"
+        }
+      ],
+      "problematic_uses": [
+        {
+          "thinker": "string",
+          "problem_type": "string",
+          "description": "string - what went wrong",
+          "significance": "high | medium | low"
+        }
+      ],
+      "strategic_invocations": [
+        {
+          "thinker": "string",
+          "strategy": "string - how they are used strategically",
+          "assessment": "legitimate | problematic"
+        }
+      ],
+      "patterns": [
+        {
+          "pattern": "string - recurring pattern in use of sources",
+          "examples": ["string - engagement IDs"],
+          "interpretation": "string - what this pattern suggests"
+        }
+      ],
+      "recommendations": [
+        {
+          "issue": "string",
+          "recommendation": "string",
+          "priority": "high | medium | low"
+        }
+      ]
+    },
+    "meta": {
+      "thinkers_analyzed": "number",
+      "total_engagements": "number",
+      "key_takeaway": "string"
+    }
+  },
+  "extraction_focus": [
+    "synthesis",
+    "patterns",
+    "recommendations"
+  ],
+  "primary_output_modes": [
+    "structured_text_report"
+  ],
+  "paradigm_keys": [],
+  "source_file": "the-critic/analyzer/prompts_influence.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "influence synthesis report",
+      "analysis_type_plural": "influence synthesis reports",
+      "core_question": "What is the overall picture of this author's use of intellectual sources?",
+      "extraction_steps": [
+        "SYNTHESIZE FINDINGS: Combine insights from all previous passes",
+        "IDENTIFY PATTERNS: Note recurring themes in how sources are used",
+        "GRADE OVERALL FIDELITY: Provide an overall assessment",
+        "HIGHLIGHT KEY ISSUES: Document the most significant problems",
+        "GENERATE RECOMMENDATIONS: Suggest how to address issues"
+      ],
+      "key_fields": {
+        "executive_summary": "Overall assessment",
+        "overall_fidelity_grade": "Letter grade"
+      },
+      "id_field": "report",
+      "key_relationships": [],
+      "special_instructions": "Write for a scholarly audience. Be direct about problems but acknowledge legitimate uses. The report should be actionable - clear about what could be challenged and what holds up."
+    },
+    "curation": {
+      "item_type": "report section",
+      "item_type_plural": "report sections",
+      "consolidation_rules": [
+        "Prioritize by significance",
+        "Group related findings"
+      ],
+      "cross_doc_patterns": [],
+      "synthesis_outputs": [
+        "final_report"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "overall_fidelity_grade": "philological fidelity assessment"
+      },
+      "analyst": {},
+      "executive": {
+        "overall_fidelity_grade": "source reliability score"
+      },
+      "activist": {}
+    },
+    "skip_concretization": true
+  },
+  "apps": [
+    "critic"
+  ]
+}

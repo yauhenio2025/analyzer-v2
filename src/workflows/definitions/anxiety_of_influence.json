@@ -3,59 +3,90 @@
   "workflow_name": "Anxiety of Influence Analysis",
   "description": "5-pass workflow analyzing how faithfully an author uses cited thinkers. Identifies intellectual debts, misappropriations, and strategic invocations.",
   "category": "influence",
-  "version": 1,
+  "version": 2,
   "passes": [
     {
       "pass_number": 1,
-      "pass_name": "Influence Identification",
+      "pass_name": "Thinker Identification",
       "pass_description": "Identify all thinkers cited or invoked in the author's work",
-      "engine_key": null,
+      "engine_key": "influence_pass1_thinker_identification",
+      "prompt_template": null,
       "requires_external_docs": false,
       "caches_result": true,
       "depends_on_passes": [],
       "output_schema": {
         "thinkers": [
           {
+            "thinker_id": "string",
             "name": "string",
             "citation_count": "number",
-            "primary_contexts": ["string"]
+            "invocation_types": [
+              "string"
+            ],
+            "primary_contexts": [
+              "string"
+            ],
+            "apparent_role": "string"
           }
-        ]
+        ],
+        "citation_patterns": {
+          "total_thinkers": "number",
+          "most_cited": [
+            "string"
+          ]
+        }
       }
     },
     {
       "pass_number": 2,
       "pass_name": "Hypothesis Generation",
       "pass_description": "Generate hypotheses about how each thinker is being used or misused",
-      "engine_key": null,
+      "engine_key": "influence_pass2_hypothesis_generation",
+      "prompt_template": null,
       "requires_external_docs": false,
       "caches_result": true,
-      "depends_on_passes": [1],
+      "depends_on_passes": [
+        1
+      ],
       "output_schema": {
         "hypotheses": [
           {
+            "hypothesis_id": "string",
             "thinker": "string",
+            "hypothesis_type": "string",
             "hypothesis": "string",
-            "evidence_needed": "string"
+            "evidence_needed": "string",
+            "priority": "string"
           }
-        ]
+        ],
+        "investigation_plan": {
+          "external_texts_needed": [
+            "string"
+          ]
+        }
       }
     },
     {
       "pass_number": 3,
       "pass_name": "Textual Sampling",
       "pass_description": "Sample relevant passages from the cited thinkers' actual works",
-      "engine_key": null,
+      "engine_key": "influence_pass3_textual_sampling",
+      "prompt_template": null,
       "requires_external_docs": true,
       "caches_result": true,
-      "depends_on_passes": [2],
+      "depends_on_passes": [
+        2
+      ],
       "output_schema": {
         "samples": [
           {
+            "sample_id": "string",
             "thinker": "string",
-            "source": "string",
+            "hypothesis_id": "string",
+            "source_work": "string",
             "passage": "string",
-            "relevance": "string"
+            "relevance": "string",
+            "initial_assessment": "string"
           }
         ]
       }
@@ -64,44 +95,74 @@
       "pass_number": 4,
       "pass_name": "Deep Engagement",
       "pass_description": "Compare author's use of thinker against the thinker's actual positions",
-      "engine_key": null,
+      "engine_key": "influence_pass4_deep_engagement",
+      "prompt_template": null,
       "requires_external_docs": true,
       "caches_result": true,
-      "depends_on_passes": [3],
+      "depends_on_passes": [
+        3
+      ],
       "output_schema": {
         "engagements": [
           {
+            "engagement_id": "string",
             "thinker": "string",
             "author_claim": "string",
             "thinker_actual": "string",
-            "fidelity": "faithful | selective | distorted | invented",
-            "analysis": "string"
+            "fidelity": "faithful | selective | distorted | invented | contested",
+            "analysis": "string",
+            "significance": "string"
           }
-        ]
+        ],
+        "fidelity_summary": {
+          "faithful_uses": "number",
+          "distorted_uses": "number"
+        }
       }
     },
     {
       "pass_number": 5,
-      "pass_name": "Synthesis & Report",
+      "pass_name": "Synthesis Report",
       "pass_description": "Synthesize findings into a comprehensive influence analysis report",
-      "engine_key": null,
+      "engine_key": "influence_pass5_report_generation",
+      "prompt_template": null,
       "requires_external_docs": false,
       "caches_result": true,
-      "depends_on_passes": [4],
+      "depends_on_passes": [
+        4
+      ],
       "output_schema": {
         "report": {
-          "overall_assessment": "string",
-          "faithful_uses": ["string"],
-          "problematic_uses": ["string"],
-          "strategic_invocations": ["string"],
-          "recommendations": ["string"]
+          "executive_summary": "string",
+          "overall_fidelity_grade": "string",
+          "faithful_uses": [
+            "object"
+          ],
+          "problematic_uses": [
+            "object"
+          ],
+          "strategic_invocations": [
+            "object"
+          ],
+          "patterns": [
+            "object"
+          ],
+          "recommendations": [
+            "object"
+          ]
         }
       }
     }
   ],
-  "required_inputs": ["corpus"],
-  "optional_inputs": ["external_texts", "specific_thinkers"],
-  "output_description": "Comprehensive analysis of intellectual influence fidelity",
+  "required_inputs": [
+    "corpus"
+  ],
+  "optional_inputs": [
+    "external_texts",
+    "specific_thinkers"
+  ],
+  "output_description": "Comprehensive analysis of intellectual influence fidelity with graded assessment",
+  "final_output_schema": null,
   "estimated_passes": 5,
   "source_project": "the-critic"
 }

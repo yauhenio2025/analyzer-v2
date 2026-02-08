@@ -1,0 +1,119 @@
+{
+  "engine_key": "influence_pass1_thinker_identification",
+  "engine_name": "Influence Pass 1: Thinker Identification",
+  "description": "First pass of influence analysis: identifies all thinkers cited, invoked, or referenced in the author's work. Maps citation patterns, distinguishes between substantive engagement and name-dropping.",
+  "version": 1,
+  "category": "scholarly",
+  "kind": "extraction",
+  "reasoning_domain": "influence_analysis",
+  "researcher_question": "Who are the thinkers this author draws upon, and how are they invoked?",
+  "canonical_schema": {
+    "thinkers": [
+      {
+        "thinker_id": "string (format: 'TH{N}')",
+        "name": "string - full name of the thinker",
+        "citation_count": "number - how many times cited/referenced",
+        "invocation_types": ["explicit_citation | allusion | conceptual_borrowing | name_drop | engagement"],
+        "primary_contexts": ["string - key contexts where invoked"],
+        "works_referenced": ["string - specific works cited if any"],
+        "apparent_role": "authority | interlocutor | target | background | borrowed_concept",
+        "quote_samples": ["string - key quotes invoking this thinker"]
+      }
+    ],
+    "citation_patterns": {
+      "total_thinkers": "number",
+      "most_cited": ["string - thinker names ordered by frequency"],
+      "depth_distribution": {
+        "deep_engagement": "number - count",
+        "moderate_engagement": "number - count",
+        "shallow_citation": "number - count",
+        "name_drop": "number - count"
+      }
+    },
+    "meta": {
+      "key_findings": ["string"],
+      "thinkers_for_verification": ["string - thinkers requiring external text lookup"]
+    }
+  },
+  "extraction_focus": [
+    "cited_thinkers",
+    "citation_patterns",
+    "engagement_depth",
+    "invocation_contexts"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "the-critic/analyzer/prompts_influence.py",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "thinker identification",
+      "analysis_type_plural": "thinker identifications",
+      "core_question": "Who are the intellectual sources this author draws upon?",
+      "extraction_steps": [
+        "SCAN FOR NAMES: Find all proper names of thinkers, theorists, philosophers, scholars",
+        "MAP CITATIONS: Note where and how each thinker is cited or invoked",
+        "ASSESS DEPTH: Distinguish deep engagement from name-dropping",
+        "IDENTIFY ROLE: Determine what role each thinker plays (authority, target, interlocutor)",
+        "CATALOG CONTEXTS: Record the contexts in which each thinker appears"
+      ],
+      "key_fields": {
+        "thinker_id": "Unique identifier for each thinker",
+        "name": "Thinker's name",
+        "invocation_types": "How they are invoked"
+      },
+      "id_field": "thinker_id",
+      "key_relationships": [
+        "cites",
+        "invokes",
+        "borrows_from",
+        "engages_with"
+      ],
+      "special_instructions": "Be thorough - catch allusions and conceptual borrowings, not just explicit citations. Note when concepts are used without attribution."
+    },
+    "curation": {
+      "item_type": "thinker",
+      "item_type_plural": "thinkers",
+      "consolidation_rules": [
+        "Merge multiple references to same thinker",
+        "Rank by engagement depth",
+        "Flag thinkers needing external verification"
+      ],
+      "cross_doc_patterns": [
+        "consistent_authorities",
+        "evolving_references"
+      ],
+      "synthesis_outputs": [
+        "thinker_catalog"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "TH1",
+          "to": "Foucault (12 citations, deep engagement)"
+        }
+      ],
+      "naming_guidance": "Use thinker name with citation count and engagement level",
+      "recommended_table_types": [
+        "thinker_catalog"
+      ],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  },
+  "apps": [
+    "critic"
+  ]
+}
