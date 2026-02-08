@@ -1,0 +1,68 @@
+{
+  "engine_key": "false_profundity_detector",
+  "engine_name": "False Profundity Detector",
+  "description": "Identifies statements that sound profound but dissolve on examination. Detects claims that exploit ambiguity: trivially true on one reading, bold but unsupported on another. Flags wisdom-sounding emptiness and profundity through vagueness.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "synthesis",
+  "reasoning_domain": "rhetoric",
+  "researcher_question": "Which statements seem profound but are actually empty?",
+  "extraction_prompt": "\nYou are detecting FALSE PROFUNDITY \u2014 statements that sound deep but dissolve\non examination.\n\n## THE FALSE PROFUNDITY TEST\n\nA statement is false profundity if:\n1. It SOUNDS profound (evokes a sense of deep insight)\n2. But on examination, it's either:\n   - Trivially true (but presented as wisdom), OR\n   - Bold but unsupported (claims more than it earns)\n3. It exploits AMBIGUITY to seem both true and interesting\n\n## PATTERNS TO DETECT\n\n### 1. THE AMBIGUITY TRAP\nStatements with two interpretations:\n- TRIVIAL: \"We need to think more carefully about important things\" (obviously)\n- BOLD: \"[Specific claim that sounds similar but is controversial]\"\n\nThe false profundity lives in the gap: seeming to say something bold while\nonly committing to something trivial.\n\n### 2. WISDOM-SOUNDING TAUTOLOGIES\nStatements that are true by definition but presented as insights:\n- \"In the end, what matters is what's important\"\n- \"Change happens when things become different\"\n- \"Success comes to those who succeed\"\n\n### 3. METAPHOR OVERLOAD\nUsing metaphor to obscure lack of content:\n- \"We must embrace the journey while honoring the destination\"\n- \"In the dance of progress, balance is key\"\n\nTest: What does this mean literally? If you can't say, it may be empty.\n\n### 4. PROFUNDITY THROUGH VAGUENESS\nStatements so vague they can't be wrong:\n- \"Everything is connected in ways we don't understand\"\n- \"There's more to this than meets the eye\"\n- \"The truth lies somewhere in between\"\n\n### 5. CATEGORY CONFUSION\nMixing categories to create pseudo-depth:\n- \"Consciousness is just information\" (mixing phenomenal and functional)\n- \"Time is an illusion\" (mixing experience and physics)\n\n## FOR EACH CANDIDATE\n\n1. **QUOTE**: The statement\n2. **SOUNDS LIKE**: Why does it seem profound?\n3. **TRIVIAL READING**: What's the obviously-true interpretation?\n4. **BOLD READING**: What's the interesting-but-unsupported interpretation?\n5. **MIDDLE READING**: Is there a meaningful middle ground?\n6. **AMBIGUITY SOURCE**: Where does the ambiguity come from?\n7. **CONTENT AFTER DISAMBIGUATION**: How much remains?\n8. **PROFUNDITY SCORE** (0-1): How profound does it sound?\n9. **EMPTINESS SCORE** (0-1): How empty is it on examination?\n10. **CLARIFICATION**: How could this be made meaningful?\n\n\n## OUTPUT GUIDANCE\n\nFocus on statements that seem to be making important claims.\nThe goal is to separate genuine insight from wisdom-sounding emptiness.\n",
+  "curation_prompt": "\nYou are synthesizing false profundity detection across multiple articles.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE PATTERNS\n- What types of false profundity appear most?\n- Are there characteristic patterns in this discourse?\n- Do different sources use similar pseudo-profound language?\n\n### 2. MAP AMBIGUITY SOURCES\n- What terms are most often used ambiguously?\n- What category confusions appear?\n- Where does metaphor substitute for content?\n\n### 3. ASSESS DISCOURSE DEPTH\n- What percentage of \"profound\" statements hold up?\n- Is the discourse relying on false profundity?\n- What would rigorous reformulation look like?\n\n### 4. CREATE CLARIFICATION GUIDE\n- Compile suggested clarifications\n- Create templates for making vague claims precise\n- Note which pseudo-profundities could become genuine insights\n\n## OUTPUT GUIDANCE\n\nThe goal is to map false profundity patterns and provide guidance\nfor more substantive discourse.\n",
+  "concretization_prompt": "\nTransform the false profundity analysis to be actionable:\n\n1. Create a profundity table:\n   | Statement | Sounds Like | Actually Means |\n   |-----------|-------------|----------------|\n   | [Quote]   | [Deep]      | [Trivial/Empty]|\n\n2. Show disambiguation examples:\n   - PSEUDO-PROFOUND: \"We need to reimagine the future\"\n   - CLARIFIED: \"We need to [specific policy] because [specific reason]\"\n\n3. Map ambiguity patterns:\n   - Most abused terms: \"consciousness,\" \"innovation,\" \"sustainability\"\n   - Most common confusion: [category X] with [category Y]\n\n4. Quantify the pattern:\n   - \"X of Y profound-sounding statements are empty on examination\"\n   - \"Most common emptiness source: [type]\"\n\n5. Create anti-profundity guidelines:\n   - If you can't state it precisely, you may not understand it\n   - If both readings are true, you're not saying anything\n   - If the metaphor can't be cashed out, it may be empty\n\nPreserve all scores and assessments.\nMake the output useful for distinguishing genuine insight from pseudo-depth.\n",
+  "canonical_schema": {
+    "false_profundities": [
+      {
+        "profundity_id": "string - unique identifier",
+        "quote": "string - the statement",
+        "sounds_like": "string - why it seems profound",
+        "trivial_reading": "string - interpretation that's obviously true but boring",
+        "bold_reading": "string - interpretation that's interesting but unsupported",
+        "middle_reading": "string | null - is there a meaningful middle ground?",
+        "ambiguity_source": "term_ambiguity | scope_ambiguity | metaphor_overload | category_confusion",
+        "content_after_disambiguation": "substantial | minimal | none",
+        "profundity_score": "number (0-1) - how profound it sounds",
+        "emptiness_score": "number (0-1) - how empty it is on examination",
+        "suggested_clarification": "string - how to make it meaningful",
+        "source_article": "string - article reference"
+      }
+    ],
+    "pattern_analysis": {
+      "common_ambiguity_sources": [
+        {
+          "source": "string",
+          "frequency": "number",
+          "examples": [
+            "string"
+          ]
+        }
+      ],
+      "profundity_signals": [
+        {
+          "signal": "string - what makes it sound profound",
+          "frequency": "number"
+        }
+      ]
+    },
+    "meta": {
+      "total_profundities_examined": "number",
+      "false_profundities_count": "number",
+      "high_emptiness_count": "number",
+      "most_common_ambiguity_type": "string",
+      "discourse_profundity_reliance": "high | moderate | low"
+    }
+  },
+  "extraction_focus": [
+    "profundity_claims",
+    "ambiguity_analysis",
+    "interpretation_spectrum",
+    "content_assessment",
+    "wisdom_signals"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/false_profundity_detector.py"
+}

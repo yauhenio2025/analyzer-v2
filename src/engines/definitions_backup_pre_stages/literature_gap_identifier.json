@@ -1,0 +1,120 @@
+{
+  "engine_key": "literature_gap_identifier",
+  "engine_name": "Knowledge Gap Finder",
+  "description": "Finds knowledge gaps in the literature. Identifies research opportunities, understudied topics, methodological gaps, empirical gaps, and theoretical gaps that future research could address.",
+  "version": 1,
+  "category": "scholarly",
+  "kind": "synthesis",
+  "reasoning_domain": "epistemology",
+  "researcher_question": "What knowledge is missing that researchers should pursue?",
+  "extraction_prompt": "\nYou are an expert literature reviewer identifying knowledge gaps.\n\nFor this article, identify ALL mentions of gaps, limitations, and opportunities:\n\n1. **RESEARCH GAPS**: What knowledge is explicitly or implicitly missing?\n   - Gap type: empirical, theoretical, methodological, geographical, temporal, population\n   - Description of the gap\n   - Current state of knowledge\n   - What specifically is missing\n   - Importance (0-1)\n   - Feasibility to address (0-1)\n   - Potential impact if filled\n\n2. **UNDERSTUDIED TOPICS**: What areas get insufficient attention?\n   - What topic is understudied?\n   - Why is it understudied (data access, difficulty, neglect)?\n   - How much coverage does it currently get?\n   - How important is it?\n   - What barriers exist?\n\n3. **METHODOLOGICAL GAPS**: What methods are missing or inadequate?\n   - What methodological limitation exists?\n   - What methods would help?\n   - What are current method limitations?\n   - Potential solutions?\n\n4. **FUTURE RESEARCH SUGGESTIONS**: What do authors explicitly recommend?\n   - Research questions suggested\n   - Approaches suggested\n   - Expected contributions\n\n5. **KNOWLEDGE FRONTIERS**: Where is the edge of current knowledge?\n   - What's the current boundary?\n   - What next steps are needed?\n   - What key questions remain?\n\n\nBe comprehensive - identify both explicit and inferred gaps.\n",
+  "curation_prompt": "\nYou are synthesizing gap analysis from multiple articles.\n\nYour task:\n1. **CONSOLIDATE GAPS**: Merge and prioritize gaps\n   - Deduplicate similar gaps\n   - Group by type\n   - Rank by importance and feasibility\n\n2. **MAP UNDERSTUDIED TOPICS**: What's consistently neglected?\n   - Identify patterns of neglect\n   - Note barriers to study\n   - Assess importance\n\n3. **CATALOG METHODOLOGICAL NEEDS**: What methods are wanted?\n   - Common methodological limitations\n   - Desired methods\n   - Potential solutions\n\n4. **COMPILE SUGGESTIONS**: What research is recommended?\n   - Group by theme\n   - Assess expected impact\n   - Note who suggests what\n\n5. **MAP KNOWLEDGE FRONTIERS**: Where are the boundaries?\n   - Current edge of knowledge\n   - Most promising directions\n   - Key unanswered questions\n\n\nCreate a comprehensive research opportunity map.\n",
+  "concretization_prompt": "\nTransform the gap analysis to be actionable:\n\n1. Name gaps specifically:\n   - \"G1\" \u2192 \"Empirical gap: Long-term effects of remote work on innovation\"\n\n2. Describe understudied topics:\n   - \"U1\" \u2192 \"Understudied: Gig worker mental health (minimal coverage, high importance)\"\n\n3. Articulate methodological needs:\n   - \"M1\" \u2192 \"Need: Longitudinal study methods for platform economy effects\"\n\n4. Frame research suggestions:\n   - \"S1\" \u2192 \"RQ: How do AI tools affect professional expertise development?\"\n\n5. Define frontiers:\n   - \"F1\" \u2192 \"Frontier: AI-human collaboration models (needs empirical testing)\"\n\nPreserve all importance and feasibility ratings.\nMake the analysis useful for research planning.\n",
+  "canonical_schema": {
+    "research_gaps": [
+      {
+        "gap_id": "string",
+        "gap_type": "empirical | theoretical | methodological | geographical | temporal | population",
+        "description": "string",
+        "current_state": "string",
+        "what_is_missing": "string",
+        "importance": "number (0-1)",
+        "feasibility": "number (0-1)",
+        "potential_impact": "string",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "understudied_topics": [
+      {
+        "topic_id": "string",
+        "topic": "string",
+        "why_understudied": "string",
+        "current_coverage": "none | minimal | partial",
+        "importance_for_field": "number (0-1)",
+        "barriers_to_study": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "methodological_gaps": [
+      {
+        "gap_id": "string",
+        "description": "string",
+        "methods_needed": [
+          "string"
+        ],
+        "current_method_limitations": [
+          "string"
+        ],
+        "potential_solutions": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "future_research_suggestions": [
+      {
+        "suggestion_id": "string",
+        "research_question": "string",
+        "suggested_approach": "string",
+        "expected_contribution": "string",
+        "suggested_by": "string",
+        "source_article": "string"
+      }
+    ],
+    "knowledge_frontiers": [
+      {
+        "frontier_id": "string",
+        "frontier_name": "string",
+        "current_edge_of_knowledge": "string",
+        "next_steps_needed": [
+          "string"
+        ],
+        "key_questions": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_gaps_identified": "number",
+      "gaps_by_type": {
+        "empirical": "number",
+        "theoretical": "number",
+        "methodological": "number",
+        "geographical": "number",
+        "temporal": "number",
+        "population": "number"
+      },
+      "highest_priority_gaps": [
+        "string"
+      ],
+      "most_feasible_opportunities": [
+        "string"
+      ]
+    }
+  },
+  "extraction_focus": [
+    "gaps",
+    "limitations",
+    "future_research",
+    "understudied",
+    "opportunities"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table",
+    "gemini_network_graph"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/literature_gap_identifier.py"
+}

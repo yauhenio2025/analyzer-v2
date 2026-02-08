@@ -1,0 +1,110 @@
+{
+  "engine_key": "cross_cultural_variation",
+  "engine_name": "Cross-Cultural Analyzer",
+  "description": "Analyzes cultural differences across contexts. Identifies cultural assumptions, geographic variations, cross-cultural comparisons, translation challenges, and universal vs. culture-specific patterns.",
+  "version": 1,
+  "category": "evidence",
+  "kind": "comparison",
+  "reasoning_domain": "comparison",
+  "researcher_question": "How do cultural contexts shape this discourse differently?",
+  "extraction_prompt": "\nYou are an expert cross-cultural analyst examining cultural variations.\n\nFor this article, extract ALL cultural and cross-cultural content:\n\n1. **CULTURAL CONTEXTS**: What cultural contexts are discussed?\n   - Name and geographic scope\n   - Cultural dimensions (if assessable):\n     * Individualism-Collectivism (-1 to 1)\n     * Power distance (0-1)\n     * Uncertainty avoidance (0-1)\n     * Long/short-term orientation (-1 to 1)\n   - Relevant values associated with this context\n\n2. **CROSS-CULTURAL VARIATIONS**: What differs across cultures?\n   - What topic shows variation?\n   - Between which contexts?\n   - What's the variation?\n   - How is it explained?\n   - How significant is it? (0-1)\n\n3. **UNIVERSAL PATTERNS**: What seems to hold everywhere?\n   - What pattern appears universal?\n   - In which contexts observed?\n   - Confidence it's truly universal (0-1)\n   - Any exceptions noted?\n\n4. **CULTURE-SPECIFIC PATTERNS**: What's unique to a context?\n   - What pattern is culture-specific?\n   - Which context is it specific to?\n   - What cultural factors explain it?\n   - How transferable might it be? (0-1)\n\n5. **TRANSLATION CHALLENGES**: What's hard to translate?\n   - What concept is challenging?\n   - Original and target contexts\n   - Challenge type: conceptual, linguistic, practical\n   - Any proposed solutions?\n\n\nBe comprehensive - capture both explicit and implicit cultural dimensions.\n",
+  "curation_prompt": "\nYou are synthesizing cross-cultural analysis from multiple articles.\n\nYour task:\n1. **MAP CULTURAL CONTEXTS**: What contexts appear?\n   - Consolidate context descriptions\n   - Note cultural dimensions\n   - Identify key values\n\n2. **CATALOG VARIATIONS**: What differs across cultures?\n   - Aggregate variations by topic\n   - Rate significance\n   - Note explanations\n\n3. **IDENTIFY UNIVERSALS**: What holds everywhere?\n   - Consolidate universal patterns\n   - Rate confidence\n   - Note exceptions\n\n4. **MAP CULTURE-SPECIFIC**: What's unique?\n   - Catalog culture-specific patterns\n   - Note cultural explanations\n   - Assess transferability\n\n5. **COMPILE TRANSLATION CHALLENGES**: What's hard to translate?\n   - Group by challenge type\n   - Note proposed solutions\n\n\nCreate a comprehensive cross-cultural map of the discourse.\n",
+  "concretization_prompt": "\nTransform the cross-cultural analysis to be clear:\n\n1. Name cultural contexts:\n   - \"C1\" \u2192 \"East Asian (Confucian-influenced) Context\"\n\n2. Describe variations:\n   - \"V1\" \u2192 \"Variation: Regulatory approach (US market-led vs. EU precautionary)\"\n\n3. Name universal patterns:\n   - \"U1\" \u2192 \"Universal: Economic efficiency concerns (observed in all contexts)\"\n\n4. Label culture-specific patterns:\n   - \"CS1\" \u2192 \"Culture-specific: Guanxi in Chinese business (low transferability)\"\n\n5. Describe translation challenges:\n   - \"TC1\" \u2192 \"Challenge: 'Privacy' concept translation to East Asian contexts\"\n\nPreserve all dimensional ratings and significance scores.\nMake the analysis useful for cross-cultural understanding.\n",
+  "canonical_schema": {
+    "cultural_contexts": [
+      {
+        "context_id": "string",
+        "name": "string",
+        "geographic_scope": "string",
+        "cultural_dimensions": {
+          "individualism_collectivism": "number (-1 to 1)",
+          "power_distance": "number (0-1)",
+          "uncertainty_avoidance": "number (0-1)",
+          "long_short_term": "number (-1 to 1)"
+        },
+        "relevant_values": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "cross_cultural_variations": [
+      {
+        "variation_id": "string",
+        "topic": "string",
+        "context_a": "context_id",
+        "context_b": "context_id",
+        "variation_description": "string",
+        "explanation": "string",
+        "significance": "number (0-1)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "universal_patterns": [
+      {
+        "pattern_id": "string",
+        "pattern_description": "string",
+        "contexts_observed": [
+          "context_id"
+        ],
+        "confidence_universal": "number (0-1)",
+        "exceptions": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "culture_specific_patterns": [
+      {
+        "pattern_id": "string",
+        "pattern_description": "string",
+        "specific_to_context": "context_id",
+        "cultural_explanation": "string",
+        "transferability": "number (0-1)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "translation_challenges": [
+      {
+        "challenge_id": "string",
+        "concept": "string",
+        "original_context": "context_id",
+        "target_context": "context_id",
+        "challenge_type": "conceptual | linguistic | practical",
+        "description": "string",
+        "proposed_solutions": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_contexts": "number",
+      "total_variations": "number",
+      "universal_pattern_count": "number",
+      "culture_specific_count": "number",
+      "average_variation_significance": "number (0-1)"
+    }
+  },
+  "extraction_focus": [
+    "culture",
+    "geography",
+    "context",
+    "variation",
+    "comparison"
+  ],
+  "primary_output_modes": [
+    "table",
+    "structured_text_report",
+    "gemini_geographic_map"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/cross_cultural_variation.py"
+}

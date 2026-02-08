@@ -1,0 +1,100 @@
+{
+  "engine_key": "replication_status_assessor",
+  "engine_name": "Replication Status Assessor",
+  "description": "Assesses replication evidence for research findings. Evaluates whether findings have been replicated, number and quality of replications, failed replications, and which findings are robust. Essential for navigating the replication crisis.",
+  "version": 1,
+  "category": "methodology",
+  "kind": "synthesis",
+  "reasoning_domain": "methodology",
+  "researcher_question": "Have these findings been replicated?",
+  "extraction_prompt": "\nYou are assessing REPLICATION STATUS \u2014 whether findings have been replicated\nand what this means for their robustness.\n\n## THE REPLICATION CRISIS CONTEXT\n\nMany published findings fail to replicate:\n- Psychology: ~40% replication rate in major study\n- Medicine: Many effects shrink in replication\n- Economics: ~50% replication rate\n- Cancer biology: Majority don't replicate\n\nThis means: Published doesn't mean reliable. Replication evidence matters.\n\n## TYPES OF REPLICATION\n\n### DIRECT REPLICATION\nSame method, new sample\n- Strongest test of finding\n- If fails, original finding questionable\n\n### CONCEPTUAL REPLICATION\nDifferent method, same concept\n- Tests whether concept is robust\n- If fails, may be method-specific\n\n### META-ANALYSIS\nSynthesizes multiple studies\n- Can reveal whether effect is real and how large\n- Publication bias can inflate effects\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY KEY FINDINGS\nWhat findings are being relied on?\n- What does each claim?\n- Where was it originally published?\n- What's the original effect size?\n\n### STEP 2: SEARCH FOR REPLICATION EVIDENCE\nFor each finding:\n- Has it been directly replicated?\n- Has it been conceptually replicated?\n- Are there failed replications?\n- Is there a meta-analysis?\n\nFor each replication attempt:\n- What type of replication?\n- What was the outcome?\n- How does the effect compare to original?\n- What's the methodological quality?\n\n### STEP 3: ASSESS EFFECT SHRINKAGE\nDo effects get smaller in replications?\n- Original effect size vs. replication effect sizes\n- This is common and informative\n\n### STEP 4: IDENTIFY UNTESTED FINDINGS\nWhat findings have no replication evidence?\n- How concerning is this?\n- How feasible would replication be?\n- What's the replication priority?\n\n### STEP 5: ASSESS ROBUSTNESS\nFor each finding:\n- Robust: Consistently replicated\n- Probably robust: Some successful replications\n- Uncertain: Mixed evidence\n- Probably fragile: More failures than successes\n- Fragile: Consistently fails to replicate\n\n### STEP 6: MAKE RECOMMENDATIONS\nHow much should we trust each finding?\n- Trust: Robust replication evidence\n- Trust cautiously: Some positive evidence\n- Await replication: Untested\n- Be skeptical: Mixed or failed replications\n- Disregard: Consistently fails to replicate\n\n\n## OUTPUT GUIDANCE\n\nBe specific about replication evidence. \"Probably replicated\" is not useful.\n\"Three direct replications, two successful, one failed, average effect 60% of original\" is useful.\n",
+  "curation_prompt": "\nYou are synthesizing replication status assessments across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE REPLICATION EVIDENCE\n- Combine replication information across sources\n- What's the complete picture of replications?\n\n### 2. IDENTIFY ROBUST VS. FRAGILE FINDINGS\n- Which findings are consistently replicated?\n- Which consistently fail?\n- Which are untested?\n\n### 3. ASSESS FIELD-LEVEL PATTERNS\n- What's the overall replication rate?\n- What predicts successful replication?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive replication assessment for all key findings.\n",
+  "concretization_prompt": "\nTransform the replication status analysis into actionable assessment:\n\n1. **REPLICATION SUMMARY**\n   ```\n   | Finding | Replications | Successes | Failures | Robustness |\n   |---------|--------------|-----------|----------|------------|\n   | F1      | 5            | 3         | 2        | Uncertain  |\n   ```\n\n2. **REPLICATION DETAILS**\n   ```\n   Finding: [Description]\n   Original: [Source, N, effect size]\n   Replications:\n   - R1: [Type] | [Outcome] | Effect: [Size] | Quality: [Rating]\n   - R2: ...\n   Overall: [Robustness assessment]\n   ```\n\n3. **EFFECT SHRINKAGE**\n   - F1: Original effect d=0.8, average replication d=0.4 (50% shrinkage)\n\n4. **ROBUSTNESS CATEGORIES**\n   - ROBUST: [Findings with consistent replication]\n   - UNCERTAIN: [Findings with mixed evidence]\n   - FRAGILE: [Findings that fail to replicate]\n   - UNTESTED: [Findings needing replication]\n\n5. **RECOMMENDATIONS**\n   | Finding | Evidence | Recommendation |\n   |---------|----------|----------------|\n   | F1      | Mixed    | Trust cautiously |\n\n6. **REPLICATION PRIORITIES**\n   - High priority: [Untested findings that matter most]\n   - Why: [Importance and feasibility]\n\n7. **BOTTOM LINE**\n   [One paragraph: Which findings are robust? Which should we be skeptical of?\n   What's the overall evidentiary quality given replication evidence?]\n",
+  "canonical_schema": {
+    "findings_assessed": [
+      {
+        "finding_id": "string - F1, F2, etc.",
+        "finding_description": "string - what the finding claims",
+        "original_source": "string - where first published",
+        "original_sample": "string - sample characteristics",
+        "original_effect_size": "string - magnitude if available",
+        "field": "string - psychology, medicine, economics, etc."
+      }
+    ],
+    "replication_evidence": [
+      {
+        "replication_id": "string - R1, R2, etc.",
+        "finding_id": "string - which finding",
+        "replication_type": "direct | conceptual | partial | systematic_review | meta_analysis",
+        "outcome": "successful | partially_successful | failed | mixed",
+        "sample_size": "number | string",
+        "effect_size_found": "string - what was found",
+        "effect_comparison": "similar | smaller | larger | absent | opposite",
+        "replicator": "string - who conducted",
+        "pre_registered": "yes | no | unclear",
+        "methodological_quality": "high | medium | low"
+      }
+    ],
+    "replication_summary": [
+      {
+        "finding_id": "string",
+        "total_replications": "number",
+        "successful_replications": "number",
+        "failed_replications": "number",
+        "replication_rate": "number - proportion successful",
+        "average_effect_in_replications": "string",
+        "effect_shrinkage": "substantial | moderate | minimal | none | unknown"
+      }
+    ],
+    "robustness_assessment": [
+      {
+        "finding_id": "string",
+        "robustness_level": "robust | probably_robust | uncertain | probably_fragile | fragile",
+        "confidence_in_assessment": "high | medium | low",
+        "basis": "string - why this assessment",
+        "caveats": [
+          "string - qualifications"
+        ],
+        "recommendation": "trust | trust_cautiously | await_replication | be_skeptical | disregard"
+      }
+    ],
+    "untested_findings": [
+      {
+        "finding_id": "string",
+        "why_concerning": "string - why lack of replication is a problem",
+        "replication_priority": "high | medium | low",
+        "replication_feasibility": "easy | moderate | difficult"
+      }
+    ],
+    "field_level_patterns": {
+      "overall_replication_rate": "string - if estimable",
+      "common_failure_patterns": [
+        "string - why replications fail"
+      ],
+      "robust_finding_characteristics": [
+        "string - what predicts robustness"
+      ]
+    },
+    "meta": {
+      "findings_assessed": "number",
+      "with_replication_evidence": "number",
+      "without_replication_evidence": "number",
+      "robust_findings": "number",
+      "fragile_findings": "number",
+      "overall_confidence": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "original_findings",
+    "replication_attempts",
+    "replication_outcomes",
+    "robustness_assessment",
+    "untested_findings"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/replication_status_assessor.py"
+}

@@ -1,0 +1,123 @@
+{
+  "engine_key": "causal_inference_auditor",
+  "engine_name": "Causal Inference Auditor",
+  "description": "Audits causal claims and identification strategies. Identifies confounding, selection bias, reverse causation, and identification weaknesses. Essential for evaluating whether causal conclusions are warranted by the research design.",
+  "version": 1,
+  "category": "methodology",
+  "kind": "synthesis",
+  "reasoning_domain": "methodology",
+  "researcher_question": "Are causal claims warranted by the evidence?",
+  "extraction_prompt": "\nYou are a CAUSAL INFERENCE AUDITOR \u2014 examining whether causal claims are\nwarranted given the research design and evidence.\n\n## THE CAUSAL INFERENCE PROBLEM\n\nCorrelation \u2260 Causation. To claim X causes Y, you need:\n1. Association: X and Y are correlated\n2. Temporal precedence: X precedes Y\n3. No confounding: No third variable Z causes both X and Y\n4. No reverse causation: Y doesn't cause X\n5. Mechanism: Plausible causal pathway\n\n## THREATS TO CAUSAL INFERENCE\n\n### CONFOUNDING\nA third variable Z causes both X and Y, creating spurious association:\n- Ice cream sales and drownings both caused by summer heat\n- Education and income both caused by family background\n- Treatment and outcome both affected by disease severity\n\n### SELECTION BIAS\nNon-random selection into treatment/exposure:\n- People who take vitamins differ from those who don't\n- Countries that adopt policies differ from those that don't\n- Selection creates spurious association\n\n### REVERSE CAUSATION\nThe effect causes the cause:\n- Does depression cause unemployment, or vice versa?\n- Does democracy cause growth, or growth cause democracy?\n- Temporal precedence alone doesn't resolve this\n\n### IDENTIFICATION STRATEGIES\nMethods for establishing causation:\n- **Randomized experiments**: Random assignment eliminates confounding\n- **Instrumental variables**: Use exogenous variation in X\n- **Difference-in-differences**: Compare changes across groups\n- **Regression discontinuity**: Exploit threshold rules\n- **Matching**: Create comparable treatment/control\n- **Panel data**: Control for time-invariant confounders\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY CAUSAL CLAIMS\nWhat causal claims are being made?\n- What is claimed to cause what?\n- How strong is the causal language?\n- What's the evidence type?\n\n### STEP 2: EXAMINE CONFOUNDING\nFor each claim, what confounders might exist?\n- What third variables could cause both X and Y?\n- Are they controlled for?\n- How well?\n- What residual confounding remains?\n\n### STEP 3: ASSESS SELECTION\nIs there non-random selection into treatment/exposure?\n- How were treated/exposed units selected?\n- How do they differ from untreated/unexposed?\n- Is selection on observables or unobservables?\n\n### STEP 4: CONSIDER REVERSE CAUSATION\nCould the effect cause the cause?\n- Is the temporal ordering clear?\n- Could there be feedback loops?\n- How is reverse causation ruled out?\n\n### STEP 5: EVALUATE IDENTIFICATION STRATEGY\nWhat strategy identifies causal effect?\n- What are the key assumptions?\n- How plausible are they?\n- What robustness checks exist?\n- What are testable implications?\n\n### STEP 6: GENERATE ALTERNATIVE EXPLANATIONS\nWhat else could explain the association?\n- Non-causal alternatives\n- Different causal paths\n- How are they ruled out?\n\n### STEP 7: OVERALL ASSESSMENT\nHow confident should we be in causal claims?\n- Which claims are best/worst identified?\n- What are most serious threats?\n- What caveats are needed?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about threats to identification.\nIdentify the most plausible alternative explanations.\nFocus on threats that affect main conclusions.\n",
+  "curation_prompt": "\nSynthesize causal inference audits from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **COMPARE CLAIMS**: Same causal claims across sources?\n2. **TRIANGULATE IDENTIFICATION**: Do different strategies yield same answer?\n3. **CROSS-VALIDATE THREATS**: Agreement on threats to validity?\n4. **ASSESS ROBUSTNESS**: How robust is the causal conclusion?\n5. **SYNTHESIZE CONFIDENCE**: Overall assessment of causal claims\n\n## OUTPUT GUIDANCE\n\nCreate unified assessment of causal claim credibility.\n",
+  "concretization_prompt": "\nTransform causal inference audit into clear assessment:\n\n1. **CAUSAL CLAIMS**\n   | Claim | Cause \u2192 Effect | Evidence Type | Identification | Confidence |\n   |-------|---------------|---------------|----------------|------------|\n\n2. **CONFOUNDING THREATS** (ranked by severity)\n   - [Claim]: [Confounder] \u2014 [Mechanism] \u2014 Addressed? [Y/N] \u2014 Severity: [X]\n\n3. **SELECTION THREATS**\n   - [Claim]: [Selection mechanism] \u2014 Direction: [Inflates/Deflates]\n\n4. **REVERSE CAUSATION**\n   - [Claim]: [Reverse story] \u2014 Plausibility: [X] \u2014 Ruled out? [Y/N]\n\n5. **IDENTIFICATION ASSESSMENT**\n   | Claim | Strategy | Key Assumption | Plausibility | Robustness |\n   |-------|----------|----------------|--------------|------------|\n\n6. **ALTERNATIVE EXPLANATIONS**\n   - [Claim]: [Alternative] \u2014 Ruled out? [Y/N]\n\n7. **OVERALL CAUSAL CONFIDENCE**\n   - High confidence: [Claims]\n   - Medium confidence: [Claims]\n   - Low confidence: [Claims]\n\n8. **BOTTOM LINE**\n   [Which causal claims are warranted? What caveats are needed?]\n",
+  "canonical_schema": {
+    "causal_claims": [
+      {
+        "claim_id": "string - CL1, CL2, etc.",
+        "cause": "string - purported cause",
+        "effect": "string - purported effect",
+        "claim_strength": "correlational | suggestive | causal | strong_causal",
+        "evidence_type": "observational | quasi_experimental | experimental | natural_experiment",
+        "identification_strategy": "string - how causation is identified"
+      }
+    ],
+    "confounding_analysis": [
+      {
+        "confound_id": "string - CF1, CF2, etc.",
+        "claim_id": "string - which causal claim",
+        "confounder": "string - the confounding variable",
+        "mechanism": "string - how it affects both cause and effect",
+        "addressed": "yes | no | partially",
+        "method_of_control": "string - how confounder is handled",
+        "residual_concern": "string - remaining worry",
+        "severity": "minor | moderate | severe"
+      }
+    ],
+    "selection_threats": [
+      {
+        "threat_id": "string",
+        "claim_id": "string - which causal claim",
+        "selection_mechanism": "string - how selection operates",
+        "direction_of_bias": "string - inflates/deflates effect",
+        "addressed": "yes | no | partially",
+        "severity": "minor | moderate | severe"
+      }
+    ],
+    "reverse_causation": [
+      {
+        "reversal_id": "string",
+        "claim_id": "string - which causal claim",
+        "reverse_story": "string - how effect might cause cause",
+        "plausibility": "unlikely | possible | plausible | likely",
+        "addressed": "yes | no | partially",
+        "method": "string - how reverse causation is ruled out"
+      }
+    ],
+    "identification_assessment": [
+      {
+        "claim_id": "string - which causal claim",
+        "strategy": "string - identification strategy used",
+        "key_assumptions": [
+          "string - required assumptions"
+        ],
+        "testable_implications": [
+          "string - what can be tested"
+        ],
+        "assumption_plausibility": {
+          "assumption": "plausibility rating"
+        },
+        "robustness_checks": [
+          "string - checks performed"
+        ],
+        "overall_credibility": "high | medium | low"
+      }
+    ],
+    "alternative_explanations": [
+      {
+        "alternative_id": "string",
+        "claim_id": "string - which causal claim",
+        "alternative": "string - alternative causal story",
+        "mechanism": "string - how it would work",
+        "ruled_out": "yes | no | partially",
+        "residual_plausibility": "low | medium | high"
+      }
+    ],
+    "overall_assessment": {
+      "strongest_claims": [
+        "string - claim_ids with best identification"
+      ],
+      "weakest_claims": [
+        "string - claim_ids with weak identification"
+      ],
+      "most_serious_threats": [
+        "string - biggest validity threats"
+      ],
+      "causal_confidence_levels": {
+        "claim_id": "high | medium | low | very_low"
+      },
+      "recommendations": [
+        "string - how to strengthen causal inference"
+      ]
+    },
+    "meta": {
+      "claims_analyzed": "number",
+      "confounders_identified": "number",
+      "severe_threats": "number",
+      "well_identified_claims": "number"
+    }
+  },
+  "extraction_focus": [
+    "causal_claims",
+    "identification_strategies",
+    "confounders",
+    "selection_issues",
+    "reverse_causation",
+    "threats_to_validity"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/causal_inference_auditor.py"
+}

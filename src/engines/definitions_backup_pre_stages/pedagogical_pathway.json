@@ -1,0 +1,123 @@
+{
+  "engine_key": "pedagogical_pathway",
+  "engine_name": "Learning Scaffold Extractor",
+  "description": "Extracts pedagogical structures from texts: concept prerequisites, learning sequences, scaffolding elements, threshold concepts that transform understanding, and common misconceptions to address.",
+  "version": 1,
+  "category": "epistemology",
+  "kind": "synthesis",
+  "reasoning_domain": "epistemology",
+  "researcher_question": "What learning pathway does this material imply?",
+  "extraction_prompt": "\nYou are an expert in instructional design and learning science.\n\nFor this article, extract PEDAGOGICAL STRUCTURES:\n\n1. **CONCEPTS**: Key ideas and terms\n   - Core concepts introduced\n   - Definitions provided\n   - Complexity level (foundational, intermediate, advanced)\n\n2. **PREREQUISITES**: What must be known first\n   - Which concepts require prior knowledge?\n   - What is assumed readers already know?\n   - Required vs. helpful prerequisites\n\n3. **LEARNING SEQUENCES**: Implied ordering\n   - In what order should concepts be learned?\n   - Why does this ordering matter?\n   - What builds on what?\n\n4. **SCAFFOLDS**: Support structures for learners\n   - Analogies used to explain difficult concepts\n   - Examples that illustrate abstractions\n   - Simplifications that aid initial understanding\n   - Visualizations or diagrams described\n   - Guiding questions posed\n\n5. **THRESHOLD CONCEPTS**: Transformative ideas\n   - Which concepts fundamentally change understanding?\n   - What makes them difficult to grasp?\n   - What does \"getting it\" look like?\n\n6. **MISCONCEPTIONS**: Common errors\n   - What might learners misunderstand?\n   - Why are these misconceptions persistent?\n   - How should they be addressed?\n\n7. **LEARNING OBJECTIVES**: What learners should achieve\n   - What should readers know/be able to do?\n   - At what Bloom's taxonomy level?\n\n\nExtract the implicit curriculum embedded in this text.\n",
+  "curation_prompt": "\nYou are synthesizing pedagogical analyses from multiple articles.\n\nYour task:\n1. **CONSOLIDATE CONCEPTS**:\n   - Deduplicate concepts across articles\n   - Standardize definitions\n   - Classify by complexity level\n\n2. **BUILD PREREQUISITE GRAPH**:\n   - Map what-requires-what relationships\n   - Identify foundational concepts\n   - Find longest prerequisite chains\n\n3. **DESIGN LEARNING SEQUENCES**:\n   - Synthesize optimal learning paths\n   - Consider different learner starting points\n   - Provide rationale for ordering\n\n4. **CATALOG SCAFFOLDS**:\n   - Collect analogies, examples, simplifications\n   - Match to concepts they support\n   - Note when scaffolds should be removed\n\n5. **IDENTIFY THRESHOLD CONCEPTS**:\n   - Which concepts are most transformative?\n   - What makes them difficult?\n   - What strategies help learners cross thresholds?\n\n6. **MAP MISCONCEPTIONS**:\n   - What errors are commonly predicted?\n   - How to identify and correct them?\n\n7. **SYNTHESIZE LEARNING OBJECTIVES**:\n   - What should learners achieve?\n   - How can achievement be assessed?\n\n\nCreate a comprehensive learning pathway from this corpus.\n",
+  "concretization_prompt": "\nTransform the pedagogical analysis to use concrete, helpful labels:\n\n1. Name concepts clearly:\n   - \"C1\" -> \"Machine Learning Fundamentals\"\n   - \"C2\" -> \"Neural Network Architecture\"\n\n2. Describe prerequisites specifically:\n   - \"Linear algebra (matrix operations) required for understanding backpropagation\"\n\n3. Name scaffolds descriptively:\n   - \"S1\" -> \"House price prediction analogy for regression\"\n\n4. Name threshold concepts memorably:\n   - \"T1\" -> \"The Gradient Descent Insight\"\n\n5. Describe misconceptions concretely:\n   - \"M1\" -> \"Confusing correlation with causation in model interpretation\"\n\nPreserve all pedagogical relationships and sequences.\nMake the output immediately useful for curriculum design.\n",
+  "canonical_schema": {
+    "concepts": [
+      {
+        "concept_id": "string",
+        "name": "string",
+        "definition": "string",
+        "complexity_level": "foundational | intermediate | advanced",
+        "domain": "string",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "prerequisite_relationships": [
+      {
+        "relationship_id": "string",
+        "prerequisite": "concept_id",
+        "enables": "concept_id",
+        "relationship_type": "required | helpful | assumed",
+        "explanation": "string (why this prerequisite matters)"
+      }
+    ],
+    "learning_sequences": [
+      {
+        "sequence_id": "string",
+        "name": "string",
+        "description": "string",
+        "concepts_in_order": [
+          "concept_id"
+        ],
+        "rationale": "string (why this ordering)",
+        "target_learner": "string",
+        "estimated_duration": "string"
+      }
+    ],
+    "scaffolds": [
+      {
+        "scaffold_id": "string",
+        "name": "string",
+        "type": "analogy | example | simplification | visualization | worked_example | guiding_question",
+        "supports_concept": "concept_id",
+        "description": "string",
+        "when_to_use": "string",
+        "when_to_remove": "string"
+      }
+    ],
+    "threshold_concepts": [
+      {
+        "threshold_id": "string",
+        "concept_id": "string",
+        "name": "string",
+        "why_transformative": "string",
+        "common_sticking_points": [
+          "string"
+        ],
+        "signs_of_crossing": [
+          "string"
+        ],
+        "pedagogical_strategies": [
+          "string"
+        ]
+      }
+    ],
+    "misconceptions": [
+      {
+        "misconception_id": "string",
+        "description": "string",
+        "related_concepts": [
+          "concept_id"
+        ],
+        "why_persistent": "string",
+        "correction_strategies": [
+          "string"
+        ],
+        "how_to_identify": "string"
+      }
+    ],
+    "learning_objectives": [
+      {
+        "objective_id": "string",
+        "statement": "string",
+        "bloom_level": "remember | understand | apply | analyze | evaluate | create",
+        "concepts_required": [
+          "concept_id"
+        ],
+        "assessable_by": "string"
+      }
+    ],
+    "meta": {
+      "total_concepts": "number",
+      "total_threshold_concepts": "number",
+      "prerequisite_depth": "number (longest chain)",
+      "target_expertise_level": "novice | intermediate | advanced"
+    }
+  },
+  "extraction_focus": [
+    "concepts",
+    "prerequisites",
+    "learning_sequences",
+    "scaffolds",
+    "threshold_concepts",
+    "misconceptions"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "mermaid_flowchart",
+    "gemini_concept_tree"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/pedagogical_pathway.py"
+}

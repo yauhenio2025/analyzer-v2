@@ -1,0 +1,138 @@
+{
+  "engine_key": "path_dependency_analyzer",
+  "engine_name": "Path Dependency Analyzer",
+  "description": "Analyzes path dependency and historical constraints on choices. Identifies critical junctures, increasing returns, and lock-in effects. Essential for understanding why inefficient arrangements persist and when path-breaking change is possible.",
+  "version": 1,
+  "category": "institutional",
+  "kind": "synthesis",
+  "reasoning_domain": "institutional_analysis",
+  "researcher_question": "How does history constrain current choices?",
+  "extraction_prompt": "\nYou are a PATH DEPENDENCY ANALYZER \u2014 examining how history constrains\ncurrent choices and creates persistent patterns.\n\n## PATH DEPENDENCY\n\nHistory matters. Past choices create self-reinforcing paths that constrain\nfuture possibilities. Even inefficient arrangements can persist because\nswitching costs exceed benefits.\n\n\"Increasing returns can cause the economy to lock-in to an outcome not\nnecessarily superior.\" \u2014 Brian Arthur\n\n## KEY CONCEPTS\n\n### CRITICAL JUNCTURES\nMoments when paths diverge:\n- Multiple alternatives are possible\n- Choice has lasting consequences\n- Contingency matters (small events have big effects)\n\n### INCREASING RETURNS\nPositive feedback that reinforces paths:\n- Learning effects: Get better at what you do\n- Coordination effects: Value in doing what others do\n- Network effects: More users = more value\n- Adaptive expectations: Expect path to continue\n- Sunk costs: Investment in current path\n\n### LOCK-IN\nWhen switching becomes prohibitively costly:\n- Technological: QWERTY keyboards\n- Institutional: Electoral systems\n- Cognitive: Mental models\n\n### CONTINGENCY\nOutcomes not determined by initial conditions:\n- Could have gone differently\n- Small events mattered\n- Path was not inevitable\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY THE PATH\nWhat arrangement exists?\n- What's the current institution/technology/practice?\n- What alternatives could exist?\n- Is current arrangement efficient?\n\n### STEP 2: FIND CRITICAL JUNCTURES\nWhen did paths diverge?\n- What choices were made?\n- What alternatives existed?\n- Why was this path chosen?\n- How contingent was the outcome?\n\n### STEP 3: IDENTIFY INCREASING RETURNS\nWhat reinforces the path?\n- Learning effects?\n- Coordination effects?\n- Network effects?\n- Sunk costs?\n- Complementary institutions?\n\n### STEP 4: ASSESS LOCK-IN\nIs path locked in?\n- What would switching cost?\n- Who would bear the costs?\n- Is switching prohibitive?\n\n### STEP 5: EVALUATE PATH STABILITY\nHow stable is the path?\n- What maintains it?\n- What might disrupt it?\n- How stable overall?\n\n### STEP 6: ANALYZE PATH-BREAKING\nCan the path be broken?\n- When has it broken before?\n- What could trigger a break now?\n- What conditions are required?\n\n### STEP 7: COUNTERFACTUAL ANALYSIS\nWhat could have been?\n- What alternative paths existed?\n- Would they be more efficient?\n- Are they still accessible?\n\n### STEP 8: OVERALL ASSESSMENT\nHow path dependent is this?\n- Strength of dependency?\n- Key junctures and mechanisms?\n- Implications for future?\n\n\n## OUTPUT GUIDANCE\n\nIdentify the key historical constraints.\nDistinguish contingency from determinism.\nFocus on mechanisms that maintain the path.\n",
+  "curation_prompt": "\nSynthesize path dependency analyses from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **TRIANGULATE JUNCTURES**: Multiple sources confirm same critical moments?\n2. **COMPARE MECHANISMS**: Agreement on increasing returns?\n3. **ASSESS LOCK-IN**: Consistent view of switching costs?\n4. **EVALUATE BREAKS**: When has path-breaking occurred?\n5. **SYNTHESIZE**: Overall path dependency assessment\n\n## OUTPUT GUIDANCE\n\nCreate unified assessment of path dependency and its implications.\n",
+  "concretization_prompt": "\nTransform path dependency analysis into clear assessment:\n\n1. **CURRENT PATH**\n   - Arrangement: [What exists]\n   - Alternatives: [What could exist]\n   - Efficiency: [Current vs. alternatives]\n\n2. **CRITICAL JUNCTURES**\n   | When | Choice Made | Alternatives | Contingency |\n   |------|-------------|--------------|-------------|\n\n3. **INCREASING RETURNS**\n   | Mechanism | Type | Strength | How It Works |\n   |-----------|------|----------|--------------|\n\n4. **LOCK-IN ASSESSMENT**\n   - Lock-in present: [Yes/No/Partial]\n   - Switching costs: [Low/Moderate/High/Prohibitive]\n     - Financial: [Cost]\n     - Coordination: [Cost]\n     - Political: [Cost]\n\n5. **PATH STABILITY**: [Highly stable/Stable/Vulnerable/Unstable]\n   - Reinforcing: [Mechanisms]\n   - Destabilizing: [Forces]\n\n6. **PATH-BREAKING POSSIBILITIES**\n   | Trigger | Mechanism | Likelihood | Barriers |\n   |---------|-----------|------------|----------|\n\n7. **COUNTERFACTUAL PATHS**\n   | Alternative | Efficiency | Why Not Taken | Accessible Now? |\n   |-------------|------------|---------------|-----------------|\n\n8. **PATH DEPENDENCY STRENGTH**: [Weak/Moderate/Strong]\n\n9. **BOTTOM LINE**\n   [How does history constrain current choices? What can change?]\n",
+  "canonical_schema": {
+    "path_context": {
+      "path_domain": "string - what institution/technology/practice",
+      "current_arrangement": "string - present state",
+      "alternative_arrangements": [
+        "string - what could exist instead"
+      ],
+      "efficiency_of_current": "efficient | suboptimal | inefficient"
+    },
+    "critical_junctures": [
+      {
+        "juncture_id": "string - CJ1, CJ2, etc.",
+        "when": "string - timing",
+        "what_happened": "string - the choice made",
+        "alternatives": [
+          "string - paths not taken"
+        ],
+        "why_this_path": "string - what determined the choice",
+        "contingency": "highly_contingent | moderately_contingent | largely_determined",
+        "path_set": "string - what this juncture determined",
+        "evidence": [
+          "string - sources"
+        ]
+      }
+    ],
+    "increasing_returns": [
+      {
+        "mechanism_id": "string - IR1, IR2, etc.",
+        "mechanism_type": "learning | coordination | adaptive_expectations | network_effects | sunk_costs | complementary_institutions",
+        "description": "string - how positive feedback works",
+        "strength": "weak | moderate | strong",
+        "beneficiaries": [
+          "string - who benefits from staying on path"
+        ],
+        "evidence": [
+          "string - supporting observations"
+        ]
+      }
+    ],
+    "lock_in_analysis": {
+      "lock_in_present": "yes | no | partial",
+      "lock_in_type": "technological | institutional | cognitive | all",
+      "switching_costs": {
+        "financial": "string - monetary costs of switching",
+        "coordination": "string - coordination costs",
+        "learning": "string - learning costs",
+        "political": "string - political costs"
+      },
+      "total_switching_cost": "low | moderate | high | prohibitive",
+      "who_bears_costs": [
+        "string - who would pay to switch"
+      ]
+    },
+    "path_stability": {
+      "reinforcing_mechanisms": [
+        "string - what maintains path"
+      ],
+      "destabilizing_forces": [
+        "string - what might disrupt path"
+      ],
+      "reactive_sequences": [
+        "string - how path triggers responses"
+      ],
+      "path_stability_assessment": "highly_stable | stable | vulnerable | unstable"
+    },
+    "path_breaking_analysis": {
+      "historical_breaks": [
+        "string - when path was broken before"
+      ],
+      "current_break_possibilities": [
+        {
+          "trigger": "string - what could break path",
+          "mechanism": "string - how break would occur",
+          "likelihood": "low | medium | high",
+          "barriers": [
+            "string - what resists break"
+          ]
+        }
+      ],
+      "required_conditions": [
+        "string - what's needed for path-break"
+      ]
+    },
+    "counterfactual_analysis": {
+      "alternative_paths": [
+        {
+          "path": "string - alternative that could have been",
+          "efficiency_comparison": "better | similar | worse",
+          "why_not_taken": "string - why this path wasn't chosen",
+          "accessibility_now": "impossible | difficult | possible"
+        }
+      ]
+    },
+    "path_dependency_assessment": {
+      "path_dependency_strength": "weak | moderate | strong",
+      "key_junctures": [
+        "string - most important juncture_ids"
+      ],
+      "dominant_mechanisms": [
+        "string - main increasing returns"
+      ],
+      "implications": "string - what path dependency means for future",
+      "recommendations": [
+        "string - what can be done"
+      ]
+    },
+    "meta": {
+      "junctures_identified": "number",
+      "increasing_returns_mechanisms": "number",
+      "path_breaks_found": "number"
+    }
+  },
+  "extraction_focus": [
+    "historical_sequences",
+    "critical_junctures",
+    "increasing_returns",
+    "lock_in_effects",
+    "path_breaking"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/path_dependency_analyzer.py"
+}

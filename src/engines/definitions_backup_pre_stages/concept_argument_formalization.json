@@ -1,0 +1,52 @@
+{
+  "engine_key": "concept_argument_formalization",
+  "engine_name": "Concept Argument Formalization",
+  "description": "Extracts and formalizes arguments involving the target concept",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "argument extraction",
+  "researcher_question": "What specific arguments are made about this concept?",
+  "extraction_prompt": "You are conducting Phase 3 of a multi-pass conceptual analysis.\n\n## YOUR TASK: ARGUMENT FORMALIZATION\n\nExtract ALL arguments that involve \"{concept}\" from the current document.\n\n## CONTEXT FROM PREVIOUS PHASES\n\nSemantic field (catch synonyms): {semantic_context}\nStructural landscape (where to look): {structural_context}\n\n## WHAT COUNTS AS AN ARGUMENT\n\nAn argument is:\n1. A CLAIM (conclusion) about \"{concept}\"\n2. One or more PREMISES (reasons/evidence)\n3. An INFERENTIAL LINK connecting them\n\n## FOR EACH ARGUMENT\n\n1. State the CONCLUSION clearly\n2. List all PREMISES (stated and implied)\n3. Identify the INFERENCE TYPE:\n   - Deductive (conclusion follows necessarily)\n   - Inductive (conclusion is probable)\n   - Abductive (best explanation)\n   - Normative (ought-claim from values)\n   - Causal (effect from cause)\n\n4. Note QUALIFICATIONS and SCOPE\n5. Provide DIRECT QUOTES as evidence\n\n## DOCUMENT TO ANALYZE: {document_name}\n\n{document_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with array of arguments, each containing:\n- argument_id, conclusion, premises[], inference_type, qualifications, quotes[], source\n\nTARGET: 15-25 distinct arguments from this document.",
+  "curation_prompt": "Validate argument extraction and ensure logical formalization is correct.",
+  "canonical_schema": {
+    "type": "object",
+    "properties": {
+      "arguments": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "argument_id": {
+              "type": "string"
+            },
+            "conclusion": {
+              "type": "string"
+            },
+            "premises": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inference_type": {
+              "type": "string"
+            },
+            "qualifications": {
+              "type": "string"
+            },
+            "quotes": {
+              "type": "array"
+            },
+            "source": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "paradigm_keys": [
+    "brandomian"
+  ]
+}

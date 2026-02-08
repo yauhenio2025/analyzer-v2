@@ -1,0 +1,16 @@
+{
+  "engine_key": "concept_causal_interventions",
+  "engine_name": "Concept Causal: Interventions",
+  "description": "Analyzes interventionist claims about manipulating the concept",
+  "version": 1,
+  "category": "concepts",
+  "kind": "relational",
+  "reasoning_domain": "causal analysis",
+  "researcher_question": "What claims are made about intervening on this concept?",
+  "extraction_prompt": "You are conducting Phase 6.4: INTERVENTIONIST CLAIMS analysis.\n\n## YOUR TASK\n\nFind claims about what would happen if we INTERVENED on \"{concept}\".\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## WHAT TO LOOK FOR\n\nInterventionist claims specify:\n- \"If we changed X, Y would result\"\n- \"By manipulating X, we could achieve Y\"\n- Policy proposals\n- Counterfactual scenarios\n\nThese are different from mere correlations or predictions.\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with interventions[], each containing:\n- intervention_id, target (what to intervene on), proposed_action, expected_outcome, mechanism (if specified), feasibility_assessment, quote, source\n\nTARGET: 5-12 interventionist claims.",
+  "curation_prompt": "Validate intervention analysis.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": []
+}

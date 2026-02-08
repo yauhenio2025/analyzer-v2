@@ -1,0 +1,107 @@
+{
+  "engine_key": "financial_forensics_analyzer",
+  "engine_name": "Financial Forensics Analyzer",
+  "description": "Traces money flows to reveal hidden interests. Analyzes funding sources, financial flows, economic stakes, and hidden beneficiaries. Essential for understanding who really benefits.",
+  "version": 1,
+  "category": "market",
+  "kind": "synthesis",
+  "reasoning_domain": "market",
+  "researcher_question": "What do money flows reveal about hidden interests?",
+  "extraction_prompt": "\nYou are conducting FINANCIAL FORENSICS - tracing money flows to reveal\nhidden interests and motivations.\n\n## FOLLOW THE MONEY PRINCIPLES\n\nMoney reveals truth:\n- Who funds research often shapes findings\n- Who profits from outcomes reveals interests\n- Who pays and who benefits may differ\n- Hidden financial flows suggest hidden agendas\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY FUNDING SOURCES\nWhere does money come from?\n- Government funding\n- Corporate sponsorship\n- Foundation grants\n- Individual donors\n- What conditions attach?\n\n### STEP 2: TRACE MONEY FLOWS\nHow does money move?\n- From whom to whom?\n- Through what intermediaries?\n- For what stated purpose?\n- What's the actual purpose?\n\n### STEP 3: MAP FINANCIAL INTERESTS\nWhat economic stakes exist?\n- Who has profit interests?\n- Who has regulatory interests?\n- Who has asset protection interests?\n- How do these shape behavior?\n\n### STEP 4: IDENTIFY HIDDEN BENEFICIARIES\nWho really benefits?\n- Who profits indirectly?\n- Who benefits but isn't visible?\n- What mechanisms obscure benefit?\n\n### STEP 5: IDENTIFY CONFLICTS OF INTEREST\nWhere do financial interests conflict with stated roles?\n- Are conflicts disclosed?\n- How severe are they?\n- How do they shape outcomes?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about amounts, actors, and flows when available.\n\"Follow the money\" is not an insight. \"The research was funded by\nCompany X, which would lose $Y million if regulations passed\" is an insight.\n",
+  "curation_prompt": "\nYou are synthesizing financial forensics analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. MAP FINANCIAL ECOSYSTEM\n- What funding relationships appear?\n- How does money flow through the system?\n\n### 2. IDENTIFY PATTERNS\n- What financial interests recur?\n- Who are the key financial actors?\n\n### 3. ASSESS CONFLICTS\n- What conflicts of interest exist?\n- How do they shape outcomes?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of financial flows and their implications.\n",
+  "concretization_prompt": "\nTransform the financial forensics analysis into actionable insight:\n\n1. **FUNDING SOURCES**\n   | Source | Type | Recipients | Conditions | Transparency |\n   |--------|------|------------|------------|--------------|\n\n2. **MONEY FLOWS**\n   - From: [Actor]\n   - To: [Actor]\n   - Amount: [If known]\n   - Purpose: [Stated vs actual]\n\n3. **FINANCIAL INTERESTS**\n   | Actor | Interest Type | Stake | How Shapes Behavior |\n   |-------|---------------|-------|---------------------|\n\n4. **HIDDEN BENEFICIARIES**\n   - Beneficiary: [Who]\n   - Benefit: [What]\n   - Mechanism: [How hidden]\n\n5. **CONFLICTS OF INTEREST**\n   | Actor | Role | Financial Interest | Conflict | Disclosed |\n   |-------|------|-------------------|----------|-----------|\n\n6. **FOLLOW THE MONEY SUMMARY**\n   - Who pays: [Funders]\n   - Who benefits: [Beneficiaries]\n   - Key relationships: [Connections]\n\n7. **BOTTOM LINE**\n   [One paragraph: What do the money flows reveal? Whose interests\n   are really being served? What conflicts shape outcomes?]\n",
+  "canonical_schema": {
+    "funding_sources": [
+      {
+        "source_id": "string - FS1, FS2, etc.",
+        "source_name": "string",
+        "source_type": "government | corporate | foundation | individual | unknown",
+        "amount": "string - if known",
+        "recipients": [
+          "string - who receives"
+        ],
+        "conditions": "string - strings attached",
+        "transparency": "transparent | partially_disclosed | opaque"
+      }
+    ],
+    "money_flows": [
+      {
+        "flow_id": "string - MF1, MF2, etc.",
+        "from_actor": "string",
+        "to_actor": "string",
+        "amount": "string - if known",
+        "flow_type": "grant | investment | payment | donation | subsidy | other",
+        "stated_purpose": "string",
+        "actual_purpose": "string - if different",
+        "intermediaries": [
+          "string - if any"
+        ]
+      }
+    ],
+    "financial_interests": [
+      {
+        "interest_id": "string - FI1, FI2, etc.",
+        "actor": "string",
+        "interest_type": "profit | market_share | regulatory | asset_protection | other",
+        "stake_description": "string - what's at stake",
+        "stake_magnitude": "very_high | high | moderate | low",
+        "how_shapes_behavior": "string"
+      }
+    ],
+    "hidden_beneficiaries": [
+      {
+        "beneficiary_id": "string",
+        "beneficiary": "string - who benefits",
+        "benefit_type": "string - how they benefit",
+        "visibility": "hidden | obscured | indirect",
+        "mechanism": "string - how benefit flows to them",
+        "evidence": "string"
+      }
+    ],
+    "conflicts_of_interest": [
+      {
+        "conflict_id": "string",
+        "actor": "string",
+        "stated_role": "string",
+        "financial_interest": "string",
+        "conflict_description": "string",
+        "severity": "severe | significant | moderate | minor",
+        "disclosed": "yes | partially | no"
+      }
+    ],
+    "follow_the_money_analysis": {
+      "key_financial_relationships": [
+        "string"
+      ],
+      "money_power_correlation": "string - how money shapes power",
+      "unexplained_flows": [
+        "string - suspicious patterns"
+      ],
+      "who_ultimately_pays": [
+        "string"
+      ],
+      "who_ultimately_benefits": [
+        "string"
+      ]
+    },
+    "meta": {
+      "funding_sources_identified": "number",
+      "money_flows_traced": "number",
+      "conflicts_identified": "number",
+      "transparency_level": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "funding_sources",
+    "money_flows",
+    "financial_interests",
+    "hidden_beneficiaries",
+    "economic_stakes"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/financial_forensics_analyzer.py"
+}

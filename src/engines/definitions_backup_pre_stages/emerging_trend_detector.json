@@ -1,0 +1,117 @@
+{
+  "engine_key": "emerging_trend_detector",
+  "engine_name": "Emerging Trend Detector",
+  "description": "Identifies emerging topics and trends. Detects rising and declining topics, paradigm shifts, buzzwords and hype cycles, and early signals of change in the discourse.",
+  "version": 1,
+  "category": "temporal",
+  "kind": "synthesis",
+  "reasoning_domain": "temporality",
+  "researcher_question": "What topics are emerging, and what's fading from attention?",
+  "extraction_prompt": "\nYou are an expert trend analyst identifying emerging and declining patterns.\n\nFor this article, detect ALL trend-related information:\n\n1. **EMERGING TOPICS**: What's gaining attention?\n   - Topic name and description\n   - Emergence indicators (new terminology, increased discussion, etc.)\n   - Growth trajectory: accelerating, steady, plateauing\n   - Novelty score (0-1): how new is this?\n   - Adoption stage: innovator, early adopter, early majority, late majority\n   - Who are the key advocates?\n\n2. **DECLINING TOPICS**: What's fading?\n   - Topic name and description\n   - Decline indicators\n   - Reasons for decline\n   - What's replacing it?\n\n3. **PARADIGM SHIFTS**: Major conceptual transitions\n   - What's the shift from and to?\n   - Driving factors\n   - Resistance factors\n   - How complete is the shift? (0-1)\n\n4. **BUZZWORDS AND HYPE**: Trendy terminology\n   - What terms seem hyped?\n   - Hype cycle stage: trigger, peak expectations, trough, slope of enlightenment, plateau\n   - Substance score (0-1): is there real content behind the term?\n   - Frequency trend: rising, stable, declining\n   - Likely longevity: flash, sustained, transformative\n\n5. **EARLY SIGNALS**: Weak signals of future change\n   - Signal type: terminology change, new actor, methodology shift, funding shift, policy change\n   - Description of the signal\n   - Potential impact\n   - Confidence (0-1)\n\n\nBe comprehensive - detect both strong trends and weak signals.\n",
+  "curation_prompt": "\nYou are synthesizing trend analysis from multiple articles.\n\nYour task:\n1. **AGGREGATE EMERGING TOPICS**: What's consistently rising?\n   - Consolidate emergence indicators\n   - Assess growth trajectories\n   - Rank by novelty and momentum\n\n2. **MAP DECLINING TOPICS**: What's consistently fading?\n   - Identify patterns of decline\n   - Note replacements\n   - Assess decline reasons\n\n3. **TRACK PARADIGM SHIFTS**: What major shifts are underway?\n   - Map from-to transitions\n   - Assess completion levels\n   - Note resistance and drivers\n\n4. **ANALYZE HYPE CYCLES**: What's buzzworthy?\n   - Place terms on hype cycle\n   - Rate substance\n   - Predict longevity\n\n5. **SYNTHESIZE EARLY SIGNALS**: What weak signals appear?\n   - Consolidate signals\n   - Assess potential impact\n   - Rate confidence\n\n\nCreate a comprehensive trend map of the discourse.\n",
+  "concretization_prompt": "\nTransform the trend analysis to be actionable:\n\n1. Name emerging topics:\n   - \"E1\" \u2192 \"Emerging: Generative AI applications (accelerating, early majority)\"\n\n2. Name declining topics:\n   - \"D1\" \u2192 \"Declining: Big Data hype (replaced by AI/ML framing)\"\n\n3. Describe paradigm shifts:\n   - \"P1\" \u2192 \"Shift: From 'automation' \u2192 'augmentation' framing\"\n\n4. Label buzzwords:\n   - \"B1\" \u2192 \"'AI for Good' (peak expectations, substance: 0.4)\"\n\n5. Describe signals:\n   - \"S1\" \u2192 \"Signal: New regulatory frameworks appearing (high impact, confidence: 0.7)\"\n\nPreserve all scores and trajectories.\nMake the analysis useful for strategic foresight.\n",
+  "canonical_schema": {
+    "emerging_topics": [
+      {
+        "topic_id": "string",
+        "topic_name": "string",
+        "description": "string",
+        "emergence_indicators": [
+          "string"
+        ],
+        "growth_trajectory": "accelerating | steady | plateauing",
+        "novelty_score": "number (0-1)",
+        "adoption_stage": "innovator | early_adopter | early_majority | late_majority",
+        "key_advocates": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "declining_topics": [
+      {
+        "topic_id": "string",
+        "topic_name": "string",
+        "description": "string",
+        "decline_indicators": [
+          "string"
+        ],
+        "reasons_for_decline": [
+          "string"
+        ],
+        "replacement_topics": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "paradigm_shifts": [
+      {
+        "shift_id": "string",
+        "shift_name": "string",
+        "from_paradigm": "string",
+        "to_paradigm": "string",
+        "driving_factors": [
+          "string"
+        ],
+        "resistance_factors": [
+          "string"
+        ],
+        "completion_estimate": "number (0-1)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "buzzwords_hype": [
+      {
+        "term_id": "string",
+        "term": "string",
+        "hype_cycle_stage": "trigger | peak_expectations | trough | slope_enlightenment | plateau",
+        "substance_score": "number (0-1)",
+        "frequency_trend": "rising | stable | declining",
+        "likely_longevity": "flash | sustained | transformative",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "early_signals": [
+      {
+        "signal_id": "string",
+        "signal_type": "terminology_change | new_actor | methodology_shift | funding_shift | policy_change",
+        "description": "string",
+        "potential_impact": "string",
+        "confidence": "number (0-1)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_emerging_topics": "number",
+      "total_declining_topics": "number",
+      "dominant_trend_direction": "emergence | stability | decline",
+      "hype_level": "number (0-1)",
+      "paradigm_shift_count": "number"
+    }
+  },
+  "extraction_focus": [
+    "trends",
+    "emergence",
+    "decline",
+    "shifts",
+    "signals"
+  ],
+  "primary_output_modes": [
+    "gemini_timeline",
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/emerging_trend_detector.py"
+}

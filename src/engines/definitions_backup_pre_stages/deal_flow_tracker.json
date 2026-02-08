@@ -1,0 +1,138 @@
+{
+  "engine_key": "deal_flow_tracker",
+  "engine_name": "Deal Flow Tracker",
+  "description": "Tracks M&A, licensing, partnerships, and investments. Maps deal parties, valuations, terms, and structures to reveal consolidation patterns, investment flows, and strategic positioning in markets.",
+  "version": 1,
+  "category": "power",
+  "kind": "relational",
+  "reasoning_domain": "flows",
+  "researcher_question": "What deals are reshaping this market, and who is acquiring power through transactions?",
+  "extraction_prompt": "\nYou are an expert M&A analyst extracting deal information from text.\n\nFor this article, extract ALL deal activity:\n\n## 1. DEALS\nFor each transaction mentioned:\n- **DEAL TYPE**:\n  - ACQUISITION: One company buying another\n  - MERGER: Two companies combining as equals\n  - INVESTMENT: Equity stake without control\n  - PARTNERSHIP: Strategic alliance\n  - LICENSING: Rights to technology/IP\n  - JOINT VENTURE: New entity from multiple parties\n  - DIVESTITURE: Selling off business unit\n- **HEADLINE**: Brief description (e.g., \"Microsoft acquires Activision\")\n- **DESCRIPTION**: Fuller context\n\n## 2. PARTIES\nFor each deal, identify:\n- **ACQUIRER**: Who is buying/investing/leading\n- **TARGET**: Who is being acquired/receiving investment\n- **INVESTORS**: Other investors (for investment rounds)\n- **PARTNERS**: Co-parties (for partnerships/JVs)\n- **ADVISORS**: Banks, lawyers mentioned\n\n## 3. VALUATION & TERMS\nExtract financial details:\n- **AMOUNT**: Dollar value (exact or estimated)\n- **CURRENCY**: USD, EUR, etc.\n- **PAYMENT TYPE**: Cash, stock, mixed\n- **PREMIUM**: If mentioned (e.g., \"30% above share price\")\n- **CONDITIONS**: Regulatory approval, shareholder vote, etc.\n- **MILESTONES**: Future payments tied to performance\n\n## 4. TIMELINE\n- **ANNOUNCED**: When deal was announced\n- **EXPECTED CLOSE**: When expected to complete\n- **STATUS**: Announced, pending approval, closed, terminated\n\n## 5. RATIONALE\nWhy is this deal happening?\n- Strategic reasoning given\n- Synergies expected\n- Market positioning goals\n\n\nBe comprehensive - capture every deal mentioned, even in passing.\n",
+  "curation_prompt": "\nYou are synthesizing deal data from multiple articles into a comprehensive M&A map.\n\nYour task:\n1. **CONSOLIDATE DEALS**: Merge references to the same deal\n   - Match by parties and timing\n   - Take most complete valuation data\n   - Aggregate rationale from multiple sources\n\n2. **BUILD PARTY PROFILES**:\n   - Identify all unique parties\n   - Calculate their deal activity (buyer vs. seller)\n   - Total values on each side\n   - Primary sectors and regions\n\n3. **CREATE DEAL NETWORK**:\n   - Map who acquired/invested in whom\n   - Edge weights by deal value\n   - Direction shows flow of control\n\n4. **ANALYZE BY SECTOR**:\n   - Count deals per sector\n   - Total value per sector\n   - Identify consolidation trends\n   - Name top acquirers per sector\n\n5. **CALCULATE METRICS**:\n   - Total deal count and value\n   - Average deal size\n   - Breakdown by deal type\n   - Most active acquirer\n   - Date range covered\n\n\nCreate a comprehensive deal flow map showing market restructuring.\n",
+  "concretization_prompt": "\nTransform the deal flow data to be immediately usable:\n\n1. Replace generic IDs with descriptive names:\n   - \"D1\" \u2192 \"Microsoft-Activision Acquisition ($69B)\"\n   - \"P1\" \u2192 \"Microsoft Corporation\"\n\n2. Format valuations clearly:\n   - Include currency and scale (billions, millions)\n   - Note if value includes debt or milestones\n\n3. Clarify party roles:\n   - \"Acquirer: Microsoft (Big Tech, US)\"\n   - \"Target: Activision Blizzard (Gaming)\"\n\n4. Name sector analysis descriptively:\n   - \"Sector1\" \u2192 \"Enterprise Software Consolidation\"\n\n5. Highlight strategic patterns:\n   - Note major consolidation trends\n   - Flag unusual or large deals\n\nPreserve all metrics and network relationships.\nMake the deal flow immediately useful for market analysis.\n",
+  "canonical_schema": {
+    "deals": [
+      {
+        "deal_id": "string",
+        "deal_type": "acquisition | merger | investment | partnership | licensing | divestiture | joint_venture",
+        "headline": "string",
+        "description": "string",
+        "parties": {
+          "acquirer": "string (entity name)",
+          "target": "string (entity name)",
+          "investors": [
+            "string"
+          ],
+          "partners": [
+            "string"
+          ],
+          "advisors": [
+            "string"
+          ]
+        },
+        "valuation": {
+          "amount": "number or null",
+          "currency": "string (USD, EUR, etc.)",
+          "display": "string (e.g., $5.2B)",
+          "includes_debt": "boolean",
+          "includes_milestones": "boolean"
+        },
+        "terms": {
+          "payment_type": "cash | stock | mixed | undisclosed",
+          "premium": "string (e.g., 30% premium to share price)",
+          "conditions": [
+            "string"
+          ],
+          "milestones": [
+            "string"
+          ]
+        },
+        "timeline": {
+          "announced_date": "string (YYYY-MM-DD)",
+          "expected_close": "string (YYYY-MM-DD or quarter/year)",
+          "actual_close": "string (YYYY-MM-DD or null)"
+        },
+        "status": "announced | pending | closed | terminated | rumored",
+        "sector": "string",
+        "rationale": "string (strategic reasoning)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "parties": [
+      {
+        "party_id": "string",
+        "name": "string",
+        "type": "corporate | private_equity | venture_capital | government | sovereign_wealth | individual",
+        "region": "string",
+        "sector": "string",
+        "deal_profile": {
+          "role": "acquirer | target | investor | partner",
+          "deal_count": "number",
+          "total_value_as_acquirer": "number",
+          "total_value_as_target": "number"
+        },
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "deal_edges": [
+      {
+        "edge_id": "string",
+        "from_party": "string (party_id)",
+        "to_party": "string (party_id)",
+        "deal_id": "string",
+        "relationship_type": "acquired | invested_in | partnered_with | licensed_to | merged_with",
+        "value": "number or null",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "sector_analysis": [
+      {
+        "sector": "string",
+        "deal_count": "number",
+        "total_value": "number",
+        "consolidation_trend": "accelerating | stable | decelerating",
+        "top_acquirers": [
+          "party_id"
+        ],
+        "key_transactions": [
+          "deal_id"
+        ]
+      }
+    ],
+    "meta": {
+      "total_deals": "number",
+      "total_value": "number",
+      "deals_by_type": {
+        "acquisition": "number",
+        "investment": "number",
+        "partnership": "number",
+        "licensing": "number"
+      },
+      "average_deal_size": "number",
+      "most_active_acquirer": "string",
+      "date_range": "string"
+    }
+  },
+  "extraction_focus": [
+    "deals",
+    "acquisitions",
+    "investments",
+    "partnerships",
+    "valuations",
+    "parties"
+  ],
+  "primary_output_modes": [
+    "gemini_network_graph",
+    "table",
+    "structured_text_report",
+    "gemini_sankey"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/deal_flow_tracker.py"
+}

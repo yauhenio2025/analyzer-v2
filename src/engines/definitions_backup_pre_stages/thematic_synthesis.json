@@ -1,0 +1,83 @@
+{
+  "engine_key": "thematic_synthesis",
+  "engine_name": "Thematic Pattern Synthesis",
+  "description": "Identifies recurring themes and patterns across a collection, synthesizing them into a coherent thematic map with prevalence and interconnections.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "synthesis",
+  "researcher_question": "What patterns emerge across the collection?",
+  "extraction_prompt": "\nYou are an expert qualitative researcher performing thematic analysis.\n\nFor this article, extract ALL themes you can identify:\n\n1. **MAIN THEMES**: Major topics or ideas that the article focuses on\n   - What is this article fundamentally about?\n   - What concepts receive significant attention?\n\n2. **SUB-THEMES**: More specific topics within main themes\n   - Variations or aspects of larger themes\n   - Detailed dimensions of broader concepts\n\n3. **RECURRING PATTERNS**: Ideas, phrases, or concepts that repeat\n   - Repeated terminology or framing\n   - Consistent perspectives or angles\n\n4. **CONNECTIONS**: How themes relate to each other in this article\n   - Does one theme support/contradict another?\n   - Are themes presented as prerequisites or parallels?\n\n5. **EVIDENCE**: Direct quotes or passages that exemplify each theme\n   - Include context for quotes\n   - Note how strongly the passage represents the theme\n\nFor each theme, note:\n- Keywords/phrases associated with it\n- How prominently it features (central vs. peripheral)\n- Any implicit or assumed themes not directly stated\n\n\nBe comprehensive - capture both obvious and subtle thematic elements.\n",
+  "curation_prompt": "\nYou are synthesizing theme extractions from multiple articles into a unified thematic map.\n\nYour task:\n1. **CONSOLIDATE THEMES**:\n   - Merge equivalent themes across articles (different words, same concept)\n   - Create clear, descriptive theme names\n   - Preserve the best evidence for each theme\n\n2. **TIER THEMES**:\n   - Primary: Appears in >50% of articles, central to collection\n   - Secondary: Appears in 20-50%, significant but not dominant\n   - Emergent: Appears in <20% but represents important trend\n\n3. **MAP RELATIONSHIPS**:\n   - Identify how themes relate: support, contradict, elaborate, precondition, parallel\n   - Rate relationship strength (0-1)\n   - Note if relationships are explicit or inferred\n\n4. **CREATE CLUSTERS**:\n   - Group related themes into conceptual clusters\n   - Name each cluster by its unifying concept\n   - Note which themes belong to multiple clusters\n\n5. **IDENTIFY GAPS**:\n   - What themes would you expect given the topic but are absent/minimal?\n   - Why are they expected? How significant is the gap?\n\n6. **CALCULATE METRICS**:\n   - Prevalence: fraction of articles discussing each theme\n   - Coverage: how well themes explain the collection\n   - Coherence: how well themes interconnect\n\n\nOutput a comprehensive thematic map that reveals the conceptual structure of the collection.\n",
+  "concretization_prompt": "\nTransform the thematic synthesis to use concrete, recognizable labels:\n\n1. Convert theme_ids to descriptive names:\n   - \"T1\" \u2192 \"Regulatory Fragmentation\"\n   - \"T2\" \u2192 \"Innovation vs. Safety Tradeoffs\"\n\n2. Make cluster names evocative:\n   - \"Cluster 1\" \u2192 \"The Governance Dilemma Nexus\"\n\n3. Name relationships clearly:\n   - Add brief explanation of why themes relate this way\n\n4. Make gaps actionable:\n   - Be specific about what's missing and why it matters\n\nPreserve all structural relationships, prevalence scores, and evidence links.\nMake the output immediately useful for a researcher writing about these themes.\n",
+  "canonical_schema": {
+    "themes": [
+      {
+        "theme_id": "string",
+        "theme_name": "string",
+        "description": "string",
+        "prevalence": "number (0-1) - fraction of articles discussing",
+        "tier": "primary | secondary | emergent",
+        "keywords": [
+          "string"
+        ],
+        "evidence": [
+          {
+            "article_id": "string",
+            "excerpt": "string",
+            "relevance": "number (0-1)"
+          }
+        ],
+        "sub_themes": [
+          "theme_id"
+        ]
+      }
+    ],
+    "theme_relationships": [
+      {
+        "from_theme": "theme_id",
+        "to_theme": "theme_id",
+        "relationship_type": "supports | contradicts | elaborates | precondition | parallel",
+        "strength": "number (0-1)",
+        "description": "string"
+      }
+    ],
+    "thematic_clusters": [
+      {
+        "cluster_id": "string",
+        "cluster_name": "string",
+        "member_themes": [
+          "theme_id"
+        ],
+        "unifying_concept": "string"
+      }
+    ],
+    "thematic_gaps": [
+      {
+        "expected_theme": "string",
+        "reason_expected": "string",
+        "coverage": "absent | minimal | partial",
+        "significance": "high | medium | low"
+      }
+    ],
+    "meta": {
+      "total_themes": "number",
+      "primary_theme_count": "number",
+      "coverage_score": "number (0-1) - how well themes cover collection",
+      "coherence_score": "number (0-1) - how well themes interconnect"
+    }
+  },
+  "extraction_focus": [
+    "topics",
+    "patterns",
+    "recurring_ideas",
+    "connections",
+    "themes"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "gemini_network_graph"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/thematic_synthesis.py"
+}

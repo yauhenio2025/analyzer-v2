@@ -1,0 +1,94 @@
+{
+  "engine_key": "argument_architecture",
+  "engine_name": "Argument Architecture Mapper",
+  "description": "Maps the logical structure of arguments across a collection using Toulmin model components: claims, grounds, warrants, backing, qualifiers, and rebuttals.",
+  "version": 1,
+  "category": "argument",
+  "kind": "relational",
+  "reasoning_domain": "rhetoric",
+  "researcher_question": "What's the logical structure of arguments across this collection?",
+  "extraction_prompt": "\nYou are an expert argument analyst using the Toulmin model + Dennett's critical tools.\n\n## DENNETT'S ANALYTICAL TOOLKIT\nApply these throughout your analysis:\n- SURELY ALARM: Flag confident assertions (\"surely\", \"obviously\") \u2014 probe these\n- OCCAM'S BROOM: Note what's suspiciously absent or swept aside\n- BOOM CRUTCH: Mark explanatory gaps (\"then magic happens\")\n- STEELMAN: Express arguments in their strongest form before critique\n- JOOTSING: Identify implicit rules that constrain the argument\n\n## TOULMIN ANALYSIS\n\nFor each argument, extract:\n\n1. **CLAIM**: The main conclusion or thesis being argued\n   - Classify as: empirical (factual), normative (value-based), or causal (cause-effect)\n   - SURELY ALARM CHECK: Does the claim use confidence markers without defense?\n\n2. **GROUNDS**: The evidence, data, or facts supporting the claim\n   - Rate strength from 0-1 based on quality and relevance\n   - Include direct quotes where possible\n   - PROVENANCE CHECK: Where does this evidence actually come from?\n\n3. **WARRANT**: The reasoning that connects grounds to claim\n   - Note if explicit (stated) or implicit (inferred)\n   - BOOM CRUTCH CHECK: Is the warrant a magic step? (\"then understanding emerges\")\n   - If implicit, is it ACTUALLY warranted or just assumed?\n\n4. **BACKING**: Additional support for the warrant (if any)\n   - Authority, precedent, or foundational principles\n   - STURGEON'S LAW: Is backing high-quality or filler?\n\n5. **QUALIFIER**: Any limitations or conditions on the claim\n   - Words like \"probably\", \"in most cases\", \"unless\"\n   - PHILOSOPHER'S SYNDROME: Are impossibility claims based on imagination failure?\n\n6. **REBUTTAL**: Counterarguments mentioned and whether they're addressed\n   - Opposing views, exceptions, or challenges\n   - STEELMAN CHECK: Are counters addressed in their strongest form?\n   - OCCAM'S BROOM: What counters are suspiciously absent?\n\n## ADDITIONAL DENNETT-ENHANCED ANALYSIS\n\n- **DEEPITY CHECK**: Any claims that equivocate between trivial and profound readings?\n- **JOOTSING OPPORTUNITY**: What implicit rules constrain this argument?\n\nAlso identify:\n- **ARGUMENT CHAINS**: Where one argument's conclusion becomes another's premise\n- **CONTESTED CLAIMS**: Claims that have both supporting and opposing arguments\n\n\nExtract comprehensively - capture the full argumentative structure with Dennett-enhanced scrutiny.\n",
+  "curation_prompt": "\nYou are synthesizing argument extractions from multiple articles into a unified argument architecture.\n\nYour task:\n1. **DEDUPLICATE**: Merge equivalent arguments that appear across articles\n   - Same claim + similar grounds = merge\n   - Keep best evidence from each source\n\n2. **IDENTIFY CHAINS**: Find where one argument's conclusion feeds into another\n   - Create chain_id and sequence arguments logically\n   - Note the final conclusion of each chain\n\n3. **MAP CONTESTATION**: Find claims that have both support and opposition\n   - List supporting and opposing argument IDs\n   - Assess resolution status\n\n4. **TIER ARGUMENTS**:\n   - Strong: Multiple grounds, explicit warrant, addresses rebuttals\n   - Moderate: Some grounds, warrant present\n   - Weak: Assertion-like, little evidence\n\n5. **QUALITY SCORE**: Rate each argument 0-1 based on:\n   - Evidence quality\n   - Logical coherence\n   - Rebuttal handling\n\nPreserve source article references for all arguments.\nCreate clear, descriptive arg_ids (e.g., \"arg_tech_innovation_drives_growth\").\n\n\nOutput a comprehensive argument map showing how arguments relate across the collection.\n",
+  "concretization_prompt": "\nTransform the argument architecture to use concrete, recognizable labels:\n\n1. Convert arg_ids to descriptive names:\n   - \"A1\" \u2192 \"Innovation Requires Deregulation Argument\"\n   - \"A2\" \u2192 \"Consumer Protection Necessity Argument\"\n\n2. Make claim types readable:\n   - Add brief explanations of why classified as empirical/normative/causal\n\n3. Name argument chains:\n   - \"Chain 1\" \u2192 \"The Market Efficiency Chain\"\n\n4. Label contested claims clearly:\n   - \"C1\" \u2192 \"The Role of Government in Tech Regulation\"\n\nPreserve all structural relationships and scores.\nMake the output immediately understandable to a researcher.\n",
+  "canonical_schema": {
+    "arguments": [
+      {
+        "arg_id": "string",
+        "claim": {
+          "text": "string",
+          "claim_type": "empirical | normative | causal"
+        },
+        "grounds": [
+          {
+            "fact_id": "string",
+            "text": "string",
+            "strength": "number (0-1)"
+          }
+        ],
+        "warrant": {
+          "text": "string",
+          "explicit": "boolean"
+        },
+        "backing": [
+          {
+            "fact_id": "string",
+            "text": "string"
+          }
+        ],
+        "qualifier": "string | null",
+        "rebuttal": {
+          "text": "string",
+          "addressed": "boolean"
+        },
+        "source_articles": [
+          "string"
+        ],
+        "strength_score": "number (0-1)"
+      }
+    ],
+    "argument_chains": [
+      {
+        "chain_id": "string",
+        "description": "string",
+        "argument_sequence": [
+          "arg_id"
+        ],
+        "conclusion": "string"
+      }
+    ],
+    "contested_claims": [
+      {
+        "claim": "string",
+        "supporting_arguments": [
+          "arg_id"
+        ],
+        "opposing_arguments": [
+          "arg_id"
+        ],
+        "resolution_status": "unresolved | partially_resolved | resolved"
+      }
+    ],
+    "meta": {
+      "total_arguments": "number",
+      "dominant_claim_type": "string",
+      "argument_quality_distribution": {
+        "strong": "number",
+        "moderate": "number",
+        "weak": "number"
+      }
+    }
+  },
+  "extraction_focus": [
+    "claims",
+    "evidence",
+    "reasoning",
+    "counterarguments",
+    "logical_structure"
+  ],
+  "primary_output_modes": [
+    "gemini_toulmin_diagram",
+    "structured_text_report"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/argument_architecture.py"
+}

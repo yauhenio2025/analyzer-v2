@@ -1,0 +1,18 @@
+{
+  "engine_key": "concept_taxonomy_inferential_mode",
+  "engine_name": "Concept Taxonomy: Inferential Mode",
+  "description": "Classifies argument chains by their inferential mode (deductive, inductive, abductive, etc.)",
+  "version": 1,
+  "category": "concepts",
+  "kind": "primitive",
+  "reasoning_domain": "logical classification",
+  "researcher_question": "What type of inference does each chain employ?",
+  "extraction_prompt": "You are conducting Phase 5.1: INFERENTIAL MODE classification.\n\n## YOUR TASK\n\nClassify each chain's PRIMARY INFERENTIAL MODE for arguments about \"{concept}\".\n\n## INFERENTIAL MODES\n\n1. **Deductive**: Conclusion follows NECESSARILY from premises\n2. **Inductive**: Conclusion is PROBABLE given evidence\n3. **Abductive**: Conclusion is BEST EXPLANATION\n4. **Normative**: OUGHT-claim from values/principles\n5. **Transcendental**: NECESSARY CONDITIONS for possibility\n6. **Dialectical**: SYNTHESIS from contradictions\n7. **Genealogical**: HISTORICAL EMERGENCE explains features\n\n## CHAINS TO CLASSIFY\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each chain, provide: chain_id, primary_mode, secondary_mode, confidence, justification.\n\nReturn as valid JSON.",
+  "curation_prompt": "Validate inferential mode classifications.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": [
+    "brandomian"
+  ]
+}

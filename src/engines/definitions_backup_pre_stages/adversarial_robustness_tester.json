@@ -1,0 +1,168 @@
+{
+  "engine_key": "adversarial_robustness_tester",
+  "engine_name": "Adversarial Robustness Tester",
+  "description": "Subjects arguments and conclusions to rigorous adversarial testing. Applies devil's advocate challenges, alternative explanations, assumption stress tests, and evidence fragility analysis. Rates argument robustness and flags appropriate confidence levels. Essential for high-stakes analytical rigor.",
+  "version": 1,
+  "category": "argument",
+  "kind": "synthesis",
+  "reasoning_domain": "argument",
+  "researcher_question": "How robust are the key arguments and conclusions under adversarial challenge?",
+  "extraction_prompt": "\nYou are conducting ADVERSARIAL ROBUSTNESS TESTING of analytical conclusions.\nYour job is to CHALLENGE, not confirm. Find weaknesses before they matter.\n\n## THE ADVERSARIAL TESTING PHILOSOPHY\n\nEvery conclusion should survive rigorous adversarial testing before being trusted.\nArguments that survive are ROBUST. Arguments that don't should be flagged.\n\nThe function of adversarial testing is to find the weakness in an argument\nthat its proponents cannot or will not see.\n\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY KEY CONCLUSIONS\n\nFind all significant conclusions, findings, or assertions in the text.\nFor each:\n- What exactly is being claimed?\n- How important is it? (critical, high, medium, low)\n- What confidence level is stated or implied?\n\n### STEP 2: DEVIL'S ADVOCATE CHALLENGES\n\nFor each conclusion, construct the STRONGEST possible counter-argument:\n- What's the best case AGAINST this conclusion?\n- What do proponents of this view tend to miss?\n- If you had to argue the opposite, what would you say?\n\nBe rigorous. Don't attack weak versions \u2014 create the STRONGEST objection.\n\n### STEP 3: ALTERNATIVE EXPLANATIONS\n\nFor each conclusion:\n- What other explanations could account for the same evidence?\n- Are these alternatives plausible?\n- What evidence would DISTINGUISH between the original and alternatives?\n\nGoal: Ensure we haven't locked onto one explanation prematurely.\n\n### STEP 4: ASSUMPTION STRESS TEST\n\nFor each conclusion:\n- What assumptions does it depend on?\n- How confident should we be in each assumption?\n- What if a key assumption is wrong?\n\n### STEP 5: EVIDENCE FRAGILITY\n\nFor each conclusion:\n- How many pieces of evidence support it?\n- If any single piece were wrong, what happens?\n- Are evidence pieces truly independent?\n- Where are single points of failure?\n\n### STEP 6: ROBUSTNESS RATINGS\n\nSynthesize all stress tests:\n- Did the conclusion SURVIVE, PARTIALLY SURVIVE, or FAIL each test?\n- What's the overall robustness score (0-1)?\n- Category: ROBUST / VULNERABLE / FRAGILE\n- What confidence level should we have?\n\n### STEP 7: RECOMMENDATIONS\n\nBased on stress testing:\n- Which conclusions are ready for use?\n- Which need caveats?\n- Which need more evidence?\n- Which should be reconsidered entirely?\n\n## OUTPUT GUIDANCE\n\nBe adversarial but fair. The goal is not to destroy conclusions but to\nidentify which ones can be trusted and which need more work.\n\nRate challenge strength honestly \u2014 some challenges are strong, some are weak.\nA weak challenge that fails doesn't vindicate the conclusion.\n\nFocus on HIGH-STAKES conclusions. Don't waste adversarial energy on trivia.\n",
+  "curation_prompt": "\nYou are synthesizing adversarial robustness testing from multiple sources to create a\ncomprehensive stress test report.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE CONCLUSIONS TESTED\n\n- Merge equivalent conclusions from different sources\n- Note where sources tested the same conclusion differently\n- Identify conclusions tested by multiple sources (higher confidence in testing)\n\n### 2. AGGREGATE STRESS TEST RESULTS\n\nFor each conclusion tested across sources:\n- Combine devil's advocate challenges\n- Merge alternative explanations\n- Integrate fragility analyses\n- Reconcile robustness ratings\n\nWhere sources disagree on robustness, investigate why.\n\n### 3. IDENTIFY CROSS-CUTTING VULNERABILITIES\n\n- Do multiple conclusions share the same weakness?\n- Are there systematic blind spots across the analysis?\n- What assumptions underlie multiple conclusions?\n\n### 4. OVERALL ROBUSTNESS PICTURE\n\nSynthesize into overall assessment:\n- What percentage of conclusions are robust?\n- Where is the analysis strongest?\n- Where is it most vulnerable?\n- What's the confidence in the overall analytical product?\n\n### 5. PRIORITY RECOMMENDATIONS\n\nConsolidate into actionable guidance:\n- PROCEED WITH CONFIDENCE: [list]\n- PROCEED WITH CAVEATS: [list with caveats]\n- REQUIRE MORE EVIDENCE: [list with specific needs]\n- RECONSIDER: [list]\n\n## OUTPUT GUIDANCE\n\nCreate a unified stress test report that decision-makers can use to understand:\n1. Which conclusions they can rely on\n2. Which need qualification\n3. Which need more work\n4. What evidence would change the picture\n",
+  "concretization_prompt": "\nTransform the stress test analysis into a decision-maker-ready report:\n\n1. **EXECUTIVE SUMMARY**\n   ```\n   ANALYTICAL ROBUSTNESS: [ROBUST / MIXED / VULNERABLE]\n   Conclusions tested: X | Robust: Y | Vulnerable: Z | Fragile: W\n   ```\n\n2. **CONFIDENCE RATINGS TABLE**\n   ```\n   | Conclusion | Robustness | Recommended Confidence | Key Vulnerability |\n   |------------|------------|------------------------|-------------------|\n   | C1: ...    | ROBUST     | Highly Likely          | Single source     |\n   | C2: ...    | VULNERABLE | Likely                 | Alt explanation   |\n   ```\n\n3. **PROCEED WITH CONFIDENCE**\n   [List conclusions that survived stress testing]\n\n4. **PROCEED WITH CAVEATS**\n   - Conclusion: [X]\n     - Caveat 1: [qualification]\n     - Caveat 2: [qualification]\n\n5. **REQUIRE MORE EVIDENCE**\n   - Conclusion: [X]\n     - Evidence needed: [specific gap]\n     - What it would establish: [value]\n\n6. **STRONGEST CHALLENGES**\n   For each major vulnerability identified:\n   - The challenge: [description]\n   - Why it matters: [impact]\n   - What would resolve it: [evidence needed]\n\n7. **BOTTOM LINE**\n   [One paragraph: What can we trust? What needs work? What should we be watching?]\n\nMake it clear which conclusions are actionable and which need more development.\n",
+  "canonical_schema": {
+    "conclusions_tested": [
+      {
+        "conclusion_id": "string - C1, C2, etc.",
+        "conclusion": "string - the finding or assertion being tested",
+        "stated_confidence": "string - original confidence level if stated",
+        "importance": "critical | high | medium | low",
+        "source_context": "string - where this conclusion comes from"
+      }
+    ],
+    "stress_tests": [
+      {
+        "conclusion_id": "string - which conclusion this tests",
+        "test_type": "devils_advocate | alternative_explanation | assumption_stress | evidence_fragility | boundary_case",
+        "challenge": "string - the specific challenge or alternative",
+        "challenge_strength": "strong | moderate | weak",
+        "evidence_supporting_challenge": [
+          {
+            "evidence": "string",
+            "source": "string",
+            "weight": "high | medium | low"
+          }
+        ],
+        "evidence_against_challenge": [
+          {
+            "evidence": "string",
+            "source": "string",
+            "weight": "high | medium | low"
+          }
+        ],
+        "challenge_verdict": "survives | partially_survives | fails",
+        "verdict_rationale": "string"
+      }
+    ],
+    "devils_advocate_analysis": [
+      {
+        "conclusion_id": "string",
+        "strongest_counter_argument": "string - best case against",
+        "counter_argument_validity": "number (0-1)",
+        "what_proponents_miss": "string - blind spots",
+        "strongest_objection": "string - best form of objection"
+      }
+    ],
+    "alternative_explanations": [
+      {
+        "conclusion_id": "string",
+        "original_explanation": "string - what the conclusion asserts",
+        "alternatives": [
+          {
+            "alternative": "string - different explanation",
+            "plausibility": "high | medium | low",
+            "evidence_fit": "string - how well it explains evidence",
+            "discriminating_evidence": "string - what would distinguish this from original"
+          }
+        ],
+        "best_alternative": "string - which alternative is strongest"
+      }
+    ],
+    "evidence_fragility_analysis": [
+      {
+        "conclusion_id": "string",
+        "key_evidence_pieces": "number",
+        "single_point_failures": [
+          {
+            "evidence_item": "string",
+            "if_wrong": "string - what happens to conclusion",
+            "confidence_in_evidence": "high | medium | low"
+          }
+        ],
+        "evidence_independence": "string - are evidence pieces truly independent",
+        "overall_fragility": "robust | moderate | fragile"
+      }
+    ],
+    "robustness_ratings": [
+      {
+        "conclusion_id": "string",
+        "tests_passed": "number",
+        "tests_failed": "number",
+        "tests_partial": "number",
+        "robustness_score": "number (0-1)",
+        "robustness_category": "ROBUST | VULNERABLE | FRAGILE",
+        "recommended_confidence": "almost_certain | highly_likely | likely | even_chance | unlikely",
+        "confidence_rationale": "string",
+        "key_vulnerabilities": [
+          "string - main weaknesses"
+        ],
+        "strengthening_evidence_needed": [
+          "string - what would increase confidence"
+        ],
+        "refuting_evidence_to_watch": [
+          "string - what would decrease confidence"
+        ]
+      }
+    ],
+    "overall_assessment": {
+      "conclusions_tested": "number",
+      "robust_conclusions": "number",
+      "vulnerable_conclusions": "number",
+      "fragile_conclusions": "number",
+      "highest_confidence_conclusions": [
+        "string - conclusion_ids"
+      ],
+      "requiring_additional_analysis": [
+        "string - conclusion_ids"
+      ],
+      "not_ready_for_decision": [
+        "string - conclusion_ids that need more work"
+      ],
+      "analytic_confidence_summary": "string - overall assessment"
+    },
+    "recommendations": {
+      "proceed_with_confidence": [
+        "string - conclusions ready for use"
+      ],
+      "proceed_with_caveats": [
+        {
+          "conclusion_id": "string",
+          "caveats": [
+            "string - necessary qualifications"
+          ]
+        }
+      ],
+      "require_more_evidence": [
+        {
+          "conclusion_id": "string",
+          "evidence_needed": [
+            "string - specific gaps"
+          ]
+        }
+      ],
+      "reconsider_entirely": [
+        "string - conclusions that may be wrong"
+      ]
+    },
+    "meta": {
+      "total_stress_tests_applied": "number",
+      "average_robustness_score": "number (0-1)",
+      "most_challenged_conclusion": "string - conclusion_id",
+      "most_robust_conclusion": "string - conclusion_id",
+      "confidence_in_stress_test": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "key_conclusions_identification",
+    "adversarial_challenges",
+    "alternative_explanations",
+    "evidence_fragility",
+    "robustness_assessment"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/adversarial_robustness_tester.py"
+}

@@ -1,0 +1,116 @@
+{
+  "engine_key": "leverage_point_identifier",
+  "engine_name": "Leverage Point Identifier",
+  "description": "Identifies high-leverage intervention points in complex systems. Finds where small changes produce large effects, maps intervention hierarchy from parameters to paradigms, and explains why obvious interventions often fail while counterintuitive ones succeed.",
+  "version": 1,
+  "category": "systems",
+  "kind": "synthesis",
+  "reasoning_domain": "systems",
+  "researcher_question": "Where can small changes produce large system effects?",
+  "extraction_prompt": "\nYou are identifying LEVERAGE POINTS \u2014 places in systems where small\ninterventions can produce large effects.\n\n## THE LEVERAGE POINT HIERARCHY (from lowest to highest leverage)\n\n### 12. PARAMETERS (Lowest leverage)\nConstants and numbers: taxes, prices, standards.\nEasy to change but rarely change system behavior much.\n\n### 11. BUFFER SIZES\nStabilizing stocks relative to flows.\n\n### 10. STOCK-AND-FLOW STRUCTURES\nPhysical system structure (pipes, roads, etc.).\n\n### 9. DELAYS\nLength of time in feedback loops.\n\n### 8. BALANCING FEEDBACK LOOPS\nNegative feedbacks that stabilize.\n\n### 7. REINFORCING FEEDBACK LOOPS\nPositive feedbacks that amplify.\n\n### 6. INFORMATION FLOWS\nWho has access to what information.\n\n### 5. RULES OF THE SYSTEM\nIncentives, constraints, permissions.\n\n### 4. SELF-ORGANIZATION\nAbility to create new structures.\n\n### 3. GOALS OF THE SYSTEM\nWhat the system is trying to achieve.\n\n### 2. PARADIGMS\nThe worldview from which goals and rules emerge.\n\n### 1. TRANSCENDING PARADIGMS (Highest leverage)\nAbility to change paradigms.\n\n## YOUR TASK\n\n### STEP 1: UNDERSTAND THE SYSTEM\nWhat are we trying to change?\n- What problems exist?\n- What's been tried?\n- Why hasn't it worked?\n\n### STEP 2: IDENTIFY LEVERAGE POINTS\nLook for places where small changes could have large effects:\n- Where are the feedback loops? Can they be strengthened/weakened?\n- What information is hidden that could change behavior if visible?\n- What rules are creating problems? Could they be changed?\n- What goals are driving behavior? Are they the right goals?\n- What paradigm is shaping everything?\n\nFor each leverage point:\n- What type is it (parameter, feedback, structure, goal, paradigm)?\n- Why is this high/low leverage?\n- What intervention is possible?\n- What effect would it have?\n\n### STEP 3: ANALYZE FAILED INTERVENTIONS\nWhat has been tried and failed?\n- Why did it fail?\n- How did the system resist?\n- What does this teach about leverage?\n\n### STEP 4: IDENTIFY COUNTERINTUITIVE DYNAMICS\nWhere does intuition fail?\n- What obvious interventions don't work?\n- What non-obvious interventions would work?\n- Why the mismatch?\n\n### STEP 5: MAP SYSTEM RESISTANCE\nHow does the system resist change?\n- Feedback correction (system compensates)\n- Goal displacement (system pursues something else)\n- Power preservation (those benefiting from status quo resist)\n\n### STEP 6: RANK AND RECOMMEND\nPrioritize leverage points by:\n- Potential impact\n- Feasibility\n- Resistance expected\n\nRecommend specific interventions with expected effects.\n\n\n## OUTPUT GUIDANCE\n\nBe specific about mechanisms. \"Change the incentives\" is too vague.\n\"Tie manager bonuses to long-term outcomes rather than quarterly results\"\nis actionable.\n",
+  "curation_prompt": "\nYou are synthesizing leverage point analyses from multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE LEVERAGE POINTS\n- Merge equivalent leverage points from different sources\n- Compare rankings across sources\n- Identify leverage points only one source sees\n\n### 2. VALIDATE THROUGH FAILURE ANALYSIS\n- Do failed interventions confirm leverage point analysis?\n- What do failures teach about where real leverage lies?\n\n### 3. SYNTHESIZE COUNTERINTUITIVE INSIGHTS\n- Where do multiple sources identify counterintuitive dynamics?\n- What patterns emerge?\n\n### 4. PRIORITIZE INTERVENTIONS\n- What leverage points appear most actionable across sources?\n- Where is there disagreement on leverage?\n\n## OUTPUT GUIDANCE\n\nCreate prioritized intervention recommendations based on multi-source\nleverage analysis.\n",
+  "concretization_prompt": "\nTransform the leverage point analysis into actionable intervention guidance:\n\n1. **LEVERAGE POINT HIERARCHY**\n   ```\n   | Rank | Type | Leverage Point | Impact | Feasibility |\n   |------|------|----------------|--------|-------------|\n   | 1    | Goal | [Description]  | High   | Medium      |\n   | 2    | Rules | [Description] | Medium | High        |\n   ```\n\n2. **HIGH-LEVERAGE OPPORTUNITIES**\n   For each high-leverage point:\n   ```\n   L1: [Name]\n   Type: [Parameter/Feedback/Structure/Goal/Paradigm]\n   Why high leverage: [Mechanism]\n   Intervention: [What to do]\n   Expected effect: [What changes]\n   Resistance expected: [How system will push back]\n   ```\n\n3. **FAILED INTERVENTIONS LESSONS**\n   - [What was tried] \u2192 Failed because: [Mechanism]\n   - Lesson: [What this teaches about leverage]\n\n4. **COUNTERINTUITIVE DYNAMICS**\n   - Intuitive approach: [What seems right]\n   - Why it fails: [Mechanism]\n   - What works instead: [Counterintuitive intervention]\n\n5. **RECOMMENDED INTERVENTIONS**\n   | Priority | Intervention | Leverage Point | Impact | Feasibility | Timing |\n   |----------|--------------|----------------|--------|-------------|--------|\n\n6. **SYSTEM RESISTANCE ANTICIPATION**\n   - If we try [intervention], system will resist by [mechanism]\n   - Counter-strategy: [How to overcome]\n\n7. **BOTTOM LINE**\n   [One paragraph: Where is the real leverage? What should be done?]\n",
+  "canonical_schema": {
+    "system_context": {
+      "system_name": "string",
+      "key_problems": [
+        "string - what we're trying to change"
+      ],
+      "current_interventions": [
+        "string - what's being tried"
+      ]
+    },
+    "leverage_points": [
+      {
+        "leverage_id": "string - L1, L2, etc.",
+        "leverage_type": "parameter | feedback | structure | goal | paradigm",
+        "description": "string - what the leverage point is",
+        "location_in_system": "string - where in the system",
+        "leverage_level": "low | medium | high | very_high",
+        "why_high_leverage": "string - mechanism of amplification",
+        "current_state": "string - current condition of this point",
+        "intervention_options": [
+          {
+            "intervention": "string - what could be done",
+            "expected_effect": "string - what would change",
+            "difficulty": "easy | moderate | hard | very_hard",
+            "resistance_expected": "string - what pushback"
+          }
+        ],
+        "evidence_in_text": [
+          "string - supporting quotes"
+        ]
+      }
+    ],
+    "intervention_hierarchy": [
+      {
+        "rank": "number - 1 is highest leverage",
+        "leverage_type": "string",
+        "leverage_id": "string",
+        "why_this_rank": "string - rationale for ranking"
+      }
+    ],
+    "failed_interventions": [
+      {
+        "intervention_id": "string",
+        "what_was_tried": "string",
+        "why_failed": "string - mechanism of failure",
+        "system_resistance": "string - how system pushed back",
+        "lessons": "string - what this teaches about leverage"
+      }
+    ],
+    "counterintuitive_dynamics": [
+      {
+        "dynamic_id": "string",
+        "intuitive_intervention": "string - what seems like it should work",
+        "why_intuition_fails": "string - mechanism",
+        "counterintuitive_alternative": "string - what actually works",
+        "why_it_works": "string - mechanism"
+      }
+    ],
+    "system_resistance_patterns": [
+      {
+        "pattern_id": "string",
+        "resistance_type": "feedback_correction | goal_displacement | boundary_hardening | power_preservation",
+        "description": "string - how system resists change",
+        "where_observed": "string",
+        "how_to_overcome": "string"
+      }
+    ],
+    "recommended_interventions": [
+      {
+        "priority": "number - 1 is highest",
+        "leverage_id": "string",
+        "intervention": "string",
+        "expected_impact": "transformative | significant | moderate | incremental",
+        "feasibility": "high | medium | low",
+        "timing_considerations": "string",
+        "success_indicators": [
+          "string - how to know it's working"
+        ],
+        "risks": [
+          "string - what could go wrong"
+        ]
+      }
+    ],
+    "meta": {
+      "leverage_points_identified": "number",
+      "high_leverage_points": "number",
+      "failed_interventions_analyzed": "number",
+      "confidence_in_analysis": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "leverage_points",
+    "intervention_hierarchy",
+    "system_resistance",
+    "counterintuitive_dynamics",
+    "effective_interventions"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/leverage_point_identifier.py"
+}

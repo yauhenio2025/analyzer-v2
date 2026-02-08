@@ -1,0 +1,136 @@
+{
+  "engine_key": "presuppositional_excavator",
+  "engine_name": "Presuppositional Excavator",
+  "description": "Excavates what must already be in place for concepts to work. Maps background capacities, conceptual prerequisites, normative infrastructure, and tacit requirements. Reveals the hidden conditions that make concept deployment possible.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "sellarsian_inferentialism",
+  "researcher_question": "What must already be understood for this concept to function?",
+  "extraction_prompt": "\nYou are an expert in Sellarsian philosophy, analyzing the presuppositional structure of concepts.\n\nFor this article, perform a PRESUPPOSITIONAL EXCAVATION:\n\n## 1. CONCEPT IDENTIFICATION\nFor each significant concept:\n- **Term**: The concept name/phrase\n- **Definition**: How it's defined or used\n- **Apparent prerequisites**: What else must you already know?\n\n## 2. BACKGROUND CAPACITY ANALYSIS\nFor each concept, identify required capacities:\n- **Perceptual capacities**: What must you be able to perceive?\n- **Cognitive capacities**: What mental operations are required?\n- **Linguistic capacities**: What language skills are needed?\n- **Practical capacities**: What must you be able to do?\n- **Social capacities**: What social understanding is required?\n\n## 3. CONCEPTUAL PREREQUISITE MAPPING\nFor each concept, identify:\n- **Definitional prerequisites**: Concepts used in its definition\n- **Inferential prerequisites**: Concepts needed to draw proper inferences\n- **Contrastive prerequisites**: Concepts needed to understand what it's NOT\n- **Analogical prerequisites**: Concepts it's understood by analogy to\n\n## 4. NORMATIVE INFRASTRUCTURE\nIdentify norms governing concept use:\n- **Semantic norms**: What counts as correct application?\n- **Epistemic norms**: What warrants concept deployment?\n- **Practical norms**: How should concept-users behave?\n- **Social norms**: What community standards apply?\n\n## 5. ENTRY CONDITIONS\nFor each concept, specify:\n- **What must be true** for this concept to apply?\n- **What context** is required?\n- **What happens** if conditions aren't met?\n\n## 6. TACIT KNOWLEDGE\nIdentify knowledge that's required but not explicit:\n- **Know-how**: Skills that can't be fully articulated\n- **Know-that**: Background facts assumed\n- **Know-when**: Timing and appropriateness\n- **Know-who**: Social knowledge required\n\n\nThink like an anthropologist encountering these concepts for the first time.\nWhat would you need to already understand to use them properly?\n",
+  "curation_prompt": "\nYou are synthesizing presuppositional analyses from multiple articles.\n\nYour task:\n\n## 1. CONSOLIDATE CONCEPT INVENTORIES\n- Merge same concepts across articles\n- Collect all presuppositional information\n- Note where analyses differ\n\n## 2. BUILD BACKGROUND CAPACITY MAP\n- Aggregate required capacities across concepts\n- Identify capacity clusters (often co-required)\n- Rate how tacit each capacity is\n\n## 3. CONSTRUCT PREREQUISITE NETWORKS\n- Build directed graphs of prerequisite relationships\n- Identify strongly connected components (concept packages)\n- Find entry points (concepts with fewest prerequisites)\n- Find deep concepts (concepts presupposing the most)\n\n## 4. SYNTHESIZE NORMATIVE INFRASTRUCTURE\n- Map norms governing the conceptual space\n- Identify norm clusters\n- Note conflicts between norms\n- Identify implicit vs explicit norms\n\n## 5. CONSOLIDATE ENTRY CONDITIONS\n- Map when concepts apply and don't\n- Identify contested entry conditions\n- Note context-sensitivity\n\n## 6. MAP TACIT KNOWLEDGE LANDSCAPE\n- Aggregate tacit requirements\n- Identify what's most often tacit\n- Note what resists articulation\n\n## 7. BUILD PRESUPPOSITIONAL CHAINS\n- Trace chains from surface concepts to foundations\n- Calculate presuppositional depth\n- Identify termini (where chains ground out)\n\n## 8. IDENTIFY CONCEPT PACKAGES\n- Find concepts that come together\n- Identify natural learning sequences\n- Map mutual presupposition clusters\n\n\nCreate a map that reveals what must already be in place for this discourse to function.\n",
+  "concretization_prompt": "\nTransform the presuppositional analysis to use concrete, recognizable labels:\n\n1. Name concepts specifically:\n   - \"C1\" \u2192 \"Informed Consent\"\n   - \"C2\" \u2192 \"Autonomy\"\n\n2. Name background capacities concretely:\n   - \"BC1\" \u2192 \"Ability to Weigh Future Consequences\"\n   - \"BC2\" \u2192 \"Understanding of Medical Risk Language\"\n\n3. Name prerequisites descriptively:\n   - \"P1\" \u2192 \"Requires mastery of 'Rights' concept\"\n   - \"P2\" \u2192 \"Presupposes 'Person' as moral category\"\n\n4. Name norms specifically:\n   - \"N1\" \u2192 \"The Disclosure Norm in Medical Ethics\"\n   - \"N2\" \u2192 \"The Competence Standard\"\n\n5. Name tacit knowledge requirements:\n   - \"TK1\" \u2192 \"Implicit Understanding of Doctor-Patient Power Dynamics\"\n\n6. Name concept packages evocatively:\n   - \"CP1\" \u2192 \"The Autonomy Package (consent, capacity, disclosure, understanding)\"\n\nPreserve all prerequisite relationships, depths, and norm specifications.\nMake the hidden infrastructure of concepts visible and navigable.\n",
+  "canonical_schema": {
+    "concepts_analyzed": [
+      {
+        "concept_id": "string",
+        "term": "string",
+        "definition": "string",
+        "presuppositional_depth": "number (0-5, how many layers of presuppositions)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "background_capacities": [
+      {
+        "capacity_id": "string",
+        "name": "string",
+        "description": "string",
+        "capacity_type": "perceptual | cognitive | linguistic | practical | social",
+        "required_for": [
+          "concept_id"
+        ],
+        "how_acquired": "string",
+        "typically_tacit": "boolean"
+      }
+    ],
+    "conceptual_prerequisites": [
+      {
+        "prerequisite_id": "string",
+        "target_concept": "concept_id",
+        "requires_concept": "string (the prerequisite concept)",
+        "requirement_type": "definitional | inferential | contrastive | analogical",
+        "requirement_strength": "strict | strong | moderate | weak",
+        "why_required": "string"
+      }
+    ],
+    "normative_infrastructure": [
+      {
+        "norm_id": "string",
+        "name": "string",
+        "description": "string",
+        "norm_type": "semantic | epistemic | practical | social",
+        "governs_concepts": [
+          "concept_id"
+        ],
+        "violation_consequences": "string",
+        "typical_awareness": "explicit | implicit | tacit"
+      }
+    ],
+    "entry_conditions": [
+      {
+        "condition_id": "string",
+        "concept": "concept_id",
+        "condition": "string",
+        "condition_type": "existential | categorical | contextual | agentive",
+        "when_satisfied": "string",
+        "when_violated": "string (what happens if condition not met)"
+      }
+    ],
+    "tacit_knowledge_requirements": [
+      {
+        "tacit_id": "string",
+        "name": "string",
+        "description": "string",
+        "knowledge_type": "know_how | know_that | know_when | know_who",
+        "required_for": [
+          "concept_id"
+        ],
+        "typically_learned_via": "string",
+        "articulability": "fully_articulable | partially_articulable | inarticulable"
+      }
+    ],
+    "presuppositional_chains": [
+      {
+        "chain_id": "string",
+        "target_concept": "concept_id",
+        "chain_sequence": [
+          {
+            "level": "number",
+            "presupposition": "string",
+            "type": "string"
+          }
+        ],
+        "chain_depth": "number",
+        "terminus": "string (what grounds the chain)"
+      }
+    ],
+    "concept_packages": [
+      {
+        "package_id": "string",
+        "name": "string",
+        "member_concepts": [
+          "concept_id"
+        ],
+        "interconnection_type": "mutual_presupposition | hierarchical | network",
+        "entry_concept": "concept_id (best concept to learn first)",
+        "description": "string"
+      }
+    ],
+    "meta": {
+      "total_concepts": "number",
+      "average_presuppositional_depth": "number",
+      "deepest_chain": "chain_id",
+      "most_presupposed_concept": "concept_id",
+      "tacit_knowledge_prevalence": "high | medium | low",
+      "analysis_completeness": "number (0-1)"
+    }
+  },
+  "extraction_focus": [
+    "presuppositions",
+    "background_capacities",
+    "conceptual_prerequisites",
+    "normative_requirements",
+    "tacit_knowledge",
+    "entry_conditions"
+  ],
+  "primary_output_modes": [
+    "mermaid_flowchart",
+    "structured_text_report",
+    "gemini_concept_tree",
+    "smart_table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/presuppositional_excavator.py"
+}

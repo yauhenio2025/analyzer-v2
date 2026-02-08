@@ -1,0 +1,94 @@
+{
+  "engine_key": "reification_detector",
+  "engine_name": "Reification Detector",
+  "description": "Identifies where abstractions are treated as concrete entities. Detects concepts treated as causal agents, categories as real things, and metaphors taken literally. Essential for avoiding category errors.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "epistemology",
+  "researcher_question": "Where are abstractions being treated as concrete entities?",
+  "extraction_prompt": "\nYou are detecting REIFICATION - where abstractions are treated as concrete entities.\n\n## TYPES OF REIFICATION\n\n### CONCEPT REIFICATION\nAbstract concepts treated as things that act:\n- \"Society demands...\" (society isn't an agent)\n- \"The market decided...\" (markets don't decide)\n- \"History shows...\" (history doesn't show, people interpret)\n\n### STATISTICAL REIFICATION\nStatistical constructs treated as real entities:\n- \"The average person\" (no such person exists)\n- GDP as a measure of wellbeing (it's a specific calculation)\n- IQ as intelligence (it's a test score)\n\n### THEORETICAL REIFICATION\nTheoretical entities treated as concrete:\n- Treating \"human capital\" as actual capital\n- Treating \"social forces\" as physical forces\n- Treating \"market equilibrium\" as a real state\n\n### METAPHOR LITERALIZATION\nMetaphors taken as literal descriptions:\n- \"Information flows\" (treated as if actually flowing)\n- \"Mind as computer\" (then assuming computational properties)\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY ABSTRACTIONS USED\nWhat abstract concepts, categories, or constructs are used?\n- Categories (society, market, culture)\n- Statistical constructs (average, median, index)\n- Theoretical entities (capital, utility, equilibrium)\n- Metaphors (flow, force, network)\n\n### STEP 2: DETECT REIFICATION\nWhere are these abstractions treated as concrete?\n- Given causal agency?\n- Treated as acting or deciding?\n- Given properties they can't have?\n\n### STEP 3: IDENTIFY CATEGORY ERRORS\nWhere are levels of abstraction confused?\n- Aggregate treated as individual?\n- Statistical summary treated as real entity?\n- Theoretical construct treated as observable?\n\n### STEP 4: FLAG LITERALIZED METAPHORS\nWhere are metaphors taken literally?\n- What's the original metaphor?\n- How is it literalized?\n- What problems does this cause?\n\n### STEP 5: SUGGEST CORRECTIONS\nHow should these be properly understood?\n- What is the abstraction actually?\n- How should claims be reformulated?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about the reification. \"The text reifies society\" is not useful.\n\"The claim that 'society rejected this idea' treats society as a unified\nagent capable of rejection, when actually [specific groups/processes]...\" is useful.\n",
+  "curation_prompt": "\nYou are synthesizing reification analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE REIFICATIONS\n- What concepts are commonly reified?\n- What patterns appear?\n\n### 2. ASSESS SEVERITY\n- Which reifications are most problematic?\n- What errors do they lead to?\n\n### 3. SUGGEST CORRECTIONS\n- How should key concepts be understood?\n- What reformulations are needed?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of reifications and their corrections.\n",
+  "concretization_prompt": "\nTransform the reification analysis into actionable insight:\n\n1. **REIFIED CONCEPTS**\n   | Concept | Type | How Reified | Severity |\n   |---------|------|-------------|----------|\n\n2. **CAUSAL ATTRIBUTION ERRORS**\n   - Abstraction: [What's treated as causal]\n   - Attributed effect: [What it supposedly causes]\n   - Problem: [Why this is wrong]\n   - Better formulation: [How to fix]\n\n3. **CATEGORY ERRORS**\n   | Category | Confusion Type | Consequence |\n   |----------|----------------|-------------|\n\n4. **STATISTICAL REIFICATIONS**\n   | Construct | Treated As | Actually Is |\n   |-----------|------------|-------------|\n\n5. **LITERALIZED METAPHORS**\n   | Metaphor | Literalization | Problem |\n   |----------|----------------|---------|\n\n6. **CORRECTIONS**\n   | Reified Usage | Corrected Understanding |\n   |---------------|-------------------------|\n\n7. **BOTTOM LINE**\n   [One paragraph: What key reifications occur? What category errors\n   result? How should these abstractions properly be understood?]\n",
+  "canonical_schema": {
+    "reified_concepts": [
+      {
+        "concept_id": "string - RC1, RC2, etc.",
+        "concept_name": "string",
+        "concept_type": "abstract_category | statistical_construct | theoretical_entity | metaphor",
+        "reification_description": "string - how it's reified",
+        "example_usage": "string - quote or paraphrase",
+        "severity": "severe | significant | moderate | minor"
+      }
+    ],
+    "causal_attribution_errors": [
+      {
+        "error_id": "string",
+        "abstraction": "string - what's treated as causal",
+        "attributed_effect": "string - what it supposedly causes",
+        "problem": "string - why this is an error",
+        "better_formulation": "string - how to fix it"
+      }
+    ],
+    "category_errors": [
+      {
+        "error_id": "string",
+        "category_confused": "string",
+        "confusion_type": "level_confusion | type_confusion | scope_confusion",
+        "description": "string",
+        "consequence": "string - what goes wrong"
+      }
+    ],
+    "statistical_reifications": [
+      {
+        "reification_id": "string",
+        "statistical_construct": "string - e.g., 'average person', 'GDP'",
+        "treated_as": "string - what it's mistaken for",
+        "problem": "string - why this is problematic",
+        "what_it_actually_is": "string - the correct understanding"
+      }
+    ],
+    "literalized_metaphors": [
+      {
+        "metaphor_id": "string",
+        "metaphor": "string",
+        "original_domain": "string",
+        "applied_domain": "string",
+        "literalization": "string - how it's taken literally",
+        "problem": "string - consequences of literalization"
+      }
+    ],
+    "corrections": [
+      {
+        "correction_id": "string",
+        "reified_concept": "string",
+        "reified_usage": "string",
+        "corrected_understanding": "string",
+        "why_correction_matters": "string"
+      }
+    ],
+    "meta": {
+      "reifications_detected": "number",
+      "severe_reifications": "number",
+      "categories_with_errors": "number",
+      "overall_reification_level": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "reified_concepts",
+    "category_errors",
+    "causal_attribution_to_abstractions",
+    "literalized_metaphors",
+    "statistical_reification"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [
+    "marxist",
+    "hegelian_critical",
+    "pragmatist_praxis"
+  ],
+  "source_file": "analyzer/src/engines/reification_detector.py"
+}

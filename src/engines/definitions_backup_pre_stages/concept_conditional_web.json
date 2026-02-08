@@ -1,0 +1,16 @@
+{
+  "engine_key": "concept_conditional_web",
+  "engine_name": "Concept Conditional Web",
+  "description": "Extracts if-then relationships involving the concept",
+  "version": 1,
+  "category": "concepts",
+  "kind": "relational",
+  "reasoning_domain": "conditional logic",
+  "researcher_question": "What conditional relationships involve this concept?",
+  "extraction_prompt": "You are conducting Phase 7: CONDITIONAL WEB analysis.\n\n## YOUR TASK\n\nExtract ALL if-then relationships involving \"{concept}\".\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## WHAT TO LOOK FOR\n\n- \"If {concept}, then X\"\n- \"If X, then {concept}\"\n- \"Only if X, {concept}\"\n- \"Unless X, not {concept}\"\n- Counterfactuals: \"If {concept} had been different...\"\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with conditionals[], each containing:\n- conditional_id, antecedent, consequent, type (indicative/counterfactual/normative), scope, confidence, quote, source\n\nAlso include: conditional_clusters[] grouping related conditionals.\n\nTARGET: 15-25 conditional relationships.",
+  "curation_prompt": "Validate conditional extraction and typing.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": []
+}

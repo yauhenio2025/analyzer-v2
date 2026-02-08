@@ -1,0 +1,157 @@
+{
+  "engine_key": "conceptual_affordance_analyzer",
+  "engine_name": "Conceptual Affordance Analyzer",
+  "description": "Analyzes what concepts enable and foreclose. Maps virtual possibilities, blocked paths, assemblage participation, and lines of flight. Reveals the productive power of concepts beyond their truth value.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "deleuzian_pragmatics",
+  "researcher_question": "What does this concept make possible?",
+  "extraction_prompt": "\nYou are an expert in Deleuzian analysis, examining concepts as productive forces.\n\nFor this article, perform a CONCEPTUAL AFFORDANCE ANALYSIS:\n\n## 1. CONCEPT IDENTIFICATION\nFor each significant concept:\n- **Term**: The concept name/phrase\n- **Definition**: How it's used\n- **Pragmatic function**: What work is it doing?\n\n## 2. ENABLED POSSIBILITIES\nFor each concept, identify what it MAKES POSSIBLE:\n- **Cognitive possibilities**: What new thoughts/questions does it enable?\n- **Practical possibilities**: What actions does it enable?\n- **Institutional possibilities**: What organizations/structures does it enable?\n- **Social possibilities**: What relationships/identities does it enable?\n- **Political possibilities**: What movements/positions does it enable?\n\nNote: Are these actualized or merely virtual (possible but not yet real)?\n\n## 3. BLOCKED PATHS\nFor each concept, identify what it FORECLOSES:\n- **What becomes unthinkable?** What questions can't be asked?\n- **What becomes undoable?** What actions are ruled out?\n- **What becomes invisible?** What can't be seen through this lens?\n- **What alternatives are obscured?** What other ways of thinking are blocked?\n\n## 4. ASSEMBLAGE ANALYSIS\nIdentify assemblages the concept participates in:\n- **What practices** does it connect with?\n- **What institutions** use it?\n- **What technologies** rely on it?\n- **What other concepts** does it combine with?\n- **What emerges** from these combinations?\n\n## 5. LINES OF FLIGHT\nIdentify escape possibilities:\n- **What constraints** might this concept help escape?\n- **What new territories** might it open?\n- **What resistances** would this encounter?\n- **What re-capture risks** exist?\n\n## 6. TERRITORIALIZATION EFFECTS\nHow does this concept stabilize or destabilize:\n- **What gets ordered/categorized?**\n- **What gets coded/decoded?**\n- **What regimes does it support or undermine?**\n\n\nThink pragmatically - what does this concept DO, not just what does it MEAN?\n",
+  "curation_prompt": "\nYou are synthesizing conceptual affordance analyses from multiple articles.\n\nYour task:\n\n## 1. CONSOLIDATE CONCEPT INVENTORIES\n- Merge same concepts across articles\n- Collect all affordance information\n- Calculate affordance richness scores\n\n## 2. MAP ENABLED POSSIBILITIES\n- Aggregate possibilities enabled by each concept\n- Categorize by type (cognitive, practical, institutional, etc.)\n- Note what's actualized vs. merely virtual\n- Identify conditions for actualization\n\n## 3. MAP BLOCKED PATHS\n- Aggregate what each concept forecloses\n- Identify patterns in blockages\n- Note workarounds and alternative concepts\n- Find concepts that open what others close\n\n## 4. BUILD ASSEMBLAGE MAPS\n- Identify recurring assemblages across articles\n- Map their components (concepts, practices, institutions, technologies)\n- Identify emergent properties\n- Assess assemblage stability\n\n## 5. TRACE LINES OF FLIGHT\n- Identify escape routes opened by concepts\n- Map where they lead\n- Identify resistances and re-capture risks\n- Assess viability of different escape routes\n\n## 6. ANALYZE TERRITORIALIZATION DYNAMICS\n- Identify what concepts stabilize\n- Identify what they destabilize\n- Map coding/overcoding effects\n- Assess overall territorial function\n\n## 7. IDENTIFY CONCEPTUAL MACHINES\n- Find concept combinations that produce consistent effects\n- Map their operational logic\n- Identify failure conditions\n\n\nCreate a map that reveals the productive power of concepts in this discourse.\n",
+  "concretization_prompt": "\nTransform the affordance analysis to use concrete, recognizable labels:\n\n1. Name concepts specifically:\n   - \"C1\" \u2192 \"Platform Economy\"\n   - \"C2\" \u2192 \"Gig Work\"\n\n2. Name enabled possibilities concretely:\n   - \"EP1\" \u2192 \"Enables: Flexible work scheduling for individuals\"\n   - \"EP2\" \u2192 \"Enables: Labor cost reduction for companies\"\n\n3. Name blocked paths specifically:\n   - \"BP1\" \u2192 \"Forecloses: Traditional employment protections\"\n   - \"BP2\" \u2192 \"Obscures: Employer responsibility for benefits\"\n\n4. Name assemblages evocatively:\n   - \"ASM1\" \u2192 \"The Platform-Worker-Algorithm Assemblage\"\n   - \"ASM2\" \u2192 \"The Flexibility-Precarity Machine\"\n\n5. Name lines of flight concretely:\n   - \"LOF1\" \u2192 \"Escape from 9-5 toward autonomous scheduling\"\n   - \"LOF2\" \u2192 \"Escape from employer control toward platform dependency\"\n\n6. Name territorialization effects:\n   - \"TERR1\" \u2192 \"Recodes 'employee' as 'independent contractor'\"\n\nPreserve all affordance types, assemblage components, and dynamic assessments.\nMake the productive power of concepts immediately visible.\n",
+  "canonical_schema": {
+    "concepts_analyzed": [
+      {
+        "concept_id": "string",
+        "term": "string",
+        "definition": "string",
+        "affordance_richness": "number (0-1, how many possibilities opened)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "enabled_possibilities": [
+      {
+        "possibility_id": "string",
+        "concept": "concept_id",
+        "enables": "string",
+        "possibility_type": "cognitive | practical | institutional | social | political",
+        "actuality_status": "actualized | virtual | emergent",
+        "conditions_for_actualization": [
+          "string"
+        ],
+        "examples": [
+          "string"
+        ]
+      }
+    ],
+    "blocked_paths": [
+      {
+        "blockage_id": "string",
+        "concept": "concept_id",
+        "forecloses": "string",
+        "blockage_type": "conceptual | practical | normative | perceptual",
+        "mechanism": "string (how does it block?)",
+        "workarounds": [
+          "string (if any)"
+        ],
+        "alternative_concepts_needed": [
+          "string"
+        ]
+      }
+    ],
+    "assemblage_maps": [
+      {
+        "assemblage_id": "string",
+        "name": "string",
+        "description": "string",
+        "component_concepts": [
+          "concept_id"
+        ],
+        "component_practices": [
+          "string"
+        ],
+        "component_institutions": [
+          "string"
+        ],
+        "component_technologies": [
+          "string"
+        ],
+        "emergent_properties": [
+          "string"
+        ],
+        "stability": "stable | dynamic | precarious"
+      }
+    ],
+    "lines_of_flight": [
+      {
+        "line_id": "string",
+        "concept": "concept_id",
+        "escape_from": "string",
+        "escape_toward": "string",
+        "deterritorialization_type": "relative | absolute",
+        "resistance_encountered": [
+          "string"
+        ],
+        "reterritorialization_risks": [
+          "string"
+        ]
+      }
+    ],
+    "territorialization_dynamics": [
+      {
+        "dynamic_id": "string",
+        "concept": "concept_id",
+        "territorializing_function": "string",
+        "what_stabilized": [
+          "string"
+        ],
+        "what_destabilized": [
+          "string"
+        ],
+        "coding_effects": [
+          "string (what gets categorized/ordered)"
+        ],
+        "overcoding_risks": [
+          "string"
+        ]
+      }
+    ],
+    "conceptual_machines": [
+      {
+        "machine_id": "string",
+        "name": "string",
+        "input_concepts": [
+          "concept_id"
+        ],
+        "output_effects": [
+          "string"
+        ],
+        "operational_logic": "string",
+        "material_requirements": [
+          "string"
+        ],
+        "breaks_down_when": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_concepts": "number",
+      "total_possibilities_enabled": "number",
+      "total_paths_blocked": "number",
+      "most_enabling_concept": "concept_id",
+      "most_blocking_concept": "concept_id",
+      "assemblage_count": "number",
+      "dominant_affordance_type": "string"
+    }
+  },
+  "extraction_focus": [
+    "enabled_possibilities",
+    "foreclosed_possibilities",
+    "practical_deployments",
+    "institutional_uses",
+    "assemblage_components",
+    "transformation_potentials"
+  ],
+  "primary_output_modes": [
+    "gemini_concept_tree",
+    "mermaid_mindmap",
+    "structured_text_report",
+    "smart_table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/conceptual_affordance_analyzer.py"
+}

@@ -1,0 +1,164 @@
+{
+  "engine_key": "terra_incognita_mapper",
+  "engine_name": "Terra Incognita Mapper",
+  "description": "Maps what we DON'T know \u2014 the blank spaces in our understanding. Identifies known unknowns, surfaces potential unknown unknowns, distinguishes unknowable from unknown, and prioritizes collection requirements. Essential for calibrating confidence and planning further research.",
+  "version": 1,
+  "category": "epistemology",
+  "kind": "synthesis",
+  "reasoning_domain": "epistemology",
+  "researcher_question": "What don't we know, and what would we need to find out?",
+  "extraction_prompt": "\nYou are mapping the TERRA INCOGNITA \u2014 the blank spaces in our knowledge about\nthis topic. Your task is to identify what we DON'T know and what we'd need to find out.\n\n## EPISTEMOLOGICAL FRAMEWORK\n\n**Known Knowns**: Things established with confidence\n**Known Unknowns**: Questions we know we need answered\n**Unknown Unknowns**: Gaps we might not realize exist\n**Unknowables**: Things that may be inherently impossible to know\n\n\n## YOUR TASK\n\n### 1. MAP THE KNOWLEDGE LANDSCAPE\n\n**Known Knowns**: What does the text establish with reasonable confidence?\n- What's well-supported?\n- What's the source quality?\n\n**Known Unknowns**: What questions does the text acknowledge needing answers to?\n- Explicit gaps the text recognizes\n- Questions raised but not answered\n\n**Unknown Unknowns** (this is the hard part): What gaps might exist that the text doesn't realize?\n- What perspectives are absent?\n- What data wasn't collected?\n- What questions weren't asked?\n- What assumptions weren't tested?\n\n**Unknowables**: What might be impossible to know?\n- Destroyed evidence\n- Inherently private information\n- Counterfactual paths not taken\n- Future contingencies\n\n### 2. IDENTIFY ASSUMPTIONS MASQUERADING AS KNOWLEDGE\n\nLook for things treated as facts that are actually:\n- Unverified assumptions\n- Plausible inferences (but not established)\n- Conventions (accepted but not proven)\n- Speculation (dressed up as knowledge)\n\nFor each: How testable is it? What happens if it's wrong?\n\n### 3. CATALOG CRITICAL GAPS\n\nFor each significant gap:\n\n**Gap Category:**\n- **Source gap**: Missing primary sources, over-reliance on secondary\n- **Data gap**: Missing quantitative evidence\n- **Methodology gap**: Untested methods, missing validation\n- **Temporal gap**: Outdated information, missing time periods\n- **Causal gap**: Correlation claimed without mechanism\n- **Contextual gap**: Missing background, missing comparison cases\n- **Comparative gap**: No baseline, no control group, no comparison\n\n**Gap Handling:**\n- How does the text deal with this gap?\n- Ignored? Assumed away? Acknowledged? Bracketed?\n- Is the handling adequate?\n\n**Impact:**\n- Which conclusions depend on this gap being filled?\n- How confident can we be given this gap?\n\n### 4. GENERATE COLLECTION REQUIREMENTS\n\nFor gaps that could be filled, specify:\n- What specific information is needed?\n- Where might it be found?\n- How much effort would it take?\n- How much would it help?\n\nCollection types:\n- Open source research\n- Primary research (interviews, surveys)\n- Expert consultation\n- Data acquisition\n- Archival research\n- Technical collection\n- Field work\n\n### 5. ASK THE UNASKED QUESTIONS\n\nWhat questions SHOULD the text have addressed but didn't?\n- Why might these questions have been avoided?\n- What would the answers reveal?\n\n### 6. TEMPORAL ASSESSMENT\n\n- Is any information likely outdated?\n- Are there future developments that would change the analysis?\n- What should be monitored going forward?\n\n### 7. COMPARATIVE ASSESSMENT\n\n- What comparisons would strengthen the analysis?\n- Are there missing baselines or reference points?\n- What \"natural experiments\" or comparison cases exist?\n\n## OUTPUT GUIDANCE\n\nThe goal is an honest map of what we know, what we don't know, and what we need to know.\nBe specific about gaps. Be realistic about what can be collected.\nRemember: acknowledging uncertainty is epistemically virtuous, not a weakness.\n",
+  "curation_prompt": "\nYou are synthesizing gap analyses from multiple sources to create a comprehensive\nmap of what we know and don't know about this topic.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE KNOWLEDGE LANDSCAPE\n- What's established across multiple sources? (Higher confidence)\n- What's claimed by only one source? (Lower confidence)\n- Where do sources contradict each other? (Gap indicator)\n\n### 2. MERGE GAP CATALOGS\n- Which gaps appear across multiple sources?\n- Which gaps does one source fill that another has?\n- Are there gaps that ALL sources share? (Priority collection targets)\n\n### 3. IDENTIFY DISCOURSE-WIDE GAPS\nLooking at the body of literature as a whole:\n- What is everyone assuming?\n- What questions is no one asking?\n- What evidence does no one have?\n- What perspectives are systematically absent?\n\n### 4. PRIORITIZE COLLECTION REQUIREMENTS\n- Which gaps, if filled, would most transform understanding?\n- Which gaps are most feasible to fill?\n- What's the best effort-to-value ratio?\n\n### 5. ASSESS CROSS-SOURCE RELIABILITY\n- Do sources validate each other?\n- Are they drawing from the same primary sources? (False corroboration)\n- Where is independent verification actually occurring?\n\n### 6. MAP THE EPISTEMIC LANDSCAPE\n- What areas are well-mapped (multiple independent sources, consensus)?\n- What areas are contested (contradictions, debates)?\n- What areas are terra incognita (no one knows)?\n\n## OUTPUT GUIDANCE\n\nCreate a unified gap map that:\n1. Shows where knowledge is solid vs. thin vs. absent\n2. Prioritizes collection requirements\n3. Identifies assumptions shared across the discourse\n4. Notes where the field is epistemically honest vs. overconfident\n",
+  "concretization_prompt": "\nTransform the terra incognita map into an actionable research planning document:\n\n1. **EXECUTIVE SUMMARY**\n   - Overall epistemic health assessment (one sentence)\n   - Number of critical gaps identified\n   - Top collection priority\n\n2. **KNOWLEDGE MAP VISUALIZATION**\n   ```\n   WELL ESTABLISHED (High Confidence)\n   \u2022 [Item]\n   \u2022 [Item]\n\n   TENTATIVELY ESTABLISHED (Moderate Confidence)\n   \u2022 [Item] \u2014 caveat: [gap]\n   \u2022 [Item] \u2014 caveat: [gap]\n\n   UNKNOWN / CONTESTED\n   \u2022 [Question]\n   \u2022 [Question]\n\n   UNKNOWABLE\n   \u2022 [Item] \u2014 why: [reason]\n   ```\n\n3. **CRITICAL GAPS TABLE**\n   ```\n   | Gap | Affects | Priority | Difficulty | Current Handling |\n   |-----|---------|----------|------------|------------------|\n   | G1  | [...]   | Critical | Moderate   | Assumed          |\n   ```\n\n4. **ASSUMPTIONS ALERT**\n   Things treated as facts but actually unverified:\n   - [Assumption] \u2014 impact if wrong: [impact]\n   - [Assumption] \u2014 impact if wrong: [impact]\n\n5. **COLLECTION REQUIREMENTS** (prioritized)\n   1. **[CR1]** \u2014 Information needed: [X]\n      - Would fill: Gap G1\n      - Potential sources: [list]\n      - Effort: [estimate]\n      - Value: [HIGH/MEDIUM/LOW]\n\n   2. **[CR2]** ...\n\n6. **QUESTIONS NO ONE IS ASKING**\n   - [Question] \u2014 why it matters: [reason]\n   - [Question] \u2014 why it matters: [reason]\n\n7. **TEMPORAL ALERTS**\n   - Outdated: [information that may be stale]\n   - Monitor: [future developments to watch]\n\n8. **EPISTEMIC HEALTH SCORECARD**\n   ```\n   Gap acknowledgment: [Good/Partial/Poor]\n   Assumption transparency: [Good/Partial/Poor]\n   Collection needs identified: [Yes/Partial/No]\n   Overall: [Solid/Adequate/Questionable/Poor]\n   ```\n\nMake it useful for someone planning follow-up research or deciding\nhow confident to be in conclusions.\n",
+  "canonical_schema": {
+    "knowledge_landscape": {
+      "known_knowns": [
+        {
+          "item": "string - something established in the text",
+          "confidence": "high | medium | low",
+          "source_quality": "string"
+        }
+      ],
+      "known_unknowns": [
+        {
+          "question": "string - question we know we need answered",
+          "importance": "critical | high | medium | low",
+          "why_important": "string - how this affects the analysis",
+          "gap_type": "factual | causal | predictive | counterfactual | definitional",
+          "acknowledged_in_text": "boolean - does the text recognize this gap?"
+        }
+      ],
+      "unknown_unknowns_surfaced": [
+        {
+          "potential_gap": "string - gap the text may not realize exists",
+          "how_identified": "string - what suggested this might be missing",
+          "potential_impact": "string - why this could matter"
+        }
+      ],
+      "unknowables": [
+        {
+          "item": "string - something that may be inherently unknowable",
+          "why_unknowable": "string - information destroyed, inherently private, counterfactual, etc.",
+          "workaround": "string - how analysis proceeds despite unknowability"
+        }
+      ]
+    },
+    "assumptions_masquerading_as_knowledge": [
+      {
+        "assumption": "string - treated as fact but actually assumed",
+        "presented_as": "string - how text presents it",
+        "actual_status": "unverified assumption | plausible inference | convention | speculation",
+        "testability": "easily testable | testable with effort | difficult to test | untestable",
+        "if_wrong_impact": "catastrophic | significant | moderate | minimal"
+      }
+    ],
+    "critical_gaps": [
+      {
+        "gap_id": "string - G1, G2, etc.",
+        "description": "string - what we don't know",
+        "gap_category": "source | data | methodology | temporal | causal | contextual | comparative",
+        "affects_conclusions": [
+          "string - which conclusions depend on filling this gap"
+        ],
+        "current_handling": {
+          "method": "ignored | assumed | inferred | acknowledged | bracketed",
+          "adequacy": "adequate | problematic | unacceptable"
+        },
+        "fill_priority": "critical | high | medium | low",
+        "fill_difficulty": "easy | moderate | difficult | very difficult | impossible"
+      }
+    ],
+    "gap_impact_analysis": {
+      "conclusions_affected_by_gaps": [
+        {
+          "conclusion": "string",
+          "dependent_gaps": [
+            "string - gap_ids"
+          ],
+          "confidence_if_gaps_filled": "string - how confidence would change",
+          "robustness": "robust despite gaps | weakened by gaps | fundamentally undermined"
+        }
+      ],
+      "overall_analysis_integrity": {
+        "assessment": "solid | adequate | questionable | unreliable",
+        "critical_gap_count": "number",
+        "gap_acknowledgment_quality": "good | partial | poor"
+      }
+    },
+    "collection_requirements": [
+      {
+        "requirement_id": "string - CR1, CR2, etc.",
+        "information_needed": "string - specific information to collect",
+        "addresses_gap": "string - gap_id this would fill",
+        "collection_type": "open_source | primary_research | expert_consultation | data_acquisition | field_work | archival | technical",
+        "potential_sources": [
+          "string - where this info might be found"
+        ],
+        "priority": "immediate | high | medium | low",
+        "effort_estimate": "minimal | moderate | significant | major",
+        "expected_value": "would resolve uncertainty | would reduce uncertainty | would inform | marginal value"
+      }
+    ],
+    "questions_the_text_should_have_asked": [
+      {
+        "question": "string",
+        "why_important": "string",
+        "why_missing": "string - possible reason text didn't address this"
+      }
+    ],
+    "temporal_gaps": {
+      "outdated_information": [
+        {
+          "item": "string - information that may be stale",
+          "age": "string",
+          "update_needed": "boolean",
+          "staleness_impact": "significant | moderate | minimal"
+        }
+      ],
+      "future_unknowns": [
+        {
+          "item": "string - future development that would affect analysis",
+          "timeframe": "string",
+          "monitoring_recommended": "boolean"
+        }
+      ]
+    },
+    "comparative_gaps": {
+      "missing_comparisons": [
+        {
+          "what_compared": "string - what the text compares",
+          "missing_comparator": "string - what should also be compared",
+          "why_important": "string"
+        }
+      ],
+      "missing_baselines": [
+        {
+          "claim": "string - claim made without baseline",
+          "baseline_needed": "string - what baseline would contextualize this"
+        }
+      ]
+    },
+    "meta": {
+      "total_known_unknowns": "number",
+      "critical_gaps_count": "number",
+      "collection_requirements_count": "number",
+      "assumptions_flagged": "number",
+      "unknowables_identified": "number",
+      "overall_epistemic_health": "good | moderate | concerning | poor",
+      "text_self_awareness": "high | medium | low - does text acknowledge its gaps?"
+    }
+  },
+  "extraction_focus": [
+    "known_unknowns",
+    "assumptions_as_knowledge",
+    "gap_impact_analysis",
+    "collection_requirements",
+    "unknowability_assessment"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/terra_incognita_mapper.py"
+}

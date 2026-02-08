@@ -1,0 +1,18 @@
+{
+  "engine_key": "concept_taxonomy_causal_structure",
+  "engine_name": "Concept Taxonomy: Causal Structure",
+  "description": "Classifies chains by their causal structure (mechanistic, counterfactual, constitutive, teleological, dispositional)",
+  "version": 1,
+  "category": "concepts",
+  "kind": "primitive",
+  "reasoning_domain": "causal analysis",
+  "researcher_question": "What type of causal reasoning does each chain employ?",
+  "extraction_prompt": "You are conducting Phase 5.2: CAUSAL STRUCTURE classification.\n\n## YOUR TASK\n\nClassify each argument chain by its CAUSAL STRUCTURE for arguments about \"{concept}\".\n\n## CAUSAL STRUCTURE TAXONOMY\n\n- **mechanistic**: Specifies the MECHANISM by which cause produces effect\n  - \"X causes Y through process Z\"\n  - Traces causal pathways step by step\n\n- **counterfactual**: DEPENDENCE claims without mechanism\n  - \"If X had not occurred, Y would not have occurred\"\n  - Lewis-style counterfactual dependence\n\n- **constitutive**: Part-whole or COMPOSITION relations\n  - \"X is part of what makes Y what it is\"\n  - Not efficient causation but formal/material\n\n- **teleological**: PURPOSE or FUNCTION explanations\n  - \"X exists in order to Y\"\n  - \"The function of X is to produce Y\"\n\n- **dispositional**: TENDENCY or CAPACITY claims\n  - \"X has the power/tendency to produce Y\"\n  - Latent causal powers\n\n## CHAINS TO CLASSIFY\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each chain: chain_id, causal_structure, mechanism_specified (true/false), confidence, justification.\n\nReturn as valid JSON.",
+  "curation_prompt": "Validate causal structure classifications.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": [
+    "marxist"
+  ]
+}

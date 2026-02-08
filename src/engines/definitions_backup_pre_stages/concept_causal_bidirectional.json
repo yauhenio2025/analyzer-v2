@@ -1,0 +1,18 @@
+{
+  "engine_key": "concept_causal_bidirectional",
+  "engine_name": "Concept Causal: Bidirectional",
+  "description": "Analyzes feedback loops and mutual causation involving the concept",
+  "version": 1,
+  "category": "concepts",
+  "kind": "relational",
+  "reasoning_domain": "causal analysis",
+  "researcher_question": "What feedback loops involve this concept?",
+  "extraction_prompt": "You are conducting Phase 6.3: BIDIRECTIONAL CAUSATION analysis.\n\n## YOUR TASK\n\nFind FEEDBACK LOOPS and MUTUAL CAUSATION involving \"{concept}\".\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## WHAT TO LOOK FOR\n\n- \"{concept} and X reinforce each other\"\n- \"X increases {concept}, which in turn increases X\"\n- Vicious/virtuous cycles\n- Dialectical relationships\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with feedback_loops[], each containing:\n- loop_id, elements[], direction (reinforcing/balancing), mechanism, stability, quote, source\n\nTARGET: 5-10 feedback loops.",
+  "curation_prompt": "Validate feedback loop identification.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": [
+    "marxist"
+  ]
+}

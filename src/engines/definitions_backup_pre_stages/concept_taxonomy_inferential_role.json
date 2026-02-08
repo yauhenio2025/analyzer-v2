@@ -1,0 +1,18 @@
+{
+  "engine_key": "concept_taxonomy_inferential_role",
+  "engine_name": "Concept Taxonomy: Inferential Role",
+  "description": "Classifies chains by their inferential role (material, formal, modal, normative, commissive)",
+  "version": 1,
+  "category": "concepts",
+  "kind": "primitive",
+  "reasoning_domain": "inferential pragmatics",
+  "researcher_question": "What inferential role does each chain play in the space of reasons?",
+  "extraction_prompt": "You are conducting Phase 5.4: INFERENTIAL ROLE classification.\n\n## YOUR TASK\n\nClassify each argument chain by its INFERENTIAL ROLE for arguments about \"{concept}\".\n\n## INFERENTIAL ROLE TAXONOMY (Brandom-inspired)\n\n- **material**: Content-based inference, not purely formal\n  - \"It's raining, so the streets are wet\"\n  - Relies on worldly connections, not just logical form\n\n- **formal**: Logic-based inference\n  - \"All A are B; x is A; therefore x is B\"\n  - Valid by form alone\n\n- **modal**: Concerns POSSIBILITY and NECESSITY\n  - \"Necessarily if X then Y\"\n  - \"It's possible that...\"\n\n- **normative**: Concerns what OUGHT to be\n  - \"Given X, we should Y\"\n  - Prescriptive conclusions\n\n- **commissive**: COMMITS speaker to further claims\n  - Accepting this commits you to that\n  - Maps commitment inheritance\n\n## CHAINS TO CLASSIFY\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each chain: chain_id, inferential_role, commitments_generated[], incompatibilities[], confidence, justification.\n\nReturn as valid JSON.",
+  "curation_prompt": "Validate inferential role classifications.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": [
+    "brandomian"
+  ]
+}

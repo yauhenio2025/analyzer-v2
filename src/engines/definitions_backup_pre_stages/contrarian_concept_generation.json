@@ -1,0 +1,114 @@
+{
+  "engine_key": "contrarian_concept_generation",
+  "engine_name": "Contrarian Concept Generator",
+  "description": "Generates counter-positions and contrarian concepts. Creates counter-arguments, alternative framings, devil's advocate positions, inversions of assumptions, and underexplored perspectives.",
+  "version": 1,
+  "category": "argument",
+  "kind": "synthesis",
+  "reasoning_domain": "dialectical",
+  "researcher_question": "What contrarian positions challenge the dominant discourse?",
+  "extraction_prompt": "\nYou are an expert contrarian analyst identifying and generating counter-positions.\n\nFor this article, analyze what's assumed and what challenges exist:\n\n1. **DOMINANT POSITIONS**: What views are presented as mainstream or obvious?\n   - State the position\n   - What arguments support it?\n   - What truths does it assume?\n   - How prevalent is this view?\n\n2. **COUNTER-ARGUMENTS**: What challenges to dominant views appear?\n   - What position is being challenged?\n   - What's the counter-argument?\n   - What evidence supports the counter?\n   - How strong is the counter? (0-1)\n   - How novel is it? (0-1)\n\n3. **ALTERNATIVE FRAMINGS**: Are there different ways to frame the issue?\n   - Original framing\n   - Alternative framing\n   - How do implications change?\n   - How feasible is adopting the alternative?\n\n4. **ASSUMPTION INVERSIONS**: What happens if we flip assumptions?\n   - Original assumption\n   - Inverted assumption\n   - What would change?\n   - Any supporting examples?\n   - How plausible is the inversion?\n\n5. **UNDEREXPLORED PERSPECTIVES**: What viewpoints are missing?\n   - What perspective is neglected?\n   - Whose perspective is it?\n   - Why is it underexplored?\n   - What insights might it offer?\n\n\nThink critically - identify both explicit contrarian views and generate possibilities.\n",
+  "curation_prompt": "\nYou are synthesizing contrarian analysis from multiple articles.\n\nYour task:\n1. **MAP DOMINANT POSITIONS**: What's the consensus?\n   - Consolidate dominant views\n   - Rate prevalence\n   - Identify assumed truths\n\n2. **COMPILE COUNTER-ARGUMENTS**: What challenges exist?\n   - Aggregate counters from corpus\n   - Generate additional counters\n   - Rate strength and novelty\n\n3. **CATALOG ALTERNATIVE FRAMINGS**: What other frames exist?\n   - Collect from corpus\n   - Generate possibilities\n   - Assess feasibility\n\n4. **GENERATE INVERSIONS**: What if assumptions are wrong?\n   - Invert key assumptions\n   - Assess plausibility\n   - Note implications\n\n5. **MAP UNDEREXPLORED PERSPECTIVES**: What's missing?\n   - Identify neglected viewpoints\n   - Note potential insights\n\n6. **CREATE DEVIL'S ADVOCATE POSITIONS**: Steelman challenges\n   - For each dominant position\n   - Create strongest possible counter\n   - Note value of consideration\n\n\nCreate a comprehensive contrarian analysis to challenge groupthink.\n",
+  "concretization_prompt": "\nTransform the contrarian analysis to be immediately useful:\n\n1. Name dominant positions:\n   - \"DP1\" \u2192 \"Consensus: AI will create more jobs than it destroys\"\n\n2. Articulate counter-arguments:\n   - \"CA1\" \u2192 \"Counter: Historical automation didn't require human-level cognition\"\n\n3. Describe alternative framings:\n   - \"AF1\" \u2192 \"Reframe: From 'job displacement' \u2192 'labor market transformation'\"\n\n4. State inversions:\n   - \"INV1\" \u2192 \"Invert: 'Regulation slows innovation' \u2192 'Regulation enables trust'\"\n\n5. Name perspectives:\n   - \"UP1\" \u2192 \"Underexplored: Global South technology workers' perspective\"\n\n6. Devil's advocate:\n   - \"DA1\" \u2192 \"DA Position: AI development should be paused (challenge: safety)\"\n\nPreserve all strength and plausibility ratings.\nMake the analysis useful for challenging assumptions.\n",
+  "canonical_schema": {
+    "dominant_positions": [
+      {
+        "position_id": "string",
+        "position": "string",
+        "supporting_arguments": [
+          "string"
+        ],
+        "assumed_truths": [
+          "string"
+        ],
+        "prevalence_in_corpus": "number (0-1)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "counter_arguments": [
+      {
+        "counter_id": "string",
+        "target_position": "position_id",
+        "counter_argument": "string",
+        "counter_evidence": [
+          "string"
+        ],
+        "strength": "number (0-1)",
+        "novelty": "number (0-1)",
+        "source": "in_corpus | generated | historical",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "alternative_framings": [
+      {
+        "framing_id": "string",
+        "original_framing": "string",
+        "alternative_framing": "string",
+        "implications_change": [
+          "string"
+        ],
+        "feasibility": "number (0-1)",
+        "source": "in_corpus | generated"
+      }
+    ],
+    "assumption_inversions": [
+      {
+        "inversion_id": "string",
+        "original_assumption": "string",
+        "inverted_assumption": "string",
+        "what_changes": "string",
+        "supporting_examples": [
+          "string"
+        ],
+        "plausibility": "number (0-1)"
+      }
+    ],
+    "underexplored_perspectives": [
+      {
+        "perspective_id": "string",
+        "perspective_name": "string",
+        "description": "string",
+        "whose_perspective": "string",
+        "why_underexplored": "string",
+        "potential_insights": [
+          "string"
+        ]
+      }
+    ],
+    "devils_advocate_positions": [
+      {
+        "position_id": "string",
+        "position": "string",
+        "challenges_consensus": "string",
+        "strongest_argument_for": "string",
+        "strongest_argument_against": "string",
+        "value_of_considering": "string"
+      }
+    ],
+    "meta": {
+      "total_dominant_positions": "number",
+      "total_counter_arguments": "number",
+      "average_counter_strength": "number (0-1)",
+      "consensus_level": "number (0-1)",
+      "contrarian_potential": "number (0-1)"
+    }
+  },
+  "extraction_focus": [
+    "assumptions",
+    "dominant_views",
+    "alternatives",
+    "inversions",
+    "challenges"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table",
+    "gemini_debate_map"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/contrarian_concept_generation.py"
+}

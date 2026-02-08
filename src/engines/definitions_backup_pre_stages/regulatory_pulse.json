@@ -1,0 +1,155 @@
+{
+  "engine_key": "regulatory_pulse",
+  "engine_name": "Regulatory Pulse Tracker",
+  "description": "Tracks policy changes, regulatory actions, and institutional decisions across jurisdictions. Maps affected sectors, compliance timelines, and regulatory trends to reveal the evolving policy landscape.",
+  "version": 1,
+  "category": "market",
+  "kind": "relational",
+  "reasoning_domain": "landscape",
+  "researcher_question": "How is regulation evolving, and who is affected by policy changes?",
+  "extraction_prompt": "\nYou are an expert regulatory analyst extracting policy and legal information.\n\nFor this article, extract ALL regulatory activity:\n\n## 1. REGULATIONS & POLICIES\nFor each regulation, law, or policy mentioned:\n- **TITLE**: Official name\n- **SHORT NAME**: Acronym or common name (e.g., GDPR, Dodd-Frank)\n- **TYPE**:\n  - LEGISLATION: Laws passed by legislature\n  - RULE: Agency regulations\n  - EXECUTIVE_ORDER: Presidential/executive actions\n  - GUIDANCE: Non-binding regulatory guidance\n  - JUDICIAL_DECISION: Court rulings with regulatory impact\n  - TREATY: International agreements\n  - STANDARD: Industry or technical standards\n- **DESCRIPTION**: What it does\n\n## 2. JURISDICTION & REGULATOR\n- **JURISDICTION**: Where it applies (country, state, EU, etc.)\n- **JURISDICTION TYPE**: Country, state, supranational, city, agency\n- **REGION**: Americas, Europe, Asia-Pacific, Middle East, Africa\n- **REGULATOR**: Who issued/enforces it\n- **REGULATOR TYPE**: Legislative, executive, judicial, independent agency\n\n## 3. TIMELINE\n- **PROPOSED**: When first proposed\n- **ENACTED**: When passed/adopted\n- **EFFECTIVE**: When it takes effect\n- **COMPLIANCE DEADLINE**: When compliance required\n\n## 4. STATUS\n- PROPOSED: Under consideration\n- PENDING: Passed but not yet effective\n- ENACTED: In force\n- EFFECTIVE: Currently being enforced\n- REPEALED: No longer in effect\n- CHALLENGED: Under legal challenge\n\n## 5. IMPACT\n- **AFFECTED SECTORS**: Industries impacted\n- **AFFECTED ENTITIES**: Types of organizations/people affected\n- **KEY PROVISIONS**: Main requirements (prohibitions, mandates, disclosures)\n- **PENALTIES**: Fines, criminal liability\n\n## 6. ENFORCEMENT ACTIONS\nFor each enforcement action mentioned:\n- **TARGET**: Who was targeted\n- **REGULATOR**: Who took action\n- **TYPE**: Investigation, fine, settlement, lawsuit, ban\n- **AMOUNT**: Financial penalty if any\n- **OUTCOME**: Result if known\n\n\nBe comprehensive - capture every regulatory development mentioned.\n",
+  "curation_prompt": "\nYou are synthesizing regulatory data from multiple articles into a comprehensive policy landscape.\n\nYour task:\n1. **CONSOLIDATE REGULATIONS**: Merge references to the same regulation\n   - Match by name and jurisdiction\n   - Take most complete timeline data\n   - Aggregate provisions from multiple sources\n\n2. **BUILD JURISDICTION PROFILES**:\n   - Group regulations by jurisdiction\n   - Count regulatory activity per jurisdiction\n   - Assess overall trend (tightening, loosening, stable)\n   - Identify key focus areas per jurisdiction\n\n3. **MAP IMPACTS**:\n   - Who is affected by each regulation\n   - Type and severity of impact\n   - Compliance timelines\n   - Cost implications if mentioned\n\n4. **CATALOG ENFORCEMENT**:\n   - List all enforcement actions\n   - Link to relevant regulations\n   - Note outcomes and amounts\n\n5. **IDENTIFY POLICY TRENDS**:\n   - Cross-jurisdictional trends\n   - Common themes across regulations\n   - Direction of regulatory change\n   - Driving factors\n\n6. **CALCULATE METRICS**:\n   - Total regulations by type\n   - Jurisdictions covered\n   - Enforcement action count\n   - Date range\n   - Dominant regulatory trend\n\n\nCreate a comprehensive regulatory landscape map for compliance and strategy.\n",
+  "concretization_prompt": "\nTransform the regulatory data to be immediately usable:\n\n1. Replace generic IDs with descriptive names:\n   - \"R1\" \u2192 \"EU AI Act (2024)\"\n   - \"J1\" \u2192 \"European Union\"\n\n2. Format timelines clearly:\n   - Show progression: Proposed \u2192 Enacted \u2192 Effective\n   - Note upcoming deadlines prominently\n\n3. Clarify impacts:\n   - \"Affects: Tech companies with >\u20ac10M revenue\"\n   - Note compliance costs if mentioned\n\n4. Name trends descriptively:\n   - \"Trend1\" \u2192 \"Global AI Regulation Wave\"\n\n5. Highlight actionable information:\n   - Upcoming compliance deadlines\n   - Active enforcement areas\n   - Recent significant penalties\n\nPreserve all jurisdiction mappings and timeline data.\nMake the regulatory landscape immediately useful for compliance planning.\n",
+  "canonical_schema": {
+    "regulations": [
+      {
+        "regulation_id": "string",
+        "title": "string",
+        "short_name": "string (acronym or common name)",
+        "description": "string",
+        "regulation_type": "legislation | rule | executive_order | guidance | judicial_decision | treaty | standard",
+        "jurisdiction": {
+          "name": "string",
+          "type": "country | state | supranational | city | agency",
+          "region": "string (Americas, Europe, Asia-Pacific, etc.)"
+        },
+        "regulator": {
+          "name": "string",
+          "type": "legislative | executive | judicial | independent_agency"
+        },
+        "timeline": {
+          "proposed_date": "string (YYYY-MM-DD or null)",
+          "enacted_date": "string (YYYY-MM-DD or null)",
+          "effective_date": "string (YYYY-MM-DD or null)",
+          "compliance_deadline": "string (YYYY-MM-DD or null)"
+        },
+        "status": "proposed | pending | enacted | effective | repealed | challenged",
+        "affected_sectors": [
+          "string"
+        ],
+        "affected_entity_types": [
+          "string (companies, individuals, etc.)"
+        ],
+        "key_provisions": [
+          {
+            "provision": "string",
+            "requirement_type": "prohibition | mandate | disclosure | standard | penalty"
+          }
+        ],
+        "penalties": {
+          "description": "string",
+          "max_fine": "number or null",
+          "criminal_liability": "boolean"
+        },
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "jurisdictions": [
+      {
+        "jurisdiction_id": "string",
+        "name": "string",
+        "type": "country | state | supranational | agency",
+        "region": "string",
+        "regulation_count": "number",
+        "regulatory_trend": "tightening | loosening | stable | mixed",
+        "key_focus_areas": [
+          "string"
+        ],
+        "notable_regulators": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "impacts": [
+      {
+        "impact_id": "string",
+        "regulation_id": "string",
+        "affected_party": "string",
+        "party_type": "company | sector | individual | institution",
+        "impact_type": "compliance_cost | operational_change | market_access | liability | opportunity",
+        "severity": "high | medium | low",
+        "description": "string",
+        "timeline": "string (immediate, 6 months, etc.)",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "enforcement_actions": [
+      {
+        "action_id": "string",
+        "regulation_id": "string or null",
+        "target": "string (company or individual)",
+        "regulator": "string",
+        "action_type": "investigation | fine | settlement | lawsuit | ban | warning",
+        "amount": "number or null",
+        "date": "string (YYYY-MM-DD)",
+        "outcome": "string",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "policy_trends": [
+      {
+        "trend_id": "string",
+        "trend_name": "string",
+        "description": "string",
+        "direction": "tightening | loosening | evolving",
+        "jurisdictions_involved": [
+          "jurisdiction_id"
+        ],
+        "regulations_involved": [
+          "regulation_id"
+        ],
+        "drivers": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "total_regulations": "number",
+      "regulations_by_type": {
+        "legislation": "number",
+        "rule": "number",
+        "guidance": "number",
+        "judicial_decision": "number"
+      },
+      "jurisdictions_covered": "number",
+      "enforcement_actions_count": "number",
+      "date_range": "string",
+      "dominant_trend": "string"
+    }
+  },
+  "extraction_focus": [
+    "regulations",
+    "policies",
+    "laws",
+    "jurisdictions",
+    "compliance",
+    "enforcement"
+  ],
+  "primary_output_modes": [
+    "table",
+    "structured_text_report",
+    "gemini_landscape",
+    "gemini_timeline"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/regulatory_pulse.py"
+}

@@ -1,0 +1,104 @@
+{
+  "engine_key": "stakeholder_power_interest",
+  "engine_name": "Stakeholder Power Matrix",
+  "description": "Maps stakeholders by their power (ability to influence outcomes) and interest (stake in the issue), identifying alliances, conflicts, and strategic positions.",
+  "version": 1,
+  "category": "power",
+  "kind": "relational",
+  "reasoning_domain": "flows",
+  "researcher_question": "Who has power? Who benefits/loses?",
+  "extraction_prompt": "\nYou are an expert policy analyst mapping stakeholder power and interests.\n\nFor this article, extract ALL stakeholders you can identify:\n\n1. **STAKEHOLDER IDENTIFICATION**:\n   - Who are the actors mentioned or implied?\n   - Classify: government, corporation, NGO, academic, individual, coalition, media, international\n   - Include both direct participants and affected parties\n\n2. **POWER ASSESSMENT** (0-1 scale):\n   - What resources do they control? (money, authority, expertise, information, legitimacy)\n   - What constraints limit their power?\n   - How much can they influence outcomes?\n\n3. **INTEREST ASSESSMENT** (0-1 scale):\n   - What do they stand to gain or lose?\n   - Stated interests (explicitly mentioned)\n   - Inferred interests (implied by actions/context)\n\n4. **POSITION MAPPING**:\n   - Supporter, opponent, neutral, or ambivalent?\n   - On what specific issues?\n\n5. **RELATIONSHIPS**:\n   - Who allies with whom? Against whom?\n   - Dependencies (who needs whom?)\n   - Competition (who competes for what?)\n\n6. **POWER DYNAMICS**:\n   - Who wins, who loses in described scenarios?\n   - Through what mechanisms?\n\n\nBe comprehensive - include obvious major players AND less visible affected parties.\n",
+  "curation_prompt": "\nYou are synthesizing stakeholder analyses from multiple articles into a unified power-interest map.\n\nYour task:\n1. **CONSOLIDATE STAKEHOLDERS**:\n   - Merge same stakeholders across articles\n   - Aggregate power/interest assessments (weighted average by evidence quality)\n   - Combine all stated and inferred interests\n\n2. **CALIBRATE SCORES**:\n   - Ensure power scores are consistent across stakeholders\n   - Ensure interest scores reflect relative stakes\n   - Adjust based on cross-article evidence\n\n3. **MAP RELATIONSHIPS**:\n   - Identify all alliance/opposition/dependency patterns\n   - Note where relationships are contested or evolving\n   - Rate strength based on evidence frequency and clarity\n\n4. **IDENTIFY COALITIONS**:\n   - Group stakeholders with aligned interests\n   - Calculate combined coalition power\n   - Name coalitions by their shared interest\n\n5. **DOCUMENT POWER DYNAMICS**:\n   - What patterns of winning/losing emerge?\n   - Through what mechanisms does power operate?\n   - Who benefits from status quo vs. change?\n\n6. **CALCULATE METRICS**:\n   - Conflict intensity: how opposed are stakeholder interests?\n   - Power concentration: how evenly distributed?\n   - Interest alignment: potential for coalition building\n\n\nOutput a comprehensive stakeholder map showing the political landscape of the issue.\n",
+  "concretization_prompt": "\nTransform the stakeholder analysis to use concrete, recognizable labels:\n\n1. Convert stakeholder_ids to real names:\n   - \"S1\" \u2192 \"U.S. Department of Commerce\"\n   - \"S2\" \u2192 \"NVIDIA Corporation\"\n   - \"S3\" \u2192 \"European Commission\"\n\n2. Name coalitions descriptively:\n   - \"Coalition 1\" \u2192 \"Tech Industry Alliance\"\n   - \"Coalition 2\" \u2192 \"Consumer Protection Advocates\"\n\n3. Make power dynamics vivid:\n   - Use specific mechanisms: \"regulatory authority\", \"market dominance\", \"lobbying budget\"\n   - Name specific wins/losses\n\n4. Clarify relationships:\n   - Add context for why stakeholders are allied/opposed\n\nPreserve all scores, relationships, and evidence links.\nMake the output immediately recognizable to someone following the policy debate.\n",
+  "canonical_schema": {
+    "stakeholders": [
+      {
+        "stakeholder_id": "string",
+        "name": "string",
+        "type": "government | corporation | ngo | academic | individual | coalition | media | international",
+        "power_score": "number (0-1) - ability to influence outcomes",
+        "interest_score": "number (0-1) - stake in the issue",
+        "position": "supporter | opponent | neutral | ambivalent",
+        "stated_interests": [
+          "string - explicitly mentioned interests"
+        ],
+        "inferred_interests": [
+          "string - implied but not stated"
+        ],
+        "resources": [
+          "string - power sources: money, authority, expertise, etc."
+        ],
+        "constraints": [
+          "string - limitations on action"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "rel_id": "string",
+        "from_stakeholder": "stakeholder_id",
+        "to_stakeholder": "stakeholder_id",
+        "relationship_type": "alliance | opposition | dependency | competition | neutral | influence",
+        "strength": "number (0-1)",
+        "description": "string",
+        "evidence": "string"
+      }
+    ],
+    "power_dynamics": [
+      {
+        "dynamic_id": "string",
+        "description": "string",
+        "winners": [
+          "stakeholder_id"
+        ],
+        "losers": [
+          "stakeholder_id"
+        ],
+        "mechanism": "string - how power is exercised",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "coalitions": [
+      {
+        "coalition_id": "string",
+        "name": "string",
+        "members": [
+          "stakeholder_id"
+        ],
+        "shared_interest": "string",
+        "combined_power": "number (0-1)"
+      }
+    ],
+    "meta": {
+      "total_stakeholders": "number",
+      "stakeholder_type_distribution": {
+        "type": "count"
+      },
+      "average_power": "number",
+      "average_interest": "number",
+      "conflict_intensity": "number (0-1)"
+    }
+  },
+  "extraction_focus": [
+    "actors",
+    "interests",
+    "power",
+    "relationships",
+    "outcomes",
+    "positions"
+  ],
+  "primary_output_modes": [
+    "gemini_stakeholder_matrix",
+    "comparative_matrix_table"
+  ],
+  "paradigm_keys": [
+    "marxist",
+    "pragmatist_praxis"
+  ],
+  "source_file": "analyzer/src/engines/stakeholder_power_interest.py"
+}

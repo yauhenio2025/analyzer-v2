@@ -1,0 +1,122 @@
+{
+  "engine_key": "principal_agent_analyzer",
+  "engine_name": "Principal-Agent Analyzer",
+  "description": "Identifies and analyzes principal-agent problems. Maps who are principals and agents, where interests diverge, information asymmetries, and how agents might exploit their position. Essential for understanding organizational dysfunction.",
+  "version": 1,
+  "category": "institutional",
+  "kind": "synthesis",
+  "reasoning_domain": "institutional",
+  "researcher_question": "What principal-agent problems exist and how do they create dysfunction?",
+  "extraction_prompt": "\nYou are analyzing PRINCIPAL-AGENT PROBLEMS \u2014 where those who act (agents)\nhave different interests from those they act for (principals).\n\n## THE PRINCIPAL-AGENT PROBLEM\n\nWhen someone acts on behalf of another:\n- PRINCIPAL: Delegates action (shareholders, citizens, patients)\n- AGENT: Acts on behalf (managers, politicians, doctors)\n\nThe problem: Agents often know more than principals and may act in their\nown interest rather than the principal's.\n\n## CORE CONCEPTS\n\n### INTEREST DIVERGENCE\nPrincipal and agent want different things:\n- Principal wants agent effort; agent wants leisure\n- Principal wants quality; agent wants to minimize cost\n- Principal wants long-term value; agent wants short-term results\n\n### INFORMATION ASYMMETRY\nAgent knows things principal doesn't:\n- What agent actually does (hidden action)\n- How hard agent works (hidden effort)\n- What agent knows (hidden information)\n- Agent's true capabilities (hidden type)\n\n### MORAL HAZARD\nAgent behaves differently because principal can't observe:\n- Shirking (not working as hard)\n- Risk-taking (with principal's money)\n- Self-dealing (benefiting self at principal's expense)\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY PRINCIPAL-AGENT RELATIONSHIPS\nWho delegates to whom?\n- Shareholders \u2192 Managers\n- Citizens \u2192 Politicians\n- Patients \u2192 Doctors\n- Clients \u2192 Lawyers/Advisors\n\n### STEP 2: MAP INTEREST DIVERGENCE\nWhere do principal and agent interests differ?\n- What does principal want?\n- What does agent want?\n- Where do these diverge?\n- How severe is the divergence?\n\n### STEP 3: IDENTIFY INFORMATION ASYMMETRIES\nWhat does agent know that principal doesn't?\n- Actions (what agent does)\n- Effort (how hard agent works)\n- Quality (how good the work is)\n- Intentions (what agent plans)\n- Expertise (what agent knows)\n\n### STEP 4: IDENTIFY MORAL HAZARD\nHow might agent exploit asymmetry?\n- What might agent do that hurts principal?\n- What enables this behavior?\n- How likely is it?\n\n### STEP 5: ASSESS CONTROL MECHANISMS\nHow does principal try to control agent?\n- Monitoring (watching agent)\n- Incentive alignment (making agent care about outcomes)\n- Bonding (agent puts up stake)\n- Reputation (agent cares about future)\n- Competition (alternatives to agent)\n\nHow effective are these mechanisms?\n\n### STEP 6: IDENTIFY DYSFUNCTION PATTERNS\nWhat problems result from agency issues?\n- What manifestations appear?\n- What's the root cause in agency terms?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about who is principal, who is agent, and what the information\nasymmetry enables. The goal is to identify agency problems that create dysfunction.\n",
+  "curation_prompt": "\nYou are synthesizing principal-agent analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE RELATIONSHIPS\n- What principal-agent relationships appear across sources?\n- Which are most problematic?\n\n### 2. IDENTIFY COMMON PATTERNS\n- What agency problems recur?\n- What control mechanisms are common?\n\n### 3. ASSESS SYSTEMIC ISSUES\n- Are there field-level agency problems?\n- What dysfunction patterns are widespread?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of principal-agent problems and their consequences.\n",
+  "concretization_prompt": "\nTransform the principal-agent analysis into actionable insight:\n\n1. **PRINCIPAL-AGENT RELATIONSHIPS**\n   ```\n   | Principal | Agent | Delegation | Power Balance |\n   |-----------|-------|------------|---------------|\n   | Shareholders | Managers | Business decisions | Agent-dominant |\n   ```\n\n2. **INTEREST DIVERGENCE**\n   ```\n   Relationship: [Principal] \u2192 [Agent]\n   Principal wants: [Interest]\n   Agent wants: [Interest]\n   Divergence: [How they differ]\n   Severity: [Rating]\n   ```\n\n3. **INFORMATION ASYMMETRIES**\n   | Relationship | What Agent Knows | What Principal Can't See |\n   |--------------|------------------|-------------------------|\n\n4. **MORAL HAZARD RISKS**\n   - Relationship: [Who \u2192 Who]\n   - Hazard: [What agent might do]\n   - Enabled by: [Information asymmetry]\n   - Harm: [How principal suffers]\n\n5. **CONTROL MECHANISMS**\n   | Mechanism | Relationship | Effectiveness | Limitations |\n   |-----------|--------------|---------------|-------------|\n\n6. **DYSFUNCTION PATTERNS**\n   - Pattern: [What goes wrong]\n   - Root cause: [Agency problem]\n   - Manifestations: [How it shows up]\n\n7. **BOTTOM LINE**\n   [One paragraph: What are the key principal-agent problems? What\n   dysfunction do they create? What mechanisms fail or succeed?]\n",
+  "canonical_schema": {
+    "principal_agent_relationships": [
+      {
+        "relationship_id": "string - PA1, PA2, etc.",
+        "principal": "string - who delegates",
+        "agent": "string - who acts",
+        "relationship_context": "string - organizational context",
+        "delegation_scope": "string - what's delegated",
+        "power_balance": "principal_dominant | balanced | agent_dominant"
+      }
+    ],
+    "interest_divergence": [
+      {
+        "divergence_id": "string",
+        "relationship_id": "string",
+        "principal_interest": "string - what principal wants",
+        "agent_interest": "string - what agent wants",
+        "divergence_type": "financial | effort | risk | time_horizon | quality | other",
+        "divergence_description": "string - how interests differ",
+        "severity": "severe | significant | moderate | minor"
+      }
+    ],
+    "information_asymmetry": [
+      {
+        "asymmetry_id": "string",
+        "relationship_id": "string",
+        "information_type": "action | effort | quality | risk | expertise | intentions",
+        "who_knows_more": "principal | agent | third_party",
+        "asymmetry_description": "string - what's hidden",
+        "why_asymmetry_exists": "string - source of asymmetry",
+        "exploitation_potential": "high | medium | low"
+      }
+    ],
+    "moral_hazard": [
+      {
+        "hazard_id": "string",
+        "relationship_id": "string",
+        "hazard_type": "hidden_action | hidden_information | adverse_selection",
+        "description": "string - what agent might do",
+        "enabled_by": "string - what asymmetry enables this",
+        "harm_to_principal": "string - how principal is hurt",
+        "likelihood": "very_likely | likely | possible | unlikely",
+        "examples": [
+          "string - cases where this occurs"
+        ]
+      }
+    ],
+    "control_mechanisms": [
+      {
+        "mechanism_id": "string",
+        "relationship_id": "string",
+        "mechanism_type": "monitoring | incentive_alignment | bonding | reputation | competition | regulation",
+        "description": "string - how control is attempted",
+        "effectiveness": "effective | partially_effective | ineffective",
+        "limitations": [
+          "string - why mechanism fails"
+        ],
+        "unintended_consequences": [
+          "string - problems created"
+        ]
+      }
+    ],
+    "dysfunction_patterns": [
+      {
+        "pattern_id": "string",
+        "relationship_ids": [
+          "string - which relationships"
+        ],
+        "pattern": "string - recurring dysfunction",
+        "root_cause": "string - underlying principal-agent problem",
+        "manifestations": [
+          "string - how it shows up"
+        ]
+      }
+    ],
+    "improvement_recommendations": [
+      {
+        "recommendation_id": "string",
+        "relationship_id": "string",
+        "problem_addressed": "string",
+        "proposed_mechanism": "string - how to address",
+        "expected_benefit": "string",
+        "potential_problems": [
+          "string - risks of solution"
+        ]
+      }
+    ],
+    "meta": {
+      "relationships_analyzed": "number",
+      "severe_divergences": "number",
+      "high_asymmetry_cases": "number",
+      "moral_hazard_risks": "number",
+      "effective_controls": "number",
+      "overall_agency_problem_severity": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "principal_agent_relationships",
+    "interest_divergence",
+    "information_asymmetry",
+    "moral_hazard",
+    "control_mechanisms"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/principal_agent_analyzer.py"
+}

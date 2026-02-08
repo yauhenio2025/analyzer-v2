@@ -1,0 +1,16 @@
+{
+  "engine_key": "concept_taxonomy_strength",
+  "engine_name": "Concept Taxonomy: Strength Assessment",
+  "description": "Assesses the logical strength of argument chains",
+  "version": 1,
+  "category": "concepts",
+  "kind": "primitive",
+  "reasoning_domain": "argument evaluation",
+  "researcher_question": "How strong is each inferential chain?",
+  "extraction_prompt": "You are conducting Phase 5.2: STRENGTH ASSESSMENT.\n\n## YOUR TASK\n\nAssess the LOGICAL STRENGTH of each chain about \"{concept}\".\n\n## STRENGTH CRITERIA\n\n- **Validity**: Do conclusions follow from premises?\n- **Soundness**: Are premises true/defensible?\n- **Completeness**: Are all necessary premises stated?\n- **Coherence**: Is the chain internally consistent?\n\n## CHAINS TO ASSESS\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each chain: chain_id, overall_strength (1-10), validity_score, soundness_score, completeness_score, coherence_score, weakest_link, justification.\n\nReturn as valid JSON.",
+  "curation_prompt": "Validate strength assessments.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": []
+}

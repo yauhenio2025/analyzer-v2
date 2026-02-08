@@ -1,0 +1,109 @@
+{
+  "engine_key": "boundary_condition_analyzer",
+  "engine_name": "Boundary Condition Analyzer",
+  "description": "Analyzes boundary conditions and constraints in complex systems. Identifies operating limits, edge conditions, boundary transitions, and constraint interactions. Essential for understanding where systems fail or fundamentally change behavior.",
+  "version": 1,
+  "category": "systems",
+  "kind": "synthesis",
+  "reasoning_domain": "systems",
+  "researcher_question": "What are the boundary conditions and constraints?",
+  "extraction_prompt": "\nYou are analyzing BOUNDARY CONDITIONS in complex systems \u2014 the constraints and\nlimits that determine where systems operate normally and where they fail or\nfundamentally change behavior.\n\n## BOUNDARY CONDITION FUNDAMENTALS\n\n### TYPES OF BOUNDARIES\n1. **Hard Boundaries**: Absolute limits (physical laws, legal requirements)\n2. **Soft Boundaries**: Flexible limits (norms, guidelines, typical ranges)\n3. **Fuzzy Boundaries**: Gradual transitions (acceptable vs unacceptable zones)\n\n### WHAT HAPPENS AT BOUNDARIES\n- **Within range**: Normal operation, assumptions valid\n- **At edge**: Stress, degradation, warning signs\n- **Beyond**: Failure, phase change, different dynamics\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY KEY PARAMETERS\nWhat variables/factors in this system have limits?\n- What can't go below/above certain values?\n- What resources are finite?\n- What conditions must hold?\n\n### STEP 2: MAP EACH BOUNDARY\nFor each bounded parameter:\n- What are the upper/lower limits?\n- Hard or soft boundary?\n- What enforces the boundary?\n- What happens within the range?\n- What happens at the edge?\n- What happens if boundary is violated?\n\n### STEP 3: IDENTIFY EDGE CONDITIONS\nSpecial cases at system limits:\n- What rare but possible conditions stress boundaries?\n- What happens when multiple boundaries are approached?\n- What corner cases exist?\n\n### STEP 4: ANALYZE BOUNDARY INTERACTIONS\nHow do boundaries relate to each other?\n- Independent or dependent?\n- Do they conflict?\n- What compound effects exist?\n\n### STEP 5: MAP TRANSITIONS\nWhat state changes occur when boundaries crossed?\n- Is the transition reversible?\n- Gradual or sudden?\n- Predictable or chaotic?\n\n### STEP 6: ASSESS ROBUSTNESS\nOverall system robustness:\n- Which boundaries are most vulnerable?\n- What are the safety margins?\n- What catastrophic scenarios exist?\n\n\n## OUTPUT GUIDANCE\n\nFocus on boundaries that have significant consequences if violated.\nIdentify both obvious and hidden constraints.\n",
+  "curation_prompt": "\nSynthesize boundary condition analyses from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **CONSOLIDATE BOUNDARIES**: Merge equivalent boundaries, reconcile differences\n2. **VALIDATE LIMITS**: Do sources agree on boundary values?\n3. **IDENTIFY GAPS**: What boundaries appear in one source but not others?\n4. **ASSESS INTERACTIONS**: Multi-source view of boundary interactions\n5. **SYNTHESIZE ROBUSTNESS**: Overall system robustness assessment\n\n## OUTPUT GUIDANCE\n\nCreate unified boundary map capturing most critical constraints.\n",
+  "concretization_prompt": "\nTransform boundary analysis into clear constraint map:\n\n1. **BOUNDARY SUMMARY TABLE**\n   | Boundary | Parameter | Lower | Upper | Type | Consequence of Violation |\n   |----------|-----------|-------|-------|------|-------------------------|\n\n2. **OPERATING ENVELOPE**\n   - Normal range: [Description]\n   - Stress zone: [Description]\n   - Failure zone: [Description]\n\n3. **EDGE CONDITIONS** (ranked by risk)\n   1. [Condition] \u2014 Probability: [X] \u2014 Severity: [Y]\n\n4. **BOUNDARY INTERACTIONS**\n   - [B1] + [B2]: [How they interact]\n\n5. **TRANSITIONS**\n   - Beyond [Boundary]: System shifts from [State A] to [State B]\n\n6. **ROBUSTNESS ASSESSMENT**\n   - Overall: [Fragile/Moderate/Robust]\n   - Most vulnerable: [Boundaries]\n   - Safety margins: [Assessment]\n\n7. **BOTTOM LINE**\n   [Where are the critical constraints and what happens if they're violated?]\n",
+  "canonical_schema": {
+    "system_context": {
+      "system_name": "string - what system is being analyzed",
+      "normal_operating_range": "string - typical conditions",
+      "key_parameters": [
+        "string - main variables that have bounds"
+      ]
+    },
+    "boundaries": [
+      {
+        "boundary_id": "string - B1, B2, etc.",
+        "boundary_name": "string - descriptive name",
+        "parameter": "string - what variable is bounded",
+        "lower_bound": "string - minimum value/condition",
+        "upper_bound": "string - maximum value/condition",
+        "boundary_type": "hard | soft | fuzzy",
+        "what_enforces": "string - why this bound exists",
+        "behavior_within": "string - how system operates in range",
+        "behavior_at_edge": "string - what happens at limits",
+        "behavior_beyond": "string - what happens when violated",
+        "evidence": [
+          "string - quotes/references"
+        ]
+      }
+    ],
+    "edge_conditions": [
+      {
+        "condition_id": "string",
+        "description": "string - the edge case",
+        "boundaries_involved": [
+          "string - boundary_ids"
+        ],
+        "probability": "rare | uncommon | common",
+        "consequence_severity": "minor | significant | catastrophic",
+        "mitigation": "string - how edge case is handled"
+      }
+    ],
+    "boundary_interactions": [
+      {
+        "interaction_id": "string",
+        "boundaries": [
+          "string - boundary_ids"
+        ],
+        "interaction_type": "independent | dependent | conflicting",
+        "description": "string - how boundaries interact",
+        "compound_effects": "string - what happens when multiple boundaries stressed"
+      }
+    ],
+    "transitions": [
+      {
+        "transition_id": "string",
+        "from_state": "string",
+        "to_state": "string",
+        "trigger_boundary": "string - boundary_id",
+        "reversibility": "reversible | hysteresis | irreversible",
+        "transition_dynamics": "gradual | sudden | chaotic"
+      }
+    ],
+    "robustness_assessment": {
+      "overall_robustness": "fragile | moderate | robust | antifragile",
+      "most_vulnerable_boundaries": [
+        "string - boundary_ids"
+      ],
+      "safety_margins": "narrow | adequate | generous",
+      "catastrophic_scenarios": [
+        {
+          "scenario": "string",
+          "boundaries_violated": [
+            "string - boundary_ids"
+          ],
+          "likelihood": "low | medium | high"
+        }
+      ]
+    },
+    "meta": {
+      "total_boundaries_identified": "number",
+      "hard_boundaries": "number",
+      "soft_boundaries": "number",
+      "edge_conditions_mapped": "number",
+      "confidence_in_analysis": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "boundaries",
+    "constraints",
+    "operating_ranges",
+    "edge_conditions",
+    "transitions",
+    "failure_modes"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/boundary_condition_analyzer.py"
+}

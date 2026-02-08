@@ -1,0 +1,16 @@
+{
+  "engine_key": "concept_causal_conditions",
+  "engine_name": "Concept Causal: Necessary/Sufficient Conditions",
+  "description": "Identifies necessary and sufficient conditions for the concept",
+  "version": 1,
+  "category": "concepts",
+  "kind": "relational",
+  "reasoning_domain": "causal analysis",
+  "researcher_question": "What are the necessary/sufficient conditions for this concept?",
+  "extraction_prompt": "You are conducting Phase 6.4: CONDITIONS analysis.\n\n## YOUR TASK\n\nFind NECESSARY and SUFFICIENT CONDITIONS for \"{concept}\".\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## WHAT TO LOOK FOR\n\nNECESSARY: \"Without X, {concept} cannot exist\"\nSUFFICIENT: \"If X, then necessarily {concept}\"\nCONTRIBUTING: \"X makes {concept} more likely\"\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with conditions[], each containing:\n- condition_id, condition_type (necessary/sufficient/contributing), condition_description, justification, quote, source\n\nTARGET: 10-15 conditions.",
+  "curation_prompt": "Validate condition identification.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": []
+}

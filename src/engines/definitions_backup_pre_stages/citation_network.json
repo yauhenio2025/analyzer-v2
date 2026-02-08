@@ -1,0 +1,93 @@
+{
+  "engine_key": "citation_network",
+  "engine_name": "Citation Network Mapper",
+  "description": "Maps citation relationships between works. Identifies hub papers, authority sources, citation clusters, and the context of citations (supporting, critical, background).",
+  "version": 1,
+  "category": "scholarly",
+  "kind": "relational",
+  "reasoning_domain": "genealogical",
+  "researcher_question": "How do works in this field cite and reference each other?",
+  "extraction_prompt": "\nYou are an expert bibliometrician analyzing citation patterns.\n\nFor this article, extract ALL citation and reference information:\n\n1. **WORKS CITED**: Every work referenced in this article\n   - Title, authors, year\n   - Publication venue\n   - Work type (article, book, etc.)\n\n2. **CITATION CONTEXT**: For each citation, note:\n   - Is it SUPPORTING the author's argument?\n   - Is it CRITICAL (being disagreed with)?\n   - Is it BACKGROUND (setting context)?\n   - Is it METHODOLOGICAL (borrowing methods)?\n   - Is it a DATA SOURCE?\n\n3. **CITATION LOCATION**: Where does the citation appear?\n   - Introduction\n   - Literature review\n   - Methods\n   - Results/findings\n   - Discussion/conclusion\n\n4. **CITATION IMPORTANCE**: Rate 0-1\n   - 1.0 = Central to the argument\n   - 0.5 = Moderately important\n   - 0.0 = Peripheral mention\n\n5. **CITATION TEXT**: Extract the sentence/context where cited\n\n\nBe comprehensive - capture every reference and its role in the article.\n",
+  "curation_prompt": "\nYou are synthesizing citation data from multiple articles into a unified network.\n\nYour task:\n1. **DEDUPLICATE WORKS**: Merge references to the same work\n   - Match by title/author/year\n   - Consolidate metadata from all mentions\n\n2. **BUILD CITATION NETWORK**: Map who cites whom\n   - Aggregate citation counts\n   - Note citation contexts\n\n3. **IDENTIFY CLUSTERS**: Find groups of works that cite each other\n   - Name clusters by theme\n   - Calculate internal density\n\n4. **FIND HUB WORKS**: Identify highly-cited works\n   - Calculate hub scores\n   - Note influence breadth\n\n5. **FIND AUTHORITY WORKS**: Identify comprehensive reviews/syntheses\n   - Works that cite many others\n   - Rate synthesis quality\n\n6. **CALCULATE NETWORK METRICS**:\n   - Total works and citations\n   - Network density\n   - Time span of citations\n\n\nCreate a comprehensive citation network showing the scholarly conversation structure.\n",
+  "concretization_prompt": "\nTransform the citation network to use complete, recognizable references:\n\n1. Convert work_ids to full citations:\n   - \"W1\" \u2192 \"Smith, J. (2020). The Future of AI. Nature, 580(7801), 22-25.\"\n\n2. Name citation clusters descriptively:\n   - \"Cluster1\" \u2192 \"AI Ethics and Governance Literature\"\n\n3. Clarify citation contexts:\n   - Include brief explanations of why each citation context was assigned\n\nPreserve all network relationships and metrics.\nMake the network immediately useful for literature review.\n",
+  "canonical_schema": {
+    "works": [
+      {
+        "work_id": "string",
+        "title": "string",
+        "authors": [
+          "string"
+        ],
+        "year": "string",
+        "publication_venue": "string",
+        "work_type": "article | book | chapter | report | thesis",
+        "in_corpus": "boolean",
+        "citation_count": "number",
+        "reference_count": "number"
+      }
+    ],
+    "citations": [
+      {
+        "citation_id": "string",
+        "citing_work": "work_id",
+        "cited_work": "work_id",
+        "citation_context": "supporting | critical | background | methodological | data_source",
+        "citation_text": "string",
+        "section_location": "introduction | literature_review | methods | results | discussion",
+        "importance": "number (0-1)"
+      }
+    ],
+    "citation_clusters": [
+      {
+        "cluster_id": "string",
+        "cluster_name": "string",
+        "theme": "string",
+        "member_works": [
+          "work_id"
+        ],
+        "internal_density": "number (0-1)",
+        "key_connecting_works": [
+          "work_id"
+        ]
+      }
+    ],
+    "hub_works": [
+      {
+        "work_id": "string",
+        "hub_score": "number (0-1)",
+        "cited_by_count": "number",
+        "influence_breadth": "string"
+      }
+    ],
+    "authority_works": [
+      {
+        "work_id": "string",
+        "authority_score": "number (0-1)",
+        "references_count": "number",
+        "synthesis_quality": "high | medium | low"
+      }
+    ],
+    "meta": {
+      "total_works": "number",
+      "total_citations": "number",
+      "average_citations_per_work": "number",
+      "network_density": "number (0-1)",
+      "most_cited_work": "work_id",
+      "citation_time_span": "string"
+    }
+  },
+  "extraction_focus": [
+    "citations",
+    "references",
+    "authors",
+    "works",
+    "citation_context"
+  ],
+  "primary_output_modes": [
+    "gemini_network_graph",
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/citation_network.py"
+}

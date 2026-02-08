@@ -1,0 +1,121 @@
+{
+  "engine_key": "system_dynamics_modeler",
+  "engine_name": "System Dynamics Modeler",
+  "description": "Models system behavior over time using stocks, flows, and delays. Identifies accumulations, rates of change, time lags, and behavior modes. Essential for understanding system evolution and predicting dynamic patterns.",
+  "version": 1,
+  "category": "systems",
+  "kind": "synthesis",
+  "reasoning_domain": "systems",
+  "researcher_question": "How does this system evolve over time?",
+  "extraction_prompt": "\nYou are modeling SYSTEM DYNAMICS \u2014 how systems evolve over time through stocks\n(accumulations), flows (rates of change), and delays.\n\n## SYSTEM DYNAMICS FUNDAMENTALS\n\n### STOCKS\nThings that accumulate or deplete over time:\n- Physical: inventory, population, debt, pollution\n- Intangible: trust, knowledge, reputation, morale\n- Key insight: Stocks change only through their flows\n\n### FLOWS\nRates of change that alter stocks:\n- Inflows: Add to stock\n- Outflows: Subtract from stock\n- Key insight: Flow rates are controlled by stocks, decisions, delays\n\n### DELAYS\nTime lags between cause and effect:\n- Information delays: Learning, detection\n- Material delays: Physical processes\n- Decision delays: Response time\n- Key insight: Delays create oscillation and overshoot\n\n### BEHAVIOR MODES\nCharacteristic patterns:\n1. Exponential growth: R loop dominance\n2. Goal-seeking: B loop dominance\n3. Oscillation: Delays in B loops\n4. S-shaped growth: R then B dominance\n5. Overshoot and collapse: R then delayed B\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY STOCKS\nWhat accumulates in this system?\n- What changes level only gradually?\n- What has memory of past flows?\n- What serves as a buffer?\n\n### STEP 2: IDENTIFY FLOWS\nWhat changes the stocks?\n- What adds to each stock?\n- What subtracts from each stock?\n- What controls each flow rate?\n\n### STEP 3: IDENTIFY DELAYS\nWhere are time lags?\n- How long between action and effect?\n- What type of delay?\n- What does the delay cause?\n\n### STEP 4: MAP BEHAVIOR MODES\nWhat patterns appear?\n- Which stocks show what behavior?\n- What structure causes the pattern?\n- Where is the system in its trajectory?\n\n### STEP 5: IDENTIFY EQUILIBRIA\nWhere are balance points?\n- Stable (returns when disturbed)?\n- Unstable (departs when disturbed)?\n- What maintains the balance?\n\n### STEP 6: RECOGNIZE ARCHETYPES\nClassic system patterns:\n- Limits to growth? Shifting the burden?\n- Tragedy of the commons? Eroding goals?\n- Escalation? Success to the successful?\n\n### STEP 7: ASSESS OVERALL DYNAMICS\nSystem trajectory:\n- Which behavior mode dominates?\n- Where is the system heading?\n- What are the critical stocks/flows?\n\n\n## OUTPUT GUIDANCE\n\nModel the essential structure that explains dynamic behavior.\nFocus on stocks, flows, and delays that drive key patterns.\n",
+  "curation_prompt": "\nSynthesize system dynamics analyses from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **CONSOLIDATE STRUCTURE**: Merge stock-flow models, reconcile differences\n2. **VALIDATE DYNAMICS**: Do sources agree on behavior patterns?\n3. **IDENTIFY GAPS**: What structure appears in one source but not others?\n4. **ASSESS TRAJECTORY**: Multi-source view of where system is heading\n5. **SYNTHESIZE MODEL**: Build integrated dynamic model\n\n## OUTPUT GUIDANCE\n\nCreate unified stock-flow model that captures essential dynamics.\n",
+  "concretization_prompt": "\nTransform system dynamics analysis into clear model:\n\n1. **STOCK-FLOW DIAGRAM** (text representation)\n   ```\n   [Stock A] \u2190\u2500\u2500 inflow F1 \u2190\u2500\u2500 [Source]\n        \u2502\n        \u2514\u2500\u2500\u2192 outflow F2 \u2500\u2500\u2192 [Stock B]\n   ```\n\n2. **STOCKS TABLE**\n   | Stock | Description | Current | Trajectory |\n   |-------|-------------|---------|------------|\n\n3. **FLOWS TABLE**\n   | Flow | From \u2192 To | Rate | Determinants |\n   |------|-----------|------|--------------|\n\n4. **DELAYS**\n   | Location | Type | Duration | Effect |\n   |----------|------|----------|--------|\n\n5. **BEHAVIOR MODES**\n   - [Stock]: [Pattern] because [Structure]\n\n6. **SYSTEM ARCHETYPES PRESENT**\n   - [Archetype]: [How it manifests]\n\n7. **DYNAMIC ASSESSMENT**\n   - Dominant mode: [Pattern]\n   - Trajectory: [Where heading]\n   - Critical leverage points: [Stocks/flows]\n\n8. **BOTTOM LINE**\n   [What drives system behavior? Where is it heading?]\n",
+  "canonical_schema": {
+    "system_context": {
+      "system_name": "string - what system is being modeled",
+      "time_horizon": "string - relevant time scale",
+      "key_behaviors": [
+        "string - main dynamic patterns observed"
+      ]
+    },
+    "stocks": [
+      {
+        "stock_id": "string - S1, S2, etc.",
+        "stock_name": "string - descriptive name",
+        "description": "string - what accumulates here",
+        "units": "string - unit of measurement",
+        "initial_value": "string - starting level",
+        "current_value": "string - present level",
+        "capacity": "string - maximum possible (if any)",
+        "significance": "string - why this stock matters"
+      }
+    ],
+    "flows": [
+      {
+        "flow_id": "string - F1, F2, etc.",
+        "flow_name": "string - descriptive name",
+        "flow_type": "inflow | outflow | biflow",
+        "from_stock": "string - stock_id or 'external'",
+        "to_stock": "string - stock_id or 'external'",
+        "description": "string - what this flow represents",
+        "units": "string - units per time period",
+        "determinants": [
+          "string - what affects flow rate"
+        ],
+        "current_rate": "string - present rate"
+      }
+    ],
+    "delays": [
+      {
+        "delay_id": "string - D1, D2, etc.",
+        "location": "string - where in the system",
+        "delay_type": "information | material | decision",
+        "duration": "string - how long",
+        "variability": "fixed | variable",
+        "effects": "string - what the delay causes"
+      }
+    ],
+    "behavior_modes": [
+      {
+        "mode_id": "string",
+        "mode_type": "exponential_growth | goal_seeking | oscillation | s_shaped | overshoot_collapse | other",
+        "description": "string - what behavior pattern",
+        "driving_structure": "string - what causes this mode",
+        "stocks_involved": [
+          "string - stock_ids"
+        ],
+        "current_phase": "string - where in the pattern now"
+      }
+    ],
+    "equilibria": [
+      {
+        "equilibrium_id": "string",
+        "type": "stable | unstable | dynamic",
+        "description": "string - what balance point",
+        "conditions": "string - what maintains equilibrium",
+        "perturbation_response": "string - what happens when disturbed"
+      }
+    ],
+    "system_archetypes": [
+      {
+        "archetype": "string - e.g., 'limits to growth', 'shifting the burden'",
+        "description": "string - how it manifests in this system",
+        "evidence": [
+          "string - supporting observations"
+        ]
+      }
+    ],
+    "dynamic_assessment": {
+      "dominant_mode": "string - primary behavior pattern",
+      "trajectory": "string - where system is heading",
+      "stability": "stable | conditionally_stable | unstable",
+      "critical_stocks": [
+        "string - stock_ids that matter most"
+      ],
+      "critical_flows": [
+        "string - flow_ids that matter most"
+      ]
+    },
+    "meta": {
+      "total_stocks": "number",
+      "total_flows": "number",
+      "delays_identified": "number",
+      "behavior_modes_detected": "number",
+      "model_confidence": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "stocks",
+    "flows",
+    "delays",
+    "behavior_patterns",
+    "equilibria",
+    "dynamic_interactions"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/system_dynamics_modeler.py"
+}

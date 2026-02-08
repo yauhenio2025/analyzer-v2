@@ -1,0 +1,114 @@
+{
+  "engine_key": "comparative_framework",
+  "engine_name": "Comparative Framework Builder",
+  "description": "Builds comparative frameworks showing how entities, jurisdictions, or approaches compare across key dimensions. Extracts comparison criteria, findings, and patterns.",
+  "version": 1,
+  "category": "evidence",
+  "kind": "synthesis",
+  "reasoning_domain": "comparison",
+  "researcher_question": "How do different entities/approaches compare?",
+  "extraction_prompt": "\nYou are an expert comparativist analyzing comparative frameworks.\n\nFor this article, extract ALL comparative information:\n\n## ENTITIES COMPARED\nFor each entity being compared:\n1. **NAME**: What's being compared?\n2. **TYPE**: Country, jurisdiction, company, policy, technology, approach, institution\n3. **KEY CHARACTERISTICS**: Defining features noted\n\n## COMPARISON DIMENSIONS\nFor each dimension of comparison:\n1. **DIMENSION**: What aspect is being compared?\n2. **DESCRIPTION**: What does this dimension measure?\n3. **MEASUREMENT**: Quantitative, qualitative, binary, ordinal\n4. **DATA**: How available/reliable is the data?\n\n## COMPARATIVE FINDINGS\nFor each comparative claim:\n1. **FINDING TYPE**:\n   - Similarity: X and Y are alike in Z\n   - Difference: X differs from Y in Z\n   - Ranking: X > Y > Z on dimension D\n   - Pattern: Entities with A tend to have B\n   - Outlier: X is exceptional in Z\n\n2. **ENTITIES**: Which entities are involved?\n3. **DIMENSIONS**: Which dimensions are addressed?\n4. **SIGNIFICANCE**: How important is this finding?\n\n## PATTERNS\nIdentify larger patterns:\n- Clusters: Which entities group together?\n- Gradients: Orderings along dimensions\n- Convergence/divergence trends\n- Explaining factors\n\n## METHODOLOGY\nHow is the comparison conducted?\n- Explicit framework or implicit?\n- What dimensions are privileged?\n- What's the data basis?\n- What are the limitations?\n\n\nExtract every comparison you can identify.\n",
+  "curation_prompt": "\nYou are synthesizing comparative analyses into a unified comparative framework.\n\nYour task:\n1. **CONSOLIDATE ENTITIES**: Merge same entities across articles\n   - Same country/company/policy = merge\n   - Aggregate characteristics\n   - Note conflicting characterizations\n\n2. **UNIFY DIMENSIONS**: Create consistent comparison dimensions\n   - Align similar dimensions from different articles\n   - Standardize measurement approaches\n   - Note where dimensions are incompatible\n\n3. **BUILD MATRIX**: Create a comprehensive comparison matrix\n   - Fill in values where available\n   - Note missing data explicitly\n   - Track evidence and confidence\n\n4. **SYNTHESIZE FINDINGS**:\n   - Do different articles agree on comparisons?\n   - What contested comparisons exist?\n   - What new patterns emerge at collection level?\n\n5. **IDENTIFY PATTERNS**:\n   - What entity clusters emerge?\n   - What dimensions drive differentiation?\n   - What convergence/divergence trends appear?\n\nCreate clear entity_ids (e.g., \"ent_germany\", \"ent_google\", \"pol_gdpr\").\n\n\nOutput a comprehensive comparative framework.\n",
+  "concretization_prompt": "\nTransform the comparative framework to use concrete labels:\n\n1. Convert entity_ids to full names:\n   - \"E1\" \u2192 \"Germany\"\n   - \"E2\" \u2192 \"United States\"\n   - \"E3\" \u2192 \"European Union\"\n\n2. Name dimensions clearly:\n   - \"D1\" \u2192 \"Regulatory Stringency\"\n   - \"D2\" \u2192 \"Market Concentration\"\n\n3. Label patterns descriptively:\n   - \"Pattern 1\" \u2192 \"The EU-US Regulatory Divide\"\n   - \"Pattern 2\" \u2192 \"Nordic Model Cluster\"\n\n4. Make findings specific:\n   - Include actual values, rankings, percentages\n\nPreserve matrix structure and all relationships.\nMake the comparison immediately useful.\n",
+  "canonical_schema": {
+    "entities_compared": [
+      {
+        "entity_id": "string",
+        "name": "string",
+        "entity_type": "country | jurisdiction | company | policy | technology | approach | institution",
+        "key_characteristics": [
+          "string"
+        ],
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "comparison_dimensions": [
+      {
+        "dimension_id": "string",
+        "name": "string",
+        "description": "string",
+        "measurement_type": "quantitative | qualitative | binary | ordinal",
+        "data_availability": "high | medium | low"
+      }
+    ],
+    "comparative_matrix": [
+      {
+        "entity_id": "string",
+        "dimension_values": [
+          {
+            "dimension_id": "string",
+            "value": "string | number",
+            "evidence": "string | null",
+            "confidence": "number (0-1)"
+          }
+        ]
+      }
+    ],
+    "comparative_findings": [
+      {
+        "finding_id": "string",
+        "finding_type": "similarity | difference | ranking | pattern | outlier",
+        "description": "string",
+        "entities_involved": [
+          "entity_id"
+        ],
+        "dimensions_involved": [
+          "dimension_id"
+        ],
+        "significance": "high | medium | low",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "comparative_patterns": [
+      {
+        "pattern_id": "string",
+        "pattern_type": "cluster | gradient | binary_split | convergence | divergence",
+        "description": "string",
+        "entities_in_pattern": [
+          "entity_id"
+        ],
+        "explaining_factors": [
+          "string"
+        ]
+      }
+    ],
+    "comparative_methodology": {
+      "comparison_basis": "explicit_framework | implicit_comparison | systematic_review | ad_hoc",
+      "dimensions_used": [
+        "dimension_id"
+      ],
+      "data_sources": [
+        "string"
+      ],
+      "limitations": [
+        "string"
+      ]
+    },
+    "meta": {
+      "total_entities": "number",
+      "total_dimensions": "number",
+      "comparison_completeness": "number (0-1)",
+      "key_differentiators": [
+        "dimension_id"
+      ]
+    }
+  },
+  "extraction_focus": [
+    "comparisons",
+    "entities_compared",
+    "dimensions",
+    "rankings",
+    "similarities",
+    "differences"
+  ],
+  "primary_output_modes": [
+    "comparative_matrix_table",
+    "structured_text_report"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/comparative_framework.py"
+}

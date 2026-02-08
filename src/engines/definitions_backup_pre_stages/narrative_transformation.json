@@ -1,0 +1,121 @@
+{
+  "engine_key": "narrative_transformation",
+  "engine_name": "Narrative Structure Analyzer",
+  "description": "Analyzes texts using narratological frameworks to reveal narrative structures. Maps actantial roles, narrative programs, canonical schemas, focalization patterns, and temporal organization of discourse.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "synthesis",
+  "reasoning_domain": "narrative",
+  "researcher_question": "What narrative structures organize this discourse?",
+  "extraction_prompt": "\nYou are an expert narratologist analyzing how stories structure understanding.\n\nFor this article, extract NARRATIVE STRUCTURES:\n\n1. **NARRATIVES**: What stories are being told?\n   - What is the overarching narrative?\n   - What type? (quest, redemption, tragedy, progress, decline, cycle)\n\n2. **ACTANTIAL STRUCTURE** (Greimas model):\n   - Subject: Who is the protagonist/agent?\n   - Object: What is being sought or at stake?\n   - Sender: Who/what initiates the quest?\n   - Receiver: Who benefits from success?\n   - Helper: Who/what assists?\n   - Opponent: Who/what opposes?\n\n3. **NARRATIVE PROGRAMS**: Transformations of state\n   - Initial state \u2192 Final state\n   - What type of transformation? (acquisition, deprivation)\n   - Modal changes (wanting, having-to, being-able-to, knowing-how-to)\n\n4. **CANONICAL SCHEMAS**: Narrative phases\n   - Contract phase (mandate, promise)\n   - Competence phase (acquiring ability)\n   - Performance phase (the test)\n   - Sanction phase (reward, judgment)\n\n5. **FOCALIZATION**: Perspective structure\n   - Whose point of view dominates?\n   - What can/cannot be seen from this perspective?\n   - Internal, external, or zero focalization?\n\n6. **TEMPORAL STRUCTURE**: Time in the narrative\n   - Chronological or disrupted?\n   - Flashbacks (analepses)\n   - Flash-forwards (prolepses)\n   - Pacing (summary, scene, pause)\n\n\nAnalyze how narrative structures organize understanding in this text.\n",
+  "curation_prompt": "\nYou are synthesizing narratological analyses from multiple articles.\n\nYour task:\n1. **MAP NARRATIVES**: Identify the stories being told\n   - What dominant narratives span the corpus?\n   - How do individual narratives relate?\n\n2. **CONSOLIDATE ACTANTIAL STRUCTURES**:\n   - Are the same subjects/objects appearing?\n   - Who consistently appears as helper/opponent?\n\n3. **TRACE NARRATIVE PROGRAMS**:\n   - What transformations are narrated?\n   - Are there shared programs across articles?\n\n4. **IDENTIFY CANONICAL SCHEMAS**:\n   - Which phases are emphasized?\n   - What is systematically present/absent?\n\n5. **ANALYZE FOCALIZATION PATTERNS**:\n   - Whose perspectives dominate the corpus?\n   - What is systematically invisible?\n\n6. **MAP TEMPORAL ORGANIZATION**:\n   - How is time structured across narratives?\n   - What temporal patterns recur?\n\n7. **IDENTIFY NARRATIVE TENSIONS**:\n   - What remains unresolved?\n   - What conflicts drive the narratives?\n\n\nCreate a comprehensive narratological map of the discourse.\n",
+  "concretization_prompt": "\nTransform the narrative analysis to use concrete, descriptive names:\n\n1. Name narratives clearly:\n   - \"N1\" -> \"The Tech Industry Redemption Arc\"\n\n2. Name actantial roles specifically:\n   - Subject: \"Regulatory Agencies\"\n   - Object: \"Consumer Data Protection\"\n   - Opponent: \"Tech Industry Lobbyists\"\n\n3. Describe narrative programs concretely:\n   - \"From unregulated market to regulated industry\"\n\n4. Name focalizers specifically:\n   - \"Consumer advocacy perspective\"\n\n5. Describe temporal structures clearly:\n   - Include actual flashback/forward content\n\nPreserve all narratological relationships and concepts.\nMake the analysis useful for understanding how discourse is narratively organized.\n",
+  "canonical_schema": {
+    "narratives": [
+      {
+        "narrative_id": "string",
+        "title": "string",
+        "summary": "string",
+        "narrative_type": "quest | redemption | tragedy | progress | decline | cycle",
+        "source_articles": [
+          "string"
+        ]
+      }
+    ],
+    "actantial_structure": [
+      {
+        "structure_id": "string",
+        "narrative_id": "string",
+        "subject": "string (who acts)",
+        "object": "string (what is sought)",
+        "sender": "string (who mandates the quest)",
+        "receiver": "string (who benefits)",
+        "helper": [
+          "string"
+        ],
+        "opponent": [
+          "string"
+        ]
+      }
+    ],
+    "narrative_programs": [
+      {
+        "program_id": "string",
+        "narrative_id": "string",
+        "description": "string",
+        "initial_state": "string",
+        "final_state": "string",
+        "transformation_type": "acquisition | deprivation | attribution | renunciation",
+        "modality_changes": {
+          "wanting": "string",
+          "having_to": "string",
+          "being_able_to": "string",
+          "knowing_how_to": "string"
+        }
+      }
+    ],
+    "canonical_schemas": [
+      {
+        "schema_id": "string",
+        "narrative_id": "string",
+        "schema_type": "contract | competence | performance | sanction",
+        "description": "string",
+        "present_in_text": "explicit | implicit | absent"
+      }
+    ],
+    "focalization": [
+      {
+        "focalization_id": "string",
+        "narrative_id": "string",
+        "type": "zero | internal | external",
+        "focalizer": "string (whose perspective)",
+        "focalized": "string (what is perceived)",
+        "limitations": "string (what cannot be seen from this perspective)"
+      }
+    ],
+    "temporal_structure": [
+      {
+        "structure_id": "string",
+        "narrative_id": "string",
+        "order": "chronological | anachronic | achronic",
+        "analepses": [
+          "string (flashbacks)"
+        ],
+        "prolepses": [
+          "string (flash-forwards)"
+        ],
+        "duration_effects": "summary | scene | stretch | pause | ellipsis",
+        "frequency": "singulative | repeating | iterative"
+      }
+    ],
+    "narrative_tensions": [
+      {
+        "tension_id": "string",
+        "narrative_id": "string",
+        "description": "string",
+        "source": "string",
+        "resolution_status": "resolved | unresolved | deferred"
+      }
+    ],
+    "meta": {
+      "total_narratives": "number",
+      "dominant_narrative_type": "string",
+      "narrative_complexity": "simple | compound | complex",
+      "dominant_focalization": "string"
+    }
+  },
+  "extraction_focus": [
+    "actants",
+    "narrative_programs",
+    "canonical_schemas",
+    "focalization",
+    "temporal_structure"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "mermaid_flowchart",
+    "gemini_network_graph"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/narrative_transformation.py"
+}

@@ -1,0 +1,221 @@
+{
+  "engine_key": "relational_topology",
+  "engine_name": "Relational Topology",
+  "description": "Graph-theoretic analysis of actor networks. Calculates centrality metrics (degree, betweenness, eigenvector, closeness), identifies structural holes and bridges, maps clusters and coalitions, and finds network vulnerabilities. Extends stakeholder analysis with formal network science.",
+  "version": 1,
+  "category": "power",
+  "kind": "synthesis",
+  "reasoning_domain": "power",
+  "researcher_question": "Who are the key players structurally, and how does network position create power?",
+  "extraction_prompt": "\nYou are implementing RELATIONAL TOPOLOGY analysis \u2014 using graph theory to\nunderstand network structure, power, and vulnerability.\n\n## THE NETWORK ANALYSIS PHILOSOPHY\n\nNetwork position creates power. Understanding who is connected to whom,\nand HOW they're connected, reveals:\n- Where power concentrates\n- Who bridges different worlds\n- Where vulnerabilities exist\n- How influence spreads\n\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY NODES (ACTORS)\n\nWho are the actors in this network?\n\n**For each actor, capture:**\n- Name/identifier\n- Type (individual, organization, institution, etc.)\n- Key attributes (sector, size, etc.)\n\n### STEP 2: MAP EDGES (RELATIONSHIPS)\n\nWhat relationships connect these actors?\n\n**For each relationship, specify:**\n- Who is connected to whom?\n- What TYPE of relationship? (alliance, rivalry, hierarchy, information flow, resource flow, influence)\n- Is it DIRECTED (A\u2192B) or UNDIRECTED (A\u2194B)?\n- How STRONG is it? (weight: 0-1)\n- Is it POSITIVE or NEGATIVE (valence)?\n- What EVIDENCE shows this relationship?\n- Is it STABLE or changing?\n\n### STEP 3: CALCULATE CENTRALITY\n\nFor each node, assess these centrality measures:\n\n**DEGREE CENTRALITY**: How many connections?\n- High degree = many direct contacts\n- Good for: seeing who's \"popular\" or well-connected\n\n**BETWEENNESS CENTRALITY**: How often on shortest paths?\n- High betweenness = bridges different groups\n- Good for: finding brokers, gatekeepers\n\n**EIGENVECTOR CENTRALITY**: Connected to well-connected people?\n- High eigenvector = connected to powerful others\n- Good for: finding \"influencer\" positions\n\n**CLOSENESS CENTRALITY**: How quickly can they reach everyone?\n- High closeness = short paths to everyone\n- Good for: finding efficient spreaders\n\n### STEP 4: IDENTIFY CLUSTERS\n\nAre there densely connected groups?\n\n**For each cluster:**\n- Who are the members?\n- What holds them together? (shared interest, sector, ideology, etc.)\n- How internally connected are they?\n- How connected to other clusters?\n- Who are the key members within?\n\n### STEP 5: STRUCTURAL ANALYSIS\n\n**KEY BROKERS**: Who bridges clusters?\n- Brokerage types:\n  - Coordinator: Links within same group\n  - Gatekeeper: Controls flow into group\n  - Representative: Speaks for group to others\n  - Liaison: Links two other groups\n  - Itinerant: Moves between many groups\n\n**STRUCTURAL HOLES**: Gaps between clusters\n- Who spans these gaps?\n- Why do these gaps exist?\n- What does bridging them provide?\n\n**CORE-PERIPHERY**: Is there a core vs. periphery?\n- Who's in the core (most connected)?\n- Who's on the periphery?\n- What characterizes each?\n\n**INFLUENCE PATHWAYS**: How does influence flow?\n- What are the main paths?\n- Where are bottlenecks?\n\n### STEP 6: VULNERABILITY ANALYSIS\n\n**SINGLE POINTS OF FAILURE**: If removed, what breaks?\n- Which nodes are critical?\n- What happens if they're removed?\n- How protected are they?\n\n**CRITICAL EDGES**: What relationships are essential?\n- Which connections, if severed, fragment the network?\n\n**FRAGMENTATION RISK**: How robust is the network?\n- Could it fragment?\n- What holds it together?\n\n### STEP 7: NETWORK DYNAMICS\n\n**INFORMATION FLOW**: How does information spread?\n- Centralized, distributed, hierarchical?\n- Who are the hubs?\n- Where are bottlenecks?\n\n**INFLUENCE CONCENTRATION**: How equal is influence?\n- Is it concentrated in few hands?\n- Who are the top influencers?\n\n**COALITION POTENTIAL**: What alliances might form?\n- Who might align?\n- What would unite them?\n- What are barriers?\n\n## OUTPUT GUIDANCE\n\nBe specific about evidence for relationships.\nExplain what centrality scores MEAN, not just what they are.\nFocus on strategic implications of network structure.\n",
+  "curation_prompt": "\nYou are synthesizing network analyses from multiple sources to create a\ncomprehensive relational map.\n\n\n## SYNTHESIS TASKS\n\n### 1. MERGE NODE LISTS\n- Combine actors mentioned across sources\n- Reconcile different names for same actors\n- Note actors that appear in multiple sources (more central to discourse)\n\n### 2. INTEGRATE EDGE DATA\n- Combine relationship information\n- Where sources describe same relationship, triangulate strength\n- Where sources disagree on relationship, note discrepancy\n\n### 3. RECONCILE CENTRALITY\n- Do different sources agree on who's central?\n- Where they disagree, why?\n- What's the combined picture?\n\n### 4. MERGE CLUSTER ANALYSIS\n- Do sources identify similar clusters?\n- Are there clusters one source sees that another misses?\n- Combined cluster map\n\n### 5. INTEGRATE STRUCTURAL FINDINGS\n- Who are brokers across sources?\n- Where are structural holes?\n- Combined vulnerability assessment\n\n### 6. SYNTHESIZE IMPLICATIONS\n- What does the combined network reveal?\n- Where do sources illuminate each other's blind spots?\n- What strategic insights emerge?\n\n## OUTPUT GUIDANCE\n\nCreate a unified network map that:\n1. Includes all identified actors\n2. Triangulates relationships from multiple sources\n3. Provides robust centrality assessment\n4. Identifies key brokers and vulnerabilities\n5. Illuminates strategic implications\n",
+  "concretization_prompt": "\nTransform the network analysis into an actionable intelligence product:\n\n1. **NETWORK OVERVIEW**\n   ```\n   Nodes: [X] | Edges: [X] | Density: [X] | Clusters: [X]\n   ```\n\n2. **KEY PLAYERS DASHBOARD**\n   ```\n   | Actor | Degree | Between | Eigen | Position | Role |\n   |-------|--------|---------|-------|----------|------|\n   | N1    | #1     | #3      | #2    | Core     | Hub  |\n   ```\n\n3. **CENTRALITY LEADERS**\n   - **Most Connected** (Degree): [Actor] \u2014 [why it matters]\n   - **Key Broker** (Betweenness): [Actor] \u2014 [what they bridge]\n   - **Best Connected** (Eigenvector): [Actor] \u2014 [who they're tied to]\n   - **Most Efficient** (Closeness): [Actor] \u2014 [reach advantage]\n\n4. **NETWORK MAP DESCRIPTION**\n   ```\n   [Cluster A] \u2190\u2192 [Broker X] \u2190\u2192 [Cluster B]\n        \u2193                            \u2193\n   [Periphery]                  [Cluster C]\n   ```\n\n5. **CLUSTER PROFILES**\n   For each cluster:\n   - Members\n   - Cohesion basis\n   - Key internal actors\n   - External connections\n\n6. **VULNERABILITIES**\n   - **Single Points of Failure**: [nodes that, if removed, fragment network]\n   - **Critical Connections**: [edges that must be maintained]\n   - **Fragmentation Risk**: [HIGH/MEDIUM/LOW] \u2014 [why]\n\n7. **INFLUENCE DYNAMICS**\n   - Influence concentration: [centralized/distributed]\n   - Information flow pattern: [hierarchical/networked/etc.]\n   - Key pathways: [how influence spreads]\n\n8. **STRATEGIC IMPLICATIONS**\n   - To influence this network, target: [actors/positions]\n   - To disrupt this network, target: [vulnerabilities]\n   - Coalition opportunities: [possible alliances]\n   - Watch for: [network changes that matter]\n\nMake it useful for someone planning engagement or intervention.\n",
+  "canonical_schema": {
+    "network_overview": {
+      "network_name": "string - what this network represents",
+      "network_type": "social | organizational | information | resource | influence | multi-type",
+      "node_count": "number",
+      "edge_count": "number",
+      "density": "number (0-1) - how connected is the network",
+      "average_degree": "number - average connections per node",
+      "diameter": "number - longest shortest path",
+      "clustering_coefficient": "number (0-1) - tendency to cluster"
+    },
+    "nodes": [
+      {
+        "node_id": "string - N1, N2, etc.",
+        "label": "string - actor name",
+        "node_type": "individual | organization | institution | state | group | other",
+        "attributes": {
+          "sector": "string - domain they operate in",
+          "size": "string - relative size/power",
+          "description": "string"
+        },
+        "centrality_scores": {
+          "degree": {
+            "score": "number",
+            "rank": "number",
+            "interpretation": "string - what this means"
+          },
+          "betweenness": {
+            "score": "number",
+            "rank": "number",
+            "interpretation": "string"
+          },
+          "eigenvector": {
+            "score": "number",
+            "rank": "number",
+            "interpretation": "string"
+          },
+          "closeness": {
+            "score": "number",
+            "rank": "number",
+            "interpretation": "string"
+          }
+        },
+        "structural_position": "core | semi-periphery | periphery | isolate | bridge",
+        "cluster_membership": "string - cluster_id"
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "string - E1, E2, etc.",
+        "source": "string - node_id",
+        "target": "string - node_id",
+        "relationship_type": "alliance | rivalry | hierarchy | information | resource | influence | mixed",
+        "direction": "directed | undirected",
+        "weight": "number (0-1) - strength of connection",
+        "valence": "positive | negative | neutral",
+        "evidence": "string - what shows this relationship exists",
+        "stability": "stable | emerging | declining | volatile"
+      }
+    ],
+    "clusters": [
+      {
+        "cluster_id": "string - C1, C2, etc.",
+        "label": "string - name for this cluster",
+        "members": [
+          "string - node_ids"
+        ],
+        "internal_density": "number (0-1) - how connected within",
+        "external_connections": "number - links to other clusters",
+        "cohesion_basis": "string - what holds this cluster together",
+        "key_members": [
+          "string - node_ids of most central within cluster"
+        ]
+      }
+    ],
+    "structural_analysis": {
+      "key_brokers": [
+        {
+          "node_id": "string",
+          "brokerage_type": "coordinator | gatekeeper | representative | liaison | itinerant",
+          "bridges_between": [
+            "string - cluster_ids"
+          ],
+          "power_source": "string - why this position matters"
+        }
+      ],
+      "structural_holes": [
+        {
+          "gap_id": "string",
+          "between_clusters": [
+            "string - cluster_ids"
+          ],
+          "bridged_by": [
+            "string - node_ids that span this gap"
+          ],
+          "significance": "string - what this gap means"
+        }
+      ],
+      "core_periphery": {
+        "core_members": [
+          "string - node_ids"
+        ],
+        "periphery_members": [
+          "string - node_ids"
+        ],
+        "semi_periphery_members": [
+          "string - node_ids"
+        ],
+        "core_description": "string - what characterizes the core"
+      },
+      "influence_pathways": [
+        {
+          "pathway_id": "string",
+          "from_node": "string - node_id",
+          "to_node": "string - node_id",
+          "path": [
+            "string - node_ids in sequence"
+          ],
+          "path_length": "number",
+          "bottlenecks": [
+            "string - node_ids that must be traversed"
+          ]
+        }
+      ]
+    },
+    "vulnerability_analysis": {
+      "single_points_of_failure": [
+        {
+          "node_id": "string",
+          "if_removed": "string - what happens to network",
+          "severity": "catastrophic | severe | moderate | minor",
+          "protected_by": "string - what makes removal difficult"
+        }
+      ],
+      "critical_edges": [
+        {
+          "edge_id": "string",
+          "if_severed": "string - what happens",
+          "severity": "catastrophic | severe | moderate | minor"
+        }
+      ],
+      "fragmentation_risk": {
+        "assessment": "high | medium | low",
+        "key_vulnerabilities": [
+          "string"
+        ],
+        "resilience_factors": [
+          "string"
+        ]
+      }
+    },
+    "network_dynamics": {
+      "information_flow": {
+        "pattern": "centralized | distributed | hierarchical | chaotic",
+        "key_hubs": [
+          "string - node_ids"
+        ],
+        "bottlenecks": [
+          "string - node_ids"
+        ],
+        "estimated_speed": "fast | moderate | slow"
+      },
+      "influence_concentration": {
+        "gini_coefficient": "number (0-1) - inequality of influence",
+        "interpretation": "string",
+        "top_influencers": [
+          "string - node_ids"
+        ]
+      },
+      "coalition_potential": [
+        {
+          "possible_coalition": [
+            "string - node_ids"
+          ],
+          "what_unites_them": "string",
+          "combined_centrality": "string",
+          "barriers": [
+            "string"
+          ]
+        }
+      ]
+    },
+    "meta": {
+      "nodes_analyzed": "number",
+      "edges_analyzed": "number",
+      "clusters_identified": "number",
+      "key_brokers_count": "number",
+      "structural_holes_count": "number",
+      "analysis_completeness": "comprehensive | partial | limited",
+      "confidence": "high | medium | low",
+      "limitations": [
+        "string"
+      ]
+    }
+  },
+  "extraction_focus": [
+    "actor_identification",
+    "relationship_mapping",
+    "centrality_assessment",
+    "cluster_detection",
+    "structural_analysis"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/relational_topology.py"
+}

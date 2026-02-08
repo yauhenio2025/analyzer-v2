@@ -1,0 +1,75 @@
+{
+  "engine_key": "unearned_certainty_detector",
+  "engine_name": "Unearned Certainty Detector",
+  "description": "Identifies claims stated with more certainty than evidence supports. Detects epistemic overreach patterns like 'clearly,' 'obviously,' and 'proves' attached to insufficiently supported claims. Flags universal quantifiers, causal claims from correlation, and definitive conclusions from limited samples.",
+  "version": 1,
+  "category": "epistemology",
+  "kind": "synthesis",
+  "reasoning_domain": "epistemology",
+  "researcher_question": "Which claims are stated with more certainty than evidence warrants?",
+  "extraction_prompt": "\nYou are detecting UNEARNED CERTAINTY \u2014 claims stated with more confidence\nthan the supporting evidence justifies.\n\n## CERTAINTY RED FLAGS\n\n### 1. CERTAINTY LANGUAGE\nWatch for language that signals high confidence:\n- \"Clearly...\" / \"Obviously...\" / \"It's evident that...\"\n- \"This proves...\" / \"This demonstrates...\"\n- \"Without doubt...\" / \"Undeniably...\"\n- \"Always...\" / \"Never...\" / \"All...\" / \"None...\"\n- \"Must be...\" / \"Can only mean...\"\n\n### 2. OVERREACH PATTERNS\n\n**Universal Quantifiers**: Claims about \"all\" or \"none\" from limited evidence\n- \"All X are Y\" \u2014 Really? Every single one?\n- \"X never works\" \u2014 Never? In any context?\n\n**Causal from Correlation**: Treating correlation as causation\n- \"X leads to Y\" when only \"X correlates with Y\" is shown\n- Ignoring confounders and alternative explanations\n\n**Limited Sample Generalization**: Broad claims from narrow evidence\n- Generalizing from one case study\n- Treating specific contexts as universal\n\n**Expert Disagreement Ignored**: Certainty where experts disagree\n- Stating as settled what is actually contested\n- Ignoring major alternative views\n\n**Complexity Reduction**: False simplicity\n- \"It's simple: X causes Y\" when the relationship is complex\n- Binary framing of nuanced issues\n\n**Temporal Projection**: Certainty about the future\n- \"This will definitely happen\" about uncertain futures\n- Treating trends as destiny\n\n## FOR EACH CERTAINTY CLAIM\n\n1. **CLAIM TEXT**: Quote the claim\n2. **CERTAINTY LANGUAGE**: What words signal certainty?\n3. **STATED CERTAINTY**: How confident does the claim sound?\n4. **WARRANTED CERTAINTY**: How confident should it be given the evidence?\n5. **CERTAINTY GAP**: How big is the mismatch?\n6. **EVIDENCE**: What support is actually provided?\n7. **OVERREACH TYPE**: Which pattern is this?\n8. **CORRECTION**: How should this be properly qualified?\n\n\n## OUTPUT GUIDANCE\n\nFocus on substantive claims, not casual language.\nThe goal is to identify where rhetorical certainty outpaces evidential support.\n",
+  "curation_prompt": "\nYou are synthesizing unearned certainty detection across multiple articles.\n\nYour task is to create a comprehensive map of epistemic overreach patterns\nin this discourse.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE SIMILAR CLAIMS\n- Merge instances of the same overcertain claim\n- Note which articles state it most confidently\n- Identify if anyone challenges the claim\n\n### 2. MAP OVERREACH PATTERNS\n- What patterns are most common?\n- Are certain domains more prone to overreach?\n- Is overreach systematic or scattered?\n\n### 3. ASSESS DISCOURSE QUALITY\n- What percentage of major claims have certainty gaps?\n- How severe are the gaps on average?\n- What would properly qualified discourse look like?\n\n### 4. IDENTIFY CORRECTIONS\n- Compile all suggested qualifications\n- Note patterns in what corrections are needed\n- Create templates for proper epistemic hygiene\n\n## OUTPUT GUIDANCE\n\nThe goal is to produce a map of epistemic overreach and provide guidance\nfor more appropriate confidence calibration.\n",
+  "concretization_prompt": "\nTransform the certainty analysis to be immediately actionable:\n\n1. Convert claim_ids to descriptive labels:\n   - \"C1\" -> \"Universal AI safety claim\"\n   - \"C2\" -> \"Causal claim about market efficiency\"\n\n2. State claims and corrections clearly:\n   - OVERCERTAIN: \"AI will definitely surpass human intelligence\"\n   - CORRECTION: \"Current trends suggest AI may eventually match human capabilities in specific domains, though timelines and outcomes remain uncertain\"\n\n3. Quantify the pattern:\n   - \"X of Y claims show unearned certainty\"\n   - \"Most common overreach: causal from correlation (N instances)\"\n\n4. Create correction templates:\n   - \"Instead of 'clearly X,' say 'evidence suggests X'\"\n   - \"Instead of 'X proves Y,' say 'X is consistent with Y'\"\n\n5. Identify highest-stakes overreach:\n   - Which overcertain claims have biggest implications if wrong?\n   - Where does false confidence pose most risk?\n\nPreserve all scores and assessments.\nMake the output useful for improving epistemic calibration in discourse.\n",
+  "canonical_schema": {
+    "certainty_claims": [
+      {
+        "claim_id": "string - unique identifier",
+        "claim_text": "string - the claim as stated",
+        "certainty_language": "string - words/phrases signaling certainty",
+        "certainty_level_stated": "absolute | high | moderate | hedged",
+        "certainty_level_warranted": "absolute | high | moderate | low | unknown",
+        "certainty_gap": "none | minor | moderate | major | severe",
+        "evidence_provided": "string - what support is offered",
+        "evidence_quality": "strong | moderate | weak | absent",
+        "overreach_type": "universal_quantifier | causal_from_correlation | limited_sample | expert_disagreement | complexity_reduction | temporal_projection",
+        "correction": "string - how claim should be qualified",
+        "source_article": "string - article reference"
+      }
+    ],
+    "pattern_analysis": {
+      "common_overreach_types": [
+        {
+          "type": "string - overreach pattern",
+          "frequency": "number",
+          "typical_domains": [
+            "string - where this appears"
+          ]
+        }
+      ],
+      "certainty_language_frequency": {
+        "clearly": "number",
+        "obviously": "number",
+        "proves": "number",
+        "demonstrates": "number",
+        "shows_that": "number",
+        "must_be": "number",
+        "always": "number",
+        "never": "number",
+        "all": "number",
+        "none": "number"
+      }
+    },
+    "meta": {
+      "total_claims_analyzed": "number",
+      "overreach_instances": "number",
+      "severe_overreach_count": "number",
+      "most_common_overreach_type": "string",
+      "domains_most_affected": [
+        "string"
+      ]
+    }
+  },
+  "extraction_focus": [
+    "certainty_claims",
+    "evidence_gaps",
+    "epistemic_overreach",
+    "qualifier_analysis",
+    "support_assessment"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/unearned_certainty_detector.py"
+}

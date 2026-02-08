@@ -1,0 +1,19 @@
+{
+  "engine_key": "concept_synthesis",
+  "engine_name": "Concept Synthesis",
+  "description": "Creates a unified summary integrating all previous analysis phases",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "integration",
+  "researcher_question": "What is the unified picture of how this concept functions?",
+  "extraction_prompt": "You are conducting Phase 12: SYNTHESIS.\n\n## YOUR TASK\n\nCreate a UNIFIED ANALYSIS of \"{concept}\" integrating all previous phases.\n\n## PHASE OUTPUTS TO SYNTHESIZE\n\n{all_phase_outputs}\n\n## SYNTHESIS STRUCTURE\n\n1. **Semantic Core**: What \"{concept}\" means in this corpus\n2. **Argumentative Architecture**: How arguments about it are structured\n3. **Logical Assessment**: Strengths and vulnerabilities\n4. **Cross-Text Evolution**: How treatment develops\n5. **Critical Verdict**: Overall assessment with key quotes\n\n## OUTPUT FORMAT\n\nReturn JSON with:\n- semantic_core: {definition, key_collocations, theoretical_lineage}\n- argumentative_architecture: {core_chains, supporting_chains, key_arguments}\n- logical_assessment: {strengths[], vulnerabilities[], overall_soundness}\n- evolution: {trajectory, key_shifts, contradictions}\n- critical_verdict: {summary, key_quotes[], recommendations}\n\nThis is the FINAL SYNTHESIS. Make it comprehensive and well-supported.",
+  "curation_prompt": "Validate synthesis completeness and integration.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": [
+    "marxist",
+    "brandomian"
+  ]
+}

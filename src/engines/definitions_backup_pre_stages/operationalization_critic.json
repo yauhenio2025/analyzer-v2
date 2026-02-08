@@ -1,0 +1,119 @@
+{
+  "engine_key": "operationalization_critic",
+  "engine_name": "Operationalization Critic",
+  "description": "Critiques how abstract concepts are operationalized into measures. Identifies construct validity problems, operationalization gaps, measurement drift, and proxy problems. Essential for evaluating whether empirical claims address the concepts they claim to measure.",
+  "version": 1,
+  "category": "methodology",
+  "kind": "synthesis",
+  "reasoning_domain": "methodology",
+  "researcher_question": "Are the measures valid operationalizations of concepts?",
+  "extraction_prompt": "\nYou are an OPERATIONALIZATION CRITIC \u2014 examining whether measures actually\ncapture the concepts they claim to represent.\n\n## THE OPERATIONALIZATION PROBLEM\n\nEvery empirical claim requires translating abstract concepts into concrete\nmeasures. This translation is never perfect:\n\n- \"Intelligence\" \u2192 IQ test scores\n- \"Economic development\" \u2192 GDP per capita\n- \"Democracy\" \u2192 Polity scores\n- \"Happiness\" \u2192 Survey responses\n\nThe gap between concept and measure is where validity problems hide.\n\n## VALIDITY TYPES\n\n### CONSTRUCT VALIDITY\nDoes the measure capture the theoretical construct?\n- Does IQ measure \"intelligence\" or test-taking ability?\n- Does GDP measure \"development\" or just monetary transactions?\n\n### CONTENT VALIDITY\nDoes the measure cover all dimensions of the concept?\n- A \"democracy\" measure that only looks at elections misses civil liberties\n\n### CRITERION VALIDITY\nDoes the measure correlate with other measures of the same concept?\n- Multiple independent measures should converge\n\n### FACE VALIDITY\nDoes the measure obviously relate to the concept?\n- Weakest form but often the only one checked\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY CONCEPTS\nWhat theoretical concepts are being studied?\n- How are they defined (explicitly or implicitly)?\n- Are they contested?\n- What dimensions do they have?\n\n### STEP 2: IDENTIFY OPERATIONALIZATIONS\nHow is each concept measured?\n- What specific indicators are used?\n- What measurement method?\n- What rationale is given?\n\n### STEP 3: CRITIQUE VALIDITY\nFor each operationalization:\n- Does it actually capture the concept?\n- What aspects of the concept does it miss?\n- What non-concept variance does it capture?\n- What assumptions must hold for validity?\n\n### STEP 4: ASSESS OPERATIONALIZATION GAPS\nHow far is each measure from its concept?\n- Size of the gap?\n- Direction of bias?\n- Consequences for conclusions?\n\n### STEP 5: CHECK FOR PROXY PROBLEMS\nAre proxies being confused with what they measure?\n- Goodhart's Law: When measure becomes target, it ceases to be good measure\n- Campbell's Law: The more a measure is used, the more it corrupts\n- Reification: Treating the measure as if it IS the concept\n- Displacement: Measure replaces concept entirely\n\n### STEP 6: LOOK FOR MEASUREMENT DRIFT\nHas the meaning of measures changed over time?\n- Original intent vs. current usage?\n- Awareness of drift?\n\n### STEP 7: OVERALL ASSESSMENT\nHow do validity issues affect conclusions?\n- Which operationalizations are strongest/weakest?\n- What are the most problematic gaps?\n- How should confidence be adjusted?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about validity problems.\nIdentify consequences for conclusions.\nFocus on gaps that matter for the main claims.\n",
+  "curation_prompt": "\nSynthesize operationalization critiques from multiple sources.\n\n## SYNTHESIS TASKS\n\n1. **CONSOLIDATE CONCEPTS**: Are sources measuring the same concepts?\n2. **COMPARE OPERATIONALIZATIONS**: Different measures for same concepts?\n3. **CROSS-VALIDATE**: Where do sources agree/disagree on validity?\n4. **ASSESS CONVERGENCE**: Do multiple operationalizations converge?\n5. **SYNTHESIZE GAPS**: Overall assessment of concept-measure gaps\n\n## OUTPUT GUIDANCE\n\nCreate unified assessment of operationalization validity.\n",
+  "concretization_prompt": "\nTransform operationalization critique into clear assessment:\n\n1. **CONCEPT-MEASURE MAP**\n   | Concept | Definition | Measure | Gap Size | Key Validity Issue |\n   |---------|------------|---------|----------|-------------------|\n\n2. **VALIDITY ISSUES** (ranked by severity)\n   1. [Operationalization]: [Problem] \u2014 Severity: [X]\n\n3. **OPERATIONALIZATION GAPS**\n   - [Concept] \u2192 [Measure]: [What's missed] | [What's added]\n\n4. **PROXY PROBLEMS**\n   - [Proxy]: [Type of problem] \u2014 [How it fails]\n\n5. **MEASUREMENT DRIFT**\n   - [Measure]: Originally meant [X], now used for [Y]\n\n6. **IMPLICATIONS FOR CONCLUSIONS**\n   - Strongest claims: [Where operationalization is solid]\n   - Weakest claims: [Where operationalization fails]\n\n7. **RECOMMENDATIONS**\n   - Better operationalizations: [Suggestions]\n   - Caveats needed: [What should be acknowledged]\n\n8. **BOTTOM LINE**\n   [How much can we trust claims based on these operationalizations?]\n",
+  "canonical_schema": {
+    "concepts_analyzed": [
+      {
+        "concept_id": "string - C1, C2, etc.",
+        "concept_name": "string - the theoretical concept",
+        "definition_given": "string - how concept is defined (if any)",
+        "definition_implicit": "string - implied meaning",
+        "dimensions": [
+          "string - facets of the concept"
+        ],
+        "contested": "yes | no"
+      }
+    ],
+    "operationalizations": [
+      {
+        "operationalization_id": "string - O1, O2, etc.",
+        "concept_id": "string - which concept",
+        "measure_used": "string - specific measure/indicator",
+        "measurement_method": "string - how it's measured",
+        "rationale_given": "string - why this measures the concept",
+        "assumptions_required": [
+          "string - what must be true for validity"
+        ],
+        "evidence_for_validity": "string - support for operationalization"
+      }
+    ],
+    "validity_critiques": [
+      {
+        "critique_id": "string",
+        "operationalization_id": "string - which operationalization",
+        "validity_type": "construct | content | criterion | face",
+        "problem": "string - what's wrong",
+        "severity": "minor | moderate | severe",
+        "what_gets_missed": "string - concept aspects not captured",
+        "what_gets_added": "string - non-concept variance captured",
+        "evidence": [
+          "string - support for this critique"
+        ]
+      }
+    ],
+    "operationalization_gaps": [
+      {
+        "gap_id": "string",
+        "concept": "string - concept_id",
+        "measure": "string - operationalization_id",
+        "gap_description": "string - how measure departs from concept",
+        "gap_size": "small | moderate | large",
+        "consequences": "string - what this gap means for conclusions"
+      }
+    ],
+    "proxy_problems": [
+      {
+        "problem_id": "string",
+        "proxy_measure": "string",
+        "intended_concept": "string",
+        "problem_type": "goodhart | campbell | reification | displacement",
+        "description": "string - how the proxy fails",
+        "manipulation_risk": "low | medium | high"
+      }
+    ],
+    "measurement_drift": [
+      {
+        "drift_id": "string",
+        "measure": "string",
+        "original_concept": "string",
+        "current_usage": "string",
+        "drift_description": "string - how meaning has shifted",
+        "awareness_of_drift": "acknowledged | unacknowledged"
+      }
+    ],
+    "overall_assessment": {
+      "strongest_operationalizations": [
+        "string - operationalization_ids"
+      ],
+      "weakest_operationalizations": [
+        "string - operationalization_ids"
+      ],
+      "most_problematic_gaps": [
+        "string - gap_ids"
+      ],
+      "confidence_impact": "string - how validity issues affect conclusions",
+      "recommendations": [
+        "string - how to improve"
+      ]
+    },
+    "meta": {
+      "concepts_analyzed": "number",
+      "operationalizations_examined": "number",
+      "validity_issues_found": "number",
+      "critical_gaps_identified": "number"
+    }
+  },
+  "extraction_focus": [
+    "concepts",
+    "measures",
+    "operationalizations",
+    "validity_concerns",
+    "measurement_gaps",
+    "proxy_problems"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/operationalization_critic.py"
+}

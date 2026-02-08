@@ -1,47 +1,114 @@
 {
   "engine_key": "concept_semantic_field",
   "engine_name": "Semantic Field Analyzer",
-  "description": "Maps the complete semantic field of a concept: what it means, where its boundaries lie, how meaning varies across contexts, and what distinguishes it from related terms. Reveals the meaning-space the concept occupies.",
-  "version": 1,
+  "description": "Deep semantic mapping of a concept: meaning boundaries, semantic neighbors, rhetorical deployments, conceptual tensions, strategic ambiguities, argumentative functions, and cross-document evolution. Reveals not just what a concept means, but how it works as a tool of thought and persuasion.",
+  "version": 2,
   "category": "concepts",
   "kind": "synthesis",
   "reasoning_domain": "semantic_analysis",
-  "researcher_question": "What is the full meaning-space of this concept - its boundaries, neighbors, and variations?",
+  "researcher_question": "What is the full meaning-space of this concept - and how does the author deploy it strategically?",
   "canonical_schema": {
     "concept_analyzed": {
       "term": "string - the target concept",
       "core_meaning": "string - the central, uncontested meaning",
-      "meaning_stability": "stable | contested | evolving | fragmented"
+      "meaning_stability": "stable | contested | evolving | fragmented | strategically_ambiguous",
+      "conceptual_genealogy": {
+        "intellectual_origins": ["string - philosophical/theoretical traditions this concept draws from"],
+        "key_thinkers": ["string - thinkers whose usage shapes this concept"],
+        "historical_layers": ["string - accumulated meanings over time that the author inherits or rejects"]
+      },
+      "author_innovation": "string - what's distinctive about THIS author's use of the concept"
     },
     "semantic_neighbors": [
       {
         "neighbor_id": "string (format: 'SN{N}')",
         "term": "string",
-        "relationship": "synonym | near_synonym | hypernym | hyponym | meronym | antonym | complement | contrast | related",
+        "relationship": "synonym | near_synonym | hypernym | hyponym | meronym | antonym | complement | contrast | related | precondition | consequence | transforms_into",
         "semantic_distance": "number (0-1, where 0 = identical, 1 = maximally distant)",
         "key_difference": "string - what distinguishes this from the target",
         "usage_contexts": ["string - contexts where this term is preferred"],
-        "substitutability": "freely_substitutable | context_dependent | never_substitutable",
-        "quote_example": "string - example from text showing relationship"
+        "substitutability": "freely_substitutable | context_dependent | never_substitutable | substitutable_with_loss",
+        "what_substitution_loses": "string - what nuance is lost if you substitute",
+        "quote_example": "string - example from text showing relationship",
+        "argumentative_relationship": "string - how does using one vs the other change the argument?"
+      }
+    ],
+    "rhetorical_deployments": [
+      {
+        "deployment_id": "string (format: 'RD{N}')",
+        "deployment_context": "string - situation where the concept is invoked",
+        "rhetorical_function": "legitimation | critique | reframing | boundary_drawing | coalition_building | opponent_characterization | bridge_concept | pivot_point",
+        "what_it_accomplishes": "string - what work does using this concept do here?",
+        "quote": "string - the passage where this deployment occurs",
+        "source_document": "string",
+        "alternative_framing": "string - how could this point be made without this concept?"
+      }
+    ],
+    "conceptual_tensions": [
+      {
+        "tension_id": "string (format: 'CT{N}')",
+        "tension_type": "internal_contradiction | scope_ambiguity | level_mixing | normative_descriptive_blur | implicit_value_judgment | definitional_instability",
+        "description": "string - what the tension is",
+        "manifestation_1": {
+          "quote": "string",
+          "interpretation": "string - what the concept seems to mean here"
+        },
+        "manifestation_2": {
+          "quote": "string",
+          "interpretation": "string - what it seems to mean here (in tension with above)"
+        },
+        "is_tension_acknowledged": "boolean - does the author recognize this tension?",
+        "how_author_manages": "string - if acknowledged, how do they handle it?",
+        "exploitation_potential": "string - could a critic exploit this tension?"
+      }
+    ],
+    "strategic_ambiguities": [
+      {
+        "ambiguity_id": "string (format: 'SA{N}')",
+        "ambiguous_aspect": "string - what's left vague",
+        "possible_readings": ["string - different ways to interpret"],
+        "what_ambiguity_enables": "string - what argumentative flexibility does vagueness provide?",
+        "what_ambiguity_conceals": "string - what hard questions does vagueness avoid?",
+        "quote_example": "string"
+      }
+    ],
+    "argumentative_functions": [
+      {
+        "function_id": "string (format: 'AF{N}')",
+        "function_type": "premise_supplier | conclusion_anchor | bridge_term | contrast_term | legitimacy_marker | critique_tool | normative_standard | descriptive_category | explanatory_key",
+        "description": "string - how the concept functions in arguments",
+        "example_argument_pattern": "string - sketch of an argument that uses the concept this way",
+        "quote": "string",
+        "indispensability": "essential | helpful | ornamental - could the argument work without this concept?"
       }
     ],
     "boundary_analysis": {
-      "boundary_sharpness": "sharp | gradient | vague | context_dependent",
-      "boundary_type": "extensional | intensional | prototypical | family_resemblance",
+      "boundary_sharpness": "sharp | gradient | vague | context_dependent | strategically_flexible",
+      "boundary_type": "extensional | intensional | prototypical | family_resemblance | normative",
       "inclusion_criteria": [
         {
           "criterion_id": "string",
           "criterion": "string - what makes something fall under this concept",
-          "criterion_type": "necessary | sufficient | necessary_and_sufficient | typical_feature",
-          "explicitness": "explicit | implicit | tacit",
-          "contested": "boolean"
+          "criterion_type": "necessary | sufficient | necessary_and_sufficient | typical_feature | normative_ideal",
+          "explicitness": "explicit | implicit | tacit | contested",
+          "contested": "boolean",
+          "who_contests": "string - if contested, what position contests it?"
         }
       ],
       "exclusion_criteria": [
         {
           "criterion_id": "string",
           "excludes": "string - what is excluded",
-          "rationale": "string - why it's excluded"
+          "rationale": "string - why it's excluded",
+          "is_exclusion_polemical": "boolean - is this exclusion doing argumentative work?"
+        }
+      ],
+      "boundary_policing": [
+        {
+          "instance_id": "string",
+          "what_is_policed": "string - what's being kept in or out",
+          "stakes": "string - why does it matter where the boundary is?",
+          "quote": "string"
         }
       ],
       "edge_cases": [
@@ -49,8 +116,9 @@
           "case_id": "string",
           "case": "string - the borderline case",
           "why_borderline": "string",
-          "author_verdict": "include | exclude | undecided | varies",
-          "quote": "string - relevant quote if any"
+          "author_verdict": "include | exclude | undecided | varies | strategically_ambiguous",
+          "quote": "string - relevant quote if any",
+          "what_verdict_reveals": "string - what does this judgment tell us about the concept?"
         }
       ]
     },
@@ -61,7 +129,51 @@
         "context": "string - where this definition appears",
         "source_document": "string",
         "emphasis": "string - what this definition emphasizes",
-        "contrast_with_others": "string - how it differs from other definitions"
+        "what_it_downplays": "string - what this definition de-emphasizes or obscures",
+        "contrast_with_others": "string - how it differs from other definitions",
+        "rhetorical_advantage": "string - what does defining it this way enable argumentatively?"
+      }
+    ],
+    "presuppositions": [
+      {
+        "presupposition_id": "string (format: 'PS{N}')",
+        "presupposition": "string - what you must accept to use the concept this way",
+        "type": "ontological | epistemological | normative | empirical | conceptual",
+        "explicitness": "explicit | implicit | deeply_buried",
+        "contestability": "widely_shared | disciplinary_consensus | controversial | highly_contested",
+        "quote_revealing_presupposition": "string"
+      }
+    ],
+    "counter_concepts": [
+      {
+        "counter_id": "string (format: 'CC{N}')",
+        "counter_concept": "string - concept that this one implicitly argues against",
+        "relationship": "replaces | critiques | subsumes | complicates | inverts",
+        "what_using_target_rejects": "string - using THIS concept implies rejecting THAT framework",
+        "quote": "string"
+      }
+    ],
+    "metaphorical_substrate": {
+      "root_metaphors": [
+        {
+          "metaphor_id": "string",
+          "metaphor": "string - e.g., 'efficiency as machine optimization'",
+          "source_domain": "string - where the metaphor comes from",
+          "what_it_highlights": "string - aspects it makes salient",
+          "what_it_hides": "string - aspects it obscures",
+          "entailments": ["string - what follows if you accept this metaphor"]
+        }
+      ],
+      "competing_metaphors": ["string - alternative metaphorical framings the author rejects or ignores"]
+    },
+    "cross_document_evolution": [
+      {
+        "evolution_id": "string (format: 'EV{N}')",
+        "from_document": "string",
+        "to_document": "string",
+        "what_changes": "string - how the concept's use shifts",
+        "what_stays_constant": "string - what remains stable",
+        "driver_of_change": "string - what motivates the shift (responding to criticism, context change, etc.)"
       }
     ],
     "semantic_field_map": {
@@ -70,7 +182,9 @@
       "peripheral_terms": ["string - loosely related"],
       "opposed_terms": ["string - antonyms and contrasts"],
       "superordinate": "string - broader category containing this concept",
-      "subordinates": ["string - more specific instances"]
+      "subordinates": ["string - more specific instances"],
+      "conceptual_allies": ["string - concepts that work together with this one"],
+      "conceptual_enemies": ["string - concepts this one is deployed against"]
     },
     "usage_patterns": {
       "typical_collocations": ["string - words that commonly appear with this concept"],
@@ -78,15 +192,36 @@
       "register_variations": {
         "technical": "string - how used in technical contexts",
         "popular": "string - how used in everyday contexts",
-        "author_specific": "string - author's distinctive usage"
+        "author_specific": "string - author's distinctive usage",
+        "polemical": "string - how used when arguing against opponents"
+      },
+      "frequency_patterns": {
+        "most_concentrated": "string - where does the concept appear most densely?",
+        "notably_absent": "string - where might you expect it but it doesn't appear?"
       }
+    },
+    "operationalization_analysis": {
+      "abstract_meaning": "string - the concept at its most general",
+      "concrete_applications": [
+        {
+          "application_id": "string",
+          "application": "string - specific use/measurement/criterion",
+          "gap_from_abstract": "string - what's lost in translation from abstract to concrete?",
+          "quote": "string"
+        }
+      ],
+      "operationalization_tensions": "string - conflicts between how concept is defined vs how it's applied"
     },
     "meta": {
       "total_neighbors": "number",
+      "total_deployments": "number",
+      "total_tensions": "number",
       "semantic_richness": "number (0-1) - how dense the semantic field is",
       "boundary_clarity": "number (0-1) - how clear the boundaries are",
       "definitional_consensus": "number (0-1) - how much agreement on meaning",
-      "key_insight": "string - most important finding about this concept's meaning"
+      "strategic_flexibility": "number (0-1) - how much the concept shifts to serve arguments",
+      "key_insight": "string - most important finding about this concept's meaning and deployment",
+      "vulnerability_summary": "string - where could a critic attack this concept's use?"
     }
   },
   "extraction_focus": [
@@ -94,7 +229,13 @@
     "concept_boundaries",
     "definitional_variations",
     "usage_patterns",
-    "edge_cases"
+    "edge_cases",
+    "rhetorical_deployments",
+    "conceptual_tensions",
+    "strategic_ambiguities",
+    "argumentative_functions",
+    "presuppositions",
+    "metaphorical_substrate"
   ],
   "primary_output_modes": [
     "structured_text_report",
@@ -109,20 +250,29 @@
     "extraction": {
       "analysis_type": "semantic field",
       "analysis_type_plural": "semantic fields",
-      "core_question": "What is the full meaning-space of this concept?",
+      "core_question": "What is the full meaning-space of this concept, and how is it deployed strategically?",
       "extraction_steps": [
-        "IDENTIFY CORE MEANING: What is the uncontested, central meaning of this concept?",
-        "MAP SEMANTIC NEIGHBORS: Find synonyms, related terms, contrasts, hypernyms, hyponyms",
-        "ANALYZE BOUNDARIES: Where does this concept end? What's included/excluded?",
+        "IDENTIFY CORE MEANING: What is the central meaning? Where does it come from intellectually?",
+        "MAP SEMANTIC NEIGHBORS: Find synonyms, related terms, contrasts - note what substitution would lose",
+        "ANALYZE RHETORICAL DEPLOYMENTS: How is the concept used to persuade? What work does it do?",
+        "IDENTIFY CONCEPTUAL TENSIONS: Where does the concept pull in different directions? Internal contradictions?",
+        "MAP STRATEGIC AMBIGUITIES: What's left vague, and what does vagueness enable?",
+        "TRACE ARGUMENTATIVE FUNCTIONS: What role does the concept play in arguments? Is it essential?",
+        "ANALYZE BOUNDARIES: Where does this concept end? Who contests the boundary and why?",
         "DOCUMENT EDGE CASES: What borderline cases reveal about the concept's limits?",
-        "TRACK DEFINITIONAL VARIATIONS: How does the meaning shift across contexts?",
-        "MAP USAGE PATTERNS: How is the concept typically used grammatically and collocationally?"
+        "TRACK DEFINITIONAL VARIATIONS: How does meaning shift across contexts? What does each definition enable?",
+        "SURFACE PRESUPPOSITIONS: What must you already believe to use this concept this way?",
+        "IDENTIFY COUNTER-CONCEPTS: What frameworks does using this concept implicitly reject?",
+        "ANALYZE METAPHORICAL SUBSTRATE: What root metaphors shape understanding? What do they hide?",
+        "TRACK CROSS-DOCUMENT EVOLUTION: How does the concept's use shift across texts?",
+        "ASSESS OPERATIONALIZATION: Gap between abstract definition and concrete application?"
       ],
       "key_fields": {
         "neighbor_id": "Semantic neighbor identifier",
         "term": "The related term",
         "relationship": "Type of semantic relationship",
-        "semantic_distance": "How close in meaning"
+        "semantic_distance": "How close in meaning",
+        "rhetorical_function": "What persuasive work does deployment do"
       },
       "id_field": "neighbor_id",
       "key_relationships": [
@@ -131,9 +281,12 @@
         "broader_than",
         "narrower_than",
         "related_to",
-        "contrasts_with"
+        "contrasts_with",
+        "enables",
+        "presupposes",
+        "undermines"
       ],
-      "special_instructions": "Focus on how the AUTHOR uses this concept, not just dictionary definitions. Look for places where the author explicitly or implicitly draws boundaries, distinguishes from other terms, or reveals what they take the concept to mean."
+      "special_instructions": "Go beyond dictionary definitions. Focus on how the AUTHOR deploys this concept strategically. Look for tensions, ambiguities, and rhetorical functions. Find places where the concept does argumentative work. Identify what using this concept commits the author to, and what it allows them to avoid. Be critical - find the weak points."
     },
     "curation": {
       "item_type": "semantic relationship",
@@ -142,17 +295,23 @@
         "Group neighbors by relationship type",
         "Identify consensus vs contested boundaries",
         "Track definitional drift across documents",
-        "Highlight most revealing edge cases"
+        "Highlight most revealing edge cases",
+        "Surface the most exploitable tensions",
+        "Map rhetorical deployment patterns"
       ],
       "cross_doc_patterns": [
         "definitional_evolution",
         "boundary_contests",
-        "semantic_drift"
+        "semantic_drift",
+        "rhetorical_escalation",
+        "strategic_refinement"
       ],
       "synthesis_outputs": [
         "semantic_field_summary",
         "boundary_map",
-        "usage_profile"
+        "usage_profile",
+        "tension_inventory",
+        "vulnerability_assessment"
       ],
       "special_instructions": null
     },
@@ -165,33 +324,43 @@
         {
           "from": "DV1",
           "to": "Efficiency as 'output/input ratio' (technical)"
+        },
+        {
+          "from": "CT1",
+          "to": "Tension: efficiency as descriptive measure vs normative goal"
         }
       ],
       "naming_guidance": "Use the term plus relationship type and distance",
       "recommended_table_types": [
         "semantic_neighbor_table",
-        "boundary_specification_table"
+        "boundary_specification_table",
+        "tension_matrix",
+        "deployment_inventory"
       ],
       "recommended_visual_patterns": [
         "semantic_field_radial",
-        "concept_boundary_diagram"
+        "concept_boundary_diagram",
+        "tension_network"
       ]
     },
     "audience_vocabulary": {
       "researcher": {
         "semantic_distance": "semantic distance",
         "hypernym": "hypernym",
-        "meronym": "meronym"
+        "meronym": "meronym",
+        "rhetorical_deployment": "rhetorical deployment"
       },
       "analyst": {
         "semantic_distance": "meaning similarity",
         "hypernym": "broader category",
-        "meronym": "part of"
+        "meronym": "part of",
+        "rhetorical_deployment": "strategic use"
       },
       "executive": {
         "semantic_distance": "how similar",
         "hypernym": "general category",
-        "meronym": "component"
+        "meronym": "component",
+        "rhetorical_deployment": "how it's used to persuade"
       },
       "activist": {}
     },

@@ -1,0 +1,130 @@
+{
+  "engine_key": "bureaucratic_behavior_interpreter",
+  "engine_name": "Bureaucratic Behavior Interpreter",
+  "description": "Interprets organizational behavior through bureaucratic logic. Explains behavior via bureaucratic politics, organizational routines, standard operating procedures, and political interests. Essential for understanding why organizations act as they do.",
+  "version": 1,
+  "category": "institutional",
+  "kind": "synthesis",
+  "reasoning_domain": "institutional",
+  "researcher_question": "How do bureaucratic dynamics explain this behavior?",
+  "extraction_prompt": "\nYou are interpreting ORGANIZATIONAL BEHAVIOR through bureaucratic logic.\n\n## THE BUREAUCRATIC LENS\n\nOrganizations don't act as unitary rational actors. Instead:\n- Behavior emerges from bargaining among players with different interests\n- Organizations follow established procedures and routines\n- What organizations can do is constrained by what they know how to do\n\n## KEY FRAMEWORKS\n\n### BUREAUCRATIC POLITICS MODEL\nOutput = Resultant of bargaining among players\n\nKey questions:\n- Who are the players?\n- What do they want?\n- Where does their power come from?\n- How did bargaining produce this outcome?\n\n### ORGANIZATIONAL PROCESS MODEL\nOutput = Enactment of organizational routines\n\nKey questions:\n- What procedures/routines were followed?\n- Why these procedures and not others?\n- How did procedures shape the outcome?\n- What options did procedures rule out?\n\n### STANDARD OPERATING PROCEDURES\nOrganizations do what they know how to do\n\nKey questions:\n- What did the organization know how to do?\n- How well did SOPs fit the situation?\n- What was the procedure-situation mismatch?\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY BEHAVIORS TO EXPLAIN\nWhat organizational behaviors are described?\n- What did the organization do?\n- What's puzzling about it?\n- What needs explaining?\n\n### STEP 2: APPLY BUREAUCRATIC POLITICS\nWho were the players?\n- What positions did they hold?\n- What were their interests?\n- Where did their power come from?\n\nHow did bargaining work?\n- What was the process?\n- What compromise emerged?\n- Who won and lost?\n\n### STEP 3: APPLY ORGANIZATIONAL PROCESS\nWhat procedures were relevant?\n- What routines were followed?\n- Why these and not others?\n- How did procedures constrain options?\n\n### STEP 4: IDENTIFY SOPs\nWhat did the organization know how to do?\n- What standard procedures were triggered?\n- How well did they fit?\n- What was the consequence of fit/misfit?\n\n### STEP 5: ANALYZE POLITICAL INTERESTS\nWhose interests were served?\n- Who benefited from this behavior?\n- Who was harmed?\n- Does this explain why it happened?\n\n### STEP 6: COMPARE EXPLANATIONS\nDoes bureaucratic explanation work better than rational actor?\n- What does rational actor model miss?\n- What does bureaucratic lens reveal?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about players, interests, and procedures. \"Bureaucratic politics\"\nis not an explanation. \"The State Department's interest in diplomatic\nrelationships conflicted with Treasury's interest in sanctions enforcement,\nproducing a compromise that...\" is an explanation.\n",
+  "curation_prompt": "\nYou are synthesizing bureaucratic behavior interpretations across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE EXPLANATIONS\n- What bureaucratic factors appear across sources?\n- Which explanations are most consistent?\n\n### 2. IDENTIFY PATTERNS\n- What players/interests recur?\n- What procedures are common?\n\n### 3. ASSESS EXPLANATORY POWER\n- How well does bureaucratic lens explain behavior?\n- Where does it illuminate? Where does it fall short?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive bureaucratic interpretation of organizational behavior.\n",
+  "concretization_prompt": "\nTransform the bureaucratic behavior analysis into actionable insight:\n\n1. **BEHAVIORS EXPLAINED**\n   ```\n   | Behavior | Puzzling Aspect | Best Explanation |\n   |----------|-----------------|------------------|\n   | ...      | ...             | Bureaucratic politics |\n   ```\n\n2. **BUREAUCRATIC POLITICS ANALYSIS**\n   ```\n   Behavior: [What happened]\n   Players:\n   - [Player 1]: Position [X], Interests [Y], Power from [Z]\n   - [Player 2]: ...\n   Bargaining: [How it unfolded]\n   Result: [What emerged]\n   Winners/Losers: [Who got what]\n   ```\n\n3. **ORGANIZATIONAL PROCESS ANALYSIS**\n   - Behavior: [What happened]\n   - Procedures followed: [What routines]\n   - Constraints: [What procedures ruled out]\n   - Path dependence: [How history mattered]\n\n4. **STANDARD OPERATING PROCEDURES**\n   - SOP triggered: [What procedure]\n   - Fit with situation: [Good/Partial/Poor]\n   - Consequences: [How fit affected outcome]\n\n5. **POLITICAL INTERESTS**\n   - Whose interests served: [Who benefited]\n   - Whose interests harmed: [Who lost]\n   - How this explains behavior: [Mechanism]\n\n6. **RATIONAL VS. BUREAUCRATIC**\n   | Behavior | Rational Explanation | Bureaucratic Explanation | Which Fits |\n   |----------|---------------------|-------------------------|------------|\n\n7. **BOTTOM LINE**\n   [One paragraph: How do bureaucratic dynamics explain the observed\n   behavior? What would rational actor model miss? What predictions follow?]\n",
+  "canonical_schema": {
+    "behaviors_analyzed": [
+      {
+        "behavior_id": "string - BEH1, BEH2, etc.",
+        "behavior_description": "string - what the organization did",
+        "organization": "string - who acted",
+        "context": "string - circumstances",
+        "puzzling_aspect": "string - what needs explaining"
+      }
+    ],
+    "bureaucratic_politics_explanation": [
+      {
+        "explanation_id": "string",
+        "behavior_id": "string",
+        "players": [
+          {
+            "player": "string - who",
+            "position": "string - organizational role",
+            "interests": [
+              "string - what they want"
+            ],
+            "power_sources": [
+              "string - where power comes from"
+            ]
+          }
+        ],
+        "bargaining_process": "string - how players negotiated",
+        "compromise_result": "string - what emerged from bargaining",
+        "winners": [
+          "string - who got what they wanted"
+        ],
+        "losers": [
+          "string - who didn't"
+        ],
+        "explanatory_power": "high | medium | low"
+      }
+    ],
+    "organizational_process_explanation": [
+      {
+        "explanation_id": "string",
+        "behavior_id": "string",
+        "relevant_procedures": [
+          {
+            "procedure": "string - what routine",
+            "origin": "string - where it came from",
+            "how_applied": "string - how it shaped behavior"
+          }
+        ],
+        "procedure_constraints": [
+          "string - what procedures ruled out"
+        ],
+        "path_dependence": "string - how history constrained options",
+        "explanatory_power": "high | medium | low"
+      }
+    ],
+    "standard_operating_procedures": [
+      {
+        "sop_id": "string",
+        "behavior_id": "string",
+        "procedure_name": "string",
+        "procedure_description": "string - what it involves",
+        "why_this_procedure": "string - what triggered it",
+        "procedure_fit": "good | partial | poor",
+        "consequences_of_fit": "string - how fit/misfit affected outcome"
+      }
+    ],
+    "political_interest_analysis": [
+      {
+        "analysis_id": "string",
+        "behavior_id": "string",
+        "whose_interests_served": [
+          "string - who benefits"
+        ],
+        "whose_interests_harmed": [
+          "string - who loses"
+        ],
+        "how_interests_explain_behavior": "string",
+        "alternative_if_different_interests": "string - what would have happened"
+      }
+    ],
+    "behavioral_explanations": [
+      {
+        "behavior_id": "string",
+        "rational_actor_explanation": "string - if org were unitary rational",
+        "bureaucratic_explanation": "string - politics and process",
+        "which_fits_better": "rational | bureaucratic | mixed",
+        "key_insight": "string - what bureaucratic lens reveals"
+      }
+    ],
+    "predictive_implications": [
+      {
+        "implication_id": "string",
+        "based_on_behavior": "string - behavior_id",
+        "prediction": "string - what to expect in future",
+        "because": "string - bureaucratic logic behind prediction"
+      }
+    ],
+    "meta": {
+      "behaviors_analyzed": "number",
+      "bureaucratic_explanations_strong": "number",
+      "political_factors_identified": "number",
+      "sops_identified": "number"
+    }
+  },
+  "extraction_focus": [
+    "organizational_behavior",
+    "bureaucratic_politics",
+    "organizational_process",
+    "political_interests",
+    "behavioral_explanation"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/bureaucratic_behavior_interpreter.py"
+}

@@ -1,0 +1,118 @@
+{
+  "engine_key": "emergence_detector",
+  "engine_name": "Emergence Detector",
+  "description": "Identifies emergent properties and behaviors in complex systems. Detects system-level characteristics not present in individual components, interaction effects that create new phenomena, and scale transitions. Essential for understanding 'more than the sum of parts' dynamics.",
+  "version": 1,
+  "category": "systems",
+  "kind": "synthesis",
+  "reasoning_domain": "systems",
+  "researcher_question": "What properties emerge from system interactions that aren't in the parts?",
+  "extraction_prompt": "\nYou are detecting EMERGENCE \u2014 system-level properties that arise from\ncomponent interactions but cannot be predicted from components alone.\n\n## THE EMERGENCE CONCEPT\n\n\"The whole is more than the sum of its parts\" \u2014 Aristotle\n\nEmergence occurs when:\n- Systems have properties that components lack\n- Behaviors arise from interactions, not individual actions\n- New phenomena appear at different scales\n- Understanding parts doesn't explain the whole\n\n## TYPES OF EMERGENCE\n\n### WEAK EMERGENCE\nProperties that are in principle derivable from components but practically\nunpredictable due to complexity:\n- Weather patterns from air molecules\n- Market prices from individual trades\n- Traffic jams from individual drivers\n\n### STRONG EMERGENCE\nProperties that are genuinely new and not even in principle reducible:\n- Consciousness from neurons (contested)\n- Life from chemistry (contested)\n- Meaning from symbols\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY SYSTEM COMPONENTS\nWhat are the parts of this system?\n- At what scale are we analyzing?\n- What can the parts do individually?\n- How do parts interact?\n\n### STEP 2: IDENTIFY EMERGENT PROPERTIES\nWhat properties exist at the system level but not component level?\n\nFor each candidate:\n- Does this property exist in individual components? (If yes, not emergent)\n- Does this property require interaction to exist?\n- Could you predict this from component properties alone?\n\nExamples to look for:\n- Collective behaviors (flocking, herding, market movements)\n- System-level functions (organizational culture, institutional memory)\n- Novel capabilities (language from neurons, intelligence from rules)\n- Pattern formation (self-organization, spontaneous order)\n\n### STEP 3: TRACE GENERATING MECHANISMS\nHow do interactions produce emergence?\n- What specific interactions generate this property?\n- What's the mechanism?\n- Can you identify the \"more\" that arises from \"mere\" interaction?\n\n### STEP 4: MAP SCALE TRANSITIONS\nWhere do new phenomena appear as you change scale?\n- What exists at micro level that disappears at macro?\n- What exists at macro level that doesn't exist at micro?\n- What's the transition mechanism?\n\n### STEP 5: IDENTIFY DOWNWARD CAUSATION\nHow do emergent properties affect components?\n- Does the system-level property constrain component behavior?\n- Do parts behave differently because of the whole they're in?\n\n### STEP 6: ASSESS IRREDUCIBILITY\nFor each emergent property:\n- Can it be fully explained by component properties?\n- Is the emergence \"weak\" (complex but reducible) or \"strong\" (genuinely new)?\n- What aspects resist reduction?\n\n### STEP 7: IMPLICATIONS\nWhat does emergence mean for:\n- Understanding this system?\n- Predicting its behavior?\n- Intervening effectively?\n\n\n## OUTPUT GUIDANCE\n\nBe careful: Not everything \"complex\" is emergent.\nFocus on properties that genuinely arise from interaction and wouldn't exist\nwithout the system context.\n",
+  "curation_prompt": "\nYou are synthesizing emergence detection across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. CONSOLIDATE EMERGENT PROPERTIES\n- Merge equivalent properties identified across sources\n- Note where sources agree/disagree on what's emergent\n- Identify properties only one source detects\n\n### 2. VALIDATE EMERGENCE CLAIMS\n- Do multiple sources confirm the same emergent properties?\n- Where do sources disagree on emergence vs. aggregation?\n- What's the strongest evidence for genuine emergence?\n\n### 3. MAP CROSS-SYSTEM PATTERNS\n- Do similar emergent properties appear in different systems?\n- Are there common emergence mechanisms?\n- What patterns in scale transitions?\n\n### 4. SYNTHESIZE IMPLICATIONS\n- What does multi-source analysis reveal about reducibility?\n- Where is emergence most consequential?\n\n## OUTPUT GUIDANCE\n\nCreate a unified emergence map that distinguishes genuine emergence from\nmere complexity or aggregation.\n",
+  "concretization_prompt": "\nTransform the emergence analysis into actionable insight:\n\n1. **SYSTEM OVERVIEW**\n   ```\n   System: [Name]\n   Components: [List]\n   Scales Analyzed: [Micro \u2192 Meso \u2192 Macro]\n   ```\n\n2. **EMERGENT PROPERTIES**\n   ```\n   | Property | Level | Type | Generating Mechanism |\n   |----------|-------|------|---------------------|\n   | E1: [Name] | System | Strong | [Interaction] |\n   ```\n\n3. **EMERGENCE MAP**\n   ```\n   COMPONENTS \u2192 [Interactions] \u2192 EMERGENT PROPERTY\n   [Parts]         [How]          [What appears]\n   ```\n\n4. **SCALE TRANSITIONS**\n   ```\n   MICRO: [What exists here]\n      \u2193 [Transition mechanism]\n   MESO: [What appears here]\n      \u2193 [Transition mechanism]\n   MACRO: [What appears here]\n   ```\n\n5. **DOWNWARD CAUSATION**\n   - [Emergent property] constrains [components] by [mechanism]\n\n6. **IRREDUCIBILITY ASSESSMENT**\n   - Strongly irreducible: [List]\n   - Partially reducible: [List]\n\n7. **IMPLICATIONS**\n   - For understanding: [What this means]\n   - For prediction: [What can/cannot be predicted]\n   - For intervention: [How to work with emergence]\n\n8. **BOTTOM LINE**\n   [One paragraph: What emerges? Why does it matter?]\n",
+  "canonical_schema": {
+    "system_description": {
+      "system_name": "string",
+      "components": [
+        "string - what are the parts"
+      ],
+      "interactions": [
+        "string - how parts interact"
+      ],
+      "scales_analyzed": [
+        "string - micro/meso/macro levels"
+      ]
+    },
+    "emergent_properties": [
+      {
+        "property_id": "string - E1, E2, etc.",
+        "property_name": "string - what emerges",
+        "description": "string - detailed description",
+        "emergence_type": "weak | strong",
+        "level": "string - at what scale this appears",
+        "component_level_absence": "string - why this isn't in the parts",
+        "generating_interactions": [
+          {
+            "interaction": "string - what interaction produces this",
+            "components_involved": [
+              "string"
+            ],
+            "mechanism": "string - how interaction creates property"
+          }
+        ],
+        "predictability": "predictable_from_parts | partially_predictable | unpredictable",
+        "evidence_in_text": [
+          "string - quotes supporting this"
+        ]
+      }
+    ],
+    "scale_transitions": [
+      {
+        "transition_id": "string",
+        "from_scale": "string - lower level",
+        "to_scale": "string - higher level",
+        "what_appears": "string - new property/behavior",
+        "what_disappears": "string - what's no longer visible",
+        "transition_mechanism": "string - how scale change creates new phenomena"
+      }
+    ],
+    "downward_causation": [
+      {
+        "causation_id": "string",
+        "emergent_property": "string - property_id",
+        "constrained_components": [
+          "string - what's affected"
+        ],
+        "constraint_mechanism": "string - how higher level affects lower",
+        "examples": [
+          "string"
+        ]
+      }
+    ],
+    "irreducibility_assessment": {
+      "strongly_irreducible": [
+        {
+          "property_id": "string",
+          "why_irreducible": "string - why this can't be reduced to parts"
+        }
+      ],
+      "partially_reducible": [
+        {
+          "property_id": "string",
+          "reducible_aspects": "string",
+          "irreducible_aspects": "string"
+        }
+      ]
+    },
+    "implications": {
+      "for_understanding": [
+        "string - what emergence means for comprehension"
+      ],
+      "for_prediction": [
+        "string - what can/cannot be predicted"
+      ],
+      "for_intervention": [
+        "string - how to intervene in emergent systems"
+      ]
+    },
+    "meta": {
+      "emergent_properties_identified": "number",
+      "scale_transitions_mapped": "number",
+      "strong_emergence_count": "number",
+      "confidence_in_analysis": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "emergent_properties",
+    "interaction_effects",
+    "scale_transitions",
+    "downward_causation",
+    "irreducibility"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/emergence_detector.py"
+}

@@ -1,0 +1,16 @@
+{
+  "engine_key": "concept_conditional_nested",
+  "engine_name": "Concept Conditional: Nested",
+  "description": "Finds nested or complex conditional structures involving the concept",
+  "version": 1,
+  "category": "concepts",
+  "kind": "relational",
+  "reasoning_domain": "conditional logic",
+  "researcher_question": "What complex conditional structures involve this concept?",
+  "extraction_prompt": "You are conducting Phase 7.4: NESTED CONDITIONALS analysis.\n\n## YOUR TASK\n\nFind NESTED or COMPLEX conditional structures involving \"{concept}\".\n\n## CONTEXT\n\nSemantic field: {semantic_context}\n\n## PATTERNS\n\nNested conditionals have conditionals within conditionals:\n- \"If (if X then Y), then Z\"\n- \"If X, then (if Y then Z)\"\n- Chains: \"If X then Y, and if Y then Z\"\n- Disjunctive: \"If X or Y, then Z\"\n\nAlso look for:\n- Conditional exceptions\n- Qualified conditionals\n- Contextual conditionals\n\n## DOCUMENTS\n\n{documents_text}\n\n## OUTPUT FORMAT\n\nReturn JSON with nested_conditionals[], each containing:\n- conditional_id, structure_description, outer_condition, inner_condition (if nested), chain_elements (if chained), complexity_type, quote, source\n\nTARGET: 5-10 complex conditional structures.",
+  "curation_prompt": "Validate nested conditional extraction.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": []
+}

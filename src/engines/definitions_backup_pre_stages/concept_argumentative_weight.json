@@ -1,0 +1,16 @@
+{
+  "engine_key": "concept_argumentative_weight",
+  "engine_name": "Concept Argumentative Weight",
+  "description": "Classifies arguments by their importance (load-bearing, supporting, peripheral)",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "argument evaluation",
+  "researcher_question": "Which arguments are most important to the overall thesis?",
+  "extraction_prompt": "You are conducting Phase 8: ARGUMENTATIVE WEIGHT analysis.\n\n## YOUR TASK\n\nClassify each argument about \"{concept}\" by its IMPORTANCE to the overall thesis.\n\n## WEIGHT CATEGORIES\n\n1. **LOAD-BEARING**: Remove this and the thesis collapses\n2. **SUPPORTING**: Strengthens thesis but not essential\n3. **ILLUSTRATIVE**: Provides examples, not logical support\n4. **DEFENSIVE**: Responds to objections\n5. **PERIPHERAL**: Tangential to main thesis\n\n## ARGUMENTS AND CHAINS\n\n{arguments_json}\n\n{chains_json}\n\n## OUTPUT FORMAT\n\nFor each argument: argument_id, weight_class, justification, dependency_count, if_removed_impact.\n\nAlso provide: thesis_core_arguments[], most_vulnerable_arguments[].\n\nReturn as valid JSON.",
+  "curation_prompt": "Validate weight classifications.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": []
+}

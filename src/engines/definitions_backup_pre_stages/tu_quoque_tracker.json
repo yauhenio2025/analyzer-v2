@@ -1,0 +1,88 @@
+{
+  "engine_key": "tu_quoque_tracker",
+  "engine_name": "Tu Quoque Tracker",
+  "description": "Identifies whataboutism substituting for substantive response. Detects tu quoque deflections, whataboutism, avoidance, and false equivalences. Essential for spotting evasive tactics.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "synthesis",
+  "reasoning_domain": "rhetoric",
+  "researcher_question": "Where is whataboutism substituting for substantive response?",
+  "extraction_prompt": "\nYou are tracking TU QUOQUE and WHATABOUTISM - deflections that avoid\nsubstantive response by pointing elsewhere.\n\n## THE PATTERN\n\n### TU QUOQUE (\"You Too\")\nDeflecting by pointing to critic's own failings:\n- \"You do the same thing\"\n- \"You're a hypocrite to criticize\"\n- \"Look at your own record\"\n\n### WHATABOUTISM\nDeflecting by pointing to other cases:\n- \"What about [other case]?\"\n- \"But [other party] did worse\"\n- \"Why focus on this when [other issue] exists?\"\n\n### WHY IT'S A PROBLEM\n- Doesn't address the substance of criticism\n- Creates false equivalences\n- Changes the subject\n- Can be valid as context but not as refutation\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY ORIGINAL CRITICISMS\nWhat criticisms are being made?\n- What's the substance?\n- Who/what is criticized?\n- Is the criticism valid?\n\n### STEP 2: IDENTIFY DEFLECTIONS\nWhat tu quoque or whataboutism appears?\n- What's pointed to instead?\n- What's the implicit argument?\n- How relevant is the deflection?\n\n### STEP 3: ASSESS SUBSTANCE ADDRESSED\nIs the original criticism actually addressed?\n- Does response engage with substance?\n- Or just deflect?\n- What's avoided?\n\n### STEP 4: IDENTIFY FALSE EQUIVALENCES\nAre cases falsely equated?\n- What's claimed to be equivalent?\n- How do they actually differ?\n- How severe is the distortion?\n\n### STEP 5: MAP PATTERNS\nWhat deflection patterns emerge?\n- What triggers deflection?\n- What targets are used?\n- How consistent is the pattern?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about what's deflected and how. \"This is whataboutism\" is not\nuseful. \"The criticism that [X did Y] is deflected by pointing to [Z did W],\nwhich doesn't address whether [Y] was wrong because [reason]\" is useful.\n",
+  "curation_prompt": "\nYou are synthesizing tu quoque tracking across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. AGGREGATE INSTANCES\n- What tu quoque patterns appear?\n- What criticisms are deflected?\n\n### 2. IDENTIFY PATTERNS\n- What deflection targets recur?\n- What triggers whataboutism?\n\n### 3. ASSESS SUBSTANCE\n- How much substance is addressed vs. avoided?\n- What false equivalences appear?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of tu quoque patterns and avoided substance.\n",
+  "concretization_prompt": "\nTransform the tu quoque analysis into actionable insight:\n\n1. **TU QUOQUE INSTANCES**\n   | Original Criticism | Deflection | Type | Substance Addressed? |\n   |--------------------|------------|------|----------------------|\n\n2. **ORIGINAL CRITICISMS**\n   | Criticism | Target | Substance | Validity |\n   |-----------|--------|-----------|----------|\n\n3. **DEFLECTIONS**\n   | Deflection | Target | Relevance to Original |\n   |------------|--------|----------------------|\n\n4. **FALSE EQUIVALENCES**\n   | Case A | Case B | Why Not Equivalent |\n   |--------|--------|-------------------|\n\n5. **AVOIDED SUBSTANCE**\n   | What Should Be Addressed | How Avoided | Importance |\n   |--------------------------|-------------|------------|\n\n6. **PATTERNS**\n   | Pattern | Frequency | Typical Trigger |\n   |---------|-----------|-----------------|\n\n7. **BOTTOM LINE**\n   [One paragraph: Where does whataboutism substitute for substance?\n   What criticisms are deflected rather than addressed? What false\n   equivalences are created?]\n",
+  "canonical_schema": {
+    "tu_quoque_instances": [
+      {
+        "instance_id": "string - TQ1, TQ2, etc.",
+        "original_criticism": "string - what was criticized",
+        "deflection": "string - the 'what about' response",
+        "deflection_type": "tu_quoque | whataboutism | both_sides | hypocrisy_charge",
+        "substance_addressed": "yes | partially | no",
+        "effectiveness_as_deflection": "successful | partial | failed"
+      }
+    ],
+    "original_criticisms": [
+      {
+        "criticism_id": "string - CR1, CR2, etc.",
+        "criticism_text": "string",
+        "target": "string - who/what is criticized",
+        "substance": "string - what the criticism is about",
+        "validity": "valid | partially_valid | questionable"
+      }
+    ],
+    "deflections": [
+      {
+        "deflection_id": "string - DF1, DF2, etc.",
+        "deflection_text": "string",
+        "deflection_target": "string - what's pointed to",
+        "implicit_argument": "string - what the deflection implies",
+        "relevance_to_original": "relevant | tangential | irrelevant"
+      }
+    ],
+    "false_equivalences": [
+      {
+        "equivalence_id": "string",
+        "case_a": "string - original criticism",
+        "case_b": "string - deflection target",
+        "claimed_equivalence": "string - how they're equated",
+        "actual_difference": "string - why not equivalent",
+        "severity_of_distortion": "severe | significant | moderate | minor"
+      }
+    ],
+    "avoided_substance": [
+      {
+        "avoidance_id": "string",
+        "original_point": "string - what should have been addressed",
+        "how_avoided": "string - mechanism of avoidance",
+        "importance_of_avoided_point": "high | medium | low"
+      }
+    ],
+    "patterns": [
+      {
+        "pattern_id": "string",
+        "pattern_description": "string",
+        "frequency": "pervasive | common | occasional",
+        "typical_trigger": "string - what prompts this deflection"
+      }
+    ],
+    "meta": {
+      "tu_quoque_instances": "number",
+      "substance_addressed_rate": "percentage or fraction",
+      "false_equivalences": "number",
+      "overall_deflection_level": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "tu_quoque_instances",
+    "whataboutism_patterns",
+    "deflection_tactics",
+    "false_equivalences",
+    "avoided_substance"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/tu_quoque_tracker.py"
+}

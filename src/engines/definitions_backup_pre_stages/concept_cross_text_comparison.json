@@ -1,0 +1,16 @@
+{
+  "engine_key": "concept_cross_text_comparison",
+  "engine_name": "Concept Cross-Text Comparison",
+  "description": "Tracks how the concept's treatment evolves across documents",
+  "version": 1,
+  "category": "concepts",
+  "kind": "synthesis",
+  "reasoning_domain": "comparative analysis",
+  "researcher_question": "How does treatment of this concept change across texts?",
+  "extraction_prompt": "You are conducting Phase 10: CROSS-TEXT COMPARISON.\n\n## YOUR TASK\n\nCompare how \"{concept}\" is treated ACROSS DIFFERENT DOCUMENTS.\n\n## DOCUMENTS\n\n{documents_summary}\n\n## WHAT TO LOOK FOR\n\n1. **Definitional shifts**: Does the meaning change?\n2. **Emphasis changes**: Different aspects highlighted?\n3. **New arguments**: Arguments appearing in later texts?\n4. **Contradictions**: Claims that conflict?\n5. **Development**: How does understanding deepen?\n\n## CONTEXT FROM PREVIOUS PHASES\n\n{previous_outputs_summary}\n\n## OUTPUT FORMAT\n\nReturn JSON with:\n- definitional_evolution: how meaning changes\n- emphasis_shifts[]: what changes in focus\n- new_elements[]: what appears in later texts\n- potential_contradictions[]: conflicting claims\n- development_trajectory: overall arc\n\nReturn as valid JSON.",
+  "curation_prompt": "Validate cross-text comparison.",
+  "canonical_schema": {
+    "type": "object"
+  },
+  "paradigm_keys": []
+}

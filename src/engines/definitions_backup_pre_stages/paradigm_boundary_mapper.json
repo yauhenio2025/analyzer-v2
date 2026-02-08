@@ -1,0 +1,119 @@
+{
+  "engine_key": "paradigm_boundary_mapper",
+  "engine_name": "Paradigm Boundary Mapper",
+  "description": "Maps paradigm conflicts and how they shape discourse. Identifies competing paradigms, incommensurability, and boundary work. Essential for understanding framework disputes.",
+  "version": 1,
+  "category": "scholarly",
+  "kind": "relational",
+  "reasoning_domain": "scholarly",
+  "researcher_question": "Where are the paradigm conflicts and how do they shape discourse?",
+  "extraction_prompt": "\nYou are mapping PARADIGM BOUNDARIES - the conflicts between competing\nframeworks and how they shape discourse.\n\n## PARADIGM CONCEPTS\n\n### PARADIGM\nA shared framework including:\n- Core assumptions about reality\n- Accepted methods\n- Central values and goals\n- Exemplary works and key figures\n\n### INCOMMENSURABILITY\nWhen paradigms can't be compared on shared terms:\n- Different concepts that don't translate\n- Different standards for evaluation\n- Different views of what counts as progress\n\n### BOUNDARY WORK\nEfforts to define paradigm membership:\n- Excluding heterodox approaches\n- Expanding to claim new territory\n- Protecting core commitments\n- Monopolizing legitimacy\n\n## YOUR TASK\n\n### STEP 1: IDENTIFY PARADIGMS\nWhat paradigms are present in the discourse?\n- What are their core assumptions?\n- What methods do they use?\n- Who are key figures?\n\n### STEP 2: MAP BOUNDARIES\nWhere are the boundaries between paradigms?\n- What are the key differences?\n- What points of conflict exist?\n- Are boundaries methodological, ontological, or normative?\n\n### STEP 3: ASSESS INCOMMENSURABILITY\nCan these paradigms be compared?\n- What concepts don't translate?\n- What standards differ?\n- Have translation attempts been made?\n\n### STEP 4: IDENTIFY BOUNDARY WORK\nHow are boundaries maintained?\n- Who does boundary work?\n- What's being included/excluded?\n- What mechanisms enforce boundaries?\n\n### STEP 5: ANALYZE PARADIGM CONFLICTS\nWhat conflicts exist between paradigms?\n- What's the surface debate?\n- What's the deeper framework dispute?\n- Can it be resolved?\n\n### STEP 6: MAP DISCOURSE EFFECTS\nHow do paradigm conflicts shape discourse?\n- What gets marginalized?\n- What gets privileged?\n- What can't be discussed across boundaries?\n\n\n## OUTPUT GUIDANCE\n\nBe specific about paradigm characteristics. \"There are paradigm conflicts\"\nis not useful. \"School A's commitment to [assumption X] is incompatible\nwith School B's [assumption Y], meaning debates about [topic] are really\nabout [framework issue]\" is useful.\n",
+  "curation_prompt": "\nYou are synthesizing paradigm boundary analyses across multiple sources.\n\n\n## SYNTHESIS TASKS\n\n### 1. MAP PARADIGM LANDSCAPE\n- What paradigms appear across sources?\n- How do they characterize each other?\n\n### 2. IDENTIFY KEY BOUNDARIES\n- What major paradigm boundaries exist?\n- Where is incommensurability strongest?\n\n### 3. ASSESS DISCOURSE IMPLICATIONS\n- How do paradigm conflicts shape the field?\n- What gets marginalized by boundary work?\n\n## OUTPUT GUIDANCE\n\nCreate comprehensive map of paradigm landscape and its discourse effects.\n",
+  "concretization_prompt": "\nTransform the paradigm boundary analysis into actionable insight:\n\n1. **PARADIGMS IDENTIFIED**\n   | Paradigm | Core Assumptions | Key Methods | Key Figures |\n   |----------|------------------|-------------|-------------|\n\n2. **PARADIGM BOUNDARIES**\n   - Between: [Paradigm A] and [Paradigm B]\n   - Type: [Methodological/Ontological/etc.]\n   - Key differences: [List]\n   - Conflict points: [List]\n\n3. **INCOMMENSURABILITY**\n   | Paradigms | Type | Description | Translation Success |\n   |-----------|------|-------------|---------------------|\n\n4. **BOUNDARY WORK**\n   | Paradigm | Type | Target | Mechanism |\n   |----------|------|--------|-----------|\n\n5. **PARADIGM CONFLICTS**\n   | Conflict | Surface Issue | Deep Issue | Resolvable? |\n   |----------|---------------|------------|-------------|\n\n6. **DISCOURSE EFFECTS**\n   - Conflict: [Which]\n   - Marginalized: [What]\n   - Privileged: [What]\n\n7. **BOTTOM LINE**\n   [One paragraph: What paradigm conflicts structure this discourse?\n   What gets marginalized by paradigm boundaries? What debates are\n   really framework disputes?]\n",
+  "canonical_schema": {
+    "paradigms_identified": [
+      {
+        "paradigm_id": "string - P1, P2, etc.",
+        "paradigm_name": "string",
+        "core_assumptions": [
+          "string"
+        ],
+        "key_methods": [
+          "string"
+        ],
+        "central_values": [
+          "string"
+        ],
+        "exemplary_works": [
+          "string"
+        ],
+        "key_figures": [
+          "string"
+        ]
+      }
+    ],
+    "paradigm_boundaries": [
+      {
+        "boundary_id": "string",
+        "paradigm_a": "string - paradigm_id",
+        "paradigm_b": "string - paradigm_id",
+        "boundary_type": "methodological | ontological | epistemological | normative",
+        "key_differences": [
+          "string"
+        ],
+        "points_of_conflict": [
+          "string"
+        ]
+      }
+    ],
+    "incommensurability": [
+      {
+        "incommensurability_id": "string",
+        "paradigms_involved": [
+          "string - paradigm_ids"
+        ],
+        "incommensurability_type": "conceptual | methodological | evaluative",
+        "description": "string - why they can't be compared",
+        "translation_attempts": [
+          "string - efforts to bridge"
+        ],
+        "translation_success": "successful | partial | failed"
+      }
+    ],
+    "boundary_work": [
+      {
+        "work_id": "string",
+        "paradigm_id": "string - whose boundary",
+        "boundary_work_type": "exclusion | expansion | protection | monopolization",
+        "target": "string - what's being included/excluded",
+        "mechanism": "string - how boundary is enforced",
+        "actors": [
+          "string - who does the boundary work"
+        ]
+      }
+    ],
+    "paradigm_conflicts": [
+      {
+        "conflict_id": "string",
+        "paradigms_involved": [
+          "string - paradigm_ids"
+        ],
+        "conflict_surface": "string - what debate appears to be about",
+        "conflict_depth": "string - what it's really about",
+        "resolution_prospects": "resolvable | negotiable | intractable"
+      }
+    ],
+    "discourse_effects": [
+      {
+        "effect_id": "string",
+        "paradigm_conflict": "string - conflict_id",
+        "effect_on_discourse": "string - how conflict shapes discussion",
+        "what_gets_marginalized": [
+          "string"
+        ],
+        "what_gets_privileged": [
+          "string"
+        ]
+      }
+    ],
+    "meta": {
+      "paradigms_identified": "number",
+      "major_boundaries": "number",
+      "intractable_conflicts": "number",
+      "overall_fragmentation": "high | medium | low"
+    }
+  },
+  "extraction_focus": [
+    "paradigms",
+    "paradigm_boundaries",
+    "incommensurability",
+    "boundary_work",
+    "paradigm_conflicts"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "analyzer/src/engines/paradigm_boundary_mapper.py"
+}

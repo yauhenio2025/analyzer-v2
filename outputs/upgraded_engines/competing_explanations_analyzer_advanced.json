@@ -1,0 +1,782 @@
+{
+  "engine_key": "competing_explanations_analyzer_advanced",
+  "engine_name": "Competing Explanations Analyzer (Advanced)",
+  "description": "Deep analysis implementing Heuer's Analysis of Competing Hypotheses (ACH) and CIA Structured Analytic Techniques for rigorous hypothesis evaluation. Reveals confirmation bias, identifies truly diagnostic evidence, maps linchpin assumptions, and determines which explanations survive systematic disconfirmation testing. Uses Bayesian reasoning principles to weight evidence and calibrate confidence. Exposes the cognitive traps that lead analysts astray\u2014anchoring, availability, satisficing, and premature closure.",
+  "version": 1,
+  "category": "methodology",
+  "kind": "synthesis",
+  "reasoning_domain": "hypothesis_evaluation_advanced",
+  "researcher_question": "What are all the plausible explanations, which evidence actually discriminates between them, and which hypothesis survives with the fewest inconsistencies?",
+  "canonical_schema": {
+    "analytic_problem": {
+      "problem_id": "string (format: 'PROB1')",
+      "problem_statement": "string (the question being analyzed)",
+      "why_it_matters": "string (stakes and implications)",
+      "initial_framing": "string (how the problem was first presented)",
+      "reframed_as": "string (improved framing after analysis)",
+      "time_horizon": "string (when must we decide or know?)",
+      "decision_context": "string (what decision depends on this?)",
+      "key_uncertainties": [
+        "string"
+      ],
+      "source_articles": [
+        "string"
+      ]
+    },
+    "hypotheses": [
+      {
+        "hypothesis_id": "string (format: 'H{N}' e.g., 'H1', 'H2')",
+        "name": "string (evocative name like 'The Insider Threat Hypothesis')",
+        "what_it_claims": "string (the core claim in plain language)",
+        "full_statement": "string (complete articulation of the hypothesis)",
+        "hypothesis_type": "mutually_exclusive | overlapping | nested | sequential",
+        "prior_probability": "string (initial assessment before evidence)",
+        "current_probability": "string (after weighing evidence)",
+        "probability_trend": "increasing | stable | decreasing",
+        "key_assumptions": [
+          "assumption_id (LA{N})"
+        ],
+        "required_conditions": [
+          "string (what must be true for this hypothesis)"
+        ],
+        "predicted_observations": [
+          "string (what we should see if true)"
+        ],
+        "predicted_absences": [
+          "string (what we should NOT see if true)"
+        ],
+        "who_advocates": "string | null (proponents of this view)",
+        "why_plausible": "string (strongest argument for)",
+        "strongest_objection": "string (best argument against)",
+        "source_articles": [
+          "string"
+        ],
+        "supported_by_evidence": [
+          "evidence_id (E{N})"
+        ],
+        "contradicted_by_evidence": [
+          "evidence_id (E{N})"
+        ],
+        "neutral_evidence": [
+          "evidence_id (E{N})"
+        ],
+        "competes_with": [
+          "hypothesis_id (H{N})"
+        ],
+        "could_combine_with": [
+          "hypothesis_id (H{N}) - if not mutually exclusive"
+        ],
+        "depends_on_assumptions": [
+          "assumption_id (LA{N})"
+        ],
+        "vulnerable_to_refutation": [
+          "refutation_id (RE{N})"
+        ],
+        "consistency_score": "number (0-1, from matrix analysis)",
+        "inconsistency_count": "number (how many pieces of disconfirming evidence)"
+      }
+    ],
+    "evidence_items": [
+      {
+        "evidence_id": "string (format: 'E{N}' e.g., 'E1', 'E2')",
+        "name": "string (short evocative name)",
+        "what_it_is": "string (description of the evidence)",
+        "evidence_type": "direct_observation | documentary | testimonial | circumstantial | physical | digital | statistical | expert_opinion | absence",
+        "raw_content": "string (the actual evidence as found)",
+        "interpreted_meaning": "string (what it seems to indicate)",
+        "source_type": "primary | secondary | tertiary",
+        "source_credibility": "high | medium | low | unknown",
+        "source_potential_bias": "string | null",
+        "collection_date": "string | null",
+        "information_freshness": "current | dated | stale | unknown",
+        "chain_of_custody": "string (how did we get this?)",
+        "could_be_fabricated": "boolean",
+        "deception_indicators": [
+          "deception_id (DI{N})"
+        ],
+        "corroborated_by": [
+          "evidence_id (E{N})"
+        ],
+        "contradicted_by": [
+          "evidence_id (E{N})"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "diagnosticity_score": "number (0-1, how well it discriminates)",
+        "is_diagnostic": "boolean",
+        "discriminates_between": [
+          "hypothesis_pair (H{N} vs H{N})"
+        ],
+        "consistency_assessments": [
+          "consistency_id (CA{N})"
+        ],
+        "supports_hypotheses": [
+          "hypothesis_id (H{N})"
+        ],
+        "contradicts_hypotheses": [
+          "hypothesis_id (H{N})"
+        ],
+        "neutral_for_hypotheses": [
+          "hypothesis_id (H{N})"
+        ],
+        "relies_on_assumptions": [
+          "assumption_id (LA{N})"
+        ]
+      }
+    ],
+    "consistency_assessments": [
+      {
+        "consistency_id": "string (format: 'CA{N}')",
+        "hypothesis_id": "string (H{N})",
+        "evidence_id": "string (E{N})",
+        "consistency_rating": "consistent | inconsistent | neutral | not_applicable",
+        "rating_code": "++ | + | -- | - | N/A | ?",
+        "confidence_in_rating": "high | medium | low",
+        "reasoning": "string (why this rating?)",
+        "could_this_be_wrong": "string (what would change this assessment?)",
+        "if_wrong_impact": "high | medium | low",
+        "source_articles": [
+          "string"
+        ],
+        "affected_by_assumptions": [
+          "assumption_id (LA{N})"
+        ],
+        "subject_to_biases": [
+          "bias_id (BIAS{N})"
+        ]
+      }
+    ],
+    "linchpin_assumptions": [
+      {
+        "assumption_id": "string (format: 'LA{N}')",
+        "name": "string (evocative name like 'The Rational Actor Assumption')",
+        "what_is_assumed": "string (the assumption stated)",
+        "why_its_linchpin": "string (why is this critical?)",
+        "assumption_type": "factual | causal | motivational | contextual | methodological",
+        "how_confident": "high | medium | low | untested",
+        "basis_for_assumption": "string (why do we believe this?)",
+        "what_if_wrong": "string (implications if false)",
+        "how_to_test": "string (how could we verify?)",
+        "who_makes_this_assumption": "string | null",
+        "is_this_acknowledged": "boolean",
+        "source_articles": [
+          "string"
+        ],
+        "underlies_hypotheses": [
+          "hypothesis_id (H{N})"
+        ],
+        "affects_evidence_interpretation": [
+          "evidence_id (E{N})"
+        ],
+        "sensitivity_analysis": [
+          "sensitivity_id (SP{N})"
+        ],
+        "related_assumptions": [
+          "assumption_id (LA{N})"
+        ]
+      }
+    ],
+    "diagnostic_evidence": [
+      {
+        "diagnostic_id": "string (format: 'DE{N}')",
+        "evidence_id": "string (E{N}) - reference to evidence item",
+        "name": "string (descriptive name)",
+        "why_diagnostic": "string (what makes this evidence discriminating?)",
+        "discriminates_between": [
+          {
+            "hypothesis_a": "string (H{N})",
+            "hypothesis_b": "string (H{N})",
+            "direction": "string (which it favors)",
+            "strength": "strong | moderate | weak"
+          }
+        ],
+        "likelihood_ratio": "string (informal Bayesian assessment)",
+        "if_present_favors": "string (H{N})",
+        "if_absent_favors": "string (H{N})",
+        "diagnosticity_score": "number (0-1)",
+        "is_actually_present": "boolean | null | unknown",
+        "source_articles": [
+          "string"
+        ],
+        "derived_from_evidence": [
+          "evidence_id (E{N})"
+        ],
+        "resolves_between_hypotheses": [
+          "hypothesis_id (H{N})"
+        ]
+      }
+    ],
+    "information_gaps": [
+      {
+        "gap_id": "string (format: 'GAP{N}')",
+        "name": "string (what we don't know)",
+        "what_is_missing": "string (description of the gap)",
+        "gap_type": "factual | causal | intentional | contextual | temporal",
+        "why_it_matters": "string (impact of not knowing)",
+        "which_hypotheses_affected": [
+          "hypothesis_id (H{N})"
+        ],
+        "would_be_diagnostic": "boolean",
+        "collection_feasibility": "easy | moderate | difficult | impossible",
+        "cost_to_fill": "string | null",
+        "risk_to_fill": "string | null",
+        "what_we_would_accept_as_answer": "string (success criteria)",
+        "absence_of_evidence_significance": "string (is absence itself evidence?)",
+        "source_articles": [
+          "string"
+        ],
+        "related_to_evidence": [
+          "evidence_id (E{N})"
+        ],
+        "blocks_resolution_of": [
+          "hypothesis_id (H{N})"
+        ],
+        "could_be_filled_by": [
+          "string (collection methods)"
+        ]
+      }
+    ],
+    "cognitive_biases_detected": [
+      {
+        "bias_id": "string (format: 'BIAS{N}')",
+        "bias_type": "confirmation_bias | anchoring | availability_heuristic | satisficing | premature_closure | hindsight_bias | mirror_imaging | groupthink | vividness_bias | wishful_thinking | clientism",
+        "name": "string (specific instance name)",
+        "where_observed": "string (which analysis step)",
+        "how_it_manifests": "string (description of the bias in action)",
+        "evidence_of_bias": "string (how we detected it)",
+        "affected_hypotheses": [
+          "hypothesis_id (H{N})"
+        ],
+        "affected_evidence_interpretation": [
+          "evidence_id (E{N})"
+        ],
+        "severity": "high | medium | low",
+        "mitigation_applied": "string | null",
+        "mitigation_effectiveness": "effective | partial | ineffective | not_applied",
+        "heuer_warning": "string (relevant Heuer guidance)",
+        "source_articles": [
+          "string"
+        ],
+        "distorts_assessment_of": [
+          "consistency_id (CA{N})"
+        ],
+        "anchored_to": [
+          "anchor_id (AP{N})"
+        ]
+      }
+    ],
+    "anchor_points": [
+      {
+        "anchor_id": "string (format: 'AP{N}')",
+        "name": "string (the anchoring belief or estimate)",
+        "what_anchored": "string (the initial position)",
+        "anchor_source": "first_information | authority | vivid_case | personal_experience | cultural_default",
+        "when_established": "string (when did this become the anchor?)",
+        "adjustment_from_anchor": "string (how much has position moved?)",
+        "is_adjustment_sufficient": "boolean",
+        "evidence_anchor_is_wrong": [
+          "evidence_id (E{N})"
+        ],
+        "source_articles": [
+          "string"
+        ],
+        "biases_created": [
+          "bias_id (BIAS{N})"
+        ],
+        "affects_hypotheses": [
+          "hypothesis_id (H{N})"
+        ]
+      }
+    ],
+    "source_assessments": [
+      {
+        "source_id": "string (format: 'SA{N}')",
+        "source_name": "string",
+        "source_type": "human | documentary | technical | open_source | classified",
+        "access_quality": "direct | indirect | hearsay",
+        "reliability_history": "proven | usually_reliable | unknown | sometimes_unreliable | unreliable",
+        "competence": "expert | knowledgeable | limited | unknown",
+        "potential_biases": [
+          "string"
+        ],
+        "potential_for_deception": "high | medium | low | none",
+        "placement_and_access": "string (why would they know?)",
+        "motivation_to_share": "string | null",
+        "corroboration_status": "corroborated | uncorroborated | contradicted",
+        "source_articles": [
+          "string"
+        ],
+        "provides_evidence": [
+          "evidence_id (E{N})"
+        ],
+        "credibility_affects": [
+          "consistency_id (CA{N})"
+        ]
+      }
+    ],
+    "deception_indicators": [
+      {
+        "deception_id": "string (format: 'DI{N}')",
+        "indicator_name": "string",
+        "what_suggests_deception": "string",
+        "deception_type": "fabrication | concealment | manipulation | misdirection",
+        "who_might_deceive": "string | null",
+        "motive_to_deceive": "string | null",
+        "capability_to_deceive": "high | medium | low",
+        "deception_likelihood": "likely | possible | unlikely",
+        "counter_deception_check": "string (how to verify)",
+        "source_articles": [
+          "string"
+        ],
+        "affects_evidence": [
+          "evidence_id (E{N})"
+        ],
+        "benefits_hypotheses": [
+          "hypothesis_id (H{N})"
+        ],
+        "undermines_hypotheses": [
+          "hypothesis_id (H{N})"
+        ]
+      }
+    ],
+    "likelihood_estimates": [
+      {
+        "estimate_id": "string (format: 'LE{N}')",
+        "what_estimated": "string (the probability being assessed)",
+        "probability_statement": "string (e.g., 'likely', '60-70%')",
+        "numeric_range": "string (if applicable)",
+        "confidence_in_estimate": "high | medium | low",
+        "basis_for_estimate": "string (reasoning)",
+        "key_drivers": "string (what most affects this estimate)",
+        "bayesian_prior": "string | null (starting probability)",
+        "likelihood_given_evidence": "string (P(E|H) assessment)",
+        "posterior_estimate": "string | null (updated probability)",
+        "source_articles": [
+          "string"
+        ],
+        "for_hypothesis": "hypothesis_id (H{N})",
+        "based_on_evidence": [
+          "evidence_id (E{N})"
+        ],
+        "sensitive_to_assumptions": [
+          "assumption_id (LA{N})"
+        ]
+      }
+    ],
+    "sensitivity_points": [
+      {
+        "sensitivity_id": "string (format: 'SP{N}')",
+        "name": "string (what makes conclusions fragile)",
+        "assumption_tested": "assumption_id (LA{N})",
+        "original_conclusion": "string",
+        "if_assumption_wrong": "string (new conclusion)",
+        "magnitude_of_change": "high | medium | low",
+        "probability_assumption_wrong": "high | medium | low",
+        "overall_sensitivity": "critical | significant | minor",
+        "robustness_assessment": "string (how robust is our conclusion?)",
+        "source_articles": [
+          "string"
+        ],
+        "affects_hypotheses": [
+          "hypothesis_id (H{N})"
+        ],
+        "changes_ranking": "boolean"
+      }
+    ],
+    "argument_chains": [
+      {
+        "chain_id": "string (format: 'AC{N}')",
+        "name": "string (the reasoning thread)",
+        "starting_evidence": [
+          "evidence_id (E{N})"
+        ],
+        "reasoning_steps": [
+          {
+            "step_number": "number",
+            "from": "string (evidence or inference)",
+            "inference": "string (reasoning move)",
+            "to": "string (intermediate or final conclusion)",
+            "confidence": "high | medium | low",
+            "assumption_required": "string | null"
+          }
+        ],
+        "conclusion": "string",
+        "supports_hypothesis": "hypothesis_id (H{N})",
+        "chain_strength": "strong | moderate | weak",
+        "weakest_link": "string (step number and why)",
+        "source_articles": [
+          "string"
+        ],
+        "relies_on_assumptions": [
+          "assumption_id (LA{N})"
+        ],
+        "vulnerable_to_objections": [
+          "string"
+        ]
+      }
+    ],
+    "refutation_evidence": [
+      {
+        "refutation_id": "string (format: 'RE{N}')",
+        "name": "string (what would disprove)",
+        "target_hypothesis": "hypothesis_id (H{N})",
+        "what_would_refute": "string (description of killer evidence)",
+        "refutation_type": "logical_impossibility | empirical_falsification | contradiction",
+        "how_definitive": "decisive | strong | suggestive",
+        "is_this_evidence_present": "boolean | unknown",
+        "if_found_conclusion": "string",
+        "search_conducted": "boolean",
+        "why_not_found": "string | null (if searched but absent)",
+        "absence_significance": "confirming | neutral | suspicious",
+        "source_articles": [
+          "string"
+        ],
+        "would_eliminate_hypothesis": "hypothesis_id (H{N})",
+        "related_evidence": [
+          "evidence_id (E{N})"
+        ]
+      }
+    ],
+    "alternative_scenarios": [
+      {
+        "scenario_id": "string (format: 'AS{N}')",
+        "name": "string (evocative scenario name)",
+        "scenario_narrative": "string (story of how this unfolds)",
+        "based_on_hypothesis": "hypothesis_id (H{N})",
+        "key_drivers": [
+          "string"
+        ],
+        "early_warning_indicators": [
+          "string (what would signal this?)"
+        ],
+        "timeline": "string",
+        "probability_assessment": "string",
+        "implications_if_true": "string",
+        "source_articles": [
+          "string"
+        ],
+        "assumes_true": [
+          "assumption_id (LA{N})"
+        ],
+        "evidence_supporting": [
+          "evidence_id (E{N})"
+        ],
+        "evidence_against": [
+          "evidence_id (E{N})"
+        ]
+      }
+    ],
+    "analytic_conclusions": [
+      {
+        "conclusion_id": "string (format: 'CON{N}')",
+        "headline": "string (main finding)",
+        "full_conclusion": "string (detailed statement)",
+        "confidence_level": "high | medium | low | very_low",
+        "confidence_calibration": "string (what does this confidence mean?)",
+        "leading_hypothesis": "hypothesis_id (H{N})",
+        "runner_up_hypothesis": "hypothesis_id (H{N}) | null",
+        "margin_of_difference": "string (how much better is leader?)",
+        "key_evidence": "string (most important evidence)",
+        "key_assumption": "string (most critical assumption)",
+        "main_uncertainty": "string (biggest unknown)",
+        "what_could_change_this": "string",
+        "dissenting_view": "string | null",
+        "source_articles": [
+          "string"
+        ],
+        "based_on_hypotheses": [
+          "hypothesis_id (H{N})"
+        ],
+        "supported_by_evidence": [
+          "evidence_id (E{N})"
+        ],
+        "contingent_on_assumptions": [
+          "assumption_id (LA{N})"
+        ],
+        "sensitive_to": [
+          "sensitivity_id (SP{N})"
+        ]
+      }
+    ],
+    "confidence_calibrations": [
+      {
+        "calibration_id": "string (format: 'CC{N}')",
+        "assessment_type": "probability | confidence | uncertainty",
+        "verbal_expression": "string (e.g., 'likely', 'probably')",
+        "numeric_equivalent": "string (e.g., '55-75%')",
+        "calibration_standard": "string (which scale used)",
+        "fischhoff_warning": "string (relevant Fischhoff guidance on overconfidence)",
+        "common_miscalibration": "string (typical error in this type of judgment)",
+        "sources_of_uncertainty": [
+          "string"
+        ],
+        "reducible_uncertainty": "string (what we could learn)",
+        "irreducible_uncertainty": "string (what we can't know)",
+        "source_articles": [
+          "string"
+        ],
+        "applies_to_hypothesis": "hypothesis_id (H{N}) | null",
+        "applies_to_conclusion": "conclusion_id (CON{N}) | null"
+      }
+    ],
+    "consistency_matrix": {
+      "matrix_id": "string (format: 'MTX1')",
+      "hypotheses_evaluated": [
+        "hypothesis_id (H{N})"
+      ],
+      "evidence_evaluated": [
+        "evidence_id (E{N})"
+      ],
+      "matrix_cells": [
+        {
+          "hypothesis_id": "string (H{N})",
+          "evidence_id": "string (E{N})",
+          "rating": "++ | + | -- | - | N/A | ?",
+          "consistency_id": "string (CA{N})"
+        }
+      ],
+      "hypothesis_rankings": [
+        {
+          "rank": "number",
+          "hypothesis_id": "string (H{N})",
+          "consistency_score": "number",
+          "inconsistency_count": "number",
+          "weighted_score": "number | null"
+        }
+      ],
+      "most_diagnostic_evidence": [
+        "evidence_id (E{N})"
+      ],
+      "least_diagnostic_evidence": [
+        "evidence_id (E{N})"
+      ],
+      "evidence_with_highest_variance": "evidence_id (E{N})",
+      "source_articles": [
+        "string"
+      ]
+    },
+    "relationship_graph": {
+      "nodes": [
+        {
+          "id": "string (any entity ID)",
+          "type": "string (entity type: hypothesis, evidence, assumption, etc.)",
+          "label": "string (short display name, 2-5 words)",
+          "weight": "number (0-1, centrality/importance)"
+        }
+      ],
+      "edges": [
+        {
+          "from_id": "string (source entity ID)",
+          "to_id": "string (target entity ID)",
+          "relationship": "string (from key_relationships)",
+          "strength": "number (0-1)",
+          "bidirectional": "boolean",
+          "label": "string (optional edge label)",
+          "polarity": "positive | negative | neutral"
+        }
+      ],
+      "clusters": [
+        {
+          "cluster_id": "string (format: 'CL{N}')",
+          "name": "string (evocative cluster name)",
+          "description": "string (what unites this cluster)",
+          "member_ids": [
+            "string (entity IDs)"
+          ],
+          "coherence": "number (0-1)",
+          "theme": "string"
+        }
+      ]
+    },
+    "meta": {
+      "total_hypotheses": "number",
+      "total_evidence_items": "number",
+      "total_linchpin_assumptions": "number",
+      "total_information_gaps": "number",
+      "biases_detected": "number",
+      "average_diagnosticity": "number (0-1)",
+      "matrix_coverage": "number (percentage of cells assessed)",
+      "leading_hypothesis": "hypothesis_id (H{N})",
+      "leading_hypothesis_name": "string",
+      "confidence_in_leading": "string",
+      "most_diagnostic_evidence": [
+        "evidence_id (E{N})"
+      ],
+      "most_critical_assumptions": [
+        "assumption_id (LA{N})"
+      ],
+      "most_significant_gaps": [
+        "gap_id (GAP{N})"
+      ],
+      "most_concerning_biases": [
+        "bias_id (BIAS{N})"
+      ],
+      "analysis_robustness": "robust | moderate | fragile",
+      "key_sensitivities": [
+        "sensitivity_id (SP{N})"
+      ]
+    }
+  },
+  "stage_context": {
+    "framework_key": "ach_methodology",
+    "additional_frameworks": [
+      "structured_analytic_techniques",
+      "bayesian_reasoning"
+    ],
+    "extraction": {
+      "analysis_type": "competing hypothesis analysis",
+      "analysis_type_plural": "competing hypothesis analyses",
+      "core_question": "What are all the plausible explanations, and which survives disconfirmation testing?",
+      "extraction_steps": [
+        "STEP 1 - PROBLEM DEFINITION: Before generating hypotheses, clearly define the analytic problem. Per Heuer's Psychology of Intelligence Analysis, state what you're trying to explain, why it matters, and what decision depends on the answer. Identify the key uncertainties that make this question difficult.",
+        "STEP 2 - HYPOTHESIS GENERATION (Breadth): Generate ALL plausible hypotheses, not just the obvious ones. Per Heuer: 'Think about what could cause the phenomenon you are trying to explain.' Use devil's advocacy and 'what if' thinking. Include hypotheses you consider unlikely\u2014ACH requires evaluating all possibilities. Combat satisficing and premature closure.",
+        "STEP 3 - HYPOTHESIS SPECIFICATION (Depth): For each hypothesis, specify: What exactly does it claim? What conditions must hold? What should we observe if true? What should be absent if true? Who advocates this view and why? Make hypotheses mutually exclusive where possible, or clearly identify overlaps.",
+        "STEP 4 - EVIDENCE CATALOGING: List ALL relevant evidence, including: direct observations, documentary evidence, testimonial evidence, circumstantial indicators, statistical patterns, expert opinions, and ABSENCE of expected evidence. Per Heuer: 'List evidence and arguments along the side of the matrix, not under any single hypothesis.'",
+        "STEP 5 - SOURCE ASSESSMENT: For each piece of evidence, assess: Source credibility and access? Potential bias or motivation? Could this be fabricated or manipulated? Is there corroboration? Chain of custody? Apply CIA tradecraft standards for source evaluation.",
+        "STEP 6 - ASSUMPTION SURFACING: Identify linchpin assumptions\u2014beliefs that if wrong would fundamentally change the analysis. Per Johnston: analysts often don't recognize their own assumptions. Ask: What am I taking for granted? What would a devil's advocate challenge? What would someone from a different culture assume?",
+        "STEP 7 - BUILD THE CONSISTENCY MATRIX: Create the ACH matrix with hypotheses as columns and evidence as rows. For each cell, assess: Is this evidence consistent (++, +), inconsistent (--, -), neutral (N/A), or unknown (?) with this hypothesis? Provide reasoning for each rating.",
+        "STEP 8 - ASSESS DIAGNOSTICITY: The key question per Heuer: 'Does this evidence help distinguish among hypotheses?' Evidence consistent with all hypotheses has zero diagnostic value. Look for evidence that is consistent with some hypotheses and inconsistent with others. Calculate diagnosticity scores.",
+        "STEP 9 - FOCUS ON DISCONFIRMATION: Per Heuer's central insight: 'Look for evidence that disconfirms hypotheses rather than evidence that confirms them.' Confirmation bias is the greatest threat. Weight inconsistent evidence heavily. A hypothesis with even one highly diagnostic piece of contrary evidence is in trouble.",
+        "STEP 10 - IDENTIFY REFUTATION EVIDENCE: For each hypothesis, ask: What evidence would definitively disprove this? Have we looked for it? If not found, is absence itself significant? Apply Popperian falsificationism\u2014good hypotheses make risky predictions that could be wrong.",
+        "STEP 11 - BIAS AUDIT: Actively search for cognitive biases per Fischhoff's debiasing research. Look for: Anchoring (stuck on first hypothesis?), Availability (favoring vivid evidence?), Confirmation bias (seeking support, not refutation?), Satisficing (stopping at 'good enough'?), Premature closure (deciding too early?).",
+        "STEP 12 - SENSITIVITY ANALYSIS: Per CIA Tradecraft Primer: Test how robust conclusions are. Which assumptions, if wrong, would change the conclusion? What evidence, if interpreted differently, would change the conclusion? How much would probabilities need to shift to change the ranking?",
+        "STEP 13 - APPLY BAYESIAN REASONING (Informal): Consider prior probabilities (how likely was each hypothesis before evidence?), likelihood ratios (how much more likely is this evidence under H1 vs H2?), and posterior probabilities (updated assessment). Even qualitative Bayesian thinking helps calibration.",
+        "STEP 14 - RANK HYPOTHESES: Based on the matrix, rank hypotheses by consistency with evidence. Per ACH: 'The hypothesis with the least evidence against it is probably correct.' This is counterintuitive\u2014focus on inconsistencies, not confirmations. Calculate consistency scores.",
+        "STEP 15 - CALIBRATE CONFIDENCE: Per Fischhoff's research on overconfidence: explicitly state uncertainty using calibrated language. What does 'likely' mean in probability terms? What are sources of reducible vs irreducible uncertainty? Flag where confidence exceeds what evidence warrants.",
+        "STEP 16 - DOCUMENT CONCLUSIONS: State the leading hypothesis and why, the runner-up and margin of difference, the key evidence and assumptions, the main uncertainties and sensitivities, and what could change the conclusion. Per Heuer: 'Prepare for the possibility of being wrong.'"
+      ],
+      "key_fields": {
+        "hypothesis_id": "Competing explanations being evaluated",
+        "evidence_id": "Evidence items being weighed",
+        "assumption_id": "Linchpin assumptions underlying analysis",
+        "diagnostic_id": "Evidence that discriminates between hypotheses",
+        "gap_id": "Critical information gaps",
+        "bias_id": "Cognitive biases detected in analysis"
+      },
+      "id_field": "hypothesis_id",
+      "key_relationships": [
+        "supports",
+        "contradicts",
+        "neutral_for",
+        "discriminates_between",
+        "depends_on",
+        "assumes",
+        "diagnoses",
+        "refutes",
+        "anchors",
+        "biases",
+        "corroborates",
+        "undermines",
+        "competes_with",
+        "sensitive_to"
+      ],
+      "special_instructions": "CRITICAL: Follow Heuer's ACH methodology rigorously. The most common error is confirmation bias\u2014seeking evidence that supports a favored hypothesis rather than evidence that disconfirms alternatives. Weight disconfirming evidence heavily. Focus on diagnosticity\u2014evidence consistent with all hypotheses tells you nothing. Always surface assumptions. Always audit for biases. Remember Fischhoff: we are systematically overconfident."
+    },
+    "curation": {
+      "item_type": "hypothesis",
+      "item_type_plural": "hypotheses",
+      "consolidation_rules": [
+        "RULE 1: Merge hypotheses that make the same core claim, even if worded differently",
+        "RULE 2: Aggregate evidence across documents that bears on the same hypothesis",
+        "RULE 3: Identify where different documents assess the same evidence differently",
+        "RULE 4: Surface assumptions that are implicit in some documents but explicit in others",
+        "RULE 5: Track which hypotheses gain or lose support across the document set",
+        "RULE 6: Combine consistency matrices where multiple documents use ACH",
+        "RULE 7: Note where biases detected in one document may affect others"
+      ],
+      "cross_doc_patterns": [
+        "shared_hypotheses",
+        "contested_evidence",
+        "assumption_conflicts",
+        "bias_patterns",
+        "diagnostic_convergence",
+        "gap_overlap"
+      ],
+      "synthesis_outputs": [
+        "consolidated_hypothesis_set",
+        "master_consistency_matrix",
+        "cross_document_evidence_map",
+        "assumption_dependency_map",
+        "bias_audit_summary",
+        "relationship_graph"
+      ],
+      "special_instructions": "Pay special attention to cases where different documents reach different conclusions about the same hypothesis. This often reveals hidden assumptions or different evidence weighting."
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "H1",
+          "to": "The State Actor Attribution Hypothesis"
+        },
+        {
+          "from": "H2",
+          "to": "The Criminal Enterprise Explanation"
+        },
+        {
+          "from": "E1",
+          "to": "The Forensic Signature Evidence"
+        },
+        {
+          "from": "LA1",
+          "to": "The Rational Actor Assumption"
+        },
+        {
+          "from": "GAP1",
+          "to": "The Missing Motive Evidence"
+        },
+        {
+          "from": "BIAS1",
+          "to": "The Confirmation Bias Toward Attribution"
+        },
+        {
+          "from": "DE1",
+          "to": "The Discriminating Timeline Evidence"
+        }
+      ],
+      "naming_guidance": "Use substantive names that capture what the hypothesis claims or what the evidence shows. Avoid generic labels like 'Hypothesis 1' or 'Evidence A'. Names should tell a story\u2014'The Insider Threat Hypothesis' not 'H1'.",
+      "recommended_table_types": [
+        "consistency_matrix",
+        "evidence_diagnosticity_ranking",
+        "hypothesis_comparison",
+        "assumption_sensitivity_matrix",
+        "source_credibility_assessment",
+        "bias_audit_checklist"
+      ],
+      "recommended_visual_patterns": [
+        "ach_matrix_heatmap",
+        "hypothesis_evidence_network",
+        "diagnosticity_bar_chart",
+        "assumption_dependency_tree",
+        "confidence_calibration_scale",
+        "scenario_cone"
+      ]
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "diagnosticity": "diagnostic value",
+        "linchpin_assumption": "critical assumption",
+        "satisficing": "settling for good enough",
+        "bayesian_updating": "probability updating"
+      },
+      "analyst": {
+        "diagnosticity": "discriminating power",
+        "linchpin_assumption": "make-or-break assumption",
+        "satisficing": "premature conclusion",
+        "bayesian_updating": "revising odds"
+      },
+      "executive": {
+        "diagnosticity": "what actually tells us something",
+        "linchpin_assumption": "bet-the-analysis assumption",
+        "satisficing": "declaring victory too early",
+        "bayesian_updating": "changing our confidence"
+      },
+      "decision_maker": {
+        "diagnosticity": "evidence that matters",
+        "linchpin_assumption": "hidden assumption",
+        "satisficing": "stopping short",
+        "bayesian_updating": "learning from evidence"
+      }
+    }
+  }
+}
