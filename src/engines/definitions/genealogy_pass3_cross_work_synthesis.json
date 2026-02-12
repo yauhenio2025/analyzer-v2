@@ -1,7 +1,7 @@
 {
   "engine_key": "genealogy_pass3_cross_work_synthesis",
   "engine_name": "Genealogy Pass 3: Cross-Work Synthesis",
-  "description": "Third pass of intellectual genealogy: synthesizes the evolution of a single idea across multiple prior works where it was found. If idea X appears in works 1, 3, and 7, this pass traces the evolution from 1 to 3 to 7 to the current work. Runs once per idea that appears in 2+ prior works.",
+  "description": "Third pass of intellectual genealogy: synthesizes the evolution of a single idea across multiple prior works where it was found. If idea X appears in works 1, 3, and 7, this pass traces the evolution from 1 to 3 to 7 to the current work. Runs once per idea that appears in 2+ prior works. Now relationship-type-aware: distinguishes between direct traces (from direct precursors), foundational patterns (from indirect contextualizers), cross-domain transfers (from different-field works), and position reversals (from counter-positions).",
   "version": 1,
   "category": "temporal",
   "kind": "synthesis",
@@ -25,6 +25,11 @@
     },
     "evolution_pattern": "gradual_refinement | sharp_reversal | silent_drift | strategic_reframe | consistent_deepening",
     "evolution_narrative": "string - 2-3 paragraph narrative of how this idea evolved across the author's body of work",
+    "indirect_enablers": {
+      "foundational_patterns_from_contextualizers": ["string - foundational patterns from indirect contextualizer works that shaped how this idea developed, even if those works never discussed the idea directly"],
+      "cross_domain_imports": ["string - methods or frameworks imported from different-field works that influenced this idea's development"],
+      "how_indirect_works_shaped_evolution": "string - narrative of how the author's broader intellectual toolkit (from non-direct-precursor works) influenced this idea's trajectory"
+    },
     "intermediate_influences": "string - what external events, intellectual encounters, or historical changes may have driven changes between works",
     "what_was_gained": "string - what the evolution added in terms of analytical power, scope, or precision",
     "what_was_lost": "string - what was present in earlier versions but abandoned, narrowed, or forgotten",
@@ -58,7 +63,9 @@
         "CLASSIFY PATTERN: Determine the overall evolution pattern — is this gradual refinement, sharp reversal, silent drift, strategic reframing, or consistent deepening?",
         "WRITE NARRATIVE: Compose a 2-3 paragraph narrative that tells the story of this idea's evolution",
         "ASSESS WHAT CHANGED: Identify what was gained (new analytical power, broader scope) and what was lost (nuance, qualification, alternative framings)",
-        "CONSIDER EXTERNAL FACTORS: What intellectual encounters, historical events, or career pressures might explain the transitions?"
+        "CONSIDER EXTERNAL FACTORS: What intellectual encounters, historical events, or career pressures might explain the transitions?",
+        "INTEGRATE INDIRECT ENABLERS: Review foundational_patterns and cross_domain_transfers from Pass 2 scans of indirect contextualizer and different-field works. How did the author's broader intellectual toolkit — methods, frameworks, cognitive habits from non-direct-precursor works — shape this idea's evolution? A game theory background might explain WHY the author frames market dynamics in a particular way, even though the game theory work never discussed the idea directly.",
+        "ASSESS INVISIBLE INFLUENCES: Some of the most important evolutionary drivers are from works that never discussed the idea. An author's training in formal methods shapes how they later reason about political economy. Flag these invisible influences."
       ],
       "key_fields": {
         "idea_id": "Cross-reference to Pass 1",
@@ -72,7 +79,7 @@
         "reversed_to",
         "silently_drifted_toward"
       ],
-      "special_instructions": "Focus on the TRAJECTORY, not just individual appearances. The value is in seeing the arc of development. Pay special attention to what drove transitions — was it new evidence, changing political context, intellectual influence, or strategic positioning? Be honest about what was lost in evolution, not just what was gained."
+      "special_instructions": "Focus on the TRAJECTORY, not just individual appearances. The value is in seeing the arc of development. Pay special attention to what drove transitions — was it new evidence, changing political context, intellectual influence, or strategic positioning? Be honest about what was lost in evolution, not just what was gained. IMPORTANT: The evolution of an idea is shaped not only by works that directly discuss it (direct precursors) but also by the author's broader intellectual toolkit from indirect contextualizer and different-field works. When Pass 2 data includes foundational_patterns or cross_domain_transfers, integrate these into the evolution narrative — they explain HOW and WHY the idea evolved in the way it did."
     },
     "curation": {
       "item_type": "evolution synthesis",

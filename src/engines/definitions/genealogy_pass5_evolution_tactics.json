@@ -54,7 +54,7 @@
       "retroactive_framing": "Presenting current position as always having been the view, retroactively rewriting intellectual history. The author's earlier exploratory or tentative claims are presented as prescient foresight.",
       "escalation": "Taking a qualified or tentative prior claim and presenting it as established fact. What was 'this might suggest...' becomes 'as we know...' without new evidence justifying the confidence increase.",
       "narrative_bootstrapping": "Using the authority of prior work to legitimize current claims without re-establishing the evidence. The credibility earned from previous careful work is spent on current speculative claims.",
-      "framework_migration": "Moving concepts from one theoretical home to another without justifying the move. A concept developed within framework A is transplanted into framework B with no discussion of whether the transplant is valid.",
+      "framework_migration": "Moving concepts from one theoretical home to another without justifying the move. A concept developed within framework A is transplanted into framework B with no discussion of whether the transplant is valid. NOTE: Pass 2 now detects cross_domain_transfers from different-field works and foundational_patterns from indirect contextualizers — these are prime sources of framework migration. When an author imports analytical methods from game theory into political economy, that IS framework migration.",
       "condition_shift": "Changing the assessed conditions while keeping conclusions similar. The same evidence is used but the diagnosis of the world-situation has changed — like Varoufakis moving from 'capitalism can be saved' to 'capitalism is dead' while citing the same QE evidence.",
       "biographical_teleology": "Presenting reactive intellectual evolution as intentional, directed development. What was actually a series of responsive adjustments is narrated as a purposeful intellectual journey toward the current position.",
       "strategic_amnesia": "Forgetting inconvenient prior positions, predictions, or commitments. Earlier claims that turned out wrong or that conflict with current positions are simply not mentioned, as if they never existed."
@@ -95,6 +95,7 @@
         "ASSESS ACKNOWLEDGMENT: Determine whether the author acknowledges the shift openly, manages it implicitly, or ignores it entirely",
         "RATE SEVERITY: Judge severity based on how much the tactic distorts the intellectual record — major tactics significantly misrepresent the prior position; minor ones are common scholarly practice",
         "LOOK FOR CLUSTERS: Identify tactics that work together — e.g., narrative_bootstrapping often accompanies escalation",
+        "CHECK INDIRECT SOURCES: Review foundational_patterns and cross_domain_transfers from Pass 2. Indirect contextualizer and different-field works often reveal framework_migration tactics that are invisible when only looking at direct precursors. If the author imports analytical methods from a different domain without acknowledgment, that is both framework_migration and potentially strategic_amnesia.",
         "SYNTHESIZE PATTERN: Describe what the overall tactic usage reveals about the author's intellectual management style"
       ],
       "key_fields": {
@@ -109,7 +110,7 @@
         "legitimates",
         "enables"
       ],
-      "special_instructions": "Be rigorous but fair. Not every change of mind is a 'tactic' — genuine intellectual development is normal and healthy. Focus on cases where the MANAGEMENT of the change is itself noteworthy — where the author obscures, inflates, or misrepresents the relationship between past and present positions. The taxonomy in the canonical_schema is your primary reference — use it precisely."
+      "special_instructions": "Be rigorous but fair. Not every change of mind is a 'tactic' — genuine intellectual development is normal and healthy. Focus on cases where the MANAGEMENT of the change is itself noteworthy — where the author obscures, inflates, or misrepresents the relationship between past and present positions. The taxonomy in the canonical_schema is your primary reference — use it precisely. NEW: Pay special attention to framework_migration from indirect contextualizer and different-field works. When an author uses analytical tools from one domain in another without acknowledging the transfer, this is a tactic worth detecting."
     },
     "curation": {
       "item_type": "tactic",

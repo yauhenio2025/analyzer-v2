@@ -11,7 +11,7 @@
     "enabling_conditions": [
       {
         "condition_id": "string (format: 'COND{N}')",
-        "condition_type": "conceptual_foundation | audience_preparation | authority_establishment | framework_provision | problem_definition | methodological_precedent",
+        "condition_type": "conceptual_foundation | audience_preparation | authority_establishment | framework_provision | problem_definition | methodological_precedent | intellectual_toolkit | cross_domain_transfer",
         "description": "string - what this enabling condition consists of",
         "prior_works_involved": ["string - titles of prior works that established this condition"],
         "how_it_enables": "string - what this condition makes possible in the current work",
@@ -57,7 +57,7 @@
       "analysis_type_plural": "conditions of possibility analyses",
       "core_question": "How does the author's intellectual biography enable and constrain their current argument?",
       "extraction_steps": [
-        "IDENTIFY ENABLING CONDITIONS: What aspects of the author's prior work make the current argument possible? Consider conceptual foundations laid, audiences prepared, authority established, frameworks provided, problems defined, and methodological precedents set",
+        "IDENTIFY ENABLING CONDITIONS: What aspects of the author's prior work make the current argument possible? Consider conceptual foundations laid, audiences prepared, authority established, frameworks provided, problems defined, and methodological precedents set. CRITICALLY: indirect contextualizer and different-field works from Pass 2 are PRIME sources of conditions of possibility — they provide the intellectual toolkit (analytical methods, cognitive habits, theoretical frameworks) that enables the current argument even when those works never discussed the same topics.",
         "ASSESS MANAGEMENT: For each enabling condition, determine how the author manages it — do they acknowledge the intellectual debt to their own prior work, leave it implicit, deny it, or instrumentalize it?",
         "IDENTIFY CONSTRAINTS: What aspects of the prior work CONSTRAIN the current argument? Prior commitments the author can't easily abandon, audience expectations, theoretical framework lock-in, reputational stakes",
         "NAVIGATION STRATEGIES: How does the author navigate each constraint? Directly address it, work around it, ignore it, or reframe it?",
@@ -76,7 +76,7 @@
         "necessitates",
         "forecloses"
       ],
-      "special_instructions": "Think in terms of intellectual path-dependence. Every author's prior work creates a landscape of possibility and constraint for their current work. This pass asks you to map that landscape. The counterfactual analysis is especially important — it separates genuine innovation from accumulated intellectual capital."
+      "special_instructions": "Think in terms of intellectual path-dependence. Every author's prior work creates a landscape of possibility and constraint for their current work. This pass asks you to map that landscape. The counterfactual analysis is especially important — it separates genuine innovation from accumulated intellectual capital. NEW: Pay particular attention to foundational_patterns from indirect contextualizer works and cross_domain_transfers from different-field works (from Pass 2). These are often the MOST significant conditions of possibility because they operate below the author's conscious awareness. An author trained in game theory doesn't just have ideas from that field — they have a WAY OF THINKING that shapes all their subsequent work. Use condition_types 'intellectual_toolkit' and 'cross_domain_transfer' for these."
     },
     "curation": {
       "item_type": "condition",

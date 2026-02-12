@@ -1,0 +1,108 @@
+{
+  "engine_key": "genealogy_pass1b_relationship_classification",
+  "engine_name": "Genealogy Pass 1B: Prior Work Relationship Classification",
+  "description": "Pre-scanning classification step: quickly determines how each prior work relates to the current work. This enables Pass 2 to adapt its analysis strategy per prior work rather than treating all prior works identically. Designed to be fast and cheap (Sonnet, low thinking budget).",
+  "version": 1,
+  "category": "temporal",
+  "kind": "extraction",
+  "reasoning_domain": "genealogy_analysis",
+  "researcher_question": "What kind of relationship does this prior work have to the current work — is it a direct precursor, an indirect contextualizer, work from a different field, or a counter-position?",
+  "canonical_schema": {
+    "prior_work_info": {
+      "title": "string - title of the prior work being classified",
+      "year": "string - year of publication"
+    },
+    "classification": {
+      "relationship_type": "direct_precursor | indirect_contextualizer | different_field_relevant | counter_position | tangential",
+      "confidence": "high | medium | low",
+      "reasoning": "string - brief explanation of why this classification was chosen",
+      "recommended_analysis_focus": "string - what the deep scan (Pass 2) should focus on for this specific work",
+      "key_aspects_to_probe": ["string - specific angles, patterns, or connections to look for in the deep scan"]
+    },
+    "relationship_type_definitions": {
+      "direct_precursor": "Contains the same or similar ideas in earlier form. The current work's concepts, arguments, or positions can be found here in proto-form, full form, or contradictory form. Standard genealogical tracing applies.",
+      "indirect_contextualizer": "Does NOT discuss the same topics as the current work, but contains foundational thinking, analytical methods, cognitive patterns, or frameworks that ENABLE the current argument. The author's intellectual toolkit — how they think — was shaped by this work, even if the subject matter differs entirely.",
+      "different_field_relevant": "Work in a substantially different domain that nonetheless shapes the author's cognitive patterns. The cross-domain transfer of methods, metaphors, structural analogies, or problem-solving approaches is the key connection. May also create blind spots.",
+      "counter_position": "Prior work where the author held a position that is opposite to, or significantly different from, the current work. The SHIFT itself is the analytically interesting datum — what changed and how the author manages the reversal.",
+      "tangential": "Minimal meaningful connection to the current work. May share some vocabulary or broad thematic overlap but does not serve as precursor, contextualizer, or counter-position in any substantial way."
+    }
+  },
+  "extraction_focus": [
+    "relationship_classification",
+    "analysis_strategy",
+    "intellectual_function"
+  ],
+  "primary_output_modes": [
+    "structured_text_report"
+  ],
+  "paradigm_keys": [],
+  "source_file": "intellectual_genealogy_workflow",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "prior work relationship classification",
+      "analysis_type_plural": "relationship classifications",
+      "core_question": "What kind of intellectual relationship does this prior work have to the current work?",
+      "extraction_steps": [
+        "COMPARE SUBJECT MATTER: Does this prior work discuss the same or similar topics as the current work? If yes, likely direct_precursor or counter_position. If no, consider indirect_contextualizer or different_field_relevant.",
+        "CHECK FOR IDEA OVERLAP: Do specific ideas, arguments, or positions from the current work appear in any form in this prior work? High overlap = direct_precursor. No overlap but foundational = indirect_contextualizer.",
+        "ASSESS DOMAIN: Is the prior work in the same intellectual domain as the current work? Same domain but different topic = indirect_contextualizer. Different domain entirely = different_field_relevant.",
+        "CHECK FOR REVERSALS: Does the author hold positions in this prior work that are opposite to the current work? If so, counter_position.",
+        "EVALUATE INTELLECTUAL FUNCTION: What role does this prior work play in the author's intellectual trajectory? Does it provide tools, frameworks, methods, or habits of thought that later appear (perhaps unconsciously) in the current work?",
+        "RECOMMEND FOCUS: Based on the classification, specify what the deep scan should look for — direct traces (for precursors), foundational patterns (for contextualizers), cross-domain transfers (for different-field), or position shifts (for counter-positions)."
+      ],
+      "key_fields": {
+        "relationship_type": "The primary classification of how this prior work relates to the current work",
+        "confidence": "How confident we are in the classification",
+        "recommended_analysis_focus": "What Pass 2 should prioritize when deeply scanning this work"
+      },
+      "id_field": null,
+      "key_relationships": [
+        "is_precursor_of",
+        "contextualizes",
+        "transfers_framework_to",
+        "is_counter_position_to"
+      ],
+      "special_instructions": "This is a QUICK classification step, not a deep analysis. Read the ideas from Pass 1 and a summary/excerpt of the prior work, then classify. Err on the side of indirect_contextualizer rather than tangential when in doubt — it's better to analyze deeply and find nothing than to skip a meaningful connection. The recommended_analysis_focus field is critical: it tells Pass 2 exactly what to look for in this specific work."
+    },
+    "curation": {
+      "item_type": "classification",
+      "item_type_plural": "classifications",
+      "consolidation_rules": [
+        "One classification per prior work",
+        "Verify classification consistency across the corpus"
+      ],
+      "cross_doc_patterns": [
+        "relationship_type_distribution"
+      ],
+      "synthesis_outputs": [
+        "classification_catalog"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "Game Theory and Institutions",
+          "to": "indirect_contextualizer: Provides analytical framework for strategic reasoning that later informs technofeudalism analysis"
+        }
+      ],
+      "naming_guidance": "Use prior work title + relationship type",
+      "recommended_table_types": [
+        "classification_catalog"
+      ],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  },
+  "apps": [
+    "critic"
+  ]
+}

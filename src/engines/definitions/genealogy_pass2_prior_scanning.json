@@ -1,17 +1,18 @@
 {
   "engine_key": "genealogy_pass2_prior_scanning",
-  "engine_name": "Genealogy Pass 2: Prior Work Scanning",
-  "description": "Second pass of intellectual genealogy: scans a single prior work for genealogical traces of target ideas from the current work. This pass runs ONCE PER PRIOR WORK. The workflow orchestrator loops over prior works and calls this pass for each.",
-  "version": 1,
+  "engine_name": "Genealogy Pass 2: Prior Work Scanning (Relationship-Aware)",
+  "description": "Second pass of intellectual genealogy: scans a single prior work for genealogical connections to the current work. ADAPTS analysis strategy based on the relationship classification from Pass 1B. For direct precursors: traces specific ideas. For indirect contextualizers: identifies foundational patterns and intellectual toolkits. For different-field works: detects cross-domain transfers. For counter-positions: analyzes reversals. Runs ONCE PER PRIOR WORK.",
+  "version": 2,
   "category": "temporal",
   "kind": "extraction",
   "reasoning_domain": "genealogy_analysis",
-  "researcher_question": "What traces of these ideas can be found in this prior work, and in what form do they appear?",
+  "researcher_question": "What genealogical connections — direct traces, foundational patterns, cross-domain transfers, or position reversals — exist between this prior work and the current work?",
   "canonical_schema": {
     "prior_work_info": {
       "title": "string - title of the prior work being scanned",
       "year": "string - year of publication",
-      "context": "string - what this work was about and its intellectual context"
+      "context": "string - what this work was about and its intellectual context",
+      "relationship_type": "direct_precursor | indirect_contextualizer | different_field_relevant | counter_position | tangential - as classified by Pass 1B"
     },
     "traces_found": [
       {
@@ -38,6 +39,50 @@
         "significance_of_absence": "string - what it means that this idea wasn't present yet"
       }
     ],
+    "foundational_patterns": [
+      {
+        "pattern_id": "string (format: 'FP{N}')",
+        "pattern_name": "string - concise name for this foundational pattern",
+        "pattern_description": "string - what this thinking pattern, analytical method, or cognitive habit consists of",
+        "how_it_enables_current_work": "string - how this pattern enables, shapes, or informs the current work's arguments, even if the author doesn't consciously deploy it",
+        "textual_evidence_prior": [
+          {
+            "quote": "string - quote from the prior work showing this pattern",
+            "location": "string - approximate location"
+          }
+        ],
+        "manifestation_in_current_work": "string - where and how this pattern appears (perhaps transformed) in the current work",
+        "pattern_type": "analytical_method | cognitive_habit | recurring_metaphor | problem_solving_approach | theoretical_framework | argumentative_structure | epistemic_commitment",
+        "author_awareness": "explicit | implicit | unconscious - whether the author seems aware of deploying this pattern from their earlier work"
+      }
+    ],
+    "cross_domain_transfers": [
+      {
+        "transfer_id": "string (format: 'XD{N}')",
+        "source_domain": "string - the domain of the prior work",
+        "target_domain": "string - the domain of the current work",
+        "what_transferred": "string - what method, framework, metaphor, or structural analogy was imported",
+        "how_transformed": "string - how the transferred element was adapted for the new domain",
+        "validity_of_transfer": "string - whether the cross-domain move is analytically justified or introduces distortions",
+        "blind_spots_created": "string - what the author's expertise in the source domain causes them to miss or distort in the target domain",
+        "unique_insights_enabled": "string - what the cross-domain perspective uniquely reveals"
+      }
+    ],
+    "reversal_analysis": {
+      "positions_reversed": [
+        {
+          "reversal_id": "string (format: 'REV{N}')",
+          "prior_position": "string - what the author argued before",
+          "current_position": "string - what the author argues now",
+          "nature_of_shift": "full_reversal | significant_modification | subtle_drift | recontextualization",
+          "evidence_prior": "string - quote or reference from prior work",
+          "evidence_current": "string - quote or reference from current work",
+          "how_managed": "string - does the author acknowledge, explain, minimize, or ignore the reversal?",
+          "what_drove_change": "string - hypothesized reason for the shift"
+        }
+      ],
+      "continuities_despite_reversal": "string - what remains consistent even as positions changed"
+    },
     "new_discoveries": [
       {
         "discovery": "string - ideas in the prior work that are relevant but weren't in our target list",
@@ -45,16 +90,23 @@
       }
     ],
     "meta": {
+      "relationship_type": "string - the classified relationship type from Pass 1B",
+      "analysis_strategy_used": "string - which analysis approach was applied based on the relationship type",
       "traces_found_count": "number",
+      "foundational_patterns_count": "number",
+      "cross_domain_transfers_count": "number",
+      "reversals_count": "number",
       "ideas_not_found_count": "number",
-      "coverage_ratio": "number (0-1) - fraction of target ideas found in some form",
+      "coverage_ratio": "number (0-1) - for direct_precursor: fraction of target ideas found. For other types: fraction of meaningful connections identified relative to potential",
       "key_findings": ["string - notable observations about this prior work's relationship to the current work"]
     }
   },
   "extraction_focus": [
     "genealogical_traces",
     "conceptual_precedents",
-    "position_shifts",
+    "foundational_patterns",
+    "cross_domain_transfers",
+    "position_reversals",
     "absent_ideas"
   ],
   "primary_output_modes": [
@@ -67,20 +119,55 @@
     "framework_key": null,
     "additional_frameworks": [],
     "extraction": {
-      "analysis_type": "prior work genealogical scanning",
+      "analysis_type": "relationship-aware prior work genealogical scanning",
       "analysis_type_plural": "prior work scans",
-      "core_question": "What traces of the target ideas exist in this prior work?",
+      "core_question": "What genealogical connections exist between this prior work and the current work, given the classified relationship type?",
       "extraction_steps": [
-        "RECEIVE TARGET IDEAS: Review the list of ideas extracted from the current work (provided as context from Pass 1)",
+        "RECEIVE CONTEXT: Review the target ideas from Pass 1 AND the relationship classification from Pass 1B. The classification tells you what kind of prior work this is and what to look for.",
+
+        "ADAPT STRATEGY BASED ON RELATIONSHIP TYPE:",
+
+        "--- IF DIRECT PRECURSOR: Follow the standard genealogical trace approach ---",
         "SCAN FOR EACH IDEA: Systematically search the prior work for traces of each target idea",
-        "CLASSIFY FORM: For each trace found, determine its form — is it a proto-form (early version), full form (already mature), contradictory form (opposite position), or different framing (same concept, different context)?",
-        "ASSESS DIFFERENCES: Note how the prior version differs from the current version in substance, emphasis, scope, or framing",
-        "DOCUMENT FUNCTION: Record what role this idea played in the prior work's argument",
-        "NOTE ABSENCES: Record ideas from the target list that are NOT present and assess the significance",
-        "DISCOVER NEW CONNECTIONS: Flag ideas in the prior work that are relevant to the genealogy but weren't in the target list"
+        "CLASSIFY FORM: For each trace found, determine its form — proto_form, full_form, contradictory_form, absent_but_implied, or different_framing",
+        "ASSESS DIFFERENCES: Note how the prior version differs from the current version",
+        "DOCUMENT FUNCTION: Record what role this idea played in the prior argument",
+        "NOTE ABSENCES: Record ideas not present and assess significance",
+        "Populate: traces_found, ideas_not_found, new_discoveries. Leave foundational_patterns, cross_domain_transfers, reversal_analysis empty or minimal.",
+
+        "--- IF INDIRECT CONTEXTUALIZER: Focus on foundational thinking patterns ---",
+        "DO NOT search for direct traces of specific ideas (they won't be there — that's the point)",
+        "Instead: IDENTIFY FOUNDATIONAL PATTERNS — analytical methods, cognitive habits, recurring metaphors, problem-solving approaches, theoretical frameworks, argumentative structures, or epistemic commitments in this prior work",
+        "For each pattern: trace how it ENABLES the current work's arguments, even if the author doesn't consciously deploy it",
+        "Assess AUTHOR AWARENESS: Does the author realize they're using this toolkit from their earlier work, or is it unconscious?",
+        "Populate: foundational_patterns primarily. traces_found may have a few entries if any direct connections exist. ideas_not_found should note that absence is EXPECTED for this relationship type.",
+
+        "--- IF DIFFERENT FIELD RELEVANT: Focus on cross-domain transfer ---",
+        "IDENTIFY what methods, frameworks, metaphors, or structural analogies the author imports from the prior work's domain into the current work's domain",
+        "ASSESS VALIDITY: Is the cross-domain transfer analytically justified, or does it introduce distortions?",
+        "IDENTIFY BLIND SPOTS: What does expertise in the source domain cause the author to miss in the target domain?",
+        "IDENTIFY UNIQUE INSIGHTS: What does the cross-domain perspective uniquely reveal?",
+        "Populate: cross_domain_transfers primarily, plus any foundational_patterns.",
+
+        "--- IF COUNTER POSITION: Focus on reversals and shifts ---",
+        "IDENTIFY specific positions that were reversed or significantly modified",
+        "CLASSIFY the nature of each shift: full_reversal, significant_modification, subtle_drift, or recontextualization",
+        "ASSESS MANAGEMENT: How does the author handle the reversal — acknowledge, explain, minimize, or ignore?",
+        "IDENTIFY what drove the change",
+        "NOTE what remains consistent despite the reversals",
+        "Populate: reversal_analysis primarily, plus any traces_found for ideas that persist in modified form.",
+
+        "--- IF TANGENTIAL: Minimal analysis ---",
+        "Brief scan for any unexpected connections. If truly tangential, document why and keep analysis short.",
+        "Populate: meta with explanation, minimal other fields.",
+
+        "ALWAYS: Flag any new discoveries not captured by the target idea list"
       ],
       "key_fields": {
-        "trace_id": "Unique identifier for each genealogical trace",
+        "trace_id": "Unique identifier for each genealogical trace (direct precursors)",
+        "pattern_id": "Unique identifier for each foundational pattern (indirect contextualizers)",
+        "transfer_id": "Unique identifier for each cross-domain transfer (different-field works)",
+        "reversal_id": "Unique identifier for each position reversal (counter-positions)",
         "target_idea_id": "Cross-reference to Pass 1 idea",
         "form_in_prior_work": "How the idea manifests in the prior work",
         "confidence": "How confident we are in this trace"
@@ -90,24 +177,33 @@
         "is_precursor_of",
         "contradicts",
         "partially_anticipates",
-        "frames_differently"
+        "frames_differently",
+        "provides_foundation_for",
+        "transfers_framework_to",
+        "reverses_position_from"
       ],
-      "special_instructions": "Be precise about the FORM of each trace. A proto-form is an early, less developed version. A contradictory form means the author held the opposite position. Different framing means the same basic concept appears but serving a different argument. Do not force connections — if an idea truly isn't present, document its absence."
+      "special_instructions": "CRITICAL: Your analysis strategy MUST be determined by the relationship_type classification provided. Do not treat all prior works the same way. A game theory textbook by the author should NOT be scanned for direct traces of technofeudalism ideas — it should be scanned for the foundational thinking patterns (strategic reasoning, information asymmetry analysis, etc.) that later enable the technofeudalism argument. Conversely, a direct precursor work SHOULD be scanned for specific idea traces. Match your approach to the relationship type. When in doubt about which fields to populate, use the recommended_analysis_focus from the Pass 1B classification."
     },
     "curation": {
       "item_type": "trace",
       "item_type_plural": "traces",
       "consolidation_rules": [
         "Group traces by target idea",
+        "Group foundational patterns by pattern type",
         "Rank by confidence level",
-        "Flag contradictory forms as high priority for evolution analysis"
+        "Flag contradictory forms as high priority for evolution analysis",
+        "Flag foundational patterns with unconscious author_awareness as especially significant"
       ],
       "cross_doc_patterns": [
         "idea_emergence",
-        "position_evolution"
+        "position_evolution",
+        "pattern_persistence",
+        "cross_domain_importation"
       ],
       "synthesis_outputs": [
-        "trace_catalog"
+        "trace_catalog",
+        "foundational_patterns_catalog",
+        "cross_domain_transfer_map"
       ],
       "special_instructions": null
     },
@@ -116,11 +212,26 @@
         {
           "from": "TR1",
           "to": "Proto-form of 'functional economy' in earlier automation analysis"
+        },
+        {
+          "from": "FP1",
+          "to": "Strategic reasoning framework from game theory enabling market power analysis"
+        },
+        {
+          "from": "XD1",
+          "to": "Nash equilibrium thinking imported from game theory to platform economics"
+        },
+        {
+          "from": "REV1",
+          "to": "Reversal from 'capitalism can be saved' to 'capitalism is already dead'"
         }
       ],
-      "naming_guidance": "Use trace form + target idea name",
+      "naming_guidance": "Use trace form + target idea name for direct precursors; pattern name + how it enables for indirect contextualizers; transfer type for cross-domain; reversal description for counter-positions",
       "recommended_table_types": [
-        "trace_catalog"
+        "trace_catalog",
+        "foundational_patterns_catalog",
+        "cross_domain_transfer_map",
+        "reversal_catalog"
       ],
       "recommended_visual_patterns": []
     },

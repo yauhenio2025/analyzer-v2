@@ -1,7 +1,7 @@
 {
   "workflow_key": "intellectual_genealogy",
   "workflow_name": "Intellectual Genealogy Analysis",
-  "description": "Traces how an author's own prior works serve as conditions of possibility for their current arguments. Detects evolution tactics, conceptual recycling, silent revisions, and other patterns of intellectual self-management. Operates in comprehensive mode (extract all ideas, trace all) or targeted mode (probe specific ideas).",
+  "description": "Traces how an author's own prior works serve as conditions of possibility for their current arguments. Classifies each prior work's relationship type (direct precursor, indirect contextualizer, different-field-relevant, counter-position) and adapts analysis accordingly. Detects evolution tactics, conceptual recycling, silent revisions, and other patterns of intellectual self-management. Operates in comprehensive mode (extract all ideas, trace all) or targeted mode (probe specific ideas).",
   "category": "genealogy",
   "version": 1,
   "passes": [
@@ -17,14 +17,25 @@
       "output_schema": null
     },
     {
-      "pass_number": 2,
-      "pass_name": "Prior Work Scanning",
-      "pass_description": "Scan each prior work for genealogical traces of the extracted ideas. Runs once per prior work.",
-      "engine_key": "genealogy_pass2_prior_scanning",
+      "pass_number": 1.5,
+      "pass_name": "Relationship Classification",
+      "pass_description": "Classify each prior work's relationship to the current work (direct precursor, indirect contextualizer, different-field-relevant, counter-position, tangential). Fast classification that determines how Pass 2 analyzes each work. Runs once per prior work.",
+      "engine_key": "genealogy_pass1b_relationship_classification",
       "prompt_template": null,
       "requires_external_docs": true,
       "caches_result": true,
       "depends_on_passes": [1],
+      "output_schema": null
+    },
+    {
+      "pass_number": 2,
+      "pass_name": "Prior Work Scanning",
+      "pass_description": "Scan each prior work for genealogical traces and influences, adapting analysis strategy based on the relationship classification from Pass 1.5. For direct precursors: trace specific ideas. For indirect contextualizers: identify foundational patterns. For different-field works: detect cross-domain transfers. For counter-positions: analyze reversals. Runs once per prior work.",
+      "engine_key": "genealogy_pass2_prior_scanning",
+      "prompt_template": null,
+      "requires_external_docs": true,
+      "caches_result": true,
+      "depends_on_passes": [1, 1.5],
       "output_schema": null
     },
     {
@@ -87,6 +98,6 @@
   "optional_inputs": ["target_ideas"],
   "output_description": "Comprehensive genealogical analysis tracing idea evolution, detecting tactics, and assessing conditions of possibility",
   "final_output_schema": null,
-  "estimated_passes": 7,
+  "estimated_passes": 8,
   "source_project": "critic"
 }
