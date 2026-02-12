@@ -1,0 +1,187 @@
+{
+  "paradigm_key": "genealogical",
+  "paradigm_name": "Genealogical Analysis",
+  "version": "1.0.0",
+  "guiding_thinkers": "Michel Foucault, Reinhart Koselleck, Quentin Skinner, Alasdair MacIntyre, Hayden White",
+  "description": "Analyzes how an author's intellectual biography shapes their current work through genealogical tracing, conceptual history (Begriffsgeschichte), and Cambridge School contextualism. Treats ideas as historically contingent, path-dependent, and strategically managed.",
+  "status": "active",
+  "foundational": {
+    "assumptions": [
+      "Ideas are historically contingent — they emerge from specific contexts and carry the marks of their origins",
+      "Intellectual evolution is path-dependent — prior commitments enable and constrain future positions",
+      "Authors manage their prior positions strategically, whether consciously or unconsciously",
+      "The relationship between an author's prior and current work is itself a text worth reading",
+      "Genealogy is not chronology — it traces conditions of possibility, not simple causation",
+      "Every intellectual position has an intellectual biography that shapes its meaning"
+    ],
+    "core_tensions": [
+      "Continuity vs Rupture — genuine development versus strategic rebranding",
+      "Enabling vs Constraining — prior work as resource versus prior work as limitation",
+      "Acknowledged vs Silent — transparent intellectual evolution versus managed history",
+      "Novel vs Path-dependent — genuinely new ideas versus recycled prior positions"
+    ],
+    "scope_conditions": [
+      "Requires access to the author's prior published works",
+      "Most effective when the author has a substantial body of prior work",
+      "Applies to intellectual rather than purely empirical claims",
+      "Benefits from knowledge of the broader intellectual context"
+    ]
+  },
+  "structural": {
+    "primary_entities": [
+      "Ideas — the theoretical positions, claims, and frameworks that constitute an author's intellectual output",
+      "Works — the published texts in which ideas appear and evolve",
+      "Evolution trajectories — the paths ideas take across an author's body of work",
+      "Tactics — the recurring patterns authors use to manage their prior positions",
+      "Conditions of possibility — the enabling and constraining factors created by prior work"
+    ],
+    "relations": [
+      "Genealogical trace — the connection between an idea in the current work and its precursor in prior work",
+      "Evolution — the transformation of an idea across multiple works",
+      "Enabling — how prior work makes current claims possible",
+      "Constraining — how prior commitments limit current positions",
+      "Tactical management — how the author handles the relationship between past and present positions"
+    ],
+    "levels_of_analysis": [
+      "Idea level — tracing the genealogy of individual concepts and claims",
+      "Work level — how each prior work contributes to the current argument",
+      "Career level — the overall arc of the author's intellectual development",
+      "Tactic level — the patterns of intellectual self-management"
+    ]
+  },
+  "dynamic": {
+    "change_mechanisms": [
+      "Conceptual drift — gradual, often unacknowledged shifts in meaning or emphasis",
+      "Framework migration — moving concepts from one theoretical home to another",
+      "Strategic reframing — consciously repositioning prior work to serve current arguments",
+      "Condition shift — changing the assessed world-situation while maintaining similar conclusions",
+      "Escalation — transforming tentative claims into established premises"
+    ],
+    "temporal_patterns": [
+      "Progressive development — ideas genuinely deepening over time",
+      "Cyclical return — returning to abandoned positions with new framing",
+      "Sharp reversal — dramatic changes of position",
+      "Silent drift — gradual unacknowledged movement",
+      "Teleological retrospection — retroactively narrating development as intentional"
+    ],
+    "transformation_processes": [
+      "Conceptual recycling — reusing old arguments in new frameworks",
+      "Narrative bootstrapping — using prior authority to support current speculation",
+      "Strategic amnesia — selectively forgetting inconvenient prior positions",
+      "Retroactive framing — presenting reactive evolution as directed development"
+    ]
+  },
+  "explanatory": {
+    "key_concepts": [
+      "Conditions of possibility — what makes a claim thinkable and assertable in a given intellectual context (Foucault)",
+      "Begriffsgeschichte — conceptual history tracing how the same term changes meaning across contexts (Koselleck)",
+      "Speech acts in context — understanding what an author is doing in saying what they say (Skinner)",
+      "Narrative identity — how an intellectual tradition constitutes itself through the stories it tells about its development (MacIntyre)",
+      "Emplotment — how historical narrative shapes the meaning of events through plot structure (White)"
+    ],
+    "analytical_methods": [
+      "Genealogical tracing — following ideas back through their prior appearances",
+      "Contextual reading — understanding claims in relation to the author's intellectual situation",
+      "Comparative analysis — placing prior and current versions side by side",
+      "Counterfactual analysis — asking what the argument would look like without the prior work history",
+      "Tactic identification — classifying the patterns of intellectual self-management"
+    ],
+    "problem_diagnosis": [
+      "Strategic amnesia — forgetting inconvenient prior positions",
+      "Narrative bootstrapping — trading on unearned authority",
+      "Silent revision — changing positions without acknowledgment",
+      "Escalation — inflating tentative claims without new evidence",
+      "Framework lock-in — being trapped by prior theoretical commitments"
+    ],
+    "ideal_state": [
+      "Transparent intellectual development — openly acknowledging how positions have changed and why",
+      "Productive path-dependence — prior work genuinely enriching rather than constraining current analysis",
+      "Reflexive self-genealogy — authors consciously mapping their own intellectual evolution",
+      "Intellectual honesty — acknowledging what was lost as well as what was gained in evolution"
+    ]
+  },
+  "active_traits": [
+    "genealogical_tracing_trait",
+    "contextual_reading_trait",
+    "tactic_detection_trait"
+  ],
+  "trait_definitions": [
+    {
+      "trait_name": "genealogical_tracing_trait",
+      "trait_description": "Following ideas back through their prior appearances to understand conditions of possibility",
+      "trait_items": [
+        "Proto-form identification",
+        "Evolution timeline construction",
+        "Path-dependence analysis",
+        "Counterfactual reasoning",
+        "Enabling condition mapping",
+        "Constraint identification"
+      ]
+    },
+    {
+      "trait_name": "contextual_reading_trait",
+      "trait_description": "Reading claims in relation to the author's intellectual situation and prior commitments",
+      "trait_items": [
+        "Intellectual context reconstruction",
+        "Career trajectory analysis",
+        "Audience awareness",
+        "Strategic positioning assessment",
+        "Commitment tracking",
+        "Framework migration detection"
+      ]
+    },
+    {
+      "trait_name": "tactic_detection_trait",
+      "trait_description": "Identifying the recurring patterns authors use to manage their intellectual history",
+      "trait_items": [
+        "Conceptual recycling detection",
+        "Silent revision identification",
+        "Escalation tracking",
+        "Strategic amnesia recognition",
+        "Narrative bootstrapping assessment",
+        "Retroactive framing analysis"
+      ]
+    }
+  ],
+  "critique_patterns": [
+    {
+      "pattern": "unacknowledged_shift",
+      "diagnostic": "Author has changed position from prior work without acknowledging the shift",
+      "fix": "Show how {current_position} diverges from {prior_position} in {prior_work}"
+    },
+    {
+      "pattern": "authority_inflation",
+      "diagnostic": "Author trading on authority earned in one domain to make claims in another",
+      "fix": "Distinguish between {earned_authority} in {original_domain} and {claimed_authority} in {new_domain}"
+    },
+    {
+      "pattern": "selective_memory",
+      "diagnostic": "Author remembers convenient aspects of prior work while forgetting inconvenient ones",
+      "fix": "Juxtapose {remembered_aspect} with {forgotten_aspect} from {prior_work}"
+    },
+    {
+      "pattern": "teleological_narrative",
+      "diagnostic": "Author presents intellectual evolution as directed toward current position",
+      "fix": "Show how {prior_position} was not oriented toward {current_position} but was responsive to {original_context}"
+    }
+  ],
+  "historical_context": "Draws on Foucault's genealogical method (Nietzsche, Genealogy, History), Koselleck's Begriffsgeschichte (conceptual history), Skinner's Cambridge School contextualism (meaning and context of political texts), MacIntyre's narrative-based tradition analysis, and White's metahistorical analysis of narrative emplotment",
+  "related_paradigms": [
+    "Foucauldian Discourse Analysis",
+    "Cambridge School History of Ideas",
+    "German Conceptual History",
+    "Intellectual History"
+  ],
+  "primary_engines": [
+    "genealogy_pass1_idea_extraction",
+    "genealogy_pass2_prior_scanning",
+    "genealogy_pass3_cross_work_synthesis",
+    "genealogy_pass5_evolution_tactics"
+  ],
+  "compatible_engines": [
+    "concept_evolution",
+    "epistemic_rupture_tracer",
+    "chronology_cycle",
+    "influence_attribution_analysis"
+  ]
+}

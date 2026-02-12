@@ -1,0 +1,119 @@
+{
+  "engine_key": "genealogy_pass3_cross_work_synthesis",
+  "engine_name": "Genealogy Pass 3: Cross-Work Synthesis",
+  "description": "Third pass of intellectual genealogy: synthesizes the evolution of a single idea across multiple prior works where it was found. If idea X appears in works 1, 3, and 7, this pass traces the evolution from 1 to 3 to 7 to the current work. Runs once per idea that appears in 2+ prior works.",
+  "version": 1,
+  "category": "temporal",
+  "kind": "synthesis",
+  "reasoning_domain": "genealogy_analysis",
+  "researcher_question": "How has this idea evolved across the author's body of work, and what does the trajectory reveal?",
+  "canonical_schema": {
+    "idea_id": "string - target idea from Pass 1",
+    "idea_name": "string - concise name of the idea being traced",
+    "evolution_timeline": [
+      {
+        "work_title": "string - title of the work",
+        "year": "string - year of publication",
+        "form": "string - how the idea appeared in this work",
+        "key_quote": "string - most representative quote",
+        "transition_to_next": "string - what changed between this work and the next in the timeline"
+      }
+    ],
+    "current_form": {
+      "description": "string - how the idea appears in the current (most recent) work",
+      "key_quote": "string - most representative quote from the current work"
+    },
+    "evolution_pattern": "gradual_refinement | sharp_reversal | silent_drift | strategic_reframe | consistent_deepening",
+    "evolution_narrative": "string - 2-3 paragraph narrative of how this idea evolved across the author's body of work",
+    "intermediate_influences": "string - what external events, intellectual encounters, or historical changes may have driven changes between works",
+    "what_was_gained": "string - what the evolution added in terms of analytical power, scope, or precision",
+    "what_was_lost": "string - what was present in earlier versions but abandoned, narrowed, or forgotten",
+    "meta": {
+      "works_in_timeline": "number - how many works this idea appears in",
+      "total_span_years": "string - time span from earliest to current appearance",
+      "key_findings": ["string"]
+    }
+  },
+  "extraction_focus": [
+    "idea_evolution",
+    "conceptual_drift",
+    "position_shifts",
+    "intellectual_development"
+  ],
+  "primary_output_modes": [
+    "structured_text_report"
+  ],
+  "paradigm_keys": [],
+  "source_file": "intellectual_genealogy_workflow",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "cross-work idea evolution synthesis",
+      "analysis_type_plural": "cross-work syntheses",
+      "core_question": "How has this specific idea evolved across the author's body of work?",
+      "extraction_steps": [
+        "RECONSTRUCT TIMELINE: Arrange all appearances of this idea chronologically across the author's prior works",
+        "TRACE TRANSITIONS: For each transition from one work to the next, identify what changed — in emphasis, scope, framing, evidence base, or conclusion",
+        "CLASSIFY PATTERN: Determine the overall evolution pattern — is this gradual refinement, sharp reversal, silent drift, strategic reframing, or consistent deepening?",
+        "WRITE NARRATIVE: Compose a 2-3 paragraph narrative that tells the story of this idea's evolution",
+        "ASSESS WHAT CHANGED: Identify what was gained (new analytical power, broader scope) and what was lost (nuance, qualification, alternative framings)",
+        "CONSIDER EXTERNAL FACTORS: What intellectual encounters, historical events, or career pressures might explain the transitions?"
+      ],
+      "key_fields": {
+        "idea_id": "Cross-reference to Pass 1",
+        "evolution_pattern": "Overall trajectory classification",
+        "evolution_narrative": "Rich narrative account"
+      },
+      "id_field": "idea_id",
+      "key_relationships": [
+        "evolved_from",
+        "refined_into",
+        "reversed_to",
+        "silently_drifted_toward"
+      ],
+      "special_instructions": "Focus on the TRAJECTORY, not just individual appearances. The value is in seeing the arc of development. Pay special attention to what drove transitions — was it new evidence, changing political context, intellectual influence, or strategic positioning? Be honest about what was lost in evolution, not just what was gained."
+    },
+    "curation": {
+      "item_type": "evolution synthesis",
+      "item_type_plural": "evolution syntheses",
+      "consolidation_rules": [
+        "Order timeline entries chronologically",
+        "Verify consistency with Pass 2 traces",
+        "Flag surprising or contradictory transitions"
+      ],
+      "cross_doc_patterns": [
+        "parallel_evolutions",
+        "correlated_shifts"
+      ],
+      "synthesis_outputs": [
+        "evolution_timeline",
+        "evolution_narrative"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "IDEA3",
+          "to": "'Automation thesis' evolution: tentative hypothesis (2015) → central claim (2019) → foundational premise (2025)"
+        }
+      ],
+      "naming_guidance": "Use idea name with evolution pattern summary",
+      "recommended_table_types": [
+        "evolution_timeline"
+      ],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  },
+  "apps": [
+    "critic"
+  ]
+}

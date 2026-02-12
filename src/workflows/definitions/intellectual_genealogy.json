@@ -1,0 +1,92 @@
+{
+  "workflow_key": "intellectual_genealogy",
+  "workflow_name": "Intellectual Genealogy Analysis",
+  "description": "Traces how an author's own prior works serve as conditions of possibility for their current arguments. Detects evolution tactics, conceptual recycling, silent revisions, and other patterns of intellectual self-management. Operates in comprehensive mode (extract all ideas, trace all) or targeted mode (probe specific ideas).",
+  "category": "genealogy",
+  "version": 1,
+  "passes": [
+    {
+      "pass_number": 1,
+      "pass_name": "Idea Extraction",
+      "pass_description": "Extract main ideas, narratives, and theoretical positions from the current work",
+      "engine_key": "genealogy_pass1_idea_extraction",
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": true,
+      "depends_on_passes": [],
+      "output_schema": null
+    },
+    {
+      "pass_number": 2,
+      "pass_name": "Prior Work Scanning",
+      "pass_description": "Scan each prior work for genealogical traces of the extracted ideas. Runs once per prior work.",
+      "engine_key": "genealogy_pass2_prior_scanning",
+      "prompt_template": null,
+      "requires_external_docs": true,
+      "caches_result": true,
+      "depends_on_passes": [1],
+      "output_schema": null
+    },
+    {
+      "pass_number": 3,
+      "pass_name": "Cross-Work Synthesis",
+      "pass_description": "Synthesize evolution of each idea across multiple prior works. Runs once per idea that appears in 2+ prior works.",
+      "engine_key": "genealogy_pass3_cross_work_synthesis",
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": true,
+      "depends_on_passes": [1, 2],
+      "output_schema": null
+    },
+    {
+      "pass_number": 4,
+      "pass_name": "Functional Analysis",
+      "pass_description": "Analyze rhetorical, analytical, and logical functions of each idea's evolution within the current work",
+      "engine_key": "genealogy_pass4_functional_analysis",
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": true,
+      "depends_on_passes": [1, 3],
+      "output_schema": null
+    },
+    {
+      "pass_number": 5,
+      "pass_name": "Evolution Tactics Detection",
+      "pass_description": "Detect specific evolution tactics used by the author to manage their prior positions",
+      "engine_key": "genealogy_pass5_evolution_tactics",
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": true,
+      "depends_on_passes": [1, 2, 3],
+      "output_schema": null
+    },
+    {
+      "pass_number": 6,
+      "pass_name": "Conditions of Possibility",
+      "pass_description": "Identify enabling and constraining conditions created by the author's prior work",
+      "engine_key": "genealogy_pass6_conditions_of_possibility",
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": true,
+      "depends_on_passes": [3, 4, 5],
+      "output_schema": null
+    },
+    {
+      "pass_number": 7,
+      "pass_name": "Final Synthesis",
+      "pass_description": "Generate comprehensive genealogical report synthesizing all findings",
+      "engine_key": "genealogy_pass7_final_synthesis",
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": false,
+      "depends_on_passes": [1, 3, 4, 5, 6],
+      "output_schema": null
+    }
+  ],
+  "required_inputs": ["corpus", "prior_works"],
+  "optional_inputs": ["target_ideas"],
+  "output_description": "Comprehensive genealogical analysis tracing idea evolution, detecting tactics, and assessing conditions of possibility",
+  "final_output_schema": null,
+  "estimated_passes": 7,
+  "source_project": "critic"
+}

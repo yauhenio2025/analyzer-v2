@@ -1,0 +1,138 @@
+{
+  "engine_key": "genealogy_pass2_prior_scanning",
+  "engine_name": "Genealogy Pass 2: Prior Work Scanning",
+  "description": "Second pass of intellectual genealogy: scans a single prior work for genealogical traces of target ideas from the current work. This pass runs ONCE PER PRIOR WORK. The workflow orchestrator loops over prior works and calls this pass for each.",
+  "version": 1,
+  "category": "temporal",
+  "kind": "extraction",
+  "reasoning_domain": "genealogy_analysis",
+  "researcher_question": "What traces of these ideas can be found in this prior work, and in what form do they appear?",
+  "canonical_schema": {
+    "prior_work_info": {
+      "title": "string - title of the prior work being scanned",
+      "year": "string - year of publication",
+      "context": "string - what this work was about and its intellectual context"
+    },
+    "traces_found": [
+      {
+        "trace_id": "string (format: 'TR{N}')",
+        "target_idea_id": "string - references idea_id from pass 1",
+        "target_idea_name": "string - name of the target idea for readability",
+        "form_in_prior_work": "proto_form | full_form | contradictory_form | absent_but_implied | different_framing",
+        "description": "string - how this idea appears in the prior work",
+        "textual_evidence": [
+          {
+            "quote": "string - direct quote from the prior work",
+            "location": "string - approximate location in the prior work"
+          }
+        ],
+        "confidence": "high | medium | low",
+        "notable_differences": "string - how the prior version differs from the current version",
+        "function_in_prior_work": "string - what role this idea played in the prior argument"
+      }
+    ],
+    "ideas_not_found": [
+      {
+        "idea_id": "string - target idea_id not found in this prior work",
+        "idea_name": "string - name of the absent idea",
+        "significance_of_absence": "string - what it means that this idea wasn't present yet"
+      }
+    ],
+    "new_discoveries": [
+      {
+        "discovery": "string - ideas in the prior work that are relevant but weren't in our target list",
+        "relevance": "string - why this discovery matters for the genealogical analysis"
+      }
+    ],
+    "meta": {
+      "traces_found_count": "number",
+      "ideas_not_found_count": "number",
+      "coverage_ratio": "number (0-1) - fraction of target ideas found in some form",
+      "key_findings": ["string - notable observations about this prior work's relationship to the current work"]
+    }
+  },
+  "extraction_focus": [
+    "genealogical_traces",
+    "conceptual_precedents",
+    "position_shifts",
+    "absent_ideas"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "intellectual_genealogy_workflow",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "prior work genealogical scanning",
+      "analysis_type_plural": "prior work scans",
+      "core_question": "What traces of the target ideas exist in this prior work?",
+      "extraction_steps": [
+        "RECEIVE TARGET IDEAS: Review the list of ideas extracted from the current work (provided as context from Pass 1)",
+        "SCAN FOR EACH IDEA: Systematically search the prior work for traces of each target idea",
+        "CLASSIFY FORM: For each trace found, determine its form — is it a proto-form (early version), full form (already mature), contradictory form (opposite position), or different framing (same concept, different context)?",
+        "ASSESS DIFFERENCES: Note how the prior version differs from the current version in substance, emphasis, scope, or framing",
+        "DOCUMENT FUNCTION: Record what role this idea played in the prior work's argument",
+        "NOTE ABSENCES: Record ideas from the target list that are NOT present and assess the significance",
+        "DISCOVER NEW CONNECTIONS: Flag ideas in the prior work that are relevant to the genealogy but weren't in the target list"
+      ],
+      "key_fields": {
+        "trace_id": "Unique identifier for each genealogical trace",
+        "target_idea_id": "Cross-reference to Pass 1 idea",
+        "form_in_prior_work": "How the idea manifests in the prior work",
+        "confidence": "How confident we are in this trace"
+      },
+      "id_field": "trace_id",
+      "key_relationships": [
+        "is_precursor_of",
+        "contradicts",
+        "partially_anticipates",
+        "frames_differently"
+      ],
+      "special_instructions": "Be precise about the FORM of each trace. A proto-form is an early, less developed version. A contradictory form means the author held the opposite position. Different framing means the same basic concept appears but serving a different argument. Do not force connections — if an idea truly isn't present, document its absence."
+    },
+    "curation": {
+      "item_type": "trace",
+      "item_type_plural": "traces",
+      "consolidation_rules": [
+        "Group traces by target idea",
+        "Rank by confidence level",
+        "Flag contradictory forms as high priority for evolution analysis"
+      ],
+      "cross_doc_patterns": [
+        "idea_emergence",
+        "position_evolution"
+      ],
+      "synthesis_outputs": [
+        "trace_catalog"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "TR1",
+          "to": "Proto-form of 'functional economy' in earlier automation analysis"
+        }
+      ],
+      "naming_guidance": "Use trace form + target idea name",
+      "recommended_table_types": [
+        "trace_catalog"
+      ],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  },
+  "apps": [
+    "critic"
+  ]
+}

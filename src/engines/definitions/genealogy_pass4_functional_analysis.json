@@ -1,0 +1,117 @@
+{
+  "engine_key": "genealogy_pass4_functional_analysis",
+  "engine_name": "Genealogy Pass 4: Functional Analysis",
+  "description": "Fourth pass of intellectual genealogy: analyzes what rhetorical, analytical, and logical function the evolution of each idea serves within the current work. Asks not just 'how did this idea change?' but 'what does the change DO for the current argument?'",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "relational",
+  "reasoning_domain": "genealogy_analysis",
+  "researcher_question": "What function does the evolution of this conceptual apparatus serve within the current work?",
+  "canonical_schema": {
+    "functional_analyses": [
+      {
+        "idea_id": "string - references idea_id from Pass 1",
+        "idea_name": "string - concise name of the idea",
+        "functions_served": [
+          {
+            "function_type": "legitimation | authority_claim | scope_expansion | framework_foundation | problem_redefinition | audience_shift | theoretical_bridge",
+            "description": "string - how this function operates in the current work",
+            "evidence": "string - textual evidence for this functional claim"
+          }
+        ],
+        "conditions_of_possibility": "string - how the author's prior work on this idea made the current argument possible",
+        "what_would_be_impossible_without": "string - what the author couldn't claim in the current work without the prior work history",
+        "psychological_dimension": "string - optional biographical or psychological reading of the evolution"
+      }
+    ],
+    "overarching_pattern": "string - what the sum of all functional analyses reveals about the author's intellectual project as a whole",
+    "meta": {
+      "ideas_analyzed": "number",
+      "dominant_function_types": ["string - most common function types across all ideas"],
+      "key_findings": ["string"]
+    }
+  },
+  "extraction_focus": [
+    "rhetorical_function",
+    "argumentative_leverage",
+    "authority_construction",
+    "intellectual_positioning"
+  ],
+  "primary_output_modes": [
+    "structured_text_report"
+  ],
+  "paradigm_keys": [],
+  "source_file": "intellectual_genealogy_workflow",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "functional analysis of idea evolution",
+      "analysis_type_plural": "functional analyses",
+      "core_question": "What work does the evolution of this idea do for the current argument?",
+      "extraction_steps": [
+        "FOR EACH IDEA WITH EVOLUTION: Review the evolution timeline and synthesis from Pass 3",
+        "IDENTIFY FUNCTIONS: Ask what the evolution DOES for the current work — does it legitimate, establish authority, expand scope, bridge theories, redefine problems, or shift audience?",
+        "ASSESS CONDITIONS OF POSSIBILITY: Determine how the prior work history enabled claims that would otherwise be unavailable",
+        "COUNTERFACTUAL TEST: Ask what the author COULDN'T argue if they didn't have the prior work history",
+        "CONSIDER PSYCHOLOGICAL DIMENSION: Optionally, offer a biographical or psychological reading of why the evolution took this path",
+        "SYNTHESIZE OVERARCHING PATTERN: Across all ideas, what does the overall functional picture reveal about the author's intellectual project?"
+      ],
+      "key_fields": {
+        "idea_id": "Cross-reference to Pass 1",
+        "functions_served": "What argumentative work the evolution does",
+        "conditions_of_possibility": "How prior work enables current claims"
+      },
+      "id_field": "idea_id",
+      "key_relationships": [
+        "enables",
+        "legitimates",
+        "authorizes",
+        "bridges",
+        "constrains"
+      ],
+      "special_instructions": "This pass requires deep interpretive work. Do not just describe the evolution — analyze what it ACHIEVES. Think about this from the author's strategic position: what does having this intellectual history allow them to do that a newcomer could not? Consider both conscious strategy and unconscious patterns."
+    },
+    "curation": {
+      "item_type": "functional analysis",
+      "item_type_plural": "functional analyses",
+      "consolidation_rules": [
+        "Group by function type to reveal patterns",
+        "Rank by strength of enabling relationship",
+        "Flag ideas where prior work constrains rather than enables"
+      ],
+      "cross_doc_patterns": [
+        "recurring_functions",
+        "enabling_clusters"
+      ],
+      "synthesis_outputs": [
+        "functional_map",
+        "overarching_pattern"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "IDEA2",
+          "to": "'Automation thesis' functions as legitimation + authority_claim: prior empirical work authorizes current theoretical speculation"
+        }
+      ],
+      "naming_guidance": "Use idea name with primary function type",
+      "recommended_table_types": [
+        "function_type_distribution"
+      ],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": true
+  },
+  "apps": [
+    "critic"
+  ]
+}

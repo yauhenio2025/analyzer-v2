@@ -1,0 +1,128 @@
+{
+  "engine_key": "genealogy_pass6_conditions_of_possibility",
+  "engine_name": "Genealogy Pass 6: Conditions of Possibility",
+  "description": "Sixth pass of intellectual genealogy: identifies the enabling conditions — how the author's prior body of work makes the current argument possible (or constrains it). Draws on Foucauldian genealogy and Cambridge School contextualism to analyze intellectual path-dependence.",
+  "version": 1,
+  "category": "epistemology",
+  "kind": "synthesis",
+  "reasoning_domain": "genealogy_analysis",
+  "researcher_question": "What conditions of possibility does the author's prior work create for the current argument, and how does the author manage those conditions?",
+  "canonical_schema": {
+    "enabling_conditions": [
+      {
+        "condition_id": "string (format: 'COND{N}')",
+        "condition_type": "conceptual_foundation | audience_preparation | authority_establishment | framework_provision | problem_definition | methodological_precedent",
+        "description": "string - what this enabling condition consists of",
+        "prior_works_involved": ["string - titles of prior works that established this condition"],
+        "how_it_enables": "string - what this condition makes possible in the current work",
+        "how_managed": "acknowledged | implicit | denied | instrumentalized",
+        "evidence": "string - textual evidence showing this condition at work"
+      }
+    ],
+    "constraining_conditions": [
+      {
+        "constraint_id": "string (format: 'CONSTR{N}')",
+        "description": "string - how prior work constrains the current argument",
+        "type": "prior_commitment | audience_expectation | framework_lock_in | reputational_stake",
+        "how_navigated": "string - how the author deals with this constraint in the current work"
+      }
+    ],
+    "counterfactual_analysis": "string - 2-3 paragraphs analyzing what the argument would look like if the author had no prior work — what is genuinely novel vs. path-dependent in the current argument",
+    "synthetic_judgment": "string - 2-3 paragraph assessment of how the author's intellectual biography shapes and constrains their current work, and whether this is productive or limiting",
+    "meta": {
+      "enabling_conditions_count": "number",
+      "constraining_conditions_count": "number",
+      "dominant_condition_types": ["string"],
+      "key_findings": ["string"]
+    }
+  },
+  "extraction_focus": [
+    "conditions_of_possibility",
+    "enabling_conditions",
+    "intellectual_constraints",
+    "path_dependence"
+  ],
+  "primary_output_modes": [
+    "structured_text_report"
+  ],
+  "paradigm_keys": [
+    "genealogical"
+  ],
+  "source_file": "intellectual_genealogy_workflow",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "conditions of possibility analysis",
+      "analysis_type_plural": "conditions of possibility analyses",
+      "core_question": "How does the author's intellectual biography enable and constrain their current argument?",
+      "extraction_steps": [
+        "IDENTIFY ENABLING CONDITIONS: What aspects of the author's prior work make the current argument possible? Consider conceptual foundations laid, audiences prepared, authority established, frameworks provided, problems defined, and methodological precedents set",
+        "ASSESS MANAGEMENT: For each enabling condition, determine how the author manages it — do they acknowledge the intellectual debt to their own prior work, leave it implicit, deny it, or instrumentalize it?",
+        "IDENTIFY CONSTRAINTS: What aspects of the prior work CONSTRAIN the current argument? Prior commitments the author can't easily abandon, audience expectations, theoretical framework lock-in, reputational stakes",
+        "NAVIGATION STRATEGIES: How does the author navigate each constraint? Directly address it, work around it, ignore it, or reframe it?",
+        "COUNTERFACTUAL ANALYSIS: Imagine the current argument written by someone with no prior work history — what would be different? What is genuinely novel in the current work vs. what is path-dependent?",
+        "SYNTHETIC JUDGMENT: Assess overall whether the intellectual biography is more enabling or constraining, and whether the author manages the relationship productively"
+      ],
+      "key_fields": {
+        "condition_id": "Unique identifier for each condition",
+        "condition_type": "Classification of the enabling condition",
+        "how_managed": "How the author handles the condition"
+      },
+      "id_field": "condition_id",
+      "key_relationships": [
+        "enables",
+        "constrains",
+        "necessitates",
+        "forecloses"
+      ],
+      "special_instructions": "Think in terms of intellectual path-dependence. Every author's prior work creates a landscape of possibility and constraint for their current work. This pass asks you to map that landscape. The counterfactual analysis is especially important — it separates genuine innovation from accumulated intellectual capital."
+    },
+    "curation": {
+      "item_type": "condition",
+      "item_type_plural": "conditions",
+      "consolidation_rules": [
+        "Separate enabling from constraining conditions",
+        "Rank enabling conditions by how essential they are",
+        "Rank constraining conditions by how binding they are"
+      ],
+      "cross_doc_patterns": [
+        "enabling_clusters",
+        "constraint_navigation"
+      ],
+      "synthesis_outputs": [
+        "conditions_map",
+        "counterfactual_analysis",
+        "synthetic_judgment"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "COND1",
+          "to": "Authority establishment: prior empirical work on automation statistics enables current speculative claims about post-capitalist transition"
+        }
+      ],
+      "naming_guidance": "Use condition type + brief description",
+      "recommended_table_types": [
+        "conditions_catalog"
+      ],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "conditions_of_possibility": "Foucauldian conditions of discourse emergence"
+      },
+      "analyst": {},
+      "executive": {
+        "conditions_of_possibility": "intellectual prerequisites"
+      },
+      "activist": {}
+    },
+    "skip_concretization": true
+  },
+  "apps": [
+    "critic"
+  ]
+}

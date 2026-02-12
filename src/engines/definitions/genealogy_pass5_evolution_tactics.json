@@ -1,0 +1,162 @@
+{
+  "engine_key": "genealogy_pass5_evolution_tactics",
+  "engine_name": "Genealogy Pass 5: Evolution Tactics Detection",
+  "description": "Fifth pass of intellectual genealogy: detects specific evolution tactics — the recurring patterns authors use when dealing with their own prior positions. Identifies conceptual recycling, silent revision, selective continuity, strategic amnesia, and other tactics. The taxonomy of tactics is defined in this engine's canonical schema.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "extraction",
+  "reasoning_domain": "genealogy_analysis",
+  "researcher_question": "What tactics does this author use to manage the relationship between their prior and current work?",
+  "canonical_schema": {
+    "tactics_detected": [
+      {
+        "tactic_id": "string (format: 'TACT{N}')",
+        "tactic_type": "conceptual_recycling | silent_revision | selective_continuity | retroactive_framing | escalation | narrative_bootstrapping | framework_migration | condition_shift | biographical_teleology | strategic_amnesia",
+        "tactic_name": "string - human-readable name of this tactic instance",
+        "description": "string - what this specific instance involves",
+        "idea_ids_involved": ["string - which idea_ids from Pass 1 are affected"],
+        "prior_work_references": [
+          {
+            "work_title": "string - title of the prior work",
+            "relevant_quote": "string - quote from the prior work showing the earlier position"
+          }
+        ],
+        "current_work_evidence": [
+          {
+            "quote": "string - quote from the current work showing the current position",
+            "location": "string - approximate location"
+          }
+        ],
+        "severity": "major | moderate | minor",
+        "assessment": "string - analysis of what this tactic achieves, what it conceals, and what it reveals about the author's intellectual management"
+      }
+    ],
+    "tactic_patterns": {
+      "most_frequent_tactic": "string - the most commonly used tactic type",
+      "tactic_distribution": {
+        "conceptual_recycling": "number",
+        "silent_revision": "number",
+        "selective_continuity": "number",
+        "retroactive_framing": "number",
+        "escalation": "number",
+        "narrative_bootstrapping": "number",
+        "framework_migration": "number",
+        "condition_shift": "number",
+        "biographical_teleology": "number",
+        "strategic_amnesia": "number"
+      },
+      "pattern_narrative": "string - what the overall tactic usage reveals about how this author manages their intellectual history"
+    },
+    "evolution_tactics_taxonomy": {
+      "conceptual_recycling": "Reusing arguments from prior work in a new framework where they serve a different function. The old argument is preserved but recontextualized — like using the same building materials for a different building.",
+      "silent_revision": "Quietly changing position from prior work without acknowledging the shift. The author previously held position X, now holds position Y, but writes as if they always held Y.",
+      "selective_continuity": "Claiming continuity with prior work while substantively departing from it. The author says 'as I argued before...' but the current position is materially different from what they actually argued.",
+      "retroactive_framing": "Presenting current position as always having been the view, retroactively rewriting intellectual history. The author's earlier exploratory or tentative claims are presented as prescient foresight.",
+      "escalation": "Taking a qualified or tentative prior claim and presenting it as established fact. What was 'this might suggest...' becomes 'as we know...' without new evidence justifying the confidence increase.",
+      "narrative_bootstrapping": "Using the authority of prior work to legitimize current claims without re-establishing the evidence. The credibility earned from previous careful work is spent on current speculative claims.",
+      "framework_migration": "Moving concepts from one theoretical home to another without justifying the move. A concept developed within framework A is transplanted into framework B with no discussion of whether the transplant is valid.",
+      "condition_shift": "Changing the assessed conditions while keeping conclusions similar. The same evidence is used but the diagnosis of the world-situation has changed — like Varoufakis moving from 'capitalism can be saved' to 'capitalism is dead' while citing the same QE evidence.",
+      "biographical_teleology": "Presenting reactive intellectual evolution as intentional, directed development. What was actually a series of responsive adjustments is narrated as a purposeful intellectual journey toward the current position.",
+      "strategic_amnesia": "Forgetting inconvenient prior positions, predictions, or commitments. Earlier claims that turned out wrong or that conflict with current positions are simply not mentioned, as if they never existed."
+    },
+    "meta": {
+      "total_tactics_detected": "number",
+      "tactics_by_severity": {
+        "major": "number",
+        "moderate": "number",
+        "minor": "number"
+      },
+      "ideas_most_affected": ["string - idea_ids with the most tactics applied to them"],
+      "key_findings": ["string"]
+    }
+  },
+  "extraction_focus": [
+    "evolution_tactics",
+    "intellectual_self_management",
+    "position_shifts",
+    "rhetorical_strategies"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "intellectual_genealogy_workflow",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "evolution tactics detection",
+      "analysis_type_plural": "evolution tactics analyses",
+      "core_question": "What recurring tactics does this author employ to manage the relationship between their prior and current positions?",
+      "extraction_steps": [
+        "SYSTEMATICALLY COMPARE: For each idea with an evolution timeline (from Pass 3), compare the current position with known prior positions",
+        "IDENTIFY DIVERGENCES: For each divergence between prior and current position, determine which tactic pattern it matches from the taxonomy",
+        "ASSESS ACKNOWLEDGMENT: Determine whether the author acknowledges the shift openly, manages it implicitly, or ignores it entirely",
+        "RATE SEVERITY: Judge severity based on how much the tactic distorts the intellectual record — major tactics significantly misrepresent the prior position; minor ones are common scholarly practice",
+        "LOOK FOR CLUSTERS: Identify tactics that work together — e.g., narrative_bootstrapping often accompanies escalation",
+        "SYNTHESIZE PATTERN: Describe what the overall tactic usage reveals about the author's intellectual management style"
+      ],
+      "key_fields": {
+        "tactic_id": "Unique identifier for each detected tactic instance",
+        "tactic_type": "Which tactic from the taxonomy this instance represents",
+        "severity": "How significantly this tactic distorts the intellectual record"
+      },
+      "id_field": "tactic_id",
+      "key_relationships": [
+        "conceals",
+        "distorts",
+        "legitimates",
+        "enables"
+      ],
+      "special_instructions": "Be rigorous but fair. Not every change of mind is a 'tactic' — genuine intellectual development is normal and healthy. Focus on cases where the MANAGEMENT of the change is itself noteworthy — where the author obscures, inflates, or misrepresents the relationship between past and present positions. The taxonomy in the canonical_schema is your primary reference — use it precisely."
+    },
+    "curation": {
+      "item_type": "tactic",
+      "item_type_plural": "tactics",
+      "consolidation_rules": [
+        "Group by tactic type",
+        "Rank by severity",
+        "Identify tactic clusters that work together",
+        "Cross-reference with ideas from Pass 1"
+      ],
+      "cross_doc_patterns": [
+        "recurring_tactic_types",
+        "tactic_clusters"
+      ],
+      "synthesis_outputs": [
+        "tactic_catalog",
+        "tactic_distribution"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "TACT1",
+          "to": "Escalation: 'automation might reduce employment' (2015) → 'automation has already eliminated meaningful work' (2025)"
+        }
+      ],
+      "naming_guidance": "Use tactic type + brief description of what shifted",
+      "recommended_table_types": [
+        "tactic_catalog",
+        "severity_distribution"
+      ],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "tactic_type": "intellectual management strategy"
+      },
+      "analyst": {},
+      "executive": {
+        "tactic_type": "argument consistency issue"
+      },
+      "activist": {}
+    },
+    "skip_concretization": false
+  },
+  "apps": [
+    "critic"
+  ]
+}

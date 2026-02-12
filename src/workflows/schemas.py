@@ -17,7 +17,9 @@ class WorkflowCategory(str, Enum):
     SYNTHESIS = "synthesis"       # Essay and argument construction
     INFLUENCE = "influence"       # Intellectual debt analysis
     OUTLINE = "outline"           # Essay outline management
-    ANALYSIS = "analysis"         # Multi-pass analytical workflows
+    ANALYSIS = "analysis"               # Multi-pass analytical workflows
+    GENEALOGY = "genealogy"             # Intellectual genealogy / self-influence analysis
+    DECISION_SUPPORT = "decision_support"  # Decision support system workflows
 
 
 class WorkflowPass(BaseModel):
@@ -31,6 +33,10 @@ class WorkflowPass(BaseModel):
     engine_key: Optional[str] = Field(
         default=None,
         description="Engine to use for this pass (if engine-backed)",
+    )
+    function_key: Optional[str] = Field(
+        default=None,
+        description="Function to use for this pass (if function-backed)",
     )
     prompt_template: Optional[str] = Field(
         default=None,

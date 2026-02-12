@@ -1,0 +1,133 @@
+{
+  "engine_key": "genealogy_pass1_idea_extraction",
+  "engine_name": "Genealogy Pass 1: Idea Extraction",
+  "description": "First pass of intellectual genealogy analysis: extracts main ideas, narratives, bifurcations, and theoretical positions from the current work. These become the target ideas whose genealogy will be traced through the author's prior works.",
+  "version": 1,
+  "category": "concepts",
+  "kind": "extraction",
+  "reasoning_domain": "genealogy_analysis",
+  "researcher_question": "What are the core ideas, theoretical positions, and conceptual bifurcations in this work?",
+  "canonical_schema": {
+    "ideas": [
+      {
+        "idea_id": "string (format: 'IDEA{N}')",
+        "idea_name": "string - concise name for this idea",
+        "description": "string - what the idea claims or asserts",
+        "type": "theoretical_position | conceptual_bifurcation | narrative_claim | methodological_commitment | empirical_assertion",
+        "centrality": "core | supporting | peripheral",
+        "related_ideas": ["string - other idea_ids that this idea depends on or connects to"],
+        "textual_evidence": [
+          {
+            "quote": "string - direct quote from the text",
+            "location": "string - document and approximate location"
+          }
+        ],
+        "analytical_function": "string - what role this idea plays in the overall argument"
+      }
+    ],
+    "narrative_structure": {
+      "main_thesis": "string - the central argument of the work",
+      "key_bifurcations": ["string - where the argument splits into distinct paths or alternatives"],
+      "enabling_assumptions": ["string - what must be true for the argument to work"]
+    },
+    "meta": {
+      "total_ideas_extracted": "number",
+      "ideas_by_type": {
+        "theoretical_position": "number",
+        "conceptual_bifurcation": "number",
+        "narrative_claim": "number",
+        "methodological_commitment": "number",
+        "empirical_assertion": "number"
+      },
+      "key_findings": ["string - notable observations about the idea landscape"]
+    }
+  },
+  "extraction_focus": [
+    "theoretical_positions",
+    "conceptual_bifurcations",
+    "narrative_claims",
+    "methodological_commitments",
+    "enabling_assumptions"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "intellectual_genealogy_workflow",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "idea extraction for genealogical tracing",
+      "analysis_type_plural": "idea extractions",
+      "core_question": "What are the core ideas in this work whose intellectual genealogy we should trace?",
+      "extraction_steps": [
+        "SCAN FOR THEORETICAL POSITIONS: Identify explicit theoretical claims and positions the author takes",
+        "IDENTIFY KEY BIFURCATIONS: Find where the argument splits into distinct paths or alternatives (e.g., Benanav's functional economy vs. free sector split)",
+        "MAP CONCEPTUAL DEPENDENCIES: Note which ideas depend on or enable other ideas",
+        "NOTE METHODOLOGICAL COMMITMENTS: Identify the methods and analytical frameworks the author commits to",
+        "EXTRACT NARRATIVE CLAIMS: Find the story the author tells about how things are or should be",
+        "ASSESS CENTRALITY: Determine which ideas are core to the argument vs. supporting or peripheral",
+        "DOCUMENT ENABLING ASSUMPTIONS: What must the reader accept for the argument to work?"
+      ],
+      "key_fields": {
+        "idea_id": "Unique identifier for cross-referencing across passes",
+        "idea_name": "Concise label for the idea",
+        "type": "Classification of what kind of idea this is",
+        "centrality": "How important this idea is to the overall argument"
+      },
+      "id_field": "idea_id",
+      "key_relationships": [
+        "depends_on",
+        "enables",
+        "contradicts",
+        "bifurcates_into",
+        "assumes"
+      ],
+      "special_instructions": "Be thorough but selective. Focus on ideas substantial enough to have a genealogy — not every minor claim, but every idea that represents a real intellectual position. Pay special attention to ideas that seem to carry the weight of the argument or that make distinctive claims the author might have developed over time."
+    },
+    "curation": {
+      "item_type": "idea",
+      "item_type_plural": "ideas",
+      "consolidation_rules": [
+        "Merge overlapping ideas into their most precise formulation",
+        "Ensure each idea is distinct enough to trace independently",
+        "Rank by centrality to the overall argument",
+        "Flag ideas that seem derivative of other ideas in the list"
+      ],
+      "cross_doc_patterns": [
+        "recurring_themes",
+        "argument_progression"
+      ],
+      "synthesis_outputs": [
+        "idea_catalog",
+        "narrative_structure"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "IDEA1",
+          "to": "Functional Economy (core theoretical position on post-capitalist production)"
+        }
+      ],
+      "naming_guidance": "Use idea name with type and centrality level",
+      "recommended_table_types": [
+        "idea_catalog"
+      ],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {},
+      "analyst": {},
+      "executive": {},
+      "activist": {}
+    },
+    "skip_concretization": false
+  },
+  "apps": [
+    "critic"
+  ]
+}

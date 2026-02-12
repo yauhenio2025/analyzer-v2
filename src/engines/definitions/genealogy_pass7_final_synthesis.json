@@ -1,0 +1,121 @@
+{
+  "engine_key": "genealogy_pass7_final_synthesis",
+  "engine_name": "Genealogy Pass 7: Final Synthesis",
+  "description": "Final pass of intellectual genealogy: generates a comprehensive genealogical report synthesizing all findings from the previous six passes. Produces an executive summary, detailed genealogical portrait, idea genealogies, author intellectual profile, and methodological notes.",
+  "version": 1,
+  "category": "scholarly",
+  "kind": "synthesis",
+  "reasoning_domain": "genealogy_analysis",
+  "researcher_question": "What is the comprehensive genealogical picture of this work's relationship to the author's prior intellectual output?",
+  "canonical_schema": {
+    "executive_summary": "string - 3-5 sentence overview of the key genealogical findings",
+    "genealogical_portrait": "string - 3-5 paragraph narrative assessment of the author's intellectual self-relationship",
+    "key_findings": [
+      {
+        "finding": "string - a significant genealogical finding",
+        "significance": "string - why this finding matters",
+        "evidence_strength": "strong | moderate | suggestive"
+      }
+    ],
+    "idea_genealogies": [
+      {
+        "idea_id": "string - references idea_id from Pass 1",
+        "idea_name": "string",
+        "genealogy_summary": "string - 1-2 paragraph summary of this idea's evolution",
+        "evolution_pattern": "string - the classified evolution pattern from Pass 3",
+        "tactics_involved": ["string - tactic types detected for this idea from Pass 5"],
+        "functional_role": "string - what function this idea's evolution serves from Pass 4"
+      }
+    ],
+    "author_intellectual_profile": {
+      "evolution_style": "string - how this author characteristically manages their prior work",
+      "dominant_tactics": ["string - the most common tactics this author employs"],
+      "intellectual_honesty_assessment": "string - assessment of how transparently the author manages their intellectual evolution",
+      "biographical_interpretation": "string - optional psychological or biographical reading of the overall evolution pattern"
+    },
+    "methodological_notes": {
+      "limitations": ["string - limitations of this genealogical analysis"],
+      "areas_requiring_further_investigation": ["string - what would benefit from deeper analysis or additional prior works"],
+      "confidence_assessment": "string - overall confidence in the findings and what would increase it"
+    },
+    "meta": {
+      "total_ideas_traced": "number",
+      "total_prior_works_scanned": "number",
+      "total_tactics_detected": "number",
+      "total_conditions_identified": "number",
+      "key_takeaway": "string - single most important insight from the genealogical analysis"
+    }
+  },
+  "extraction_focus": [
+    "comprehensive_synthesis",
+    "intellectual_portrait",
+    "genealogical_assessment"
+  ],
+  "primary_output_modes": [
+    "structured_text_report"
+  ],
+  "paradigm_keys": [
+    "genealogical"
+  ],
+  "source_file": "intellectual_genealogy_workflow",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "comprehensive genealogical synthesis",
+      "analysis_type_plural": "genealogical syntheses",
+      "core_question": "What is the complete genealogical picture of this author's relationship to their own prior work?",
+      "extraction_steps": [
+        "SYNTHESIZE ALL PASSES: Integrate findings from idea extraction (Pass 1), prior work scanning (Pass 2), cross-work synthesis (Pass 3), functional analysis (Pass 4), evolution tactics (Pass 5), and conditions of possibility (Pass 6)",
+        "COMPOSE EXECUTIVE SUMMARY: Write a 3-5 sentence overview capturing the most important genealogical findings",
+        "WRITE GENEALOGICAL PORTRAIT: Compose a 3-5 paragraph narrative that tells the story of this author's intellectual self-relationship",
+        "COMPILE IDEA GENEALOGIES: For each idea traced, provide a concise summary integrating evolution pattern, tactics, and functional role",
+        "CONSTRUCT AUTHOR PROFILE: Characterize the author's evolution style, dominant tactics, and intellectual honesty",
+        "NOTE METHODOLOGY: Document limitations, areas for further investigation, and confidence assessment",
+        "IDENTIFY KEY FINDINGS: List the most significant genealogical discoveries with evidence strength ratings"
+      ],
+      "key_fields": {
+        "executive_summary": "Top-level overview",
+        "genealogical_portrait": "Rich narrative assessment",
+        "author_intellectual_profile": "Characterization of the author's intellectual management style"
+      },
+      "id_field": "report",
+      "key_relationships": [],
+      "special_instructions": "This is the capstone synthesis. Write for a scholarly audience that wants both rigorous analysis and readable prose. The genealogical portrait should be the kind of assessment that would be valuable in a review essay or intellectual biography. Be honest about limitations — acknowledge where evidence is suggestive rather than conclusive. The intellectual honesty assessment should be fair: acknowledge that all authors manage their prior work, and focus on cases where the management is noteworthy."
+    },
+    "curation": {
+      "item_type": "synthesis report",
+      "item_type_plural": "synthesis reports",
+      "consolidation_rules": [
+        "Prioritize by significance and evidence strength",
+        "Integrate cross-cutting themes",
+        "Ensure internal consistency across sections"
+      ],
+      "cross_doc_patterns": [],
+      "synthesis_outputs": [
+        "final_report"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [],
+      "naming_guidance": "",
+      "recommended_table_types": [],
+      "recommended_visual_patterns": []
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "genealogical_portrait": "intellectual genealogy in the Foucauldian sense"
+      },
+      "analyst": {},
+      "executive": {
+        "genealogical_portrait": "intellectual consistency assessment"
+      },
+      "activist": {}
+    },
+    "skip_concretization": true
+  },
+  "apps": [
+    "critic"
+  ]
+}
