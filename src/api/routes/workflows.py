@@ -29,7 +29,7 @@ def get_composer() -> StageComposer:
     return _composer
 
 
-AudienceType = Literal["researcher", "analyst", "executive", "activist"]
+AudienceType = Literal["researcher", "analyst", "executive", "activist", "social_movements"]
 
 router = APIRouter(prefix="/workflows", tags=["workflows"])
 

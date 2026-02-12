@@ -5,6 +5,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+- **First-Class Audiences** - Audiences are now a proper entity in analyzer-v2
+  - 5 audience definitions extracted from analyzer's audience_profiles.py: analyst, executive, researcher, activist, social_movements
+  - Rich data model with 8 sections: identity, engine affinities, visual style, textual style, curation, strategist, pattern discovery, vocabulary
+  - 1,599 vocabulary translations per audience (pivoted from per-term to per-audience format)
+  - Full CRUD API at `/v1/audiences` with per-section getters and utility endpoints
+  - `AudienceRegistry` following WorkflowRegistry pattern (JSON file storage)
+  - StageComposer updated to load audience guidance from registry (replaces hardcoded blocks)
+  - Global vocabulary merges underneath engine-specific vocabulary (engine overrides win)
+  - `social_movements` added as 5th audience type across all route files
+  - Migration script: `scripts/extract_audiences.py`
+  - New files: `src/audiences/` (schemas, registry, 5 JSON definitions)
+
 ### Changed
 - **Semantic Field Engine v3** - Massively expanded for close textual analysis
   - All quote fields now support multiple quotes per item (arrays instead of strings)

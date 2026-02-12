@@ -8,6 +8,7 @@ Analyzer v2 extracts pure analytical definitions from the current Analyzer servi
 - **Engine definitions**: Prompts, schemas, and metadata for 160+ analysis engines
 - **Paradigm definitions**: 4-layer ontology structures (IE schema)
 - **Engine chains**: Multi-engine composition specifications
+- **Audience definitions**: Rich multi-section profiles for 5 audience types
 
 This is the "reversed approach" - instead of moving process code TO Visualizer, we extract definitions OUT of Analyzer into this clean service.
 
@@ -42,6 +43,11 @@ analyzer-v2/
 │   │   ├── registry.py    # ChainRegistry
 │   │   └── definitions/   # JSON files
 │   │
+│   ├── audiences/         # Audience definitions (first-class entity)
+│   │   ├── schemas.py     # AudienceDefinition model (8 sub-models)
+│   │   ├── registry.py    # AudienceRegistry (CRUD + guidance/vocab/weight)
+│   │   └── definitions/   # 5 JSON files (analyst, executive, researcher, activist, social_movements)
+│   │
 │   └── api/               # FastAPI application
 │       ├── main.py        # App entry point
 │       └── routes/        # Endpoint handlers
@@ -71,6 +77,21 @@ GET  /v1/paradigms/{key}/critique-patterns
 
 GET  /v1/chains                      # List chains
 GET  /v1/chains/{key}                # Chain specification
+
+GET  /v1/audiences                   # List all audiences
+GET  /v1/audiences/{key}             # Full audience definition
+GET  /v1/audiences/{key}/identity    # Identity/profile section
+GET  /v1/audiences/{key}/engine-affinities
+GET  /v1/audiences/{key}/visual-style
+GET  /v1/audiences/{key}/textual-style
+GET  /v1/audiences/{key}/curation
+GET  /v1/audiences/{key}/vocabulary
+GET  /v1/audiences/{key}/guidance    # Composed guidance block
+GET  /v1/audiences/{key}/translate/{term}
+GET  /v1/audiences/{key}/engine-weight/{engine_key}
+PUT  /v1/audiences/{key}             # Update audience
+POST /v1/audiences                   # Create audience
+DELETE /v1/audiences/{key}           # Delete audience
 
 GET  /v1/llm/status                  # Check LLM availability
 POST /v1/llm/profile-generate        # Generate profile with AI

@@ -37,7 +37,7 @@ def get_composer() -> StageComposer:
     return _composer
 
 
-AudienceType = Literal["researcher", "analyst", "executive", "activist"]
+AudienceType = Literal["researcher", "analyst", "executive", "activist", "social_movements"]
 
 
 @router.get("", response_model=list[EngineSummary])

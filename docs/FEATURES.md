@@ -1,6 +1,31 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-02-08
+> Auto-maintained by Claude Code. Last updated: 2026-02-12
+
+## Audiences (First-Class Entity)
+
+### Audience Definitions
+- **Status**: Active
+- **Description**: First-class audience entities with rich multi-section definitions. 5 audiences (analyst, executive, researcher, activist, social_movements) extracted from analyzer's monolithic audience_profiles.py into individual JSON files.
+- **Entry Points**:
+  - `src/audiences/schemas.py:1-230` - Pydantic models (AudienceDefinition, 8 sub-models, AudienceSummary)
+  - `src/audiences/registry.py:1-230` - AudienceRegistry with CRUD + utility methods
+  - `src/audiences/definitions/` - 5 JSON files (analyst.json, executive.json, researcher.json, activist.json, social_movements.json)
+  - `src/api/routes/audiences.py:1-250` - Full REST API (list, get, per-section getters, CRUD, guidance, translate, engine-weight)
+  - `src/api/main.py:16` - Router registration and lifespan loading
+  - `src/stages/composer.py:177-232` - StageComposer integration (registry-first guidance, global vocab merge)
+  - `scripts/extract_audiences.py` - Migration script from analyzer
+- **Sections per Audience**:
+  - Identity (core_questions, priorities, deprioritize, detail_level)
+  - Engine Affinities (preferred_categories, high/low affinity engines, category_weights)
+  - Visual Style (aesthetic, color palette, typography, layout, density, tone)
+  - Textual Style (voice, structure, evidence handling, word count guidance)
+  - Curation Guidance (curation emphasis, fidelity constraint)
+  - Strategist Guidance (num visualizations, table purposes, narrative focus)
+  - Pattern Discovery (pattern types priority, meta insight focus, significance)
+  - Vocabulary (1,599 technical→audience translations, guidance intro/outro)
+- **API Endpoints**: `/v1/audiences`, `/v1/audiences/{key}`, per-section getters, `/guidance`, `/translate/{term}`, `/engine-weight/{engine_key}`
+- **Added**: 2026-02-12
 
 ## Concept Analysis Tabs
 

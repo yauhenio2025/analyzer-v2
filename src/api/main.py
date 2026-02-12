@@ -12,7 +12,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import chains, engines, llm, paradigms, styles, primitives, display, workflows
+from src.api.routes import audiences, chains, engines, llm, paradigms, styles, primitives, display, workflows
+from src.audiences.registry import get_audience_registry
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
 from src.paradigms.registry import get_paradigm_registry
@@ -64,6 +65,10 @@ async def lifespan(app: FastAPI):
     workflow_registry = get_workflow_registry()
     logger.info(f"Loaded {workflow_registry.count()} workflows")
 
+    logger.info("Loading audience definitions...")
+    audience_registry = get_audience_registry()
+    logger.info(f"Loaded {audience_registry.count()} audiences")
+
     logger.info("Analyzer v2 API ready")
     yield
     # Shutdown
@@ -113,6 +118,7 @@ app.include_router(styles.router, prefix="/v1")
 app.include_router(primitives.router, prefix="/v1")
 app.include_router(display.router, prefix="/v1")
 app.include_router(workflows.router, prefix="/v1")
+app.include_router(audiences.router, prefix="/v1")
 app.include_router(llm.router, prefix="/v1")
 
 
@@ -129,6 +135,7 @@ async def root():
             "paradigms": "/v1/paradigms",
             "chains": "/v1/chains",
             "workflows": "/v1/workflows",
+            "audiences": "/v1/audiences",
             "styles": "/v1/styles",
             "primitives": "/v1/primitives",
             "display": "/v1/display",
@@ -143,6 +150,7 @@ async def health():
     paradigm_registry = get_paradigm_registry()
     chain_registry = get_chain_registry()
     workflow_registry = get_workflow_registry()
+    audience_registry = get_audience_registry()
     style_registry = get_style_registry()
     style_stats = style_registry.get_stats()
 
@@ -152,6 +160,7 @@ async def health():
         "paradigms_loaded": paradigm_registry.count(),
         "chains_loaded": chain_registry.count(),
         "workflows_loaded": workflow_registry.count(),
+        "audiences_loaded": audience_registry.count(),
         "styles_loaded": style_stats["styles_loaded"],
         "style_affinities": style_stats["engine_affinities"],
     }
@@ -164,6 +173,7 @@ async def api_v1_root():
     paradigm_registry = get_paradigm_registry()
     chain_registry = get_chain_registry()
     workflow_registry = get_workflow_registry()
+    audience_registry = get_audience_registry()
     style_registry = get_style_registry()
     style_stats = style_registry.get_stats()
 
@@ -207,6 +217,20 @@ async def api_v1_root():
                     "GET /v1/workflows/{key}",
                     "GET /v1/workflows/{key}/passes",
                     "GET /v1/workflows/category/{category}",
+                ],
+            },
+            "audiences": {
+                "count": audience_registry.count(),
+                "endpoints": [
+                    "GET /v1/audiences",
+                    "GET /v1/audiences/{key}",
+                    "GET /v1/audiences/{key}/identity",
+                    "GET /v1/audiences/{key}/engine-affinities",
+                    "GET /v1/audiences/{key}/visual-style",
+                    "GET /v1/audiences/{key}/textual-style",
+                    "GET /v1/audiences/{key}/curation",
+                    "GET /v1/audiences/{key}/vocabulary",
+                    "GET /v1/audiences/{key}/guidance",
                 ],
             },
             "styles": {

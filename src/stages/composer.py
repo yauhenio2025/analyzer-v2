@@ -18,6 +18,7 @@ from .schemas import (
     AudienceVocabulary,
 )
 from .registry import StageRegistry, get_stage_registry
+from src.audiences.registry import get_audience_registry
 
 
 class StageComposer:
@@ -202,20 +203,33 @@ class StageComposer:
     ) -> dict[str, str]:
         """Get vocabulary dict for specific audience.
 
+        Merges global audience vocabulary (from AudienceRegistry) underneath
+        engine-specific vocabulary. Engine-specific terms override global ones.
+
         Args:
-            vocab: AudienceVocabulary object
+            vocab: AudienceVocabulary object (engine-specific)
             audience: Target audience name
 
         Returns:
             Dictionary of term -> translation for this audience
         """
+        # Start with global audience vocabulary from registry
+        audience_registry = get_audience_registry()
+        audience_def = audience_registry.get(audience)
+        global_vocab = audience_def.vocabulary.translations if audience_def else {}
+
+        # Get engine-specific vocabulary
         audience_map = {
             "researcher": vocab.researcher,
             "analyst": vocab.analyst,
             "executive": vocab.executive,
             "activist": vocab.activist,
+            "social_movements": getattr(vocab, "social_movements", {}),
         }
-        return audience_map.get(audience, vocab.analyst)
+        engine_vocab = audience_map.get(audience, vocab.analyst)
+
+        # Merge: global underneath, engine-specific on top (engine wins)
+        return {**global_vocab, **engine_vocab}
 
     def _generate_audience_guidance(
         self,
@@ -224,6 +238,9 @@ class StageComposer:
     ) -> str:
         """Generate audience-specific language guidance block.
 
+        Tries AudienceRegistry first for rich, editable guidance.
+        Falls back to hardcoded blocks if audience not found in registry.
+
         Args:
             vocab: AudienceVocabulary object
             audience: Target audience name
@@ -231,6 +248,13 @@ class StageComposer:
         Returns:
             Markdown block with audience guidance
         """
+        # Try registry first (rich, editable definitions)
+        audience_registry = get_audience_registry()
+        guidance = audience_registry.generate_guidance(audience)
+        if guidance:
+            return guidance
+
+        # Fallback to hardcoded blocks for backward compatibility
         if audience == "researcher":
             return """
 ## AUDIENCE: RESEARCHER
