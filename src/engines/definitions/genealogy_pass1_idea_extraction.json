@@ -1,19 +1,19 @@
 {
   "engine_key": "genealogy_pass1_idea_extraction",
-  "engine_name": "Genealogy Pass 1: Idea Extraction",
-  "description": "First pass of intellectual genealogy analysis: extracts main ideas, narratives, bifurcations, and theoretical positions from the current work. These become the target ideas whose genealogy will be traced through the author's prior works.",
-  "version": 1,
+  "engine_name": "Genealogy Pass 1: Deep Target Work Profiling",
+  "description": "First pass of intellectual genealogy: produces a deep, multi-dimensional profile of the target work specifically optimized for genealogical tracing through the author's prior works. Extracts not just ideas but vocabulary, methodological signatures, metaphorical frameworks, framing choices, domain crossings, and positioning moves — everything downstream passes need to find resonance, trace evolution, and detect tactics in prior works.",
+  "version": 2,
   "category": "concepts",
   "kind": "extraction",
   "reasoning_domain": "genealogy_analysis",
-  "researcher_question": "What are the core ideas, theoretical positions, and conceptual bifurcations in this work?",
+  "researcher_question": "What are the core ideas, conceptual vocabulary, methodological moves, metaphorical frameworks, and positioning choices in this work — extracted in a form that maximizes our ability to trace their genealogy through the author's prior works?",
   "canonical_schema": {
     "ideas": [
       {
         "idea_id": "string (format: 'IDEA{N}')",
         "idea_name": "string - concise name for this idea",
         "description": "string - what the idea claims or asserts",
-        "type": "theoretical_position | conceptual_bifurcation | narrative_claim | methodological_commitment | empirical_assertion",
+        "type": "theoretical_position | conceptual_bifurcation | narrative_claim | methodological_commitment | empirical_assertion | conceptual_innovation",
         "centrality": "core | supporting | peripheral",
         "related_ideas": ["string - other idea_ids that this idea depends on or connects to"],
         "textual_evidence": [
@@ -22,13 +22,68 @@
             "location": "string - document and approximate location"
           }
         ],
-        "analytical_function": "string - what role this idea plays in the overall argument"
+        "analytical_function": "string - what role this idea plays in the overall argument",
+        "vocabulary": [
+          {
+            "term": "string - key term or phrase the author uses for this idea",
+            "definition_given": "string - how the author defines or deploys this term (may be implicit)",
+            "is_coined": "boolean - whether this term appears to be the author's own coinage",
+            "likely_precursor_terms": ["string - terms that might have been used for the same concept in earlier work, even if different words"]
+          }
+        ],
+        "methodological_signature": "string - how does the author ARGUE for this idea? What evidence type, logical structure, or analytical move supports it? (e.g., 'historical narrative of feudal rent extraction mapped onto digital platforms', 'empirical data on profit rates reinterpreted through Marxist categories')",
+        "metaphors": ["string - metaphors or analogies used to convey this idea (e.g., 'cloud as new land', 'platforms as fiefdoms')"],
+        "framing": {
+          "presented_as": "novel | established | building_on_prior | contested | self_evident",
+          "confidence_level": "tentative | qualified | definitive | axiomatic",
+          "acknowledges_prior_work": "string - does the author reference their own earlier work on this idea? What do they say?",
+          "what_is_suppressed": "string - what qualifications, alternatives, or complications does the framing suppress?"
+        },
+        "domain_crossings": [
+          {
+            "source_domain": "string - where this concept or method originates (e.g., 'Marxist political economy', 'game theory', 'feudal history')",
+            "what_is_imported": "string - what specific concept, method, or structural analogy is brought from the source domain",
+            "adaptation": "string - how it's been adapted for the current argument"
+          }
+        ],
+        "genealogical_hints": "string - any signals that this idea has a history in the author's prior work: self-references, evolved terminology, claims that feel 'settled' without adequate justification in this text alone, or structural similarities to arguments the author is known for"
       }
     ],
     "narrative_structure": {
       "main_thesis": "string - the central argument of the work",
       "key_bifurcations": ["string - where the argument splits into distinct paths or alternatives"],
-      "enabling_assumptions": ["string - what must be true for the argument to work"]
+      "enabling_assumptions": ["string - what must be true for the argument to work"],
+      "argumentative_arc": "string - how the argument builds: what comes first, what depends on what, where the climax is"
+    },
+    "overall_vocabulary_map": {
+      "coined_terms": ["string - terms that appear to be the author's own creation or distinctive usage"],
+      "repurposed_terms": [
+        {
+          "term": "string",
+          "standard_meaning": "string - how this term is normally used",
+          "author_meaning": "string - how the author uses it differently"
+        }
+      ],
+      "key_oppositions": [
+        {
+          "term_a": "string",
+          "term_b": "string",
+          "what_the_opposition_structures": "string - what analytical work this opposition does"
+        }
+      ]
+    },
+    "overall_methodological_profile": {
+      "primary_evidence_types": ["string - what kinds of evidence the author relies on (historical narrative, economic data, theoretical derivation, analogy, thought experiment, case study)"],
+      "argumentative_structure": "string - how does the author characteristically build arguments? (e.g., 'starts from Marx, derives through historical narrative, arrives at political prescription')",
+      "recurring_analytical_moves": ["string - moves the author makes repeatedly (e.g., 'reframes capitalist phenomena as feudal', 'appeals to structural necessity', 'personalizes systemic dynamics')"],
+      "what_counts_as_evidence": "string - what does the author treat as sufficient evidence for a claim? This reveals epistemological commitments that may be traceable to earlier work"
+    },
+    "positioning_profile": {
+      "claimed_novelty": ["string - what the author explicitly claims is new or original about this work"],
+      "claimed_continuity": ["string - what the author claims continues from their prior work"],
+      "intellectual_opponents": ["string - who or what the author positions themselves against"],
+      "intellectual_allies": ["string - whose frameworks or positions the author builds on"],
+      "audience_assumptions": "string - who is the author writing for and what are they assumed to already know?"
     },
     "meta": {
       "total_ideas_extracted": "number",
@@ -37,17 +92,23 @@
         "conceptual_bifurcation": "number",
         "narrative_claim": "number",
         "methodological_commitment": "number",
-        "empirical_assertion": "number"
+        "empirical_assertion": "number",
+        "conceptual_innovation": "number"
       },
-      "key_findings": ["string - notable observations about the idea landscape"]
+      "vocabulary_richness": "number - total coined + repurposed terms identified",
+      "domain_crossings_count": "number",
+      "key_findings": ["string - notable observations about the work's genealogical profile"]
     }
   },
   "extraction_focus": [
     "theoretical_positions",
-    "conceptual_bifurcations",
-    "narrative_claims",
-    "methodological_commitments",
-    "enabling_assumptions"
+    "conceptual_vocabulary",
+    "methodological_signatures",
+    "metaphorical_frameworks",
+    "framing_choices",
+    "domain_crossings",
+    "positioning_moves",
+    "genealogical_hints"
   ],
   "primary_output_modes": [
     "structured_text_report",
@@ -59,23 +120,34 @@
     "framework_key": null,
     "additional_frameworks": [],
     "extraction": {
-      "analysis_type": "idea extraction for genealogical tracing",
-      "analysis_type_plural": "idea extractions",
-      "core_question": "What are the core ideas in this work whose intellectual genealogy we should trace?",
+      "analysis_type": "deep genealogy-oriented target work profiling",
+      "analysis_type_plural": "target work profiles",
+      "core_question": "What are the core ideas, vocabulary, methods, metaphors, framing choices, and positioning moves in this work — profiled in a way that maximizes our ability to trace their genealogy through the author's prior works?",
       "extraction_steps": [
-        "SCAN FOR THEORETICAL POSITIONS: Identify explicit theoretical claims and positions the author takes",
-        "IDENTIFY KEY BIFURCATIONS: Find where the argument splits into distinct paths or alternatives (e.g., Benanav's functional economy vs. free sector split)",
-        "MAP CONCEPTUAL DEPENDENCIES: Note which ideas depend on or enable other ideas",
-        "NOTE METHODOLOGICAL COMMITMENTS: Identify the methods and analytical frameworks the author commits to",
-        "EXTRACT NARRATIVE CLAIMS: Find the story the author tells about how things are or should be",
-        "ASSESS CENTRALITY: Determine which ideas are core to the argument vs. supporting or peripheral",
-        "DOCUMENT ENABLING ASSUMPTIONS: What must the reader accept for the argument to work?"
+        "SCAN FOR THEORETICAL POSITIONS: Identify explicit theoretical claims and positions. For each, note not just WHAT is claimed but HOW — what vocabulary is used, what metaphors carry the argument, what evidence is deployed, how confident the framing is.",
+
+        "EXTRACT CONCEPTUAL VOCABULARY: Map the author's key terms. Which terms are coined? Which are standard terms used non-standardly? Which oppositions structure the argument (e.g., capitalism/feudalism, profit/rent, market/cloud)? Pay special attention to terms that FEEL established in this text but might have a history — these are genealogy targets.",
+
+        "PROFILE METHODOLOGICAL SIGNATURES: How does this author characteristically argue? What counts as evidence? What analytical moves recur? (e.g., 'reframes X as Y', 'derives conclusion from historical narrative', 'appeals to structural necessity'). These signatures persist across an author's career and are the most reliable genealogical markers.",
+
+        "MAP METAPHORICAL FRAMEWORKS: Identify the core metaphors and analogies. Metaphors are genealogy gold — they migrate across works, sometimes gaining, sometimes losing analytical power. Note which metaphors do heavy lifting vs. which are decorative.",
+
+        "ASSESS FRAMING CHOICES: For each major idea, determine: Is this presented as novel or established? Tentative or definitive? Building on prior work or breaking new ground? Does the author acknowledge their own earlier work? What's being suppressed by the framing? Ideas presented as 'self-evident' or 'axiomatic' without adequate justification in THIS text may be relying on authority established in prior work — flag these.",
+
+        "IDENTIFY DOMAIN CROSSINGS: Where does the author import concepts, methods, or structural analogies from other fields? Each crossing is a potential genealogical thread — the source domain may appear in prior works.",
+
+        "PROFILE POSITIONING: How does the author position themselves? What do they claim is new? Who are they arguing against? Whose frameworks do they adopt? Claimed novelty vs. actual novelty is a key genealogical indicator.",
+
+        "FLAG GENEALOGICAL HINTS: Look for signals that ideas have a history — self-references to prior work, evolved terminology, claims that feel 'settled' without justification, structural similarities to known prior arguments. These are breadcrumbs for the downstream passes.",
+
+        "ASSESS CENTRALITY AND DEPENDENCIES: Determine which ideas are core vs. peripheral, and map how ideas depend on each other. The dependency structure reveals what must have existed first for the argument to work — that's the genealogical architecture."
       ],
       "key_fields": {
-        "idea_id": "Unique identifier for cross-referencing across passes",
-        "idea_name": "Concise label for the idea",
-        "type": "Classification of what kind of idea this is",
-        "centrality": "How important this idea is to the overall argument"
+        "idea_id": "Unique identifier for cross-referencing across all downstream passes",
+        "vocabulary": "Key terms with their specific usage — downstream passes search for these in prior works",
+        "methodological_signature": "How the author argues for this idea — downstream passes match these patterns",
+        "framing": "How the idea is presented — downstream passes check whether earlier framings match",
+        "genealogical_hints": "Direct signals of genealogical connections — downstream passes follow these leads"
       },
       "id_field": "idea_id",
       "key_relationships": [
@@ -83,25 +155,30 @@
         "enables",
         "contradicts",
         "bifurcates_into",
-        "assumes"
+        "assumes",
+        "imports_from",
+        "reframes"
       ],
-      "special_instructions": "Be thorough but selective. Focus on ideas substantial enough to have a genealogy — not every minor claim, but every idea that represents a real intellectual position. Pay special attention to ideas that seem to carry the weight of the argument or that make distinctive claims the author might have developed over time."
+      "special_instructions": "You are NOT just extracting ideas — you are building a GENEALOGICAL PROFILE. Every dimension you extract (vocabulary, methods, metaphors, framing, domains, positioning) becomes a search target for downstream passes that will scan 10+ prior works. The richer and more specific your extraction, the more precisely those passes can find resonance, trace evolution, and detect tactics. Be thorough but selective — focus on ideas substantial enough to have a genealogy. Pay special attention to: (1) terms that feel established but aren't justified here — they may rely on authority from prior work; (2) methodological moves that feel habitual — they likely trace back years; (3) metaphors doing heavy analytical lifting — they probably evolved from simpler forms. This is deep analytical work, not surface extraction."
     },
     "curation": {
-      "item_type": "idea",
-      "item_type_plural": "ideas",
+      "item_type": "idea profile",
+      "item_type_plural": "idea profiles",
       "consolidation_rules": [
         "Merge overlapping ideas into their most precise formulation",
-        "Ensure each idea is distinct enough to trace independently",
-        "Rank by centrality to the overall argument",
-        "Flag ideas that seem derivative of other ideas in the list"
+        "Ensure each idea's vocabulary list captures all distinctive terms",
+        "Verify methodological signatures are specific enough to be matchable in prior works",
+        "Rank by centrality and genealogical potential"
       ],
       "cross_doc_patterns": [
         "recurring_themes",
-        "argument_progression"
+        "argument_progression",
+        "vocabulary_clusters"
       ],
       "synthesis_outputs": [
         "idea_catalog",
+        "vocabulary_map",
+        "methodological_profile",
         "narrative_structure"
       ],
       "special_instructions": null
@@ -110,12 +187,13 @@
       "id_examples": [
         {
           "from": "IDEA1",
-          "to": "Functional Economy (core theoretical position on post-capitalist production)"
+          "to": "Technofeudalism thesis (core theoretical position: capitalism has mutated into feudalism via cloud platforms)"
         }
       ],
       "naming_guidance": "Use idea name with type and centrality level",
       "recommended_table_types": [
-        "idea_catalog"
+        "idea_catalog",
+        "vocabulary_map"
       ],
       "recommended_visual_patterns": []
     },

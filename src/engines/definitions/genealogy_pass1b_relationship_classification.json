@@ -2,7 +2,7 @@
   "engine_key": "genealogy_pass1b_relationship_classification",
   "engine_name": "Genealogy Pass 1B: Prior Work Relationship Classification",
   "description": "Pre-scanning classification step: quickly determines how each prior work relates to the current work. This enables Pass 2 to adapt its analysis strategy per prior work rather than treating all prior works identically. Designed to be fast and cheap (Sonnet, low thinking budget).",
-  "version": 1,
+  "version": 2,
   "category": "temporal",
   "kind": "extraction",
   "reasoning_domain": "genealogy_analysis",
@@ -15,16 +15,20 @@
     "classification": {
       "relationship_type": "direct_precursor | indirect_contextualizer | different_field_relevant | counter_position | tangential",
       "confidence": "high | medium | low",
-      "reasoning": "string - brief explanation of why this classification was chosen",
-      "recommended_analysis_focus": "string - what the deep scan (Pass 2) should focus on for this specific work",
-      "key_aspects_to_probe": ["string - specific angles, patterns, or connections to look for in the deep scan"]
+      "reasoning": "string - explanation of why this classification was chosen, referencing specific evidence from both works",
+      "vocabulary_overlap": "string - which key terms from the target work's vocabulary appear in this prior work? Are the same terms used differently? Are different terms used for the same concepts?",
+      "methodological_similarity": "string - does this prior work share argumentative structures, evidence types, or analytical moves with the target work? Describe specific matches.",
+      "metaphor_overlap": "string - do any of the target work's core metaphors appear in this prior work, even in different contexts?",
+      "recommended_analysis_focus": "string - what the deep scan (Pass 2) should focus on for this specific work, informed by the vocabulary/method/metaphor overlaps detected",
+      "key_aspects_to_probe": ["string - specific vocabulary terms to track, methodological signatures to match, metaphors to trace, or framing shifts to detect in the deep scan"],
+      "specific_ideas_to_trace": ["string - idea_ids from Pass 1 that show the strongest signals of connection to this prior work, based on vocabulary/method/metaphor overlap"]
     },
     "relationship_type_definitions": {
-      "direct_precursor": "Contains the same or similar ideas in earlier form. The current work's concepts, arguments, or positions can be found here in proto-form, full form, or contradictory form. Standard genealogical tracing applies.",
-      "indirect_contextualizer": "Does NOT discuss the same topics as the current work, but contains foundational thinking, analytical methods, cognitive patterns, or frameworks that ENABLE the current argument. The author's intellectual toolkit — how they think — was shaped by this work, even if the subject matter differs entirely.",
-      "different_field_relevant": "Work in a substantially different domain that nonetheless shapes the author's cognitive patterns. The cross-domain transfer of methods, metaphors, structural analogies, or problem-solving approaches is the key connection. May also create blind spots.",
-      "counter_position": "Prior work where the author held a position that is opposite to, or significantly different from, the current work. The SHIFT itself is the analytically interesting datum — what changed and how the author manages the reversal.",
-      "tangential": "Minimal meaningful connection to the current work. May share some vocabulary or broad thematic overlap but does not serve as precursor, contextualizer, or counter-position in any substantial way."
+      "direct_precursor": "Contains the same or similar ideas in earlier form. The current work's concepts, arguments, or positions can be found here in proto-form, full form, or contradictory form. Standard genealogical tracing applies. SIGNALS: shared vocabulary (same terms or precursor terms), similar methodological signatures, same metaphors, matching domain crossings.",
+      "indirect_contextualizer": "Does NOT discuss the same topics as the current work, but contains foundational thinking, analytical methods, cognitive patterns, or frameworks that ENABLE the current argument. The author's intellectual toolkit — how they think — was shaped by this work, even if the subject matter differs entirely. SIGNALS: shared methodological signatures even with different subject matter, recurring analytical moves, same argumentative structures applied to different domains.",
+      "different_field_relevant": "Work in a substantially different domain that nonetheless shapes the author's cognitive patterns. The cross-domain transfer of methods, metaphors, structural analogies, or problem-solving approaches is the key connection. May also create blind spots. SIGNALS: the target work's domain_crossings reference this field, metaphors from this domain appear in the target work, structural analogies bridge the two domains.",
+      "counter_position": "Prior work where the author held a position that is opposite to, or significantly different from, the current work. The SHIFT itself is the analytically interesting datum — what changed and how the author manages the reversal. SIGNALS: same vocabulary used with opposite valence, same evidence cited for different conclusions, framing shifts from tentative to definitive (or vice versa).",
+      "tangential": "Minimal meaningful connection to the current work. May share some vocabulary or broad thematic overlap but does not serve as precursor, contextualizer, or counter-position in any substantial way. CLASSIFY AS TANGENTIAL ONLY IF: no vocabulary overlap, no methodological signature matches, no metaphor overlap, no relevant domain crossings."
     }
   },
   "extraction_focus": [
@@ -45,16 +49,22 @@
       "analysis_type_plural": "relationship classifications",
       "core_question": "What kind of intellectual relationship does this prior work have to the current work?",
       "extraction_steps": [
-        "COMPARE SUBJECT MATTER: Does this prior work discuss the same or similar topics as the current work? If yes, likely direct_precursor or counter_position. If no, consider indirect_contextualizer or different_field_relevant.",
-        "CHECK FOR IDEA OVERLAP: Do specific ideas, arguments, or positions from the current work appear in any form in this prior work? High overlap = direct_precursor. No overlap but foundational = indirect_contextualizer.",
-        "ASSESS DOMAIN: Is the prior work in the same intellectual domain as the current work? Same domain but different topic = indirect_contextualizer. Different domain entirely = different_field_relevant.",
-        "CHECK FOR REVERSALS: Does the author hold positions in this prior work that are opposite to the current work? If so, counter_position.",
-        "EVALUATE INTELLECTUAL FUNCTION: What role does this prior work play in the author's intellectual trajectory? Does it provide tools, frameworks, methods, or habits of thought that later appear (perhaps unconsciously) in the current work?",
-        "RECOMMEND FOCUS: Based on the classification, specify what the deep scan should look for — direct traces (for precursors), foundational patterns (for contextualizers), cross-domain transfers (for different-field), or position shifts (for counter-positions)."
+        "SCAN VOCABULARY OVERLAP: Compare the target work's vocabulary map (coined terms, repurposed terms, key oppositions) against this prior work. Do the same terms appear? Are precursor terms present? Are different terms used for the same concepts? Vocabulary overlap is the strongest signal for direct_precursor classification.",
+        "MATCH METHODOLOGICAL SIGNATURES: Compare the target work's methodological profile (evidence types, argumentative structure, recurring analytical moves) against this prior work. Do the same argumentative moves appear? Same evidence types? This is the strongest signal for indirect_contextualizer — shared methods without shared topics means foundational influence.",
+        "TRACE METAPHOR OVERLAP: Do any of the target work's core metaphors appear in this prior work? Metaphors that carry analytical weight often migrate across an author's works. Same metaphor in different context = likely precursor or contextualizer.",
+        "CHECK DOMAIN CROSSINGS: Does this prior work belong to any of the source domains identified in the target work's domain_crossings? If so, this is likely a different_field_relevant work that provided the imported concepts.",
+        "CHECK FOR FRAMING REVERSALS: Compare how key claims are framed. If the target work presents something as 'definitive' that this prior work treated as 'tentative', or if the target work now opposes what this prior work advocated, classify as counter_position.",
+        "ASSESS OVERALL RELATIONSHIP: Based on vocabulary overlap, methodological similarity, metaphor overlap, domain connections, and framing patterns, classify the relationship type. Use the SIGNALS listed in each type definition.",
+        "IDENTIFY SPECIFIC IDEAS TO TRACE: Based on the overlap patterns found, list which specific idea_ids from Pass 1 show the strongest connection signals to this prior work. This focuses Pass 2's scanning effort.",
+        "RECOMMEND FOCUS: Based on the classification AND the specific overlaps found, specify exactly what Pass 2 should look for — which vocabulary terms to track, which methodological signatures to match, which metaphors to trace, which framing shifts to detect."
       ],
       "key_fields": {
         "relationship_type": "The primary classification of how this prior work relates to the current work",
         "confidence": "How confident we are in the classification",
+        "vocabulary_overlap": "Which key terms overlap — gives Pass 2 specific terms to hunt for",
+        "methodological_similarity": "Which analytical moves match — gives Pass 2 patterns to trace",
+        "metaphor_overlap": "Which metaphors appear — gives Pass 2 metaphorical threads to follow",
+        "specific_ideas_to_trace": "Which ideas from Pass 1 have the strongest signals — focuses Pass 2's effort",
         "recommended_analysis_focus": "What Pass 2 should prioritize when deeply scanning this work"
       },
       "id_field": null,
@@ -64,7 +74,7 @@
         "transfers_framework_to",
         "is_counter_position_to"
       ],
-      "special_instructions": "This is a QUICK classification step, not a deep analysis. Read the ideas from Pass 1 and a summary/excerpt of the prior work, then classify. Err on the side of indirect_contextualizer rather than tangential when in doubt — it's better to analyze deeply and find nothing than to skip a meaningful connection. The recommended_analysis_focus field is critical: it tells Pass 2 exactly what to look for in this specific work."
+      "special_instructions": "This is a classification step informed by RICH multi-dimensional data from Pass 1. You receive not just ideas but their vocabulary, methodological signatures, metaphors, framing choices, and domain crossings. USE ALL THESE DIMENSIONS for classification — don't just compare topics. Two works can share NO topics but have identical methodological signatures (= indirect_contextualizer). A work can be in a completely different field but be the SOURCE of a metaphor the author now uses centrally (= different_field_relevant). Vocabulary overlap is the strongest signal for direct_precursor. Methodological signature matches with different subject matter is the strongest signal for indirect_contextualizer. Err on the side of indirect_contextualizer rather than tangential when in doubt. The specific_ideas_to_trace and key_aspects_to_probe fields are critical — they tell Pass 2 exactly what to search for, making the deep scan far more precise."
     },
     "curation": {
       "item_type": "classification",

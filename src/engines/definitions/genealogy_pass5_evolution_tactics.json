@@ -2,7 +2,7 @@
   "engine_key": "genealogy_pass5_evolution_tactics",
   "engine_name": "Genealogy Pass 5: Evolution Tactics Detection",
   "description": "Fifth pass of intellectual genealogy: detects specific evolution tactics — the recurring patterns authors use when dealing with their own prior positions. Identifies conceptual recycling, silent revision, selective continuity, strategic amnesia, and other tactics. The taxonomy of tactics is defined in this engine's canonical schema.",
-  "version": 1,
+  "version": 2,
   "category": "rhetoric",
   "kind": "extraction",
   "reasoning_domain": "genealogy_analysis",
@@ -27,6 +27,9 @@
             "location": "string - approximate location"
           }
         ],
+        "vocabulary_evidence": "string - how vocabulary changes support this tactic detection (e.g., 'same term used with opposite meaning', 'prior term abandoned in favor of new coinage', 'precursor term evolved into current coined term'). Reference specific terms from the target work's vocabulary map.",
+        "framing_evidence": "string - how framing shifts support this tactic detection (e.g., 'was tentative in 2015 work, now presented as axiomatic without new justification'). Reference the framing_comparison data from Pass 2 traces.",
+        "methodological_evidence": "string - how methodological continuity or change supports this tactic (e.g., 'same evidence cited but conclusion reversed', 'same argumentative structure applied to opposite conclusion'). Reference methodological_comparison from Pass 2.",
         "severity": "major | moderate | minor",
         "assessment": "string - analysis of what this tactic achieves, what it conceals, and what it reveals about the author's intellectual management"
       }
@@ -90,13 +93,29 @@
       "analysis_type_plural": "evolution tactics analyses",
       "core_question": "What recurring tactics does this author employ to manage the relationship between their prior and current positions?",
       "extraction_steps": [
-        "SYSTEMATICALLY COMPARE: For each idea with an evolution timeline (from Pass 3), compare the current position with known prior positions",
-        "IDENTIFY DIVERGENCES: For each divergence between prior and current position, determine which tactic pattern it matches from the taxonomy",
-        "ASSESS ACKNOWLEDGMENT: Determine whether the author acknowledges the shift openly, manages it implicitly, or ignores it entirely",
-        "RATE SEVERITY: Judge severity based on how much the tactic distorts the intellectual record — major tactics significantly misrepresent the prior position; minor ones are common scholarly practice",
-        "LOOK FOR CLUSTERS: Identify tactics that work together — e.g., narrative_bootstrapping often accompanies escalation",
-        "CHECK INDIRECT SOURCES: Review foundational_patterns and cross_domain_transfers from Pass 2. Indirect contextualizer and different-field works often reveal framework_migration tactics that are invisible when only looking at direct precursors. If the author imports analytical methods from a different domain without acknowledgment, that is both framework_migration and potentially strategic_amnesia.",
-        "SYNTHESIZE PATTERN: Describe what the overall tactic usage reveals about the author's intellectual management style"
+        "RECEIVE RICH EVIDENCE: You now have THREE layers of evidence: (1) the target work's rich profile from Pass 1 (vocabulary, methodological signatures, metaphors, framing choices, positioning moves), (2) Pass 2's dimensional comparisons (vocabulary_comparison, methodological_comparison, metaphor_comparison, framing_comparison for each trace), and (3) Pass 3's evolution timelines. USE ALL THREE LAYERS.",
+
+        "DETECT ESCALATION using framing_comparison data: For each trace where Pass 2 recorded a framing shift (e.g., prior_framing='tentative' → current_framing='definitive'), check whether new evidence justifies the confidence increase. If not, this is escalation. The framing_comparison field is your PRIMARY evidence for this tactic. Also check the target work's framing.presented_as field — ideas presented as 'self_evident' or 'axiomatic' without justification in the current text are escalation candidates.",
+
+        "DETECT CONCEPTUAL RECYCLING using vocabulary data: For each idea, compare Pass 1's vocabulary (coined terms, repurposed terms) against Pass 2's vocabulary_comparison (shared_terms, prior_terms_replaced, semantic_drift). When the same argument appears under new vocabulary, or old terms are used for new purposes, that's conceptual recycling. The vocabulary_evidence field must cite specific terms.",
+
+        "DETECT RETROACTIVE FRAMING using positioning_profile: Compare the target work's claimed_novelty and claimed_continuity (from Pass 1's positioning_profile) against the actual evidence from Pass 2. If the author CLAIMS continuity ('as I've always argued') but Pass 2 shows the prior position was materially different, that's retroactive framing. If the author CLAIMS novelty but Pass 2 shows full_form traces in prior works, that's also significant.",
+
+        "DETECT FRAMEWORK MIGRATION using domain_crossings + Pass 2 cross_domain_transfers: When the target work's domain_crossings show imports from other fields, and Pass 2's cross_domain_transfers detail how those imports actually work, check whether the migration is acknowledged or silent. Unacknowledged framework migration is a tactic.",
+
+        "DETECT SILENT REVISION using Pass 2 traces with contradictory_form: Any trace where form_in_prior_work='contradictory_form' is a candidate for silent revision if the author doesn't acknowledge the reversal.",
+
+        "DETECT SELECTIVE CONTINUITY using vocabulary + framing: When the author uses continuity language ('building on my earlier work') but the vocabulary_comparison shows semantic_drift or the framing_comparison shows shifted confidence levels, the claimed continuity is selective.",
+
+        "ASSESS EACH TACTIC: For every tactic detected, populate vocabulary_evidence, framing_evidence, and methodological_evidence with specific references to the upstream data. These evidence fields make the detection VERIFIABLE rather than impressionistic.",
+
+        "RATE SEVERITY: Major = significantly misrepresents the intellectual record with clear evidence from vocabulary/framing/method comparisons. Minor = common scholarly practice. Moderate = in between.",
+
+        "LOOK FOR CLUSTERS: Tactics often work together (narrative_bootstrapping + escalation, selective_continuity + retroactive_framing). Identify these patterns.",
+
+        "CHECK INDIRECT SOURCES: Review foundational_patterns and cross_domain_transfers from Pass 2 for framework_migration and strategic_amnesia tactics.",
+
+        "SYNTHESIZE PATTERN: Describe what the overall tactic usage reveals, grounded in the vocabulary, framing, and methodological evidence."
       ],
       "key_fields": {
         "tactic_id": "Unique identifier for each detected tactic instance",
@@ -110,7 +129,7 @@
         "legitimates",
         "enables"
       ],
-      "special_instructions": "Be rigorous but fair. Not every change of mind is a 'tactic' — genuine intellectual development is normal and healthy. Focus on cases where the MANAGEMENT of the change is itself noteworthy — where the author obscures, inflates, or misrepresents the relationship between past and present positions. The taxonomy in the canonical_schema is your primary reference — use it precisely. NEW: Pay special attention to framework_migration from indirect contextualizer and different-field works. When an author uses analytical tools from one domain in another without acknowledging the transfer, this is a tactic worth detecting."
+      "special_instructions": "Be rigorous but fair. Not every change of mind is a 'tactic' — genuine intellectual development is normal and healthy. Focus on cases where the MANAGEMENT of the change is noteworthy. You now have UNPRECEDENTED evidence quality: Pass 1 gives you the target work's vocabulary, methodology, metaphors, framing, and positioning; Pass 2 gives you vocabulary_comparison, methodological_comparison, metaphor_comparison, and framing_comparison for each trace. USE THIS EVIDENCE. Every tactic you detect must be grounded in specific vocabulary_evidence, framing_evidence, or methodological_evidence — not just your impression. The framing_comparison data is especially powerful: when Pass 2 records prior_framing='tentative' → current_framing='definitive', that IS escalation evidence. When vocabulary_comparison shows semantic_drift, that IS potential conceptual_recycling evidence. When the positioning_profile claims novelty but Pass 2 shows full_form traces, that IS retroactive_framing evidence. Make your detections VERIFIABLE."
     },
     "curation": {
       "item_type": "tactic",

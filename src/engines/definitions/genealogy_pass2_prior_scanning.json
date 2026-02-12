@@ -2,7 +2,7 @@
   "engine_key": "genealogy_pass2_prior_scanning",
   "engine_name": "Genealogy Pass 2: Prior Work Scanning (Relationship-Aware)",
   "description": "Second pass of intellectual genealogy: scans a single prior work for genealogical connections to the current work. ADAPTS analysis strategy based on the relationship classification from Pass 1B. For direct precursors: traces specific ideas. For indirect contextualizers: identifies foundational patterns and intellectual toolkits. For different-field works: detects cross-domain transfers. For counter-positions: analyzes reversals. Runs ONCE PER PRIOR WORK.",
-  "version": 2,
+  "version": 3,
   "category": "temporal",
   "kind": "extraction",
   "reasoning_domain": "genealogy_analysis",
@@ -29,7 +29,19 @@
         ],
         "confidence": "high | medium | low",
         "notable_differences": "string - how the prior version differs from the current version",
-        "function_in_prior_work": "string - what role this idea played in the prior argument"
+        "function_in_prior_work": "string - what role this idea played in the prior argument",
+        "vocabulary_comparison": {
+          "shared_terms": ["string - terms used in both works for this idea"],
+          "prior_terms_replaced": ["string - terms used in the prior work that were later abandoned or renamed"],
+          "semantic_drift": "string - if the same term is used, how has its meaning shifted?"
+        },
+        "methodological_comparison": "string - does the author argue for this idea using the same evidence types and analytical moves as in the current work, or differently?",
+        "metaphor_comparison": "string - are the same metaphors used? Have metaphors evolved (simpler → more elaborate, or different metaphor entirely)?",
+        "framing_comparison": {
+          "prior_framing": "tentative | qualified | definitive | axiomatic | exploratory",
+          "current_framing": "tentative | qualified | definitive | axiomatic | exploratory",
+          "framing_shift": "string - describe the confidence trajectory: did this go from tentative to definitive? From exploratory to axiomatic? This directly feeds escalation detection in Pass 5"
+        }
       }
     ],
     "ideas_not_found": [
@@ -52,6 +64,8 @@
           }
         ],
         "manifestation_in_current_work": "string - where and how this pattern appears (perhaps transformed) in the current work",
+        "matched_methodological_signature": "string - if this pattern corresponds to a specific methodological signature from the target work's profile, name it here. This is the KEY link — it connects the prior work's method to the current work's method.",
+        "vocabulary_carried_forward": ["string - specific terms or phrases from this prior work that persist into the current work, even if repurposed"],
         "pattern_type": "analytical_method | cognitive_habit | recurring_metaphor | problem_solving_approach | theoretical_framework | argumentative_structure | epistemic_commitment",
         "author_awareness": "explicit | implicit | unconscious - whether the author seems aware of deploying this pattern from their earlier work"
       }
@@ -123,45 +137,40 @@
       "analysis_type_plural": "prior work scans",
       "core_question": "What genealogical connections exist between this prior work and the current work, given the classified relationship type?",
       "extraction_steps": [
-        "RECEIVE CONTEXT: Review the target ideas from Pass 1 AND the relationship classification from Pass 1B. The classification tells you what kind of prior work this is and what to look for.",
+        "RECEIVE RICH CONTEXT: Review the FULL target work profile from Pass 1 (ideas with their vocabulary, methodological signatures, metaphors, framing, domain crossings, genealogical hints) AND the relationship classification from Pass 1B (including vocabulary_overlap, methodological_similarity, metaphor_overlap, specific_ideas_to_trace, and key_aspects_to_probe). These give you PRECISE search targets, not just generic ideas.",
 
         "ADAPT STRATEGY BASED ON RELATIONSHIP TYPE:",
 
-        "--- IF DIRECT PRECURSOR: Follow the standard genealogical trace approach ---",
-        "SCAN FOR EACH IDEA: Systematically search the prior work for traces of each target idea",
-        "CLASSIFY FORM: For each trace found, determine its form — proto_form, full_form, contradictory_form, absent_but_implied, or different_framing",
-        "ASSESS DIFFERENCES: Note how the prior version differs from the current version",
-        "DOCUMENT FUNCTION: Record what role this idea played in the prior argument",
-        "NOTE ABSENCES: Record ideas not present and assess significance",
-        "Populate: traces_found, ideas_not_found, new_discoveries. Leave foundational_patterns, cross_domain_transfers, reversal_analysis empty or minimal.",
+        "--- IF DIRECT PRECURSOR: Trace ideas with full dimensional comparison ---",
+        "PRIORITIZE specific_ideas_to_trace from Pass 1B — these have the strongest connection signals",
+        "FOR EACH TRACED IDEA: Don't just confirm presence. Compare VOCABULARY (same terms? precursor terms? semantic drift?), METHODOLOGY (same argumentative moves?), METAPHORS (same or evolved?), and FRAMING (was this tentative before but definitive now? exploratory before but axiomatic now?). Populate vocabulary_comparison, methodological_comparison, metaphor_comparison, and framing_comparison for each trace.",
+        "FRAMING COMPARISON IS CRITICAL: If an idea was 'tentative' in the prior work but 'definitive' in the current work, that's an escalation signal. If 'exploratory' became 'axiomatic', that's even stronger. Record the trajectory precisely — Pass 5 needs this for tactic detection.",
+        "NOTE ABSENCES: Record ideas not present and assess significance — especially ideas the author presents as 'established' in the current work that DON'T appear here.",
+        "Populate: traces_found (with all comparison fields), ideas_not_found, new_discoveries.",
 
-        "--- IF INDIRECT CONTEXTUALIZER: Focus on foundational thinking patterns ---",
-        "DO NOT search for direct traces of specific ideas (they won't be there — that's the point)",
-        "Instead: IDENTIFY FOUNDATIONAL PATTERNS — analytical methods, cognitive habits, recurring metaphors, problem-solving approaches, theoretical frameworks, argumentative structures, or epistemic commitments in this prior work",
-        "For each pattern: trace how it ENABLES the current work's arguments, even if the author doesn't consciously deploy it",
-        "Assess AUTHOR AWARENESS: Does the author realize they're using this toolkit from their earlier work, or is it unconscious?",
-        "Populate: foundational_patterns primarily. traces_found may have a few entries if any direct connections exist. ideas_not_found should note that absence is EXPECTED for this relationship type.",
+        "--- IF INDIRECT CONTEXTUALIZER: Match methodological signatures ---",
+        "USE the target work's overall_methodological_profile as your search template. For each of the author's recurring_analytical_moves and primary_evidence_types, look for the SAME MOVES in this prior work.",
+        "MATCH argumentative_structure: Does the author build arguments the same way here? This is the smoking gun for foundational influence.",
+        "For each foundational pattern found, fill in matched_methodological_signature to explicitly link it to the target work's profile.",
+        "TRACK VOCABULARY that carries forward — even if used differently, terms that persist across works reveal deep intellectual commitments.",
+        "Populate: foundational_patterns primarily (with matched_methodological_signature and vocabulary_carried_forward).",
 
-        "--- IF DIFFERENT FIELD RELEVANT: Focus on cross-domain transfer ---",
-        "IDENTIFY what methods, frameworks, metaphors, or structural analogies the author imports from the prior work's domain into the current work's domain",
-        "ASSESS VALIDITY: Is the cross-domain transfer analytically justified, or does it introduce distortions?",
-        "IDENTIFY BLIND SPOTS: What does expertise in the source domain cause the author to miss in the target domain?",
-        "IDENTIFY UNIQUE INSIGHTS: What does the cross-domain perspective uniquely reveal?",
+        "--- IF DIFFERENT FIELD RELEVANT: Trace domain crossings to their source ---",
+        "USE the target work's domain_crossings as your map. Each crossing identifies a source_domain and what_is_imported. If this prior work IS that source domain, trace exactly what was imported and how it was transformed.",
+        "ASSESS whether the cross-domain move preserves or distorts the original concept's meaning and validity.",
+        "IDENTIFY metaphors that originated in this domain and now do analytical work in the target work.",
         "Populate: cross_domain_transfers primarily, plus any foundational_patterns.",
 
-        "--- IF COUNTER POSITION: Focus on reversals and shifts ---",
-        "IDENTIFY specific positions that were reversed or significantly modified",
-        "CLASSIFY the nature of each shift: full_reversal, significant_modification, subtle_drift, or recontextualization",
-        "ASSESS MANAGEMENT: How does the author handle the reversal — acknowledge, explain, minimize, or ignore?",
-        "IDENTIFY what drove the change",
-        "NOTE what remains consistent despite the reversals",
-        "Populate: reversal_analysis primarily, plus any traces_found for ideas that persist in modified form.",
+        "--- IF COUNTER POSITION: Focus on reversals with framing evidence ---",
+        "IDENTIFY specific positions reversed or significantly modified. USE the target work's framing data — positions now presented as 'self_evident' or 'definitive' are prime candidates for being reversals from earlier 'tentative' or 'contested' positions.",
+        "For each reversal, document the VOCABULARY shift (did the same words change meaning?), FRAMING shift (tentative → definitive?), and EVIDENCE shift (same evidence, different conclusion?).",
+        "ASSESS how the author MANAGES the reversal — this feeds directly into Pass 5's tactic detection.",
+        "Populate: reversal_analysis primarily, plus traces_found for ideas that persist in modified form.",
 
         "--- IF TANGENTIAL: Minimal analysis ---",
-        "Brief scan for any unexpected connections. If truly tangential, document why and keep analysis short.",
-        "Populate: meta with explanation, minimal other fields.",
+        "Brief scan for unexpected vocabulary or methodological matches. If truly tangential, document why.",
 
-        "ALWAYS: Flag any new discoveries not captured by the target idea list"
+        "ALWAYS: Flag new discoveries not in the target idea list. Pay special attention to ideas that appear in this prior work but the author chose NOT to carry forward — strategic omissions are genealogically significant."
       ],
       "key_fields": {
         "trace_id": "Unique identifier for each genealogical trace (direct precursors)",
@@ -182,7 +191,7 @@
         "transfers_framework_to",
         "reverses_position_from"
       ],
-      "special_instructions": "CRITICAL: Your analysis strategy MUST be determined by the relationship_type classification provided. Do not treat all prior works the same way. A game theory textbook by the author should NOT be scanned for direct traces of technofeudalism ideas — it should be scanned for the foundational thinking patterns (strategic reasoning, information asymmetry analysis, etc.) that later enable the technofeudalism argument. Conversely, a direct precursor work SHOULD be scanned for specific idea traces. Match your approach to the relationship type. When in doubt about which fields to populate, use the recommended_analysis_focus from the Pass 1B classification."
+      "special_instructions": "CRITICAL: You now receive a RICH multi-dimensional profile of the target work — not just idea names but vocabulary maps, methodological signatures, metaphors, framing choices, domain crossings, and positioning moves. USE ALL OF THIS. Your analysis strategy MUST be determined by the relationship_type from Pass 1B, but your SEARCH TARGETS come from Pass 1's rich profile. For direct precursors: don't just confirm an idea exists — compare vocabulary, methods, metaphors, and framing between the two works. The framing_comparison field is ESSENTIAL for downstream tactic detection: if something was 'tentative' before and is 'definitive' now, that's exactly what Pass 5 needs. For indirect contextualizers: match the target work's methodological signatures against this work — same analytical moves in different domains is the key signal. For different-field works: trace domain_crossings back to their source. Always use specific_ideas_to_trace and key_aspects_to_probe from Pass 1B to focus your search — these have already been pre-filtered for relevance."
     },
     "curation": {
       "item_type": "trace",
