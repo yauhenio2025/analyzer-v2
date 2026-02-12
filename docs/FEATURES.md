@@ -2,6 +2,40 @@
 
 > Auto-maintained by Claude Code. Last updated: 2026-02-12
 
+## Functions (First-Class Entity)
+
+### Function Definitions
+- **Status**: Active
+- **Description**: First-class LLM function entities from decider-v2. 24 functions with prompt templates, model config, I/O contracts, implementation locations, and DAG relationships.
+- **Entry Points**:
+  - `src/functions/schemas.py:1-305` - Pydantic models (FunctionDefinition, FunctionSummary, PromptTemplate, ModelConfigSpec, IOContract, Implementation)
+  - `src/functions/registry.py:1-140` - FunctionRegistry with search, filter, and reload
+  - `src/functions/definitions/` - 24 JSON files (coordinator_decision, question_generation, emergent_synthesis, etc.)
+  - `src/api/routes/functions.py:1-172` - Full REST API (list, get, categories, projects, prompts, implementations)
+  - `src/api/main.py:16` - Router registration and lifespan loading
+- **Categories**: coordination (3), generation (3), analysis (2), synthesis (2), tool (11), infrastructure (3)
+- **Tiers**: strategic (Opus, 3), tactical (Sonnet, 16), lightweight (Haiku, 5)
+- **Schema Features**:
+  - `prompt_templates[]` - Full prompt text with {variable} placeholders per role
+  - `model_config_spec` - Model name, max_tokens, thinking_budget, streaming, temperature
+  - `io_contract` - Input/output descriptions with optional JSON schemas
+  - `implementations[]` - Code locations with file path, symbol, line numbers, GitHub URLs
+  - `depends_on_functions[]` / `feeds_into_functions[]` - DAG edges between functions
+  - `invocation_pattern` - every_question, periodic, on_demand, once_per_session, per_vector
+- **API Endpoints**: `/v1/functions`, `/v1/functions/{key}`, `/v1/functions/categories`, `/v1/functions/projects`, `/v1/functions/{key}/prompts`, `/v1/functions/{key}/implementations`, `/v1/functions/project/{project}`
+- **Added**: 2026-02-12
+
+### Decider Workflow Definitions (3 new)
+- **Status**: Active
+- **Description**: Function-backed workflow definitions for decider-v2's main loops using `function_key` instead of `engine_key`
+- **Entry Points**:
+  - `src/workflows/definitions/decider_question_lifecycle.json` - 5-pass: coordinator → question gen → quality check → synthesis → implications
+  - `src/workflows/definitions/decider_onboarding.json` - 4-pass: vector init (IDEAS + PROCESS) → dedup → grid analysis
+  - `src/workflows/definitions/decider_answer_processing.json` - 6-pass: category → synthesis → implications → handoff → weight → grid
+- **Category**: DECISION_SUPPORT (new WorkflowCategory)
+- **Schema Extension**: `WorkflowPass.function_key` field added alongside `engine_key`
+- **Added**: 2026-02-12
+
 ## Audiences (First-Class Entity)
 
 ### Audience Definitions

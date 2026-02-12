@@ -6,6 +6,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **First-Class Functions** - 24 decider-v2 LLM functions registered as first-class entities
+  - New module: `src/functions/` with schemas, registry, and API routes
+  - Each function captures: prompt templates (actual text), model config, I/O contracts, implementation locations with GitHub links, DAG relationships
+  - 6 categories (coordination, generation, analysis, synthesis, tool, infrastructure), 3 tiers (strategic/tactical/lightweight)
+  - Full REST API at `/v1/functions` with per-section getters and filtering
+  - FunctionRegistry following EngineRegistry pattern (JSON file storage)
+  - 3 new decider workflow definitions (question_lifecycle, onboarding, answer_processing) using `function_key`-backed passes
+  - `DECISION_SUPPORT` added to WorkflowCategory enum
+  - `function_key` field added to WorkflowPass schema
+
 - **First-Class Audiences** - Audiences are now a proper entity in analyzer-v2
   - 5 audience definitions extracted from analyzer's audience_profiles.py: analyst, executive, researcher, activist, social_movements
   - Rich data model with 8 sections: identity, engine affinities, visual style, textual style, curation, strategist, pattern discovery, vocabulary
