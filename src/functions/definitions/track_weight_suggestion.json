@@ -1,0 +1,81 @@
+{
+  "function_key": "track_weight_suggestion",
+  "function_name": "Track Weight Suggestion",
+  "description": "Analyzes onboarding answers and suggests relative weights for IDEAS vs PROCESS tracks. Determines whether the user needs more conceptual exploration (IDEAS) or practical execution support (PROCESS) based on their core challenge, clarity items, uncertainty items, dependencies, and success definition.",
+  "version": 1,
+  "category": "analysis",
+  "tier": "tactical",
+  "invocation_pattern": "periodic",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 256,
+    "thinking_budget": null,
+    "streaming": false,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "user",
+      "template_text": "Analyze this project context and determine whether the user needs more help with:\n- IDEAS (conceptual clarity, articulating thoughts, exploring framings)\n- PROCESS (practical execution, task management, gathering information)\n\n## Context\n\nCore Challenge: {core_challenge_text}\n\nClarity Items: {clarity_items_json}\n\nUncertainty Items: {uncertainty_items_json}\n\nDependencies: {dependencies_json}\n\nSuccess Definition: {success_definition_json}\n\n## Your Response\n\nReturn ONLY a JSON object with suggested weights:\n{\"ideas\": 0.X, \"process\": 0.X, \"rationale\": \"...\"}\n\nThe weights should sum to 1.0. Higher IDEAS weight means the user needs more conceptual work.\nHigher PROCESS weight means the user needs more execution support.",
+      "variables": [
+        "core_challenge_text",
+        "clarity_items_json",
+        "uncertainty_items_json",
+        "dependencies_json",
+        "success_definition_json"
+      ],
+      "notes": "Returns JSON with 'ideas' and 'process' float weights summing to 1.0. Falls back to {ideas: 0.5, process: 0.5} on parse error."
+    }
+  ],
+  "io_contract": {
+    "input_description": "Onboarding context dictionary containing core_challenge (starter + text), clarity_items, uncertainty_items, dependencies, and success_definition.",
+    "output_description": "Dictionary with 'ideas' (float 0.0-1.0) and 'process' (float 0.0-1.0) weights summing to 1.0.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "onboarding_context": {
+          "type": "object",
+          "properties": {
+            "core_challenge": {
+              "type": "object",
+              "properties": {
+                "starter": { "type": "string" },
+                "text": { "type": "string" }
+              }
+            },
+            "clarity_items": { "type": "array", "items": { "type": "object" } },
+            "uncertainty_items": { "type": "array", "items": { "type": "object" } },
+            "dependencies": { "type": "array", "items": { "type": "object" } },
+            "success_definition": { "type": "object" }
+          }
+        }
+      }
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "ideas": { "type": "number", "minimum": 0, "maximum": 1 },
+        "process": { "type": "number", "minimum": 0, "maximum": 1 }
+      },
+      "required": ["ideas", "process"]
+    }
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService.suggest_track_weights_from_onboarding",
+      "line_start": 1003,
+      "line_end": 1057,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Sends onboarding context to LLM, parses JSON response for ideas/process weights. Includes markdown code block extraction and fallback to balanced 0.5/0.5 on error."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": [],
+  "feeds_into_functions": [],
+  "track": "both",
+  "tags": ["onboarding", "track-balance", "weights", "json-output"],
+  "notes": "Lightweight call with only 256 max_tokens. Uses the tactical model (Sonnet) since this is a straightforward classification task. Called after onboarding to set initial track bias."
+}

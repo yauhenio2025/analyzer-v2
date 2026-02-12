@@ -1,0 +1,68 @@
+{
+  "function_key": "framing_analyzer",
+  "function_name": "Framing Analyzer",
+  "description": "Compare different conceptual framings to understand their implications. Analyzes multiple framings/perspectives (2-5) to surface hidden assumptions, compare fairly, identify trade-offs, consider stakeholder impact, and recommend the most useful framing for the user's situation. Supports the RESOLVE vector of the IDEAS track.",
+  "version": 1,
+  "category": "tool",
+  "tier": "tactical",
+  "invocation_pattern": "on_demand",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 4096,
+    "thinking_budget": null,
+    "streaming": true,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are a FRAMING ANALYZER - an expert at comparing different ways of conceptualizing problems.\n\nYOUR ROLE:\nYou help users understand how different framings of a problem or decision lead to different insights,\npriorities, and potential solutions. A \"framing\" is a mental model or perspective through which\nsomeone views a situation.\n\nWHAT MAKES A GOOD ANALYSIS:\n1. SURFACE THE HIDDEN: Each framing has assumptions baked in - make these explicit\n2. COMPARE FAIRLY: Don't favor one framing over another unless the context demands it\n3. IDENTIFY TRADE-OFFS: What does each framing make visible vs invisible?\n4. CONSIDER STAKEHOLDERS: Who benefits or loses under each framing?\n5. BE PRACTICAL: Which framing is most useful for the user's actual situation?\n\nANALYSIS STRUCTURE:\nFor each framing, identify:\n- Core metaphor/analogy it uses\n- What it emphasizes\n- What it minimizes or ignores\n- Key assumptions\n- Implied solutions/actions\n- Potential blind spots\n\nThen provide:\n- A comparison matrix\n- Synthesis of insights\n- Recommendation based on context\n\nOUTPUT FORMAT (JSON):\n{\n  \"framings_analyzed\": [\n    {\n      \"name\": \"Framing name/label\",\n      \"core_metaphor\": \"The underlying analogy\",\n      \"emphasizes\": [\"What it highlights\"],\n      \"minimizes\": [\"What it downplays\"],\n      \"assumptions\": [\"Hidden assumptions\"],\n      \"implied_actions\": [\"Actions it suggests\"],\n      \"blind_spots\": [\"Potential oversights\"],\n      \"best_for\": \"When this framing is most useful\"\n    }\n  ],\n  \"comparison_matrix\": {\n    \"dimensions\": [\"dimension1\", \"dimension2\", ...],\n    \"scores\": {\n      \"Framing 1\": {\"dimension1\": \"high/medium/low\", ...},\n      \"Framing 2\": {\"dimension1\": \"high/medium/low\", ...}\n    }\n  },\n  \"synthesis\": {\n    \"common_ground\": [\"What all framings agree on\"],\n    \"key_tensions\": [\"Where framings conflict\"],\n    \"missing_perspectives\": [\"What no framing addresses\"]\n  },\n  \"recommendation\": {\n    \"primary_framing\": \"Recommended framing\",\n    \"rationale\": \"Why this framing fits the context\",\n    \"integration_suggestions\": [\"How to incorporate insights from other framings\"]\n  },\n  \"generated_items\": [\n    {\n      \"text\": \"New item to add to model\",\n      \"vector\": \"articulate|investigate|resolve\",\n      \"reasoning\": \"Why this item matters\"\n    }\n  ]\n}",
+      "variables": ["project_name", "core_challenge", "resolve_items", "articulate_items", "item_ids", "content", "constraints"],
+      "notes": "User prompt is dynamically built from ToolContext and ToolInput. Sections include: PROJECT CONTEXT, CORE CHALLENGE, FRAMINGS TO ANALYZE (from resolve_items or item_ids), RELATED CONCEPTS (from articulate_items), USER CONSTRAINTS, and YOUR TASK."
+    }
+  ],
+  "io_contract": {
+    "input_description": "ToolContext with session items (requires >= 2 RESOLVE items) plus ToolInput with optional item_ids, content, and constraints. Framings are drawn from resolve_items or explicitly provided.",
+    "output_description": "JSON with framings_analyzed (per-framing analysis), comparison_matrix, synthesis (common_ground, key_tensions, missing_perspectives), recommendation, and generated_items for model integration.",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/framing_analyzer.py",
+      "symbol": "FramingAnalyzer.execute",
+      "line_start": 117,
+      "line_end": 182,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Async execute method: builds prompt from context, calls LLM with system prompt, parses JSON response, extracts generated items with IdeasVector mapping, builds summary, returns ToolOutput with confidence_updates {resolve: 0.1}."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/framing_analyzer.py",
+      "symbol": "FramingAnalyzer.SYSTEM_PROMPT",
+      "line_start": 41,
+      "line_end": 107,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "System prompt constant defining the framing analyzer role, analysis structure, and JSON output format."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/framing_analyzer.py",
+      "symbol": "FramingAnalyzer._build_prompt",
+      "line_start": 188,
+      "line_end": 228,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Builds user prompt with sections: PROJECT CONTEXT, CORE CHALLENGE, FRAMINGS TO ANALYZE (from resolve_items/item_ids, limit 5), RELATED CONCEPTS, USER CONSTRAINTS, YOUR TASK."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": [],
+  "feeds_into_functions": ["tradeoff_visualizer"],
+  "track": "ideas",
+  "tags": ["ideas-tool"],
+  "notes": "Unlocks tradeoff_visualizer on completion. Requires >= 2 RESOLVE items to execute. Boosts resolve confidence by 0.1 on success. Generated items default to RESOLVE vector with confidence 0.6."
+}

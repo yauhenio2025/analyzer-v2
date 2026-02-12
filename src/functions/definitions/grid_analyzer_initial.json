@@ -1,0 +1,138 @@
+{
+  "function_key": "grid_analyzer_initial",
+  "function_name": "Grid Analyzer Initial Context",
+  "description": "Analyzes all Vector Initialization items at session activation to identify project-specific themes that warrant wildcard grid dimensions beyond the standard 15x15. Runs ONCE when the session activates, leveraging the rich context from vector initialization instead of waiting for 5+ Q&A rounds. High-confidence suggestions (>=0.85) are added immediately; lower-confidence ones become pending for Q&A confirmation.",
+  "version": 1,
+  "category": "infrastructure",
+  "tier": "tactical",
+  "invocation_pattern": "once_per_session",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 2048,
+    "thinking_budget": null,
+    "streaming": false,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are analyzing the initial context of a decision-support project to identify if the standard 15x15 grid dimensions are sufficient, or if project-specific wildcard dimensions are needed.\n\nThe user has just completed their \"Vector Initialization\" phase where they described:\n- Problem streams (what they're trying to solve)\n- Activities they've already done\n- What they know well vs. need to learn\n- Key expectations and constraints\n\nYour task: Analyze this rich initial context to identify any CLEAR, DISTINCT themes that would benefit from dedicated grid dimensions beyond the standard 15x15.\n\nThe system has TWO SEPARATE TRACKS with COMPLETELY DIFFERENT grids:\n\n**IDEAS Track** (Conceptual exploration):\n- CONDITIONS (rows) = aspects of conceptual understanding: clarity, consistency, evidence, perspectives, assumptions, scope, trade-offs, history, implications, ethics, risk, alternatives, implementation bridge, communication, decision criteria\n- AXES (columns) = spectra for evaluating concepts: specificity, evidence base, consensus, urgency, complexity, abstraction, impact scope, reversibility, certainty, dependencies, novelty, emotional weight, resource needs, time sensitivity, stakeholder count\n\n**PROCESS Track** (Execution planning):\n- CONDITIONS (rows) = practical constraints: resources, timeline, dependencies, risk factors, buy-in, feasibility, learning needs, decision points, quality, communication, budget, capacity, external factors, compliance, metrics\n- AXES (columns) = spectra for evaluating execution: urgency, complexity, control, effort, expertise, parallelizability, visibility, recoverability, cost, quality impact, schedule, risk level, flexibility, measurability, stakeholder impact\n\nCRITICAL: Your suggestion MUST match the track's semantic domain:\n- IDEAS wildcards should be CONCEPTUAL/INTELLECTUAL (e.g., \"Theoretical Completeness\", \"Epistemological Grounding\")\n- PROCESS wildcards should be PRACTICAL/EXECUTION (e.g., \"Regulatory Compliance\", \"Technical Debt\")\n- Do NOT suggest execution-oriented dimensions for IDEAS or conceptual dimensions for PROCESS\n\nRULES FOR SUGGESTING NEW DIMENSIONS:\n1. Only suggest if the theme appears MULTIPLE TIMES across the user's items\n2. The theme must be DISTINCT from existing dimensions (not just a reframing)\n3. The theme must be IMPORTANT enough to the project to track separately\n4. The dimension MUST fit the track's semantic domain (conceptual for IDEAS, practical for PROCESS)\n5. Choose condition vs axis based on the dimension's nature:\n   - CONDITIONS (rows): Things that need attention, constraints, challenges, factors to manage\n   - AXES (columns): Evaluation criteria, ways to measure/assess, dimensions for comparison\n6. Maximum 2 suggestions per track (we're looking for the MOST important gaps only)\n\nEXAMPLES OF GOOD NEW DIMENSIONS:\n- \"Regulatory Compliance\" when items mention government approvals, permits, legal requirements\n- \"Seasonal Timing\" when items mention deadlines tied to seasons, holidays, fiscal years\n- \"Cultural Fit\" when items mention organizational politics, team dynamics, stakeholder buy-in\n- \"Technical Debt\" when items mention legacy systems, migration, backward compatibility\n- \"Geographic Distribution\" when items mention multiple locations, time zones, remote teams\n\nEXAMPLES OF BAD SUGGESTIONS (too generic or already covered):\n- \"Importance\" (too vague, covered by existing axes)\n- \"Risk\" (already covered by Risk Assessment condition)\n- \"Budget\" (already covered by Resource Constraints condition)\n- \"People\" (too vague, covered by Stakeholder conditions)\n\nOUTPUT FORMAT (JSON):\n{\n  \"suggestions\": [\n    {\n      \"dimension_name\": \"Name of suggested dimension\",\n      \"dimension_type\": \"condition\",\n      \"rationale\": \"Why this dimension is needed based on the items analyzed\",\n      \"confidence\": 0.85,\n      \"evidence_items\": [\"Item text 1...\", \"Item text 2...\"]\n    }\n  ],\n  \"analysis_summary\": \"Brief summary of what patterns were found (or not found)\"\n}\n\nIf no new dimensions are needed, return:\n{\n  \"suggestions\": [],\n  \"analysis_summary\": \"The standard grid dimensions adequately cover this project because...\"\n}",
+      "variables": [],
+      "notes": "System prompt is a class constant INITIAL_CONTEXT_SYSTEM_PROMPT on GridAnalyzerService."
+    },
+    {
+      "role": "user",
+      "template_text": "## Track: {track}\n\n## Current Grid Dimensions\n\n### CONDITIONS (rows):\n{conditions_str}\n\n### AXES (columns):\n{axes_str}\n{other_track_section}\n## User's Initial Context\n{onboarding_str}\n\n## Vector Initialization Items\nThe user categorized these items into progress buckets (have_done, know_well, dont_have, etc.):\n{items_str}\n\n## Your Task\nAnalyze whether these items reveal themes that need dedicated grid dimensions beyond the standard 15x15.\nFocus on project-specific patterns that appear MULTIPLE TIMES across items.\nIf the other track already has a similar dimension, DO NOT suggest an overlapping one.\nReturn JSON with your analysis.",
+      "variables": [
+        "track",
+        "conditions_str",
+        "axes_str",
+        "other_track_section",
+        "onboarding_str",
+        "items_str"
+      ],
+      "notes": "Built by _build_initial_context_prompt(). items_str groups items by vector with bucket and feedback annotations. onboarding_str includes core challenge, clarity/uncertainty items, dependencies, and success definition. other_track_section warns against overlap with the other track's existing wildcards."
+    }
+  ],
+  "io_contract": {
+    "input_description": "Track (IDEAS/PROCESS), list of VectorInitItem dicts (with text, vector, bucket, feedback_type, feedback_reason), grid_dimensions dict, optional onboarding_context, optional other_track_wildcards.",
+    "output_description": "Dictionary with suggestions list, analyzer_state dict (with initial_context_analyzed=True), dimensions_added list (high-confidence items added immediately), and analysis_summary string.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "track": { "type": "string", "enum": ["ideas", "process"] },
+        "vector_init_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": { "type": "string" },
+              "vector": { "type": "string" },
+              "bucket": { "type": "string" },
+              "feedback_type": { "type": "string" },
+              "feedback_reason": { "type": "string" }
+            }
+          }
+        },
+        "grid_dimensions": {
+          "type": "object",
+          "properties": {
+            "conditions": { "type": "array", "items": { "type": "string" } },
+            "axes": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "onboarding_context": { "type": "object" },
+        "other_track_wildcards": {
+          "type": "object",
+          "properties": {
+            "wildcard_conditions": { "type": "array", "items": { "type": "string" } },
+            "wildcard_axes": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      },
+      "required": ["track", "vector_init_items", "grid_dimensions"]
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "suggestions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dimension_name": { "type": "string" },
+              "dimension_type": { "type": "string", "enum": ["condition", "axis"] },
+              "rationale": { "type": "string" },
+              "confidence": { "type": "number" },
+              "evidence_items": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "analyzer_state": { "type": "object" },
+        "dimensions_added": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dimension_name": { "type": "string" },
+              "dimension_type": { "type": "string" },
+              "rationale": { "type": "string" },
+              "confidence": { "type": "number" },
+              "source": { "type": "string", "const": "initial_context" }
+            }
+          }
+        },
+        "analysis_summary": { "type": "string" }
+      },
+      "required": ["suggestions", "analyzer_state", "dimensions_added"]
+    }
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/grid_analyzer_service.py",
+      "symbol": "GridAnalyzerService.analyze_initial_context",
+      "line_start": 689,
+      "line_end": 800,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Main entry point. Builds initial context prompt, calls LLM, processes suggestions by confidence threshold: >=0.85 added immediately to dimensions_added, lower confidence stored as pending in analyzer_state for later Q&A confirmation."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/grid_analyzer_service.py",
+      "symbol": "GridAnalyzerService._build_initial_context_prompt",
+      "line_start": 802,
+      "line_end": 920,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Builds the user prompt with current grid dimensions, vector init items grouped by vector with bucket/feedback annotations, onboarding context, and other track wildcard overlap prevention."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": [],
+  "feeds_into_functions": ["grid_analyzer_interview"],
+  "track": "both",
+  "tags": ["grid", "wildcard-dimensions", "initial-analysis", "session-activation", "json-output", "two-tier-confidence"],
+  "notes": "This is the proactive complement to grid_analyzer_interview. By analyzing all VectorInit items upfront, it can detect project-specific themes much earlier than waiting for Q&A rounds. The two-tier confidence system (>=0.85 immediate, <0.85 pending) ensures high-quality suggestions are acted on immediately while borderline ones get Q&A confirmation. Maximum 2 suggestions per track per analysis to prevent grid bloat."
+}

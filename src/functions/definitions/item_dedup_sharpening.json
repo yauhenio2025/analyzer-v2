@@ -1,0 +1,73 @@
+{
+  "function_key": "item_dedup_sharpening",
+  "function_name": "Item Deduplication and Sharpening",
+  "description": "LLM-powered quality control pass that runs after vector_init_generation. Performs three tasks: (1) identifies semantic duplicates -- items expressing the same concept in different words -- and keeps only the best version, (2) identifies vague/fluffy items that are too general to be actionable and either sharpens them into specific items or removes them, (3) checks new items against existing items already in the system to catch cross-duplicates. Uses Sonnet with 3000-token thinking budget for reasoning about semantic similarity.",
+  "version": 1,
+  "category": "analysis",
+  "tier": "tactical",
+  "invocation_pattern": "per_vector",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 4096,
+    "thinking_budget": 3000,
+    "streaming": false,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "user",
+      "template_text": "You are a strict quality controller for a decision support system.\n\nReview these newly generated items and:\n1. IDENTIFY SEMANTIC DUPLICATES - items that express the same concept in different words\n2. IDENTIFY VAGUE/FLUFFY items - items that are too general to be actionable\n3. For duplicates: KEEP only the BEST version (most specific, clearest)\n4. For vague items: Either SHARPEN them or REMOVE them\n\n{existing_section}\n\n## NEW ITEMS TO REVIEW:\n{items_list}\n\n## Your Task\n\nReturn a JSON array with ONLY the items to KEEP (after deduplication and sharpening).\nEach item should have:\n- \"original_index\": The original number (1-based) from the list above\n- \"text\": The item text (may be sharpened/reworded for clarity)\n- \"action\": \"keep\" | \"sharpened\" | \"removed\"\n- \"reason\": Why this decision (especially for removals and sharpenings)\n\nSTRICT RULES:\n- If two items are semantically similar, REMOVE ONE and note which was removed\n- \"The relationship between X and Y\" and \"Relationship between X and Y\" are DUPLICATES\n- \"Balance between A and B\" is VAGUE - sharpen to specific aspect\n- Items must be SPECIFIC enough to act on, think about, research, or decide\n- When in doubt, SHARPEN rather than keep vague\n\nExample response:\n```json\n[\n  {\"original_index\": 1, \"text\": \"The relationship between neoliberalism and solutionism\", \"action\": \"keep\", \"reason\": \"Specific conceptual relationship\"},\n  {\"original_index\": 3, \"text\": \"Relationship between neoliberalism and solutionism\", \"action\": \"removed\", \"reason\": \"Duplicate of item 1\"},\n  {\"original_index\": 4, \"text\": \"How solutionism rhetoric masks neoliberal assumptions\", \"action\": \"sharpened\", \"reason\": \"Original was too vague - 'balance between theoretical sophistication'\"}\n]\n```\n\nOutput ONLY the JSON array.",
+      "variables": [
+        "existing_section",
+        "items_list"
+      ],
+      "notes": "Single user prompt (no system prompt). items_list is formatted as numbered entries like '1. [VECTOR] item text'. existing_section is conditionally included -- when existing_items are provided, it contains a header 'EXISTING ITEMS (already in the system - REMOVE any new items that duplicate these)' followed by the list of existing items with their vectors. The response includes ALL items (kept, sharpened, and removed) but only items with action 'keep' or 'sharpened' are retained in the final output."
+    }
+  ],
+  "io_contract": {
+    "input_description": "items: List of GeneratedItem objects (output from vector_init_generation), existing_items: optional list of dict items already in the system (each with 'text' and 'vector' keys).",
+    "output_description": "Filtered and refined list of GeneratedItem objects. Semantic duplicates are removed (keeping the best version). Vague items are either sharpened (text reworded for specificity) or removed entirely. Items that duplicate existing system items are removed. Original GeneratedItem metadata (vector, suggested_bucket, rationale, contextual_options) is preserved; only the text field may change for sharpened items.",
+    "input_schema": null,
+    "output_schema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["original_index", "text", "action", "reason"],
+        "properties": {
+          "original_index": { "type": "integer", "minimum": 1 },
+          "text": { "type": "string" },
+          "action": { "type": "string", "enum": ["keep", "sharpened", "removed"] },
+          "reason": { "type": "string" }
+        }
+      }
+    }
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService._deduplicate_and_sharpen_items",
+      "line_start": 252,
+      "line_end": 373,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Builds the dedup prompt with numbered item list and optional existing items section, calls Sonnet with 3000-token thinking budget and 4096 max_tokens, parses the JSON response, filters out 'removed' items, updates text for 'sharpened' items while preserving original GeneratedItem metadata (vector, bucket, rationale, contextual_options). Falls back to returning original items if JSON parsing fails."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": ["vector_init_generation"],
+  "feeds_into_functions": [],
+  "track": "both",
+  "tags": [
+    "deduplication",
+    "quality-control",
+    "sharpening",
+    "semantic-similarity",
+    "specificity-enforcement",
+    "sonnet",
+    "extended-thinking",
+    "post-processing",
+    "vector-initialization"
+  ],
+  "notes": "This is a post-processing pass that runs after vector_init_generation. It acts as a quality gate ensuring no semantic duplicates survive and all items are specific enough to be actionable. Uses Sonnet with 3000-token thinking budget (lower than generation's 5000 since the reasoning task is simpler). The function is resilient to LLM failures -- if JSON parsing fails, it returns the original items unchanged rather than crashing. When items are 'sharpened', only the text field is updated; all other metadata (vector, suggested_bucket, rationale, contextual_options) is preserved from the original GeneratedItem. Grid coordinates (suggested_row, suggested_col) from the original items are NOT preserved for sharpened items due to the GeneratedItem reconstruction."
+}

@@ -1,0 +1,75 @@
+{
+  "function_key": "question_generation",
+  "function_name": "Question Generation",
+  "description": "Generates interview questions for a dual-track decision support system. Takes track/vector targeting, session context (items, answers, confidence), and format constraints to produce a contextually relevant question with bespoke UI format, reasoning chain audit, and project-specific options. Enforces format cost/diversity rules and semantic coherence validation.",
+  "version": 1,
+  "category": "generation",
+  "tier": "tactical",
+  "invocation_pattern": "every_question",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 2048,
+    "thinking_budget": null,
+    "streaming": false,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You generate interview questions for a decision support system.\n\n## TRACKS AND VECTORS\n\n**IDEAS Track** (conceptual):\n- ARTICULATE: Questions about expressing, formalizing, structuring concepts\n- INVESTIGATE: Questions about exploring conceptual space, assumptions\n- RESOLVE: Questions about choosing between framings, settling debates\n\n**PROCESS Track** (execution):\n- DO: Questions about tasks, actions, execution\n- LEARN: Questions about information needs, knowledge gaps\n- DECIDE: Questions about priorities, resource allocation, tradeoffs\n\n## QUESTION TYPES\n\n- open_ended: Free text response\n- multiple_choice: Select from options (multi-select by default, unless mutually_exclusive)\n- yes_no: Binary choice\n- slider: Numeric scale\n- ranking: Order items by priority\n- likert: Agreement scale\n- checklist: Select multiple from options\n- matrix: 2D grid assessment\n\n## BESPOKE FORMATS\n\nFor specialized UI rendering, suggest one of these format IDs:\n\n**Text formats:**\n- short_text: Single-line text input with character limit\n- long_text: Multi-line textarea for detailed responses\n- open_ended: Alias for long_text\n\n**Choice formats (IMPORTANT: all include \"Other\" write-in by default):**\n- radio_single_select: The PRIMARY choice format. Supports both single and multi-select.\n  - By default: checkboxes (multi-select) + \"Other\" write-in option\n  - Set format_config.mutually_exclusive=true ONLY when options are logically incompatible\n- multiple_choice: Alias for radio_single_select\n- checkbox_multi_select: Explicit multi-select checkboxes\n- checklist: Alias for checkbox_multi_select\n- dropdown_select: Native dropdown (good for many options, single select)\n- button_group: Clickable buttons for quick selection\n\nCRITICAL: For ALL choice formats, put options in the \"options\" array, NOT in the question text!\n\n**Scale/rating formats:**\n- likert_scale: Semantic scale (e.g., Strongly Disagree to Strongly Agree)\n- yes_no_confidence: Yes/No with confidence slider\n- continuous_slider: Smooth slider for continuous values\n- discrete_slider: Step-based slider with tick marks\n- range_slider: Dual-handle min/max range selection\n- star_rating: Visual 1-5 star rating\n\n**Ranking/ordering formats:**\n- drag_drop_ranking: Drag items to reorder by priority\n- ranking: Alias for drag_drop_ranking\n- top_n_selection: Select N most important items from a list\n- pairwise_comparison: Compare items A vs B sequentially\n\n**Matrix/quantitative formats:**\n- rating_matrix: Multi-criteria evaluation grid (items x criteria)\n- matrix: Alias for rating_matrix\n- point_allocation: Distribute budget/points across options\n\n## YOUR TASK\n\nGenerate a question that:\n1. Targets the specified vector and track\n2. Fills a specific gap in the user's context\n3. Uses an appropriate question type and format\n4. Provides helpful context and examples\n\nOutput JSON only.",
+      "variables": [],
+      "notes": "Static system prompt. Defines the full taxonomy of question types and bespoke formats."
+    },
+    {
+      "role": "user",
+      "template_text": "## TARGET\n- Track: {track}\n- Vector: {target_vector}\n- Suggested Type: {question_type_hint}\n- Suggested Format: {format_hint}\n\n## FORMAT CONSTRAINTS (Cognitive Load Management)\nRecent formats used: {recent_formats}\nAVOID these formats (used recently): {formats_to_avoid}\n{high_cost_guidance}\n\n## PROJECT\nName: {project_name}\nChallenge: {core_challenge}\n\n## DISCOVERED ITEMS (what user has revealed so far)\n{items_text}\n\n## RECENT CONVERSATION (user's actual words - USE THESE FOR OPTIONS)\n{recent_answers}\n\n## CONFIDENCE\n{target_vector}: {confidence_value}\n\n## QUESTIONS ALREADY ASKED (DO NOT REPEAT)\n{previous_questions}\n\nCRITICAL: Do NOT ask questions that:\n1. Cover the same TOPIC or CONCEPT as above, even with different wording\n2. Ask for the same type of information (e.g., definition, examples, timeline)\n3. Circle back to ground already covered\n\n## GENERATE (ALL REASONING FIELDS REQUIRED FOR AUDIT)\nCreate a question that advances understanding in this vector.\nReturn JSON with REQUIRED reasoning chains plus question fields:\n{\n  \"format_reasoning\": {\n    \"chosen_format\": \"the format you selected\",\n    \"format_cost\": 0.0-1.0,\n    \"reason_for_format\": \"Why this format suits this question\",\n    \"rejected_alternatives\": [\"format_x: rejected because...\"]\n  },\n  \"option_reasoning\": {\n    \"user_context_sources\": [\"User mentioned X in Q3\"],\n    \"expected_info_gain_per_option\": {\n      \"option_value_1\": \"If selected, tells us user prioritizes X over Y\"\n    }\n  },\n  \"text\": \"question text\",\n  \"question_type\": \"type\",\n  \"bespoke_format\": \"format or null\",\n  \"format_config\": {\n    \"mutually_exclusive\": false,\n    \"allow_write_in\": true,\n    \"write_in_label\": \"Other (please specify)\"\n  },\n  \"helper_text\": \"optional context\",\n  \"placeholder\": \"optional placeholder\",\n  \"examples\": [\"example 1\"],\n  \"options\": [{\"value\": \"opt1\", \"label\": \"Option 1\", \"description\": \"optional details\"}],\n  \"slider_config\": {\n    \"min\": 0, \"max\": 100, \"step\": 1,\n    \"labels\": {\"min\": \"Left endpoint label\", \"max\": \"Right endpoint label\"}\n  }\n}\n\nCRITICAL: format_reasoning and option_reasoning are NOT optional.\n\n**ALWAYS GENERATE OPTIONS** - Even for open_ended questions!\nOptions MUST be PROJECT-SPECIFIC, not generic.\n\nCRITICAL FOR CHOICE QUESTIONS: DO NOT embed options in the \"text\" field.\nIMPORTANT: Default to mutually_exclusive=false.",
+      "variables": [
+        "track",
+        "target_vector",
+        "question_type_hint",
+        "format_hint",
+        "recent_formats",
+        "formats_to_avoid",
+        "high_cost_guidance",
+        "project_name",
+        "core_challenge",
+        "items_text",
+        "recent_answers",
+        "confidence_value",
+        "previous_questions"
+      ],
+      "notes": "User prompt is assembled dynamically by _build_prompt(). Sections are conditionally included based on available context. The format constraints section is built by _build_format_guidance(). Previous questions section includes up to 15 recent questions for dedup."
+    }
+  ],
+  "io_contract": {
+    "input_description": "Track (IDEAS/PROCESS), target vector (articulate/investigate/resolve/do/learn/decide), session context dict (project_name, core_challenge, items, recent_answers, confidence), previous questions list, recent formats list, optional type/format hints.",
+    "output_description": "A Question dataclass with: text, question_type, bespoke_format, format_config, helper_text, placeholder, examples, options array, slider config, track, target_vector, and a reasoning_chain for audit transparency.",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/question_service.py",
+      "symbol": "QuestionService",
+      "line_start": 154,
+      "line_end": 1203,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Full QuestionService class. SYSTEM_PROMPT at line 162. generate_question() at line 244 is the main entry point. _build_prompt() at line 302 assembles the user prompt from context. Post-generation validation chain: _validate_format_choice() (line 848), _ensure_options_for_open_ended() (line 951), _validate_semantic_coherence() (line 1117)."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": ["coordinator_decision"],
+  "feeds_into_functions": ["emergent_synthesis"],
+  "track": "both",
+  "tags": [
+    "interview",
+    "bespoke-format",
+    "format-cost",
+    "reasoning-chain",
+    "quality-check",
+    "dual-track"
+  ],
+  "notes": "The function includes extensive post-LLM validation: format cost/diversity checking (ported from V1), ensuring all questions have options for checkbox+write-in UI (never a blank text box), and semantic coherence validation via QualityChecker. The reasoning chain (format_reasoning + option_reasoning) is required for audit transparency. Model config uses class constants MODEL and MAX_TOKENS rather than settings."
+}

@@ -1,0 +1,205 @@
+{
+  "function_key": "coordinator_decision",
+  "function_name": "Coordinator Decision",
+  "description": "The root coordinator LLM call that drives the dual-track interview system. Given full session context (onboarding answers, vector baselines, confidence levels, grid coverage, Q&A history, user feedback, implications), it decides: which track (IDEAS vs PROCESS) needs attention, what question to ask next (with target vector and grid cell), which activities to unlock, and whether cross-track handoffs are needed. Uses Opus with extended thinking for strategic depth. Returns a structured JSON decision with forced reasoning chains (objective, track_reasoning, vector_reasoning, cell_reasoning) ensuring full audit transparency.",
+  "version": 1,
+  "category": "coordination",
+  "tier": "strategic",
+  "invocation_pattern": "every_question",
+  "model_config_spec": {
+    "model": "claude-opus-4-6",
+    "max_tokens": 16000,
+    "thinking_budget": 4000,
+    "streaming": true,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are the COORDINATOR agent in a dual-track decision support system.\n\n## THE TWO TRACKS\n\n**IDEAS Track** (Conceptual exploration):\n- ARTICULATE: Express, formalize, structure concepts -> buckets: well_expressed, partially_formed, unclear\n- INVESTIGATE: Explore conceptual space -> buckets: explored, partially_explored, unexplored\n- RESOLVE: Decide between framings -> buckets: resolved, leaning, unresolved\n\n**PROCESS Track** (Execution):\n- DO: Execute tasks -> buckets: have_done, in_progress, havent_done\n- LEARN: Gather data/information -> buckets: know_well, somewhat_know, dont_know\n- DECIDE: Triage/prioritize -> buckets: decided, leaning, undecided\n\n## YOUR ROLE\n\nYou coordinate the organic interview flow by deciding:\n1. Which TRACK needs attention (based on weights and current state)\n2. What QUESTION to ask next (targeted to make progress)\n3. Which ACTIVITIES (tools) should UNLOCK based on progress\n4. Whether a cross-track HANDOFF is needed\n\n## VECTOR INITIALIZATION BASELINE\n\nThe user has already categorized items into progress buckets BEFORE the interview started. Items marked 'completed' -> HIGH confidence baseline; 'partial' -> MEDIUM confidence; 'needs work' -> LOW confidence, needs attention. Use this baseline to focus questions on areas that need the most work.\n\n## USER FEEDBACK (CRITICAL CONTEXT)\n\nUsers can provide feedback on WHY certain items don't apply: 'Good idea!' -> generate more similar; 'Irrelevant' -> don't ask about similar topics; 'Won't do' -> don't suggest alternatives; 'Deferred' -> note constraints for later.\n\n## QUESTION HISTORY (AVOID REPETITION)\n\nYou will be shown recent questions that have already been asked. You must NOT ask similar questions. Vary the angle/perspective when revisiting a topic.\n\n## ACTIVITY UNLOCKING RULES\n\n[6 activity unlock conditions: Framing Analyzer, Option Generator, Consequence Tracer, Research Agent, Draft Generator, Progress Tracker]\n\n## GRID COVERAGE (DIVERSITY TRACKING)\n\nEach track has a {total_rows}x{total_cols} grid ({total_cells} cells) mapping the decision space. The two tracks have COMPLETELY DIFFERENT dimensions.\n\n### IDEAS TRACK GRID\nConditions (rows 0-14): Conceptual Clarity, Logical Consistency, Evidence Quality, Stakeholder Perspective, Assumption Validity, Scope Definition, Trade-off Balance, Historical Context, Future Implications, Ethical Considerations, Risk Assessment, Alternative Framings, Implementation Bridge, Communication Clarity, Decision Criteria\nAxes (cols 0-14): Specificity, Evidence Base, Consensus Level, Urgency, Complexity, Abstraction, Impact Scope, Reversibility, Certainty, Dependencies, Novelty, Emotional Weight, Resource Needs, Time Sensitivity, Stakeholder Count\n\n### PROCESS TRACK GRID\nConditions (rows 0-14): Resource Availability, Timeline Pressure, Dependencies, Risk Factors, Stakeholder Buy-in, Technical Feasibility, Learning Requirements, Decision Points, Quality Constraints, Communication Needs, Budget Constraints, Team Capacity, External Factors, Compliance Requirements, Success Metrics\nAxes (cols 0-14): Urgency, Complexity, Control Level, Effort Required, Expertise Needed, Parallelizability, Visibility, Recoverability, Cost Impact, Quality Impact, Schedule Impact, Risk Level, Flexibility, Measurability, Stakeholder Impact\n\n### WILDCARD DIMENSIONS (rows/cols 15-19): Project-specific themes detected from user context. PRIORITIZE exploring these!\n\nWhen grid coverage is provided: Empty rows/columns -> PRIORITIZE; Cold spots -> TARGET; Hot spots -> AVOID.\n\n## OUTPUT FORMAT (ALL FIELDS REQUIRED)\n\nReturn JSON with REQUIRED reasoning chains:\n- objective: {we_need_to_learn, because}\n- track_reasoning: {chosen_track, rejected_track, ideas_confidence_avg, process_confidence_avg, reason_for_choice}\n- vector_reasoning: {chosen_vector, vector_confidences, weakest_vector, reason_for_choice}\n- cell_reasoning: {target_row (0-{max_row}), target_col (0-{max_col}), row_condition_name, col_axis_name, reason_for_row, reason_for_col, expected_learning}\n- Decision fields: recommended_track, track_rationale, question_text, question_type, bespoke_format, question_context, question_options (3-5 specific options), target_vector, target_row, target_col, activities_to_unlock, unlock_rationale, suggested_tool, tool_auto_execute, handoff_suggested, handoff_reason, handoff_items, confidence, reasoning\n\nCRITICAL: Reasoning fields are NOT optional. Confidence MUST align with reasoning. question_options MUST be specific to the question_text.",
+      "variables": [
+        "total_rows",
+        "total_cols",
+        "total_cells",
+        "max_row",
+        "max_col"
+      ],
+      "notes": "System prompt is built dynamically via _build_system_prompt(max_row, max_col). Grid dimensions default to 15x15 (max_row=14, max_col=14) but expand to 20x20 when wildcard dimensions are detected from user context. The prompt includes full grid dimension labels for both IDEAS and PROCESS tracks so the LLM can map cells correctly."
+    },
+    {
+      "role": "user",
+      "template_text": "## SESSION OVERVIEW\n- Project: {project_name}\n- Current Track: {current_track}\n- Session State: {session_state}\n- Track Weights: IDEAS={ideas_weight}, PROCESS={process_weight}\n- Time Pressure: {time_pressure}\n\n## CORE CHALLENGE\n{core_challenge_text}\n\n## USER'S CLARITY (what they know)\n{clarity_items}\n\n## USER'S UNCERTAINTY (what needs work)\n{uncertainty_items}\n\n## SUCCESS DEFINITION\n- Deliverable: {deliverable}\n- Criteria: {criteria}\n- Timeline: {timeline_hint}\n\n## IDEAS TRACK BASELINE (from vector init)\n{ideas_baseline_formatted}\n\n## PROCESS TRACK BASELINE (from vector init)\n{process_baseline_formatted}\n\n## IDEAS TRACK FEEDBACK (user rejections/preferences)\n{ideas_feedback_formatted}\n\n## PROCESS TRACK FEEDBACK (user rejections/preferences)\n{process_feedback_formatted}\n\n## IDEAS CONFIDENCE LEVELS\n{ideas_confidence}\n\n## PROCESS CONFIDENCE LEVELS\n{process_confidence}\n\n## IDEAS GRID COVERAGE (diversity tracking)\n{ideas_grid_coverage_formatted}\n\n## PROCESS GRID COVERAGE (diversity tracking)\n{process_grid_coverage_formatted}\n\n## ACTIVITIES (TOOLS)\n{activities_formatted}\n\n## QUESTIONS ALREADY ASKED ({num_questions} total)\n{recent_questions}\n\n## FULL Q&A HISTORY ({num_answers} exchanges)\n{recent_answers_formatted}\n\n## IMPLICATION ANALYSIS (from prior answer)\n{implication_formatted}\n\n## MANDATORY CONSTRAINT: FORCED TARGET VECTOR (if pregen)\n{forced_vector_instruction}\n\n## SPECIAL INSTRUCTION: COMPLEMENTARY QUESTION GENERATION (if pregen)\n{complementary_instruction}\n\n## YOUR DECISION\nAnalyze the context and decide what to do next. Return ONLY the JSON object.",
+      "variables": [
+        "project_name",
+        "current_track",
+        "session_state",
+        "ideas_weight",
+        "process_weight",
+        "time_pressure",
+        "core_challenge_text",
+        "clarity_items",
+        "uncertainty_items",
+        "deliverable",
+        "criteria",
+        "timeline_hint",
+        "ideas_baseline_formatted",
+        "process_baseline_formatted",
+        "ideas_feedback_formatted",
+        "process_feedback_formatted",
+        "ideas_confidence",
+        "process_confidence",
+        "ideas_grid_coverage_formatted",
+        "process_grid_coverage_formatted",
+        "activities_formatted",
+        "num_questions",
+        "recent_questions",
+        "num_answers",
+        "recent_answers_formatted",
+        "implication_formatted",
+        "forced_vector_instruction",
+        "complementary_instruction"
+      ],
+      "notes": "User prompt is built dynamically via _build_prompt(context). Sections are conditionally included based on available context. The full Q&A history is included WITHOUT truncation for context continuity. Implication analysis from the prior answer is formatted via ImplicationService.format_for_coordinator(). For pregeneration calls, forced_target_vector and complementary generation instructions are appended."
+    }
+  ],
+  "io_contract": {
+    "input_description": "A CoordinatorContext dataclass containing: project_name, current_track (Track enum), session_state, track weights, time_pressure, core_challenge dict, clarity_items list, uncertainty_items list, dependencies list, success_definition dict, ideas/process baselines (vector->items dicts), ideas/process feedback (type->items dicts), ideas/process confidence (vector->float dicts), ideas/process grid coverage dicts, activities list, recent_questions list, recent_answers list, latest_implication dict, generation_hints dict, ideas/process items lists.",
+    "output_description": "A CoordinatorDecision dataclass containing: recommended_track, track_rationale, question_text, question_type, bespoke_format, question_context, question_options, target_vector, target_row, target_col, activities_to_unlock, unlock_rationale, suggested_tool, tool_auto_execute, handoff_suggested, handoff_reason, handoff_items, confidence float, reasoning string, reasoning_chain (ObjectiveStatement + TrackSelectionReasoning + VectorSelectionReasoning + CellSelectionReasoning), context_inventory dict.",
+    "input_schema": null,
+    "output_schema": {
+      "type": "object",
+      "required": [
+        "objective",
+        "track_reasoning",
+        "vector_reasoning",
+        "cell_reasoning",
+        "recommended_track",
+        "question_text",
+        "question_type",
+        "target_vector",
+        "target_row",
+        "target_col",
+        "confidence",
+        "reasoning"
+      ],
+      "properties": {
+        "objective": {
+          "type": "object",
+          "properties": {
+            "we_need_to_learn": { "type": "string" },
+            "because": { "type": "string" }
+          }
+        },
+        "track_reasoning": {
+          "type": "object",
+          "properties": {
+            "chosen_track": { "type": "string", "enum": ["ideas", "process"] },
+            "rejected_track": { "type": "string" },
+            "ideas_confidence_avg": { "type": "number" },
+            "process_confidence_avg": { "type": "number" },
+            "reason_for_choice": { "type": "string" }
+          }
+        },
+        "vector_reasoning": {
+          "type": "object",
+          "properties": {
+            "chosen_vector": { "type": "string" },
+            "vector_confidences": { "type": "object" },
+            "weakest_vector": { "type": "string" },
+            "reason_for_choice": { "type": "string" }
+          }
+        },
+        "cell_reasoning": {
+          "type": "object",
+          "properties": {
+            "target_row": { "type": "integer" },
+            "target_col": { "type": "integer" },
+            "row_condition_name": { "type": "string" },
+            "col_axis_name": { "type": "string" },
+            "reason_for_row": { "type": "string" },
+            "reason_for_col": { "type": "string" },
+            "expected_learning": { "type": "string" }
+          }
+        },
+        "recommended_track": { "type": "string", "enum": ["ideas", "process"] },
+        "question_text": { "type": "string" },
+        "question_type": { "type": "string", "enum": ["open_ended", "multiple_choice", "slider", "ranking", "yes_no"] },
+        "question_options": { "type": "array" },
+        "target_vector": { "type": "string" },
+        "target_row": { "type": "integer" },
+        "target_col": { "type": "integer" },
+        "confidence": { "type": "number" },
+        "reasoning": { "type": "string" }
+      }
+    }
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/coordinator_service.py",
+      "symbol": "CoordinatorService._build_system_prompt",
+      "line_start": 199,
+      "line_end": 447,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "System prompt builder for the coordinator. Dynamically injects grid dimensions (15x15 default, up to 20x20 with wildcards). Contains full grid dimension labels for both IDEAS and PROCESS tracks, activity unlock rules, output format specification with forced reasoning chains."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/coordinator_service.py",
+      "symbol": "CoordinatorService._build_prompt",
+      "line_start": 499,
+      "line_end": 644,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "User prompt builder. Conditionally assembles sections from CoordinatorContext: session overview, onboarding data, vector baselines, user feedback, confidence levels, grid coverage, activities, full Q&A history, implication analysis, and pregen generation hints."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/coordinator_service.py",
+      "symbol": "CoordinatorService.get_next_action",
+      "line_start": 453,
+      "line_end": 497,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Orchestration method that builds context inventory, extracts grid dimensions, constructs system+user prompts, calls strategic_call (Opus + extended thinking), and parses the JSON response into CoordinatorDecision."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService.strategic_call",
+      "line_start": 72,
+      "line_end": 125,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Generic strategic LLM call wrapper using Opus with extended thinking via streaming. Filters out thinking blocks from response, returning only text content."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/config.py",
+      "symbol": "Settings",
+      "line_start": 37,
+      "line_end": 44,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Model configuration: strategic_model='claude-opus-4-6', strategic_thinking_budget=4000, strategic_max_tokens=16000, tactical_model='claude-sonnet-4-5-20250929', tactical_max_tokens=4096."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": [],
+  "feeds_into_functions": ["question_generation"],
+  "track": "both",
+  "tags": [
+    "coordinator",
+    "strategic",
+    "opus",
+    "extended-thinking",
+    "dual-track",
+    "grid-coverage",
+    "forced-reasoning",
+    "audit-transparency",
+    "organic-flow",
+    "pregeneration"
+  ],
+  "notes": "This is the root coordinator function - the most important LLM call in the system. It runs for every question (both live and pregenerated). Uses Opus with 4000-token thinking budget for deep strategic reasoning. The forced reasoning chain (objective, track_reasoning, vector_reasoning, cell_reasoning) ensures every decision is auditable. Grid dimensions are dynamic (15x15 core, expandable to 20x20 with project-specific wildcards). For pregeneration calls, a forced_target_vector constraint ensures the pregenerated question matches the expected vector. The full Q&A history is included WITHOUT truncation, which means token usage grows linearly with interview length."
+}

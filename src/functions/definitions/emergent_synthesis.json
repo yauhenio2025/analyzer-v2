@@ -1,0 +1,78 @@
+{
+  "function_key": "emergent_synthesis",
+  "function_name": "Emergent Synthesis",
+  "description": "Pattern detection and meaning synthesis across accumulated answers in a track. Detects emergent items not captured in original initialization, identifies consolidation opportunities, suggests graduations (LEARN->DO, DECIDE->DO, INVESTIGATE->ARTICULATE, RESOLVE->ARTICULATE), detects blockages, discovers dependencies between items, and recommends cross-track handoffs. Philosophy: meaning over form -- items from initialization are a starting model that gets reformulated based on what emerges.",
+  "version": 1,
+  "category": "synthesis",
+  "tier": "tactical",
+  "invocation_pattern": "periodic",
+  "model_config_spec": {
+    "model": "claude-opus-4-6",
+    "max_tokens": 24000,
+    "thinking_budget": 16000,
+    "streaming": true,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are the EMERGENT-SYNTHESIZER agent in a dual-track decision support system.\n\nTHE DUAL-TRACK ARCHITECTURE:\n1. IDEAS track: Conceptual exploration (ARTICULATE, INVESTIGATE, RESOLVE)\n2. PROCESS track: Execution (DO, LEARN, DECIDE)\n\nYOUR ROLE: Synthesize emergent understanding from accumulated answers.\n\nTHE PROBLEM WITH STATIC ITEMS:\nItems from vector initialization are a STARTING MODEL, not final truth.\nAs we interview, we learn things that:\n- Cross-cut multiple items\n- Reveal hidden connections\n- Expose new dimensions\n- Make some original items obsolete\n\nYOUR JOB: Synthesize meaning, not preserve form.\n\nWHAT YOU GENERATE:\n\n1. EMERGENT ITEMS: New items that emerged from patterns\n   - SPECIFIC and ACTIONABLE\n   - Start with ACTION VERB (Create, Build, Define, Map, Research, etc.)\n   - Reference actual content from answers\n   - Format: \"Define the criteria for evaluating vendor proposals mentioned in Phase 3\"\n\n2. CONSOLIDATIONS: Items that should merge\n   - Multiple items actually about the same thing\n   - Include a consolidated text that starts with action verb\n\n3. INSIGHTS: Cross-cutting realizations\n   - META-UNDERSTANDING about the problem space\n   - Not items, but realizations that reframe understanding\n\n4. GRADUATIONS: Items ready to move to action vector\n   FOR PROCESS TRACK:\n   - LEARN -> DO: When research reveals a concrete action\n   - DECIDE -> DO: When a decision spawns implementation actions\n   FOR IDEAS TRACK:\n   - INVESTIGATE -> ARTICULATE: When exploration yields something to formalize\n   - RESOLVE -> ARTICULATE: When a framing choice is ready to express\n\n   Look for triggers:\n   - High confidence ratings in answers\n   - Definitive language (\"I've decided\", \"The answer is\")\n   - Specific details added (dates, names, numbers)\n   - Elimination of alternatives\n\n5. BLOCKAGES: Items that cannot proceed\n   Types: knowledge_gap, action_prerequisite, decision_dependency,\n          external_blocker, insufficient_clarity, cross_track_dependency\n\n6. DEPENDENCIES: Relationships between items\n   Types: requires, informs, blocks, enables, conflicts\n\n7. CROSS-TRACK HANDOFFS: When an item in one track should create an item in the other\n   - IDEAS item reveals a concrete action -> handoff to PROCESS\n   - PROCESS item reveals conceptual gap -> handoff to IDEAS\n\nCRITICAL RULES:\n- Generate 1-3 emergent items per synthesis (unless truly nothing new)\n- Be SPECIFIC - vague insights are useless\n- Reference actual content from answers\n- Quality over quantity\n- Each emergent item ID must be unique: emg_{track}_{question_count}_{number}\n\nRespond in JSON format only.",
+      "variables": [],
+      "notes": "Static system prompt defining the synthesizer's role, the 7 output types, graduation paths, blockage types, dependency types, and critical rules."
+    },
+    {
+      "role": "user",
+      "template_text": "Synthesize emergent understanding for the {track} track:\n\nPROJECT: {project_name}\nDescription: {project_description}\n\nTRACK: {track}\nVectors: {vectors}\nQuestion count: {question_count}\n\nVECTOR CONFIDENCES:\n{confidence_text}\n\nGRADUATION PATHS FOR THIS TRACK:\n{graduation_paths}\n\nCURRENT ITEMS:\n{items_text}\n{prior_emergent_text}{prior_grad_text}\nALL ANSWERS IN THIS TRACK:\n{answers_text}\n\nBased on accumulated answers, synthesize what has EMERGED.\nLook for patterns, connections, new dimensions, items that should merge.\nGenerate specific, actionable emergent items if genuinely new insights exist.\n\nEMERGENT ITEM ID FORMAT: emg_{track}_{question_count}_1, emg_{track}_{question_count}_2, etc.\n\nConsider cross-track handoffs to {target_track} track when appropriate.\n\nRespond with this JSON structure:\n{\n    \"emergent_items\": [\n        {\n            \"id\": \"emg_{track}_{question_count}_1\",\n            \"vector\": \"{first_vector}\",\n            \"text\": \"Action verb + specific actionable task\",\n            \"emerged_from\": [\"answer_ref\", \"item_id\"],\n            \"priority\": \"high|medium|low\",\n            \"deepens\": \"optional_prior_emergent_id\",\n            \"suggest_handoff_to\": null\n        }\n    ],\n    \"consolidations\": [\n        {\n            \"original_ids\": [\"item1\", \"item2\"],\n            \"consolidated_text\": \"Action verb + merged description\",\n            \"reason\": \"Why merge\"\n        }\n    ],\n    \"insights\": [\"Cross-cutting insight 1\"],\n    \"obsolete_item_ids\": [\"item_ids now resolved\"],\n    \"graduations\": [\n        {\n            \"source_item_id\": \"item_id\",\n            \"from_vector\": \"LEARN\",\n            \"to_vector\": \"DO\",\n            \"graduation_trigger\": \"Evidence from answers\",\n            \"generated_actions\": [\n                {\"text\": \"Specific DO item\", \"priority\": \"high\"}\n            ],\n            \"dependencies\": [\"prereq_item_ids\"]\n        }\n    ],\n    \"blockage_detections\": [\n        {\n            \"item_id\": \"blocked_item\",\n            \"blockage_type\": \"knowledge_gap|action_prerequisite|decision_dependency|external_blocker|insufficient_clarity|cross_track_dependency\",\n            \"blocking_item_ids\": [\"blocker1\"],\n            \"reason\": \"Why blocked\"\n        }\n    ],\n    \"dependency_discoveries\": [\n        {\n            \"from_id\": \"dependent_item\",\n            \"to_id\": \"blocking_item\",\n            \"dependency_type\": \"requires|informs|blocks|enables|conflicts\",\n            \"reason\": \"Why this dependency\"\n        }\n    ],\n    \"handoff_suggestions\": [\n        {\n            \"source_item_id\": \"item_in_current_track\",\n            \"target_track\": \"{target_track}\",\n            \"suggested_vector\": \"DO\",\n            \"suggested_text\": \"Action verb + handoff item text\",\n            \"reason\": \"Why this handoff is valuable\"\n        }\n    ],\n    \"suggested_focus\": \"Where next probe should aim\",\n    \"reasoning\": \"Brief synthesis explanation\"\n}",
+      "variables": [
+        "track",
+        "project_name",
+        "project_description",
+        "vectors",
+        "question_count",
+        "confidence_text",
+        "graduation_paths",
+        "items_text",
+        "prior_emergent_text",
+        "prior_grad_text",
+        "answers_text",
+        "target_track",
+        "first_vector"
+      ],
+      "notes": "Assembled by _build_prompt(). Items formatted by _format_items() (up to 50 items with ID, vector, confidence, text). Answers formatted by _format_answers(). Prior emergent items and graduated item IDs included to prevent duplication. The JSON schema in the prompt uses double-braces for literal braces in the f-string."
+    }
+  ],
+  "io_contract": {
+    "input_description": "SynthesisContext dataclass containing: project_name, project_description, track (ideas/process), question_count, items list (current items in track), answers list (all answers in track), vector_confidences dict, prior_emergent_items list, prior_graduations list (item IDs already graduated).",
+    "output_description": "SynthesisResult dataclass containing: emergent_items (EmergentItem list), consolidations (Consolidation list), insights (string list), obsolete_item_ids (string list), graduations (Graduation list with generated_actions), blockage_detections (BlockageDetection list), dependency_discoveries (DependencyDiscovery list), handoff_suggestions (CrossTrackHandoff list), suggested_focus (string), reasoning (string).",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/synthesizer_service.py",
+      "symbol": "SynthesizerService",
+      "line_start": 235,
+      "line_end": 631,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "SynthesizerService class. SYSTEM_PROMPT at line 259. synthesize() at line 330 is the main entry point -- calls LLMService.strategic_call() with Opus + extended thinking (16k thinking budget, 24k max tokens). _build_prompt() at line 372 assembles context with items, answers, prior emergent items, graduation paths. _parse_response() at line 546 converts JSON to SynthesisResult with all 7 output types. apply_synthesis_to_session() at line 634 (module-level function) applies results to session state with dedup and capping."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": ["question_generation", "implication_drawing"],
+  "feeds_into_functions": ["handoff_detection"],
+  "track": "both",
+  "tags": [
+    "pattern-detection",
+    "emergent-items",
+    "consolidation",
+    "graduation",
+    "blockage-detection",
+    "dependency-discovery",
+    "cross-track-handoff",
+    "extended-thinking",
+    "opus"
+  ],
+  "notes": "This is the only function in the extraction set that uses the strategic model (Opus with extended thinking). The thinking_budget of 16000 tokens allows deep pattern analysis across all accumulated answers. Uses LLMService.strategic_call() which streams via client.messages.stream() to handle long operations. The function includes rich dataclass definitions for all 7 output types (EmergentItem, Consolidation, Graduation, BlockageDetection, DependencyDiscovery, CrossTrackHandoff, SynthesisResult). The companion function apply_synthesis_to_session() (line 634) handles persisting results to session state with deduplication, capping, and incremental accumulation."
+}

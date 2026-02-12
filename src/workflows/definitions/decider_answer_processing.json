@@ -1,0 +1,106 @@
+{
+  "workflow_key": "decider_answer_processing",
+  "workflow_name": "Decider Answer Processing",
+  "description": "Post-answer processing pipeline. After a user submits an answer, this workflow updates synthesis state, draws implications, checks for handoff conditions, and triggers the next question generation wave.",
+  "category": "decision_support",
+  "version": 1,
+  "passes": [
+    {
+      "pass_number": 1,
+      "pass_name": "Category Selection",
+      "pass_description": "Determine what category/bucket the answer content belongs to for item organization",
+      "function_key": "category_selection",
+      "engine_key": null,
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": false,
+      "depends_on_passes": [],
+      "output_schema": {
+        "category": "string",
+        "confidence": "number"
+      }
+    },
+    {
+      "pass_number": 2,
+      "pass_name": "Emergent Synthesis Update",
+      "pass_description": "Update the rolling synthesis with insights from the new answer",
+      "function_key": "emergent_synthesis",
+      "engine_key": null,
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": true,
+      "depends_on_passes": [1],
+      "output_schema": {
+        "synthesis_delta": "object",
+        "new_themes": "array"
+      }
+    },
+    {
+      "pass_number": 3,
+      "pass_name": "Implication Drawing",
+      "pass_description": "Draw implications from the answer and updated synthesis, potentially generating items for the other track",
+      "function_key": "implication_drawing",
+      "engine_key": null,
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": true,
+      "depends_on_passes": [2],
+      "output_schema": {
+        "implications": "array",
+        "cross_track_items": "array"
+      }
+    },
+    {
+      "pass_number": 4,
+      "pass_name": "Handoff Detection",
+      "pass_description": "Check if the current track has sufficient coverage and should hand off to the other track",
+      "function_key": "handoff_detection",
+      "engine_key": null,
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": false,
+      "depends_on_passes": [2],
+      "output_schema": {
+        "should_handoff": "boolean",
+        "handoff_reason": "string",
+        "suggested_track": "string"
+      }
+    },
+    {
+      "pass_number": 5,
+      "pass_name": "Track Weight Update",
+      "pass_description": "Reassess the relative weights of IDEAS vs PROCESS tracks based on current state",
+      "function_key": "track_weight_suggestion",
+      "engine_key": null,
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": false,
+      "depends_on_passes": [2],
+      "output_schema": {
+        "ideas_weight": "number",
+        "process_weight": "number",
+        "reasoning": "string"
+      }
+    },
+    {
+      "pass_number": 6,
+      "pass_name": "Grid Analysis Update",
+      "pass_description": "Update the strategy grid analysis with the new answer data",
+      "function_key": "grid_analyzer_interview",
+      "engine_key": null,
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": true,
+      "depends_on_passes": [1],
+      "output_schema": {
+        "updated_scores": "object",
+        "new_coverage": "string"
+      }
+    }
+  ],
+  "required_inputs": ["answer_data", "session_context", "synthesis_state"],
+  "optional_inputs": ["previous_question"],
+  "output_description": "Fully processed answer with updated synthesis, implications, handoff assessment, and grid scores",
+  "estimated_passes": 6,
+  "source_project": "decider-v2"
+}

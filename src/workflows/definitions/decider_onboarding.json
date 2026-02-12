@@ -1,0 +1,77 @@
+{
+  "workflow_key": "decider_onboarding",
+  "workflow_name": "Decider Session Onboarding",
+  "description": "Session initialization workflow. Takes user's project description, generates initial items across both tracks, deduplicates them, and builds the starting synthesis state.",
+  "category": "decision_support",
+  "version": 1,
+  "passes": [
+    {
+      "pass_number": 1,
+      "pass_name": "Vector Initialization - IDEAS",
+      "pass_description": "Generate initial items for all IDEAS vectors (ARTICULATE, INVESTIGATE, RESOLVE) based on user's project description",
+      "function_key": "vector_init_generation",
+      "engine_key": null,
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": true,
+      "depends_on_passes": [],
+      "output_schema": {
+        "items": "array",
+        "vector": "string",
+        "count": "number"
+      }
+    },
+    {
+      "pass_number": 2,
+      "pass_name": "Vector Initialization - PROCESS",
+      "pass_description": "Generate initial items for all PROCESS vectors (DO, LEARN, DECIDE) based on user's project description",
+      "function_key": "vector_init_generation",
+      "engine_key": null,
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": true,
+      "depends_on_passes": [],
+      "output_schema": {
+        "items": "array",
+        "vector": "string",
+        "count": "number"
+      }
+    },
+    {
+      "pass_number": 3,
+      "pass_name": "Item Deduplication & Sharpening",
+      "pass_description": "Deduplicate and sharpen generated items within each vector, removing redundancies and improving clarity",
+      "function_key": "item_dedup_sharpening",
+      "engine_key": null,
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": true,
+      "depends_on_passes": [1, 2],
+      "output_schema": {
+        "deduplicated_items": "array",
+        "removed_count": "number",
+        "sharpened_count": "number"
+      }
+    },
+    {
+      "pass_number": 4,
+      "pass_name": "Grid Analysis - Initial",
+      "pass_description": "Analyze the initial item set against the 15x15 strategy grids for both IDEAS and PROCESS tracks",
+      "function_key": "grid_analyzer_initial",
+      "engine_key": null,
+      "prompt_template": null,
+      "requires_external_docs": false,
+      "caches_result": true,
+      "depends_on_passes": [3],
+      "output_schema": {
+        "grid_scores": "object",
+        "coverage_assessment": "string"
+      }
+    }
+  ],
+  "required_inputs": ["project_description"],
+  "optional_inputs": ["user_context", "domain_hints"],
+  "output_description": "Fully initialized session with deduplicated items across both tracks and initial grid analysis",
+  "estimated_passes": 4,
+  "source_project": "decider-v2"
+}

@@ -1,0 +1,128 @@
+{
+  "function_key": "quality_checker",
+  "function_name": "Quality Checker",
+  "description": "Post-generation validator that ensures question/item/format coherence. Uses fast rule-based checks for most cases (slider mode vs item types, question framing vs format, choice-type detection, semantic coherence via format_intelligence). Optionally escalates to LLM validation for complex edge cases with many items or ambiguous content.",
+  "version": 1,
+  "category": "infrastructure",
+  "tier": "tactical",
+  "invocation_pattern": "every_question",
+  "model_config_spec": {
+    "model": "claude-haiku-4-5-20251001",
+    "max_tokens": 2000,
+    "thinking_budget": null,
+    "streaming": false,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are a QUALITY-CHECKER that validates interview questions for coherence.\n\nYour job is to check if a question, its items, and the answer format make LOGICAL SENSE together.\n\nKEY COHERENCE RULES:\n\n1. TOPIC vs CLAIM COHERENCE:\n   - TOPICS are things you know ABOUT (questions, noun phrases, things to learn)\n     Examples: \"What major tech developments...\", \"The role of government\", \"Market dynamics\"\n   - CLAIMS are statements that can be TRUE or FALSE\n     Examples: \"Technology is the primary driver\", \"Government intervention is necessary\"\n\n   - DUAL SLIDERS (Position/Certainty, True/False + Confidence) → ONLY for CLAIMS\n   - SINGLE SLIDERS (Understanding, Knowledge, Familiarity) → For TOPICS\n\n   If dual slider is used with topic-style items, this is INCOHERENT.\n\n2. QUESTION FRAMING vs ITEMS:\n   - If question asks about \"validity\" or \"truth\" → items should be CLAIMS\n   - If question asks about \"understanding\" or \"knowledge\" → items should be TOPICS\n   - If question asks to \"rank priorities\" → items should be things that CAN be prioritized\n   - If question asks about \"importance\" → items should be things with varying importance\n\n3. CHOICE-TYPE ITEMS:\n   - Items like \"Choose between X, Y, or Z\" or \"X or Y?\" need multiple_choice format, NOT ranking or sliders\n\n4. SEMANTIC MISMATCH:\n   - Question: \"Rate the historical validity of...\" with items that are QUESTIONS like \"What developments...?\"\n     → INCOHERENT: You can't rate \"validity\" of a question\n   - Question: \"How well do you understand...\" with items that are CLAIMS\n     → INCOHERENT: Understanding is about topics, not truth-claims\n\nRESPOND WITH JSON:\n{\n    \"verdict\": \"pass\" | \"fix\" | \"reject\",\n    \"issues\": [\"issue1\", \"issue2\"],\n    \"recommended_fixes\": {\n        \"slider_mode\": \"single\" or \"dual\",\n        \"question_reframe\": \"suggested new question text\" (optional),\n        \"items_need_conversion\": true/false\n    },\n    \"reasoning\": \"brief explanation\"\n}\n\nBE STRICT. If something doesn't make sense, flag it.",
+      "variables": [],
+      "notes": "System prompt is a class constant SYSTEM_PROMPT on QualityChecker. Only used when LLM validation is triggered (use_llm_validation=True and _needs_llm_validation returns True)."
+    },
+    {
+      "role": "user",
+      "template_text": "Validate this interview question for coherence:\n\nQUESTION: {question_text}\n\nFORMAT: {format_type}\n\nSLIDER MODE: {slider_mode}\n\nITEMS:\n{items_text}\n\nSLIDER LABELS:\n  Axis 1: {axis1_label}\n    Low: {axis1_low}\n    High: {axis1_high}\n  Axis 2: {axis2_label}\n    Low: {axis2_low}\n    High: {axis2_high}\n\nCheck:\n1. Do the items match the question's framing?\n2. Does the slider mode make sense for these items?\n3. Are there any semantic mismatches?\n\nRespond with JSON only.",
+      "variables": [
+        "question_text",
+        "format_type",
+        "slider_mode",
+        "items_text",
+        "axis1_label",
+        "axis1_low",
+        "axis1_high",
+        "axis2_label",
+        "axis2_low",
+        "axis2_high"
+      ],
+      "notes": "Built by _llm_check(). items_text is a formatted list of up to 10 items. Slider labels are extracted from format_config with fallback to 'N/A'."
+    }
+  ],
+  "io_contract": {
+    "input_description": "Question text, format_type (knowledge_mapping, ranking, two_slider, etc.), format_config dict (with items, slider_mode, axis labels), optional probe_context, and use_llm_validation flag.",
+    "output_description": "QualityCheckResult with verdict (PASS/FIX/REJECT), list of issues found, list of fixes applied, optional fixed_config, and reasoning string.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "question_text": { "type": "string" },
+        "format_type": { "type": "string", "enum": ["knowledge_mapping", "two_slider", "continuous_slider", "ranking", "drag_drop_ranking", "multiple_choice", "open_text"] },
+        "format_config": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "text": { "type": "string" }
+                }
+              }
+            },
+            "slider_mode": { "type": "string", "enum": ["single", "dual"] },
+            "axis_label": { "type": "string" },
+            "axis_low": { "type": "string" },
+            "axis_high": { "type": "string" },
+            "axis1_label": { "type": "string" },
+            "axis1_low": { "type": "string" },
+            "axis1_high": { "type": "string" },
+            "axis2_label": { "type": "string" },
+            "axis2_low": { "type": "string" },
+            "axis2_high": { "type": "string" }
+          }
+        },
+        "probe_context": { "type": "object" },
+        "use_llm_validation": { "type": "boolean", "default": false }
+      },
+      "required": ["question_text", "format_type", "format_config"]
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "verdict": { "type": "string", "enum": ["pass", "fix", "reject"] },
+        "issues": { "type": "array", "items": { "type": "string" } },
+        "fixes_applied": { "type": "array", "items": { "type": "string" } },
+        "fixed_config": { "type": "object" },
+        "reasoning": { "type": "string" }
+      },
+      "required": ["verdict", "issues", "fixes_applied", "reasoning"]
+    }
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/quality_checker.py",
+      "symbol": "QualityChecker.check_quality",
+      "line_start": 116,
+      "line_end": 166,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Main entry point. Runs rule-based checks first (_rule_based_check), returns immediately on REJECT or FIX. Only escalates to LLM (_llm_check) if use_llm_validation=True and _needs_llm_validation heuristic says the case is complex enough."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/quality_checker.py",
+      "symbol": "QualityChecker._rule_based_check",
+      "line_start": 168,
+      "line_end": 257,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Fast rule-based validation. Checks: (1) slider mode vs item types via _check_slider_item_coherence, (2) question framing vs slider mode via _check_question_framing_coherence, (3) choice-type items in wrong formats via _check_choice_format_coherence, (4) semantic coherence via format_intelligence.validate_question_item_coherence."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/quality_checker.py",
+      "symbol": "QualityChecker._llm_check",
+      "line_start": 421,
+      "line_end": 470,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "LLM-based validation for complex cases. Builds a prompt with question text, format type, slider mode, items (up to 10), and slider labels. Sends to Haiku for fast validation. Falls back to PASS on LLM error."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": [],
+  "feeds_into_functions": [],
+  "track": "both",
+  "tags": ["quality-validation", "coherence-check", "rule-based", "llm-fallback", "auto-fix", "json-output", "topic-claim-classification"],
+  "notes": "The quality checker is a two-tier system: fast rule-based checks handle most cases without any LLM call, while the LLM path (Haiku for speed) is reserved for complex edge cases with >5 items containing long multi-clause text. Rule-based auto-fixes include: switching dual slider to single when items are topics (not claims), and adjusting axis labels to 'Understanding/Unclear/Clear'. The format_intelligence module provides is_topic_not_claim() and is_choice_type_item() classifiers used by the rule engine. LLM validation is disabled by default (use_llm_validation=False) for performance."
+}

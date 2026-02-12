@@ -1,0 +1,68 @@
+{
+  "function_key": "tradeoff_visualizer",
+  "function_name": "Tradeoff Visualizer",
+  "description": "Visualize trade-offs between options to understand what you gain and lose with each choice. Maps value dimensions, scores options against them, identifies critical trade-offs with mitigation strategies, and analyzes time dynamics (short-term vs long-term winners). Supports the RESOLVE vector of the IDEAS track.",
+  "version": 1,
+  "category": "tool",
+  "tier": "tactical",
+  "invocation_pattern": "on_demand",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 4096,
+    "thinking_budget": null,
+    "streaming": true,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are a TRADEOFF VISUALIZER - an expert at mapping the give-and-take between choices.\n\nYOUR ROLE:\nYou help users see clearly what they gain and what they sacrifice with each option.\nTrade-offs are rarely about good vs bad - they're about different values in tension.\n\nWHAT MAKES A GOOD VISUALIZATION:\n1. IDENTIFY VALUE DIMENSIONS: What values or goals are in play?\n2. MAP GAINS AND LOSSES: For each option, what do you get vs what do you give up?\n3. QUANTIFY WHEN POSSIBLE: Use relative scales (high/medium/low)\n4. HIGHLIGHT NON-OBVIOUS: Surface trade-offs that aren't immediately apparent\n5. CONSIDER TIME: Some trade-offs pay off differently over time\n\nANALYSIS APPROACH:\n1. Extract the core options being compared\n2. Identify the value dimensions (speed, cost, quality, risk, etc.)\n3. For each option, rate how it performs on each dimension\n4. Identify the critical trade-offs (where options differ most)\n5. Suggest which trade-offs matter most for this specific context\n\nOUTPUT FORMAT (JSON):\n{\n  \"options\": [\n    {\n      \"name\": \"Option name\",\n      \"summary\": \"One-line description\"\n    }\n  ],\n  \"value_dimensions\": [\n    {\n      \"name\": \"Dimension name (e.g., Speed, Cost, Quality)\",\n      \"description\": \"What this dimension represents\",\n      \"user_priority\": \"high|medium|low|unknown\"\n    }\n  ],\n  \"tradeoff_matrix\": {\n    \"Option 1\": {\n      \"Dimension 1\": {\n        \"score\": \"high|medium|low\",\n        \"gains\": [\"What you get\"],\n        \"losses\": [\"What you give up\"]\n      }\n    }\n  },\n  \"critical_tradeoffs\": [\n    {\n      \"description\": \"The core tension\",\n      \"options_affected\": [\"Option 1\", \"Option 2\"],\n      \"severity\": \"high|medium|low\",\n      \"mitigation\": \"How to potentially reduce this trade-off\"\n    }\n  ],\n  \"time_dynamics\": {\n    \"short_term_winner\": \"Which option is best in short term\",\n    \"long_term_winner\": \"Which option is best in long term\",\n    \"rationale\": \"Why they differ (if they do)\"\n  },\n  \"recommendation\": {\n    \"for_speed\": \"Option X - because...\",\n    \"for_quality\": \"Option Y - because...\",\n    \"balanced\": \"Option Z - because...\",\n    \"rationale\": \"Overall guidance based on trade-offs\"\n  },\n  \"generated_items\": [\n    {\n      \"text\": \"New item to add to model\",\n      \"vector\": \"articulate|investigate|resolve\",\n      \"reasoning\": \"Why this item matters\"\n    }\n  ]\n}",
+      "variables": ["project_name", "core_challenge", "resolve_items", "articulate_items", "investigate_items", "item_ids", "content", "priorities", "constraints"],
+      "notes": "User prompt is dynamically built from ToolContext and ToolInput. Sections include: PROJECT CONTEXT, CORE CHALLENGE, OPTIONS TO COMPARE (from item_ids, resolve_items, or articulate_items, limit 5), RELEVANT EXPLORATIONS (investigate_items), USER PRIORITIES (from parameters), USER CONSTRAINTS, YOUR TASK."
+    }
+  ],
+  "io_contract": {
+    "input_description": "ToolContext with session items (requires >= 2 RESOLVE items OR >= 2 ARTICULATE items) plus ToolInput with optional item_ids, content, constraints, and parameters.priorities.",
+    "output_description": "JSON with options, value_dimensions (with user_priority), tradeoff_matrix (score/gains/losses per option per dimension), critical_tradeoffs (with mitigation), time_dynamics, recommendation (for_speed/for_quality/balanced), and generated_items.",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/tradeoff_visualizer.py",
+      "symbol": "TradeoffVisualizer.execute",
+      "line_start": 124,
+      "line_end": 189,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Async execute method: builds prompt, calls LLM, parses JSON. Extracts generated_items with default RESOLVE vector and confidence 0.6. Returns ToolOutput with confidence_updates {resolve: 0.15} - highest resolve boost of all tools."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/tradeoff_visualizer.py",
+      "symbol": "TradeoffVisualizer.SYSTEM_PROMPT",
+      "line_start": 41,
+      "line_end": 111,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "System prompt constant defining the tradeoff visualizer role, analysis approach, and JSON output format with tradeoff_matrix, critical_tradeoffs, time_dynamics, and recommendation."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/tradeoff_visualizer.py",
+      "symbol": "TradeoffVisualizer._build_prompt",
+      "line_start": 195,
+      "line_end": 243,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Builds user prompt with sections: PROJECT CONTEXT, CORE CHALLENGE, OPTIONS TO COMPARE (resolve_items or articulate_items, limit 5), RELEVANT EXPLORATIONS, USER PRIORITIES, USER CONSTRAINTS, YOUR TASK."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": ["framing_analyzer"],
+  "feeds_into_functions": ["concept_mapper"],
+  "track": "ideas",
+  "tags": ["ideas-tool"],
+  "notes": "Unlocks concept_mapper on completion. Unlocked by framing_analyzer. Requires >= 2 RESOLVE items OR >= 2 ARTICULATE items. Gives the highest resolve confidence boost (0.15) of all IDEAS tools. Generated items default to RESOLVE vector."
+}

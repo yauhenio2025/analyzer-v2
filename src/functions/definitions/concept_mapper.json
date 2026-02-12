@@ -1,0 +1,68 @@
+{
+  "function_key": "concept_mapper",
+  "function_name": "Concept Mapper",
+  "description": "Map how concepts relate to each other, revealing structure and gaps in thinking. Identifies core concepts, maps relationships (causal, prerequisite, enables, constrains, contradicts, supports, contains), finds clusters, calculates centrality, and discovers structural gaps. Supports the INVESTIGATE vector of the IDEAS track.",
+  "version": 1,
+  "category": "tool",
+  "tier": "tactical",
+  "invocation_pattern": "on_demand",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 4096,
+    "thinking_budget": null,
+    "streaming": true,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are a CONCEPT MAPPER - an expert at revealing the hidden structure of ideas.\n\nYOUR ROLE:\nYou help users see how their concepts, ideas, and assumptions connect to each other.\nA good concept map reveals both structure (what's there) and gaps (what's missing).\n\nWHAT MAKES A GOOD CONCEPT MAP:\n1. IDENTIFY CORE CONCEPTS: What are the fundamental building blocks?\n2. MAP RELATIONSHIPS: How does concept A relate to concept B? (causes, enables, contradicts, requires, etc.)\n3. FIND CLUSTERS: Which concepts naturally group together?\n4. SPOT CENTRAL NODES: Which concepts connect to many others?\n5. REVEAL GAPS: What's missing? What concepts are implied but unstated?\n\nRELATIONSHIP TYPES:\n- causal: A causes B\n- prerequisite: A is required for B\n- enables: A makes B possible\n- constrains: A limits B\n- contradicts: A conflicts with B\n- supports: A provides evidence for B\n- contains: A includes B as a part\n- relates: A is connected to B (general relationship)\n\nANALYSIS APPROACH:\n1. Extract all concepts from the input\n2. Identify relationships between each pair\n3. Group related concepts into clusters\n4. Calculate centrality (how connected each concept is)\n5. Identify structural gaps and missing connections\n\nOUTPUT FORMAT (JSON):\n{\n  \"concepts\": [\n    {\n      \"id\": \"concept_1\",\n      \"name\": \"Concept name\",\n      \"description\": \"Brief description\",\n      \"type\": \"core|supporting|peripheral\",\n      \"clarity\": \"high|medium|low\"\n    }\n  ],\n  \"relationships\": [\n    {\n      \"source\": \"concept_1\",\n      \"target\": \"concept_2\",\n      \"type\": \"causal|prerequisite|enables|constrains|contradicts|supports|contains|relates\",\n      \"strength\": \"strong|moderate|weak\",\n      \"description\": \"How they relate\"\n    }\n  ],\n  \"clusters\": [\n    {\n      \"name\": \"Cluster name\",\n      \"theme\": \"What unifies this cluster\",\n      \"concepts\": [\"concept_1\", \"concept_2\"],\n      \"importance\": \"high|medium|low\"\n    }\n  ],\n  \"centrality_analysis\": {\n    \"most_connected\": [\"concept_id\"],\n    \"isolated_concepts\": [\"concept_id\"],\n    \"bridge_concepts\": [\"concept_id that connects clusters\"]\n  },\n  \"structural_gaps\": [\n    {\n      \"description\": \"What's missing\",\n      \"suggested_concept\": \"A concept that would fill this gap\",\n      \"would_connect\": [\"concept_1\", \"concept_2\"]\n    }\n  ],\n  \"insight_summary\": {\n    \"structure_type\": \"hierarchical|networked|clustered|linear\",\n    \"key_insight\": \"The most important thing this map reveals\",\n    \"potential_issues\": [\"Structural problems or tensions\"]\n  },\n  \"generated_items\": [\n    {\n      \"text\": \"New item to add to model\",\n      \"vector\": \"articulate|investigate|resolve\",\n      \"reasoning\": \"Why this item matters\"\n    }\n  ]\n}",
+      "variables": ["project_name", "core_challenge", "articulate_items", "investigate_items", "resolve_items", "item_ids", "content", "focus_areas", "constraints"],
+      "notes": "User prompt is dynamically built from ToolContext and ToolInput. Sections include: PROJECT CONTEXT, CORE CHALLENGE, CONCEPTS TO MAP (from item_ids or all items tagged by vector [ARTICULATE]/[INVESTIGATE]/[RESOLVE], limits 8/8/4), FOCUS AREAS (from parameters), USER CONSTRAINTS, YOUR TASK."
+    }
+  ],
+  "io_contract": {
+    "input_description": "ToolContext with session items (requires >= 3 items across ARTICULATE and INVESTIGATE vectors) plus ToolInput with optional item_ids, content, constraints, and parameters.focus_areas.",
+    "output_description": "JSON with concepts (typed as core/supporting/peripheral), relationships (typed and strength-rated), clusters, centrality_analysis, structural_gaps (with suggested concepts), insight_summary, and generated_items.",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/concept_mapper.py",
+      "symbol": "ConceptMapper.execute",
+      "line_start": 135,
+      "line_end": 213,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Async execute method: builds prompt, calls LLM, parses JSON. Extracts generated_items and also adds structural_gaps as INVESTIGATE items (confidence 0.4, urgency 0.6). Returns ToolOutput with confidence_updates {investigate: 0.1, articulate: 0.05}."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/concept_mapper.py",
+      "symbol": "ConceptMapper.SYSTEM_PROMPT",
+      "line_start": 42,
+      "line_end": 124,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "System prompt constant defining the concept mapper role, relationship types, analysis approach, and JSON output format."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/concept_mapper.py",
+      "symbol": "ConceptMapper._build_prompt",
+      "line_start": 219,
+      "line_end": 266,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Builds user prompt with sections: PROJECT CONTEXT, CORE CHALLENGE, CONCEPTS TO MAP (items tagged by vector, limits 8/8/4), FOCUS AREAS, USER CONSTRAINTS, YOUR TASK."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": ["tradeoff_visualizer"],
+  "feeds_into_functions": ["counter_argument_generator"],
+  "track": "ideas",
+  "tags": ["ideas-tool"],
+  "notes": "Unlocks counter_argument_generator on completion. Unlocked by tradeoff_visualizer. Requires >= 3 items across ARTICULATE + INVESTIGATE. Structural gaps are automatically added as INVESTIGATE items. Boosts investigate by 0.1 and articulate by 0.05."
+}

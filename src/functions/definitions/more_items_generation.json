@@ -1,0 +1,117 @@
+{
+  "function_key": "more_items_generation",
+  "function_name": "More Items Generation",
+  "description": "Generates additional items for a specific vector, taking into account existing items (to avoid duplicates), user feedback on previous items (to respect preferences), cross-track items (to avoid overlap), and grid priority regions. Uses a comprehensive generation prompt with track/vector-specific instructions, bucket options, and grid awareness.",
+  "version": 1,
+  "category": "generation",
+  "tier": "tactical",
+  "invocation_pattern": "on_demand",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 4096,
+    "thinking_budget": null,
+    "streaming": false,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "user",
+      "template_text": "You are helping a user organize their thinking about a project/decision.\n\n## User's Context\n\n{context_section}\n\n## Your Task\n\nGenerate 5-8 items for the **{vector}** vector in the **{track}** track.\n\n{track_instructions}\n\n{vector_instructions}\n\n## Bucket Options\n\nFor each item, suggest which bucket it likely belongs to based on the user's context:\n{bucket_options}\n\n{grid_awareness_section}\n\n## Output Format\n\nReturn a JSON array of items. Each item should have:\n- \"text\": The SUBJECT or CONTENT (a concise noun phrase - NOT an action verb!) **MAXIMUM 10 WORDS**\n- \"suggested_bucket\": One of the bucket values\n- \"rationale\": Brief reason for the bucket suggestion\n- \"contextual_options\": Array of 2-4 pre-generated reasons why this item might NOT apply to the user's situation\n- \"suggested_row\": (OPTIONAL) Integer 0-19 indicating which condition this item addresses\n- \"suggested_col\": (OPTIONAL) Integer 0-19 indicating which axis dimension is most relevant\n- \"grid_rationale\": (OPTIONAL) Brief reason for the grid placement\n\nCRITICAL LENGTH REQUIREMENT: Each \"text\" field MUST be 5-10 words maximum. Be concise!\n\nCRITICAL: The \"text\" field should describe WHAT, not the action. The vector name ({vector}) already tells the user what to do with it.\n- WRONG: \"Define the problem statement\" (uses action verb)\n- RIGHT: \"The core problem statement\" (describes the content)\n\nFor contextual_options, each should have:\n- \"id\": Unique ID like \"opt1\", \"opt2\", etc.\n- \"type\": One of \"prerequisite\", \"dependency\", \"timing\", \"already_handled\", \"not_applicable\"\n- \"label\": A specific reason text relevant to THIS item and the user's context\n\n{existing_items_section}\n\nGenerate 5-8 items now. Be specific to the user's context.\n\n## STRICT REQUIREMENTS\n\n**Length**: Each \"text\" MUST be 5-10 WORDS MAXIMUM\n**Format**: Noun phrases describing content (NOT action verbs)\n**ZERO DUPLICATES**: Each item must express a UNIQUE concept\n**SPECIFICITY IS MANDATORY**: NO vague items - each must be sharp enough to act on\n\n**FINAL CHECK for {track} track**:\n- Is each item about the right domain (UNDERSTANDING for IDEAS, DOING for PROCESS)?\n- Is each item UNIQUE? No semantic duplicates!\n- Is each item SPECIFIC enough to act on?\n\nOutput ONLY the JSON array, no other text.\n\n{feedback_section}",
+      "variables": [
+        "context_section",
+        "vector",
+        "track",
+        "track_instructions",
+        "vector_instructions",
+        "bucket_options",
+        "grid_awareness_section",
+        "existing_items_section",
+        "feedback_section"
+      ],
+      "notes": "The prompt is assembled by _build_generation_prompt() with multiple helper methods: _get_track_instructions() (IDEAS vs PROCESS domain enforcement), _get_vector_instructions() (vector-specific guidance), _get_bucket_options() (track/vector-specific bucket labels), _build_grid_awareness_section() (priority regions from grid). Feedback context (from VectorInitFeedbackContext.to_generation_prompt()) is appended separately, containing items marked irrelevant/won't do/deferred/good idea."
+    }
+  ],
+  "io_contract": {
+    "input_description": "Track (IDEAS/PROCESS), vector name, onboarding context dict, existing items list (with text/vector/bucket), optional feedback string, optional feedback_context from VectorInitFeedbackContext, optional other_track_items, optional priority_regions from grid.",
+    "output_description": "List of GeneratedItem dataclasses with text, vector, suggested_bucket, rationale, contextual_options, and optional grid placement (suggested_row, suggested_col, grid_rationale).",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "track": { "type": "string", "enum": ["ideas", "process"] },
+        "vector": { "type": "string" },
+        "onboarding_context": { "type": "object" },
+        "existing_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": { "type": "string" },
+              "vector": { "type": "string" },
+              "bucket": { "type": "string" }
+            }
+          }
+        },
+        "feedback": { "type": "string" },
+        "feedback_context": { "type": "string" },
+        "other_track_items": { "type": "array" },
+        "priority_regions": { "type": "object" }
+      },
+      "required": ["track", "vector", "onboarding_context"]
+    },
+    "output_schema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string" },
+          "vector": { "type": "string" },
+          "suggested_bucket": { "type": "string" },
+          "rationale": { "type": "string" },
+          "contextual_options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "type": { "type": "string" },
+                "label": { "type": "string" }
+              }
+            }
+          },
+          "suggested_row": { "type": "integer" },
+          "suggested_col": { "type": "integer" },
+          "grid_rationale": { "type": "string" }
+        },
+        "required": ["text", "vector", "suggested_bucket"]
+      }
+    }
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService.generate_more_items",
+      "line_start": 939,
+      "line_end": 1001,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Calls _build_generation_prompt() to assemble the full prompt, appends feedback_context and free-text feedback sections, sends to LLM, parses response via _parse_generated_items()."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService._build_generation_prompt",
+      "line_start": 375,
+      "line_end": 596,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Core prompt builder that assembles onboarding context, track/vector instructions, bucket options, grid awareness, existing items dedup section, and strict output requirements into a single comprehensive prompt."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": [],
+  "feeds_into_functions": [],
+  "track": "both",
+  "tags": ["vector-init", "item-generation", "grid-aware", "feedback-responsive", "json-output", "deduplication"],
+  "notes": "The prompt enforces strong constraints: 5-10 word items, noun phrases only, no semantic duplicates, track-domain enforcement (IDEAS=conceptual, PROCESS=practical). Feedback context from previous rounds is critical — items marked 'Irrelevant' or 'Won't do' cause avoidance, 'Good idea!' causes amplification. Grid awareness section provides priority regions (empty/low-confidence cells) to guide placement."
+}

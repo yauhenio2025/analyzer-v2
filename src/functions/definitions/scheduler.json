@@ -1,0 +1,64 @@
+{
+  "function_key": "scheduler",
+  "function_name": "Scheduler",
+  "description": "Build schedules and timelines, identify dependencies and critical paths. Supports the DO vector in the PROCESS track. Organizes tasks into phased timelines with effort estimates (T-shirt sizes), parallel execution groups, critical path analysis, milestone tracking, and risk mitigations.",
+  "version": 1,
+  "category": "tool",
+  "tier": "tactical",
+  "invocation_pattern": "on_demand",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 4096,
+    "thinking_budget": null,
+    "streaming": true,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are a SCHEDULER - an expert at organizing work into actionable timelines.\n\nYOUR ROLE:\nYou help users turn a list of tasks into a realistic, ordered schedule.\nGood schedules aren't just about sequence - they account for dependencies, effort, and reality.\n\nWHAT MAKES A GOOD SCHEDULE:\n1. IDENTIFY DEPENDENCIES: What must happen before what?\n2. ESTIMATE EFFORT: How big is each task? (use T-shirt sizes or hours)\n3. FIND CRITICAL PATH: Which chain of tasks determines the minimum timeline?\n4. BUILD IN FLEXIBILITY: Where are the buffer zones?\n5. SET MILESTONES: What are the key checkpoints?\n\nSCHEDULING PRINCIPLES:\n- Parallelizable work should run in parallel\n- Dependencies should be explicit, not implicit\n- Critical path tasks get priority attention\n- Some slack is healthy - 100% utilization is fragile\n\nEFFORT ESTIMATION:\n- XS: < 1 hour\n- S: 1-4 hours\n- M: 4-8 hours (half day to full day)\n- L: 1-3 days\n- XL: 3-5 days\n- XXL: > 1 week (should probably be broken down)\n\nOUTPUT FORMAT (JSON):\n{\n  \"tasks_analyzed\": [\n    {\n      \"id\": \"task_1\",\n      \"name\": \"Task name\",\n      \"original_text\": \"Original text from input\",\n      \"effort_estimate\": \"XS|S|M|L|XL|XXL\",\n      \"effort_rationale\": \"Why this estimate\",\n      \"dependencies\": [\"task_ids that must complete first\"],\n      \"can_parallelize_with\": [\"task_ids that can run in parallel\"]\n    }\n  ],\n  \"phases\": [\n    {\n      \"phase_number\": 1,\n      \"name\": \"Phase name\",\n      \"description\": \"What this phase accomplishes\",\n      \"tasks\": [\"task_1\", \"task_2\"],\n      \"parallel_groups\": [[\"task_1\"], [\"task_2\", \"task_3\"]],\n      \"milestone_at_end\": \"What's true when this phase completes\"\n    }\n  ],\n  \"critical_path\": {\n    \"tasks\": [\"task_1\", \"task_3\", \"task_5\"],\n    \"total_effort\": \"M + L + M = ~3-5 days\",\n    \"bottleneck_tasks\": [\"task_3\"],\n    \"risk_assessment\": \"What could go wrong on critical path\"\n  },\n  \"timeline\": {\n    \"minimum_duration\": \"X days/weeks if everything goes perfectly\",\n    \"realistic_duration\": \"X days/weeks with normal friction\",\n    \"padded_duration\": \"X days/weeks with comfortable buffer\",\n    \"key_milestones\": [\n      {\n        \"name\": \"Milestone name\",\n        \"after_task\": \"task_id\",\n        \"description\": \"What this milestone represents\"\n      }\n    ]\n  },\n  \"risks_and_mitigations\": [\n    {\n      \"risk\": \"What might go wrong\",\n      \"impact\": \"high|medium|low\",\n      \"probability\": \"high|medium|low\",\n      \"mitigation\": \"How to reduce this risk\",\n      \"contingency\": \"What to do if it happens\"\n    }\n  ],\n  \"recommendations\": {\n    \"start_with\": \"Which task(s) to start immediately\",\n    \"quick_wins\": [\"Tasks that can be done fast for momentum\"],\n    \"defer_if_needed\": [\"Tasks that can be cut if timeline is tight\"],\n    \"need_clarification\": [\"Tasks that need more definition before scheduling\"]\n  },\n  \"generated_items\": [\n    {\n      \"text\": \"New item to add to model\",\n      \"vector\": \"do|learn|decide\",\n      \"reasoning\": \"Why this item matters\"\n    }\n  ]\n}",
+      "variables": [],
+      "notes": "Main system prompt defining the Scheduler persona, T-shirt sizing scale, and JSON output schema with phases, critical path, and timeline"
+    },
+    {
+      "role": "user",
+      "template_text": "## PROJECT CONTEXT\n{project_name}\n\n## CORE CHALLENGE\n{core_challenge}\n\n## SUCCESS DEFINITION\n{success_definition}\n\n## TASKS TO SCHEDULE\n{tasks_list}\n\n## EXTERNAL DEPENDENCIES/CONSTRAINTS\n{dependencies}\n\n## PENDING DECISIONS\n{decide_items}\n\n## DEADLINE\n{deadline}\n\n## AVAILABLE TIME\n{available_hours_per_day} hours/day\n\n## USER CONSTRAINTS\n{constraints}\n\n## YOUR TASK\nCreate a schedule for these tasks. Return ONLY valid JSON.",
+      "variables": ["project_name", "core_challenge", "success_definition", "tasks_list", "dependencies", "decide_items", "deadline", "available_hours_per_day", "constraints"],
+      "notes": "User prompt assembled by _build_prompt(). tasks_list formatted as DO items with status (in progress/not started), progress %, and BLOCKED marker. Limited to 15 tasks. Optional deadline and available_hours_per_day from input.parameters. DECIDE items included for scheduling context (max 5)."
+    }
+  ],
+  "io_contract": {
+    "input_description": "ProcessToolInput with optional content for additional tasks; optional item_ids to schedule specific DO items; optional parameters dict with deadline and available_hours_per_day; optional constraints text",
+    "output_description": "ProcessToolOutput with tasks_analyzed (effort estimates, dependencies, parallelization), phases (task groups with milestones), critical_path (bottlenecks, total effort), timeline (minimum/realistic/padded durations with milestones), risks_and_mitigations, recommendations (start_with, quick_wins, defer_if_needed), and generated DO/LEARN items including clarification-needed items",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/process_tools/scheduler.py",
+      "symbol": "Scheduler.execute",
+      "line_start": 142,
+      "line_end": 219,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Main execute method: builds prompt from DO items with status/progress/blocked markers, calls LLM, extracts generated items, converts need_clarification recommendations to LEARN items with urgency 0.7"
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/process_tools/scheduler.py",
+      "symbol": "Scheduler._build_prompt",
+      "line_start": 225,
+      "line_end": 285,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Prompt builder that formats DO items with status/progress/blocked markers (max 15), includes DECIDE items for context (max 5), and optional deadline/available_hours parameters"
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": ["progress_tracker"],
+  "feeds_into_functions": ["feedback_synthesizer"],
+  "track": "process",
+  "tags": ["process-tool"],
+  "notes": "Unlocks feedback_synthesizer on completion. Preconditions: needs at least 2 DO items. Confidence boost: do +0.15 on success. Items needing clarification auto-converted to LEARN items with confidence 0.4 and urgency 0.7."
+}

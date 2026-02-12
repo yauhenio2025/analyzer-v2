@@ -1,0 +1,164 @@
+{
+  "function_key": "vector_init_generation",
+  "function_name": "Vector Initialization Item Generation",
+  "description": "Generates 5-8 items per vector during the vector initialization phase, before the interview starts. For each item, produces: a concise noun-phrase text (5-10 words max), a suggested progress bucket, a rationale, 2-4 contextual options explaining why the item might not apply, and optional grid coordinates (row/col) for placement on the track's grid. Items are generated per-vector with awareness of existing items (same vector, other vectors, other track) to avoid duplication. Uses Sonnet with 5000-token thinking budget for quality reasoning about specificity and deduplication.",
+  "version": 1,
+  "category": "generation",
+  "tier": "tactical",
+  "invocation_pattern": "per_vector",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 16000,
+    "thinking_budget": 5000,
+    "streaming": false,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "user",
+      "template_text": "You are helping a user organize their thinking about a project/decision.\n\n## User's Context\n\n{context_section}\n\n## Your Task\n\nGenerate 5-8 items for the **{vector}** vector in the **{track}** track.\n\n{track_instructions}\n\n{vector_instructions}\n\n## Bucket Options\n\nFor each item, suggest which bucket it likely belongs to based on the user's context:\n{bucket_options}\n\n{grid_awareness_section}\n\n## Output Format\n\nReturn a JSON array of items. Each item should have:\n- \"text\": The SUBJECT or CONTENT (a concise noun phrase - NOT an action verb!) **MAXIMUM 10 WORDS**\n- \"suggested_bucket\": One of the bucket values\n- \"rationale\": Brief reason for the bucket suggestion\n- \"contextual_options\": Array of 2-4 pre-generated reasons why this item might NOT apply to the user's situation\n- \"suggested_row\": (OPTIONAL) Integer 0-19 indicating which condition this item addresses\n- \"suggested_col\": (OPTIONAL) Integer 0-19 indicating which axis dimension is most relevant\n- \"grid_rationale\": (OPTIONAL) Brief reason for the grid placement\n\nCRITICAL LENGTH REQUIREMENT: Each \"text\" field MUST be 5-10 words maximum. Be concise!\n\nCRITICAL: The \"text\" field should describe WHAT, not the action. The vector name ({vector}) already tells the user what to do with it.\n- WRONG: \"Define the problem statement\" (uses action verb)\n- WRONG: \"The methodological justification for LLM-assisted synthesis of decade-long research notes\" (too long)\n- RIGHT: \"The core problem statement\" (describes the content, 4 words)\n- RIGHT: \"LLM methodology justification\" (concise, 3 words)\n\nFor contextual_options, each should have:\n- \"id\": Unique ID like \"opt1\", \"opt2\"\n- \"type\": One of \"prerequisite\", \"dependency\", \"timing\", \"already_handled\", \"not_applicable\"\n- \"label\": A specific reason text relevant to THIS item and the user's context\n\n{existing_section}\n\nGenerate 5-8 items now. Be specific to the user's context.\n\n## STRICT REQUIREMENTS\n\n**Length**: Each \"text\" MUST be 5-10 WORDS MAXIMUM\n\n**Format**: Noun phrases describing content (NOT action verbs). The vector name already tells what to do.\n\n**ZERO DUPLICATES**: Each item must express a UNIQUE concept. Different wording != different item.\n\n**SPECIFICITY IS MANDATORY**: NO vague items. Each item must be SHARP enough to act on, think about, research, or decide on.\n\nBAD (vague): \"Balance between theoretical sophistication and accessibility\"\nGOOD (specific): \"How much Marxist terminology for general audience\"\n\n**FINAL CHECK for {track} track**:\n- Is each item about the right domain (IDEAS=understanding, PROCESS=doing)?\n- Is each item UNIQUE? No semantic duplicates!\n- Is each item SPECIFIC enough to act on?\n\nOutput ONLY the JSON array, no other text.",
+      "variables": [
+        "context_section",
+        "vector",
+        "track",
+        "track_instructions",
+        "vector_instructions",
+        "bucket_options",
+        "grid_awareness_section",
+        "existing_section"
+      ],
+      "notes": "Single user prompt (no system prompt used). context_section is built from onboarding answers: core_challenge, clarity_items, uncertainty_items, dependencies, success_definition. track_instructions enforce IDEAS/PROCESS track separation. vector_instructions are specific per vector (articulate/investigate/resolve/do/learn/decide) with good/bad examples. bucket_options map to vector-specific progress buckets. grid_awareness_section includes grid dimensions with substance (rows) and quality (columns) labels, plus optional priority regions. existing_section shows already-generated items grouped by categorization status, other vectors, and other track items to avoid duplication."
+    }
+  ],
+  "io_contract": {
+    "input_description": "track (Track enum: IDEAS or PROCESS), vector (string: articulate/investigate/resolve/do/learn/decide), onboarding_context dict (core_challenge, clarity_items, uncertainty_items, dependencies, success_definition), optional existing_items list (items already generated for this track), optional other_track_items list (items from the other track), optional priority_regions (PriorityRegions from PriorityRegionService with priority rows/cols).",
+    "output_description": "List of GeneratedItem dataclasses, each containing: text (string, 5-10 words noun phrase), vector (string), suggested_bucket (string matching vector's bucket options), rationale (optional string), contextual_options (optional list of ContextualOption with id, type, label), suggested_row (optional int 0-19), suggested_col (optional int 0-19), grid_rationale (optional string).",
+    "input_schema": null,
+    "output_schema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["text", "suggested_bucket"],
+        "properties": {
+          "text": { "type": "string", "maxLength": 100 },
+          "suggested_bucket": { "type": "string" },
+          "rationale": { "type": "string" },
+          "contextual_options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "type": { "type": "string", "enum": ["prerequisite", "dependency", "timing", "already_handled", "not_applicable"] },
+                "label": { "type": "string" }
+              }
+            }
+          },
+          "suggested_row": { "type": "integer", "minimum": 0, "maximum": 19 },
+          "suggested_col": { "type": "integer", "minimum": 0, "maximum": 19 },
+          "grid_rationale": { "type": "string" }
+        }
+      }
+    }
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService._generate_items_for_vector",
+      "line_start": 213,
+      "line_end": 250,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Calls _build_generation_prompt then makes the LLM call with Sonnet + extended thinking (5000 budget_tokens, 16000 max_tokens). Parses response via _parse_generated_items."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService._build_generation_prompt",
+      "line_start": 375,
+      "line_end": 596,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Builds the full generation prompt. Assembles context from onboarding answers, gets vector-specific instructions and bucket options, builds existing items section (grouped by categorization status, other vectors, other track), adds grid awareness section with conditions/axes labels and priority regions."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService._get_track_instructions",
+      "line_start": 598,
+      "line_end": 653,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Returns track-level scope enforcement instructions. IDEAS track: conceptual/theoretical only. PROCESS track: practical/execution only. Includes good/bad examples."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService._get_vector_instructions",
+      "line_start": 655,
+      "line_end": 756,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Returns vector-specific generation instructions with good/bad examples enforcing noun-phrase format. Covers all 6 vectors: articulate, investigate, resolve, do, learn, decide."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService._get_bucket_options",
+      "line_start": 758,
+      "line_end": 787,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Returns bucket options per vector. Each vector has 3 progress buckets (e.g., well_expressed/partially_formed/unclear for articulate)."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService._build_grid_awareness_section",
+      "line_start": 789,
+      "line_end": 841,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Builds the optional grid awareness prompt section. Includes grid dimensions (substance rows, quality columns) from get_grid_dimensions(), plus priority regions if available."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService._parse_generated_items",
+      "line_start": 843,
+      "line_end": 937,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Parses LLM JSON response into GeneratedItem objects. Validates contextual_options types, grid row/col ranges (0-19), truncates bucket values to 200 chars, strips vector prefixes from text. Falls back to line-by-line parsing if JSON fails."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService.generate_vector_init_items",
+      "line_start": 164,
+      "line_end": 211,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Public entry point. Iterates over vectors (all vectors for track if none specified), calls _generate_items_for_vector for each, then passes all items through _deduplicate_and_sharpen_items."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": [],
+  "feeds_into_functions": ["item_dedup_sharpening"],
+  "track": "both",
+  "tags": [
+    "vector-initialization",
+    "item-generation",
+    "noun-phrase",
+    "grid-aware",
+    "contextual-options",
+    "bucket-suggestion",
+    "deduplication-aware",
+    "cross-track-awareness",
+    "priority-regions",
+    "sonnet",
+    "extended-thinking"
+  ],
+  "notes": "Generates items for the vector initialization phase that happens before the interview. Items are 5-10 word noun phrases with suggested progress buckets, contextual 'why this might not apply' options, and optional grid coordinates. Uses Sonnet (not Opus) with 5000-token thinking budget for quality reasoning about specificity and deduplication. The prompt enforces strict track separation (IDEAS=conceptual, PROCESS=execution) and zero-duplicate policy. Grid-aware generation suggests row/col placements based on substance (conditions) and quality (axes) dimensions. After generation, all items pass through the item_dedup_sharpening function for semantic deduplication."
+}

@@ -1,0 +1,64 @@
+{
+  "function_key": "draft_generator",
+  "function_name": "Draft Generator",
+  "description": "Generate drafts, documents, and structured content based on requirements. Supports the DO vector in the PROCESS track by producing actual output. Creates first drafts of documents, outlines, templates, emails, project plans, technical specs, and meeting materials with clear placeholders for user input.",
+  "version": 1,
+  "category": "tool",
+  "tier": "tactical",
+  "invocation_pattern": "on_demand",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 4096,
+    "thinking_budget": null,
+    "streaming": true,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are a DRAFT GENERATOR - an expert at creating structured content and documents.\n\nYOUR ROLE:\nYou help users produce first drafts of documents, sections, outlines, and other written content.\nYour drafts are well-structured, actionable starting points that users can refine.\n\nDRAFTING PRINCIPLES:\n1. STRUCTURE FIRST: Organize content logically before filling in details\n2. AUDIENCE AWARE: Consider who will read/use this content\n3. ACTION-ORIENTED: Make content useful and actionable\n4. CLEAR PLACEHOLDERS: Mark areas that need user input with [PLACEHOLDER]\n5. COMPLETENESS: Cover all requested sections, even if briefly\n\nDRAFT TYPES YOU CAN CREATE:\n- Document sections (intro, methodology, conclusion, etc.)\n- Outlines and structures\n- Templates with placeholders\n- Email/message drafts\n- Project plans and roadmaps\n- Technical specifications\n- Meeting agendas and summaries\n\nOUTPUT FORMAT (JSON):\n{\n  \"draft_type\": \"Type of content generated\",\n  \"title\": \"Draft title or heading\",\n  \"content\": {\n    \"full_text\": \"The complete draft text with proper formatting\",\n    \"sections\": [\n      {\n        \"heading\": \"Section heading\",\n        \"content\": \"Section content\",\n        \"placeholders\": [\"Items that need user input\"]\n      }\n    ]\n  },\n  \"metadata\": {\n    \"word_count\": 0,\n    \"estimated_reading_time\": \"X minutes\",\n    \"completeness\": \"high/medium/low\",\n    \"needs_review\": [\"Areas that need user attention\"]\n  },\n  \"next_steps\": [\n    {\n      \"action\": \"What to do next\",\n      \"priority\": \"high/medium/low\"\n    }\n  ],\n  \"generated_items\": [\n    {\n      \"text\": \"Task to complete this draft\",\n      \"vector\": \"do\",\n      \"bucket\": \"havent_done\",\n      \"reasoning\": \"Why this task is needed\"\n    }\n  ]\n}",
+      "variables": [],
+      "notes": "Main system prompt defining the Draft Generator persona and JSON output schema"
+    },
+    {
+      "role": "user",
+      "template_text": "## PROJECT CONTEXT\n{project_name}\n\n## CORE CHALLENGE\n{core_challenge}\n\n## SUCCESS DEFINITION\n{success_definition}\n\n## DRAFT REQUEST\n{content}\n\n## CONSTRAINTS\n{constraints}\n\n## PARAMETERS\n- Format: {format}\n- Target length: {length}\n- Audience: {audience}\n- Tone: {tone}\n\n## AVAILABLE KNOWLEDGE\n{learn_items_known}\n\n## WORK COMPLETED/IN PROGRESS\n{do_items_done}\n\n## YOUR TASK\nGenerate the requested draft. Return ONLY valid JSON.",
+      "variables": ["project_name", "core_challenge", "success_definition", "content", "constraints", "format", "length", "audience", "tone", "learn_items_known", "do_items_done"],
+      "notes": "User prompt assembled dynamically by _build_prompt(). Sections are conditionally included based on available context. learn_items_known filters to know_well/somewhat_know buckets (max 5). do_items_done filters to have_done/in_progress buckets (max 5)."
+    }
+  ],
+  "io_contract": {
+    "input_description": "ProcessToolInput with draft request in content field; optional constraints; optional parameters dict with format, length, audience, tone keys",
+    "output_description": "ProcessToolOutput with draft content (full_text + sections with placeholders), metadata (word_count, reading_time, completeness, needs_review), next_steps as prioritized actions, and generated DO items for follow-up tasks",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/process_tools/draft_generator.py",
+      "symbol": "DraftGenerator.execute",
+      "line_start": 123,
+      "line_end": 207,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Main execute method: builds prompt from context and input, calls LLM with max_tokens=6000, parses response, extracts generated DO items and converts next_steps to DO items with priority-based urgency"
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/process_tools/draft_generator.py",
+      "symbol": "DraftGenerator._build_prompt",
+      "line_start": 213,
+      "line_end": 274,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Prompt builder that assembles project context, draft request, constraints, parameters (format/length/audience/tone), available knowledge from LEARN items, and existing work from DO items"
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": ["research_agent"],
+  "feeds_into_functions": ["feedback_synthesizer"],
+  "track": "process",
+  "tags": ["process-tool"],
+  "notes": "Unlocks feedback_synthesizer on completion. Preconditions: needs at least one of (LEARN items in know_well/somewhat_know, success_definition, core_challenge). Uses max_tokens=6000 for LLM call (overrides default in _call_llm). Confidence boost: do +0.1 on success."
+}

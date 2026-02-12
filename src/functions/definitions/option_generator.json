@@ -1,0 +1,68 @@
+{
+  "function_key": "option_generator",
+  "function_name": "Option Generator",
+  "description": "Generate distinct structural alternatives for exploring different approaches. When users are stuck with one approach or have a partially-formed idea, generates 3-5 structurally different alternatives that explore different dimensions of the solution space. Supports the ARTICULATE vector of the IDEAS track.",
+  "version": 1,
+  "category": "tool",
+  "tier": "tactical",
+  "invocation_pattern": "on_demand",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 4096,
+    "thinking_budget": null,
+    "streaming": true,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are an OPTION GENERATOR - an expert at creating diverse, high-quality alternatives.\n\nYOUR ROLE:\nWhen users are stuck with one approach or have a partially-formed idea, you generate\nstructurally different alternatives. You don't just create variations - you create\ngenuinely distinct approaches that explore different dimensions of the solution space.\n\nWHAT MAKES GOOD OPTIONS:\n1. STRUCTURAL DIVERSITY: Options should differ in fundamental approach, not just details\n2. ACTIONABLE: Each option should be concrete enough to evaluate and potentially implement\n3. COMPLEMENTARY: Options should collectively cover the solution space well\n4. HONEST TRADE-OFFS: Each option has real strengths AND weaknesses\n\nOPTION TYPES TO CONSIDER:\n- Minimal viable approach (simplest that could work)\n- Ambitious approach (if resources/time were unconstrained)\n- Unconventional approach (challenges assumptions)\n- Integrative approach (combines elements from multiple domains)\n- Iterative approach (starts simple, evolves)\n\nEVALUATION DIMENSIONS:\nFor each option, assess along relevant dimensions like:\n- Feasibility (can it actually be done?)\n- Risk (what could go wrong?)\n- Resource requirements (time, money, expertise)\n- Reversibility (can you course-correct if needed?)\n- Scalability (does it work at different scales?)\n- Alignment (does it fit the user's values and constraints?)\n\nOUTPUT FORMAT (JSON):\n{\n  \"problem_restated\": \"Your understanding of what needs alternatives\",\n  \"options\": [\n    {\n      \"id\": \"option_1\",\n      \"name\": \"Option name\",\n      \"description\": \"What this option involves\",\n      \"approach_type\": \"minimal|ambitious|unconventional|integrative|iterative|other\",\n      \"key_moves\": [\"The 2-3 key actions this option requires\"],\n      \"strengths\": [\"What's good about this option\"],\n      \"weaknesses\": [\"What's challenging or risky\"],\n      \"best_if\": \"Conditions under which this option shines\",\n      \"avoid_if\": \"Conditions under which this option struggles\",\n      \"first_step\": \"The concrete first action to take\"\n    }\n  ],\n  \"comparison_table\": {\n    \"dimensions\": [\"dimension1\", \"dimension2\", ...],\n    \"ratings\": {\n      \"option_1\": {\"dimension1\": \"high|medium|low\", ...}\n    }\n  },\n  \"recommendation\": {\n    \"for_exploration\": \"Option to explore if user wants to learn more\",\n    \"for_action\": \"Option to choose if user wants to act now\",\n    \"rationale\": \"Why these recommendations\"\n  },\n  \"synthesis_insight\": \"What generating these options reveals about the problem\",\n  \"generated_items\": [\n    {\n      \"text\": \"New item for the model\",\n      \"vector\": \"articulate|investigate|resolve\",\n      \"reasoning\": \"Why this item matters\"\n    }\n  ]\n}",
+      "variables": ["project_name", "core_challenge", "articulate_items", "resolve_items", "item_ids", "content", "clarity_items", "uncertainty_items", "constraints", "num_options"],
+      "notes": "User prompt is dynamically built from ToolContext and ToolInput. Sections include: PROJECT CONTEXT, CORE CHALLENGE, GENERATE OPTIONS FOR (from item_ids or unclear/partially_formed articulate_items), WHAT USER IS CLEAR ON, USER'S UNCERTAINTIES, CONSTRAINTS TO RESPECT, PARAMETERS (num_options, default 4), YOUR TASK."
+    }
+  ],
+  "io_contract": {
+    "input_description": "ToolContext with session items (requires unclear/partially_formed ARTICULATE items or any ARTICULATE items) plus ToolInput with optional item_ids, content, constraints, and parameters.num_options (default 4).",
+    "output_description": "JSON with problem_restated, options array (each with id, name, description, approach_type, key_moves, strengths, weaknesses, best_if, avoid_if, first_step), comparison_table, recommendation, synthesis_insight, and generated_items.",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/option_generator.py",
+      "symbol": "OptionGenerator.execute",
+      "line_start": 123,
+      "line_end": 202,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Async execute method: builds prompt, calls LLM, parses JSON. Each generated option becomes a RESOLVE item (suggested_bucket='unresolved'). Also extracts explicit generated_items from LLM. Returns ToolOutput with confidence_updates {articulate: 0.1}."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/option_generator.py",
+      "symbol": "OptionGenerator.SYSTEM_PROMPT",
+      "line_start": 42,
+      "line_end": 107,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "System prompt constant defining the option generator role, option types, evaluation dimensions, and JSON output format."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/option_generator.py",
+      "symbol": "OptionGenerator._build_prompt",
+      "line_start": 208,
+      "line_end": 262,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Builds user prompt with sections: PROJECT CONTEXT, CORE CHALLENGE, GENERATE OPTIONS FOR (item_ids or unclear items, limit 3), WHAT USER IS CLEAR ON, USER'S UNCERTAINTIES, CONSTRAINTS TO RESPECT, PARAMETERS (num_options), YOUR TASK."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": [],
+  "feeds_into_functions": ["consequence_tracer"],
+  "track": "ideas",
+  "tags": ["ideas-tool"],
+  "notes": "Unlocks consequence_tracer on completion. Can execute when any ARTICULATE items exist (prefers unclear/partially_formed). Each option is added as a RESOLVE item with confidence 0.5. Boosts articulate confidence by 0.1 on success."
+}

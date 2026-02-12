@@ -1,0 +1,64 @@
+{
+  "function_key": "feedback_synthesizer",
+  "function_name": "Feedback Synthesizer",
+  "description": "Process feedback to extract themes, patterns, and actionable insights. Supports the LEARN and DECIDE vectors in the PROCESS track. Categorizes feedback by theme (praise, improvement, concern, confusion, feature_request, bug_report, process, strategic), assesses validity, performs sentiment analysis, builds priority matrices, and generates action items.",
+  "version": 1,
+  "category": "tool",
+  "tier": "tactical",
+  "invocation_pattern": "on_demand",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 4096,
+    "thinking_budget": null,
+    "streaming": true,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are a FEEDBACK SYNTHESIZER - an expert at extracting value from feedback.\n\nYOUR ROLE:\nYou help users process feedback (from reviews, stakeholders, users, critics) and turn it into actionable insights.\nGood feedback synthesis doesn't just summarize - it finds patterns and prioritizes action.\n\nWHAT MAKES GOOD FEEDBACK SYNTHESIS:\n1. CATEGORIZE: Group feedback by theme, not by source\n2. FIND PATTERNS: What do multiple sources agree on?\n3. IDENTIFY OUTLIERS: What unique insights come from single sources?\n4. ASSESS VALIDITY: Not all feedback is equally valid\n5. PRIORITIZE: What matters most to address?\n6. GENERATE ACTIONS: Turn insights into specific next steps\n\nFEEDBACK CATEGORIES:\n- praise: What's working well (reinforce)\n- improvement: What could be better (iterate)\n- concern: Worries or risks raised (address)\n- confusion: Misunderstandings (clarify)\n- feature_request: New capabilities requested (evaluate)\n- bug_report: Things that are broken (fix)\n- process: How work happens (adjust)\n- strategic: Direction and goals (consider)\n\nVALIDITY ASSESSMENT:\n- source_authority: Does this person have relevant expertise?\n- evidence_provided: Is this backed by data or examples?\n- alignment_count: How many sources agree?\n- recency: Is this still relevant?\n- specificity: Is it actionable or vague?\n\nOUTPUT FORMAT (JSON):\n{\n  \"feedback_summary\": {\n    \"total_items\": 0,\n    \"sources_identified\": [\"source1\", \"source2\"],\n    \"overall_sentiment\": \"positive|mixed|negative\",\n    \"processing_approach\": \"How feedback was analyzed\"\n  },\n  \"themes\": [\n    {\n      \"name\": \"Theme name\",\n      \"category\": \"praise|improvement|concern|confusion|feature_request|bug_report|process|strategic\",\n      \"frequency\": \"high|medium|low\",\n      \"examples\": [\"Example feedback items\"],\n      \"sources\": [\"Who said this\"],\n      \"validity_score\": 0.0-1.0,\n      \"priority\": \"critical|high|medium|low\"\n    }\n  ],\n  \"patterns\": [\n    {\n      \"pattern\": \"Pattern description\",\n      \"supporting_themes\": [\"theme_names\"],\n      \"strength\": \"strong|moderate|weak\",\n      \"implication\": \"What this pattern suggests\"\n    }\n  ],\n  \"outliers\": [\n    {\n      \"feedback\": \"The unique feedback\",\n      \"source\": \"Who said it\",\n      \"reason_to_consider\": \"Why this matters despite being unique\",\n      \"risk_of_ignoring\": \"What happens if we ignore this\"\n    }\n  ],\n  \"sentiment_analysis\": {\n    \"positive_highlights\": [\"What people love\"],\n    \"negative_highlights\": [\"What frustrates people\"],\n    \"neutral_observations\": [\"Factual observations\"],\n    \"emotional_triggers\": [\"What evokes strong reactions\"]\n  },\n  \"priority_matrix\": {\n    \"urgent_and_important\": [\"Must address now\"],\n    \"important_not_urgent\": [\"Plan to address\"],\n    \"urgent_not_important\": [\"Delegate or quick-fix\"],\n    \"neither\": [\"Monitor but don't act\"]\n  },\n  \"action_items\": [\n    {\n      \"action\": \"Specific action to take\",\n      \"addresses_themes\": [\"theme_names\"],\n      \"priority\": \"critical|high|medium|low\",\n      \"effort\": \"XS|S|M|L|XL\",\n      \"owner_type\": \"Who should own this\",\n      \"success_metric\": \"How to know if this worked\"\n    }\n  ],\n  \"synthesis_verdict\": {\n    \"key_insight\": \"The most important takeaway\",\n    \"blind_spots\": [\"What feedback might be missing\"],\n    \"recommended_response\": \"Overall approach to this feedback\",\n    \"follow_up_questions\": [\"Questions to ask for more clarity\"]\n  },\n  \"generated_items\": [\n    {\n      \"text\": \"New item to add to model\",\n      \"vector\": \"do|learn|decide\",\n      \"reasoning\": \"Why this item matters\"\n    }\n  ]\n}",
+      "variables": [],
+      "notes": "Main system prompt defining the Feedback Synthesizer persona with 8 feedback categories, 5 validity dimensions, Eisenhower priority matrix, and comprehensive JSON output schema"
+    },
+    {
+      "role": "user",
+      "template_text": "## PROJECT CONTEXT\n{project_name}\n\n## CORE CHALLENGE\n{core_challenge}\n\n## SUCCESS DEFINITION\n{success_definition}\n\n## PRIMARY FEEDBACK\n{content}\n\n## FEEDBACK TO SYNTHESIZE\n{learn_items_with_notes}\n\n## CURRENT DECISIONS/POSITIONS\n{decide_items}\n\n## CURRENT WORK\n{do_items}\n\n## FEEDBACK SOURCE\n{feedback_source}\n\n## FOCUS AREAS\n{focus_areas}\n\n## USER CONSTRAINTS\n{constraints}\n\n## YOUR TASK\nSynthesize this feedback into actionable insights. Return ONLY valid JSON.",
+      "variables": ["project_name", "core_challenge", "success_definition", "content", "learn_items_with_notes", "decide_items", "do_items", "feedback_source", "focus_areas", "constraints"],
+      "notes": "User prompt assembled by _build_prompt(). LEARN items include research_notes when available (max 10). DECIDE items provide context on current positions (max 5). DO items provide context on current work (max 5). Optional feedback_source and focus_areas from input.parameters."
+    }
+  ],
+  "io_contract": {
+    "input_description": "ProcessToolInput with feedback text in content field; optional item_ids for specific LEARN items; optional parameters dict with feedback_source and focus_areas keys; optional constraints text",
+    "output_description": "ProcessToolOutput with feedback_summary (total_items, sources, sentiment), themes with categories and validity scores, patterns with strength, outliers with risk_of_ignoring, sentiment_analysis, priority_matrix (Eisenhower), action_items with effort/owner/success_metric, synthesis_verdict with key_insight and blind_spots, plus generated DO/LEARN items from actions and follow-up questions",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/process_tools/feedback_synthesizer.py",
+      "symbol": "FeedbackSynthesizer.execute",
+      "line_start": 157,
+      "line_end": 254,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Main execute method: builds prompt from feedback and context, calls LLM, extracts generated items, converts action_items to DO items with priority-mapped urgency (critical=0.9, high=0.7, medium=0.5, low=0.3), converts follow_up_questions to LEARN items"
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/process_tools/feedback_synthesizer.py",
+      "symbol": "FeedbackSynthesizer._build_prompt",
+      "line_start": 260,
+      "line_end": 322,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Prompt builder that includes primary feedback content, LEARN items with research_notes (max 10), DECIDE items for position context (max 5), DO items for work context (max 5), and optional feedback_source/focus_areas parameters"
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": ["draft_generator", "scheduler"],
+  "feeds_into_functions": [],
+  "track": "process",
+  "tags": ["process-tool"],
+  "notes": "Terminal tool in the PROCESS track - unlocks nothing further. Preconditions: needs at least 1 LEARN item (also works with just input.content). Confidence boost: learn +0.1, decide +0.1. Action items limited to top 5, follow-up questions limited to top 3."
+}

@@ -12,10 +12,11 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import audiences, chains, engines, llm, paradigms, styles, primitives, display, workflows
+from src.api.routes import audiences, chains, engines, functions, llm, paradigms, styles, primitives, display, workflows
 from src.audiences.registry import get_audience_registry
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
+from src.functions.registry import get_function_registry
 from src.paradigms.registry import get_paradigm_registry
 from src.styles.registry import get_style_registry
 from src.primitives.registry import get_primitives_registry
@@ -69,6 +70,10 @@ async def lifespan(app: FastAPI):
     audience_registry = get_audience_registry()
     logger.info(f"Loaded {audience_registry.count()} audiences")
 
+    logger.info("Loading function definitions...")
+    function_registry = get_function_registry()
+    logger.info(f"Loaded {function_registry.count()} functions")
+
     logger.info("Analyzer v2 API ready")
     yield
     # Shutdown
@@ -119,6 +124,7 @@ app.include_router(primitives.router, prefix="/v1")
 app.include_router(display.router, prefix="/v1")
 app.include_router(workflows.router, prefix="/v1")
 app.include_router(audiences.router, prefix="/v1")
+app.include_router(functions.router, prefix="/v1")
 app.include_router(llm.router, prefix="/v1")
 
 
@@ -139,6 +145,7 @@ async def root():
             "styles": "/v1/styles",
             "primitives": "/v1/primitives",
             "display": "/v1/display",
+            "functions": "/v1/functions",
         },
     }
 
@@ -151,6 +158,7 @@ async def health():
     chain_registry = get_chain_registry()
     workflow_registry = get_workflow_registry()
     audience_registry = get_audience_registry()
+    function_registry = get_function_registry()
     style_registry = get_style_registry()
     style_stats = style_registry.get_stats()
 
@@ -161,6 +169,7 @@ async def health():
         "chains_loaded": chain_registry.count(),
         "workflows_loaded": workflow_registry.count(),
         "audiences_loaded": audience_registry.count(),
+        "functions_loaded": function_registry.count(),
         "styles_loaded": style_stats["styles_loaded"],
         "style_affinities": style_stats["engine_affinities"],
     }
@@ -174,6 +183,7 @@ async def api_v1_root():
     chain_registry = get_chain_registry()
     workflow_registry = get_workflow_registry()
     audience_registry = get_audience_registry()
+    function_registry = get_function_registry()
     style_registry = get_style_registry()
     style_stats = style_registry.get_stats()
 
@@ -231,6 +241,18 @@ async def api_v1_root():
                     "GET /v1/audiences/{key}/curation",
                     "GET /v1/audiences/{key}/vocabulary",
                     "GET /v1/audiences/{key}/guidance",
+                ],
+            },
+            "functions": {
+                "count": function_registry.count(),
+                "endpoints": [
+                    "GET /v1/functions",
+                    "GET /v1/functions/categories",
+                    "GET /v1/functions/projects",
+                    "GET /v1/functions/{key}",
+                    "GET /v1/functions/{key}/prompts",
+                    "GET /v1/functions/{key}/implementations",
+                    "GET /v1/functions/project/{project}",
                 ],
             },
             "styles": {

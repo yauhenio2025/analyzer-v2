@@ -1,0 +1,88 @@
+{
+  "function_key": "category_selection",
+  "function_name": "Contextual Category Selection",
+  "description": "Selects the 4-5 most relevant clarity and uncertainty categories from a pool of 10 each, based on project context (name, challenge type, challenge description). Also generates 2-3 specific example suggestions per category to help stimulate user input during onboarding.",
+  "version": 1,
+  "category": "coordination",
+  "tier": "tactical",
+  "invocation_pattern": "every_question",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 1024,
+    "thinking_budget": null,
+    "streaming": false,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "user",
+      "template_text": "You are helping select the most relevant categories for a user's decision/project.\n\n## Project Context\n\n{context}\n\n## Available Clarity Categories (pick 4-5 most relevant)\n\nThese are categories for \"What do you already have clarity on?\":\n{clarity_pool_json}\n\n## Available Uncertainty Categories (pick 4-5 most relevant)\n\nThese are categories for \"What feels uncertain or contested?\":\n{uncertainty_pool_json}\n\n## Your Task\n\nBased on the project context, select the 4-5 MOST RELEVANT categories from each pool.\n\nConsider:\n1. **Project type**: Is this intellectual/conceptual (book, research, philosophy) or practical/execution (building, launching, organizing)?\n2. **Challenge framing**: What does the starter suggest about their needs?\n3. **What would help**: Which categories would prompt the most useful input from the user?\n\nGuidelines:\n- For INTELLECTUAL projects (books, research, ideas): Focus on \"ideas_formed\", \"unclear_framings\", \"open_questions\", \"values_held\"\n- For PRACTICAL projects (building, executing, organizing): Focus on \"work_done\", \"resources_available\", \"skills_i_have\", \"timing_uncertainties\"\n- For DECISION projects: Focus on \"decisions_made\", \"competing_options\", \"priorities_unclear\"\n- For RELATIONSHIP-heavy projects: Include \"relationships_established\", \"stakeholder_unknowns\"\n\n## Response Format\n\nReturn ONLY a JSON object:\n```json\n{\n  \"clarity_categories\": [\n    {\n      \"value\": \"category_value\",\n      \"label\": \"Display Label\",\n      \"suggestions\": [\"Suggestion 1\", \"Suggestion 2\"]\n    }\n  ],\n  \"uncertainty_categories\": [\n    {\n      \"value\": \"category_value\",\n      \"label\": \"Display Label\",\n      \"suggestions\": [\"Suggestion 1\", \"Suggestion 2\"]\n    }\n  ],\n  \"reasoning\": \"Brief explanation of why these categories fit this project\"\n}\n```\n\nSelect 4-5 categories for each pool. Order them by relevance (most relevant first).\n\n**CRITICAL for suggestions**: Generate 2-3 SHORT, SPECIFIC suggestions for EACH category.\n- These should be plausible examples that fit this specific project\n- Keep them brief (3-10 words each)\n- Make them specific to the project context, not generic\n- For clarity items: What might they already have done/know/decided?\n- For uncertainty items: What might they be unsure about?\n\nExample for \"writing a book about organic capitalism\":\n- ideas_formed suggestions: [\"Capitalism needs fundamental reform\", \"Nature provides models for economics\", \"Current system is unsustainable\"]\n- open_questions suggestions: [\"How to define 'organic'?\", \"What makes capitalism reform-able?\", \"Who is the target audience?\"]",
+      "variables": [
+        "context",
+        "clarity_pool_json",
+        "uncertainty_pool_json"
+      ],
+      "notes": "Context is built from project_name, core_challenge_starter, and core_challenge_text. The clarity_pool and uncertainty_pool are constructed from ClarityCategory and UncertaintyCategory enums with their display labels."
+    }
+  ],
+  "io_contract": {
+    "input_description": "Optional project_name, core_challenge_starter (from Q1), core_challenge_text, and include_suggestions flag. Uses ClarityCategory and UncertaintyCategory enums to build full pool of 10 categories each.",
+    "output_description": "Dictionary with clarity_categories (list of {value, label, suggestions}), uncertainty_categories (list of {value, label, suggestions}), and reasoning string.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": { "type": "string" },
+        "core_challenge_starter": { "type": "string" },
+        "core_challenge_text": { "type": "string" },
+        "include_suggestions": { "type": "boolean", "default": true }
+      }
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "clarity_categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": { "type": "string" },
+              "label": { "type": "string" },
+              "suggestions": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "uncertainty_categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": { "type": "string" },
+              "label": { "type": "string" },
+              "suggestions": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "reasoning": { "type": "string" }
+      },
+      "required": ["clarity_categories", "uncertainty_categories", "reasoning"]
+    }
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/llm_service.py",
+      "symbol": "LLMService.suggest_contextual_categories",
+      "line_start": 1059,
+      "line_end": 1222,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Builds context from project name and challenge, constructs full category pool from enums, sends to LLM for selection. Parses JSON response with markdown code block extraction. Falls back to first 4 categories from each pool with empty suggestions on error."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": [],
+  "feeds_into_functions": ["more_items_generation"],
+  "track": "both",
+  "tags": ["onboarding", "category-selection", "suggestions", "json-output", "personalization"],
+  "notes": "Called during onboarding to personalize the clarity/uncertainty input step. The category pools come from ClarityCategory and UncertaintyCategory enums (10 each) defined in app.models.enums. Guidelines in the prompt map project types (intellectual, practical, decision, relationship) to preferred category subsets."
+}

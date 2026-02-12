@@ -1,0 +1,121 @@
+{
+  "function_key": "grid_analyzer_interview",
+  "function_name": "Grid Analyzer Interview (Post-Answer)",
+  "description": "Analyzes question-answer pairs during the interview to detect themes not well-covered by existing grid dimensions. Uses throttling (minimum questions between analyses), confidence thresholds, and consecutive-suggestion confirmation before adding new wildcard dimensions. Supports cross-track deduplication by receiving the other track's existing wildcards.",
+  "version": 1,
+  "category": "infrastructure",
+  "tier": "tactical",
+  "invocation_pattern": "once_per_session",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 1024,
+    "thinking_budget": null,
+    "streaming": false,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are analyzing a decision-support interview to identify if the conversation has revealed aspects of the problem not well-covered by the existing grid dimensions.\n\nThe system has TWO SEPARATE TRACKS with COMPLETELY DIFFERENT grids:\n\n**IDEAS Track** (Conceptual exploration):\n- CONDITIONS (rows) = aspects of conceptual understanding: clarity, consistency, evidence, perspectives, assumptions, scope, trade-offs, history, implications, ethics, risk, alternatives, implementation bridge, communication, decision criteria\n- AXES (columns) = spectra for evaluating concepts: specificity, evidence base, consensus, urgency, complexity, abstraction, impact scope, reversibility, certainty, dependencies, novelty, emotional weight, resource needs, time sensitivity, stakeholder count\n\n**PROCESS Track** (Execution planning):\n- CONDITIONS (rows) = practical constraints: resources, timeline, dependencies, risk factors, stakeholder buy-in, technical feasibility, learning needs, decision points, quality constraints, communication needs, budget, team capacity, external factors, compliance, success metrics\n- AXES (columns) = spectra for evaluating execution: urgency, complexity, control level, effort, expertise, parallelizability, visibility, recoverability, cost impact, quality impact, schedule impact, risk level, flexibility, measurability, stakeholder impact\n\nCRITICAL: Your suggestion MUST match the track's semantic domain:\n- IDEAS wildcards should be CONCEPTUAL/INTELLECTUAL (e.g., \"Theoretical Completeness\", \"Philosophical Consistency\")\n- PROCESS wildcards should be PRACTICAL/EXECUTION (e.g., \"Regulatory Compliance\", \"Technical Debt\")\n- Do NOT suggest execution-oriented dimensions for IDEAS or conceptual dimensions for PROCESS\n\nYour task: Determine if the recent Q&A reveals a CLEAR, DISTINCT theme that would benefit from its own dimension.\n\nRULES FOR SUGGESTING NEW DIMENSIONS:\n1. Only suggest if there's a CLEAR pattern across multiple Q&As (not just one mention)\n2. The theme must be DISTINCT from existing dimensions (not just a reframing)\n3. The theme must be IMPORTANT enough to track separately (not trivial)\n4. The dimension MUST fit the track's semantic domain (conceptual for IDEAS, practical for PROCESS)\n5. Choose condition vs axis based on the dimension's nature:\n   - CONDITIONS (rows): Things that need attention, constraints, challenges, factors to manage\n   - AXES (columns): Evaluation criteria, ways to measure/assess, dimensions for comparison\n6. Be conservative - only suggest when genuinely needed\n\nEXAMPLES OF GOOD NEW DIMENSIONS:\n- \"Regulatory Compliance\" when a project involves government approvals not covered by existing compliance\n- \"Seasonal Timing\" when a project has strong seasonal dependencies\n- \"Cultural Fit\" when organizational culture is a key factor\n- \"Technical Debt\" when legacy system constraints keep coming up\n\nEXAMPLES OF BAD SUGGESTIONS (too generic or already covered):\n- \"Importance\" (too vague, covered by existing axes)\n- \"Risk\" (already covered by Risk Assessment condition)\n- \"Time\" (already covered by Timeline Pressure condition)\n- \"People\" (too vague, covered by Stakeholder conditions)\n\nOUTPUT FORMAT (JSON):\n{\n  \"should_suggest\": true/false,\n  \"dimension_name\": \"Name of suggested dimension\" or null,\n  \"dimension_type\": \"condition\" or \"axis\" or null,\n  \"rationale\": \"Why this dimension is needed and how it differs from existing ones\",\n  \"confidence\": 0.0-1.0,\n  \"evidence\": [\"Q3 revealed...\", \"Q5 mentioned...\"]\n}",
+      "variables": [],
+      "notes": "System prompt is a class constant SYSTEM_PROMPT on GridAnalyzerService."
+    },
+    {
+      "role": "user",
+      "template_text": "## Track: {track}\n\n## Current Grid Dimensions\n\n### CONDITIONS (rows):\n{conditions_str}\n\n### AXES (columns):\n{axes_str}\n{other_track_section}\n## Recent Q&A History\n{qa_str}\n\n## Current Question-Answer\nQ: {question_text}\nA: {answer_text}\n\n## Constraints\n{constraints_str}\n\n## Your Task\nAnalyze whether the Q&A reveals a theme that needs its own dimension. Be conservative.\nIf the other track already has a similar dimension, DO NOT suggest an overlapping one.\nReturn JSON with your analysis.",
+      "variables": [
+        "track",
+        "conditions_str",
+        "axes_str",
+        "other_track_section",
+        "qa_str",
+        "question_text",
+        "answer_text",
+        "constraints_str"
+      ],
+      "notes": "Built by _build_analysis_prompt(). conditions_str and axes_str enumerate all current dimensions (core + wildcards). qa_str shows last 10 Q&A pairs. other_track_section warns against overlap with the other track's existing wildcards. constraints_str indicates whether max wildcards have been reached for conditions and/or axes."
+    }
+  ],
+  "io_contract": {
+    "input_description": "Track (IDEAS/PROCESS), current GridDimensions object, question text, answer text, full Q&A history, analyzer throttling state, current question index, and optional other track wildcards.",
+    "output_description": "GridAnalysisResult with should_add_dimension flag, optional DimensionSuggestion (name, type, rationale, confidence, evidence), updated analyzer_state, and reasoning string.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "track": { "type": "string", "enum": ["ideas", "process"] },
+        "current_grid": { "type": "object", "description": "GridDimensions with all_conditions, all_axes, wildcard_conditions, wildcard_axes" },
+        "question_text": { "type": "string" },
+        "answer_text": { "type": "string" },
+        "qa_history": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": { "type": "string" },
+              "answer": { "type": "string" }
+            }
+          }
+        },
+        "analyzer_state": { "type": "object" },
+        "current_question_index": { "type": "integer" },
+        "other_track_wildcards": {
+          "type": "object",
+          "properties": {
+            "wildcard_conditions": { "type": "array", "items": { "type": "string" } },
+            "wildcard_axes": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      },
+      "required": ["track", "current_grid", "question_text", "answer_text", "qa_history", "analyzer_state", "current_question_index"]
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "should_add_dimension": { "type": "boolean" },
+        "suggestion": {
+          "type": "object",
+          "properties": {
+            "dimension_name": { "type": "string" },
+            "dimension_type": { "type": "string", "enum": ["condition", "axis"] },
+            "rationale": { "type": "string" },
+            "confidence": { "type": "number" },
+            "first_seen_question_index": { "type": "integer" },
+            "consecutive_count": { "type": "integer" },
+            "evidence_questions": { "type": "array", "items": { "type": "integer" } }
+          }
+        },
+        "analyzer_state_updates": { "type": "object" },
+        "reasoning": { "type": "string" }
+      },
+      "required": ["should_add_dimension", "analyzer_state_updates", "reasoning"]
+    }
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/grid_analyzer_service.py",
+      "symbol": "GridAnalyzerService.analyze_after_answer",
+      "line_start": 209,
+      "line_end": 406,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Main entry point. Checks throttling (min questions between dimensions), max wildcards cap, calls LLM via _build_analysis_prompt(), processes suggestions through pending/consecutive confirmation system. Requires 2 consecutive suggestions at >=0.7 confidence before adding a dimension."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/grid_analyzer_service.py",
+      "symbol": "GridAnalyzerService._build_analysis_prompt",
+      "line_start": 408,
+      "line_end": 488,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Builds the user prompt with current dimensions, recent Q&A history (last 10), current Q&A, availability constraints, and other track wildcard context."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": [],
+  "feeds_into_functions": ["grid_analyzer_initial"],
+  "track": "both",
+  "tags": ["grid", "wildcard-dimensions", "self-reflexive", "throttled", "conservative", "json-output"],
+  "notes": "Throttling constants: MIN_QUESTIONS_BETWEEN_DIMENSIONS=5 (3 after initial analysis), CONSECUTIVE_SUGGESTIONS_REQUIRED=2, MAX_WILDCARDS_PER_AXIS=5, MIN_SUGGESTION_CONFIDENCE=0.7. The consecutive-suggestion mechanism prevents hasty dimension creation - a suggestion must appear in 2 consecutive analyses before being added. Successfully added wildcards are also fire-and-forget reported to the Theorist service via _report_wildcard_to_theorist()."
+}

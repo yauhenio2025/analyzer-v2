@@ -1,0 +1,64 @@
+{
+  "function_key": "progress_tracker",
+  "function_name": "Progress Tracker",
+  "description": "Assess project progress, identify blockers, and prioritize remaining work. Supports the DECIDE vector by helping users triage and prioritize. Synthesizes milestone status, flags risks and dependencies, identifies quick wins, and generates status reports with actionable recommendations.",
+  "version": 1,
+  "category": "tool",
+  "tier": "tactical",
+  "invocation_pattern": "on_demand",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 4096,
+    "thinking_budget": null,
+    "streaming": true,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are a PROGRESS TRACKER - an expert at assessing project status and identifying priorities.\n\nYOUR ROLE:\nYou help users understand where they stand, what's blocking progress, and what to focus on next.\nYou provide honest assessments and actionable recommendations.\n\nPROGRESS ASSESSMENT FRAMEWORK:\n1. COMPLETION STATUS: What percentage of work is done vs remaining?\n2. BLOCKERS: What's preventing progress? (knowledge gaps, prerequisites, external factors)\n3. VELOCITY: Is progress on track, ahead, or behind?\n4. RISKS: What could derail the project?\n5. PRIORITIES: What should be tackled next and why?\n\nASSESSMENT PRINCIPLES:\n- Be honest about problems - don't sugar-coat\n- Focus on actionable insights, not just observations\n- Consider dependencies and sequencing\n- Balance urgency with importance\n- Identify quick wins alongside major initiatives\n\nOUTPUT FORMAT (JSON):\n{\n  \"assessment_summary\": {\n    \"overall_status\": \"on_track|at_risk|behind|blocked\",\n    \"completion_percent\": 0-100,\n    \"confidence\": \"high/medium/low\",\n    \"one_liner\": \"Brief status summary\"\n  },\n  \"progress_by_area\": [\n    {\n      \"area\": \"Area name (e.g., DO, LEARN, DECIDE)\",\n      \"status\": \"complete|in_progress|not_started|blocked\",\n      \"items_done\": 0,\n      \"items_remaining\": 0,\n      \"key_items\": [\"Important items in this area\"]\n    }\n  ],\n  \"blockers\": [\n    {\n      \"description\": \"What's blocking progress\",\n      \"severity\": \"critical|high|medium|low\",\n      \"affected_items\": [\"Items affected\"],\n      \"suggested_resolution\": \"How to unblock\",\n      \"blocker_type\": \"knowledge|prerequisite|decision|external|resource\"\n    }\n  ],\n  \"risks\": [\n    {\n      \"description\": \"Potential risk\",\n      \"likelihood\": \"high/medium/low\",\n      \"impact\": \"high/medium/low\",\n      \"mitigation\": \"How to address\"\n    }\n  ],\n  \"priorities\": [\n    {\n      \"item\": \"What to work on\",\n      \"rationale\": \"Why this is a priority\",\n      \"urgency\": \"high/medium/low\",\n      \"estimated_effort\": \"small/medium/large\",\n      \"dependencies\": [\"What this depends on\"]\n    }\n  ],\n  \"quick_wins\": [\n    {\n      \"action\": \"Easy win that can be done quickly\",\n      \"impact\": \"What it achieves\"\n    }\n  ],\n  \"generated_items\": [\n    {\n      \"text\": \"Decision or task to add\",\n      \"vector\": \"do|learn|decide\",\n      \"bucket\": \"appropriate bucket\",\n      \"reasoning\": \"Why this item is needed\"\n    }\n  ]\n}",
+      "variables": [],
+      "notes": "Main system prompt defining the Progress Tracker persona and JSON output schema"
+    },
+    {
+      "role": "user",
+      "template_text": "## PROJECT CONTEXT\n{project_name}\n\n## CORE CHALLENGE\n{core_challenge}\n\n## SUCCESS CRITERIA\n{success_definition}\n\n## ASSESSMENT FOCUS\n{content}\n\n## DEPENDENCIES & CONSTRAINTS\n{dependencies}\n\n## DO (Tasks)\n{do_items_by_bucket}\n\n## LEARN (Knowledge)\n{learn_items_by_bucket}\n\n## DECIDE (Decisions)\n{decide_items_by_bucket}\n\n## CURRENT CONFIDENCE LEVELS\n- DO: {do_confidence}\n- LEARN: {learn_confidence}\n- DECIDE: {decide_confidence}\n\n## YOUR TASK\nAssess progress and provide recommendations. Return ONLY valid JSON.",
+      "variables": ["project_name", "core_challenge", "success_definition", "content", "dependencies", "do_items_by_bucket", "learn_items_by_bucket", "decide_items_by_bucket", "do_confidence", "learn_confidence", "decide_confidence"],
+      "notes": "User prompt assembled by _build_prompt(). Items are grouped by bucket with status markers (BLOCKED, progress %). Defaults to 'Provide overall project progress assessment' if no specific focus. Items limited to 5 per bucket."
+    }
+  ],
+  "io_contract": {
+    "input_description": "ProcessToolInput with optional assessment focus in content field; optional item_ids for specific items to assess",
+    "output_description": "ProcessToolOutput with assessment_summary (overall_status, completion_percent, confidence, one_liner), progress_by_area, blockers with severity and resolution, risks with likelihood/impact/mitigation, priorities with effort estimates, quick_wins, and generated DECIDE items for high-priority decisions",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/process_tools/progress_tracker.py",
+      "symbol": "ProgressTracker.execute",
+      "line_start": 141,
+      "line_end": 232,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Main execute method: builds prompt from all PROCESS items grouped by bucket, calls LLM, extracts generated DECIDE items, converts high-urgency priorities to DECIDE items, calculates confidence updates based on overall_status"
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/process_tools/progress_tracker.py",
+      "symbol": "ProgressTracker._build_prompt",
+      "line_start": 238,
+      "line_end": 286,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Prompt builder that formats all DO/LEARN/DECIDE items grouped by bucket with progress percentages and blocked markers, plus current confidence levels"
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": [],
+  "feeds_into_functions": ["scheduler"],
+  "track": "process",
+  "tags": ["process-tool"],
+  "notes": "Unlocks scheduler on completion. Preconditions: needs at least 1 total item across DO/LEARN/DECIDE. Confidence boost: decide +0.1 if on_track, +0.05 if at_risk/behind. Top 3 high-urgency priorities auto-converted to DECIDE items."
+}

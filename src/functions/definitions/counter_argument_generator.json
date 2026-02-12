@@ -1,0 +1,68 @@
+{
+  "function_key": "counter_argument_generator",
+  "function_name": "Counter-Argument Generator",
+  "description": "Generate opposing viewpoints to stress-test ideas and anticipate objections. Acts as a skilled devil's advocate, producing steel-manned counter-arguments from multiple perspectives (logical, empirical, practical, ethical, precedent, stakeholder, systemic), with strength ratings, potential rebuttals, vulnerability analysis, and defense strategy. Supports the RESOLVE vector of the IDEAS track.",
+  "version": 1,
+  "category": "tool",
+  "tier": "tactical",
+  "invocation_pattern": "on_demand",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 4096,
+    "thinking_budget": null,
+    "streaming": true,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are a COUNTER-ARGUMENT GENERATOR - a skilled devil's advocate.\n\nYOUR ROLE:\nYou help users strengthen their thinking by generating strong, fair counter-arguments.\nYour goal isn't to destroy their ideas but to help them see weaknesses and blind spots.\n\nWHAT MAKES A GOOD COUNTER-ARGUMENT:\n1. STEEL MAN: Attack the strongest version of their argument, not a strawman\n2. BE FAIR: Generate arguments someone would actually make\n3. VARY SOURCES: Draw from different perspectives (practical, ethical, logical, empirical)\n4. GRADE STRENGTH: Not all objections are equal - indicate strength\n5. ENABLE RESPONSE: Give enough detail that they can prepare rebuttals\n\nTYPES OF COUNTER-ARGUMENTS:\n- logical: Identifies flaws in reasoning\n- empirical: Points to contradicting evidence or data\n- practical: Challenges feasibility or implementation\n- ethical: Raises moral or values-based concerns\n- precedent: Points to past failures of similar approaches\n- stakeholder: Voices concerns from affected parties\n- systemic: Identifies how it might fail at scale or over time\n\nAPPROACH:\n1. Understand the position being challenged\n2. Identify the strongest version of the argument\n3. Generate counter-arguments from multiple perspectives\n4. Rate each counter-argument by strength and type\n5. Suggest how to respond to the strongest objections\n\nOUTPUT FORMAT (JSON):\n{\n  \"position_analyzed\": {\n    \"summary\": \"The position being challenged\",\n    \"key_claims\": [\"Claim 1\", \"Claim 2\"],\n    \"assumptions\": [\"Assumption 1\", \"Assumption 2\"]\n  },\n  \"counter_arguments\": [\n    {\n      \"argument\": \"The counter-argument statement\",\n      \"type\": \"logical|empirical|practical|ethical|precedent|stakeholder|systemic\",\n      \"strength\": \"strong|moderate|weak\",\n      \"source_perspective\": \"Who might make this argument\",\n      \"evidence_or_reasoning\": \"Why this counter-argument holds\",\n      \"potential_rebuttal\": \"How to respond to this objection\",\n      \"rebuttal_difficulty\": \"easy|moderate|hard\"\n    }\n  ],\n  \"vulnerability_analysis\": {\n    \"most_vulnerable_claim\": \"Which claim is hardest to defend\",\n    \"strongest_objection_type\": \"Which type of objection is most damaging\",\n    \"blind_spots\": [\"What the position fails to consider\"]\n  },\n  \"defense_strategy\": {\n    \"acknowledge\": [\"Objections to concede partially\"],\n    \"rebut_directly\": [\"Objections to challenge head-on\"],\n    \"reframe\": [\"Objections to address by reframing the issue\"],\n    \"research_needed\": [\"Objections that need more evidence to address\"]\n  },\n  \"stress_test_verdict\": {\n    \"overall_robustness\": \"high|medium|low\",\n    \"confidence_after_stress_test\": 0.0-1.0,\n    \"recommendation\": \"Proceed|Revise|Reconsider\",\n    \"rationale\": \"Why this verdict\"\n  },\n  \"generated_items\": [\n    {\n      \"text\": \"New item to add to model\",\n      \"vector\": \"articulate|investigate|resolve\",\n      \"reasoning\": \"Why this item matters\"\n    }\n  ]\n}",
+      "variables": ["project_name", "core_challenge", "resolve_items", "articulate_items", "item_ids", "content", "clarity_items", "perspectives", "intensity", "constraints"],
+      "notes": "User prompt is dynamically built from ToolContext and ToolInput. Sections include: PROJECT CONTEXT, CORE CHALLENGE, POSITION TO CHALLENGE (from content, item_ids, resolve_items, or articulate_items), USER'S STATED CERTAINTIES (clarity_items), PERSPECTIVES TO EMPHASIZE (from parameters), CHALLENGE INTENSITY (from parameters, default 'balanced'), USER CONSTRAINTS, YOUR TASK."
+    }
+  ],
+  "io_contract": {
+    "input_description": "ToolContext with session items (requires >= 1 RESOLVE item OR >= 2 ARTICULATE items) plus ToolInput with optional content, item_ids, constraints, and parameters (perspectives, intensity: aggressive|balanced).",
+    "output_description": "JSON with position_analyzed (summary, key_claims, assumptions), counter_arguments (typed, strength-rated, with rebuttals), vulnerability_analysis, defense_strategy (acknowledge/rebut/reframe/research_needed), stress_test_verdict, and generated_items.",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/counter_argument_generator.py",
+      "symbol": "CounterArgumentGenerator.execute",
+      "line_start": 125,
+      "line_end": 212,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Async execute method: builds prompt, calls LLM, parses JSON. Extracts generated_items and adds research_needed items as INVESTIGATE items (urgency 0.7). Confidence update is dynamic: resolve +0.15 if robustness='high', +0.05 if 'medium', -0.05 if 'low'."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/counter_argument_generator.py",
+      "symbol": "CounterArgumentGenerator.SYSTEM_PROMPT",
+      "line_start": 42,
+      "line_end": 113,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "System prompt constant defining the counter-argument generator role, counter-argument types (logical/empirical/practical/ethical/precedent/stakeholder/systemic), approach, and JSON output format."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/counter_argument_generator.py",
+      "symbol": "CounterArgumentGenerator._build_prompt",
+      "line_start": 218,
+      "line_end": 272,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Builds user prompt with sections: PROJECT CONTEXT, CORE CHALLENGE, POSITION TO CHALLENGE (content/item_ids/resolve_items/articulate_items, limit 3), USER'S STATED CERTAINTIES, PERSPECTIVES TO EMPHASIZE, CHALLENGE INTENSITY, USER CONSTRAINTS, YOUR TASK."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": ["consequence_tracer", "concept_mapper"],
+  "feeds_into_functions": [],
+  "track": "ideas",
+  "tags": ["ideas-tool"],
+  "notes": "Terminal tool in the IDEAS track unlock chain (unlocks nothing). Unlocked by both consequence_tracer and concept_mapper. Dynamic confidence update: +0.15 for high robustness, +0.05 for medium, -0.05 for low. research_needed items from defense_strategy are automatically added as INVESTIGATE items with urgency 0.7."
+}

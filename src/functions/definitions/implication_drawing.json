@@ -1,0 +1,82 @@
+{
+  "function_key": "implication_drawing",
+  "function_name": "Implication Drawing",
+  "description": "Draws structured 'so what?' conclusions after each answer. Runs after answer processing and BEFORE next-question generation. Produces a structured report analyzing coverage shifts, confidence trajectories, tensions between answers, and saturation -- which the coordinator consumes directly instead of re-deriving implications from raw data.",
+  "version": 1,
+  "category": "synthesis",
+  "tier": "tactical",
+  "invocation_pattern": "periodic",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 4096,
+    "thinking_budget": null,
+    "streaming": false,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are the IMPLICATION DRAWER for a dual-track decision support interview system.\n\nYour job: analyze the current interview state and articulate what it MEANS for the interview going forward.\nYou do NOT generate questions. You produce a structured 'so what?' report that helps the coordinator\nmake better decisions about what to explore next.\n\nThe interview has two tracks:\n- IDEAS track (ARTICULATE / INVESTIGATE / RESOLVE) - conceptual exploration\n- PROCESS track (DO / LEARN / DECIDE) - execution planning\n\nEach track uses a 15x15 grid where rows are \"conditions\" and columns are \"axes\".\nGrid cells can be covered (have items), cold (unexplored), or hot (over-probed).\n\nYour analysis should identify:\n1. What the latest answer IMPLIES for specific grid cells and vectors\n2. Whether confidence is trending up/down and where to focus next\n3. Tensions or contradictions between answers\n4. Whether certain areas are saturated (enough info) or newly important\n5. A 2-3 sentence executive summary the coordinator can use directly",
+      "variables": [],
+      "notes": "Static system prompt defining the implication drawer's role."
+    },
+    {
+      "role": "user",
+      "template_text": "## SESSION OVERVIEW\n- Project: {project_name}\n- Current Track: {current_track}\n- Track Weights: IDEAS={ideas_weight}, PROCESS={process_weight}\n- Questions Asked: {question_count}\n\n## CORE CHALLENGE\n{core_challenge}\n\n## IDEAS CONFIDENCE\n{ideas_confidence}\n\n## PROCESS CONFIDENCE\n{process_confidence}\n\n## {track_name} GRID STATE\nCovered: {covered_cells} cells, Hot: {hot_spots}, Cold: {cold_spots}, Empty rows: {empty_rows}, Empty cols: {empty_cols}\n\n## LATEST EXCHANGE\n**Question**: {question_text}\n**Answer**: {answer_text}\n**Processing Result**: {processing_result}\n\n## FULL Q&A HISTORY\n{qa_history}\n\n## PRIOR IMPLICATION REPORTS\n{prior_reports}\n\n## YOUR TASK\nAnalyze the interview state and produce a structured implication report.\nReturn ONLY valid JSON matching this schema:\n{\n  \"implications\": [\n    {\n      \"finding\": \"What we observed from the latest answer\",\n      \"implication\": \"What it means for the interview going forward\",\n      \"affected_cells\": [[0, 0]],\n      \"priority\": \"high|medium|low\",\n      \"category\": \"coverage_shift|confidence_trajectory|tension|new_territory|saturation\"\n    }\n  ],\n  \"recommended_focus_shift\": \"string or null\",\n  \"tensions_detected\": [\n    {\"between_q\": 0, \"and_q\": 0, \"nature\": \"description\"}\n  ],\n  \"coverage_insights\": {\n    \"newly_important_cells\": [[0, 0]],\n    \"saturated_cells\": [[0, 0]],\n    \"reasoning\": \"why these cells matter or are done\"\n  },\n  \"confidence_trajectory\": {\n    \"track_recommendation\": \"ideas|process\",\n    \"vector_recommendation\": \"which vector needs attention\",\n    \"reasoning\": \"why this track/vector\"\n  },\n  \"executive_summary\": \"2-3 sentence 'so what?' for the coordinator\"\n}\n\nFocus on what the latest answer IMPLIES, not just what it says. Look for:\n- Shifts in what grid areas matter most\n- Confidence trends (improving or stalling?)\n- Tensions between different answers\n- Areas that are saturated vs newly opened up\n- Whether the interview should pivot tracks or vectors",
+      "variables": [
+        "project_name",
+        "current_track",
+        "ideas_weight",
+        "process_weight",
+        "question_count",
+        "core_challenge",
+        "ideas_confidence",
+        "process_confidence",
+        "track_name",
+        "covered_cells",
+        "hot_spots",
+        "cold_spots",
+        "empty_rows",
+        "empty_cols",
+        "question_text",
+        "answer_text",
+        "processing_result",
+        "qa_history",
+        "prior_reports"
+      ],
+      "notes": "Assembled by _build_prompt(). Grid state sections are emitted per track. Prior implication reports (up to 3) are included for continuity. Skipped entirely if fewer than 3 questions have been asked."
+    }
+  ],
+  "io_contract": {
+    "input_description": "Session ID, CoordinatorContext (project_name, current_track, weights, confidence, grid coverage, recent_questions, recent_answers, core_challenge), processing_result dict from answer processing, question_context dict, answer_data dict, and an AsyncSession for DB access.",
+    "output_description": "A structured JSON dict with: implications array (finding, implication, affected_cells, priority, category), recommended_focus_shift, tensions_detected, coverage_insights, confidence_trajectory, and an executive_summary string. Persisted as ImplicationReport in DB. Returns None for the first 2 questions.",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/implication_service.py",
+      "symbol": "ImplicationService",
+      "line_start": 71,
+      "line_end": 281,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "ImplicationService class. SYSTEM_PROMPT at module level (line 23). draw_implications() at line 78 is the main entry point -- skips if fewer than 3 questions asked, fetches prior reports for continuity, calls LLM, persists ImplicationReport to DB in its own session. _build_prompt() at line 176 assembles context. format_for_coordinator() at line 283 is a static helper that formats reports as prompt sections for downstream consumption."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": [],
+  "feeds_into_functions": ["emergent_synthesis"],
+  "track": "both",
+  "tags": [
+    "post-answer",
+    "implications",
+    "coverage-analysis",
+    "confidence-trajectory",
+    "tension-detection",
+    "grid-state",
+    "executive-summary"
+  ],
+  "notes": "Uses settings.tactical_model and settings.tactical_max_tokens (defaults to claude-sonnet-4-5-20250929 / 4096). Persists each report to ImplicationReport table using its OWN DB session (async_session_maker()) to avoid rollback contamination from the parent request. The OUTPUT_SCHEMA constant (line 43) serves as both the expected output shape and is included in the prompt for the LLM. The format_for_coordinator() static method produces a prompt section that the coordinator consumes directly. Skips entirely for the first 2 questions (not enough context)."
+}

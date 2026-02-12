@@ -1,0 +1,64 @@
+{
+  "function_key": "research_agent",
+  "function_name": "Research Agent",
+  "description": "Search the web and synthesize findings to answer research questions. Supports the LEARN vector in the PROCESS track. Performs actual web searches via Anthropic's tool use (web_search) with LLM-simulated fallback. Returns synthesized research findings with sources, gaps, and generated LEARN items.",
+  "version": 1,
+  "category": "tool",
+  "tier": "tactical",
+  "invocation_pattern": "on_demand",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 8192,
+    "thinking_budget": null,
+    "streaming": true,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are a RESEARCH AGENT - an expert at gathering and synthesizing information.\n\nYOUR ROLE:\nYou help users research topics, answer questions, and gather data needed for decisions.\nYou conduct thorough research and present findings in an actionable format.\n\nRESEARCH PROCESS:\n1. UNDERSTAND: What specific questions need answering?\n2. SEARCH: What search queries would find relevant information?\n3. ANALYZE: What do the search results tell us?\n4. SYNTHESIZE: What are the key findings and implications?\n5. IDENTIFY GAPS: What questions remain unanswered?\n\nOUTPUT QUALITY:\n- Be specific with facts, numbers, and sources\n- Distinguish between well-supported findings and speculation\n- Highlight conflicting information when found\n- Note the recency and reliability of sources\n- Make findings actionable for decision-making\n\nOUTPUT FORMAT (JSON):\n{\n  \"research_questions\": [\"The questions investigated\"],\n  \"search_queries_used\": [\"Actual search queries performed\"],\n  \"findings\": [\n    {\n      \"topic\": \"Topic area\",\n      \"summary\": \"Key finding in 1-2 sentences\",\n      \"details\": \"More detailed explanation\",\n      \"confidence\": \"high/medium/low\",\n      \"sources\": [\"Source 1\", \"Source 2\"],\n      \"recency\": \"How recent is this information\"\n    }\n  ],\n  \"synthesis\": {\n    \"key_insights\": [\"Main takeaways\"],\n    \"implications\": [\"What this means for the project\"],\n    \"recommendations\": [\"Suggested next steps\"]\n  },\n  \"gaps\": {\n    \"unanswered_questions\": [\"What we still don't know\"],\n    \"suggested_follow_up\": [\"Additional research needed\"]\n  },\n  \"generated_items\": [\n    {\n      \"text\": \"Item to add to LEARN vector\",\n      \"vector\": \"learn\",\n      \"bucket\": \"know_well|somewhat_know|dont_know\",\n      \"reasoning\": \"Why this matters\",\n      \"research_notes\": \"Detailed notes from research\"\n    }\n  ]\n}",
+      "variables": [],
+      "notes": "Main system prompt defining the Research Agent persona and JSON output schema"
+    },
+    {
+      "role": "user",
+      "template_text": "Based on the web search results provided, synthesize the findings.\n\nSEARCH RESULTS:\n{search_results}\n\nORIGINAL RESEARCH QUESTIONS:\n{questions}\n\nPROJECT CONTEXT:\n{context}\n\nAnalyze these results and provide a comprehensive synthesis in the JSON format specified.\nFocus on:\n1. Directly answering the research questions\n2. Identifying actionable insights\n3. Noting any gaps or conflicting information\n4. Generating LEARN items for the user's knowledge base\n\nReturn ONLY valid JSON.",
+      "variables": ["search_results", "questions", "context"],
+      "notes": "Search synthesis prompt used after web search results are collected. Context is built from project_name, core_challenge, success_definition, and dependencies."
+    }
+  ],
+  "io_contract": {
+    "input_description": "ProcessToolInput with research questions or topics in content field; optional item_ids to focus on specific LEARN items; falls back to uncertainty_items or dont_know LEARN items if no explicit questions provided",
+    "output_description": "ProcessToolOutput with findings array (topic, summary, details, confidence, sources, recency), synthesis (key_insights, implications, recommendations), gaps (unanswered_questions, suggested_follow_up), and generated LEARN items with buckets and research_notes",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/process_tools/research_agent.py",
+      "symbol": "ResearchAgent.execute",
+      "line_start": 136,
+      "line_end": 226,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Main execute method: builds research questions from input/context, performs web search via Anthropic tool use (web_search_20250305) with LLM-simulated fallback, synthesizes findings, extracts generated LEARN items with confidence mapping"
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/process_tools/research_agent.py",
+      "symbol": "ResearchAgent._perform_search",
+      "line_start": 264,
+      "line_end": 333,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Web search implementation using Claude's tool use with web_search_20250305, limited to 3 searches, with LLM-simulated fallback on failure"
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": [],
+  "feeds_into_functions": ["draft_generator"],
+  "track": "process",
+  "tags": ["process-tool"],
+  "notes": "Unlocks draft_generator on completion. Uses custom MAX_TOKENS=8192 (overrides base 4096). Can always execute (no preconditions). Confidence boost: learn +0.15 on success."
+}

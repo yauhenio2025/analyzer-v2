@@ -1,0 +1,86 @@
+{
+  "function_key": "handoff_detection",
+  "function_name": "Handoff Detection",
+  "description": "Detects when cross-track handoffs should be created between IDEAS and PROCESS tracks. Analyzes source items or user answers to determine if work in one track naturally implies a need in the other track. Supports six handoff reasons: IDEAS->PROCESS (verify_assumption, thesis_decided, framing_resolved) and PROCESS->IDEAS (research_complete, draft_revealed_gap, feedback_surfaced). Includes cycle detection to prevent runaway handoff chains.",
+  "version": 1,
+  "category": "coordination",
+  "tier": "tactical",
+  "invocation_pattern": "periodic",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 2048,
+    "thinking_budget": null,
+    "streaming": false,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are a HANDOFF DETECTOR in a dual-track decision support system.\n\n## THE TWO TRACKS\n\n**IDEAS Track** (Conceptual):\n- ARTICULATE: Express, formalize, structure concepts\n- INVESTIGATE: Explore conceptual space\n- RESOLVE: Decide between framings\n\n**PROCESS Track** (Execution):\n- DO: Execute tasks\n- LEARN: Gather data/information\n- DECIDE: Triage/prioritize\n\n## HANDOFF TYPES\n\n**IDEAS -> PROCESS:**\n- VERIFY_ASSUMPTION: A conceptual claim needs real-world verification -> Create LEARN item\n- THESIS_DECIDED: A framing is resolved -> Create DO items to execute\n- FRAMING_RESOLVED: Conceptual structure is clear -> Schedule/plan can be built\n\n**PROCESS -> IDEAS:**\n- RESEARCH_COMPLETE: Data gathering finished -> New evidence for conceptual work\n- DRAFT_REVEALED_GAP: Execution revealed logical gap -> Need conceptual resolution\n- FEEDBACK_SURFACED: External input surfaced -> Counter-arguments to address\n\n## YOUR TASK\n\nGiven a source item and context, determine if a handoff should be created.\n\nConsider:\n1. Does this item's state naturally lead to work in the other track?\n2. Would creating a handoff add genuine value (vs just noise)?\n3. Is there already a similar handoff or item in the target track?\n\nReturn JSON:\n{\n  \"should_handoff\": true/false,\n  \"handoffs\": [\n    {\n      \"direction\": \"ideas_to_process\" or \"process_to_ideas\",\n      \"reason\": \"verify_assumption\" | \"thesis_decided\" | \"framing_resolved\" | \"research_complete\" | \"draft_revealed_gap\" | \"feedback_surfaced\",\n      \"description\": \"Why this handoff is needed\",\n      \"target_vector\": \"do\" | \"learn\" | \"decide\" | \"articulate\" | \"investigate\" | \"resolve\",\n      \"target_text\": \"The text for the new item in target track\",\n      \"confidence\": 0.0-1.0\n    }\n  ],\n  \"reasoning\": \"Your analysis\"\n}\n\nBe selective. Only suggest handoffs that add real value.",
+      "variables": [],
+      "notes": "Static system prompt for the primary handoff detection path (item-based). Also used for answer-based detection with a different user prompt."
+    },
+    {
+      "role": "user",
+      "template_text": "## SOURCE ITEM\nID: {source_item_id}\nType: {source_item_type}\nVector: {source_item_vector}\nBucket: {source_item_bucket}\nConfidence: {source_item_confidence}\nText: {source_item_text}\n\n## OTHER IDEAS ITEMS\n{ideas_items}\n\n## OTHER PROCESS ITEMS\n{process_items}\n\n## RECENT HANDOFFS (to avoid duplicates)\n{recent_handoffs}\n\n## YOUR TASK\nShould this source item trigger a handoff to the other track?\nAnalyze and return JSON with your decision.",
+      "variables": [
+        "source_item_id",
+        "source_item_type",
+        "source_item_vector",
+        "source_item_bucket",
+        "source_item_confidence",
+        "source_item_text",
+        "ideas_items",
+        "process_items",
+        "recent_handoffs"
+      ],
+      "notes": "Item-based detection prompt built by _build_detection_prompt(). Items limited to 10 per track. Recent handoffs limited to 5 most recent."
+    },
+    {
+      "role": "user",
+      "template_text": "## QUESTION ASKED (in {target_track} track)\nQuestion: {question_text}\nTarget vector: {target_vector}\n\n## USER'S ANSWER\n{answer_json}\n\n## CURRENT IDEAS ITEMS\n{ideas_items}\n\n## CURRENT PROCESS ITEMS\n{process_items}\n\n## YOUR TASK\nDoes this answer reveal a need for work in the OTHER track?\nConsider: Would this answer naturally lead to action in {other_track}?",
+      "variables": [
+        "target_track",
+        "question_text",
+        "target_vector",
+        "answer_json",
+        "ideas_items",
+        "process_items",
+        "other_track"
+      ],
+      "notes": "Answer-based detection prompt used by detect_handoffs_for_answer(). Uses the same DETECTION_SYSTEM_PROMPT but with a different user prompt structure focused on the Q&A exchange rather than a source item."
+    }
+  ],
+  "io_contract": {
+    "input_description": "Two entry points: (1) detect_handoffs: db session, session_id, source_item_id, source_item_type (ideas/process). (2) detect_handoffs_for_answer: db session, session_id, question_context dict, answer dict, target_track (Track enum). Both load session with ideas/process items and recent handoffs for context.",
+    "output_description": "List of HandoffSuggestion dataclasses, each containing: direction (HandoffDirection enum), reason (HandoffReason enum), description string, target_vector string, target_text string, confidence float (0-1). Empty list if no handoffs are warranted.",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/handoff_service.py",
+      "symbol": "HandoffService",
+      "line_start": 87,
+      "line_end": 483,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "HandoffService class. DETECTION_SYSTEM_PROMPT at line 99. detect_handoffs() at line 192 is the item-based entry point. detect_handoffs_for_answer() at line 229 is the answer-based entry point. _build_detection_context() at line 320 loads session data. _build_detection_prompt() at line 414 assembles the item-based prompt. _parse_detection_response() at line 437 parses LLM output into HandoffSuggestion list. Also includes create_handoff() at line 489 (with cycle depth tracking, MAX_CYCLE_DEPTH=5), process_handoff() at line 549, and detect_conflicts() at line 714 (separate CONFLICT_SYSTEM_PROMPT at line 152)."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": ["emergent_synthesis"],
+  "feeds_into_functions": [],
+  "track": "both",
+  "tags": [
+    "cross-track",
+    "handoff",
+    "cycle-detection",
+    "ideas-to-process",
+    "process-to-ideas",
+    "conflict-detection",
+    "dual-track"
+  ],
+  "notes": "The service has two distinct LLM-powered detection paths sharing the same system prompt: item-based (detect_handoffs) and answer-based (detect_handoffs_for_answer). A separate CONFLICT_SYSTEM_PROMPT (line 152) is used by detect_conflicts() to find direction/priority/timing/resource conflicts between tracks. Cycle detection via MAX_CYCLE_DEPTH=5 prevents runaway handoff chains. Model config uses class constants MODEL and MAX_TOKENS. The service also handles handoff creation (with cycle depth tracking), processing (creating target items), and rejection -- making it both a detection and execution service."
+}

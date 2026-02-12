@@ -1,0 +1,68 @@
+{
+  "function_key": "consequence_tracer",
+  "function_name": "Consequence Tracer",
+  "description": "Trace 'If X, then Y' chains to understand implications of decisions, assumptions, or actions. Maps multi-level causal chains with probability estimates, branching paths, reversibility assessment, and stakeholder impact analysis. Supports the RESOLVE vector of the IDEAS track.",
+  "version": 1,
+  "category": "tool",
+  "tier": "tactical",
+  "invocation_pattern": "on_demand",
+  "model_config_spec": {
+    "model": "claude-sonnet-4-5-20250929",
+    "max_tokens": 4096,
+    "thinking_budget": null,
+    "streaming": true,
+    "temperature": null
+  },
+  "prompt_templates": [
+    {
+      "role": "system",
+      "template_text": "You are a CONSEQUENCE TRACER - an expert at mapping causal chains and implications.\n\nYOUR ROLE:\nYou help users understand what happens downstream of their decisions, assumptions, or actions.\nYou trace \"If X, then Y, then Z...\" chains to make implicit consequences explicit.\n\nWHAT MAKES GOOD CONSEQUENCE TRACING:\n1. MULTI-LEVEL: Don't stop at first-order effects - trace 2nd and 3rd order consequences\n2. BRANCHING: Major decisions often lead to multiple parallel consequence chains\n3. PROBABILITY ESTIMATES: Some consequences are more likely than others - be explicit\n4. REVERSIBILITY: Note which consequences are reversible vs irreversible\n5. STAKEHOLDER IMPACT: Who is affected at each step of the chain?\n6. TIME HORIZONS: Some consequences are immediate, others are delayed\n\nTYPES OF CONSEQUENCES:\n- DIRECT: Immediately and obviously follow from the trigger\n- INDIRECT: Mediated through other factors\n- SYSTEMIC: Emerge from interactions between multiple elements\n- FEEDBACK: Create loops that amplify or dampen effects\n- UNINTENDED: Not the goal but plausibly result from the action\n\nCHAIN STRUCTURE:\n- Level 0: The trigger (decision/assumption/action)\n- Level 1: First-order consequences (direct results)\n- Level 2: Second-order consequences (consequences of consequences)\n- Level 3+: Higher-order effects (ripple effects, emergent outcomes)\n\nOUTPUT FORMAT (JSON):\n{\n  \"trigger\": {\n    \"text\": \"What we're tracing from\",\n    \"type\": \"decision|assumption|action\",\n    \"context\": \"Why this trigger matters\"\n  },\n  \"consequence_chains\": [\n    {\n      \"chain_id\": \"chain_1\",\n      \"name\": \"Name of this consequence thread\",\n      \"probability\": 0.0-1.0,\n      \"levels\": [\n        {\n          \"level\": 1,\n          \"consequence\": \"First-order consequence\",\n          \"probability\": 0.0-1.0,\n          \"type\": \"direct|indirect|systemic|feedback|unintended\",\n          \"time_horizon\": \"immediate|short-term|medium-term|long-term\",\n          \"reversible\": true|false,\n          \"stakeholders_affected\": [\"who\"],\n          \"confidence\": \"high|medium|low\"\n        }\n      ]\n    }\n  ],\n  \"critical_paths\": [\n    {\n      \"path_name\": \"Name of this critical path\",\n      \"description\": \"Why this path matters\",\n      \"steps\": [\"step1 -> step2 -> step3\"],\n      \"total_probability\": 0.0-1.0,\n      \"risk_level\": \"high|medium|low\"\n    }\n  ],\n  \"risk_summary\": {\n    \"high_probability_negative\": [\"Likely bad outcomes\"],\n    \"low_probability_catastrophic\": [\"Unlikely but severe outcomes\"],\n    \"positive_opportunities\": [\"Good things that might happen\"]\n  },\n  \"decision_points\": [\n    {\n      \"point\": \"Where user can intervene\",\n      \"options\": [\"What they can do\"],\n      \"best_timing\": \"When to act\"\n    }\n  ],\n  \"generated_items\": [\n    {\n      \"text\": \"New item for the model\",\n      \"vector\": \"articulate|investigate|resolve\",\n      \"reasoning\": \"Why this item matters\"\n    }\n  ]\n}",
+      "variables": ["project_name", "core_challenge", "resolve_items", "articulate_items", "investigate_items", "item_ids", "content", "constraints", "max_levels", "focus"],
+      "notes": "User prompt is dynamically built from ToolContext and ToolInput. Sections include: PROJECT CONTEXT, CORE CHALLENGE, TRACE CONSEQUENCES OF (from item_ids or resolve_items, limit 3), RELATED CONCEPTS (articulate_items), AREAS UNDER INVESTIGATION (investigate_items), CONSTRAINTS/ASSUMPTIONS, PARAMETERS (max_levels default 3, focus default 'balanced'), YOUR TASK."
+    }
+  ],
+  "io_contract": {
+    "input_description": "ToolContext with session items (requires >= 1 RESOLVE item) plus ToolInput with optional item_ids, content, constraints, and parameters (max_levels default 3, focus: risk|opportunity|balanced).",
+    "output_description": "JSON with trigger, consequence_chains (multi-level with probability/type/time_horizon/reversibility), critical_paths, risk_summary, decision_points, and generated_items.",
+    "input_schema": null,
+    "output_schema": null
+  },
+  "implementations": [
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/consequence_tracer.py",
+      "symbol": "ConsequenceTracer.execute",
+      "line_start": 141,
+      "line_end": 233,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": true,
+      "description": "Async execute method: builds prompt, calls LLM, parses JSON. Critical paths become INVESTIGATE items (urgency 0.7 for high-risk). Decision points become RESOLVE items. Returns ToolOutput with confidence_updates {investigate: 0.1, resolve: 0.05}."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/consequence_tracer.py",
+      "symbol": "ConsequenceTracer.SYSTEM_PROMPT",
+      "line_start": 45,
+      "line_end": 131,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "System prompt constant defining the consequence tracer role, consequence types (direct/indirect/systemic/feedback/unintended), chain structure, and JSON output format."
+    },
+    {
+      "project": "decider-v2",
+      "file_path": "backend/app/services/ideas_tools/consequence_tracer.py",
+      "symbol": "ConsequenceTracer._build_prompt",
+      "line_start": 239,
+      "line_end": 290,
+      "repo_url": "https://github.com/yauhenio2025/decider-v2",
+      "is_primary": false,
+      "description": "Builds user prompt with sections: PROJECT CONTEXT, CORE CHALLENGE, TRACE CONSEQUENCES OF (resolve_items/item_ids), RELATED CONCEPTS, AREAS UNDER INVESTIGATION, CONSTRAINTS/ASSUMPTIONS, PARAMETERS (max_levels, focus), YOUR TASK."
+    }
+  ],
+  "source_projects": ["decider-v2"],
+  "depends_on_functions": ["option_generator"],
+  "feeds_into_functions": ["counter_argument_generator"],
+  "track": "ideas",
+  "tags": ["ideas-tool"],
+  "notes": "Unlocks counter_argument_generator on completion. Unlocked by option_generator. Requires >= 1 RESOLVE item. Critical paths added as INVESTIGATE items with urgency scaled by risk_level. Decision points added as RESOLVE items. Boosts investigate by 0.1 and resolve by 0.05."
+}
