@@ -124,13 +124,13 @@ class WorkflowRegistry:
             return False
 
     def update_pass(
-        self, workflow_key: str, pass_number: int, pass_def: WorkflowPass
+        self, workflow_key: str, pass_number: float, pass_def: WorkflowPass
     ) -> bool:
         """Update a single pass in a workflow.
 
         Args:
             workflow_key: Key of the workflow
-            pass_number: 1-indexed pass number to update
+            pass_number: Pass number to update (matches pass_number field, e.g. 1, 1.5, 2)
             pass_def: The updated pass definition
 
         Returns:
@@ -142,15 +142,14 @@ class WorkflowRegistry:
             logger.error(f"Workflow not found: {workflow_key}")
             return False
 
-        if pass_number < 1 or pass_number > len(workflow.passes):
-            logger.error(f"Invalid pass number {pass_number} for workflow {workflow_key}")
-            return False
+        # Find pass by pass_number value, not by index
+        for i, p in enumerate(workflow.passes):
+            if p.pass_number == pass_number:
+                workflow.passes[i] = pass_def
+                return self.save(workflow_key, workflow)
 
-        # Update the pass
-        workflow.passes[pass_number - 1] = pass_def
-
-        # Save the updated workflow
-        return self.save(workflow_key, workflow)
+        logger.error(f"Pass {pass_number} not found in workflow {workflow_key}")
+        return False
 
     def delete(self, workflow_key: str) -> bool:
         """Delete a workflow definition.

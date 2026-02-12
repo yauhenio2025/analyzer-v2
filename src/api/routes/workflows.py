@@ -96,7 +96,7 @@ async def get_workflow_passes(workflow_key: str) -> list[WorkflowPass]:
 
 
 @router.get("/{workflow_key}/pass/{pass_number}")
-async def get_workflow_pass(workflow_key: str, pass_number: int) -> WorkflowPass:
+async def get_workflow_pass(workflow_key: str, pass_number: float) -> WorkflowPass:
     """Get a specific pass from a workflow."""
     registry = get_workflow_registry()
     workflow = registry.get(workflow_key)
@@ -105,18 +105,19 @@ async def get_workflow_pass(workflow_key: str, pass_number: int) -> WorkflowPass
             status_code=404,
             detail=f"Workflow not found: {workflow_key}",
         )
-    if pass_number < 1 or pass_number > len(workflow.passes):
-        raise HTTPException(
-            status_code=404,
-            detail=f"Pass {pass_number} not found in workflow {workflow_key}",
-        )
-    return workflow.passes[pass_number - 1]
+    for p in workflow.passes:
+        if p.pass_number == pass_number:
+            return p
+    raise HTTPException(
+        status_code=404,
+        detail=f"Pass {pass_number} not found in workflow {workflow_key}",
+    )
 
 
 @router.get("/{workflow_key}/pass/{pass_number}/prompt")
 async def get_workflow_pass_prompt(
     workflow_key: str,
-    pass_number: int,
+    pass_number: float,
     audience: AudienceType = Query(
         "analyst",
         description="Target audience for vocabulary calibration",
@@ -135,13 +136,17 @@ async def get_workflow_pass_prompt(
             status_code=404,
             detail=f"Workflow not found: {workflow_key}",
         )
-    if pass_number < 1 or pass_number > len(workflow.passes):
+
+    pass_def = None
+    for p in workflow.passes:
+        if p.pass_number == pass_number:
+            pass_def = p
+            break
+    if pass_def is None:
         raise HTTPException(
             status_code=404,
             detail=f"Pass {pass_number} not found in workflow {workflow_key}",
         )
-
-    pass_def = workflow.passes[pass_number - 1]
 
     # If pass has an engine_key, compose the engine's extraction prompt
     if pass_def.engine_key:
@@ -262,7 +267,7 @@ async def update_workflow(
 
 @router.put("/{workflow_key}/pass/{pass_number}", response_model=WorkflowPass)
 async def update_workflow_pass(
-    workflow_key: str, pass_number: int, pass_def: WorkflowPass
+    workflow_key: str, pass_number: float, pass_def: WorkflowPass
 ) -> WorkflowPass:
     """Update a single pass in a workflow.
 

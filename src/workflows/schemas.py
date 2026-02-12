@@ -25,7 +25,7 @@ class WorkflowCategory(str, Enum):
 class WorkflowPass(BaseModel):
     """A single pass within a workflow."""
 
-    pass_number: int = Field(..., description="Order of this pass (1-indexed)")
+    pass_number: float = Field(..., description="Order of this pass (1-indexed, supports .5 for intermediate passes)")
     pass_name: str = Field(..., description="Human-readable name for this pass")
     pass_description: str = Field(
         default="", description="What this pass accomplishes"
@@ -50,9 +50,9 @@ class WorkflowPass(BaseModel):
         default=True,
         description="Whether to cache pass results for resumability",
     )
-    depends_on_passes: list[int] = Field(
+    depends_on_passes: list[float] = Field(
         default_factory=list,
-        description="Pass numbers this pass depends on",
+        description="Pass numbers this pass depends on (supports .5 for intermediate passes)",
     )
     output_schema: Optional[dict[str, Any]] = Field(
         default=None,
