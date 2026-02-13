@@ -1,15 +1,124 @@
 {
   "engine_key": "concept_synthesis",
   "engine_name": "Concept Synthesis",
-  "description": "Creates a unified summary integrating all previous analysis phases",
-  "version": 1,
+  "description": "Creates a unified summary integrating all previous analysis phases. Enhanced with evolution timeline construction, multi-work trace aggregation, convergence/divergence detection, and indirect enabler analysis — enabling cross-work intellectual genealogy synthesis.",
+  "version": 2,
   "category": "concepts",
   "kind": "synthesis",
   "reasoning_domain": "integration",
-  "researcher_question": "What is the unified picture of how this concept functions?",
+  "researcher_question": "What is the unified picture of how this concept functions across a body of work?",
   "canonical_schema": {
-    "type": "object"
+    "semantic_core": {
+      "concept_id": "string - cross-reference to source analysis",
+      "concept_name": "string - concise name of the concept",
+      "unified_definition": "string - synthesized definition integrating all perspectives",
+      "key_tensions": ["string - unresolved or productive tensions in how this concept functions"],
+      "argumentative_role": "string - what role this concept plays in the overall argument across texts"
+    },
+    "argumentative_architecture": {
+      "supporting_claims": ["string - claims that support or derive from this concept"],
+      "dependent_concepts": ["string - concepts that depend on this one"],
+      "enabling_assumptions": ["string - what must be true for this concept to work as the author uses it"],
+      "logical_vulnerabilities": ["string - where the argumentative use of this concept is weakest"]
+    },
+    "evolution_timelines": [
+      {
+        "timeline_id": "string",
+        "concept_id": "string - the concept being traced",
+        "concept_name": "string - for readability",
+        "stages": [
+          {
+            "work_title": "string - title of the work",
+            "year": "string - year of publication",
+            "form": "string - how the concept appeared in this work (proto-form, full form, modified, etc.)",
+            "key_quote": "string - most representative quote",
+            "framing": "tentative | qualified | definitive | axiomatic | exploratory",
+            "transition_to_next": "string - what changed between this work and the next in the timeline"
+          }
+        ],
+        "current_form": {
+          "description": "string - how the concept appears in the current (most recent) work",
+          "key_quote": "string - most representative quote from the current work"
+        },
+        "evolution_pattern": "gradual_refinement | sharp_reversal | silent_drift | strategic_reframe | consistent_deepening",
+        "evolution_narrative": "string - 2-3 paragraph narrative of how this concept evolved across the author's body of work",
+        "total_span_years": "string - time span from earliest to current appearance",
+        "works_in_timeline": "number - how many works this concept appears in"
+      }
+    ],
+    "multi_work_trace_aggregation": {
+      "traces_by_concept": [
+        {
+          "concept_id": "string",
+          "concept_name": "string",
+          "total_prior_works_found_in": "number",
+          "strongest_traces": ["string - the most significant traces across all works"],
+          "evolution_summary": "string - synthesis of how this concept changed across all works where it was found",
+          "consistency_assessment": "string - how consistent is the concept across works? Where does it diverge?"
+        }
+      ],
+      "most_evolved_concepts": ["string - concepts that changed the most across the corpus"],
+      "most_stable_concepts": ["string - concepts that remained remarkably consistent"],
+      "orphan_concepts": ["string - concepts in the current work with no detectable ancestry in prior works"]
+    },
+    "convergence_divergence": {
+      "convergence_points": [
+        {
+          "convergence_id": "string",
+          "description": "string - where ideas from different prior works converge in the current work",
+          "contributing_works": ["string - which prior works feed into this convergence"],
+          "what_converges": "string - what specific ideas or patterns come together",
+          "synthesis_quality": "string - how well the author integrates these different influences"
+        }
+      ],
+      "divergence_points": [
+        {
+          "divergence_id": "string",
+          "description": "string - where ideas from different prior works conflict or pull in different directions",
+          "conflicting_works": ["string - which prior works create the tension"],
+          "what_conflicts": "string - what specific ideas or patterns are in tension",
+          "how_author_manages": "string - does the author acknowledge, resolve, suppress, or ignore the tension?"
+        }
+      ],
+      "hidden_dependencies": ["string - ideas from the current work that depend on specific prior work evolution paths that aren't acknowledged"]
+    },
+    "indirect_enablers": {
+      "foundational_patterns_from_contextualizers": ["string - foundational patterns from indirect contextualizer works that shaped how this concept developed, even if those works never discussed the concept directly"],
+      "cross_domain_imports": ["string - methods or frameworks imported from different-field works that influenced this concept's development"],
+      "how_indirect_works_shaped_evolution": "string - narrative of how the author's broader intellectual toolkit (from non-direct-precursor works) influenced this concept's trajectory"
+    },
+    "what_was_gained": "string - what the evolution added in terms of analytical power, scope, or precision",
+    "what_was_lost": "string - what was present in earlier versions but abandoned, narrowed, or forgotten",
+    "intermediate_influences": "string - what external events, intellectual encounters, or historical changes may have driven changes between works",
+    "critical_verdict": {
+      "overall_assessment": "string - integrated critical assessment of this concept across the body of work",
+      "strengths": ["string - what works well about how this concept functions"],
+      "weaknesses": ["string - what doesn't work or is problematic"],
+      "unacknowledged_debts": ["string - intellectual debts the author doesn't acknowledge"],
+      "alternative_paths_not_taken": ["string - plausible directions the author could have taken but didn't"]
+    },
+    "meta": {
+      "concepts_synthesized": "number",
+      "timelines_constructed": "number",
+      "convergence_points_found": "number",
+      "divergence_points_found": "number",
+      "key_findings": ["string - notable observations about the synthesis"]
+    }
   },
+  "extraction_focus": [
+    "semantic_core",
+    "argumentative_architecture",
+    "cross_text_evolution",
+    "evolution_timelines",
+    "trace_aggregation",
+    "convergence_divergence",
+    "indirect_enablers",
+    "critical_verdict"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "gemini_timeline"
+  ],
   "paradigm_keys": [
     "marxist",
     "brandomian"
@@ -20,41 +129,95 @@
     "extraction": {
       "analysis_type": "concept",
       "analysis_type_plural": "concepts",
-      "core_question": "What is the unified picture of how this concept functions?",
+      "core_question": "What is the unified picture of how this concept functions across a body of work?",
       "extraction_steps": [
-        "Semantic Core",
-        "Argumentative Architecture",
-        "Logical Assessment",
-        "Cross-Text Evolution",
-        "Critical Verdict"
+        "SEMANTIC CORE: Establish the synthesized definition of the concept, integrating all perspectives from across texts. Identify key tensions and the concept's argumentative role.",
+
+        "ARGUMENTATIVE ARCHITECTURE: Map how this concept supports other claims, what depends on it, what assumptions enable it, and where its logical vulnerabilities lie.",
+
+        "EVOLUTION TIMELINE CONSTRUCTION: For each concept that appears in 2+ works, reconstruct the chronological timeline of its evolution. Arrange all appearances chronologically. For each transition between works, identify what changed — in emphasis, scope, framing, evidence base, or conclusion. Track the framing trajectory: tentative → definitive escalation is a critical genealogical signal.",
+
+        "CLASSIFY EVOLUTION PATTERN: For each timeline, determine the overall evolution pattern — is this gradual refinement, sharp reversal, silent drift, strategic reframing, or consistent deepening?",
+
+        "WRITE EVOLUTION NARRATIVE: For each significant timeline, compose a 2-3 paragraph narrative that tells the story of the concept's evolution. Focus on the TRAJECTORY, not just individual appearances.",
+
+        "MULTI-WORK TRACE AGGREGATION: Merge traces from all prior works into a unified view per concept. Which concepts changed most? Which remained stable? Which concepts in the current work have no detectable ancestry (orphan concepts)?",
+
+        "CONVERGENCE DETECTION: Where do ideas from different prior works converge in the current work? Identify points where separately evolved ideas come together, and assess the quality of the author's synthesis.",
+
+        "DIVERGENCE DETECTION: Where do ideas from different prior works conflict or pull in different directions? Identify tensions the author manages (or suppresses) and hidden dependencies on specific evolution paths.",
+
+        "INDIRECT ENABLERS: Review foundational patterns and cross-domain transfers from non-direct-precursor works. How did the author's broader intellectual toolkit — methods, frameworks, cognitive habits from contextualizer and different-field works — influence the concept's trajectory? Some of the most important evolutionary drivers come from works that never discussed the concept directly.",
+
+        "GAINS AND LOSSES: What did the evolution add? What was abandoned or forgotten? Be honest about what was lost, not just what was gained.",
+
+        "CRITICAL VERDICT: Integrate all analysis into a critical assessment. What are the unacknowledged debts? What alternative paths were not taken? What strengths and weaknesses does the concept have as it currently functions?"
       ],
-      "key_fields": {},
+      "key_fields": {
+        "concept_id": "Cross-reference to source analysis",
+        "evolution_pattern": "Overall trajectory classification",
+        "evolution_narrative": "Rich narrative account of evolution",
+        "convergence_divergence": "Where ideas from different works interact",
+        "indirect_enablers": "Invisible influences from non-direct works"
+      },
       "id_field": "concept_id",
       "key_relationships": [
-        "contradicts"
+        "contradicts",
+        "evolved_from",
+        "refined_into",
+        "reversed_to",
+        "silently_drifted_toward",
+        "converges_with",
+        "diverges_from",
+        "enabled_by"
       ],
-      "special_instructions": null
+      "special_instructions": "When used for genealogical synthesis: Focus on the TRAJECTORY of each concept, not just individual appearances. The value is in seeing the arc of development across works. Pay special attention to what drove transitions — was it new evidence, changing political context, intellectual influence, or strategic positioning? Be honest about what was lost in evolution, not just what was gained. IMPORTANT: The evolution of a concept is shaped not only by works that directly discuss it (direct precursors) but also by the author's broader intellectual toolkit from indirect contextualizer and different-field works. When prior analysis data includes foundational_patterns or cross_domain_transfers, integrate these into the evolution narrative — they explain HOW and WHY the concept evolved in the way it did. If Runtime Context is provided, adapt your analysis accordingly."
     },
     "curation": {
       "item_type": "concept",
       "item_type_plural": "concepts",
-      "consolidation_rules": [],
+      "consolidation_rules": [
+        "ORDER TIMELINES CHRONOLOGICALLY: Ensure all timeline entries are in temporal order",
+        "VERIFY CROSS-REFERENCES: Ensure concept_ids match across evolution timelines and traces",
+        "AGGREGATE TRACES: Merge per-work traces into unified per-concept summaries",
+        "IDENTIFY CONVERGENCES: Find where separately evolved ideas come together in the current work",
+        "FLAG CONTRADICTIONS: Highlight where evolution paths create tensions",
+        "RANK BY SIGNIFICANCE: Order concepts by their genealogical significance and analytical importance"
+      ],
       "cross_doc_patterns": [
         "shared_items",
         "contested_items",
-        "response_network"
+        "response_network",
+        "parallel_evolutions",
+        "correlated_shifts",
+        "convergence_patterns"
       ],
       "synthesis_outputs": [
         "consolidated_item_list",
         "relationship_map",
-        "cross_document_dynamics"
+        "cross_document_dynamics",
+        "evolution_timeline_collection",
+        "convergence_divergence_map",
+        "critical_verdict"
       ],
       "special_instructions": null
     },
     "concretization": {
-      "id_examples": [],
-      "naming_guidance": "",
-      "recommended_table_types": [],
+      "id_examples": [
+        {
+          "from": "IDEA3",
+          "to": "'Automation thesis' evolution: tentative hypothesis (2015) → central claim (2019) → foundational premise (2025)"
+        },
+        {
+          "from": "CONV1",
+          "to": "Convergence of surplus population theory + automation thesis in current work's 'functional economy' framework"
+        }
+      ],
+      "naming_guidance": "Use concept name with evolution pattern summary",
+      "recommended_table_types": [
+        "evolution_timeline",
+        "convergence_map"
+      ],
       "recommended_visual_patterns": []
     },
     "audience_vocabulary": {
@@ -63,7 +226,7 @@
       "executive": {},
       "activist": {}
     },
-    "skip_concretization": true
+    "skip_concretization": false
   },
   "apps": [
     "critic"

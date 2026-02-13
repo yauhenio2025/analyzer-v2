@@ -1,8 +1,8 @@
 {
   "engine_key": "concept_evolution",
   "engine_name": "Concept Evolution Tracker",
-  "description": "Tracks how key terms and concepts evolve across a collection. Maps definitional variations, semantic drift, contested meanings, and conceptual genealogies.",
-  "version": 1,
+  "description": "Tracks how key terms and concepts evolve across a collection. Maps definitional variations, semantic drift, contested meanings, and conceptual genealogies. Enhanced with multi-dimensional comparison framework (vocabulary, methodology, metaphor, framing), per-dimension evidence extraction, foundational pattern detection, cross-domain transfer tracking, and relationship-type-aware analysis strategies — enabling precise genealogical tracing through an author's prior works.",
+  "version": 2,
   "category": "concepts",
   "kind": "synthesis",
   "reasoning_domain": "conceptual_analysis",
@@ -82,11 +82,99 @@
         "cohesion": "number (0-1)"
       }
     ],
+    "dimensional_comparisons": [
+      {
+        "comparison_id": "string",
+        "concept_or_idea_id": "string - concept being compared across works",
+        "concept_name": "string - name for readability",
+        "form_in_source_work": "proto_form | full_form | contradictory_form | absent_but_implied | different_framing",
+        "description": "string - how this concept appears in the compared work",
+        "confidence": "high | medium | low",
+        "notable_differences": "string - how the compared version differs from the reference version",
+        "vocabulary_comparison": {
+          "shared_terms": ["string - terms used in both works for this concept"],
+          "prior_terms_replaced": ["string - terms used in the compared work that were later abandoned or renamed"],
+          "semantic_drift": "string - if the same term is used, how has its meaning shifted?"
+        },
+        "methodological_comparison": "string - does the author argue for this concept using the same evidence types and analytical moves, or differently?",
+        "metaphor_comparison": "string - are the same metaphors used? Have metaphors evolved (simpler to more elaborate, or different metaphor entirely)?",
+        "framing_comparison": {
+          "source_framing": "tentative | qualified | definitive | axiomatic | exploratory",
+          "target_framing": "tentative | qualified | definitive | axiomatic | exploratory",
+          "framing_shift": "string - describe the confidence trajectory: did this go from tentative to definitive? From exploratory to axiomatic?"
+        },
+        "textual_evidence": [
+          {
+            "quote": "string - direct quote showing this concept in the compared work",
+            "location": "string - approximate location in the work"
+          }
+        ]
+      }
+    ],
+    "foundational_patterns": [
+      {
+        "pattern_id": "string",
+        "pattern_name": "string - concise name for this foundational pattern",
+        "pattern_description": "string - what this thinking pattern, analytical method, or cognitive habit consists of",
+        "how_it_enables_current_work": "string - how this pattern enables or shapes the current work's arguments",
+        "textual_evidence": [
+          {
+            "quote": "string - quote showing this pattern",
+            "location": "string - approximate location"
+          }
+        ],
+        "matched_methodological_signature": "string | null - if this pattern corresponds to a specific methodological signature from the target work's profile",
+        "vocabulary_carried_forward": ["string - terms from this work that persist into the target work"],
+        "pattern_type": "analytical_method | cognitive_habit | recurring_metaphor | problem_solving_approach | theoretical_framework | argumentative_structure | epistemic_commitment",
+        "author_awareness": "explicit | implicit | unconscious"
+      }
+    ],
+    "cross_domain_transfers": [
+      {
+        "transfer_id": "string",
+        "source_domain": "string - the domain of the source work",
+        "target_domain": "string - the domain of the target work",
+        "what_transferred": "string - what method, framework, metaphor, or structural analogy was imported",
+        "how_transformed": "string - how the transferred element was adapted for the new domain",
+        "validity_of_transfer": "string - whether the cross-domain move is analytically justified or introduces distortions",
+        "blind_spots_created": "string | null - what expertise in the source domain causes to be missed in the target domain",
+        "unique_insights_enabled": "string | null - what the cross-domain perspective uniquely reveals"
+      }
+    ],
+    "reversal_analysis": {
+      "positions_reversed": [
+        {
+          "reversal_id": "string",
+          "prior_position": "string - what the author argued before",
+          "current_position": "string - what the author argues now",
+          "nature_of_shift": "full_reversal | significant_modification | subtle_drift | recontextualization",
+          "evidence_prior": "string - quote or reference from prior work",
+          "evidence_current": "string - quote or reference from current work",
+          "how_managed": "string - does the author acknowledge, explain, minimize, or ignore the reversal?",
+          "what_drove_change": "string - hypothesized reason for the shift"
+        }
+      ],
+      "continuities_despite_reversal": "string | null - what remains consistent even as positions changed"
+    },
+    "relationship_type_strategies": {
+      "description": "When analyzing concept evolution in the context of a known relationship between works, use these strategies to adapt analysis focus",
+      "strategies": {
+        "direct_precursor": "Trace specific ideas with full dimensional comparison. Prioritize vocabulary comparison, framing shifts, and methodological matching. The framing_comparison is CRITICAL: tentative-to-definitive escalation is a key genealogical signal.",
+        "indirect_contextualizer": "Focus on foundational_patterns: match methodological signatures even when subject matter differs. Look for shared analytical moves, recurring argumentative structures, and epistemic commitments.",
+        "different_field_relevant": "Focus on cross_domain_transfers: trace domain crossings to their source. Assess what was imported, how it was transformed, and what blind spots or unique insights resulted.",
+        "counter_position": "Focus on reversal_analysis: identify positions reversed or significantly modified. Document vocabulary shifts, framing shifts, and evidence reinterpretation.",
+        "tangential": "Brief scan for unexpected vocabulary or methodological matches. Document why truly tangential."
+      }
+    },
     "meta": {
       "total_concepts": "number",
       "most_contested_concept": "string",
       "most_evolved_concept": "string",
-      "definitional_stability": "number (0-1)"
+      "definitional_stability": "number (0-1)",
+      "dimensional_comparisons_count": "number",
+      "foundational_patterns_count": "number",
+      "cross_domain_transfers_count": "number",
+      "reversals_count": "number"
     }
   },
   "extraction_focus": [
@@ -94,7 +182,13 @@
     "key_terms",
     "semantic_usage",
     "conceptual_debates",
-    "terminology"
+    "terminology",
+    "vocabulary_comparison",
+    "methodological_comparison",
+    "metaphor_comparison",
+    "framing_comparison",
+    "domain_transfers",
+    "position_reversals"
   ],
   "primary_output_modes": [
     "structured_text_report",
@@ -114,18 +208,47 @@
       "analysis_type_plural": "concepts",
       "core_question": "How do key terms transform across this collection?",
       "extraction_steps": [
-        "TERM",
-        "IMPORTANCE",
-        "DEFINITION(S)",
-        "AUTHOR",
-        "DATE"
+        "TERM: Identify the key term or concept being tracked.",
+        "IMPORTANCE: Assess whether this concept is core, supporting, or peripheral.",
+        "DEFINITION(S): Extract all definitions (explicit, operational, implicit) with attribution.",
+        "AUTHOR: Note who defines or uses the concept.",
+        "DATE: Track temporal markers for chronological ordering.",
+
+        "DIMENSIONAL COMPARISON — VOCABULARY: Compare how key terms are used across works. Track shared terms, precursor terms that were later replaced, and semantic drift (same word, different meaning). Vocabulary comparison is the most reliable signal for tracing direct genealogical connections.",
+
+        "DIMENSIONAL COMPARISON — METHODOLOGY: Compare how the author argues for this concept across works. Same evidence types? Same analytical moves? Methodological consistency across different subject matter is a strong signal of foundational influence.",
+
+        "DIMENSIONAL COMPARISON — METAPHOR: Compare metaphors used to convey this concept across works. Have metaphors evolved (simpler to more elaborate)? Have they been replaced entirely? Metaphor migration across works reveals deep intellectual continuities.",
+
+        "DIMENSIONAL COMPARISON — FRAMING: Compare how the concept is framed across works. Track the confidence trajectory: was this tentative before but definitive now? Exploratory before but axiomatic now? Framing shifts are CRITICAL for downstream tactic detection (escalation, silent revision, strategic reframing).",
+
+        "FOUNDATIONAL PATTERNS: Look for thinking patterns, analytical methods, or cognitive habits that persist across works regardless of subject matter. When the same argumentative structure appears in different domains, it reveals foundational intellectual influence. Match against the target work's methodological signatures.",
+
+        "CROSS-DOMAIN TRANSFERS: Identify where concepts, methods, or structural analogies cross from one domain to another. Assess whether the transfer preserves or distorts the original meaning. Note what blind spots the transfer creates and what unique insights it enables.",
+
+        "REVERSAL ANALYSIS: Identify positions that have been reversed or significantly modified. Document the vocabulary shift, framing shift, and evidence reinterpretation. Assess how the author manages the reversal (acknowledge, explain, minimize, or ignore).",
+
+        "ADAPT STRATEGY TO RELATIONSHIP TYPE: If Runtime Context specifies a relationship type (direct_precursor, indirect_contextualizer, different_field_relevant, counter_position, tangential), prioritize the corresponding analysis dimension. See relationship_type_strategies in the schema."
       ],
-      "key_fields": {},
+      "key_fields": {
+        "concept_id": "Unique identifier for cross-referencing",
+        "vocabulary_comparison": "How key terms compare across works — strongest signal for direct genealogy",
+        "methodological_comparison": "How argumentative methods compare — strongest signal for foundational influence",
+        "framing_comparison": "How confidence levels shift — critical for tactic detection downstream",
+        "foundational_patterns": "Deep intellectual patterns that persist across works and domains"
+      },
       "id_field": "concept_id",
       "key_relationships": [
-        "relates_to"
+        "relates_to",
+        "is_precursor_of",
+        "contradicts",
+        "partially_anticipates",
+        "frames_differently",
+        "provides_foundation_for",
+        "transfers_framework_to",
+        "reverses_position_from"
       ],
-      "special_instructions": null
+      "special_instructions": "When used for genealogical analysis: you receive rich multi-dimensional data — not just concept names but their vocabulary, methodological signatures, metaphors, framing, domain crossings. USE ALL DIMENSIONS for comparison, not just topic-level matching. Two works can share NO topics but have identical methodological signatures (foundational influence). A work in a different field may be the SOURCE of a metaphor now used centrally (cross-domain transfer). Adapt your strategy based on the relationship type if provided in Runtime Context. For direct precursors: trace ideas with full dimensional comparison. For indirect contextualizers: match methodological signatures. For different-field works: trace domain crossings. For counter-positions: analyze reversals with framing evidence. If Runtime Context is provided, adapt your analysis accordingly."
     },
     "curation": {
       "item_type": "concept",
@@ -135,17 +258,26 @@
         "MAP VARIATIONS: - Where do definitions diverge?",
         "TRACE EVOLUTION: - If temporal data exists, track meaning changes",
         "BUILD GENEALOGIES: - Which concepts derive from others?",
-        "CLUSTER SEMANTICALLY: - Group related concepts"
+        "CLUSTER SEMANTICALLY: - Group related concepts",
+        "AGGREGATE DIMENSIONAL COMPARISONS: Merge per-work comparisons into a cross-work evolution view",
+        "RANK FOUNDATIONAL PATTERNS: Order by persistence across works and analytical significance",
+        "MAP REVERSAL TRAJECTORIES: Construct chronological reversal paths across the entire corpus"
       ],
       "cross_doc_patterns": [
         "shared_items",
         "contested_items",
-        "response_network"
+        "response_network",
+        "vocabulary_drift",
+        "methodological_consistency",
+        "framing_trajectories"
       ],
       "synthesis_outputs": [
         "consolidated_item_list",
         "relationship_map",
-        "cross_document_dynamics"
+        "cross_document_dynamics",
+        "dimensional_comparison_summary",
+        "foundational_patterns_catalog",
+        "reversal_map"
       ],
       "special_instructions": null
     },

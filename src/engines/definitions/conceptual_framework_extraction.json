@@ -1,8 +1,8 @@
 {
   "engine_key": "conceptual_framework_extraction",
   "engine_name": "Conceptual Framework Extractor",
-  "description": "Extracts analytical frameworks, theoretical models, and typologies developed or used in a collection. Maps framework components, relationships, and applications.",
-  "version": 1,
+  "description": "Extracts analytical frameworks, theoretical models, and typologies developed or used in a collection. Maps framework components, relationships, and applications. Enhanced with genealogy-oriented dimensions: vocabulary mapping, methodological signature profiling, metaphor tracking, and framing analysis — enabling downstream genealogical tracing through an author's prior works.",
+  "version": 2,
   "category": "concepts",
   "kind": "synthesis",
   "reasoning_domain": "theory",
@@ -40,7 +40,31 @@
         ],
         "source_articles": [
           "string"
-        ]
+        ],
+        "vocabulary": [
+          {
+            "term": "string - key term or phrase used within this framework",
+            "definition_given": "string - how the author defines or deploys this term (may be implicit)",
+            "is_coined": "boolean - whether this term appears to be the author's own coinage or distinctive usage",
+            "likely_precursor_terms": ["string - terms that might have been used for the same concept in earlier work, even if different words"]
+          }
+        ],
+        "methodological_signature": "string - how does the author ARGUE for this framework? What evidence type, logical structure, or analytical move supports it?",
+        "metaphors": ["string - metaphors or analogies used to convey or justify this framework"],
+        "framing": {
+          "presented_as": "novel | established | building_on_prior | contested | self_evident",
+          "confidence_level": "tentative | qualified | definitive | axiomatic",
+          "acknowledges_prior_work": "string | null - does the author reference their own or others' earlier work on this framework?",
+          "what_is_suppressed": "string | null - what qualifications, alternatives, or complications does the framing suppress?"
+        },
+        "domain_crossings": [
+          {
+            "source_domain": "string - where this concept or method originates",
+            "what_is_imported": "string - what specific concept, method, or structural analogy is brought from the source domain",
+            "adaptation": "string - how it's been adapted for the current argument"
+          }
+        ],
+        "genealogical_hints": "string | null - any signals that this framework has a history: self-references, evolved terminology, claims that feel 'settled' without adequate justification in this text alone"
       }
     ],
     "framework_comparisons": [
@@ -86,11 +110,57 @@
         ]
       }
     ],
+    "vocabulary_map": {
+      "coined_terms": ["string - terms that appear to be the author's own creation or distinctive usage"],
+      "repurposed_terms": [
+        {
+          "term": "string",
+          "standard_meaning": "string - how this term is normally used in the field",
+          "author_meaning": "string - how the author uses it differently"
+        }
+      ],
+      "key_oppositions": [
+        {
+          "term_a": "string",
+          "term_b": "string",
+          "what_the_opposition_structures": "string - what analytical work this opposition does in the argument"
+        }
+      ]
+    },
+    "methodological_profile": {
+      "primary_evidence_types": ["string - what kinds of evidence the author relies on (historical narrative, economic data, theoretical derivation, analogy, thought experiment, case study)"],
+      "argumentative_structure": "string - how does the author characteristically build arguments?",
+      "recurring_analytical_moves": ["string - moves the author makes repeatedly (e.g., 'reframes X as Y', 'appeals to structural necessity', 'derives from historical narrative')"],
+      "what_counts_as_evidence": "string - what does the author treat as sufficient evidence for a claim? Reveals epistemological commitments"
+    },
+    "metaphor_inventory": [
+      {
+        "metaphor": "string - the metaphor or analogy",
+        "source_domain": "string - where the metaphor draws from",
+        "analytical_weight": "heavy | moderate | decorative - how much argumentative work this metaphor does",
+        "frameworks_using_it": ["framework_id - which frameworks rely on this metaphor"],
+        "role_in_argument": "string - what function this metaphor serves (explanation, persuasion, structure, etc.)"
+      }
+    ],
+    "framing_landscape": {
+      "problem_framing": "string - how the central problem or question is framed",
+      "foregrounded_aspects": ["string - what the framing emphasizes or centers"],
+      "backgrounded_aspects": ["string - what the framing de-emphasizes, omits, or renders invisible"],
+      "positioning_profile": {
+        "claimed_novelty": ["string - what the author explicitly claims is new or original"],
+        "claimed_continuity": ["string - what the author claims continues from prior work"],
+        "intellectual_opponents": ["string - who or what the author positions themselves against"],
+        "intellectual_allies": ["string - whose frameworks or positions the author builds on"]
+      }
+    },
     "meta": {
       "total_frameworks": "number",
       "dominant_framework_type": "string",
       "framework_diversity": "number (0-1)",
-      "most_applied_framework": "framework_id"
+      "most_applied_framework": "framework_id",
+      "vocabulary_richness": "number - total coined + repurposed terms identified",
+      "domain_crossings_count": "number",
+      "metaphor_count": "number"
     }
   },
   "extraction_focus": [
@@ -99,7 +169,11 @@
     "typologies",
     "theories",
     "mechanisms",
-    "analytical_lenses"
+    "analytical_lenses",
+    "vocabulary",
+    "methodology",
+    "metaphors",
+    "framing"
   ],
   "primary_output_modes": [
     "structured_text_report",
@@ -115,18 +189,41 @@
       "analysis_type_plural": "concepts",
       "core_question": "What analytical frameworks structure thinking in this collection?",
       "extraction_steps": [
-        "IDENTIFICATION",
-        "COMPONENTS",
-        "RELATIONSHIPS",
-        "APPLICATION",
-        "LIMITATIONS"
+        "IDENTIFICATION: Identify all analytical frameworks, theoretical models, and typologies in the text.",
+        "COMPONENTS: For each framework, map its components and their roles.",
+        "RELATIONSHIPS: Map relationships between framework components.",
+        "APPLICATION: Document how each framework is applied and with what success.",
+        "LIMITATIONS: Note stated or implied limitations of each framework.",
+
+        "VOCABULARY EXTRACTION: For each framework, extract the key terms it introduces or relies on. Note which terms appear to be coined by the author, which are standard terms used non-standardly, and what precursor terms might exist in earlier work. Build the overall vocabulary_map: coined terms, repurposed terms, and key oppositions that structure the argument.",
+
+        "METHODOLOGICAL SIGNATURE PROFILING: Characterize HOW the author argues for each framework. What evidence types support it? What analytical moves recur? Build the overall methodological_profile: primary evidence types, argumentative structure, recurring analytical moves, and what counts as evidence. These signatures persist across an author's career and are reliable markers for genealogical tracing.",
+
+        "METAPHOR TRACKING: Identify metaphors and analogies used within each framework and across the text. Assess how much argumentative weight each metaphor carries (heavy = does real analytical work; decorative = merely illustrative). Metaphors are genealogy gold — they migrate across works, sometimes gaining, sometimes losing analytical power.",
+
+        "FRAMING ANALYSIS: For each framework, assess how it is framed: as novel, established, building on prior work, contested, or self-evident? How confident is the author (tentative, qualified, definitive, axiomatic)? Does the author acknowledge prior work? What does the framing suppress? Build the overall framing_landscape: how the central problem is framed, what is foregrounded vs. backgrounded, and how the author positions themselves relative to allies and opponents.",
+
+        "DOMAIN CROSSINGS: For each framework, identify where concepts, methods, or structural analogies are imported from other fields. Each crossing is a potential genealogical thread.",
+
+        "GENEALOGICAL HINTS: Flag any signals that a framework has a history in the author's prior work: self-references, evolved terminology, claims that feel 'settled' without adequate justification in this text alone, or structural similarities to arguments the author is known for."
       ],
-      "key_fields": {},
+      "key_fields": {
+        "framework_id": "Unique identifier for cross-referencing",
+        "vocabulary": "Key terms with their specific usage — downstream passes search for these in prior works",
+        "methodological_signature": "How the author argues for this framework — downstream passes match these patterns",
+        "framing": "How the framework is presented — downstream passes check whether earlier framings match",
+        "genealogical_hints": "Direct signals of genealogical connections"
+      },
       "id_field": "conceptual_id",
       "key_relationships": [
-        "relates_to"
+        "relates_to",
+        "depends_on",
+        "enables",
+        "contradicts",
+        "imports_from",
+        "reframes"
       ],
-      "special_instructions": null
+      "special_instructions": "When used for genealogical analysis: you are not just extracting frameworks — you are building a GENEALOGICAL PROFILE. Every dimension you extract (vocabulary, methods, metaphors, framing, domains) becomes a search target for downstream passes that will scan prior works for resonance, evolution, and tactical moves. Be thorough but selective — focus on frameworks substantial enough to have a genealogy. Pay special attention to: (1) terms that feel established but aren't justified here — they may rely on authority from prior work; (2) methodological moves that feel habitual — they likely trace back years; (3) metaphors doing heavy analytical lifting — they probably evolved from simpler forms. If Runtime Context is provided, adapt your analysis accordingly."
     },
     "curation": {
       "item_type": "concept",
@@ -136,17 +233,25 @@
         "MAP FRAMEWORK RELATIONSHIPS: - Which frameworks compete?",
         "TRACK APPLICATIONS: - How are frameworks actually used?",
         "IDENTIFY EMERGENT FRAMEWORKS: - Are new frameworks being proposed?",
-        "ASSESS LANDSCAPE: - What framework types dominate?"
+        "ASSESS LANDSCAPE: - What framework types dominate?",
+        "MERGE VOCABULARY: Consolidate vocabulary maps across documents — track which terms appear consistently vs. in isolated contexts",
+        "MERGE METHODOLOGICAL PROFILES: Identify which analytical moves persist across documents vs. which are context-specific",
+        "TRACK METAPHOR EVOLUTION: If the same metaphor appears across documents, note how its usage or weight changes"
       ],
       "cross_doc_patterns": [
         "shared_items",
         "contested_items",
-        "response_network"
+        "response_network",
+        "vocabulary_clusters",
+        "methodological_consistency"
       ],
       "synthesis_outputs": [
         "consolidated_item_list",
         "relationship_map",
-        "cross_document_dynamics"
+        "cross_document_dynamics",
+        "vocabulary_map",
+        "methodological_profile",
+        "metaphor_inventory"
       ],
       "special_instructions": null
     },
