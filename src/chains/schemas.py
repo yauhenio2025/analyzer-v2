@@ -4,7 +4,7 @@ Chains define how multiple engines can be combined for complex analysis.
 """
 
 from enum import Enum
-from typing import Optional
+from typing import Any, Optional
 
 from pydantic import BaseModel, Field
 
@@ -92,6 +92,14 @@ class EngineChainSpec(BaseModel):
         examples=["concepts", "critique", "comprehensive"],
     )
 
+    # Runtime context schema
+    context_parameter_schema: Optional[dict[str, Any]] = Field(
+        default=None,
+        description="JSON Schema describing what runtime context this chain expects. "
+        "Informational — tells consumers what context_parameters to pass when invoking. "
+        "Example: {'type': 'object', 'properties': {'relationship_type': {'type': 'string'}}}",
+    )
+
     # Metadata
     recommended_for: list[str] = Field(
         default_factory=list,
@@ -134,6 +142,7 @@ class ChainSummary(BaseModel):
     blend_mode: BlendMode
     engine_count: int
     category: Optional[str] = None
+    has_context_parameters: bool = False
 
 
 class ChainRecommendRequest(BaseModel):

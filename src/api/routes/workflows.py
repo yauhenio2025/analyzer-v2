@@ -7,6 +7,7 @@ from typing import Literal, Optional
 
 from fastapi import APIRouter, HTTPException, Query
 
+from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
 from src.stages.composer import StageComposer
 from src.workflows.registry import get_workflow_registry
@@ -148,6 +149,63 @@ async def get_workflow_pass_prompt(
             detail=f"Pass {pass_number} not found in workflow {workflow_key}",
         )
 
+    # If pass has a chain_key, compose prompts for each engine in the chain
+    if pass_def.chain_key:
+        chain_registry = get_chain_registry()
+        chain = chain_registry.get(pass_def.chain_key)
+        if chain is None:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Chain not found: {pass_def.chain_key}",
+            )
+
+        engine_registry = get_engine_registry()
+        composer = get_composer()
+        engine_prompts = []
+
+        for engine_key in chain.engine_keys:
+            engine = engine_registry.get(engine_key)
+            if engine is None:
+                engine_prompts.append({
+                    "engine_key": engine_key,
+                    "error": f"Engine not found: {engine_key}",
+                })
+                continue
+
+            try:
+                composed = composer.compose(
+                    stage="extraction",
+                    engine_key=engine_key,
+                    stage_context=engine.stage_context,
+                    audience=audience,
+                    canonical_schema=engine.canonical_schema,
+                )
+                engine_prompts.append({
+                    "engine_key": engine_key,
+                    "prompt": composed.prompt,
+                    "framework_used": composed.framework_used,
+                })
+            except ValueError as e:
+                engine_prompts.append({
+                    "engine_key": engine_key,
+                    "error": f"Failed to compose prompt: {e}",
+                })
+
+        return {
+            "workflow_key": workflow_key,
+            "pass_number": pass_number,
+            "pass_name": pass_def.pass_name,
+            "chain_key": pass_def.chain_key,
+            "engine_key": None,
+            "prompt_type": "chain",
+            "blend_mode": chain.blend_mode.value,
+            "engine_prompts": engine_prompts,
+            "context_parameters": pass_def.context_parameters,
+            "context_parameter_schema": chain.context_parameter_schema,
+            "audience": audience,
+            "framework_used": None,
+        }
+
     # If pass has an engine_key, compose the engine's extraction prompt
     if pass_def.engine_key:
         engine_registry = get_engine_registry()
@@ -180,6 +238,7 @@ async def get_workflow_pass_prompt(
             "engine_key": pass_def.engine_key,
             "prompt_type": "extraction",
             "prompt": composed.prompt,
+            "context_parameters": pass_def.context_parameters,
             "audience": audience,
             "framework_used": composed.framework_used,
         }
@@ -193,14 +252,15 @@ async def get_workflow_pass_prompt(
             "engine_key": None,
             "prompt_type": "custom_template",
             "prompt": pass_def.prompt_template,
+            "context_parameters": pass_def.context_parameters,
             "audience": audience,
             "framework_used": None,
         }
 
-    # Neither engine nor template defined
+    # Neither engine, chain, nor template defined
     raise HTTPException(
         status_code=404,
-        detail=f"Pass {pass_number} has no engine_key or prompt_template defined",
+        detail=f"Pass {pass_number} has no engine_key, chain_key, or prompt_template defined",
     )
 
 

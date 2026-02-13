@@ -41,6 +41,7 @@ async def list_chains(
             blend_mode=c.blend_mode,
             engine_count=len(c.engine_keys),
             category=c.category,
+            has_context_parameters=c.context_parameter_schema is not None,
         )
         for c in chains
     ]
@@ -73,6 +74,7 @@ async def list_chains_by_category(category: str) -> list[ChainSummary]:
             blend_mode=c.blend_mode,
             engine_count=len(c.engine_keys),
             category=c.category,
+            has_context_parameters=c.context_parameter_schema is not None,
         )
         for c in chains
     ]

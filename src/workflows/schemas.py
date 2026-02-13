@@ -8,7 +8,7 @@ Workflows are complex, multi-pass analysis pipelines that differ from chains:
 from enum import Enum
 from typing import Any, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class WorkflowCategory(str, Enum):
@@ -38,6 +38,17 @@ class WorkflowPass(BaseModel):
         default=None,
         description="Function to use for this pass (if function-backed)",
     )
+    chain_key: Optional[str] = Field(
+        default=None,
+        description="Chain to execute for this pass (if chain-backed). "
+        "Mutually exclusive with engine_key and function_key.",
+    )
+    context_parameters: Optional[dict[str, Any]] = Field(
+        default=None,
+        description="Runtime context passed to chain or engine. "
+        "Free-form dict injected into prompts at execution time. "
+        "Example: {'relationship_type': 'direct_precursor', 'focus_dimensions': ['vocabulary']}",
+    )
     prompt_template: Optional[str] = Field(
         default=None,
         description="Custom prompt template (if not engine-backed)",
@@ -58,6 +69,22 @@ class WorkflowPass(BaseModel):
         default=None,
         description="Expected output schema for this pass",
     )
+
+    @model_validator(mode="after")
+    def validate_execution_target(self) -> "WorkflowPass":
+        """Ensure at most one execution target is set."""
+        targets = [
+            ("engine_key", self.engine_key),
+            ("function_key", self.function_key),
+            ("chain_key", self.chain_key),
+        ]
+        set_targets = [name for name, val in targets if val is not None]
+        if len(set_targets) > 1:
+            raise ValueError(
+                f"At most one of engine_key, function_key, chain_key may be set. "
+                f"Got: {', '.join(set_targets)}"
+            )
+        return self
 
 
 class WorkflowDefinition(BaseModel):
