@@ -1,0 +1,26 @@
+{
+  "chain_key": "genealogy_synthesis",
+  "chain_name": "Genealogy: Analysis & Synthesis",
+  "description": "Multi-stage synthesis chain covering cross-work idea synthesis, argumentative function analysis, evolution tactics detection, and conditions of possibility analysis. Runs four engines in sequence: (1) concept synthesis merges traces from multiple prior works into unified evolution narratives with convergence/divergence detection; (2) argumentative function analysis maps how concepts serve the author's argument; (3) evolution tactics detector identifies 10 intellectual self-management tactics (conceptual recycling, silent revision, strategic escalation, etc.); (4) conditions of possibility analyzer performs Foucauldian/Cambridge School analysis of intellectual path-dependence. Each engine builds on the previous engine's output.",
+  "version": 1,
+  "engine_keys": [
+    "concept_synthesis",
+    "concept_taxonomy_argumentative_function",
+    "evolution_tactics_detector",
+    "conditions_of_possibility_analyzer"
+  ],
+  "blend_mode": "sequential",
+  "selection_criteria": null,
+  "max_engines": 4,
+  "merge_strategy": null,
+  "pass_context": true,
+  "category": "genealogy",
+  "context_parameter_schema": null,
+  "recommended_for": [
+    "intellectual genealogy",
+    "evolution analysis",
+    "path dependence analysis",
+    "intellectual tactics detection",
+    "cross-work synthesis"
+  ]
+}

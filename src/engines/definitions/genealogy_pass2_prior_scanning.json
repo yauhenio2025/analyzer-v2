@@ -3,6 +3,8 @@
   "engine_name": "Genealogy Pass 2: Prior Work Scanning (Relationship-Aware)",
   "description": "Second pass of intellectual genealogy: scans a single prior work for genealogical connections to the current work. ADAPTS analysis strategy based on the relationship classification from Pass 1B. For direct precursors: traces specific ideas. For indirect contextualizers: identifies foundational patterns and intellectual toolkits. For different-field works: detects cross-domain transfers. For counter-positions: analyzes reversals. Runs ONCE PER PRIOR WORK.",
   "version": 3,
+  "status": "deprecated",
+  "deprecated_reason": "Replaced by genealogy_prior_work_scanning chain (Phase 6 migration)",
   "category": "temporal",
   "kind": "extraction",
   "reasoning_domain": "genealogy_analysis",

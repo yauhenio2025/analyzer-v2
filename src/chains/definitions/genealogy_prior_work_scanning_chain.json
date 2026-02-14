@@ -1,0 +1,60 @@
+{
+  "chain_key": "genealogy_prior_work_scanning",
+  "chain_name": "Genealogy: Prior Work Scanning",
+  "description": "Scans a prior work for genealogical traces relative to a target work, adapting strategy based on relationship type. Runs concept evolution analysis (dimensional comparison across vocabulary, methodology, metaphor, and framing) followed by concept appropriation tracking (detecting how ideas migrate between works). Accepts runtime context specifying the relationship type (from classification pass) and target ideas (from profiling pass) to focus the analysis.",
+  "version": 1,
+  "engine_keys": [
+    "concept_evolution",
+    "concept_appropriation_tracker"
+  ],
+  "blend_mode": "sequential",
+  "selection_criteria": null,
+  "max_engines": 2,
+  "merge_strategy": null,
+  "pass_context": true,
+  "category": "genealogy",
+  "context_parameter_schema": {
+    "type": "object",
+    "properties": {
+      "relationship_type": {
+        "type": "string",
+        "enum": [
+          "direct_precursor",
+          "indirect_contextualizer",
+          "different_field_relevant",
+          "counter_position",
+          "tangential"
+        ],
+        "description": "How this prior work relates to the target work (from Pass 1.5 relationship classification)"
+      },
+      "target_ideas": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Key ideas extracted from target work (from Pass 1 profiling) to trace in this prior work"
+      },
+      "target_vocabulary": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Key vocabulary terms from target work to look for in prior work"
+      },
+      "target_methodological_signature": {
+        "type": "string",
+        "description": "Summary of target work's methodological approach, for comparison"
+      }
+    },
+    "required": [
+      "relationship_type"
+    ]
+  },
+  "recommended_for": [
+    "intellectual genealogy",
+    "comparative analysis",
+    "influence tracing",
+    "concept migration detection",
+    "intellectual history"
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "engine_key": "evolution_tactics_detector",
+  "engine_name": "Evolution Tactics Detector",
+  "description": "Detects specific intellectual self-management tactics that authors use when dealing with their own prior positions. Identifies 10 recurring patterns — conceptual recycling, silent revision, strategic escalation, framework migration, strategic amnesia, and others — that reveal how authors manage the relationship between earlier and current work. Useful for intellectual history, academic review, political analysis, and any comparative analysis of how an author's positions evolve across works.",
+  "version": 1,
+  "category": "rhetoric",
+  "kind": "extraction",
+  "reasoning_domain": "intellectual_evolution_analysis",
+  "researcher_question": "What tactics does this author use to manage the relationship between their prior and current work?",
+  "canonical_schema": {
+    "tactics_detected": [
+      {
+        "tactic_id": "string (format: 'TACT{N}')",
+        "tactic_type": "conceptual_recycling | silent_revision | selective_continuity | retroactive_framing | strategic_escalation | narrative_bootstrapping | framework_migration | condition_shift | biographical_teleology | strategic_amnesia",
+        "tactic_name": "string - human-readable name of this tactic instance",
+        "description": "string - what this specific instance involves",
+        "confidence": "high | medium | low - how confident the detection is",
+        "source_work": {
+          "title": "string - title of the earlier work",
+          "evidence_quotes": ["string - quotes from the earlier work showing the prior position"],
+          "approximate_date": "string | null"
+        },
+        "target_work": {
+          "title": "string - title of the later/current work",
+          "evidence_quotes": ["string - quotes from the later work showing the current position"],
+          "approximate_date": "string | null"
+        },
+        "vocabulary_evidence": "string - how vocabulary changes support this tactic detection (e.g., 'same term used with shifted meaning', 'prior term abandoned in favor of new coinage', 'old term repurposed for new argument')",
+        "framing_evidence": "string - how framing shifts support this tactic detection (e.g., 'was tentative in earlier work, now presented as established without new justification')",
+        "methodological_evidence": "string - how methodological continuity or change supports this tactic (e.g., 'same evidence cited but conclusion reversed', 'same argumentative structure applied to different conclusion')",
+        "severity": "major | moderate | minor",
+        "assessment": "string - analysis of what this tactic achieves, what it conceals, and what it reveals about the author's intellectual management"
+      }
+    ],
+    "tactic_patterns": {
+      "most_frequent_tactic": "string - the most commonly used tactic type",
+      "tactic_distribution": {
+        "conceptual_recycling": "number",
+        "silent_revision": "number",
+        "selective_continuity": "number",
+        "retroactive_framing": "number",
+        "strategic_escalation": "number",
+        "narrative_bootstrapping": "number",
+        "framework_migration": "number",
+        "condition_shift": "number",
+        "biographical_teleology": "number",
+        "strategic_amnesia": "number"
+      },
+      "tactic_clusters": ["string - descriptions of tactics that work together (e.g., 'narrative_bootstrapping + escalation cluster in chapters 3-4')"],
+      "pattern_narrative": "string - what the overall tactic usage reveals about how this author manages their intellectual history"
+    },
+    "evolution_tactics_taxonomy": {
+      "conceptual_recycling": "Reusing arguments from prior work in a new framework where they serve a different function. The old argument is preserved but recontextualized — like using the same building materials for a different building.",
+      "silent_revision": "Quietly changing position from prior work without acknowledging the shift. The author previously held position X, now holds position Y, but writes as if they always held Y.",
+      "selective_continuity": "Claiming continuity with prior work while substantively departing from it. The author says 'as I argued before...' but the current position is materially different from what they actually argued.",
+      "retroactive_framing": "Presenting current position as always having been the view, retroactively rewriting intellectual history. The author's earlier exploratory or tentative claims are presented as prescient foresight.",
+      "strategic_escalation": "Taking a qualified or tentative prior claim and presenting it as established fact. What was 'this might suggest...' becomes 'as we know...' without new evidence justifying the confidence increase.",
+      "narrative_bootstrapping": "Using the authority of prior work to legitimize current claims without re-establishing the evidence. The credibility earned from previous careful work is spent on current speculative claims.",
+      "framework_migration": "Moving concepts from one theoretical home to another without justifying the move. A concept developed within framework A is transplanted into framework B with no discussion of whether the transplant is valid.",
+      "condition_shift": "Changing the assessed conditions while keeping conclusions similar. The same evidence is used but the diagnosis of the situation has changed — like moving from 'X can be reformed' to 'X is beyond reform' while citing the same evidence.",
+      "biographical_teleology": "Presenting reactive intellectual evolution as intentional, directed development. What was actually a series of responsive adjustments is narrated as a purposeful intellectual journey toward the current position.",
+      "strategic_amnesia": "Forgetting inconvenient prior positions, predictions, or commitments. Earlier claims that turned out wrong or that conflict with current positions are simply not mentioned, as if they never existed."
+    },
+    "meta": {
+      "total_tactics_detected": "number",
+      "tactics_by_severity": {
+        "major": "number",
+        "moderate": "number",
+        "minor": "number"
+      },
+      "tactics_by_confidence": {
+        "high": "number",
+        "medium": "number",
+        "low": "number"
+      },
+      "most_affected_ideas": ["string - concepts or arguments that have the most tactics applied to them"],
+      "key_findings": ["string"]
+    }
+  },
+  "extraction_focus": [
+    "evolution_tactics",
+    "intellectual_self_management",
+    "position_shifts",
+    "rhetorical_strategies",
+    "vocabulary_drift",
+    "framing_changes"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [],
+  "source_file": "evolution_tactics_detector",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "evolution tactics detection",
+      "analysis_type_plural": "evolution tactics analyses",
+      "core_question": "What recurring tactics does this author employ to manage the relationship between their prior and current positions?",
+      "extraction_steps": [
+        "IDENTIFY WORKS: Determine which texts represent the author's 'prior position(s)' and which represent 'current position(s)'. This may be explicit in the input (e.g., two documents from different periods) or inferred from internal references within a single text. If Runtime Context is provided, use it to identify which works to compare and any relevant relationship classifications.",
+
+        "MAP VOCABULARY LANDSCAPE: For each work, identify key terms, coined terms, repurposed terms, and abandoned terms. Track how the author's vocabulary shifts between works — shared terms that change meaning (semantic drift), prior terms replaced by new coinages, and imported terms from other fields.",
+
+        "DETECT STRATEGIC ESCALATION: Look for claims that were tentative, hedged, or exploratory in the earlier work but appear as established, definitive, or axiomatic in the later work. Ask: is the confidence increase justified by new evidence, or is it a rhetorical move? Ideas presented as self-evident without justification are escalation candidates.",
+
+        "DETECT CONCEPTUAL RECYCLING: Compare arguments across works. When the same argument appears under new vocabulary, or old terms are used for new purposes, that's conceptual recycling. The vocabulary_evidence field must cite specific terms from both works.",
+
+        "DETECT RETROACTIVE FRAMING: Compare the author's claims about continuity with their prior work against actual evidence. If they CLAIM continuity ('as I've always argued') but the earlier text shows a materially different position, that's retroactive framing. If they CLAIM novelty but the earlier text contains the argument in full form, that's also significant.",
+
+        "DETECT FRAMEWORK MIGRATION: Look for concepts or methods imported from one theoretical framework or discipline into another. Check whether the migration is acknowledged or silent. Unacknowledged framework migration — especially from different fields — is a significant tactic.",
+
+        "DETECT SILENT REVISION: Look for positions that have reversed or substantially changed between works without the author acknowledging the change. Any case where the author contradicts their earlier position but doesn't flag this as a change of mind is a candidate.",
+
+        "DETECT SELECTIVE CONTINUITY: Look for continuity language ('building on my earlier work', 'extending my previous analysis') where the substance has actually shifted. When vocabulary comparison shows semantic drift or framing has changed confidence levels, claimed continuity is selective.",
+
+        "ASSESS EACH TACTIC: For every tactic detected, populate vocabulary_evidence, framing_evidence, and methodological_evidence with specific textual references. These evidence fields make the detection VERIFIABLE rather than impressionistic. Assign confidence (high/medium/low) based on evidence strength.",
+
+        "RATE SEVERITY: Major = significantly misrepresents the intellectual record with clear evidence. Minor = common scholarly practice, within normal bounds. Moderate = noteworthy but not egregious.",
+
+        "IDENTIFY CLUSTERS: Tactics often work together (narrative_bootstrapping + escalation, selective_continuity + retroactive_framing). Identify these patterns and note what they achieve as combinations.",
+
+        "SYNTHESIZE OVERALL PATTERN: Describe what the overall tactic usage reveals about this author's intellectual management style, grounded in specific vocabulary, framing, and methodological evidence."
+      ],
+      "key_fields": {
+        "tactic_id": "Unique identifier for each detected tactic instance",
+        "tactic_type": "Which tactic from the taxonomy this instance represents",
+        "confidence": "How confident the detection is based on available evidence",
+        "severity": "How significantly this tactic distorts the intellectual record"
+      },
+      "id_field": "tactic_id",
+      "key_relationships": [
+        "conceals",
+        "distorts",
+        "legitimates",
+        "enables"
+      ],
+      "special_instructions": "Be rigorous but fair. Not every change of mind is a 'tactic' — genuine intellectual development is normal and healthy. Focus on cases where the MANAGEMENT of the change is noteworthy: unacknowledged reversals, unjustified confidence increases, claimed continuity where there is none. Every tactic you detect must be grounded in specific vocabulary_evidence, framing_evidence, or methodological_evidence — not just your impression. Make your detections VERIFIABLE by citing specific quotes from both earlier and later works. If Runtime Context is provided (e.g., upstream analysis results, relationship classifications, dimensional comparisons), use it to strengthen your evidence — but the engine must also work well without any context, using only the input texts."
+    },
+    "curation": {
+      "item_type": "tactic",
+      "item_type_plural": "tactics",
+      "consolidation_rules": [
+        "Group by tactic type",
+        "Rank by severity within each type",
+        "Identify tactic clusters that work together",
+        "Cross-reference affected ideas across tactic types"
+      ],
+      "cross_doc_patterns": [
+        "recurring_tactic_types",
+        "tactic_clusters",
+        "shared_affected_ideas"
+      ],
+      "synthesis_outputs": [
+        "tactic_catalog",
+        "tactic_distribution",
+        "pattern_narrative"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "TACT1",
+          "to": "Escalation: 'automation might reduce employment' (2015) → 'automation has already eliminated meaningful work' (2025)"
+        },
+        {
+          "from": "TACT2",
+          "to": "Silent Revision: advocated market reform (2012) → advocates market abolition (2024) without acknowledging shift"
+        }
+      ],
+      "naming_guidance": "Use tactic type + brief description of what shifted between works",
+      "recommended_table_types": [
+        "tactic_catalog",
+        "severity_distribution",
+        "tactic_cluster_map"
+      ],
+      "recommended_visual_patterns": [
+        "gemini_network_graph"
+      ]
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "tactic_type": "intellectual self-management strategy",
+        "severity": "degree of intellectual record distortion"
+      },
+      "analyst": {
+        "tactic_type": "argumentative consistency pattern",
+        "severity": "significance level"
+      },
+      "executive": {
+        "tactic_type": "argument consistency issue",
+        "severity": "impact level"
+      },
+      "activist": {
+        "tactic_type": "position shift pattern"
+      }
+    },
+    "skip_concretization": false
+  },
+  "apps": [
+    "critic",
+    "visualizer"
+  ]
+}

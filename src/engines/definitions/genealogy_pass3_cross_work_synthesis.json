@@ -3,6 +3,8 @@
   "engine_name": "Genealogy Pass 3: Cross-Work Synthesis",
   "description": "Third pass of intellectual genealogy: synthesizes the evolution of a single idea across multiple prior works where it was found. If idea X appears in works 1, 3, and 7, this pass traces the evolution from 1 to 3 to 7 to the current work. Runs once per idea that appears in 2+ prior works. Now relationship-type-aware: distinguishes between direct traces (from direct precursors), foundational patterns (from indirect contextualizers), cross-domain transfers (from different-field works), and position reversals (from counter-positions).",
   "version": 1,
+  "status": "deprecated",
+  "deprecated_reason": "Replaced by genealogy_synthesis chain (Phase 6 migration). Passes 3-6 collapsed into single chain.",
   "category": "temporal",
   "kind": "synthesis",
   "reasoning_domain": "genealogy_analysis",

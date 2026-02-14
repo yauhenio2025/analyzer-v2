@@ -3,6 +3,8 @@
   "engine_name": "Genealogy Pass 1: Deep Target Work Profiling",
   "description": "First pass of intellectual genealogy: produces a deep, multi-dimensional profile of the target work specifically optimized for genealogical tracing through the author's prior works. Extracts not just ideas but vocabulary, methodological signatures, metaphorical frameworks, framing choices, domain crossings, and positioning moves — everything downstream passes need to find resonance, trace evolution, and detect tactics in prior works.",
   "version": 2,
+  "status": "deprecated",
+  "deprecated_reason": "Replaced by genealogy_target_profiling chain (Phase 6 migration)",
   "category": "concepts",
   "kind": "extraction",
   "reasoning_domain": "genealogy_analysis",

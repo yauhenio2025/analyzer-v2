@@ -3,6 +3,8 @@
   "engine_name": "Genealogy Pass 6: Conditions of Possibility",
   "description": "Sixth pass of intellectual genealogy: identifies the enabling conditions — how the author's prior body of work makes the current argument possible (or constrains it). Draws on Foucauldian genealogy and Cambridge School contextualism to analyze intellectual path-dependence.",
   "version": 1,
+  "status": "deprecated",
+  "deprecated_reason": "Replaced by genealogy_synthesis chain (Phase 6 migration). Passes 3-6 collapsed into single chain.",
   "category": "epistemology",
   "kind": "synthesis",
   "reasoning_domain": "genealogy_analysis",

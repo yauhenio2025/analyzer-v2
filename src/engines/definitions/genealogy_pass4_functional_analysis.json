@@ -3,6 +3,8 @@
   "engine_name": "Genealogy Pass 4: Functional Analysis",
   "description": "Fourth pass of intellectual genealogy: analyzes what rhetorical, analytical, and logical function the evolution of each idea serves within the current work. Asks not just 'how did this idea change?' but 'what does the change DO for the current argument?'",
   "version": 1,
+  "status": "deprecated",
+  "deprecated_reason": "Replaced by genealogy_synthesis chain (Phase 6 migration). Passes 3-6 collapsed into single chain.",
   "category": "rhetoric",
   "kind": "relational",
   "reasoning_domain": "genealogy_analysis",

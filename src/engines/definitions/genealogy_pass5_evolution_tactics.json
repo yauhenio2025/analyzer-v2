@@ -3,6 +3,8 @@
   "engine_name": "Genealogy Pass 5: Evolution Tactics Detection",
   "description": "Fifth pass of intellectual genealogy: detects specific evolution tactics — the recurring patterns authors use when dealing with their own prior positions. Identifies conceptual recycling, silent revision, selective continuity, strategic amnesia, and other tactics. The taxonomy of tactics is defined in this engine's canonical schema.",
   "version": 2,
+  "status": "deprecated",
+  "deprecated_reason": "Replaced by genealogy_synthesis chain (Phase 6 migration). Passes 3-6 collapsed into single chain.",
   "category": "rhetoric",
   "kind": "extraction",
   "reasoning_domain": "genealogy_analysis",

@@ -3,6 +3,8 @@
   "engine_name": "Genealogy Pass 1B: Prior Work Relationship Classification",
   "description": "Pre-scanning classification step: quickly determines how each prior work relates to the current work. This enables Pass 2 to adapt its analysis strategy per prior work rather than treating all prior works identically. Designed to be fast and cheap (Sonnet, low thinking budget).",
   "version": 2,
+  "status": "deprecated",
+  "deprecated_reason": "Built-in prompt in orchestrator; engine definition unused. Relationship classification handled by orchestrator directly.",
   "category": "temporal",
   "kind": "extraction",
   "reasoning_domain": "genealogy_analysis",

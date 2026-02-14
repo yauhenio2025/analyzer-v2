@@ -1,0 +1,211 @@
+{
+  "engine_key": "conditions_of_possibility_analyzer",
+  "engine_name": "Conditions of Possibility Analyzer",
+  "description": "Foucauldian and Cambridge School analysis identifying the intellectual conditions that make an author's current argument possible or constrain it. Maps enabling conditions (what prior work makes the current argument thinkable), constraining conditions (what prior commitments limit the argument), path dependencies (causal chains from prior to current positions), unacknowledged intellectual debts, and alternative paths not taken. Useful for philosophy of science, paradigm analysis, policy genealogy, and any analysis of intellectual path-dependence.",
+  "version": 1,
+  "category": "epistemology",
+  "kind": "synthesis",
+  "reasoning_domain": "intellectual_path_dependence_analysis",
+  "researcher_question": "What conditions of possibility does an author's prior work create for their current argument, and what paths were foreclosed?",
+  "canonical_schema": {
+    "enabling_conditions": [
+      {
+        "condition_id": "string (format: 'COND{N}')",
+        "condition_type": "conceptual_foundation | audience_preparation | authority_establishment | framework_provision | problem_definition | methodological_precedent | intellectual_toolkit | cross_domain_transfer",
+        "description": "string - what this enabling condition consists of",
+        "prior_works_involved": ["string - titles of prior works that established this condition"],
+        "how_it_enables": "string - what this condition makes possible in the current work",
+        "how_managed": "acknowledged | implicit | denied | instrumentalized",
+        "evidence": "string - textual evidence showing this condition at work",
+        "essentiality": "critical | important | supporting - how essential this condition is to the current argument"
+      }
+    ],
+    "constraining_conditions": [
+      {
+        "constraint_id": "string (format: 'CONSTR{N}')",
+        "constraint_type": "prior_commitment | audience_expectation | framework_lock_in | reputational_stake | methodological_path_dependence",
+        "description": "string - how prior work constrains the current argument",
+        "prior_works_involved": ["string - titles of prior works creating this constraint"],
+        "how_it_constrains": "string - what this constraint prevents or limits",
+        "how_navigated": "string - how the author deals with this constraint (addresses it, works around it, ignores it, reframes it)",
+        "binding_force": "strong | moderate | weak - how binding this constraint is"
+      }
+    ],
+    "path_dependencies": [
+      {
+        "dependency_id": "string (format: 'PATH{N}')",
+        "description": "string - the path-dependent reasoning chain",
+        "chain": ["string - ordered sequence: 'work X established Y, which led to Z in work W, which is now premise for Q'"],
+        "if_absent": "string - what the argument would look like if this path hadn't been taken",
+        "is_acknowledged": "boolean - whether the author acknowledges this dependency"
+      }
+    ],
+    "unacknowledged_debts": [
+      {
+        "debt_id": "string (format: 'DEBT{N}')",
+        "creditor_work": "string - the prior work that is owed the debt",
+        "what_is_owed": "string - what the current argument takes from the prior work without acknowledgment",
+        "evidence": "string - textual evidence showing the debt",
+        "possible_reasons": "string - why the author might not acknowledge this debt"
+      }
+    ],
+    "alternative_paths": [
+      {
+        "alternative_id": "string (format: 'ALT{N}')",
+        "branching_point": "string - where the intellectual path could have diverged",
+        "path_not_taken": "string - what the author could have argued instead from the same starting conditions",
+        "why_not_taken": "string - what made this path less available or attractive",
+        "implications": "string - what would be different about the current argument if this path had been taken"
+      }
+    ],
+    "counterfactual_analysis": "string - 2-3 paragraphs analyzing what the argument would look like if the author had no prior work — what is genuinely novel vs. path-dependent in the current argument",
+    "synthetic_judgment": "string - 2-3 paragraph assessment of how the author's intellectual biography shapes and constrains their current work, and whether this is productive or limiting",
+    "meta": {
+      "enabling_conditions_count": "number",
+      "constraining_conditions_count": "number",
+      "path_dependencies_count": "number",
+      "unacknowledged_debts_count": "number",
+      "alternative_paths_count": "number",
+      "dominant_condition_types": ["string"],
+      "overall_balance": "enabling_dominant | constraining_dominant | balanced - whether the prior work mostly enables or constrains the current argument",
+      "key_findings": ["string"]
+    }
+  },
+  "extraction_focus": [
+    "conditions_of_possibility",
+    "enabling_conditions",
+    "intellectual_constraints",
+    "path_dependence",
+    "unacknowledged_debts",
+    "alternative_intellectual_paths"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "table"
+  ],
+  "paradigm_keys": [
+    "genealogical"
+  ],
+  "source_file": "conditions_of_possibility_analyzer",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": [],
+    "extraction": {
+      "analysis_type": "conditions of possibility analysis",
+      "analysis_type_plural": "conditions of possibility analyses",
+      "core_question": "How does an author's intellectual biography enable and constrain their current argument, and what alternatives were foreclosed?",
+      "extraction_steps": [
+        "IDENTIFY ENABLING CONDITIONS: What aspects of the author's prior work make the current argument possible? Consider: conceptual foundations laid (ideas that had to exist first), audiences prepared (readers who were trained to accept certain premises), authority established (credibility built in prior work now spent), frameworks provided (theoretical structures reused), problems defined (how prior work shaped what counts as a problem), and methodological precedents set (analytical approaches habituated). If Runtime Context is provided, use upstream analysis results to identify specific traces and relationships.",
+
+        "IDENTIFY CROSS-DOMAIN TRANSFERS: Pay special attention to works from different fields or disciplines that provided intellectual toolkits — ways of thinking, analytical habits, cognitive frameworks — that shape the current argument even when those works discussed entirely different topics. These often operate below the author's conscious awareness and are among the most significant conditions of possibility.",
+
+        "ASSESS MANAGEMENT: For each enabling condition, determine how the author manages it — do they acknowledge the intellectual debt to their own prior work ('as I showed in...'), leave it implicit (use the framework without citing its origin), deny it ('contrary to what I previously argued...'), or instrumentalize it (cite prior work purely for authority, not content)?",
+
+        "IDENTIFY CONSTRAINING CONDITIONS: What aspects of the prior work CONSTRAIN the current argument? Consider: prior commitments the author can't easily abandon without loss of credibility, audience expectations created by prior work, theoretical framework lock-in (invested too much to switch), reputational stakes (known for position X, hard to abandon), and methodological path-dependence (trained to see the world one way).",
+
+        "ASSESS NAVIGATION: How does the author navigate each constraint? Directly address it and explain the change, quietly work around it, ignore it and hope readers won't notice, or reframe it as consistent with the new position?",
+
+        "MAP PATH DEPENDENCIES: Identify causal chains where prior work A led to position B, which led to framework C, which now serves as an unexamined premise for conclusion D. These chains show how intellectual history accumulates and constrains. Note whether each dependency is acknowledged by the author.",
+
+        "IDENTIFY UNACKNOWLEDGED DEBTS: Find cases where the current argument relies on prior work (by the same author or others) without acknowledgment. Hypothesize why the debt might be unacknowledged — embarrassment, oversight, desire for novelty, or strategic reasons.",
+
+        "EXPLORE ALTERNATIVE PATHS: At key branching points in the author's intellectual development, what could they have argued instead from the same starting conditions? Why was the path taken more available or attractive? What would the current argument look like if a different path had been chosen?",
+
+        "COUNTERFACTUAL ANALYSIS: Imagine the current argument written by someone with no prior work history — what would be different? This thought experiment separates genuine innovation from accumulated intellectual capital. What in the current work is genuinely new vs. what is path-dependent inheritance?",
+
+        "SYNTHETIC JUDGMENT: Assess overall whether the intellectual biography is more enabling or constraining, and whether the author manages the relationship productively. Is the path-dependence a source of depth and nuance, or does it trap the author in positions they should have outgrown?"
+      ],
+      "key_fields": {
+        "condition_id": "Unique identifier for each enabling condition",
+        "constraint_id": "Unique identifier for each constraining condition",
+        "condition_type": "Classification of the enabling condition",
+        "how_managed": "How the author handles the enabling condition",
+        "binding_force": "How binding a constraint is"
+      },
+      "id_field": "condition_id",
+      "key_relationships": [
+        "enables",
+        "constrains",
+        "necessitates",
+        "forecloses",
+        "depends_on"
+      ],
+      "special_instructions": "Think in terms of intellectual path-dependence. Every author's prior work creates a landscape of possibility and constraint for their current work. This engine asks you to map that landscape. The counterfactual analysis is especially important — it separates genuine innovation from accumulated intellectual capital. Pay particular attention to works from different fields or indirect sources that provide intellectual toolkits — ways of thinking that shape all subsequent work below conscious awareness. An author trained in game theory doesn't just have ideas from that field — they have a WAY OF THINKING that shapes everything after. If Runtime Context is provided (e.g., prior pass results, relationship classifications, dimensional comparisons), use it to strengthen your analysis — but the engine must also work well without any context, using only the input texts."
+    },
+    "curation": {
+      "item_type": "condition",
+      "item_type_plural": "conditions",
+      "consolidation_rules": [
+        "Separate enabling from constraining conditions",
+        "Rank enabling conditions by essentiality (critical → important → supporting)",
+        "Rank constraining conditions by binding force (strong → moderate → weak)",
+        "Group path dependencies by branching point",
+        "Cross-reference unacknowledged debts with enabling conditions"
+      ],
+      "cross_doc_patterns": [
+        "enabling_clusters",
+        "constraint_navigation_strategies",
+        "path_dependency_chains"
+      ],
+      "synthesis_outputs": [
+        "conditions_map",
+        "counterfactual_analysis",
+        "synthetic_judgment",
+        "alternative_paths_catalog"
+      ],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {
+          "from": "COND1",
+          "to": "Authority establishment: prior empirical work on automation statistics enables current speculative claims about post-capitalist transition"
+        },
+        {
+          "from": "CONSTR1",
+          "to": "Framework lock-in: deep investment in world-systems theory constrains ability to engage with post-Keynesian alternatives"
+        },
+        {
+          "from": "PATH1",
+          "to": "Path dependency: anti-market stance in 2015 book → post-capitalist framing required by 2025 → must reject reform proposals even when plausible"
+        },
+        {
+          "from": "ALT1",
+          "to": "Alternative path: could have developed a reform-compatible framework from the same automation evidence"
+        }
+      ],
+      "naming_guidance": "Use condition type + brief description of what is enabled, constrained, or foreclosed",
+      "recommended_table_types": [
+        "conditions_catalog",
+        "constraint_navigation_matrix",
+        "path_dependency_chains"
+      ],
+      "recommended_visual_patterns": [
+        "gemini_network_graph"
+      ]
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "conditions_of_possibility": "Foucauldian conditions of discourse emergence",
+        "path_dependence": "intellectual path-dependence analysis"
+      },
+      "analyst": {
+        "conditions_of_possibility": "enabling and constraining factors from prior work",
+        "path_dependence": "how prior positions shaped current argument"
+      },
+      "executive": {
+        "conditions_of_possibility": "intellectual prerequisites and constraints",
+        "path_dependence": "argumentative lock-in from earlier positions"
+      },
+      "activist": {
+        "conditions_of_possibility": "what made this argument possible",
+        "path_dependence": "how the author's history shapes their current stance"
+      }
+    },
+    "skip_concretization": false
+  },
+  "apps": [
+    "critic",
+    "visualizer"
+  ]
+}
