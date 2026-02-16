@@ -5,11 +5,17 @@ import logging
 from pathlib import Path
 from typing import Optional
 
+import yaml
+
 from src.engines.schemas import (
     EngineCategory,
     EngineDefinition,
     EngineProfile,
     EngineSummary,
+)
+from src.engines.schemas_v2 import (
+    CapabilityEngineDefinition,
+    CapabilityEngineSummary,
 )
 
 logger = logging.getLogger(__name__)
@@ -27,7 +33,10 @@ class EngineRegistry:
         if definitions_dir is None:
             definitions_dir = Path(__file__).parent / "definitions"
         self.definitions_dir = definitions_dir
+        self.capability_definitions_dir = definitions_dir.parent / "capability_definitions"
         self._engines: dict[str, EngineDefinition] = {}
+        self._capability_engines: dict[str, CapabilityEngineDefinition] = {}
+        self._capability_loaded = False
         self._loaded = False
 
     def load(self) -> None:
@@ -211,11 +220,73 @@ class EngineRegistry:
             logger.error(f"Failed to delete profile for {engine_key}: {e}")
             return False
 
+    # ── Capability definitions (v2 format) ──────────────────────
+
+    def _load_capability_definitions(self) -> None:
+        """Load all capability engine definitions from YAML files."""
+        if self._capability_loaded:
+            return
+
+        if not self.capability_definitions_dir.exists():
+            logger.info(f"No capability definitions directory: {self.capability_definitions_dir}")
+            self._capability_loaded = True
+            return
+
+        for yaml_file in self.capability_definitions_dir.glob("*.yaml"):
+            try:
+                with open(yaml_file, "r") as f:
+                    data = yaml.safe_load(f)
+                cap_engine = CapabilityEngineDefinition.model_validate(data)
+                self._capability_engines[cap_engine.engine_key] = cap_engine
+                logger.debug(f"Loaded capability definition: {cap_engine.engine_key}")
+            except Exception as e:
+                logger.error(f"Failed to load capability definition from {yaml_file}: {e}")
+
+        self._capability_loaded = True
+        logger.info(f"Loaded {len(self._capability_engines)} capability definitions")
+
+    def get_capability_definition(self, engine_key: str) -> Optional[CapabilityEngineDefinition]:
+        """Get capability engine definition by key."""
+        self._load_capability_definitions()
+        return self._capability_engines.get(engine_key)
+
+    def list_capability_definitions(self) -> list[CapabilityEngineDefinition]:
+        """List all capability engine definitions."""
+        self._load_capability_definitions()
+        return list(self._capability_engines.values())
+
+    def list_capability_summaries(self) -> list[CapabilityEngineSummary]:
+        """List lightweight capability engine summaries."""
+        self._load_capability_definitions()
+        return [
+            CapabilityEngineSummary(
+                engine_key=e.engine_key,
+                engine_name=e.engine_name,
+                category=e.category,
+                kind=e.kind,
+                problematique=e.problematique,
+                capability_count=len(e.capabilities),
+                dimension_count=len(e.analytical_dimensions),
+                depth_levels=[d.key for d in e.depth_levels],
+                synergy_engines=e.composability.synergy_engines,
+                apps=e.apps,
+            )
+            for e in self._capability_engines.values()
+        ]
+
+    def list_capability_keys(self) -> list[str]:
+        """List all capability definition keys."""
+        self._load_capability_definitions()
+        return list(self._capability_engines.keys())
+
     def reload(self) -> None:
         """Force reload all definitions."""
         self._loaded = False
         self._engines.clear()
+        self._capability_loaded = False
+        self._capability_engines.clear()
         self.load()
+        self._load_capability_definitions()
 
 
 # Global registry instance

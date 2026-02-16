@@ -20,6 +20,14 @@ from src.engines.schemas import (
     EngineSchemaResponse,
     EngineSummary,
 )
+from src.engines.schemas_v2 import (
+    CapabilityEngineDefinition,
+    CapabilityEngineSummary,
+)
+from src.stages.capability_composer import (
+    CapabilityPrompt,
+    compose_capability_prompt,
+)
 from src.stages.composer import StageComposer
 from src.stages.registry import get_stage_registry
 
@@ -143,6 +151,23 @@ async def list_engines_by_category(
         )
         for e in engines
     ]
+
+
+# ── Capability definitions (v2 format) ──────────────────────
+
+
+@router.get("/capability-definitions", response_model=list[CapabilityEngineSummary])
+async def list_capability_definitions() -> list[CapabilityEngineSummary]:
+    """List all capability engine definitions (v2 format).
+
+    Returns lightweight summaries of engines that have capability-driven
+    definitions (problematique, analytical dimensions, composability).
+    """
+    registry = get_engine_registry()
+    return registry.list_capability_summaries()
+
+
+# ── Legacy engine endpoints ──────────────────────
 
 
 @router.get("/{engine_key}", response_model=EngineDefinition)
@@ -454,6 +479,68 @@ async def delete_engine_profile(engine_key: str) -> dict:
         )
 
     return {"status": "deleted", "engine_key": engine_key}
+
+
+@router.get("/{engine_key}/capability-definition", response_model=CapabilityEngineDefinition)
+async def get_capability_definition(engine_key: str) -> CapabilityEngineDefinition:
+    """Get capability-driven engine definition (v2 format).
+
+    Returns the rich intellectual description of what this engine investigates:
+    problematique, analytical dimensions with probing questions, capabilities
+    with dependency graph, composability spec, and depth levels.
+
+    This is the NEW format that describes WHAT the engine investigates,
+    not HOW it formats output.
+    """
+    registry = get_engine_registry()
+    cap_def = registry.get_capability_definition(engine_key)
+    if cap_def is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No capability definition found for engine: {engine_key}. "
+            f"Available: {registry.list_capability_keys()}",
+        )
+    return cap_def
+
+
+@router.get("/{engine_key}/capability-prompt", response_model=CapabilityPrompt)
+async def get_capability_prompt(
+    engine_key: str,
+    depth: str = Query(
+        "standard",
+        description="Analysis depth: surface, standard, or deep",
+        pattern="^(surface|standard|deep)$",
+    ),
+    dimensions: Optional[str] = Query(
+        None,
+        description="Comma-separated dimension keys to focus on (default: all)",
+    ),
+) -> CapabilityPrompt:
+    """Get a prose-focused prompt composed from the capability definition.
+
+    This prompt asks the LLM for analytical PROSE output — not JSON.
+    It includes the engine's problematique, selected analytical dimensions
+    with probing questions, and depth-specific guidance.
+
+    Use this for the new schema-on-read architecture where LLM output
+    is saved as plain text and structured data is extracted at presentation time.
+    """
+    registry = get_engine_registry()
+    cap_def = registry.get_capability_definition(engine_key)
+    if cap_def is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No capability definition found for engine: {engine_key}. "
+            f"Available: {registry.list_capability_keys()}",
+        )
+
+    focus_dims = dimensions.split(",") if dimensions else None
+
+    return compose_capability_prompt(
+        cap_def=cap_def,
+        depth=depth,
+        focus_dimensions=focus_dims,
+    )
 
 
 @router.post("/reload")

@@ -6,6 +6,29 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Capability Engine Definitions (v2 format)** - New engine definition format describing WHAT an engine investigates, not HOW it formats output
+  - `src/engines/schemas_v2.py` - Pydantic models: CapabilityEngineDefinition, AnalyticalDimension, EngineCapability, ComposabilitySpec, DepthLevel, IntellectualLineage
+  - `src/engines/capability_definitions/conditions_of_possibility_analyzer.yaml` - First capability definition with 8 analytical dimensions, 8 capabilities, 3 depth levels, composability spec
+  - Registry support: `get_capability_definition()`, `list_capability_definitions()`, `list_capability_summaries()` in EngineRegistry
+  - API endpoints: `GET /v1/engines/capability-definitions` (list), `GET /v1/engines/{key}/capability-definition` (full definition)
+
+- **Capability-Based Prompt Composer** - Prose-focused prompt composition from capability definitions
+  - `src/stages/capability_composer.py` - compose_capability_prompt() generates prompts asking for analytical PROSE, not JSON
+  - API endpoint: `GET /v1/engines/{key}/capability-prompt?depth=standard&dimensions=...`
+  - Supports depth levels (surface/standard/deep), focused dimensions, shared context injection
+
+- **Analysis Output Tables (Critic DB)** - Schema-on-read infrastructure in the-critic
+  - `AnalysisOutputDB` - Plain-text analysis output table with lineage tracking (parent_id tree)
+  - `PresentationCacheDB` - Cached structured extractions from prose, keyed by output hash + section
+
+- **Prose Output Path (Critic)** - Full prose-mode pipeline for conditions_of_possibility engine
+  - `the-critic/analyzer/output_store.py` - Persistent storage for prose analysis outputs with lineage tracking
+  - `the-critic/analyzer/context_broker.py` - Cross-pass prose context assembly for LLM prompts
+  - `the-critic/analyzer/presentation.py` - Schema-on-read extraction from prose using Claude Haiku
+  - `the-critic/analyzer/analyze_genealogy.py` - Added output_mode="prose" parameter, capability-based prompts, prose output saving
+  - `the-critic/api/server.py` - Presentation endpoint `POST /api/genealogy/{job_id}/present/conditions`, pre-extraction on job completion
+  - `the-critic/webapp/src/pages/GenealogyPage.tsx` - Dual-mode ConditionsTab: legacy JSON or prose with on-demand extraction
+
 - **First-Class Functions** - 24 decider-v2 LLM functions registered as first-class entities
   - New module: `src/functions/` with schemas, registry, and API routes
   - Each function captures: prompt templates (actual text), model config, I/O contracts, implementation locations with GitHub links, DAG relationships

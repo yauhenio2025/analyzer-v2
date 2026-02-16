@@ -1,6 +1,46 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-02-12
+> Auto-maintained by Claude Code. Last updated: 2026-02-16
+
+## Capability Engine Definitions (v2 Format)
+
+### Capability-Driven Engine Definitions
+- **Status**: Active (Phase 0 complete — PoC with conditions_of_possibility)
+- **Description**: New engine definition format describing WHAT an engine investigates (problematique, analytical dimensions, capabilities, composability) rather than HOW it formats output (fixed schemas, extraction steps). Part of the schema-on-read architecture.
+- **Entry Points**:
+  - `src/engines/schemas_v2.py:1-239` - Pydantic models (CapabilityEngineDefinition, AnalyticalDimension, EngineCapability, ComposabilitySpec, DepthLevel, IntellectualLineage, CapabilityEngineSummary)
+  - `src/engines/capability_definitions/conditions_of_possibility_analyzer.yaml:1-314` - First capability definition (8 dimensions, 8 capabilities, composability, 3 depth levels)
+  - `src/engines/registry.py:216-268` - Capability definition loading from YAML, registry methods
+  - `src/api/routes/engines.py:155-175` - List endpoint `/v1/engines/capability-definitions`
+  - `src/api/routes/engines.py:483-503` - Detail endpoint `/{key}/capability-definition`
+- **API Endpoints**: `GET /v1/engines/capability-definitions`, `GET /v1/engines/{key}/capability-definition`
+- **Architecture Docs**: `docs/refactoring_engines.md`, `docs/plain_text_architecture.md`
+- **Added**: 2026-02-16
+
+### Capability-Based Prompt Composer
+- **Status**: Active
+- **Description**: Composes prose-focused prompts from capability definitions. Asks LLM for analytical prose (not JSON). Supports depth levels, focused dimensions, and shared context injection.
+- **Entry Points**:
+  - `src/stages/capability_composer.py:1-176` - compose_capability_prompt(), CapabilityPrompt model
+  - `src/api/routes/engines.py:505-540` - Prompt endpoint `/{key}/capability-prompt`
+- **API Endpoint**: `GET /v1/engines/{key}/capability-prompt?depth=standard&dimensions=...`
+- **Added**: 2026-02-16
+
+## Schema-on-Read / Prose Pipeline (the-critic)
+
+### Prose Output Infrastructure
+- **Status**: Active (PoC — conditions_of_possibility engine only)
+- **Description**: Full prose-mode pipeline where LLM outputs analytical prose instead of forced JSON. Structured data extracted at presentation time using Claude Haiku.
+- **Entry Points** (in the-critic project):
+  - `analyzer/output_store.py` - Persistent storage for prose outputs with lineage tracking and presentation cache
+  - `analyzer/context_broker.py` - Cross-pass prose context assembly for LLM prompts
+  - `analyzer/presentation.py` - Schema-on-read extraction using Claude Haiku, with caching
+  - `analyzer/analyze_genealogy.py` - output_mode="prose" parameter, capability-based prompts, prose output saving
+  - `api/server.py` - `POST /api/genealogy/{job_id}/present/conditions` endpoint, pre-extraction on job completion
+  - `webapp/src/pages/GenealogyPage.tsx` - ConditionsTab dual-mode rendering (legacy JSON or prose extraction)
+  - `webapp/src/pages/GenealogyPage.css` - Prose mode UI styles (spinner, badges, error states)
+- **Data Flow**: analyze_genealogy (prose output) → analysis_outputs DB → presentation.py (Haiku extraction) → presentation_cache DB → frontend
+- **Added**: 2026-02-16
 
 ## Functions (First-Class Entity)
 
