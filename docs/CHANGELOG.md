@@ -24,10 +24,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 - **Prose Output Path (Critic)** - Full prose-mode pipeline for conditions_of_possibility engine
   - `the-critic/analyzer/output_store.py` - Persistent storage for prose analysis outputs with lineage tracking
   - `the-critic/analyzer/context_broker.py` - Cross-pass prose context assembly for LLM prompts
-  - `the-critic/analyzer/presentation.py` - Schema-on-read extraction from prose using Claude Haiku
+  - `the-critic/analyzer/presentation.py` - Schema-on-read extraction from prose using Claude Haiku + direct prose fallback
   - `the-critic/analyzer/analyze_genealogy.py` - Added output_mode="prose" parameter, capability-based prompts, prose output saving
-  - `the-critic/api/server.py` - Presentation endpoint `POST /api/genealogy/{job_id}/present/conditions`, pre-extraction on job completion
+  - `the-critic/api/server.py` - Presentation endpoint `POST /api/genealogy/{job_id}/present/conditions`, pre-extraction on job completion, multi-path job_id resolution (in-memory → DB → direct prose extraction)
   - `the-critic/webapp/src/pages/GenealogyPage.tsx` - Dual-mode ConditionsTab: legacy JSON or prose with on-demand extraction
+
+- **Phase 2.5 Quality Validation (Varoufakis PoC)** - Prose mode validated against JSON baseline
+  - Prose mode: 6,638 words of connected analytical narrative with full section structure
+  - JSON-forced: 83K chars of disconnected fields with empty counterfactual/synthetic judgment sections
+  - Prose extraction via Haiku: 12 enabling conditions, 7 constraining, 5K+ chars counterfactual, 5K+ chars synthetic judgment — all fields 100% complete
+  - JSON-forced: 12 enabling (missing condition_types), 8 constraining, 0 chars counterfactual, 0 chars synthetic judgment
+  - Decision: Prose mode strictly superior. Proceed to Phase 3 (scale to all engines)
 
 - **First-Class Functions** - 24 decider-v2 LLM functions registered as first-class entities
   - New module: `src/functions/` with schemas, registry, and API routes
