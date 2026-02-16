@@ -1,0 +1,304 @@
+# Capability Definition: Evolution Tactics Detector
+#
+# This is the NEW format that describes WHAT the engine investigates,
+# not HOW it formats output. The LLM orchestrator uses this to plan
+# analysis, compose prompts, and determine output structure at runtime.
+#
+# Replaces the JSON definition with a rich intellectual description.
+# The engine detects specific intellectual self-management tactics
+# authors use when dealing with their own prior positions.
+
+engine_key: evolution_tactics_detector
+engine_name: Evolution Tactics Detector
+version: 1
+category: rhetoric
+kind: extraction
+
+# ============================================================
+# THE WHAT: Rich Intellectual Description
+# ============================================================
+
+problematique: |
+  When authors write across many years, they inevitably change their
+  minds. But they rarely just SAY "I changed my mind." Instead, they
+  employ a repertoire of intellectual self-management tactics --
+  strategies for handling the relationship between what they said before
+  and what they say now. These tactics are not necessarily dishonest;
+  they are often unconscious, sometimes strategic, and always revealing.
+
+  This engine detects 10 recurring tactics:
+
+  CONCEPTUAL RECYCLING: Reusing old arguments in new frameworks where
+  they serve different functions -- same building materials, different
+  building. SILENT REVISION: Changing position without acknowledgment,
+  writing as if the new view was always held. STRATEGIC ESCALATION:
+  Promoting tentative prior claims to established facts without new
+  evidence. FRAMEWORK MIGRATION: Moving concepts between theoretical
+  homes without justifying the transplant. STRATEGIC AMNESIA:
+  Selectively forgetting inconvenient prior commitments. VOCABULARY
+  LAUNDERING: Renaming concepts to shed unwanted associations -- the
+  same idea reappears under a new name, severed from its problematic
+  history. AUTHORITY BOOTSTRAPPING: Leveraging credibility earned from
+  careful prior work to legitimize current speculative claims.
+  HEDGING RECLASSIFICATION: Retroactively qualifying past claims as
+  more tentative than they actually were, creating room for the current
+  position. COMPLEXITY SHIELDING: Burying contradictions between prior
+  and current positions in layers of complexity so they are difficult
+  to detect. LEGACY MANAGEMENT: Actively curating one's intellectual
+  history -- selectively citing earlier work, reframing past positions,
+  constructing a narrative of purposeful development where the actual
+  trajectory was more reactive.
+
+  The analytical stance is Goffman's: we are watching impression
+  management applied to intellectual identity. The author is performing
+  a self that has a coherent intellectual history, and the tactics are
+  the dramaturgical techniques of that performance. Bourdieu adds the
+  dimension of cultural capital -- these tactics are strategies for
+  maintaining and deploying accumulated intellectual credibility.
+  Kuhn provides the framework for understanding why tactics cluster
+  around certain moments: paradigm shifts within an author's own work
+  create the most intense need for self-management.
+
+  Every detection must be VERIFIABLE -- grounded in specific vocabulary
+  evidence, framing evidence, and methodological evidence from both
+  earlier and later works. The engine does not make impressionistic
+  judgments; it builds evidence-based cases for each tactic instance.
+
+researcher_question: "What tactics does this author use to manage the relationship between their prior and current work?"
+
+intellectual_lineage:
+  primary: goffman
+  secondary:
+    - bourdieu  # Cultural capital, habitus, field theory
+    - kuhn  # Normal science vs revolutionary science, paradigm shifts
+    - lakatos  # Research programmes, rational reconstruction of intellectual history
+  traditions:
+    - dramaturgical_sociology  # Goffman's impression management and face-work
+    - field_theory  # Bourdieu's analysis of symbolic capital and positioning
+    - philosophy_of_science  # Kuhn's paradigm theory, Lakatos's research programmes
+    - rhetoric_of_science  # How scientists and scholars manage their public intellectual identity
+    - intellectual_history  # Tracking how ideas and their framings change over time
+  key_concepts:
+    - impression_management  # Goffman's central concept -- controlling how others perceive us
+    - face_work  # Maintaining a consistent public self under pressure
+    - cultural_capital  # Bourdieu's accumulated intellectual credibility
+    - habitus  # Ingrained dispositions that shape intellectual behavior below awareness
+    - paradigm_shift  # Kuhn's moments of crisis that force self-management
+    - research_programme  # Lakatos's framework for rational reconstruction of intellectual evolution
+    - performative_coherence  # The constructed appearance of intellectual consistency
+    - strategic_self_presentation  # Active management of one's intellectual identity
+
+# ============================================================
+# ANALYTICAL DIMENSIONS: Directions of Inquiry
+# ============================================================
+
+analytical_dimensions:
+
+  - key: tactic_detection
+    description: >
+      Identifying specific tactic instances with full evidence chains.
+      Each detection specifies: which tactic from the taxonomy, the
+      source work (earlier position with quotes), the target work (current
+      position with quotes), vocabulary evidence (how word choice supports
+      the detection), framing evidence (how presentation changes support
+      the detection), methodological evidence (how method continuity or
+      change supports the detection), confidence level, and severity.
+      The detection must be VERIFIABLE -- a reader given the evidence
+      should be able to confirm or dispute the finding.
+    probing_questions:
+      - "For each pair of works, what position shifts occurred and how were they managed?"
+      - "Where has tentative language been replaced by definitive language without new evidence (strategic escalation)?"
+      - "Where has the author contradicted a prior position without acknowledging the contradiction (silent revision)?"
+      - "Where are concepts reappearing under new names (vocabulary laundering) or in new frameworks (framework migration)?"
+      - "Where are inconvenient prior commitments simply absent from the discussion (strategic amnesia)?"
+      - "Where is the author using past credibility to support current speculation (authority bootstrapping)?"
+      - "What vocabulary, framing, and methodological evidence supports each detection?"
+    depth_guidance:
+      surface: "Detect the 3-5 most prominent tactic instances with brief evidence"
+      standard: "Systematic detection across all significant position shifts, with full vocabulary/framing/methodological evidence chains, confidence ratings, and severity assessments for each instance"
+      deep: "Exhaustive detection: every detectable tactic instance mapped with comprehensive evidence, including borderline cases with explicit reasoning for inclusion/exclusion, comparison of the same tactic across multiple work-pairs, and assessment of the author's tactical sophistication (do tactics become more subtle over time?)"
+
+  - key: tactic_patterns
+    description: >
+      Moving beyond individual detections to see the patterns. Which
+      tactic does the author use most frequently? Which tactics cluster
+      together (e.g., narrative bootstrapping + escalation, selective
+      continuity + retroactive framing)? What does the overall tactic
+      distribution reveal about the author's intellectual management
+      style? Some authors are primarily escalators (always amplifying),
+      others are primarily revisers (always changing quietly), and
+      others are primarily narrators (always constructing coherence
+      stories). The pattern is the fingerprint.
+    probing_questions:
+      - "What is the most frequently used tactic type, and what does that reveal?"
+      - "What is the distribution across all 10 tactic types?"
+      - "Which tactics cluster together -- appear in the same passages or serve the same strategic purpose?"
+      - "What does the overall pattern reveal about the author's intellectual management style?"
+      - "Is there a dominant mode: escalation, revision, narration, or amnesia?"
+    depth_guidance:
+      surface: "Note the most frequent tactic and any obvious clusters"
+      standard: "Full distribution analysis, cluster identification with explanation of how clustered tactics reinforce each other, and characterization of the author's overall management style"
+      deep: "Comprehensive pattern analysis: full distribution with statistical characterization, all tactic clusters mapped with functional analysis (what each cluster achieves), comparison of the author's tactic profile with common profiles in their field, assessment of whether the tactic repertoire is typical or distinctive, and narrative synthesis of what the pattern reveals about the author's relationship with their own intellectual history"
+
+  - key: tactic_evolution
+    description: >
+      How the author's tactical repertoire changes over time. Do early
+      works show simpler tactics (direct revision) while later works
+      show more sophisticated ones (complexity shielding, legacy
+      management)? Are there periods of intense tactical activity --
+      perhaps corresponding to major intellectual shifts? Does the
+      author develop new tactics as their career progresses, or rely
+      on the same repertoire throughout? Tactic evolution is itself
+      a kind of intellectual evolution, and tracking it reveals how
+      the author's self-management capacity develops.
+    probing_questions:
+      - "How does the tactic repertoire change across the author's career?"
+      - "Do tactics become more sophisticated over time?"
+      - "Are there periods of intense tactical activity corresponding to intellectual crises?"
+      - "Does the author develop new tactics or rely on the same ones throughout?"
+      - "Is there a relationship between the magnitude of position change and the sophistication of tactics used to manage it?"
+    depth_guidance:
+      surface: "Note any obvious shifts in tactic usage between early and late career"
+      standard: "Map tactic usage by career period, identify inflection points, and assess whether tactical sophistication increases over time"
+      deep: "Full diachronic analysis: tactic usage tracked across all career periods, correlation with intellectual crisis points, sophistication trajectory, comparison of early vs late tactical repertoire, and assessment of whether the author has become more or less self-aware about their own tactics"
+
+  - key: tactic_effectiveness
+    description: >
+      How well does each tactic actually work? A silent revision may
+      go unnoticed by most readers but be transparent to specialists.
+      A strategic escalation may be effective in popular writing but
+      fail in peer review. Vocabulary laundering may succeed when
+      the author has moved to a new audience but fail when the same
+      readers follow both old and new work. Effectiveness depends on
+      audience, context, and the quality of execution. Some authors
+      are gifted tacticians; others are clumsy and transparent.
+    probing_questions:
+      - "For each detected tactic, how likely is it to succeed with the intended audience?"
+      - "Are there tactics that work well in one context but fail in another?"
+      - "Does the author execute tactics skillfully or clumsily?"
+      - "Have any of the author's tactics been publicly called out by critics?"
+      - "What makes certain tactic instances more effective than others?"
+    depth_guidance:
+      surface: "Brief assessment of effectiveness for the most prominent tactics"
+      standard: "Effectiveness rating for each detected tactic instance, with analysis of what makes some more effective than others and how audience/context affects success"
+      deep: "Full effectiveness analysis: each instance rated for execution quality, audience-relative effectiveness, transparency to different reader types, comparison of intended vs actual effect, and assessment of the author's overall tactical skill level"
+
+  - key: tactic_taxonomy
+    description: >
+      The complete classification system for all detected tactics.
+      While the 10 core types provide the initial framework, real
+      intellectual behavior sometimes produces hybrid tactics, novel
+      tactics that don't fit the taxonomy, or variants that refine
+      the categories. This dimension captures the full taxonomy as
+      instantiated in this author's work, including any extensions
+      or modifications needed to accommodate what was actually found.
+    probing_questions:
+      - "Do all detected tactics fit cleanly into the 10 core types?"
+      - "Are there hybrid tactics -- combinations of two or more types?"
+      - "Are there novel tactics this author employs that the taxonomy doesn't capture?"
+      - "Which taxonomy categories are instantiated and which are absent?"
+      - "Does this author's tactical repertoire suggest refinements to the taxonomy itself?"
+    depth_guidance:
+      surface: "List which taxonomy categories are present and absent"
+      standard: "Full taxonomy instantiation with notes on any hybrids, gaps, and potential extensions"
+      deep: "Complete taxonomic analysis: every category assessed for fit, all hybrids and novel tactics documented with proposed classifications, taxonomy coverage analysis, and reflexive assessment of whether this author's practice reveals limitations in the taxonomy that should be addressed"
+
+# ============================================================
+# CAPABILITIES: What This Engine Can Do
+# ============================================================
+
+capabilities:
+
+  - key: detect_tactics
+    description: "Identify specific tactic instances with verifiable evidence chains across vocabulary, framing, and methodology"
+    produces_dimensions:
+      - tactic_detection
+    requires_dimensions: []
+
+  - key: analyze_tactic_patterns
+    description: "Identify the distribution, clustering, and overall profile of the author's tactical repertoire"
+    produces_dimensions:
+      - tactic_patterns
+    requires_dimensions:
+      - tactic_detection
+
+  - key: trace_tactic_evolution
+    description: "Track how the author's tactical repertoire changes across career stages"
+    produces_dimensions:
+      - tactic_evolution
+    requires_dimensions:
+      - tactic_detection
+      - tactic_patterns
+
+  - key: assess_tactic_effectiveness
+    description: "Evaluate how well each tactic works given audience, context, and execution quality"
+    produces_dimensions:
+      - tactic_effectiveness
+    requires_dimensions:
+      - tactic_detection
+
+  - key: instantiate_taxonomy
+    description: "Map the 10-type taxonomy onto this author's actual behavior, extending with hybrids and novel types as needed"
+    produces_dimensions:
+      - tactic_taxonomy
+    requires_dimensions:
+      - tactic_detection
+      - tactic_patterns
+
+# ============================================================
+# COMPOSABILITY: How It Plays With Others
+# ============================================================
+
+composability:
+  shares_with:
+    tactic_catalog: "All detected tactic instances with evidence chains, available for downstream engines"
+    tactic_distribution: "Frequency and pattern data across the 10+ tactic types"
+    pattern_narrative: "Characterization of the author's overall intellectual management style"
+    effectiveness_ratings: "Per-tactic effectiveness assessments relative to audience and context"
+
+  consumes_from:
+    concept_synthesis: "Evolution timelines and convergence/divergence maps providing the evidential landscape for tactic detection"
+    concept_taxonomy_argumentative_function: "Functional classifications revealing which argumentative roles are most subject to tactical management"
+    concept_evolution: "From Pass 2 -- per-work dimensional comparisons (vocabulary, methodology, metaphor, framing shifts) providing direct evidence for tactics"
+    concept_appropriation_tracker: "From Pass 2 -- traces of idea migration that may involve conceptual recycling or framework migration"
+    relationship_classification: "From Pass 1.5 -- relationship types that determine which work-pairs are most relevant for tactic detection"
+
+  synergy_engines:
+    - concept_synthesis  # Provides the evolution timelines that are the evidential base for tactic detection
+    - concept_taxonomy_argumentative_function  # Reveals which argumentative functions are most subject to tactical management
+    - conditions_of_possibility_analyzer  # Conditions explain WHY tactics exist; tactics reveal HOW conditions are managed
+    - concept_evolution  # Per-work dimensional comparisons provide the fine-grained evidence for each tactic
+
+# ============================================================
+# DEPTH LEVELS
+# ============================================================
+
+depth_levels:
+
+  - key: surface
+    description: "Detect the most prominent tactic instances with brief evidence, note the dominant tactic type"
+    typical_passes: 1
+    suitable_for: "Quick assessment, policy documents, preliminary scoping, non-academic texts with prior positions"
+
+  - key: standard
+    description: "Systematic detection across all significant position shifts, full evidence chains, pattern analysis with clustering, effectiveness assessment, and characterization of the author's management style"
+    typical_passes: 2
+    suitable_for: "Most academic texts, authors with 3-7 prior works, standard genealogy analysis, peer review preparation"
+
+  - key: deep
+    description: "Exhaustive detection including borderline cases, full diachronic tactic evolution tracking, comprehensive effectiveness analysis, taxonomy instantiation with extensions, and reflexive assessment of the taxonomy itself against this author's practice"
+    typical_passes: 3
+    suitable_for: "Dense philosophical works, prolific authors with 10+ works, comprehensive genealogy studies, publication-grade rhetorical analysis"
+
+# ============================================================
+# METADATA
+# ============================================================
+
+legacy_engine_key: evolution_tactics_detector
+
+apps:
+  - critic
+  - visualizer
+
+paradigm_keys:
+  - genealogical

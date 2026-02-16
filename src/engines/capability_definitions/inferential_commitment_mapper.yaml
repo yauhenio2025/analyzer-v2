@@ -1,0 +1,302 @@
+# Capability Definition: Inferential Commitment Mapper
+#
+# This is the NEW format that describes WHAT the engine investigates,
+# not HOW it formats output. The LLM orchestrator uses this to plan
+# analysis, compose prompts, and determine output structure at runtime.
+#
+# CHAIN POSITION: Engine 3 of 3 in genealogy_target_profiling chain.
+# Builds on both prior engines: uses the vocabulary/methodology profile
+# from conceptual_framework_extraction and the semantic field maps from
+# concept_semantic_constellation to map the full inferential commitment
+# structure of the work -- what you are really signing up for when you
+# accept these ideas.
+
+engine_key: inferential_commitment_mapper
+engine_name: Inferential Commitment Mapper
+version: 1
+category: concepts
+kind: synthesis
+
+# ============================================================
+# THE WHAT: Rich Intellectual Description
+# ============================================================
+
+problematique: |
+  Ideas come in packages. Accept one claim, and you are committed to
+  others -- whether you realize it or not. Endorse a particular theory
+  of human nature, and you have implicitly committed to a politics, an
+  ethics, and an epistemology. The inferential structure of ideas is
+  the hidden wiring beneath the surface of any argument: the logical
+  connections, dependencies, incompatibilities, and cascading
+  implications that determine what you are REALLY signing up for
+  when you nod along.
+
+  Most readers -- and many authors -- are unaware of this wiring.
+  They accept a conclusion without tracing what else it entails.
+  They endorse two positions without realizing they are incompatible.
+  They cite an authority without inheriting the full baggage of that
+  authority's commitments. This engine makes the invisible wiring
+  visible. It asks: what are the explicit commitments of this work?
+  What implicit commitments follow from them? Where do commitments
+  conflict? What logical dependencies create cascading chains where
+  one commitment forces another, which forces another? What are the
+  package deals -- bundles of ideas that can only be accepted or
+  rejected as a whole?
+
+  The philosophical foundation is Brandom's inferentialism: the
+  meaning of a concept is constituted by its inferential role -- what
+  it follows from, what follows from it, and what it is incompatible
+  with. But the output speaks in plain language, not philosophical
+  jargon. The method is Brandomian; the voice is accessible. The
+  insight is that commitment structures are not academic exercises
+  but practical maps: they tell you what you can and cannot say next,
+  what positions are available to you, and what contradictions you
+  must navigate.
+
+  As the THIRD and final engine in the target profiling chain, this
+  engine synthesizes the outputs of both prior engines into a
+  commitment landscape. The vocabulary and frameworks extracted by
+  conceptual_framework_extraction become the objects of commitment
+  analysis. The semantic relationships mapped by concept_semantic_
+  constellation reveal which commitments are semantically entangled.
+  The result is the deepest layer of the target profile: not just
+  what the author says (vocabulary), not just how concepts relate
+  (semantic fields), but what logical structure binds it all together
+  and what you are really agreeing to when you accept it.
+
+  For genealogical analysis, the commitment structure is the
+  skeleton. Vocabulary changes, metaphors evolve, framing shifts --
+  but the deep inferential commitments often persist across an
+  author's career, sometimes beneath the author's own awareness.
+  Tracking commitment persistence and mutation across works is
+  the most reliable method for detecting genuine intellectual
+  continuity vs. surface-level change.
+
+researcher_question: "What are you really signing up for when you accept these ideas?"
+
+intellectual_lineage:
+  primary: brandom
+  secondary:
+    - sellars  # The space of reasons -- normative structure of thought
+    - frege  # Logical consequence -- what follows from what
+    - toulmin  # Argument structure -- warrants, backings, rebuttals
+  traditions:
+    - inferentialism  # Brandom: meaning as inferential role in the space of reasons
+    - space_of_reasons  # Sellars: the normative domain of justification and commitment
+    - logical_analysis  # Frege/Russell: formal structure of implication and incompatibility
+    - argumentation_theory  # Toulmin: practical structure of real arguments
+    - deontic_scorekeeping  # Brandom: tracking what each interlocutor is committed and entitled to
+  key_concepts:
+    - inferential_commitment  # What you are committed to by virtue of accepting a claim
+    - material_inference  # Non-formal inferences that depend on content, not just logical form
+    - incompatibility  # Claims that cannot both be held -- the structure of disagreement
+    - entitlement  # What you have the right to assert -- earned vs. default authority
+    - deontic_score  # The running tally of commitments and entitlements for each speaker
+    - package_deal  # Ideas that come bundled -- accept one, you get the rest
+    - commitment_chain  # Cascading sequences where one commitment forces another
+    - performative_contradiction  # When what you do undermines what you say
+
+# ============================================================
+# ANALYTICAL DIMENSIONS: Directions of Inquiry
+# ============================================================
+
+analytical_dimensions:
+
+  - key: explicit_commitments
+    description: >
+      The claims, positions, and theses that the author explicitly
+      endorses. These are the surface-level commitments -- what the
+      author would acknowledge if asked "what are you arguing?"
+      They form the starting points for tracing deeper structures.
+    probing_questions:
+      - "What are the central claims or theses the author explicitly advances?"
+      - "What positions does the author take on contested questions?"
+      - "What theoretical commitments are stated openly?"
+      - "Which commitments are presented as the author's own vs. inherited from a tradition?"
+      - "How central is each commitment -- is it load-bearing or peripheral?"
+    depth_guidance:
+      surface: "List the 3-5 most important explicit commitments with centrality assessment"
+      standard: "Map all significant explicit commitments with centrality ratings, source (original vs. inherited), supporting evidence, and inter-commitment relationships"
+      deep: "Complete explicit commitment inventory: every significant claim mapped with centrality, originality assessment, evidential basis, relationship to other commitments, and assessment of how the author manages the commitment (confidently, tentatively, defensively)"
+
+  - key: implicit_commitments
+    description: >
+      What the author is committed to WITHOUT explicitly saying so --
+      the logical consequences of their stated positions that they
+      may not have noticed, may be avoiding, or may consider too
+      obvious to state. These are the hidden implications that make
+      inferential analysis valuable: they reveal what the author is
+      REALLY arguing, not just what they think they are arguing.
+    probing_questions:
+      - "What follows logically from the stated positions that the author does not spell out?"
+      - "Are there commitments the author seems to be avoiding -- implications they do not want to draw?"
+      - "What would a careful reader be entitled to conclude that the author has not stated?"
+      - "Do any implicit commitments conflict with the author's stated values or other positions?"
+      - "Which implicit commitments would embarrass the author if made explicit?"
+    depth_guidance:
+      surface: "Identify the 2-3 most significant unstated implications of the main arguments"
+      standard: "Map implicit commitments: what follows from stated positions, how tight the inference is (locked_in/usually/loosely), whether the author seems aware, and whether the implication is welcome or awkward"
+      deep: "Complete implicit commitment analysis: every significant unstated implication traced from its source commitment, inference strength assessed, author awareness evaluated, potential embarrassments noted, and assessment of whether the implicit commitments form a coherent position or reveal hidden tensions in the author's thinking"
+
+  - key: commitment_conflicts
+    description: >
+      Points where the author's commitments -- explicit or implicit --
+      are in tension or outright contradiction. These conflicts are
+      diagnostically valuable: they reveal the fault lines in the
+      author's thinking, the unresolved tensions they are managing
+      (or failing to manage), and the points where the argument is
+      most vulnerable to challenge.
+    probing_questions:
+      - "Do any explicit commitments conflict with each other?"
+      - "Do implicit commitments conflict with explicit ones?"
+      - "Are there commitments inherited from cited authorities that conflict with the author's own positions?"
+      - "How does the author manage conflicts -- acknowledged and addressed, acknowledged and bracketed, or unacknowledged?"
+      - "Are any conflicts productive (generating new insights through their tension) rather than damaging?"
+    depth_guidance:
+      surface: "Note the 1-2 most significant tensions or contradictions in the argument"
+      standard: "Map commitment conflicts: which commitments clash, whether the conflict is acknowledged, how the author navigates it, and whether the tension is productive or damaging"
+      deep: "Full conflict analysis: every significant tension mapped with involved commitments, conflict type (direct contradiction, pragmatic tension, inherited conflict), author's navigation strategy, assessment of whether navigation succeeds, and counterfactual analysis of what the argument would look like if the conflict were resolved in each possible direction"
+
+  - key: logical_dependencies
+    description: >
+      The dependency chains between commitments: which commitments
+      require which others as prerequisites, which are foundational
+      (nothing depends on them being justified by other commitments
+      in the text), and which are terminal (many things depend on
+      them but they support nothing further). Dependency chains
+      reveal the load-bearing structure of an argument.
+    probing_questions:
+      - "Which commitments are foundational -- assumed or asserted without derivation from other commitments in this text?"
+      - "Which commitments are derived -- following from earlier commitments in a chain?"
+      - "What are the longest dependency chains, and where are their weakest links?"
+      - "Are there circular dependencies where A supports B supports C supports A?"
+      - "What is the argument's single point of failure -- the one commitment whose collapse would bring down the most?"
+    depth_guidance:
+      surface: "Identify the 2-3 most important dependency chains and their foundational commitments"
+      standard: "Map dependency structure: foundational commitments, derived commitments with their chains, weakest links, and single points of failure"
+      deep: "Complete dependency analysis: full directed graph of commitment dependencies, chain length and strength assessment, circular dependency detection, single-point-of-failure analysis, load-bearing assessment (what collapses if each foundational commitment is removed), and comparison of the author's stated logical structure with the actual dependency structure"
+
+  - key: hidden_implications
+    description: >
+      The real-world, practical, and policy implications of accepting
+      the author's commitments -- the "so what?" that connects
+      abstract argument to concrete consequence. Hidden implications
+      are often where the argument becomes politically or ethically
+      charged, even when the author presents it as purely theoretical.
+    probing_questions:
+      - "If the author's central claims are true, what follows for practice, policy, or action?"
+      - "Are practical implications acknowledged or left unstated?"
+      - "Do the implications align with or conflict with the author's apparent values?"
+      - "Would the author be comfortable with all the practical implications of their position?"
+      - "Are there implications that would be unwelcome to the author's own audience?"
+    depth_guidance:
+      surface: "Note the 2-3 most significant practical implications of the main arguments"
+      standard: "Map hidden implications: what follows for practice, whether acknowledged, whether welcome, and whether consistent with the author's stated values and audience expectations"
+      deep: "Complete implication analysis: every significant practical consequence traced from its source commitments, assessment of author awareness and comfort level, audience reception analysis, comparison with implications of rival positions, and evaluation of whether the practical implications are actually embraced, reluctantly accepted, or strategically concealed"
+
+# ============================================================
+# CAPABILITIES: What This Engine Can Do
+# ============================================================
+
+capabilities:
+
+  - key: map_explicit_commitments
+    description: "Inventory the author's stated claims, positions, and theses with centrality and originality assessment"
+    produces_dimensions:
+      - explicit_commitments
+    requires_dimensions: []
+
+  - key: surface_implicit_commitments
+    description: "Trace the unstated logical consequences of explicit positions -- what the author is committed to without saying so"
+    produces_dimensions:
+      - implicit_commitments
+    requires_dimensions:
+      - explicit_commitments
+
+  - key: detect_conflicts
+    description: "Find tensions and contradictions between commitments -- explicit vs. explicit, explicit vs. implicit, inherited vs. original"
+    produces_dimensions:
+      - commitment_conflicts
+    requires_dimensions:
+      - explicit_commitments
+      - implicit_commitments
+
+  - key: trace_dependencies
+    description: "Map the directed dependency graph between commitments: what requires what, where the chains are, where the weak links are"
+    produces_dimensions:
+      - logical_dependencies
+    requires_dimensions:
+      - explicit_commitments
+      - implicit_commitments
+
+  - key: reveal_hidden_implications
+    description: "Draw out the practical, policy, and real-world consequences that the author may not acknowledge"
+    produces_dimensions:
+      - hidden_implications
+    requires_dimensions:
+      - explicit_commitments
+      - implicit_commitments
+      - commitment_conflicts
+
+# ============================================================
+# COMPOSABILITY: How It Plays With Others
+# ============================================================
+
+composability:
+  shares_with:
+    commitment_inventory: "Explicit and implicit commitments with centrality ratings -- downstream engines know what the author is committed to"
+    conflict_map: "Tensions and contradictions between commitments -- reveals fault lines other engines can investigate historically"
+    dependency_graph: "The load-bearing structure of the argument -- which commitments are foundational, which are derived"
+    commitment_chains: "Cascading sequences of forced commitments -- the dominoes that fall when you accept a starting position"
+    package_deals: "Bundles of commitments that can only be accepted or rejected together"
+    implication_landscape: "Practical consequences of the theoretical position -- the bridge from abstract to concrete"
+
+  consumes_from:
+    vocabulary_profile: "From conceptual_framework_extraction -- the coined terms and key oppositions that become objects of commitment analysis"
+    methodological_fingerprint: "From conceptual_framework_extraction -- argumentative habits that reveal which commitments are conscious and which are unreflective"
+    framework_architecture: "From conceptual_framework_extraction -- structural relationships between frameworks that constrain the space of possible commitments"
+    framing_landscape: "From conceptual_framework_extraction -- positioning data revealing which commitments are strategic vs. genuine"
+    semantic_field_maps: "From concept_semantic_constellation -- meaning-relation networks revealing which commitments are semantically entangled"
+    concept_cluster_structure: "From concept_semantic_constellation -- thematic groupings suggesting which commitments belong to the same package deal"
+    boundary_analysis: "From concept_semantic_constellation -- contested boundaries between concepts that often encode unresolved commitment conflicts"
+
+  synergy_engines:
+    - conceptual_framework_extraction  # Upstream: provides vocabulary and frameworks as objects of commitment analysis
+    - concept_semantic_constellation  # Upstream: provides semantic relationships revealing which commitments are entangled
+    - conditions_of_possibility_analyzer  # Commitments are the mechanism of constraint -- the conditions engine explains WHY these commitments bind
+    - evolution_tactics_detector  # Commitment changes across works reveal tactical evolution -- managed mutation vs. genuine revision
+    - intellectual_genealogy  # Commitment persistence across authors reveals intellectual lineage more reliably than shared vocabulary
+
+# ============================================================
+# DEPTH LEVELS
+# ============================================================
+
+depth_levels:
+
+  - key: surface
+    description: "Identify the central explicit commitments, the 2-3 most significant implicit commitments, and any obvious tensions between them"
+    typical_passes: 1
+    suitable_for: "Quick assessment, policy documents, texts with straightforward argumentation, preliminary scoping"
+
+  - key: standard
+    description: "Full commitment inventory (explicit and implicit) with centrality ratings, conflict map between commitments, major dependency chains with weakest links, package deals, and practical implications with author awareness assessment"
+    typical_passes: 2
+    suitable_for: "Most academic texts, standard genealogy target profiling, texts with moderate argumentative complexity"
+
+  - key: deep
+    description: "Complete inferential archaeology: exhaustive commitment inventory with originality and awareness assessment, full conflict analysis with navigation strategy evaluation, complete dependency graph with single-point-of-failure analysis, cascading commitment chains with strength at every link, package deal identification with incompatibility mapping, hidden implications traced to source commitments, performative contradictions surfaced, and citation baggage analysis revealing inherited commitments the author may not realize they carry"
+    typical_passes: 3
+    suitable_for: "Dense philosophical works, texts with complex or contradictory argumentation, foundational profiling for major genealogy studies, works where the real argument differs from the stated argument"
+
+# ============================================================
+# METADATA
+# ============================================================
+
+legacy_engine_key: inferential_commitment_mapper
+
+apps:
+  - critic
+  - visualizer
+
+paradigm_keys:
+  - brandomian

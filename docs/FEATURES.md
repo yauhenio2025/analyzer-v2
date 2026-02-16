@@ -10,6 +10,8 @@
 - **Entry Points**:
   - `src/engines/schemas_v2.py:1-239` - Pydantic models (CapabilityEngineDefinition, AnalyticalDimension, EngineCapability, ComposabilitySpec, DepthLevel, IntellectualLineage, CapabilityEngineSummary)
   - `src/engines/capability_definitions/conditions_of_possibility_analyzer.yaml:1-314` - First capability definition (8 dimensions, 8 capabilities, composability, 3 depth levels)
+  - `src/engines/capability_definitions/concept_evolution.yaml:1-253` - Concept Evolution Tracker (6 dimensions: vocabulary/methodology/metaphor/framing evolution, concept trajectory, dimensional comparison matrix; Koselleck/Skinner/Kuhn lineage; first engine in Pass 2 scanning chain)
+  - `src/engines/capability_definitions/concept_appropriation_tracker.yaml:1-261` - Concept Appropriation Tracker (6 dimensions: migration paths, semantic mutations, appropriation patterns, distortion map, recombination, acknowledgment status; Derrida/Said/Bakhtin/Bloom lineage; second engine in Pass 2 scanning chain)
   - `src/engines/registry.py:216-268` - Capability definition loading from YAML, registry methods
   - `src/api/routes/engines.py:155-175` - List endpoint `/v1/engines/capability-definitions`
   - `src/api/routes/engines.py:483-503` - Detail endpoint `/{key}/capability-definition`

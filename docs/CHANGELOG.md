@@ -6,6 +6,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Capability definitions for Pass 2 genealogy scanning engines** - Two new YAML capability definitions for the prior work scanning chain
+  - `src/engines/capability_definitions/concept_evolution.yaml` - Concept Evolution Tracker: 6 analytical dimensions (vocabulary_evolution, methodology_evolution, metaphor_evolution, framing_evolution, concept_trajectory, dimensional_comparison_matrix), 6 capabilities, 3 depth levels. Koselleck/Skinner/Kuhn lineage. First engine in scanning chain.
+  - `src/engines/capability_definitions/concept_appropriation_tracker.yaml` - Concept Appropriation Tracker: 6 analytical dimensions (migration_paths, semantic_mutations, appropriation_patterns, distortion_map, recombination, acknowledgment_status), 6 capabilities, 3 depth levels. Derrida/Said/Bakhtin/Bloom lineage. Second engine in scanning chain.
+
 - **Capability Engine Definitions (v2 format)** - New engine definition format describing WHAT an engine investigates, not HOW it formats output
   - `src/engines/schemas_v2.py` - Pydantic models: CapabilityEngineDefinition, AnalyticalDimension, EngineCapability, ComposabilitySpec, DepthLevel, IntellectualLineage
   - `src/engines/capability_definitions/conditions_of_possibility_analyzer.yaml` - First capability definition with 8 analytical dimensions, 8 capabilities, 3 depth levels, composability spec

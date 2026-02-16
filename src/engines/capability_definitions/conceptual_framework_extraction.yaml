@@ -1,0 +1,303 @@
+# Capability Definition: Conceptual Framework Extraction
+#
+# This is the NEW format that describes WHAT the engine investigates,
+# not HOW it formats output. The LLM orchestrator uses this to plan
+# analysis, compose prompts, and determine output structure at runtime.
+#
+# CHAIN POSITION: Engine 1 of 3 in genealogy_target_profiling chain.
+# This engine produces the foundational vocabulary/methodology profile
+# that concept_semantic_constellation and inferential_commitment_mapper
+# build upon in subsequent passes.
+
+engine_key: conceptual_framework_extraction
+engine_name: Conceptual Framework Extractor
+version: 2
+category: concepts
+kind: synthesis
+
+# ============================================================
+# THE WHAT: Rich Intellectual Description
+# ============================================================
+
+problematique: |
+  Every intellectual work is built on a scaffolding of analytical
+  frameworks -- theoretical models, typologies, causal stories,
+  analytical lenses -- that structure what can be seen, what counts
+  as evidence, and what conclusions are reachable. But frameworks
+  are not just tools of analysis; they are themselves carriers of
+  intellectual history. An author's vocabulary reveals their training.
+  Their methodological signature -- how they characteristically argue --
+  persists across decades, mutating but recognizable. Their metaphors
+  do real analytical work, not just decoration, and the metaphors that
+  migrate from one work to the next are genealogy gold: tracers
+  revealing intellectual lineage.
+
+  This engine extracts the full conceptual architecture of a work:
+  the frameworks deployed, the vocabulary introduced or repurposed,
+  the methodological habits that structure argumentation, the metaphors
+  that carry analytical weight, and the framing choices that foreground
+  some aspects while rendering others invisible. It asks not just
+  "what frameworks are used?" but "what does the choice and handling
+  of these frameworks reveal about the author's intellectual formation?"
+
+  The genealogical dimension is central. Terms that feel established
+  but are not justified in the current text alone -- they rely on
+  authority accumulated elsewhere. Methodological moves that feel
+  habitual -- they trace back years, sometimes decades. Metaphors
+  doing heavy analytical lifting -- they probably evolved from simpler
+  forms in earlier work. These are the threads that downstream engines
+  (semantic constellation, inferential commitment mapper) will pull on.
+
+  As the FIRST engine in the target profiling chain, this engine
+  produces the foundational profile that all subsequent analysis
+  builds upon. Its vocabulary map becomes the search targets for
+  semantic constellation mapping. Its commitment landscape feeds
+  the inferential commitment mapper. Get this profile wrong, and
+  the entire genealogical analysis inherits the distortion.
+
+researcher_question: "What analytical frameworks structure thinking in this collection?"
+
+intellectual_lineage:
+  primary: lakatos
+  secondary:
+    - kuhn  # Paradigm structures and normal science
+    - brandom  # Inferentialism -- meaning as inferential role
+    - cassirer  # Symbolic forms and conceptual architecture
+  traditions:
+    - research_programmes  # Lakatos: hard core, protective belt, heuristic
+    - paradigm_analysis  # Kuhn: normal science, anomalies, revolutionary shifts
+    - inferentialism  # Brandom: concepts as nodes in inferential networks
+    - conceptual_history  # Koselleck: Begriffsgeschichte -- how concepts carry history
+    - vocabulary_analysis  # Wittgenstein/Brandom: meaning is use, vocabulary as toolset
+  key_concepts:
+    - research_programme  # Lakatos: the structured core of a theoretical position
+    - paradigm  # Kuhn: the shared commitments of a research community
+    - vocabulary  # The terms an author introduces, borrows, repurposes, or coins
+    - methodological_signature  # How an author characteristically argues -- their fingerprint
+    - metaphor_as_argument  # Metaphors that do real analytical work, not decoration
+    - framing  # What is foregrounded vs. backgrounded -- the politics of emphasis
+    - domain_crossing  # When concepts, methods, or analogies migrate between fields
+    - genealogical_hint  # Signals that a framework has a history beyond the current text
+
+# ============================================================
+# ANALYTICAL DIMENSIONS: Directions of Inquiry
+# ============================================================
+
+analytical_dimensions:
+
+  - key: vocabulary_map
+    description: >
+      The complete lexical inventory of the work: terms coined by the author,
+      standard terms used non-standardly, key oppositions that structure
+      the argument, and precursor terms that might have been used for the
+      same concept in earlier work. Vocabulary is the most reliable
+      genealogical tracer -- authors change their arguments, but their
+      distinctive terms persist.
+    probing_questions:
+      - "What terms does the author coin or use distinctively?"
+      - "Which standard terms are given non-standard meanings?"
+      - "What key oppositions structure the argument (e.g., structure/agency, system/lifeworld)?"
+      - "Which terms feel 'settled' without adequate justification in this text -- are they borrowing authority from elsewhere?"
+      - "What precursor terms might have existed for the same concept in earlier work?"
+      - "Are there terminological clusters that suggest a particular intellectual tradition?"
+    depth_guidance:
+      surface: "List the 5-10 most distinctive terms with brief definitions and note any obviously coined vocabulary"
+      standard: "Full vocabulary map: coined terms with likely precursors, repurposed terms with standard vs. author meanings, key oppositions with what analytical work they do, and assessment of which terms carry unearned authority"
+      deep: "Complete lexical archaeology: every significant term traced to its origin (author coinage, borrowing, repurposing), terminological clusters mapped to intellectual traditions, diachronic assessment of which terms are stable vs. evolving, and precursor analysis identifying what earlier vocabulary this terminology likely replaced or refined"
+
+  - key: methodological_signature
+    description: >
+      How the author characteristically argues: what counts as evidence,
+      what logical structures recur, what analytical moves are habitual.
+      Methodological signatures are the most persistent feature of an
+      author's intellectual identity -- they change arguments, switch
+      topics, revise positions, but their WAY OF ARGUING remains
+      recognizable across decades.
+    probing_questions:
+      - "What types of evidence does the author rely on (historical narrative, data, theoretical derivation, analogy, case study, thought experiment)?"
+      - "What is the characteristic argumentative structure (dialectical, cumulative, abductive, deductive, genealogical)?"
+      - "What analytical moves recur (reframing X as Y, appeals to structural necessity, deriving from historical narrative, immanent critique)?"
+      - "What counts as sufficient evidence for a claim -- what are the author's epistemological commitments?"
+      - "Are there signature rhetorical patterns that function as analytical tools?"
+    depth_guidance:
+      surface: "Identify the primary evidence types and 2-3 recurring analytical moves"
+      standard: "Full methodological profile: evidence types with assessment of epistemic commitments, argumentative structure, recurring moves with examples, and what counts as evidence -- revealing the author's implicit theory of knowledge"
+      deep: "Complete methodological fingerprint: every significant evidence type and analytical move catalogued with textual examples, cross-referenced with intellectual traditions that favor these methods, assessment of which moves are conscious choices vs. unreflective habits, and comparison with the author's stated methodology (if any) to detect mismatches between practice and self-description"
+
+  - key: metaphor_tracking
+    description: >
+      Metaphors and analogies that do real analytical work in the text --
+      not decorative language but structural elements that shape what can
+      be thought. A metaphor that carries heavy argumentative weight is
+      a genealogical prize: it probably evolved from simpler forms in
+      earlier work, gaining analytical power as the author refined it.
+    probing_questions:
+      - "What metaphors or analogies carry heavy argumentative weight -- doing real analytical work, not just illustration?"
+      - "Which metaphors are borrowed from other domains, and what do they import along with themselves?"
+      - "Are any metaphors treated as literal -- has the author forgotten they are metaphors?"
+      - "Do metaphors cluster by framework, suggesting they evolved together?"
+      - "Which metaphors feel 'mature' -- polished through repeated use -- vs. tentative?"
+    depth_guidance:
+      surface: "List the 3-5 most prominent metaphors with their source domains and analytical weight"
+      standard: "Full metaphor inventory: each metaphor with source domain, analytical weight (heavy/moderate/decorative), which frameworks use it, what it imports from the source domain, and whether the author treats it as literal"
+      deep: "Complete metaphor archaeology: every significant metaphor traced to its likely origin, assessed for maturity (fresh coinage vs. polished through reuse), mapped to the frameworks it supports, analyzed for what it reveals and conceals about the subject matter, and cross-referenced with other authors who use the same metaphor differently"
+
+  - key: framing_analysis
+    description: >
+      How the work frames its central problem, what it foregrounds and
+      backgrounds, and how the author positions themselves relative to
+      allies and opponents. Framing is never neutral: every presentation
+      emphasizes some aspects and renders others invisible. Tracking how
+      framing changes across an author's works reveals strategic evolution.
+    probing_questions:
+      - "How is the central problem or question framed -- what does this framing make visible and invisible?"
+      - "What does the author claim is novel or original in their contribution?"
+      - "What continuity with prior work does the author claim?"
+      - "Who are the intellectual opponents -- what is the author positioned against?"
+      - "Who are the intellectual allies -- whose authority is borrowed?"
+      - "What does the framing suppress -- qualifications, alternatives, complications that are absent?"
+    depth_guidance:
+      surface: "Identify the central framing, what it emphasizes, and who the main allies/opponents are"
+      standard: "Full framing landscape: problem framing with foregrounded and backgrounded aspects, novelty claims, continuity claims, opponent/ally map, and assessment of what the framing suppresses"
+      deep: "Complete framing archaeology: how the framing positions the work within its field, what alternative framings were available but not used (and why), how the framing constrains what conclusions are reachable, the politics of the framing (who benefits from this way of posing the question), and comparison with how the author has framed similar problems in other works"
+
+  - key: conceptual_architecture
+    description: >
+      The structural relationships between frameworks: which are
+      foundational, which are dependent, which compete, which are
+      complementary. The architecture reveals the load-bearing
+      elements -- remove a foundational framework and everything
+      above it collapses.
+    probing_questions:
+      - "Which frameworks are foundational -- everything else depends on them?"
+      - "Which frameworks are peripheral -- could be removed without structural damage?"
+      - "Do any frameworks compete with each other -- offering alternative explanations for the same phenomena?"
+      - "Are there emergent frameworks synthesized from multiple component frameworks?"
+      - "What is the relationship between theoretical frameworks and applied/practical ones?"
+    depth_guidance:
+      surface: "Identify the 2-3 foundational frameworks and their main dependencies"
+      standard: "Map the framework architecture: foundational vs. dependent vs. peripheral, competing frameworks, complementary pairs, and emergent syntheses"
+      deep: "Full architectural analysis: complete dependency graph between frameworks, load-bearing assessment (what collapses if X is removed), competing and complementary relationships, emergent frameworks with their synthesis logic, and assessment of architectural coherence (is the framework ensemble well-integrated or ad hoc?)"
+
+  - key: domain_crossings
+    description: >
+      Where concepts, methods, or structural analogies are imported from
+      other fields. Each crossing is a potential genealogical thread --
+      it reveals where the author was trained, what they read, and what
+      shapes their thinking below conscious awareness. An economist
+      doing political theory doesn't just have economic ideas; they
+      have an economic WAY OF THINKING.
+    probing_questions:
+      - "What concepts, methods, or analogies are imported from other fields?"
+      - "How have imports been adapted for the current domain -- what was changed and what was preserved?"
+      - "Are the cross-domain origins acknowledged or invisible to the author?"
+      - "Do imports create productive insights or misleading analogies?"
+      - "What intellectual training or background do the domain crossings reveal?"
+    depth_guidance:
+      surface: "Note the 2-3 most significant cross-domain imports and their source fields"
+      standard: "Map domain crossings: source field, what was imported, how it was adapted, whether acknowledged, and whether the import is productive or distorting"
+      deep: "Full cross-domain analysis: every significant import traced to its source tradition, assessment of how adaptation changed the original concept, analysis of what the source domain's assumptions smuggle into the current argument, and mapping of the author's intellectual formation as revealed by their cross-domain toolkit"
+
+# ============================================================
+# CAPABILITIES: What This Engine Can Do
+# ============================================================
+
+capabilities:
+
+  - key: extract_vocabulary
+    description: "Build a complete lexical inventory: coined terms, repurposed terms, key oppositions, and genealogical tracers"
+    produces_dimensions:
+      - vocabulary_map
+    requires_dimensions: []
+
+  - key: profile_methodology
+    description: "Characterize the author's argumentative fingerprint: evidence types, logical structures, recurring moves, epistemological commitments"
+    produces_dimensions:
+      - methodological_signature
+    requires_dimensions: []
+
+  - key: track_metaphors
+    description: "Identify metaphors doing analytical work, assess their weight, trace their likely origins and maturity"
+    produces_dimensions:
+      - metaphor_tracking
+    requires_dimensions: []
+
+  - key: analyze_framing
+    description: "Map how the work frames its problem, what it foregrounds and backgrounds, and how the author positions relative to allies and opponents"
+    produces_dimensions:
+      - framing_analysis
+    requires_dimensions: []
+
+  - key: map_architecture
+    description: "Reveal the structural relationships between frameworks: foundational, dependent, competing, complementary, emergent"
+    produces_dimensions:
+      - conceptual_architecture
+    requires_dimensions:
+      - vocabulary_map
+      - methodological_signature
+
+  - key: detect_domain_crossings
+    description: "Identify concepts, methods, and analogies imported from other fields, and assess what intellectual formation they reveal"
+    produces_dimensions:
+      - domain_crossings
+    requires_dimensions:
+      - vocabulary_map
+
+# ============================================================
+# COMPOSABILITY: How It Plays With Others
+# ============================================================
+
+composability:
+  shares_with:
+    vocabulary_profile: "Coined terms, repurposed terms, key oppositions -- the lexical fingerprint for downstream genealogical matching"
+    methodological_fingerprint: "Evidence types, argumentative structure, recurring moves -- persistent identity markers"
+    metaphor_inventory: "Metaphors with source domains and analytical weight -- tracers for cross-work evolution tracking"
+    framing_landscape: "Problem framing, novelty/continuity claims, ally/opponent map -- strategic positioning data"
+    framework_architecture: "Structural relationships between frameworks -- dependency and load-bearing analysis"
+    domain_crossing_map: "Cross-field imports revealing intellectual formation and implicit assumptions"
+    genealogical_hints: "Signals that frameworks have histories beyond the current text -- settled claims, habitual moves, mature metaphors"
+
+  consumes_from: {}
+  # As the FIRST engine in the target profiling chain, this engine
+  # has no upstream dependencies. It produces the foundational profile
+  # that all subsequent engines consume.
+
+  synergy_engines:
+    - concept_semantic_constellation  # Consumes vocabulary_profile to map semantic fields of extracted terms
+    - inferential_commitment_mapper  # Consumes frameworks and vocabulary to map logical commitments
+    - conditions_of_possibility_analyzer  # Uses vocabulary/methodology as evidence of enabling conditions
+    - concept_evolution  # Tracks how vocabulary, metaphors, and framing change across works
+    - evolution_tactics_detector  # Uses framing_landscape to detect strategic positioning moves
+
+# ============================================================
+# DEPTH LEVELS
+# ============================================================
+
+depth_levels:
+
+  - key: surface
+    description: "Extract the dominant frameworks, key vocabulary, and most prominent metaphors with brief characterization"
+    typical_passes: 1
+    suitable_for: "Quick assessment, policy documents, non-academic texts, preliminary scoping before deeper analysis"
+
+  - key: standard
+    description: "Full vocabulary map with genealogical tracers, complete methodological profile, metaphor inventory with analytical weight, framing landscape with positioning, and framework architecture with dependencies"
+    typical_passes: 2
+    suitable_for: "Most academic texts, standard genealogy target profiling, author with 3-5 prior works"
+
+  - key: deep
+    description: "Complete lexical archaeology with every significant term traced to origin, full methodological fingerprint cross-referenced with intellectual traditions, metaphor maturity assessment, framing politics analysis, exhaustive framework architecture with load-bearing assessment, and comprehensive domain crossing analysis revealing the author's complete intellectual formation"
+    typical_passes: 3
+    suitable_for: "Dense philosophical works, prolific authors with extensive prior work, foundational profiling for major genealogy studies"
+
+# ============================================================
+# METADATA
+# ============================================================
+
+legacy_engine_key: conceptual_framework_extraction
+
+apps:
+  - critic
+  - visualizer
+
+paradigm_keys: []
