@@ -6,6 +6,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **10 new capability definitions for all genealogy engines (Phase 3)** - Complete capability-driven YAML definitions for prose-mode analysis across all 3 chains + 2 standalone engines:
+  - Target profiling chain: `conceptual_framework_extraction.yaml`, `concept_semantic_constellation.yaml`, `inferential_commitment_mapper.yaml`
+  - Prior work scanning chain: `concept_evolution.yaml`, `concept_appropriation_tracker.yaml`
+  - Synthesis chain: `concept_synthesis.yaml`, `concept_taxonomy_argumentative_function.yaml`, `evolution_tactics_detector.yaml`
+  - Standalone: `genealogy_relationship_classification.yaml`, `genealogy_final_synthesis.yaml`
+  - Each definition specifies problematique, intellectual lineage, analytical dimensions with depth guidance, capabilities, and composability specs
+
 - **Capability definitions for Pass 2 genealogy scanning engines** - Two new YAML capability definitions for the prior work scanning chain
   - `src/engines/capability_definitions/concept_evolution.yaml` - Concept Evolution Tracker: 6 analytical dimensions (vocabulary_evolution, methodology_evolution, metaphor_evolution, framing_evolution, concept_trajectory, dimensional_comparison_matrix), 6 capabilities, 3 depth levels. Koselleck/Skinner/Kuhn lineage. First engine in scanning chain.
   - `src/engines/capability_definitions/concept_appropriation_tracker.yaml` - Concept Appropriation Tracker: 6 analytical dimensions (migration_paths, semantic_mutations, appropriation_patterns, distortion_map, recombination, acknowledgment_status), 6 capabilities, 3 depth levels. Derrida/Said/Bakhtin/Bloom lineage. Second engine in scanning chain.
