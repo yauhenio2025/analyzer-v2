@@ -271,16 +271,58 @@ depth_levels:
     description: "Identify shared concepts, note obvious vocabulary changes, and list dominant evolution types"
     typical_passes: 1
     suitable_for: "Quick assessment, straightforward prior works, tangential relationships, preliminary scoping"
+    passes:
+      - pass_number: 1
+        label: "Concept Discovery Scan"
+        stance: discovery
+        focus_dimensions: [vocabulary_evolution, concept_trajectory]
+        focus_capabilities: [track_vocabulary_evolution, trace_concept_lifecycles]
+        consumes_from: []
+        description: |
+          Scan for shared concepts between prior and current work. Note
+          obvious vocabulary changes (births, deaths, renames) and list
+          the dominant evolution types (expansion, narrowing, reversal).
+          At surface depth this is a quick scan for the strongest signals.
 
   - key: standard
     description: "Multi-dimensional comparison across vocabulary, methodology, metaphor, and framing for each key concept. Per-concept trajectories with evidence. Foundational patterns and cross-domain transfers identified."
     typical_passes: 1
     suitable_for: "Most prior work comparisons, direct precursors with 3-10 shared concepts, standard genealogy analysis"
+    passes:
+      - pass_number: 1
+        label: "Multi-Dimensional Comparison"
+        stance: inference
+        focus_dimensions: [vocabulary_evolution, methodology_evolution, metaphor_evolution, framing_evolution, concept_trajectory, dimensional_comparison_matrix]
+        focus_capabilities: [track_vocabulary_evolution, compare_methodology, trace_metaphor_change, analyze_framing_shifts, trace_concept_lifecycles, synthesize_dimensional_matrix]
+        consumes_from: []
+        description: |
+          Full multi-dimensional comparison in a single pass. For each
+          key concept: vocabulary drift analysis with evidence from both
+          texts, methodology comparison, metaphor evolution, and framing
+          trajectory. Produce per-concept dimensional matrix showing
+          which dimensions changed and which remained stable. Identify
+          foundational patterns and cross-domain transfers.
 
   - key: deep
     description: "Full Koselleckian conceptual history: complete term inventories, detailed drift analysis with quoted evidence, metaphor archaeology, framing trajectory mapping, coupling analysis across dimensions, concept genealogy trees, and assessment of intellectual change archetypes. Suitable for the most important prior works."
     typical_passes: 1
     suitable_for: "Key prior works with extensive conceptual overlap, prolific authors, works spanning multiple domains, direct precursors to the author's most important ideas"
+    passes:
+      - pass_number: 1
+        label: "Full Koselleckian Conceptual History"
+        stance: inference
+        focus_dimensions: [vocabulary_evolution, methodology_evolution, metaphor_evolution, framing_evolution, concept_trajectory, dimensional_comparison_matrix]
+        focus_capabilities: [track_vocabulary_evolution, compare_methodology, trace_metaphor_change, analyze_framing_shifts, trace_concept_lifecycles, synthesize_dimensional_matrix]
+        consumes_from: []
+        description: |
+          Complete Koselleckian conceptual history in a single intensive
+          pass. Full term inventories for both works with detailed drift
+          analysis and quoted evidence. Metaphor archaeology tracing
+          source domains and evolution trajectories. Framing trajectory
+          mapping with confidence arcs. Coupling analysis across all four
+          dimensions revealing change archetypes. Concept genealogy trees
+          showing ancestor-descendant relationships and co-evolution
+          patterns.
 
 # ============================================================
 # METADATA

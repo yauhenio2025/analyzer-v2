@@ -232,16 +232,60 @@ depth_levels:
     description: "Rapid classification: assign relationship type and strength based on strongest signal"
     typical_passes: 1
     suitable_for: "Quick triage of large prior-work sets, preliminary pipeline planning, non-academic texts"
+    passes:
+      - pass_number: 1
+        label: "Rapid Relationship Classification"
+        stance: discovery
+        focus_dimensions: [relationship_type, relationship_strength]
+        focus_capabilities: [classify_relationship, assess_strength]
+        consumes_from: []
+        description: |
+          Rapid classification based on the strongest signal. Assign one
+          of the five relationship types (direct_precursor, indirect_
+          contextualizer, methodological_ancestor, contradicted_position,
+          parallel_development) and assess strength (strong/moderate/weak)
+          with one-sentence justification for each.
 
   - key: standard
     description: "Full classification with evidence, all five channels assessed, scanning strategy produced"
     typical_passes: 1
     suitable_for: "Standard genealogy pipeline Pass 1.5, most academic texts, authors with 3-10 prior works"
+    passes:
+      - pass_number: 1
+        label: "Full Classification & Scanning Strategy"
+        stance: inference
+        focus_dimensions: [relationship_type, relationship_strength, influence_channels, strategic_relevance]
+        focus_capabilities: [classify_relationship, assess_strength, map_influence_channels, determine_scanning_strategy]
+        consumes_from: []
+        description: |
+          Full classification with textual evidence from both works.
+          Relationship type assigned with justification and secondary
+          types noted. Strength assessed across centrality, pervasiveness,
+          and evidence directness. All five influence channels (vocabulary,
+          methodology, audience, authority, framing) evaluated with
+          specific evidence. Scanning strategy produced with priority
+          dimensions and recommended attention level for Pass 2.
 
   - key: deep
     description: "Nuanced classification with primary and secondary types, temporal evolution of relationship, full channel interaction analysis, detailed strategic guidance with contingency plans"
     typical_passes: 1
     suitable_for: "Complex intellectual relationships, works that defy easy classification, cases where misclassification risk is high"
+    passes:
+      - pass_number: 1
+        label: "Nuanced Classification & Strategic Guidance"
+        stance: inference
+        focus_dimensions: [relationship_type, relationship_strength, influence_channels, strategic_relevance]
+        focus_capabilities: [classify_relationship, assess_strength, map_influence_channels, determine_scanning_strategy]
+        consumes_from: []
+        description: |
+          Nuanced classification with primary and secondary types, each
+          supported by detailed evidence. Assessment of how the
+          relationship may have shifted over time (temporal evolution).
+          Full channel interaction analysis showing how influence channels
+          reinforce or undermine each other. Detailed strategic guidance
+          with contingency plans: priority dimensions ranked, expected
+          trace types with specific hypotheses, and recommendations for
+          revising classification if Pass 2 evidence contradicts it.
 
 # ============================================================
 # METADATA

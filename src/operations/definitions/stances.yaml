@@ -1,0 +1,180 @@
+# Analytical Stances — Shared Cognitive Postures for Multi-Pass Analysis
+#
+# These describe HOW the LLM should think in a given pass, not what
+# shape the output takes. Output is always connected analytical prose.
+#
+# Each stance is a mode of thinking that recurs across many engines.
+# The engine-specific dimensions guide WHAT to think about.
+# The stance guides the COGNITIVE APPROACH.
+#
+# Think of these as a professor's instructions to a brilliant student:
+# "First, survey everything you can find. Then, stress-test what you
+# found. Finally, tell me what it all means."
+
+stances:
+
+  - key: discovery
+    name: "Discovery"
+    cognitive_mode: "divergent — maximize coverage"
+    typical_position: early
+    pairs_well_with: [inference, confrontation]
+    stance: |
+      Cast the widest possible net. Your job in this pass is to find
+      everything that's there — be exhaustive, miss nothing, follow
+      every thread even if it seems minor. Write about what you discover
+      in connected analytical prose, thinking aloud as you go.
+
+      Don't organize for a downstream consumer. Don't compress. Don't
+      rank or filter yet. The richness of your observations IS the
+      value — the next pass will build on everything you notice here,
+      including the asides and the tentative connections that might
+      turn out to be important.
+
+      Treat the text as an archaeological site: your job is to uncover
+      everything, tag it in place, and describe what you see. Later
+      passes will interpret; this pass discovers.
+
+      When you find something, stay with it. Describe it fully. Note
+      what it reminds you of, what it connects to, what seems surprising
+      about it. A discovery pass that lists items without dwelling on
+      them has failed — you should be writing paragraphs, not bullets.
+
+  - key: inference
+    name: "Inference"
+    cognitive_mode: "deductive — follow the logic wherever it leads"
+    typical_position: early
+    pairs_well_with: [discovery, confrontation, architecture]
+    stance: |
+      Trace what follows. Given what was discovered or stated, what
+      are the logical consequences — the things that MUST be true if
+      the stated positions hold? What is the author committed to
+      without saying so?
+
+      Follow every inferential chain as far as it goes. Some chains
+      will lead to obvious conclusions the author simply left unstated.
+      Others will lead somewhere surprising — to implications the author
+      probably didn't intend, wouldn't welcome, or hasn't noticed.
+      Both kinds matter.
+
+      Write through each inference, showing your reasoning. Don't just
+      state conclusions — trace the path. "If X is true, then Y follows
+      because... and if Y, then Z because..." The inferential chain
+      itself is the analytical product, not just the endpoint.
+
+      Pay special attention to inferences the author seems to avoid —
+      places where the logic points somewhere but the text veers away.
+      These evasions are diagnostically valuable: they often mark the
+      points where the argument is under the most pressure.
+
+  - key: confrontation
+    name: "Confrontation"
+    cognitive_mode: "adversarial — maximize tension detection"
+    typical_position: middle
+    pairs_well_with: [discovery, inference, architecture]
+    stance: |
+      Now pit your findings against each other. Read the prose from
+      prior passes and look for tensions, contradictions, uncomfortable
+      implications, and things that don't quite fit together.
+
+      Write about these tensions as a thinker working through them —
+      don't just list them. What makes each tension interesting? Is it
+      productive (generating new insight through its irresolution) or
+      damaging (a genuine flaw in the argument)? Is it a direct
+      contradiction, a pragmatic tension, or an inherited conflict
+      from a cited source?
+
+      How does the author navigate each tension? Do they acknowledge
+      it and address it? Acknowledge it and bracket it ("this is
+      beyond our scope")? Or fail to notice it entirely? The
+      navigation strategy — or the absence of one — is as revealing
+      as the tension itself.
+
+      Be genuinely adversarial, not performatively so. The goal is
+      not to destroy but to stress-test. A good confrontation pass
+      finds the real fault lines — the places where the argument
+      is genuinely under strain, not just places where you can
+      quibble.
+
+  - key: architecture
+    name: "Architecture"
+    cognitive_mode: "structural — map the load-bearing skeleton"
+    typical_position: middle
+    pairs_well_with: [discovery, confrontation, integration]
+    stance: |
+      Map the structural skeleton. What depends on what? What is
+      foundational — assumed or asserted without derivation? What
+      is derived — it follows from something else, and if that
+      something else falls, this falls too?
+
+      Think of the argument as a building. Some elements are
+      load-bearing: remove them and everything above collapses.
+      Others are decorative: remove them and the structure stands.
+      Your job is to tell the difference.
+
+      Trace the longest dependency chains. Where are the weakest
+      links — the points where the chain is most likely to break?
+      Where are the single points of failure — the one commitment,
+      the one assumption, the one piece of evidence whose removal
+      would bring down the most?
+
+      Write about structure in connected prose, not as a list of
+      dependencies. Describe the architecture the way an engineer
+      describes a building: "This rests on that, which in turn
+      rests on this foundation, and if we pull that foundation
+      out, everything from here up comes down."
+
+  - key: integration
+    name: "Integration"
+    cognitive_mode: "convergent — maximize insight density"
+    typical_position: late
+    pairs_well_with: [confrontation, architecture, reflection]
+    stance: |
+      Read everything from prior passes and synthesize. Not summarize —
+      SYNTHESIZE. A summary repeats what was said more briefly. A
+      synthesis reveals what no single prior pass could see: patterns
+      that emerge only when you hold all the pieces together, narratives
+      that connect findings across dimensions, insights that arise from
+      the juxtaposition of things that seemed separate.
+
+      Write the kind of connected analytical prose that a brilliant
+      colleague would write after reading all your notes — someone
+      who has absorbed everything and can now see the shape of the
+      whole. What is the story here? What are the 3-5 things that
+      matter most? What would surprise the author? What changes how
+      we should read this text?
+
+      Be specific and grounded. Every synthetic claim should trace
+      back to specific findings from prior passes. Vague integrative
+      statements ("the argument is complex and multifaceted") are
+      worthless. Precise integrative statements ("the author's
+      commitment to X creates an irresolvable tension with their
+      reliance on Y, which means their conclusion Z is actually
+      undermined by their own premises") are gold.
+
+  - key: reflection
+    name: "Reflection"
+    cognitive_mode: "meta-cognitive — assess the assessment itself"
+    typical_position: late
+    pairs_well_with: [integration]
+    stance: |
+      Step back from the analysis and assess it. What confidence
+      level attaches to each major finding? Where is the evidence
+      strong and where is it circumstantial? What are the blind spots
+      — things you couldn't see because of the method, the available
+      texts, or the analytical framework?
+
+      What questions remain unanswered? What would you investigate
+      next if you had more time, more texts, or a different angle?
+      What would change the picture most dramatically — what single
+      new piece of evidence would most alter the conclusions?
+
+      Be honest about uncertainty. The temptation in a final pass
+      is to project false confidence, wrapping everything up neatly.
+      Resist this. The most valuable thing a reflection pass can do
+      is say clearly: "This finding is solid. This one is speculative.
+      And this area we simply couldn't assess."
+
+      If the analysis itself has biases — built into the method, the
+      framework, or the analytical tradition — name them. Practicing
+      what genealogy preaches: reflexive awareness of the conditions
+      of your own knowledge production.

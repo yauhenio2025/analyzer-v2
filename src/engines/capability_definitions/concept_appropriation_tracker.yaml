@@ -280,16 +280,60 @@ depth_levels:
     description: "Identify the most obvious concept migrations and note whether they are cited or uncited, faithful or adapted"
     typical_passes: 1
     suitable_for: "Quick assessment, tangential prior works, preliminary scoping, works with minimal conceptual overlap"
+    passes:
+      - pass_number: 1
+        label: "Migration Discovery"
+        stance: discovery
+        focus_dimensions: [migration_paths, acknowledgment_status]
+        focus_capabilities: [trace_migration_paths, assess_acknowledgment]
+        consumes_from: []
+        description: |
+          Identify the most obvious concept migrations between prior and
+          current work. For each migration, note the mechanism of travel
+          (cited, silently borrowed, absorbed) and whether the concept
+          was carried faithfully or adapted. Quick surface scan for the
+          3-5 clearest cases.
 
   - key: standard
     description: "Map migration paths with mechanisms, classify semantic mutations by type, assess appropriation fidelity, identify distortions, and map acknowledgment patterns. Suitable for most genealogical analysis."
     typical_passes: 1
     suitable_for: "Most prior work comparisons, direct precursors, works with moderate conceptual overlap, standard genealogy analysis"
+    passes:
+      - pass_number: 1
+        label: "Migration & Appropriation Analysis"
+        stance: inference
+        focus_dimensions: [migration_paths, semantic_mutations, appropriation_patterns, distortion_map, acknowledgment_status]
+        focus_capabilities: [trace_migration_paths, detect_semantic_mutations, analyze_appropriation, map_distortions, assess_acknowledgment]
+        consumes_from: []
+        description: |
+          Map all significant migration paths with mechanisms of travel
+          and contextual analysis. Classify semantic mutations by type
+          (extension, restriction, metaphorization, distortion, inversion).
+          Assess appropriation fidelity for each borrowed concept. Identify
+          distortions with type, motivation, and impact. Map acknowledgment
+          patterns revealing the politics of self-citation.
 
   - key: deep
     description: "Full Derridean iterability analysis: every concept migration traced with mechanism, semantic mutation classified and motivated, appropriation assessed for legitimacy, distortions catalogued with counterfactuals, recombinations mapped with novelty assessment, and acknowledgment patterns analyzed for strategic logic. Includes assessment of the author's characteristic appropriation style."
     typical_passes: 1
     suitable_for: "The most important prior works, works with extensive conceptual overlap, cases where appropriation or distortion is central to the genealogical question, prolific authors with complex self-citation patterns"
+    passes:
+      - pass_number: 1
+        label: "Full Derridean Iterability Analysis"
+        stance: inference
+        focus_dimensions: [migration_paths, semantic_mutations, appropriation_patterns, distortion_map, recombination, acknowledgment_status]
+        focus_capabilities: [trace_migration_paths, detect_semantic_mutations, analyze_appropriation, map_distortions, detect_recombinations, assess_acknowledgment]
+        consumes_from: []
+        description: |
+          Full Derridean iterability analysis in a single intensive pass.
+          Every concept migration traced with mechanism, intermediate
+          stops, and contextual analysis. Every semantic mutation classified
+          and motivated (strategic vs. drift). Appropriation assessed for
+          legitimacy with impact on both original and new context.
+          Distortions catalogued with counterfactuals. Recombinations
+          mapped with novelty assessment. Acknowledgment patterns analyzed
+          for strategic logic, revealing the author's characteristic
+          appropriation style.
 
 # ============================================================
 # METADATA

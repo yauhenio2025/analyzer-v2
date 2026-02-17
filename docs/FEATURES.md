@@ -1,14 +1,40 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-02-16
+> Auto-maintained by Claude Code. Last updated: 2026-02-17
+
+## Analytical Stances (Operations)
+
+### Analytical Stances Library
+- **Status**: Active
+- **Description**: Shared cognitive postures for multi-pass analysis. 6 stances describing HOW an LLM should think in a given pass — discovery, inference, confrontation, architecture, integration, reflection. Stances are prose descriptions injected into prompts, NOT output templates.
+- **Entry Points**:
+  - `src/operations/schemas.py:1-30` - AnalyticalStance and StanceSummary Pydantic models
+  - `src/operations/definitions/stances.yaml:1-80` - 6 stance definitions with prose descriptions, cognitive modes, typical positions
+  - `src/operations/registry.py:1-80` - StanceRegistry class (get, list, filter by position)
+  - `src/api/routes/operations.py:1-82` - API routes for stances
+  - `src/api/main.py:78-84` - Stance registry loading in lifespan, init_stance_registry for capability composer
+- **Stances** (6 total):
+  - `discovery` (early, divergent) — Cast the widest net, surface everything without filtering
+  - `inference` (early, deductive) — Trace what follows from what, map logical chains
+  - `confrontation` (middle, adversarial) — Pit findings against each other, test robustness
+  - `architecture` (middle, structural) — Map load-bearing skeleton, classify structures
+  - `integration` (late, convergent) — Synthesize across dimensions into unified narrative
+  - `reflection` (late, meta-cognitive) — Assess the assessment, identify blindspots
+- **API Endpoints**:
+  - `GET /v1/operations/stances` - List stance summaries
+  - `GET /v1/operations/stances/full` - List all stances with full prose
+  - `GET /v1/operations/stances/{key}` - Get single stance
+  - `GET /v1/operations/stances/{key}/text` - Get just the stance prose for prompt injection
+  - `GET /v1/operations/stances/position/{position}` - Filter by typical position (early/middle/late)
+- **Added**: 2026-02-17
 
 ## Capability Engine Definitions (v2 Format)
 
 ### Capability-Driven Engine Definitions
-- **Status**: Active (Phase 0 complete — PoC with conditions_of_possibility)
-- **Description**: New engine definition format describing WHAT an engine investigates (problematique, analytical dimensions, capabilities, composability) rather than HOW it formats output (fixed schemas, extraction steps). Part of the schema-on-read architecture.
+- **Status**: Active (11 engines with capability definitions, 10 with explicit pass definitions)
+- **Description**: New engine definition format describing WHAT an engine investigates (problematique, analytical dimensions, capabilities, composability) rather than HOW it formats output (fixed schemas, extraction steps). Part of the schema-on-read architecture. Now includes PassDefinition for explicit multi-pass structure with analytical stances.
 - **Entry Points**:
-  - `src/engines/schemas_v2.py:1-239` - Pydantic models (CapabilityEngineDefinition, AnalyticalDimension, EngineCapability, ComposabilitySpec, DepthLevel, IntellectualLineage, CapabilityEngineSummary)
+  - `src/engines/schemas_v2.py:1-292` - Pydantic models (CapabilityEngineDefinition, AnalyticalDimension, EngineCapability, ComposabilitySpec, DepthLevel, PassDefinition, IntellectualLineage, CapabilityEngineSummary)
   - `src/engines/capability_definitions/conditions_of_possibility_analyzer.yaml:1-314` - First capability definition (8 dimensions, 8 capabilities, composability, 3 depth levels)
   - `src/engines/capability_definitions/concept_evolution.yaml:1-253` - Concept Evolution Tracker (6 dimensions: vocabulary/methodology/metaphor/framing evolution, concept trajectory, dimensional comparison matrix; Koselleck/Skinner/Kuhn lineage; first engine in Pass 2 scanning chain)
   - `src/engines/capability_definitions/concept_appropriation_tracker.yaml:1-261` - Concept Appropriation Tracker (6 dimensions: migration paths, semantic mutations, appropriation patterns, distortion map, recombination, acknowledgment status; Derrida/Said/Bakhtin/Bloom lineage; second engine in Pass 2 scanning chain)
@@ -21,12 +47,16 @@
 
 ### Capability-Based Prompt Composer
 - **Status**: Active
-- **Description**: Composes prose-focused prompts from capability definitions. Asks LLM for analytical prose (not JSON). Supports depth levels, focused dimensions, and shared context injection.
+- **Description**: Composes prose-focused prompts from capability definitions. Two modes: (1) whole-engine prompts for backward compatibility, (2) per-pass prompts using analytical stances. Always asks for prose, never JSON.
 - **Entry Points**:
-  - `src/stages/capability_composer.py:1-176` - compose_capability_prompt(), CapabilityPrompt model
-  - `src/api/routes/engines.py:505-540` - Prompt endpoint `/{key}/capability-prompt`
-- **API Endpoint**: `GET /v1/engines/{key}/capability-prompt?depth=standard&dimensions=...`
-- **Added**: 2026-02-16
+  - `src/stages/capability_composer.py:1-401` - CapabilityPrompt, PassPrompt models; compose_capability_prompt(), compose_pass_prompt(), compose_all_pass_prompts()
+  - `src/api/routes/engines.py:505-540` - Whole-engine prompt endpoint `/{key}/capability-prompt`
+  - `src/api/routes/engines.py` - Per-pass endpoints `/{key}/pass-prompts`, `/{key}/pass-prompts/{pass_number}`
+- **API Endpoints**:
+  - `GET /v1/engines/{key}/capability-prompt?depth=standard&dimensions=...` - Whole-engine prompt
+  - `GET /v1/engines/{key}/pass-prompts?depth=deep` - All pass prompts for a depth level
+  - `GET /v1/engines/{key}/pass-prompts/{pass_number}?depth=deep` - Single pass prompt
+- **Added**: 2026-02-16 | **Modified**: 2026-02-17
 
 ## Schema-on-Read / Prose Pipeline (the-critic)
 

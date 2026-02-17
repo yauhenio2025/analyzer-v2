@@ -277,16 +277,92 @@ depth_levels:
     description: "Identify the central explicit commitments, the 2-3 most significant implicit commitments, and any obvious tensions between them"
     typical_passes: 1
     suitable_for: "Quick assessment, policy documents, texts with straightforward argumentation, preliminary scoping"
+    passes:
+      - pass_number: 1
+        label: "Commitment Discovery"
+        stance: discovery
+        focus_dimensions: [explicit_commitments, implicit_commitments, commitment_conflicts]
+        focus_capabilities: [map_explicit_commitments, surface_implicit_commitments]
+        consumes_from: []
+        description: |
+          Identify the central explicit and implicit commitments and flag
+          obvious tensions between them. At surface depth, aim for the 3-5
+          most important explicit commitments and the 2-3 most significant
+          unstated implications, plus any contradictions visible without
+          deep tracing.
 
   - key: standard
     description: "Full commitment inventory (explicit and implicit) with centrality ratings, conflict map between commitments, major dependency chains with weakest links, package deals, and practical implications with author awareness assessment"
     typical_passes: 2
     suitable_for: "Most academic texts, standard genealogy target profiling, texts with moderate argumentative complexity"
+    passes:
+      - pass_number: 1
+        label: "Full Commitment Inventory"
+        stance: discovery
+        focus_dimensions: [explicit_commitments, implicit_commitments]
+        focus_capabilities: [map_explicit_commitments, surface_implicit_commitments]
+        consumes_from: []
+        description: |
+          Build the complete commitment inventory: all significant explicit
+          commitments with centrality ratings and originality assessment,
+          plus implicit commitments traced from stated positions with
+          inference strength and author-awareness evaluation.
+      - pass_number: 2
+        label: "Conflict Mapping & Dependency Analysis"
+        stance: confrontation
+        focus_dimensions: [commitment_conflicts, logical_dependencies, hidden_implications]
+        focus_capabilities: [detect_conflicts, trace_dependencies, reveal_hidden_implications]
+        consumes_from: [1]
+        description: |
+          With the full commitment inventory in hand, map conflicts between
+          commitments (explicit vs. explicit, explicit vs. implicit, inherited
+          vs. original), trace the major dependency chains identifying weakest
+          links and single points of failure, and draw out practical
+          implications with author awareness assessment.
 
   - key: deep
     description: "Complete inferential archaeology: exhaustive commitment inventory with originality and awareness assessment, full conflict analysis with navigation strategy evaluation, complete dependency graph with single-point-of-failure analysis, cascading commitment chains with strength at every link, package deal identification with incompatibility mapping, hidden implications traced to source commitments, performative contradictions surfaced, and citation baggage analysis revealing inherited commitments the author may not realize they carry"
     typical_passes: 3
     suitable_for: "Dense philosophical works, texts with complex or contradictory argumentation, foundational profiling for major genealogy studies, works where the real argument differs from the stated argument"
+    passes:
+      - pass_number: 1
+        label: "Exhaustive Commitment Inventory"
+        stance: discovery
+        focus_dimensions: [explicit_commitments, implicit_commitments]
+        focus_capabilities: [map_explicit_commitments, surface_implicit_commitments]
+        consumes_from: []
+        description: |
+          Exhaustive inventory of every significant commitment: all explicit
+          claims with centrality, originality, evidential basis, and
+          management style; all implicit commitments with inference strength,
+          author awareness, and assessment of whether each implication is
+          welcome or awkward.
+      - pass_number: 2
+        label: "Full Conflict & Dependency Analysis"
+        stance: confrontation
+        focus_dimensions: [commitment_conflicts, logical_dependencies]
+        focus_capabilities: [detect_conflicts, trace_dependencies]
+        consumes_from: [1]
+        description: |
+          Full conflict analysis: every significant tension mapped with
+          conflict type, navigation strategy, and success assessment.
+          Complete dependency graph: foundational commitments, derived
+          chains, circular dependencies, single-point-of-failure analysis,
+          and load-bearing assessment for each foundational commitment.
+      - pass_number: 3
+        label: "Hidden Implications & Commitment Landscape Synthesis"
+        stance: integration
+        focus_dimensions: [hidden_implications, commitment_conflicts, logical_dependencies]
+        focus_capabilities: [reveal_hidden_implications]
+        consumes_from: [1, 2]
+        description: |
+          Synthesize the full commitment landscape: hidden implications
+          traced to source commitments, performative contradictions surfaced,
+          citation baggage analysis revealing inherited commitments the
+          author may not realize they carry, package deal identification
+          with incompatibility mapping, and overall commitment landscape
+          synthesis integrating conflicts, dependencies, and implications
+          into a coherent map of what you are really signing up for.
 
 # ============================================================
 # METADATA

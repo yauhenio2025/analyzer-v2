@@ -279,16 +279,92 @@ depth_levels:
     description: "Detect the most prominent tactic instances with brief evidence, note the dominant tactic type"
     typical_passes: 1
     suitable_for: "Quick assessment, policy documents, preliminary scoping, non-academic texts with prior positions"
+    passes:
+      - pass_number: 1
+        label: "Prominent Tactic Detection"
+        stance: discovery
+        focus_dimensions: [tactic_detection]
+        focus_capabilities: [detect_tactics]
+        consumes_from: []
+        description: |
+          Detect the 3-5 most prominent tactic instances with brief
+          evidence from vocabulary, framing, and methodology. Note the
+          dominant tactic type and any obvious clusters. At surface depth,
+          prioritize the clearest cases with the strongest evidence chains.
 
   - key: standard
     description: "Systematic detection across all significant position shifts, full evidence chains, pattern analysis with clustering, effectiveness assessment, and characterization of the author's management style"
     typical_passes: 2
     suitable_for: "Most academic texts, authors with 3-7 prior works, standard genealogy analysis, peer review preparation"
+    passes:
+      - pass_number: 1
+        label: "Systematic Tactic Detection"
+        stance: discovery
+        focus_dimensions: [tactic_detection]
+        focus_capabilities: [detect_tactics]
+        consumes_from: []
+        description: |
+          Systematic detection across all significant position shifts
+          between prior and current work. For each instance: tactic type,
+          source work evidence (quotes), target work evidence (quotes),
+          vocabulary/framing/methodological evidence chains, confidence
+          rating, and severity assessment.
+      - pass_number: 2
+        label: "Pattern Analysis & Management Style"
+        stance: architecture
+        focus_dimensions: [tactic_patterns, tactic_effectiveness]
+        focus_capabilities: [analyze_tactic_patterns, assess_tactic_effectiveness]
+        consumes_from: [1]
+        description: |
+          With the full detection catalog, analyze patterns: distribution
+          across the 10 tactic types, cluster identification showing which
+          tactics reinforce each other, and characterization of the author's
+          overall intellectual management style (escalator, reviser,
+          narrator, amnesiac). Brief effectiveness assessment for each
+          detected instance.
 
   - key: deep
     description: "Exhaustive detection including borderline cases, full diachronic tactic evolution tracking, comprehensive effectiveness analysis, taxonomy instantiation with extensions, and reflexive assessment of the taxonomy itself against this author's practice"
     typical_passes: 3
     suitable_for: "Dense philosophical works, prolific authors with 10+ works, comprehensive genealogy studies, publication-grade rhetorical analysis"
+    passes:
+      - pass_number: 1
+        label: "Exhaustive Tactic Detection"
+        stance: discovery
+        focus_dimensions: [tactic_detection]
+        focus_capabilities: [detect_tactics]
+        consumes_from: []
+        description: |
+          Exhaustive detection including borderline cases with explicit
+          reasoning for inclusion/exclusion. Every detectable tactic
+          instance mapped with comprehensive vocabulary, framing, and
+          methodological evidence. Include comparison of the same tactic
+          across multiple work-pairs where applicable.
+      - pass_number: 2
+        label: "Pattern & Evolution Architecture"
+        stance: architecture
+        focus_dimensions: [tactic_patterns, tactic_evolution]
+        focus_capabilities: [analyze_tactic_patterns, trace_tactic_evolution]
+        consumes_from: [1]
+        description: |
+          Full pattern analysis: complete distribution with statistical
+          characterization, all tactic clusters mapped with functional
+          analysis. Diachronic evolution tracking: how the tactic
+          repertoire changes across career stages, inflection points,
+          and whether tactical sophistication increases over time.
+      - pass_number: 3
+        label: "Effectiveness, Taxonomy & Reflexive Assessment"
+        stance: reflection
+        focus_dimensions: [tactic_effectiveness, tactic_taxonomy]
+        focus_capabilities: [assess_tactic_effectiveness, instantiate_taxonomy]
+        consumes_from: [1, 2]
+        description: |
+          Comprehensive effectiveness analysis: each instance rated for
+          execution quality, audience-relative effectiveness, and
+          transparency. Full taxonomy instantiation: every category
+          assessed for fit, hybrids and novel tactics documented with
+          proposed classifications. Reflexive assessment of whether this
+          author's practice reveals limitations in the taxonomy itself.
 
 # ============================================================
 # METADATA

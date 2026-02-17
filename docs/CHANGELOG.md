@@ -6,6 +6,43 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Analytical Stances library** — New `src/operations/` module implementing 6 shared cognitive postures for multi-pass analysis
+  - Stances describe HOW to think in a given pass, not what output format to produce (preserving prose-first architecture)
+  - 6 stances: discovery (divergent), inference (deductive), confrontation (adversarial), architecture (structural), integration (convergent), reflection (meta-cognitive)
+  - `src/operations/schemas.py` - AnalyticalStance and StanceSummary models
+  - `src/operations/definitions/stances.yaml` - Stance definitions with rich prose descriptions
+  - `src/operations/registry.py` - StanceRegistry with get, list, filter by position
+  - `src/api/routes/operations.py` - API routes at `/v1/operations/stances`
+  - Stances integrated into capability composer via `init_stance_registry()`
+
+- **PassDefinition schema** — Extended `schemas_v2.py` with explicit pass definitions for multi-pass depth levels
+  - `PassDefinition` model: pass_number, label, stance (key), focus_dimensions, focus_capabilities, consumes_from (pass numbers), description (prose)
+  - Added `passes` field to `DepthLevel` (optional, backward-compatible)
+  - Pass definitions make implicit multi-pass structure explicit: what each pass does, what stance it adopts, how data flows between passes
+
+- **Per-pass prompt composition** — Extended capability composer to generate per-pass prompts
+  - `compose_pass_prompt()` — Composes prompt for a single pass: framing + stance + focused dimensions + shared context + pass instructions
+  - `compose_all_pass_prompts()` — Preview all passes for a depth level
+  - `PassPrompt` model with stance metadata and data flow info
+  - New API endpoints: `GET /{key}/pass-prompts`, `GET /{key}/pass-prompts/{pass_number}`
+
+- **Explicit pass definitions for 10 capability definition YAMLs** - Added `passes` field to every depth level in all 10 genealogy engine YAMLs, specifying pass_number, label, stance, focus_dimensions, focus_capabilities, consumes_from, and description:
+  - `conceptual_framework_extraction.yaml` - Surface: 1 pass (discovery); Standard: 2 passes (discovery, architecture); Deep: 3 passes (discovery, architecture, integration)
+  - `concept_semantic_constellation.yaml` - Surface: 1 pass (discovery); Standard: 2 passes (discovery, architecture); Deep: 3 passes (discovery, architecture, integration)
+  - `concept_synthesis.yaml` - Surface: 1 pass (integration); Standard: 2 passes (discovery, integration); Deep: 3 passes (discovery, confrontation, integration)
+  - `concept_taxonomy_argumentative_function.yaml` - Surface: 1 pass (discovery); Standard: 2 passes (discovery, architecture); Deep: 3 passes (discovery, architecture, confrontation)
+  - `inferential_commitment_mapper.yaml` - Surface: 1 pass (discovery); Standard: 2 passes (discovery, confrontation); Deep: 3 passes (discovery, confrontation, integration)
+  - `evolution_tactics_detector.yaml` - Surface: 1 pass (discovery); Standard: 2 passes (discovery, architecture); Deep: 3 passes (discovery, architecture, reflection)
+  - `concept_evolution.yaml` - Single-pass at all depths: Surface (discovery); Standard (inference); Deep (inference)
+  - `concept_appropriation_tracker.yaml` - Single-pass at all depths: Surface (discovery); Standard (inference); Deep (inference)
+  - `genealogy_relationship_classification.yaml` - Single-pass at all depths: Surface (discovery); Standard (inference); Deep (inference)
+  - `genealogy_final_synthesis.yaml` - Single-pass capstone at all depths: Surface (integration); Standard (integration); Deep (integration)
+  - All 6 analytical stances used: discovery, inference, confrontation, architecture, integration, reflection
+
+### Fixed
+- **consumes_from field in 2 YAMLs** — `inferential_commitment_mapper.yaml` and `evolution_tactics_detector.yaml` had dimension keys (strings) in `consumes_from` instead of pass numbers (integers). Fixed to use `[1]` and `[1, 2]` per the PassDefinition schema.
+
+### Added
 - **10 new capability definitions for all genealogy engines (Phase 3)** - Complete capability-driven YAML definitions for prose-mode analysis across all 3 chains + 2 standalone engines:
   - Target profiling chain: `conceptual_framework_extraction.yaml`, `concept_semantic_constellation.yaml`, `inferential_commitment_mapper.yaml`
   - Prior work scanning chain: `concept_evolution.yaml`, `concept_appropriation_tracker.yaml`

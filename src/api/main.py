@@ -12,11 +12,12 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import audiences, chains, engines, functions, llm, paradigms, styles, primitives, display, workflows
+from src.api.routes import audiences, chains, engines, functions, llm, operations, paradigms, styles, primitives, display, workflows
 from src.audiences.registry import get_audience_registry
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
 from src.functions.registry import get_function_registry
+from src.operations.registry import StanceRegistry
 from src.paradigms.registry import get_paradigm_registry
 from src.styles.registry import get_style_registry
 from src.primitives.registry import get_primitives_registry
@@ -74,6 +75,14 @@ async def lifespan(app: FastAPI):
     function_registry = get_function_registry()
     logger.info(f"Loaded {function_registry.count()} functions")
 
+    logger.info("Loading analytical stances...")
+    stance_registry = StanceRegistry()
+    operations.init_registry(stance_registry)
+    # Also make stances available to the capability composer
+    from src.stages.capability_composer import init_stance_registry
+    init_stance_registry(stance_registry)
+    logger.info(f"Loaded {stance_registry.count} analytical stances")
+
     logger.info("Analyzer v2 API ready")
     yield
     # Shutdown
@@ -125,6 +134,7 @@ app.include_router(display.router, prefix="/v1")
 app.include_router(workflows.router, prefix="/v1")
 app.include_router(audiences.router, prefix="/v1")
 app.include_router(functions.router, prefix="/v1")
+app.include_router(operations.router)
 app.include_router(llm.router, prefix="/v1")
 
 
@@ -146,6 +156,7 @@ async def root():
             "primitives": "/v1/primitives",
             "display": "/v1/display",
             "functions": "/v1/functions",
+            "operations": "/v1/operations",
         },
     }
 

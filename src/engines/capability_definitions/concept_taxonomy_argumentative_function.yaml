@@ -257,16 +257,123 @@ depth_levels:
     description: "Classify the most significant chains and sketch the main architectural connections"
     typical_passes: 1
     suitable_for: "Quick structural overview, policy documents, preliminary assessment of argument structure"
+    passes:
+      - pass_number: 1
+        label: "Functional Classification Scan"
+        stance: discovery
+        focus_dimensions: [functional_classification, argumentative_architecture, load_bearing_analysis, redundancy_map, vulnerability_assessment]
+        focus_capabilities: [classify_argumentative_functions, map_argumentative_architecture, analyze_load_bearing, map_redundancy, assess_vulnerabilities]
+        consumes_from: []
+        description: |
+          A single pass to classify the 5-7 most significant conceptual
+          chains by their argumentative function (foundational, elaborative,
+          defensive, bridge, culminative) and sketch the main architectural
+          connections between them. Note the most obvious load-bearing
+          chains, any visible redundancies, and the most apparent
+          vulnerabilities. The goal is a structural sketch sufficient
+          for preliminary assessment, not a complete engineering analysis.
 
   - key: standard
     description: "Full functional classification of all significant chains, complete architectural mapping, load-bearing analysis, redundancy mapping, and vulnerability assessment"
     typical_passes: 2
     suitable_for: "Most academic texts, standard genealogy analysis, peer review preparation, structural critique"
+    passes:
+      - pass_number: 1
+        label: "Complete Functional Classification"
+        stance: discovery
+        focus_dimensions: [functional_classification]
+        focus_capabilities: [classify_argumentative_functions]
+        consumes_from: []
+        description: |
+          Systematic classification of all significant conceptual chains
+          by their argumentative function. For each chain, assign primary
+          and secondary functions with textual evidence. Track whether
+          the chain's function shifts across different works or contexts.
+          Note chains whose function is ambiguous or contested. Assess
+          confidence in each classification. This pass produces the
+          functional inventory that architectural analysis requires --
+          you cannot map the architecture until you know what each
+          component does.
+
+      - pass_number: 2
+        label: "Architectural and Structural Analysis"
+        stance: architecture
+        focus_dimensions: [argumentative_architecture, load_bearing_analysis, redundancy_map, vulnerability_assessment]
+        focus_capabilities: [map_argumentative_architecture, analyze_load_bearing, map_redundancy, assess_vulnerabilities]
+        consumes_from: [1]
+        description: |
+          With functional classifications in hand, build the complete
+          argumentative architecture. Map how chains compose: which
+          foundational chains support which elaborative chains, which
+          defensive chains protect which claims, which bridges enable
+          which connections. Identify load-bearing chains and assess
+          whether their structural importance is proportional to their
+          evidential support. Map redundancies and single-thread
+          dependencies. Synthesize load and redundancy analyses into a
+          vulnerability assessment: where is the argument weakest, and
+          what are the most likely points of failure under critical
+          examination?
 
   - key: deep
     description: "Comprehensive structural engineering analysis: diachronic function tracking, complete dependency graph, stress testing, adversarial attack simulation, full redundancy audit, and comparison of the author's perceived vs actual argumentative architecture"
     typical_passes: 3
     suitable_for: "Dense philosophical works, prolific authors, publication-grade structural analysis, comprehensive genealogy studies"
+    passes:
+      - pass_number: 1
+        label: "Exhaustive Functional Classification"
+        stance: discovery
+        focus_dimensions: [functional_classification]
+        focus_capabilities: [classify_argumentative_functions]
+        consumes_from: []
+        description: |
+          Exhaustive classification of every significant conceptual chain
+          with multi-layered function assessment. For each chain, determine
+          primary, secondary, and tertiary functions with detailed textual
+          evidence. Track diachronic function shifts: how has the chain's
+          argumentative role changed over the author's career? Assess
+          whether the author is aware of each chain's actual function.
+          Compare stated vs. actual argumentative roles. No chain is too
+          minor to classify -- peripheral chains often do unrecognized
+          structural work.
+
+      - pass_number: 2
+        label: "Complete Architectural Engineering"
+        stance: architecture
+        focus_dimensions: [argumentative_architecture, load_bearing_analysis, redundancy_map]
+        focus_capabilities: [map_argumentative_architecture, analyze_load_bearing, map_redundancy]
+        consumes_from: [1]
+        description: |
+          Build the complete dependency graph of the argumentative
+          architecture. Map every hierarchical relationship, bottleneck,
+          and structural logic pattern (linear, branching, converging,
+          cyclic). Perform comprehensive load-bearing analysis: rank all
+          load-bearing chains by structural importance, assess support
+          proportionality, identify single points of failure, compare
+          prominence with importance. Execute full redundancy audit:
+          complete overlap map with intentionality assessment for each
+          redundancy, resilience analysis, and historical redundancy
+          trajectory. Compare the author's explicit argument structure
+          with the implicit architecture revealed by functional analysis.
+
+      - pass_number: 3
+        label: "Adversarial Vulnerability Assessment"
+        stance: confrontation
+        focus_dimensions: [vulnerability_assessment]
+        focus_capabilities: [assess_vulnerabilities]
+        consumes_from: [1, 2]
+        description: |
+          Subject the entire argumentative architecture to adversarial
+          stress-testing. Simulate how a sophisticated interlocutor would
+          attack: which chains would they target, what objections would
+          they raise, where would the argument break? Map all weak points
+          with severity and exploitability ratings. Assess which defensive
+          chains are weakest relative to the objections they face. Identify
+          bridge concepts doing unacknowledged heavy lifting. Reflect on
+          whether some vulnerabilities are productive (enabling flexibility
+          and future development) vs. dangerous (threatening collapse under
+          scrutiny). Compare vulnerability patterns across the author's
+          career: are they getting better or worse at structural defense?
+          Produce recommendations for structural reinforcement.
 
 # ============================================================
 # METADATA

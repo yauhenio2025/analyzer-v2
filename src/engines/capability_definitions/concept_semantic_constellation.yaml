@@ -251,16 +251,119 @@ depth_levels:
     description: "Map semantic fields for the 3-5 most significant concepts with basic relationship types and note the most obvious concept clusters"
     typical_passes: 1
     suitable_for: "Quick semantic overview, non-academic texts, preliminary scoping, texts with limited conceptual complexity"
+    passes:
+      - pass_number: 1
+        label: "Core Concept Mapping"
+        stance: discovery
+        focus_dimensions: [semantic_field, concept_clusters, boundary_terms, usage_patterns, connotation_map]
+        focus_capabilities: [map_semantic_fields, identify_clusters, analyze_boundaries, track_usage, map_connotations]
+        consumes_from: []
+        description: |
+          Map the semantic fields of the 3-5 most significant concepts in
+          a single pass. For each concept, identify the immediate semantic
+          neighborhood: synonyms, antonyms, key collocations. Note the
+          most obvious concept clusters and any boundary terms where
+          distinctions are visibly contested. Touch on usage patterns and
+          connotations only where they are immediately apparent. The goal
+          is a usable semantic sketch, not a complete landscape.
 
   - key: standard
     description: "Full semantic field maps for all significant concepts, concept cluster identification with bridges and orphans, boundary analysis between major concept pairs, usage pattern tracking, and basic connotation assessment"
     typical_passes: 2
     suitable_for: "Most academic texts, standard genealogy target profiling, texts with moderate conceptual density"
+    passes:
+      - pass_number: 1
+        label: "Semantic Field Inventory"
+        stance: discovery
+        focus_dimensions: [semantic_field]
+        focus_capabilities: [map_semantic_fields]
+        consumes_from: []
+        description: |
+          Build complete semantic field maps for all significant concepts.
+          For each concept, trace the full network of meaning-relations:
+          synonyms and near-synonyms with the subtle distinctions the author
+          draws, antonyms and contrasts that define the concept negatively,
+          broader and narrower categories, and co-occurrence patterns that
+          reveal implicit associations. Compare the author's semantic fields
+          with standard disciplinary usage to detect where meaning has been
+          bent. This inventory becomes the foundation for all structural
+          analysis in the next pass.
+
+      - pass_number: 2
+        label: "Semantic Architecture"
+        stance: architecture
+        focus_dimensions: [concept_clusters, boundary_terms, usage_patterns, connotation_map]
+        focus_capabilities: [identify_clusters, analyze_boundaries, track_usage, map_connotations]
+        consumes_from: [1]
+        description: |
+          With semantic fields mapped, now build the higher-order structures.
+          Identify concept clusters -- groups of terms that travel together
+          and constitute thematic units. Map bridge concepts connecting
+          clusters and orphan concepts outside any cluster. Analyze boundary
+          terms between major concept pairs: where boundaries are sharp vs.
+          fuzzy, whether ambiguity is strategic. Track usage patterns to
+          detect definition-usage gaps and meaning shifts. Assess connotations
+          for the most significant terms, noting where evaluative loading
+          does silent argumentative work.
 
   - key: deep
     description: "Complete semantic archaeology: every concept mapped with full relationship networks and cross-disciplinary comparison, cluster analysis with internal structure and inter-cluster dynamics, exhaustive boundary mapping with strategic ambiguity detection, usage tracking with meaning drift analysis, and full connotation landscape revealing the implicit rhetoric of vocabulary choices"
     typical_passes: 3
     suitable_for: "Dense philosophical works, texts with high conceptual originality, foundational profiling for comparative genealogy studies"
+    passes:
+      - pass_number: 1
+        label: "Exhaustive Semantic Field Mapping"
+        stance: discovery
+        focus_dimensions: [semantic_field]
+        focus_capabilities: [map_semantic_fields]
+        consumes_from: []
+        description: |
+          Map every significant concept with its full relationship network.
+          No significance threshold -- trace every term that does intellectual
+          work, including minor variants and terms the author uses without
+          defining. For each concept, build the complete semantic field with
+          cross-disciplinary comparison: how does the author's usage differ
+          from how the same term functions in neighboring fields? Track
+          co-occurrence statistics to reveal the implicit conceptual
+          architecture encoded in language habits. This pass must be
+          exhaustive because subsequent passes build on it.
+
+      - pass_number: 2
+        label: "Structural Analysis and Tension Detection"
+        stance: architecture
+        focus_dimensions: [concept_clusters, boundary_terms, usage_patterns]
+        focus_capabilities: [identify_clusters, analyze_boundaries, track_usage]
+        consumes_from: [1]
+        description: |
+          Build the full structural apparatus from the semantic field data.
+          Map all concept clusters with internal structure (core vs. peripheral
+          members) and inter-cluster dynamics (complementary, competing,
+          nested). Perform exhaustive boundary analysis: every significant
+          conceptual boundary mapped with sharpness, the author's awareness,
+          and strategic uses of ambiguity. Track usage patterns through the
+          entire text with attention to meaning drift, contextual variation,
+          and definition-usage mismatches. Adopt a confrontational stance
+          toward apparent coherence: where do concepts that seem harmonious
+          actually harbor tensions? Where do boundaries that seem clear
+          actually conceal productive ambiguity?
+
+      - pass_number: 3
+        label: "Connotation Landscape and Semantic Synthesis"
+        stance: integration
+        focus_dimensions: [connotation_map, semantic_field, concept_clusters, boundary_terms, usage_patterns]
+        focus_capabilities: [map_connotations, map_semantic_fields, identify_clusters, analyze_boundaries, track_usage]
+        consumes_from: [1, 2]
+        description: |
+          Complete the connotation landscape: every significant term assessed
+          for evaluative charge, aesthetic and emotional associations, and
+          comparison with disciplinary and everyday connotations. Analyze
+          how the author's connotation choices constitute an implicit rhetoric.
+          Then synthesize all dimensions into the full semantic architecture:
+          how do clusters, boundaries, usage patterns, and connotations
+          interact to constitute the work's conceptual universe? Assess
+          whether the argument would survive if connotation-loaded terms were
+          replaced with neutral equivalents. Produce the integrated semantic
+          profile that downstream engines will consume.
 
 # ============================================================
 # METADATA

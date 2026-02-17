@@ -279,16 +279,118 @@ depth_levels:
     description: "Extract the dominant frameworks, key vocabulary, and most prominent metaphors with brief characterization"
     typical_passes: 1
     suitable_for: "Quick assessment, policy documents, non-academic texts, preliminary scoping before deeper analysis"
+    passes:
+      - pass_number: 1
+        label: "Framework Scan"
+        stance: discovery
+        focus_dimensions: [vocabulary_map, methodological_signature, metaphor_tracking, framing_analysis, conceptual_architecture, domain_crossings]
+        focus_capabilities: [extract_vocabulary, profile_methodology, track_metaphors, analyze_framing, map_architecture, detect_domain_crossings]
+        consumes_from: []
+        description: |
+          A single sweep across the text to capture the dominant conceptual
+          landscape. Prioritize the most visible frameworks, the 5-10 most
+          distinctive vocabulary items, the primary methodological pattern,
+          and the 3-5 metaphors doing the heaviest analytical work. For
+          architecture and domain crossings, note only what is immediately
+          apparent -- foundational frameworks and obvious cross-field imports.
+          The goal is a rapid but honest sketch, not exhaustive coverage.
 
   - key: standard
     description: "Full vocabulary map with genealogical tracers, complete methodological profile, metaphor inventory with analytical weight, framing landscape with positioning, and framework architecture with dependencies"
     typical_passes: 2
     suitable_for: "Most academic texts, standard genealogy target profiling, author with 3-5 prior works"
+    passes:
+      - pass_number: 1
+        label: "Lexical and Methodological Inventory"
+        stance: discovery
+        focus_dimensions: [vocabulary_map, methodological_signature, metaphor_tracking, framing_analysis]
+        focus_capabilities: [extract_vocabulary, profile_methodology, track_metaphors, analyze_framing]
+        consumes_from: []
+        description: |
+          Systematic inventory of the four independent dimensions. Build the
+          full vocabulary map with coined terms, repurposed terms, key
+          oppositions, and genealogical tracers. Profile the methodological
+          signature including evidence types, argumentative structure, and
+          recurring analytical moves. Catalog metaphors with their source
+          domains and analytical weight. Map the framing landscape: problem
+          framing, novelty/continuity claims, ally/opponent positioning.
+          This pass produces the raw material that architectural analysis
+          requires.
+
+      - pass_number: 2
+        label: "Architectural Mapping"
+        stance: architecture
+        focus_dimensions: [conceptual_architecture, domain_crossings]
+        focus_capabilities: [map_architecture, detect_domain_crossings]
+        consumes_from: [1]
+        description: |
+          With the vocabulary map and methodological profile in hand, now
+          map the structural relationships between frameworks. Identify
+          which frameworks are foundational, dependent, peripheral, or
+          competing. Trace domain crossings using the vocabulary inventory
+          as evidence -- cross-field imports often hide in borrowed terminology.
+          Assess how adaptations changed the original concepts and what
+          assumptions they smuggled in. The architecture should reveal load-
+          bearing elements whose removal would collapse the argument.
 
   - key: deep
     description: "Complete lexical archaeology with every significant term traced to origin, full methodological fingerprint cross-referenced with intellectual traditions, metaphor maturity assessment, framing politics analysis, exhaustive framework architecture with load-bearing assessment, and comprehensive domain crossing analysis revealing the author's complete intellectual formation"
     typical_passes: 3
     suitable_for: "Dense philosophical works, prolific authors with extensive prior work, foundational profiling for major genealogy studies"
+    passes:
+      - pass_number: 1
+        label: "Exhaustive Lexical and Methodological Excavation"
+        stance: discovery
+        focus_dimensions: [vocabulary_map, methodological_signature, metaphor_tracking, framing_analysis]
+        focus_capabilities: [extract_vocabulary, profile_methodology, track_metaphors, analyze_framing]
+        consumes_from: []
+        description: |
+          Exhaustive inventory with no significance threshold. Every coined
+          term, every repurposed term, every terminological cluster traced
+          to its intellectual tradition. Full methodological fingerprint
+          cross-referenced with traditions that favor these methods, including
+          mismatches between stated and practiced methodology. Complete
+          metaphor archaeology: maturity assessment (fresh vs. polished
+          through reuse), what each metaphor reveals and conceals. Framing
+          politics: what alternative framings were available but not used,
+          who benefits from the chosen framing. Leave nothing for later
+          passes to discover at this level.
+
+      - pass_number: 2
+        label: "Structural Architecture and Cross-Domain Tracing"
+        stance: architecture
+        focus_dimensions: [conceptual_architecture, domain_crossings]
+        focus_capabilities: [map_architecture, detect_domain_crossings]
+        consumes_from: [1]
+        description: |
+          Build the complete structural skeleton of the work's conceptual
+          apparatus. Map every dependency between frameworks -- foundational,
+          dependent, peripheral, competing, complementary, emergent. Perform
+          load-bearing assessment: what collapses if each framework is
+          removed? Trace every cross-domain import to its source tradition,
+          assess how adaptation changed the original, and map what the source
+          domain's assumptions smuggle into the current argument. The
+          architecture should be detailed enough to serve as a structural
+          blueprint of the author's intellectual edifice.
+
+      - pass_number: 3
+        label: "Integrative Profile Synthesis"
+        stance: integration
+        focus_dimensions: [vocabulary_map, methodological_signature, metaphor_tracking, framing_analysis, conceptual_architecture, domain_crossings]
+        focus_capabilities: [extract_vocabulary, profile_methodology, track_metaphors, analyze_framing, map_architecture, detect_domain_crossings]
+        consumes_from: [1, 2]
+        description: |
+          Synthesize all dimensions into the complete target profile that
+          downstream engines will consume. Cross-reference vocabulary clusters
+          with architectural dependencies -- do terminological families align
+          with framework hierarchies? Assess how the methodological signature
+          constrains which frameworks can be deployed. Evaluate the coherence
+          of the whole ensemble: does the conceptual architecture support the
+          framing claims? Do domain crossings enrich or distort the framework
+          architecture? Produce genealogical implications: what does this
+          profile predict about the author's intellectual formation, and what
+          should downstream engines (semantic constellation, inferential
+          commitment mapper) look for?
 
 # ============================================================
 # METADATA

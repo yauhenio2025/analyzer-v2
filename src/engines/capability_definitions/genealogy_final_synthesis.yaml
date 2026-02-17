@@ -279,16 +279,63 @@ depth_levels:
     description: "Executive summary and key findings only -- the genealogical picture in miniature"
     typical_passes: 1
     suitable_for: "Quick genealogical overview, when prior passes yielded limited data, non-academic texts, preliminary reports"
+    passes:
+      - pass_number: 1
+        label: "Genealogy in Miniature"
+        stance: integration
+        focus_dimensions: [executive_summary, key_findings]
+        focus_capabilities: [compose_executive_summary]
+        consumes_from: []
+        description: |
+          Produce the genealogical picture in miniature: a concise
+          executive summary capturing the most important discoveries
+          and 3 key findings that most change how a reader should
+          understand the current work. Synthesize all available upstream
+          data into the most compact meaningful form.
 
   - key: standard
     description: "Full synthesis: executive summary, genealogical portrait, 5-8 idea genealogies with timelines, author profile, methodological notes, and key findings"
     typical_passes: 1
     suitable_for: "Standard genealogy pipeline final output, most academic texts, authors with 3-10 prior works"
+    passes:
+      - pass_number: 1
+        label: "Full Genealogical Synthesis"
+        stance: integration
+        focus_dimensions: [executive_summary, genealogical_portrait, idea_genealogies, author_intellectual_profile, methodological_notes, key_findings]
+        focus_capabilities: [compose_executive_summary, narrate_genealogical_portrait, trace_idea_genealogies, profile_intellectual_character, reflect_on_methodology]
+        consumes_from: []
+        description: |
+          Full synthesis integrating all upstream pass data. Executive
+          summary with dominant influences and key evolution patterns.
+          Genealogical portrait narrating the author's intellectual
+          trajectory through descent and emergence. 5-8 idea genealogies
+          with timelines and evolution narratives. Author intellectual
+          profile characterizing habits, strengths, and weaknesses.
+          Methodological notes with confidence levels and limitations.
+          3-5 key findings with implications.
 
   - key: deep
     description: "Comprehensive synthesis with extended narratives: detailed genealogical portrait with close textual analysis, comprehensive idea genealogies with co-evolution analysis, full intellectual portrait with field comparisons, reflexive methodological assessment, and key findings with multi-audience implications"
     typical_passes: 1
     suitable_for: "Dense philosophical works, prolific authors with 10+ prior works, publication-quality genealogical studies, comprehensive intellectual biography projects"
+    passes:
+      - pass_number: 1
+        label: "Comprehensive Genealogical Synthesis"
+        stance: integration
+        focus_dimensions: [executive_summary, genealogical_portrait, idea_genealogies, author_intellectual_profile, methodological_notes, key_findings]
+        focus_capabilities: [compose_executive_summary, narrate_genealogical_portrait, trace_idea_genealogies, profile_intellectual_character, reflect_on_methodology]
+        consumes_from: []
+        description: |
+          Comprehensive synthesis with extended narratives. Detailed
+          genealogical portrait with close textual analysis tracing
+          origin stories, transformation moments, and abandoned paths.
+          Comprehensive idea genealogies with co-evolution analysis
+          showing how changing one idea forced changes to others. Full
+          intellectual portrait with field comparisons and growth
+          assessment. Reflexive methodological assessment examining
+          biases in the genealogical method itself. Key findings with
+          multi-audience implications and assessment of how the author
+          might respond to each finding.
 
 # ============================================================
 # METADATA

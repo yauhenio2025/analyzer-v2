@@ -26,7 +26,10 @@ from src.engines.schemas_v2 import (
 )
 from src.stages.capability_composer import (
     CapabilityPrompt,
+    PassPrompt,
     compose_capability_prompt,
+    compose_pass_prompt,
+    compose_all_pass_prompts,
 )
 from src.stages.composer import StageComposer
 from src.stages.registry import get_stage_registry
@@ -540,6 +543,102 @@ async def get_capability_prompt(
         cap_def=cap_def,
         depth=depth,
         focus_dimensions=focus_dims,
+    )
+
+
+@router.get("/{engine_key}/pass-prompts", response_model=list[PassPrompt])
+async def get_pass_prompts(
+    engine_key: str,
+    depth: str = Query(
+        "standard",
+        description="Analysis depth: surface, standard, or deep",
+        pattern="^(surface|standard|deep)$",
+    ),
+) -> list[PassPrompt]:
+    """Get per-pass prompts for a capability engine at a given depth.
+
+    Returns one prompt per pass, each with:
+    - The engine's intellectual framing
+    - The analytical stance (cognitive posture) for that pass
+    - Only the dimensions that pass focuses on
+    - Pass-specific description
+
+    Shared context is NOT filled in (that happens at runtime when prior
+    pass output is available). This endpoint is for previewing the full
+    pass structure.
+
+    Returns empty list if the engine has no pass definitions at this depth.
+    Falls back gracefully — engines without pass definitions still work
+    via the whole-engine capability-prompt endpoint.
+    """
+    registry = get_engine_registry()
+    cap_def = registry.get_capability_definition(engine_key)
+    if cap_def is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No capability definition found for engine: {engine_key}. "
+            f"Available: {registry.list_capability_keys()}",
+        )
+
+    prompts = compose_all_pass_prompts(cap_def=cap_def, depth=depth)
+    return prompts
+
+
+@router.get("/{engine_key}/pass-prompts/{pass_number}", response_model=PassPrompt)
+async def get_single_pass_prompt(
+    engine_key: str,
+    pass_number: int,
+    depth: str = Query(
+        "standard",
+        description="Analysis depth: surface, standard, or deep",
+        pattern="^(surface|standard|deep)$",
+    ),
+) -> PassPrompt:
+    """Get the prompt for a single pass of a capability engine.
+
+    Useful for inspecting what a specific pass does, or for runtime
+    prompt generation when you want to supply shared_context separately.
+    """
+    registry = get_engine_registry()
+    cap_def = registry.get_capability_definition(engine_key)
+    if cap_def is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No capability definition found for engine: {engine_key}",
+        )
+
+    # Find the depth level
+    depth_level = None
+    for dl in cap_def.depth_levels:
+        if dl.key == depth:
+            depth_level = dl
+            break
+
+    if not depth_level or not depth_level.passes:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No pass definitions for {engine_key} at depth={depth}. "
+            f"Use the /capability-prompt endpoint for whole-engine prompts.",
+        )
+
+    # Find the specific pass
+    pass_def = None
+    for p in depth_level.passes:
+        if p.pass_number == pass_number:
+            pass_def = p
+            break
+
+    if pass_def is None:
+        available = [p.pass_number for p in depth_level.passes]
+        raise HTTPException(
+            status_code=404,
+            detail=f"Pass {pass_number} not found. Available passes: {available}",
+        )
+
+    return compose_pass_prompt(
+        cap_def=cap_def,
+        pass_def=pass_def,
+        depth=depth,
     )
 
 

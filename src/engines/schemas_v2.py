@@ -96,11 +96,58 @@ class ComposabilitySpec(BaseModel):
     )
 
 
+class PassDefinition(BaseModel):
+    """An explicit pass within a depth level.
+
+    Describes what analytical work happens in this pass, what cognitive
+    stance the LLM adopts, and how data flows between passes. The output
+    is always prose — the stance guides HOW to think, not what shape
+    the output takes.
+    """
+
+    pass_number: int = Field(
+        ...,
+        description="1-indexed pass number within this depth level",
+    )
+    label: str = Field(
+        ...,
+        description="Human-readable name for this pass (e.g., 'Commitment Discovery')",
+    )
+    stance: str = Field(
+        ...,
+        description="Key of the analytical stance (e.g., 'discovery', 'confrontation'). "
+        "References a stance from the operations/stances library.",
+    )
+    focus_dimensions: list[str] = Field(
+        default_factory=list,
+        description="Dimension keys this pass focuses on (subset of engine's dimensions)",
+    )
+    focus_capabilities: list[str] = Field(
+        default_factory=list,
+        description="Capability keys this pass exercises (subset of engine's capabilities)",
+    )
+    consumes_from: list[int] = Field(
+        default_factory=list,
+        description="Pass numbers whose prose output feeds into this pass as context",
+    )
+    description: str = Field(
+        ...,
+        description="Engine-specific description of what this pass does and why. "
+        "Written in prose — this is injected into the prompt alongside the stance.",
+    )
+
+
 class DepthLevel(BaseModel):
     """A depth level for analysis.
 
     The orchestrator selects depth based on document complexity,
     user preferences, and available budget.
+
+    Depth levels can optionally include explicit pass definitions
+    that break down the multi-pass structure: what stance each pass
+    adopts, which dimensions it focuses on, and how data flows
+    between passes. When passes are defined, the prompt composer
+    can generate per-pass prompts.
     """
 
     key: str = Field(
@@ -118,6 +165,12 @@ class DepthLevel(BaseModel):
     suitable_for: str = Field(
         default="",
         description="When to use this depth (document types, analysis goals)",
+    )
+    passes: list[PassDefinition] = Field(
+        default_factory=list,
+        description="Explicit pass breakdown. When present, makes the multi-pass "
+        "structure legible: what stance each pass adopts, which dimensions it "
+        "focuses on, and how prose flows between passes.",
     )
 
 

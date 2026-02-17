@@ -5,12 +5,16 @@ that ask the LLM for PROSE output — not JSON. This is the core of the
 schema-on-read architecture: rich analytical prose now, structure at
 presentation time.
 
-The prompt structure:
+Two composition modes:
+1. compose_capability_prompt() — whole-engine prompt (original, backward-compat)
+2. compose_pass_prompt() — per-pass prompt using analytical stances
+
+The prompt structure for per-pass:
 1. Engine's problematique (intellectual framing)
-2. Selected analytical dimensions with probing questions
-3. Depth-specific guidance
-4. Shared context from prior engines/passes (plain text)
-5. Instruction: write thorough analytical prose
+2. Analytical stance (cognitive posture for this pass)
+3. Pass-specific focus dimensions with depth guidance
+4. Shared context from prior passes (plain text)
+5. Pass-specific description (what this pass should accomplish)
 """
 
 import logging
@@ -18,9 +22,27 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-from src.engines.schemas_v2 import CapabilityEngineDefinition
+from src.engines.schemas_v2 import CapabilityEngineDefinition, PassDefinition
+from src.operations.registry import StanceRegistry
 
 logger = logging.getLogger(__name__)
+
+# Module-level stance registry reference
+_stance_registry: StanceRegistry | None = None
+
+
+def init_stance_registry(registry: StanceRegistry) -> None:
+    """Set the stance registry for prompt composition."""
+    global _stance_registry
+    _stance_registry = registry
+
+
+def _get_stance_registry() -> StanceRegistry:
+    """Get or create the stance registry."""
+    global _stance_registry
+    if _stance_registry is None:
+        _stance_registry = StanceRegistry()
+    return _stance_registry
 
 
 class CapabilityPrompt(BaseModel):
@@ -32,6 +54,22 @@ class CapabilityPrompt(BaseModel):
     prompt: str
     dimension_count: int = 0
     focus_dimensions: list[str] = Field(default_factory=list)
+    has_shared_context: bool = False
+
+
+class PassPrompt(BaseModel):
+    """A composed per-pass prompt using analytical stances."""
+
+    engine_key: str
+    engine_name: str
+    depth: str
+    pass_number: int
+    pass_label: str
+    stance_key: str
+    stance_name: str
+    prompt: str
+    focus_dimensions: list[str] = Field(default_factory=list)
+    consumes_from: list[int] = Field(default_factory=list)
     has_shared_context: bool = False
 
 
@@ -83,6 +121,160 @@ def compose_capability_prompt(
         focus_dimensions=[d.key for d in dimensions],
         has_shared_context=shared_context is not None,
     )
+
+
+def compose_pass_prompt(
+    cap_def: CapabilityEngineDefinition,
+    pass_def: PassDefinition,
+    depth: str = "standard",
+    shared_context: Optional[str] = None,
+) -> PassPrompt:
+    """Compose a per-pass prompt using analytical stances.
+
+    This is the multi-pass composition mode. Each pass gets:
+    1. Engine's problematique (framing)
+    2. The analytical stance (cognitive posture)
+    3. Only the dimensions this pass focuses on
+    4. Prior pass output as shared context
+    5. The pass-specific description
+
+    Args:
+        cap_def: The capability engine definition
+        pass_def: The specific pass to compose for
+        depth: Analysis depth — determines dimension guidance
+        shared_context: Prose output from prior passes
+
+    Returns:
+        PassPrompt with rendered prompt text
+    """
+    sections: list[str] = []
+    reg = _get_stance_registry()
+
+    # ── 1. Intellectual framing (same as whole-engine) ──────────
+    sections.append(_compose_framing(cap_def))
+
+    # ── 2. Analytical stance ──────────────────────────────────
+    stance = reg.get(pass_def.stance)
+    if stance:
+        sections.append(_compose_stance_section(stance.name, stance.stance, stance.cognitive_mode))
+    else:
+        logger.warning(f"Stance '{pass_def.stance}' not found in registry")
+
+    # ── 3. Pass-specific dimensions ───────────────────────────
+    if pass_def.focus_dimensions:
+        dimensions = [
+            d for d in cap_def.analytical_dimensions
+            if d.key in pass_def.focus_dimensions
+        ]
+        if dimensions:
+            sections.append(_compose_dimensions(dimensions, depth))
+
+    # ── 4. Shared context from prior passes ───────────────────
+    if shared_context:
+        sections.append(_compose_shared_context(shared_context))
+
+    # ── 5. Pass-specific instructions ─────────────────────────
+    sections.append(_compose_pass_instructions(cap_def, pass_def, depth))
+
+    prompt = "\n\n".join(sections)
+
+    return PassPrompt(
+        engine_key=cap_def.engine_key,
+        engine_name=cap_def.engine_name,
+        depth=depth,
+        pass_number=pass_def.pass_number,
+        pass_label=pass_def.label,
+        stance_key=pass_def.stance,
+        stance_name=stance.name if stance else pass_def.stance,
+        prompt=prompt,
+        focus_dimensions=pass_def.focus_dimensions,
+        consumes_from=pass_def.consumes_from,
+        has_shared_context=shared_context is not None,
+    )
+
+
+def compose_all_pass_prompts(
+    cap_def: CapabilityEngineDefinition,
+    depth: str = "standard",
+) -> list[PassPrompt]:
+    """Compose prompts for all passes in a depth level.
+
+    Returns a list of PassPrompts in pass order, WITHOUT shared context
+    filled in (that comes at runtime when prior pass output is available).
+    This is useful for previewing the full pass structure.
+    """
+    depth_level = None
+    for dl in cap_def.depth_levels:
+        if dl.key == depth:
+            depth_level = dl
+            break
+
+    if not depth_level or not depth_level.passes:
+        logger.info(
+            f"No pass definitions for {cap_def.engine_key} at depth={depth}, "
+            f"falling back to whole-engine prompt"
+        )
+        return []
+
+    prompts = []
+    for pass_def in sorted(depth_level.passes, key=lambda p: p.pass_number):
+        prompt = compose_pass_prompt(
+            cap_def=cap_def,
+            pass_def=pass_def,
+            depth=depth,
+            shared_context=None,  # No context in preview mode
+        )
+        prompts.append(prompt)
+
+    return prompts
+
+
+def _compose_stance_section(name: str, stance_text: str, cognitive_mode: str) -> str:
+    """Compose the analytical stance section."""
+    return "\n".join([
+        "## Analytical Stance for This Pass",
+        "",
+        f"**{name}** — _{cognitive_mode}_",
+        "",
+        stance_text.strip(),
+    ])
+
+
+def _compose_pass_instructions(
+    cap_def: CapabilityEngineDefinition,
+    pass_def: PassDefinition,
+    depth: str,
+) -> str:
+    """Compose pass-specific output instructions."""
+    lines = [
+        f"## Pass {pass_def.pass_number}: {pass_def.label}",
+        "",
+        pass_def.description.strip(),
+        "",
+        "Write thorough **analytical prose**. Your output will be read by "
+        "the next analytical pass, which will build directly on your "
+        "observations, reasoning, and tentative connections.",
+        "",
+    ]
+
+    # If this pass feeds downstream, note it
+    if cap_def.composability.shares_with:
+        # Only include shares relevant to this pass's dimensions
+        relevant_shares = {
+            k: v for k, v in cap_def.composability.shares_with.items()
+            if not pass_def.focus_dimensions or any(
+                dim_key in k for dim_key in pass_def.focus_dimensions
+            )
+        }
+        if relevant_shares:
+            lines.extend([
+                "**For the next pass**: Ensure your prose clearly surfaces:",
+            ])
+            for dim_key, desc in relevant_shares.items():
+                lines.append(f"- {desc}")
+            lines.append("")
+
+    return "\n".join(lines)
 
 
 def _compose_framing(cap_def: CapabilityEngineDefinition) -> str:

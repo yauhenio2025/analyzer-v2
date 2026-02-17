@@ -292,16 +292,123 @@ depth_levels:
     description: "Quick synthesis of the 3-5 most significant concepts with evolution timelines and basic convergence/divergence"
     typical_passes: 1
     suitable_for: "Preliminary assessment, small corpora (2-3 works), non-academic texts, scoping analysis"
+    passes:
+      - pass_number: 1
+        label: "Rapid Synthesis"
+        stance: integration
+        focus_dimensions: [evolution_timelines, multi_work_trace_aggregation, convergence_divergence, indirect_enablers, semantic_core, critical_verdict]
+        focus_capabilities: [construct_evolution_timelines, aggregate_multi_work_traces, map_convergence_divergence, analyze_indirect_enablers, establish_semantic_core, render_critical_verdict]
+        consumes_from: []
+        description: |
+          A single integrative sweep across all available per-work scan data
+          to produce the most important synthesis outputs. Construct evolution
+          timelines for the 3-5 most significant concepts, noting the major
+          transition points. Aggregate traces to identify the most-evolved
+          and most-stable concepts. Note the most obvious convergence and
+          divergence points. Sketch semantic cores for the key concepts and
+          provide a brief critical assessment. Indirect enablers only where
+          immediately apparent. The goal is a usable synthesis, not a
+          comprehensive one.
 
   - key: standard
     description: "Full synthesis with evolution timelines for all multi-work concepts, trace aggregation, convergence/divergence mapping, indirect enabler analysis, semantic cores, and critical verdicts"
     typical_passes: 2
     suitable_for: "Most academic corpora, authors with 3-7 prior works, standard genealogy analysis"
+    passes:
+      - pass_number: 1
+        label: "Timeline and Trace Assembly"
+        stance: discovery
+        focus_dimensions: [evolution_timelines, multi_work_trace_aggregation]
+        focus_capabilities: [construct_evolution_timelines, aggregate_multi_work_traces]
+        consumes_from: []
+        description: |
+          Build the raw material for synthesis. Construct full evolution
+          timelines for every concept appearing in 2+ works: chronological
+          sequence of forms, framing at each stage, transition drivers,
+          evolution pattern classification, and narrative summaries. Aggregate
+          all per-work scan traces into unified per-concept summaries. Rank
+          concepts by evolution magnitude. Identify orphan concepts in the
+          target work that have no ancestry in scanned prior works. This
+          pass produces the factual substrate -- what happened -- that the
+          next pass will interpret.
+
+      - pass_number: 2
+        label: "Interpretive Synthesis"
+        stance: integration
+        focus_dimensions: [convergence_divergence, indirect_enablers, semantic_core, critical_verdict]
+        focus_capabilities: [map_convergence_divergence, analyze_indirect_enablers, establish_semantic_core, render_critical_verdict]
+        consumes_from: [1]
+        description: |
+          With timelines and aggregated traces in hand, now produce the
+          interpretive synthesis. Map convergence and divergence points:
+          where do ideas from separate works come together, where do they
+          conflict, and what hidden dependencies exist? Analyze indirect
+          enablers: cross-domain influences that shaped trajectories without
+          being part of the direct lineage. Establish semantic cores that
+          integrate all manifestations while preserving productive tensions.
+          Render critical verdicts grounded in specific evidence from the
+          timelines: strengths, weaknesses, unacknowledged debts, and
+          alternative paths not taken.
 
   - key: deep
     description: "Comprehensive synthesis: exhaustive timelines including proto-forms and abandoned variants, deep orphan investigation, full convergence/divergence cartography with counterfactuals, toolkit archaeology of indirect enablers, layered semantic core analysis, and detailed critical verdicts with field-level implications"
     typical_passes: 3
     suitable_for: "Dense philosophical corpora, prolific authors with 10+ works, comprehensive genealogy studies, publication-grade analysis"
+    passes:
+      - pass_number: 1
+        label: "Comprehensive Timeline and Trace Reconstruction"
+        stance: discovery
+        focus_dimensions: [evolution_timelines, multi_work_trace_aggregation]
+        focus_capabilities: [construct_evolution_timelines, aggregate_multi_work_traces]
+        consumes_from: []
+        description: |
+          Exhaustive reconstruction of the raw conceptual history. Build
+          comprehensive timelines for every traceable concept including
+          proto-forms and abandoned variants. Track mutual timeline
+          interactions -- how one concept's evolution influenced another's.
+          Produce full aggregation with cross-concept interaction analysis.
+          Deep orphan investigation: trace possible external sources for
+          concepts without corpus ancestry. Assess the corpus's conceptual
+          metabolism -- how quickly and thoroughly the author processes and
+          transforms ideas. Leave no factual stone unturned.
+
+      - pass_number: 2
+        label: "Convergence Stress-Testing and Enabler Archaeology"
+        stance: confrontation
+        focus_dimensions: [convergence_divergence, indirect_enablers]
+        focus_capabilities: [map_convergence_divergence, analyze_indirect_enablers]
+        consumes_from: [1]
+        description: |
+          Stress-test the evolution picture produced in Pass 1. Map all
+          convergence and divergence points with mutual interactions.
+          Challenge apparent convergences: are they genuine synthesis or
+          superficial juxtaposition? Expose hidden dependencies -- arguments
+          that only work because of specific, unacknowledged evolution paths.
+          Perform counterfactual analysis: what would the argument look like
+          if key convergences had not occurred? Conduct full toolkit
+          archaeology of indirect enablers: all non-obvious influences mapped
+          with interaction effects, visibility assessment, and comparison of
+          acknowledged vs. actual influences. Adopt an architectural stance
+          toward the structural skeleton of the evolution.
+
+      - pass_number: 3
+        label: "Semantic Core Synthesis and Critical Verdict"
+        stance: integration
+        focus_dimensions: [semantic_core, critical_verdict]
+        focus_capabilities: [establish_semantic_core, render_critical_verdict]
+        consumes_from: [1, 2]
+        description: |
+          Produce the culminating synthesis. Establish layered semantic cores
+          showing how meaning accreted over time, with full tension analysis
+          distinguishing productive from destructive tensions. Build complete
+          argumentative architecture with vulnerability analysis. Render
+          detailed critical verdicts with evidence chains, field-level
+          implications, and recommendations. Assess whether the overall
+          trajectory represents genuine intellectual development or
+          accumulation of path-dependent commitments. Reflect on the
+          methodology itself: what does this synthesis reveal about the
+          limits of the genealogical method? What could a different
+          analytical approach have discovered that this one missed?
 
 # ============================================================
 # METADATA
