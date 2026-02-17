@@ -1,0 +1,136 @@
+engine_key: conditions_of_possibility_analyzer
+engine_name: Conditions of Possibility Analyzer
+stance_operationalizations:
+- stance_key: discovery
+  label: Landscape of Enabling & Constraining Conditions
+  description: |-
+    Exhaustive mapping of what had to be true for this argument to become
+    thinkable and these practices possible. For enabling conditions: every
+    conceptual foundation, audience preparation, authority establishment,
+    framework reuse, and methodological precedent that makes the current
+    argument possible — each assessed for essentiality (critical/important/
+    supporting) with textual evidence. For constraining conditions: every
+    prior commitment that limits or binds, audience expectation, framework
+    lock-in, reputational stake, and methodological path-dependence — each
+    assessed for binding force (strong/moderate/weak). Also detect
+    cross-domain transfers: intellectual toolkits imported from other fields
+    that shape thinking below conscious awareness, whether acknowledged or
+    invisible.
+  focus_dimensions:
+  - enabling_conditions
+  - constraining_conditions
+  - cross_domain_transfers
+  focus_capabilities:
+  - map_enabling_conditions
+  - detect_constraints
+  - detect_cross_domain_transfers
+- stance_key: architecture
+  label: Path Dependency Chains & Unacknowledged Debts
+  description: |-
+    With the landscape of conditions mapped, trace the structural chains.
+    Path dependencies: causal chains showing how prior positions accumulate
+    into current constraints and enablements — the intellectual archaeology
+    of how A led to B led to C, which now serves as unexamined premise for
+    D. For each chain: the sequence of works and positions involved, whether
+    the chain is acknowledged or hidden, and how the argument would collapse
+    if key links were removed. Unacknowledged debts: ideas presented as new
+    that were actually developed in earlier work, borrowings from prior work
+    without citation, inherited frameworks used without attribution — with
+    hypothesized reasons for non-acknowledgment (embarrassment, oversight,
+    desire for novelty, strategic concealment). Alternative paths: at key
+    branching points, what could the author have argued instead from the same
+    starting conditions, and what intellectual, institutional, or audience
+    resources favored the path actually taken.
+  focus_dimensions:
+  - path_dependencies
+  - unacknowledged_debts
+  - alternative_paths
+  focus_capabilities:
+  - trace_path_dependence
+  - reveal_debts
+  - map_alternative_paths
+- stance_key: confrontation
+  label: Counterfactual Stress-Testing
+  description: |-
+    The central thought experiment: imagine this argument written by someone
+    with no prior work history. What changes? What remains? This separates
+    genuine innovation from accumulated intellectual capital. For each major
+    claim or position, assess: is this genuinely new (would exist without
+    any prior work), or is it path-dependent inheritance (could only emerge
+    from this specific history)? Estimate the proportion of intellectual
+    capital that is novel versus inherited. Assess whether path-dependence
+    adds depth (accumulated expertise enriching the argument) or creates a
+    trap (inherited assumptions preventing growth). Revisit the alternative
+    paths from the architecture pass: for the most significant branching
+    points, construct detailed counterfactual scenarios — what the argument
+    would look like if a different path had been taken, what would be gained
+    and lost.
+  focus_dimensions:
+  - counterfactual_analysis
+  - alternative_paths
+  focus_capabilities:
+  - explore_counterfactuals
+  - map_alternative_paths
+- stance_key: integration
+  label: Synthetic Judgment & Conditions Landscape
+  description: |-
+    Synthesize the full conditions landscape. The discovery pass mapped
+    enabling and constraining conditions; the architecture pass traced the
+    structural chains and debts; the confrontation pass stress-tested via
+    counterfactual. Now produce the synthetic judgment: on balance, is the
+    intellectual biography more enabling or constraining? Does the author
+    manage their intellectual history productively — deploying prior work
+    strategically while remaining open to revision — or are they trapped by
+    accumulated commitments? Is their awareness of path-dependence itself
+    productive (enabling reflexive scholarship) or performative (acknowledged
+    but not acted upon)? Integrate the enabling and constraining conditions
+    into a unified landscape showing how they interact, where cross-domain
+    transfers create unique capabilities, and where the counterfactual
+    analysis reveals the argument's deepest dependencies. The result should
+    be a map of what had to be true for this argument to exist, what it
+    costs the author to maintain it, and what alternatives remain available.
+  focus_dimensions:
+  - synthetic_judgment
+  - enabling_conditions
+  - constraining_conditions
+  - counterfactual_analysis
+  focus_capabilities:
+  - synthesize_judgment
+  - map_enabling_conditions
+  - detect_constraints
+  - explore_counterfactuals
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: confrontation
+    consumes_from:
+    - 1
+    - 2
+  - pass_number: 4
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2
+    - 3

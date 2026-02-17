@@ -12,6 +12,7 @@ stance_operationalizations:
   focus_dimensions:
   - relationship_type
   - relationship_strength
+  - relationship_evidence
   focus_capabilities:
   - classify_relationship
   - assess_strength
@@ -29,6 +30,7 @@ stance_operationalizations:
   focus_dimensions:
   - relationship_type
   - relationship_strength
+  - relationship_evidence
   - influence_channels
   - strategic_relevance
   focus_capabilities:
@@ -50,5 +52,9 @@ depth_sequences:
 - depth_key: deep
   passes:
   - pass_number: 1
-    stance_key: inference
+    stance_key: discovery
     consumes_from: []
+  - pass_number: 2
+    stance_key: inference
+    consumes_from:
+    - 1

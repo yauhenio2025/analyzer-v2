@@ -5,6 +5,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+- **Orphaned dimensions**: `tactic_evolution` added to evolution_tactics_detector (architecture + reflection stances), `relationship_evidence` added to genealogy_relationship_classification (discovery + inference stances)
+- **Missing operationalization**: Created `conditions_of_possibility_analyzer.yaml` with 4 stances (discovery, architecture, confrontation, integration), 8 dimensions, 3 depth levels — completing 11/11 engine coverage
+- **Flat depth sequences**: Added depth escalation to concept_appropriation_tracker (3 passes deep), concept_evolution (3 passes deep), genealogy_relationship_classification (2 passes deep) — all engines now have genuine multi-pass at deep depth
+
 ### Added
 - **Analytical Stances library** — New `src/operations/` module implementing 7 shared cognitive postures for multi-pass analysis
   - Stances describe HOW to think in a given pass, not what output format to produce (preserving prose-first architecture)

@@ -39,6 +39,56 @@ stance_operationalizations:
   - analyze_framing_shifts
   - trace_concept_lifecycles
   - synthesize_dimensional_matrix
+- stance_key: architecture
+  label: Structural Evolution Pattern Analysis
+  description: |-
+    With the vocabulary and trajectory catalog established, analyze
+    the structural evolution patterns. Methodology evolution: how
+    does the author's analytical toolkit change — do they import new
+    methods, abandon old ones, or hybridize? Trace the evolution of
+    methodological commitments across works. Metaphor evolution: map
+    the source domain shifts — when an author switches from spatial
+    to temporal metaphors, what conceptual restructuring does this
+    signal? Framing evolution: track how the same problem is framed
+    differently across works, revealing shifts in the author's
+    understanding of what the problem actually is.
+  focus_dimensions:
+  - methodology_evolution
+  - metaphor_evolution
+  - framing_evolution
+  focus_capabilities:
+  - compare_methodology
+  - trace_metaphor_change
+  - analyze_framing_shifts
+- stance_key: integration
+  label: Dimensional Comparison Matrix Synthesis
+  description: |-
+    Synthesize the full evolutionary landscape into the dimensional
+    comparison matrix. The discovery pass mapped vocabulary changes
+    and concept trajectories; the architecture pass analyzed structural
+    evolution in methodology, metaphor, and framing. Now produce the
+    integrated matrix: coupling analysis across all dimensions
+    revealing change archetypes — does vocabulary change track
+    methodology change, or do they decouple? Concept genealogy
+    trees showing ancestor-descendant relationships and co-evolution
+    patterns. The final portrait: is the author's conceptual evolution
+    coherent (all dimensions moving together) or fragmented (vocabulary
+    changing while methodology stays fixed)? What does the pattern of
+    co-evolution reveal about the author's intellectual development?
+  focus_dimensions:
+  - vocabulary_evolution
+  - methodology_evolution
+  - metaphor_evolution
+  - framing_evolution
+  - concept_trajectory
+  - dimensional_comparison_matrix
+  focus_capabilities:
+  - track_vocabulary_evolution
+  - compare_methodology
+  - trace_metaphor_change
+  - analyze_framing_shifts
+  - trace_concept_lifecycles
+  - synthesize_dimensional_matrix
 depth_sequences:
 - depth_key: surface
   passes:
@@ -48,10 +98,23 @@ depth_sequences:
 - depth_key: standard
   passes:
   - pass_number: 1
-    stance_key: inference
+    stance_key: discovery
     consumes_from: []
+  - pass_number: 2
+    stance_key: inference
+    consumes_from:
+    - 1
 - depth_key: deep
   passes:
   - pass_number: 1
-    stance_key: inference
+    stance_key: discovery
     consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2

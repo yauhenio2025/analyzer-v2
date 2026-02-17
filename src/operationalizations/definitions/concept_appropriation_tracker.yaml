@@ -41,6 +41,54 @@ stance_operationalizations:
   - map_distortions
   - detect_recombinations
   - assess_acknowledgment
+- stance_key: architecture
+  label: Appropriation Pattern Architecture
+  description: |-
+    With the migration catalog established, analyze the structural
+    patterns. For appropriation patterns: classify each by the
+    Derridean iterability framework — faithful citation, productive
+    misreading, strategic redefinition, unconscious absorption. For
+    distortion maps: what was lost, what was gained, and whether the
+    distortion serves the author's purposes or reveals a misunderstanding.
+    For recombinations: map how borrowed concepts combine with original
+    ideas to produce genuinely new intellectual formations, assessing
+    the novelty and stability of each recombination.
+  focus_dimensions:
+  - appropriation_patterns
+  - distortion_map
+  - recombination
+  focus_capabilities:
+  - analyze_appropriation
+  - map_distortions
+  - detect_recombinations
+- stance_key: integration
+  label: Appropriation Landscape Synthesis
+  description: |-
+    Synthesize the full appropriation landscape. The discovery pass
+    mapped migrations and acknowledgments; the architecture pass
+    analyzed structural patterns in appropriation, distortion, and
+    recombination. Now produce the integrated assessment: what is
+    the author's characteristic appropriation style? Are they a
+    faithful transmitter, a productive transformer, or a strategic
+    re-appropriator? How does the acknowledgment pattern align with
+    the actual appropriation — does the author acknowledge what they
+    transform but silently borrow what they preserve? Map the full
+    trajectory from source through mutation to recombination,
+    producing a portrait of intellectual iterability in action.
+  focus_dimensions:
+  - migration_paths
+  - semantic_mutations
+  - appropriation_patterns
+  - distortion_map
+  - recombination
+  - acknowledgment_status
+  focus_capabilities:
+  - trace_migration_paths
+  - detect_semantic_mutations
+  - analyze_appropriation
+  - map_distortions
+  - detect_recombinations
+  - assess_acknowledgment
 depth_sequences:
 - depth_key: surface
   passes:
@@ -50,10 +98,23 @@ depth_sequences:
 - depth_key: standard
   passes:
   - pass_number: 1
-    stance_key: inference
+    stance_key: discovery
     consumes_from: []
+  - pass_number: 2
+    stance_key: inference
+    consumes_from:
+    - 1
 - depth_key: deep
   passes:
   - pass_number: 1
-    stance_key: inference
+    stance_key: discovery
     consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2

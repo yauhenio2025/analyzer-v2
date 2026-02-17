@@ -25,9 +25,11 @@ stance_operationalizations:
   focus_dimensions:
   - tactic_patterns
   - tactic_effectiveness
+  - tactic_evolution
   focus_capabilities:
   - analyze_tactic_patterns
   - assess_tactic_effectiveness
+  - trace_tactic_evolution
 - stance_key: reflection
   label: Effectiveness, Taxonomy & Reflexive Assessment
   description: |-
@@ -40,9 +42,11 @@ stance_operationalizations:
   focus_dimensions:
   - tactic_effectiveness
   - tactic_taxonomy
+  - tactic_evolution
   focus_capabilities:
   - assess_tactic_effectiveness
   - instantiate_taxonomy
+  - trace_tactic_evolution
 depth_sequences:
 - depth_key: surface
   passes:
