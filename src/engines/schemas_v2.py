@@ -221,24 +221,54 @@ class DepthLevel(BaseModel):
     )
 
 
+class ThinkerReference(BaseModel):
+    """A thinker who influences this engine's analytical approach."""
+
+    name: str = Field(..., description="Thinker identifier (e.g., 'brandom', 'foucault')")
+    description: str = Field(
+        default="",
+        description="1-2 sentence bio situating the thinker's contribution",
+    )
+
+
+class TraditionEntry(BaseModel):
+    """An intellectual tradition the engine draws from."""
+
+    name: str = Field(..., description="Tradition identifier (e.g., 'inferentialism')")
+    description: str = Field(
+        default="",
+        description="2-3 sentence description of the tradition",
+    )
+
+
+class KeyConceptEntry(BaseModel):
+    """A core concept from the tradition that informs the engine."""
+
+    name: str = Field(..., description="Concept identifier (e.g., 'material_inference')")
+    definition: str = Field(
+        default="",
+        description="1-2 sentence definition of the concept",
+    )
+
+
 class IntellectualLineage(BaseModel):
     """The intellectual tradition this engine draws from."""
 
-    primary: str = Field(
+    primary: ThinkerReference | str = Field(
         ...,
-        description="Primary thinker or tradition (e.g., 'foucault', 'brandom')",
+        description="Primary thinker — rich object or legacy string",
     )
-    secondary: list[str] = Field(
+    secondary: list[ThinkerReference | str] = Field(
         default_factory=list,
-        description="Secondary influences",
+        description="Secondary influences — rich objects or legacy strings",
     )
-    traditions: list[str] = Field(
+    traditions: list[TraditionEntry | str] = Field(
         default_factory=list,
-        description="Intellectual traditions (e.g., 'archaeology', 'genealogy', 'inferentialism')",
+        description="Intellectual traditions — rich objects or legacy strings",
     )
-    key_concepts: list[str] = Field(
+    key_concepts: list[KeyConceptEntry | str] = Field(
         default_factory=list,
-        description="Core concepts from the tradition that inform the engine",
+        description="Core concepts — rich objects or legacy strings",
     )
 
 

@@ -409,27 +409,78 @@
   "engine_name": "Concept Semantic Constellation",
   "intellectual_lineage": {
     "key_concepts": [
-      "semantic_field",
-      "langue_parole",
-      "language_game",
-      "family_resemblance",
-      "conceptual_metaphor",
-      "prototype",
-      "semantic_boundary",
-      "collocation"
+      {
+        "definition": "The structured set of lexical items that partition a conceptual domain, each term gaining meaning through its differential relationships (oppositions, gradations, hyponymic relations) to others in the set. For this engine, the semantic field IS the primary object of analysis: mapping which terms an author treats as inhabiting the same conceptual territory and how they carve up that territory reveals the structure of their thought more reliably than analyzing terms in isolation.",
+        "name": "semantic_field"
+      },
+      {
+        "definition": "Saussure's distinction between langue (the abstract system of language as a structured whole shared by a community) and parole (actual instances of language use by individuals). This engine operates at an intermediate level: it analyzes an individual author's semantic system (their parole) but treats it as revealing an underlying structured langue\u2014the conceptual system that generates their particular usage patterns, which may diverge from disciplinary norms or evolve across their corpus.",
+        "name": "langue_parole"
+      },
+      {
+        "definition": "Wittgenstein's term for the interwoven patterns of language use and practical activity within which words acquire meaning\u2014the 'game' being the rule-governed but not rigidly determined practice of deploying terms for specific purposes. The engine uses this concept to contextualize semantic constellations: the same term may participate in different constellations depending on the language game (theoretical explanation, political persuasion, technical description) in which the author is engaged, requiring the engine to track usage patterns across argumentative contexts.",
+        "name": "language_game"
+      },
+      {
+        "definition": "Wittgenstein's model of conceptual structure where category members are related by overlapping similarities without any single feature common to all, like family members who share various features (nose, eyes, build) without any feature universal to the family. This concept guides the engine's approach to semantic boundaries: rather than seeking sharp definitional boundaries between concepts, it maps overlapping zones where terms share some features with multiple neighboring concepts, creating a network of partial similarities that constitutes the semantic landscape.",
+        "name": "family_resemblance"
+      },
+      {
+        "definition": "Lakoff's notion that abstract conceptual domains are systematically structured by mappings from more concrete, embodied source domains (e.g., ARGUMENT IS WAR, THEORIES ARE BUILDINGS), with the metaphor licensing specific inferences and entailments. The engine uses this to identify the underlying metaphorical architecture organizing semantic constellations\u2014when an author's terms for 'theory' cluster with 'foundation', 'construction', 'framework', and 'edifice', this reveals a BUILDINGS metaphor structuring their conceptual field, determining which theoretical moves will seem natural or problematic.",
+        "name": "conceptual_metaphor"
+      },
+      {
+        "definition": "The most representative or 'best example' of a category, around which the category is cognitively organized, with other members judged by their similarity to the prototype rather than by meeting definitional criteria. The engine uses prototype identification to map the center-periphery structure of semantic constellations: determining which term functions as the prototypical case reveals the conceptual core around which an author organizes related concepts, with other terms positioned at varying distances as more or less central to the constellation.",
+        "name": "prototype"
+      },
+      {
+        "definition": "The line (often fuzzy or contested) where one concept's semantic field ends and another's begins\u2014the point at which the engine must determine whether an author treats two terms as distinct concepts or as variants within a single conceptual space. Mapping these boundaries is crucial for genealogical analysis: where an author draws sharp boundaries versus allowing overlap reveals their conceptual commitments, and divergences from disciplinary norms in boundary-drawing are diagnostic of distinct intellectual formation or theoretical innovation.",
+        "name": "semantic_boundary"
+      },
+      {
+        "definition": "The habitual co-occurrence of words in proximity\u2014the statistical tendency for certain terms to appear near each other in actual usage. For this engine, collocation patterns provide empirical evidence for semantic constellation structure: terms that regularly appear together in an author's text likely occupy related positions in their conceptual field, and the specific collocational profile of a term (what it habitually appears with) reveals which semantic neighbors are most salient in that author's usage, potentially diverging from standard disciplinary patterns.",
+        "name": "collocation"
+      }
     ],
-    "primary": "saussure",
+    "primary": {
+      "description": "Ferdinand de Saussure (1857-1913), Swiss linguist whose Course in General Linguistics established the foundational principle that meaning is determined not by reference to things but by differential relationships within a system of signs. His concept of the 'semantic field' (champ s\u00e9mantique) is fundamental to this engine: a term derives its meaning from its position within a network of related terms, from what it is NOT as much as what it IS. For mapping conceptual constellations, Saussure provides the core insight that to understand any concept requires mapping its relationships of similarity, opposition, and distinction within the author's total semantic system.",
+      "name": "saussure"
+    },
     "secondary": [
-      "wittgenstein",
-      "lakoff",
-      "rosch"
+      {
+        "description": "Ludwig Wittgenstein (1889-1951), Austrian-British philosopher whose later work (particularly Philosophical Investigations) challenged essentialist definitions by showing how meaning emerges from patterns of use within specific contexts or 'language games'. His concept of 'family resemblance' is crucial for this engine's approach to semantic boundaries: concepts often lack defining features shared by all instances, instead exhibiting overlapping similarities that create fuzzy boundaries. This insight prevents the engine from seeking artificial precision in semantic constellations and instead maps the actual patterns of conceptual overlap and gradation in an author's usage.",
+        "name": "wittgenstein"
+      },
+      {
+        "description": "George Lakoff (1941-), American cognitive linguist who demonstrated through conceptual metaphor theory that abstract concepts are systematically structured by metaphorical mappings from embodied experience. His work reveals that semantic constellations are not arbitrary but often organized around underlying metaphorical schemas (TIME IS SPACE, IDEAS ARE OBJECTS, etc.). For this engine, Lakoff provides tools for identifying the implicit conceptual metaphors that structure an author's semantic field\u2014the hidden architecture that determines which terms naturally cluster together and which conceptual moves seem natural versus strained.",
+        "name": "lakoff"
+      },
+      {
+        "description": "Eleanor Rosch (1938-), American psychologist whose prototype theory revolutionized understanding of categorization by demonstrating that concepts are organized around 'best examples' rather than necessary-and-sufficient features, with category membership being graded rather than binary. Her empirical work on basic-level categories and prototype effects provides this engine with a model for understanding how semantic constellations have centers and peripheries\u2014some terms are prototypical exemplars of a concept while others are marginal cases. This allows the engine to map not just which terms relate to a concept, but their distance from the conceptual core in an author's usage.",
+        "name": "rosch"
+      }
     ],
     "traditions": [
-      "structural_linguistics",
-      "ordinary_language_philosophy",
-      "cognitive_linguistics",
-      "prototype_theory",
-      "frame_semantics"
+      {
+        "description": "The intellectual tradition inaugurated by Saussure that treats language as a system of interdependent elements where each unit is defined by its relationships to other units rather than by external reference. Its core methodological commitment\u2014that linguistic analysis must identify the paradigmatic and syntagmatic relations that constitute the system\u2014directly informs this engine's approach to mapping semantic fields. The engine adopts structural linguistics' fundamental insight that understanding a concept requires reconstructing the oppositional and associative networks that give it differential value within an author's conceptual system.",
+        "name": "structural_linguistics"
+      },
+      {
+        "description": "The mid-20th-century philosophical movement, exemplified by the later Wittgenstein and J.L. Austin, that rejected abstract logical analysis in favor of examining how terms actually function in concrete linguistic practices. Its methodological principle\u2014that meaning is use, revealed through attention to the variety of contexts and purposes for which language is deployed\u2014guides this engine's emphasis on usage patterns over dictionary definitions. The tradition teaches the engine to treat semantic constellations as maps of actual deployment rather than formal logical relationships, attending to the pragmatic work concepts perform in argumentation.",
+        "name": "ordinary_language_philosophy"
+      },
+      {
+        "description": "The interdisciplinary approach emerging in the 1970s-80s that treats language as inseparable from general cognitive capacities, emphasizing embodied experience, conceptual metaphor, and prototype-based categorization rather than formal compositional semantics. Its core commitment\u2014that semantic structure reflects conceptual structure grounded in bodily and cultural experience\u2014enables this engine to recognize that semantic constellations are not arbitrary but motivated by underlying cognitive schemas. This tradition provides the theoretical warrant for treating an author's semantic field as diagnostic of their conceptual formation: the clustering patterns reveal deep cognitive commitments, not just stylistic choices.",
+        "name": "cognitive_linguistics"
+      },
+      {
+        "description": "The theory of categorization, developed by Rosch and extended by Lakoff and others, proposing that categories are organized around prototypical exemplars with graded membership rather than classical necessary-and-sufficient definitions. Its empirical demonstration that category boundaries are often fuzzy and that some members are 'better examples' than others provides this engine with a non-essentialist model for semantic boundaries. The engine uses prototype theory to map the internal structure of semantic constellations\u2014identifying which terms function as prototypes in an author's usage, which are peripheral, and where boundaries blur into neighboring concepts.",
+        "name": "prototype_theory"
+      },
+      {
+        "description": "The approach developed by Charles Fillmore treating word meanings as evoking structured knowledge configurations (frames) that include participants, props, and relationships characteristic of schematized experiences. Its core analytical move\u2014that understanding a term requires identifying the entire structured scenario it presupposes\u2014extends this engine's reach beyond simple word associations to the conceptual frames that organize semantic fields. Frame semantics enables the engine to recognize that when an author uses 'buyer' and 'seller', they invoke an entire COMMERCIAL_TRANSACTION frame, and the constellation must map this whole structured knowledge complex, not just pairwise term relations.",
+        "name": "frame_semantics"
+      }
     ]
   },
   "kind": "primitive",

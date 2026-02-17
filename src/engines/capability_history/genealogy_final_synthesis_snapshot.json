@@ -356,28 +356,82 @@
   "engine_name": "Genealogy Final Synthesis",
   "intellectual_lineage": {
     "key_concepts": [
-      "herkunft",
-      "entstehung",
-      "effective_history",
-      "intellectual_portrait",
-      "genealogical_narrative",
-      "multi_scale_synthesis",
-      "confidence_calibration"
+      {
+        "definition": "Nietzsche's concept of 'descent' or 'provenance'\u2014the tracking of an idea's lineage through its multiple sources, discontinuous influences, and the heterogeneous elements that combined to form it, without assuming unity or coherent development. This engine uses Herkunft to map the diverse intellectual sources feeding into a current work, refusing to reduce genealogy to a single line of descent and instead revealing the multiple, sometimes contradictory traditions an author draws upon.",
+        "name": "herkunft"
+      },
+      {
+        "definition": "Nietzsche's concept of 'emergence'\u2014the moment when an idea arises not through gradual development but through conflict, struggle, or the accidental conjunction of forces under specific conditions. This engine uses Entstehung to identify critical moments in an author's trajectory where new concepts or approaches emerged discontinuously, asking what specific intellectual problems, institutional pressures, or conceptual conflicts produced the emergence of new frameworks rather than assuming smooth evolution.",
+        "name": "entstehung"
+      },
+      {
+        "definition": "Foucault's concept (drawing on Gadamer's Wirkungsgeschichte) of history as a force actively shaping the present rather than a neutral object of study\u2014the recognition that we are formed by the histories we investigate and that genealogy reveals how past contingencies produced present necessities. This engine employs effective history to synthesize not just what happened in an author's intellectual development but how that development shaped what became possible or impossible for them to think in the current work, treating the genealogy itself as constitutive of present meaning.",
+        "name": "effective_history"
+      },
+      {
+        "definition": "A synthetic representation of a thinker's intellectual character, commitments, and trajectory that integrates biographical, contextual, and textual evidence into a coherent but non-reductive account, following Berlin's practice of creating rich portraits that capture both the distinctiveness of individual thinkers and their embeddedness in larger intellectual currents. This engine constructs intellectual portraits as the ultimate product of genealogical synthesis, rendering visible the pattern of an author's intellectual evolution and the current work's place within it.",
+        "name": "intellectual_portrait"
+      },
+      {
+        "definition": "A story of intellectual development that honors both continuity and rupture, both acknowledged debts and hidden influences, refusing both the myth of complete originality and the reduction of ideas to mere inheritance. This engine's central output is a genealogical narrative that synthesizes evidence across scales and passes into a coherent account that reveals how an author's thinking evolved, what was transformed or abandoned, and what this pattern illuminates about intellectual production generally.",
+        "name": "genealogical_narrative"
+      },
+      {
+        "definition": "The analytical practice of maintaining coherence across different levels of granularity\u2014macro patterns (overall trajectory), meso structures (per-concept genealogies), and micro evidence (specific textual instances)\u2014ensuring that broad claims about intellectual development remain grounded in particular evidence while particular details illuminate larger patterns. This engine performs multi-scale synthesis as its core operation, moving fluidly between scales while maintaining logical consistency and evidential support across all levels.",
+        "name": "multi_scale_synthesis"
+      },
+      {
+        "definition": "The epistemic practice of assigning appropriate levels of certainty to genealogical claims based on the strength and directness of evidence, distinguishing between what can be demonstrated textually, what can be reasonably inferred from context, and what remains speculative. This engine employs confidence calibration to avoid both excessive skepticism (claiming nothing can be known about intellectual influence) and naive certainty (treating all apparent connections as proven dependencies), marking the epistemic status of each genealogical claim in its synthetic narrative.",
+        "name": "confidence_calibration"
+      }
     ],
-    "primary": "foucault",
+    "primary": {
+      "description": "Michel Foucault (1926-1984), French philosopher and historian whose genealogical method provides the foundational framework for this engine's approach to tracing intellectual lineages. His insistence that genealogy reveals discontinuities, ruptures, and the contingent emergence of seemingly natural categories\u2014rather than smooth developmental narratives\u2014directly shapes this engine's commitment to uncovering what was abandoned, concealed, or transformed in an author's intellectual trajectory. Foucault's distinction between traditional history of ideas (which seeks origins and continuities) and genealogy (which reveals the play of forces, accidents, and reversals) defines this engine's analytical stance toward synthesizing an author's intellectual development.",
+      "name": "foucault"
+    },
     "secondary": [
-      "nietzsche",
-      "berlin",
-      "grafton",
-      "skinner"
+      {
+        "description": "Friedrich Nietzsche (1844-1900), German philosopher whose Genealogy of Morals pioneered the method of revealing how current meanings conceal radically different origins, teaching that what appears natural is often historically contingent and ideologically constructed. His distinction between Herkunft (descent/provenance) and Entstehung (emergence through struggle) provides this engine with conceptual tools for distinguishing between an idea's lineage and the specific conditions under which it emerged in a particular work. Nietzsche's suspicion toward developmental narratives and his attention to the revaluation of concepts across time inform this engine's vigilance against imposing false continuity on an author's intellectual evolution.",
+        "name": "nietzsche"
+      },
+      {
+        "description": "Isaiah Berlin (1909-1997), British philosopher and historian of ideas whose approach to intellectual history emphasizes that ideas have practical consequences and that understanding their genealogy matters for grasping their influence on human action and institutions. Berlin's method of creating rich intellectual portraits that connect abstract ideas to biographical, cultural, and political contexts provides this engine with a model for multi-scale synthesis that moves from textual analysis to broader patterns of thought. His insistence that intellectual history must recover what ideas meant to their original thinkers\u2014while tracing their transformation across contexts\u2014shapes this engine's commitment to both fidelity to textual evidence and attention to conceptual evolution.",
+        "name": "berlin"
+      },
+      {
+        "description": "Anthony Grafton (1950-), American historian whose meticulous scholarship on the history of scholarship itself\u2014particularly footnotes, textual criticism, and the material practices of intellectual work\u2014informs this engine's attention to how ideas are transmitted, acknowledged, and concealed through citation practices and textual apparatus. Grafton's work on intellectual prosopography and the social networks of knowledge production provides methodological tools for mapping not just what an author thought but how institutional, material, and social conditions shaped that thinking. His combination of microhistorical precision with broader cultural analysis models this engine's commitment to grounding macro-level genealogical narratives in specific textual evidence.",
+        "name": "grafton"
+      },
+      {
+        "description": "Quentin Skinner (1940-), British historian and political theorist whose contextualist methodology insists that understanding a text requires recovering the specific linguistic and ideological context in which it was produced, guarding against anachronistic readings that project later meanings backward. Skinner's emphasis on authorial intention as recovered through analysis of what speech acts a text was performing in its original context provides this engine with tools for distinguishing genuine intellectual debts from superficial resemblances across an author's works. His work on conceptual change and the history of political thought informs this engine's approach to tracking how an author's use of specific concepts evolves, is repurposed, or is abandoned across their intellectual trajectory.",
+        "name": "skinner"
+      }
     ],
     "traditions": [
-      "genealogy",
-      "genealogy_of_morals",
-      "intellectual_history",
-      "historical_synthesis",
-      "prosopography",
-      "wissenschaftsgeschichte"
+      {
+        "description": "The Foucauldian methodological tradition that investigates how present configurations of knowledge, practice, or discourse emerged through contingent historical processes rather than logical development or progressive refinement. Genealogy refuses teleological narratives, instead attending to discontinuities, accidents, reversals, and the play of power in shaping what comes to seem natural or necessary. This engine deploys genealogy to trace how an author's current work relates to prior output not as inevitable development but as contingent emergence, revealing what was suppressed, transformed, or concealed in the process.",
+        "name": "genealogy"
+      },
+      {
+        "description": "Nietzsche's specific genealogical project that demonstrated how moral concepts underwent radical revaluation\u2014such that 'good' once meant 'noble' but came to mean 'selfless'\u2014revealing that current meanings often conceal fundamentally different origins. This tradition's core commitment is to denaturalization: showing that what appears self-evident is historically constructed through struggles and reversals. This engine applies this approach to intellectual genealogy, investigating how an author's concepts may retain the same terminology while undergoing fundamental semantic shifts, or how seemingly new ideas may unconsciously repurpose abandoned earlier frameworks.",
+        "name": "genealogy_of_morals"
+      },
+      {
+        "description": "The disciplinary tradition exemplified by Berlin, Skinner, and others that studies the development and transmission of ideas across time, insisting that ideas must be understood in their contexts of production and that they have consequences for action, institutions, and subsequent thought. Unlike pure history of philosophy, intellectual history attends to the social, political, and cultural embedding of ideas; unlike social history, it takes the content and logic of ideas seriously as causal forces. This engine draws on intellectual history's commitment to contextual understanding and its methods for tracing conceptual change while maintaining attention to the specific arguments and claims made in texts.",
+        "name": "intellectual_history"
+      },
+      {
+        "description": "The scholarly practice of integrating diverse sources of evidence, multiple analytical scales, and different types of historical data into coherent narratives that reveal patterns invisible in any single source or scale of analysis. Historical synthesis requires methodological sophistication to avoid reductionism (collapsing complexity to a single factor) or incoherence (failing to connect diverse elements into a meaningful whole). This engine performs historical synthesis by integrating findings from multiple genealogical passes\u2014archaeological discoveries, dimensional traces, conditions of possibility\u2014into a unified genealogical portrait of an author's intellectual trajectory that operates simultaneously at macro, meso, and micro scales.",
+        "name": "historical_synthesis"
+      },
+      {
+        "description": "The historical method of collective biography that investigates shared characteristics, networks, and patterns across groups of individuals, originally developed for studying Roman political elites and later applied to intellectual communities. Prosopography reveals how social networks, institutional affiliations, and shared training shape intellectual production, making visible the collective conditions underlying seemingly individual achievements. This engine adapts prosopographic methods to analyze a single author's intellectual network across time, treating the author's earlier works and influences as a kind of intellectual community whose relationships and patterns illuminate the genealogy of the current work.",
+        "name": "prosopography"
+      },
+      {
+        "description": "The German tradition of 'science of science history' or history of scholarship that investigates not just the content of knowledge but the methods, institutions, practices, and material conditions through which knowledge is produced and transmitted. Wissenschaftsgeschichte attends to how disciplinary formations, pedagogical practices, and scholarly apparatus (citations, footnotes, archives) shape what can be thought and said. This engine incorporates this tradition's attention to the material and methodological dimensions of intellectual production, investigating how an author's evolving methods, institutional contexts, and scholarly practices shape the substantive content and genealogy of their ideas.",
+        "name": "wissenschaftsgeschichte"
+      }
     ]
   },
   "kind": "synthesis",

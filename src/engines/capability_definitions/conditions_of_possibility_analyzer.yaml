@@ -22,48 +22,127 @@ problematique: |
   The counterfactual is central: imagine the argument written by
   someone with no prior work history. What remains? That difference
   between the actual and the counterfactual -- that is path-dependence.
-researcher_question: What conditions of possibility does an author's prior work create
-  for their current argument, and what paths were foreclosed?
+researcher_question: What conditions of possibility does an author's prior work create for their current
+  argument, and what paths were foreclosed?
 intellectual_lineage:
-  primary: foucault
+  primary:
+    name: foucault
+    description: 'Michel Foucault (1926-1984), French philosopher and historian of ideas whose archaeological
+      and genealogical methods revealed how systems of thought emerge not from linear progress but from
+      ruptures in epistemic conditions. His concept of ''conditions of possibility'' — the historical
+      a priori that makes certain statements thinkable at particular moments — provides this engine''s
+      foundational question: what had to be assembled (institutionally, discursively, materially) for
+      an argument to become possible, and what constraints did that assembly impose on what could subsequently
+      be said?'
   secondary:
-  - skinner
-  - quentin_skinner
-  - arthur_lovejoy
+  - name: skinner
+    description: 'Quentin Skinner (1940-), British historian and founder of the Cambridge School contextualism,
+      whose methodology demands that texts be understood through the linguistic and ideological conventions
+      available to their authors at the moment of writing. His insistence that we recover what an author
+      could have meant — not what later interpreters wish they meant — provides this engine''s counterfactual
+      discipline: distinguishing between what an author''s prior work made possible versus what the argument
+      actually required.'
+  - name: quentin_skinner
+    description: Quentin Skinner (1940-), whose concept of 'rhetorical redescription' shows how intellectual
+      innovation occurs within — not beyond — inherited vocabularies, as thinkers stretch, recombine,
+      or subvert available terms. This framework helps the engine identify moments where an author's prior
+      conceptual commitments both enable new arguments (by providing established vocabulary) and constrain
+      them (by binding the author to audiences and frameworks that limit radical departure).
+  - name: arthur_lovejoy
+    description: Arthur O. Lovejoy (1873-1962), American philosopher and founder of the history of ideas,
+      who traced 'unit-ideas' across centuries to reveal hidden continuities and constraints in philosophical
+      argument. His method of isolating conceptual building blocks — showing how complex arguments depend
+      on prior, often unexamined assumptions — informs this engine's technique of decomposing an author's
+      current position into debts to their earlier work, revealing the genealogical sediment beneath present
+      claims.
   traditions:
-  - archaeology
-  - genealogy
-  - critical_theory
-  - cambridge_school
-  - path_dependence_theory
+  - name: archaeology
+    description: 'Foucauldian archaeology excavates the rules that govern what can be said in a given
+      epoch, identifying discontinuities in discursive formations rather than tracing smooth development.
+      For this engine, archaeology provides a method for identifying the epistemic conditions an author
+      inherits from their own prior work: the conceptual grids, taxonomies, and problem-spaces that structure
+      what arguments become formulable and what questions can be asked.'
+  - name: genealogy
+    description: 'Foucauldian genealogy traces how present arrangements emerged through contingent struggle,
+      accident, and power rather than necessity or progress, emphasizing the paths not taken and possibilities
+      foreclosed. This tradition equips the engine to ask counterfactual questions: what alternative trajectories
+      were available at each stage of an author''s intellectual development, and how did choices made
+      in earlier work constrain or enable later argumentation?'
+  - name: critical_theory
+    description: 'Critical theory, from the Frankfurt School through contemporary variants, interrogates
+      the hidden social and institutional conditions that shape knowledge production, asking whose interests
+      are served by particular framings. This tradition directs the engine to examine not just conceptual
+      but material and institutional conditions: how an author''s position, audience, and disciplinary
+      location structure what arguments are possible and which remain unthinkable.'
+  - name: cambridge_school
+    description: The Cambridge School of intellectual history, developed by Skinner and Pocock, demands
+      rigorous historical contextualization by reconstructing the linguistic conventions, rhetorical moves,
+      and ideological debates available to historical actors. For this engine, the Cambridge School provides
+      methodological discipline for distinguishing what an author's prior work actually made possible
+      from anachronistic attributions, insisting that intellectual possibilities be mapped through available
+      vocabularies and acknowledged commitments.
+  - name: path_dependence_theory
+    description: 'Path dependence theory, borrowed from institutional economics and science studies, demonstrates
+      how early choices create increasing returns and lock-in effects, making certain trajectories self-reinforcing
+      while foreclosing alternatives. This tradition provides the engine with a framework for analyzing
+      how an author''s prior conceptual investments create momentum: established vocabularies attract
+      audiences, prior positions bind future commitments, and accumulated authority makes certain moves
+      possible while rendering others strategically unavailable.'
   key_concepts:
-  - episteme
-  - dispositif
-  - discursive_formation
-  - conditions_of_possibility
-  - path_dependence
-  - intellectual_toolkit
-  - counterfactual_analysis
+  - name: episteme
+    definition: The underlying epistemological configuration that determines, in a given period and domain,
+      what counts as knowledge, what problems are recognizable, and what methods are legitimate. The engine
+      uses this to map the epistemic field an author's prior work has constructed for their current argument
+      — the implicit rules governing what can be said.
+  - name: dispositif
+    definition: A heterogeneous apparatus linking discourses, institutions, architectural forms, regulations,
+      and practices into a strategic network that produces particular effects. The engine deploys this
+      to trace how an author's prior institutional positions, publication venues, and audience relationships
+      form a material-discursive apparatus shaping what arguments are possible.
+  - name: discursive_formation
+    definition: A system of rules that defines what statements are recognizable, valid, and related within
+      a domain, determining which objects can appear and which speaking positions are authorized. The
+      engine uses this to identify how an author's earlier work establishes a discursive formation that
+      both legitimates and constrains their current intervention.
+  - name: conditions_of_possibility
+    definition: 'The ensemble of prerequisites — conceptual, institutional, material, discursive — that
+      must be in place for a particular statement, practice, or argument to become thinkable and utterable.
+      This is the engine''s central analytical target: what conditions did the author''s prior work create
+      that make the current argument possible?'
+  - name: path_dependence
+    definition: The process by which early choices generate self-reinforcing effects that constrain future
+      options, creating lock-in even when alternatives might be superior. The engine uses this to analyze
+      how an author's prior conceptual commitments create momentum and constraint, making certain argumentative
+      moves natural while foreclosing others.
+  - name: intellectual_toolkit
+    definition: The accumulated repertoire of concepts, methods, rhetorical strategies, and frameworks
+      an author has developed through prior work, which becomes both resource and constraint for new arguments.
+      The engine inventories this toolkit to determine what the current argument inherits and what it
+      must work around.
+  - name: counterfactual_analysis
+    definition: 'The methodological practice of imagining alternative scenarios — arguments by authors
+      without particular prior commitments, or trajectories where different choices were made — to isolate
+      the causal effect of specific conditions. The engine uses counterfactuals to measure what the author''s
+      prior work specifically contributes: the difference between what was written and what could have
+      been.'
 analytical_dimensions:
 - key: enabling_conditions
   description: |
     What conditions had to exist for this argument to become thinkable? What prior work laid the conceptual, institutional, and methodological groundwork that makes the current argument possible?
   probing_questions:
   - What conceptual foundations from prior work make the current argument possible?
-  - What audience preparation was needed -- were readers trained to accept certain
-    premises?
+  - What audience preparation was needed -- were readers trained to accept certain premises?
   - What authority had to be established first -- what credibility is being spent?
   - What frameworks from prior work are reused or presupposed?
   - What problems were defined in prior work that shape what counts as a problem now?
   - What methodological precedents were set -- what analytical approaches were habituated?
   depth_guidance:
     surface: Identify the 3-5 most obvious enabling conditions with brief descriptions
-    standard: Map enabling conditions with essentiality ratings (critical/important/supporting),
-      evidence from the texts, and assessment of how the author manages each (acknowledged/implicit/denied/instrumentalized)
-    deep: 'Full archaeological analysis: enabling conditions, their mutual dependencies,
-      the intellectual toolkit they constitute, how conditions from different fields
-      and indirect sources operate below conscious awareness, and how the ensemble
-      of conditions creates a specific landscape of thinkability'
+    standard: Map enabling conditions with essentiality ratings (critical/important/supporting), evidence
+      from the texts, and assessment of how the author manages each (acknowledged/implicit/denied/instrumentalized)
+    deep: 'Full archaeological analysis: enabling conditions, their mutual dependencies, the intellectual
+      toolkit they constitute, how conditions from different fields and indirect sources operate below
+      conscious awareness, and how the ensemble of conditions creates a specific landscape of thinkability'
 - key: constraining_conditions
   description: |
     What prior commitments limit or bind the current argument? How does the author's intellectual history constrain what they can now say, and how do they navigate these constraints?
@@ -75,27 +154,24 @@ analytical_dimensions:
   - Is there methodological path-dependence -- trained to see the world one way?
   depth_guidance:
     surface: Identify the 2-3 strongest constraints with binding force
-    standard: Map constraints with binding force (strong/moderate/weak) and how the
-      author navigates each (addresses/works around/ignores/reframes)
-    deep: 'Analyze the full constraint landscape: how constraints interact, what navigation
-      strategies the author employs, and whether constraints are productive (forcing
-      rigor) or limiting (preventing growth)'
+    standard: Map constraints with binding force (strong/moderate/weak) and how the author navigates each
+      (addresses/works around/ignores/reframes)
+    deep: 'Analyze the full constraint landscape: how constraints interact, what navigation strategies
+      the author employs, and whether constraints are productive (forcing rigor) or limiting (preventing
+      growth)'
 - key: path_dependencies
   description: |
     Causal chains showing how prior positions accumulate into current constraints and enablements. The intellectual archaeology of how A led to B led to C, which now serves as unexamined premise for D.
   probing_questions:
   - What chains of reasoning connect prior work to current positions?
-  - Which premises in the current work are actually inherited conclusions from prior
-    work?
+  - Which premises in the current work are actually inherited conclusions from prior work?
   - Are these dependency chains acknowledged or hidden?
   - How would the argument collapse if key links in the chain were removed?
   depth_guidance:
     surface: Identify the 1-2 most significant dependency chains
-    standard: Map major dependency chains with the sequence of works and positions
-      involved
-    deep: 'Full path analysis: all significant chains, their acknowledgment status,
-      mutual reinforcement, and what the argument would look like if key links were
-      absent'
+    standard: Map major dependency chains with the sequence of works and positions involved
+    deep: 'Full path analysis: all significant chains, their acknowledgment status, mutual reinforcement,
+      and what the argument would look like if key links were absent'
 - key: unacknowledged_debts
   description: |
     Intellectual debts hidden from the reader. Cases where the current argument relies on prior work without acknowledgment -- whether from embarrassment, oversight, desire for novelty, or strategic reasons.
@@ -107,9 +183,8 @@ analytical_dimensions:
   depth_guidance:
     surface: Note any obvious unacknowledged borrowings
     standard: Identify debts with evidence and hypothesize reasons for non-acknowledgment
-    deep: 'Map the full debt structure: what is owed, to which works, the evidence,
-      the likely reasons for concealment, and how acknowledgment would change the
-      argument''s reception'
+    deep: 'Map the full debt structure: what is owed, to which works, the evidence, the likely reasons
+      for concealment, and how acknowledgment would change the argument''s reception'
 - key: alternative_paths
   description: |
     Branching points where different intellectual trajectories were available. What could the author have argued instead from the same starting conditions, and why was the chosen path preferred?
@@ -121,9 +196,8 @@ analytical_dimensions:
   depth_guidance:
     surface: Identify 1-2 major branching points
     standard: Map branching points with alternative paths and reasons for choices
-    deep: 'Full alternative analysis: all significant branching points, paths not
-      taken, the resources that favored the chosen path, and detailed counterfactual
-      scenarios'
+    deep: 'Full alternative analysis: all significant branching points, paths not taken, the resources
+      that favored the chosen path, and detailed counterfactual scenarios'
 - key: counterfactual_analysis
   description: |
     The central thought experiment: imagine this argument written by someone with no prior work history. What changes? What remains? This separates genuine innovation from accumulated intellectual capital.
@@ -134,10 +208,9 @@ analytical_dimensions:
   - Does the path-dependence add depth, or trap the author?
   depth_guidance:
     surface: 'Brief counterfactual: what is most obviously path-dependent'
-    standard: 2-3 paragraph counterfactual analysis separating genuine innovation
-      from inheritance
-    deep: Full counterfactual with specific examples, proportion estimates, and assessment
-      of whether path-dependence is productive or limiting
+    standard: 2-3 paragraph counterfactual analysis separating genuine innovation from inheritance
+    deep: Full counterfactual with specific examples, proportion estimates, and assessment of whether
+      path-dependence is productive or limiting
 - key: cross_domain_transfers
   description: |
     Intellectual toolkits imported from different fields that shape thinking below conscious awareness. An author trained in game theory doesn't just have ideas from that field -- they have a WAY OF THINKING that shapes everything after.
@@ -148,11 +221,10 @@ analytical_dimensions:
   - Do the transferred frameworks create blind spots or unique insights?
   depth_guidance:
     surface: Note any obvious cross-domain influences
-    standard: Map transfers with source fields, what was imported, and how it shapes
-      the argument
-    deep: 'Analyze the full toolkit: transferred frameworks, their visibility to the
-      author, the blind spots they create, the unique insights they enable, and how
-      they interact with discipline-internal frameworks'
+    standard: Map transfers with source fields, what was imported, and how it shapes the argument
+    deep: 'Analyze the full toolkit: transferred frameworks, their visibility to the author, the blind
+      spots they create, the unique insights they enable, and how they interact with discipline-internal
+      frameworks'
 - key: synthetic_judgment
   description: |
     Overall assessment: is the intellectual biography more enabling or constraining, and does the author manage the relationship productively? Is path-dependence a source of depth or a trap?
@@ -164,12 +236,11 @@ analytical_dimensions:
   depth_guidance:
     surface: One-paragraph judgment
     standard: 2-3 paragraph assessment with evidence
-    deep: Full assessment with specific recommendations for the author and implications
-      for the field
+    deep: Full assessment with specific recommendations for the author and implications for the field
 capabilities:
 - key: map_enabling_conditions
-  description: Identify and classify the epistemic, institutional, material, and discursive
-    preconditions that make an argument thinkable
+  description: Identify and classify the epistemic, institutional, material, and discursive preconditions
+    that make an argument thinkable
   produces_dimensions:
   - enabling_conditions
   requires_dimensions: []
@@ -182,32 +253,24 @@ capabilities:
   intellectual_grounding:
     thinker: foucault
     concept: episteme
-    method: Foucault's archaeological method examines not what authors consciously
-      intended but what system of thought made their statements possible—the rules
-      of formation that determine what can be said, who can say it, and how it acquires
-      truth-value. This capability applies that method to trace the historical a priori
-      that conditions an argument.
+    method: Foucault's archaeological method examines not what authors consciously intended but what system
+      of thought made their statements possible—the rules of formation that determine what can be said,
+      who can say it, and how it acquires truth-value. This capability applies that method to trace the
+      historical a priori that conditions an argument.
   indicators:
-  - Author employs technical vocabulary without definition, suggesting reader familiarity
-    from prior work
-  - Argument begins mid-conversation, presupposing resolution of debates the author
-    previously engaged
-  - Methodological moves are executed without justification, as if naturalized through
-    repetition
-  - Author's institutional position or prior publications are invoked as authorization
-    for claims
-  - Conceptual frameworks appear fully formed rather than being constructed within
-    the text
+  - Author employs technical vocabulary without definition, suggesting reader familiarity from prior work
+  - Argument begins mid-conversation, presupposing resolution of debates the author previously engaged
+  - Methodological moves are executed without justification, as if naturalized through repetition
+  - Author's institutional position or prior publications are invoked as authorization for claims
+  - Conceptual frameworks appear fully formed rather than being constructed within the text
   depth_scaling:
-    surface: Identifies 3-5 most obvious enabling conditions (prior conceptual work,
-      audience preparation, established authority) with brief descriptions of each.
-    standard: Maps enabling conditions with essentiality ratings (critical/important/supporting),
-      specific textual evidence showing reliance, and assessment of author's management
-      strategy (acknowledged/implicit/denied/instrumentalized).
-    deep: Full archaeological analysis of the ensemble of enabling conditions, their
-      mutual dependencies, how they constitute a coherent intellectual toolkit, tracking
-      conditions from multiple fields and indirect sources operating below conscious
-      awareness, revealing the complete landscape of thinkability.
+    surface: Identifies 3-5 most obvious enabling conditions (prior conceptual work, audience preparation,
+      established authority) with brief descriptions of each.
+    standard: Maps enabling conditions with essentiality ratings (critical/important/supporting), specific
+      textual evidence showing reliance, and assessment of author's management strategy (acknowledged/implicit/denied/instrumentalized).
+    deep: Full archaeological analysis of the ensemble of enabling conditions, their mutual dependencies,
+      how they constitute a coherent intellectual toolkit, tracking conditions from multiple fields and
+      indirect sources operating below conscious awareness, revealing the complete landscape of thinkability.
 - key: detect_constraints
   description: Identify binding prior commitments and assess their force
   produces_dimensions:
@@ -222,32 +285,26 @@ capabilities:
   intellectual_grounding:
     thinker: path_dependence_theory
     concept: lock-in
-    method: Path-dependence theory, particularly from institutional economics, shows
-      how prior choices create increasing returns that make switching costly. Applied
-      to intellectual history, it reveals how theoretical commitments, methodological
-      investments, and reputational positions create lock-in effects that constrain
-      subsequent argument paths even when alternatives might be superior.
+    method: Path-dependence theory, particularly from institutional economics, shows how prior choices
+      create increasing returns that make switching costly. Applied to intellectual history, it reveals
+      how theoretical commitments, methodological investments, and reputational positions create lock-in
+      effects that constrain subsequent argument paths even when alternatives might be superior.
   indicators:
   - Author carefully hedges or qualifies claims that might contradict prior positions
   - Conspicuous silence on topics the author previously addressed with different conclusions
   - Defensive footnotes acknowledging but minimizing departures from earlier work
-  - Argumentative contortions to maintain consistency with a framework the author
-    has elsewhere defended
-  - Appeals to audience expectations or community standards that limit argumentative
-    options
+  - Argumentative contortions to maintain consistency with a framework the author has elsewhere defended
+  - Appeals to audience expectations or community standards that limit argumentative options
   depth_scaling:
-    surface: Identifies 2-3 strongest constraints with assessment of binding force
-      (strong/moderate/weak).
-    standard: Maps constraints with binding force ratings and detailed analysis of
-      how the author navigates each (directly addresses/works around/ignores/reframes),
-      including textual evidence of navigation strategies.
-    deep: Analyzes the complete constraint landscape including constraint interactions,
-      comprehensive taxonomy of navigation strategies employed, and assessment of
-      whether each constraint is productive (forcing rigor and coherence) or limiting
-      (preventing intellectual growth).
+    surface: Identifies 2-3 strongest constraints with assessment of binding force (strong/moderate/weak).
+    standard: Maps constraints with binding force ratings and detailed analysis of how the author navigates
+      each (directly addresses/works around/ignores/reframes), including textual evidence of navigation
+      strategies.
+    deep: Analyzes the complete constraint landscape including constraint interactions, comprehensive
+      taxonomy of navigation strategies employed, and assessment of whether each constraint is productive
+      (forcing rigor and coherence) or limiting (preventing intellectual growth).
 - key: trace_path_dependence
-  description: Map causal chains of intellectual accumulation from prior to current
-    work
+  description: Map causal chains of intellectual accumulation from prior to current work
   produces_dimensions:
   - path_dependencies
   requires_dimensions:
@@ -262,28 +319,23 @@ capabilities:
   intellectual_grounding:
     thinker: foucault
     concept: genealogy
-    method: Foucault's genealogical method traces how present configurations emerged
-      from contingent historical processes rather than logical necessity. Applied
-      here, it shows how current arguments descend from prior positions through accumulation
-      and sedimentation, revealing path-dependence where linear intellectual history
-      sees development or progress.
+    method: Foucault's genealogical method traces how present configurations emerged from contingent historical
+      processes rather than logical necessity. Applied here, it shows how current arguments descend from
+      prior positions through accumulation and sedimentation, revealing path-dependence where linear intellectual
+      history sees development or progress.
   indicators:
   - Current argument treats as premise what prior work established as conclusion
   - Technical terms whose meaning was defined in earlier works are used without redefinition
-  - Author references 'as I have shown elsewhere' suggesting inherited rather than
-    fresh argument
-  - Conceptual frameworks appear without justification because they were justified
-    in prior publications
-  - Methodological choices that make sense only given the author's specific intellectual
-    trajectory
+  - Author references 'as I have shown elsewhere' suggesting inherited rather than fresh argument
+  - Conceptual frameworks appear without justification because they were justified in prior publications
+  - Methodological choices that make sense only given the author's specific intellectual trajectory
   depth_scaling:
-    surface: Identifies 1-2 most significant dependency chains with brief description
-      of the sequence.
-    standard: Maps major dependency chains showing the sequence of works and positions
-      involved, with assessment of whether chains are acknowledged or hidden.
-    deep: Full path analysis of all significant chains, their acknowledgment status,
-      how chains from different works mutually reinforce, and detailed counterfactual
-      analysis of what the argument would look like if key links were removed.
+    surface: Identifies 1-2 most significant dependency chains with brief description of the sequence.
+    standard: Maps major dependency chains showing the sequence of works and positions involved, with
+      assessment of whether chains are acknowledged or hidden.
+    deep: Full path analysis of all significant chains, their acknowledgment status, how chains from different
+      works mutually reinforce, and detailed counterfactual analysis of what the argument would look like
+      if key links were removed.
 - key: reveal_debts
   description: Surface unacknowledged intellectual borrowings and hypothesize reasons
   produces_dimensions:
@@ -298,31 +350,23 @@ capabilities:
   intellectual_grounding:
     thinker: quentin_skinner
     concept: rhetorical_strategy
-    method: Skinner's contextualist method examines what an author was doing in making
-      an argument—what rhetorical moves were being executed, what positions were being
-      contested. This capability applies that lens to ask what an author gains rhetorically
-      by obscuring connections to their own prior work, treating non-acknowledgment
-      as a strategic choice worth interpreting.
+    method: Skinner's contextualist method examines what an author was doing in making an argument—what
+      rhetorical moves were being executed, what positions were being contested. This capability applies
+      that lens to ask what an author gains rhetorically by obscuring connections to their own prior work,
+      treating non-acknowledgment as a strategic choice worth interpreting.
   indicators:
-  - Ideas presented as novel that appear substantially similar to claims in prior
-    works
+  - Ideas presented as novel that appear substantially similar to claims in prior works
   - Shifts in terminology that rebrand rather than reconceptualize earlier positions
-  - Arguments structured around frameworks developed elsewhere without citation to
-    the original development
-  - Current work claims to break new ground in areas the author has previously published
-    on without acknowledgment
-  - Omission of self-citation at points where the author's prior work is directly
-    relevant
+  - Arguments structured around frameworks developed elsewhere without citation to the original development
+  - Current work claims to break new ground in areas the author has previously published on without acknowledgment
+  - Omission of self-citation at points where the author's prior work is directly relevant
   depth_scaling:
-    surface: Notes any obvious unacknowledged borrowings from prior work with brief
-      description.
-    standard: Identifies specific debts with textual evidence from both current and
-      prior work, and hypothesizes reasons for non-acknowledgment (embarrassment/oversight/novelty
-      claim/strategic distancing).
-    deep: 'Maps the complete debt structure: what is owed, to which specific prior
-      works, comprehensive evidence, likely reasons for concealment including psychological
-      and strategic factors, and detailed assessment of how acknowledgment would change
-      the argument''s reception and credibility.'
+    surface: Notes any obvious unacknowledged borrowings from prior work with brief description.
+    standard: Identifies specific debts with textual evidence from both current and prior work, and hypothesizes
+      reasons for non-acknowledgment (embarrassment/oversight/novelty claim/strategic distancing).
+    deep: 'Maps the complete debt structure: what is owed, to which specific prior works, comprehensive
+      evidence, likely reasons for concealment including psychological and strategic factors, and detailed
+      assessment of how acknowledgment would change the argument''s reception and credibility.'
 - key: map_alternative_paths
   description: Identify branching points and paths not taken
   produces_dimensions:
@@ -339,32 +383,27 @@ capabilities:
   intellectual_grounding:
     thinker: quentin_skinner
     concept: available_moves
-    method: Skinner's contextualism emphasizes that authors operate within a repertoire
-      of available moves constrained by linguistic and conceptual conventions of their
-      time. This capability applies that insight diachronically to an author's own
-      corpus, asking what moves were available at each stage and why certain ones
-      were selected over alternatives.
+    method: Skinner's contextualism emphasizes that authors operate within a repertoire of available moves
+      constrained by linguistic and conceptual conventions of their time. This capability applies that
+      insight diachronically to an author's own corpus, asking what moves were available at each stage
+      and why certain ones were selected over alternatives.
   indicators:
-  - Author explicitly considers and rejects alternative positions that could have
-    been developed from prior work
-  - Significant shifts in emphasis or focus between works suggesting choices about
-    what threads to pursue
+  - Author explicitly considers and rejects alternative positions that could have been developed from
+    prior work
+  - Significant shifts in emphasis or focus between works suggesting choices about what threads to pursue
   - Theoretical frameworks adopted that foreclose other frameworks previously available
   - Responses to critics that reveal paths the author chose not to take
   - Disciplinary or institutional migrations that opened new paths while closing others
   depth_scaling:
-    surface: Identifies 1-2 major branching points where different argumentative paths
-      were available.
-    standard: Maps branching points with description of alternative paths available,
-      reasons the chosen path was preferred (conceptual/institutional/audience resources),
-      and brief assessment of what was gained and lost.
-    deep: 'Comprehensive alternative analysis: all significant branching points, detailed
-      description of paths not taken, analysis of the full resource landscape that
-      favored the chosen path, and rich counterfactual scenarios showing how current
-      argument would differ if alternatives had been pursued.'
+    surface: Identifies 1-2 major branching points where different argumentative paths were available.
+    standard: Maps branching points with description of alternative paths available, reasons the chosen
+      path was preferred (conceptual/institutional/audience resources), and brief assessment of what was
+      gained and lost.
+    deep: 'Comprehensive alternative analysis: all significant branching points, detailed description
+      of paths not taken, analysis of the full resource landscape that favored the chosen path, and rich
+      counterfactual scenarios showing how current argument would differ if alternatives had been pursued.'
 - key: explore_counterfactuals
-  description: Separate genuine innovation from accumulated intellectual capital through
-    thought experiment
+  description: Separate genuine innovation from accumulated intellectual capital through thought experiment
   produces_dimensions:
   - counterfactual_analysis
   requires_dimensions:
@@ -380,33 +419,27 @@ capabilities:
   intellectual_grounding:
     thinker: path_dependence_theory
     concept: counterfactual_analysis
-    method: Path-dependence theory uses counterfactual reasoning to assess the causal
-      impact of historical contingencies. By imagining a world where the contingent
-      event didn't occur and comparing outcomes, we can measure the magnitude of path-dependence.
-      This capability applies that method to intellectual history, asking what would
-      remain without the contingent fact of this author's specific prior work.
+    method: Path-dependence theory uses counterfactual reasoning to assess the causal impact of historical
+      contingencies. By imagining a world where the contingent event didn't occur and comparing outcomes,
+      we can measure the magnitude of path-dependence. This capability applies that method to intellectual
+      history, asking what would remain without the contingent fact of this author's specific prior work.
   indicators:
   - Arguments that presuppose conceptual frameworks without establishing them
-  - Claims that draw authority from the author's prior work or reputation rather than
-    independent argument
+  - Claims that draw authority from the author's prior work or reputation rather than independent argument
   - Technical vocabulary whose meaning depends on prior definitional work
-  - Positions that make sense only as developments of or responses to the author's
-    earlier claims
-  - Audience preparation that enables compressed argument unavailable to someone writing
-    ab initio
+  - Positions that make sense only as developments of or responses to the author's earlier claims
+  - Audience preparation that enables compressed argument unavailable to someone writing ab initio
   depth_scaling:
-    surface: Brief counterfactual identifying what is most obviously path-dependent
-      versus what could exist independently of prior work.
-    standard: 2-3 paragraph counterfactual analysis separating genuine innovation
-      from inherited intellectual capital, with examples of each and rough proportion
-      estimates.
-    deep: Comprehensive counterfactual with specific examples of what changes in each
-      section of the argument, detailed proportion estimates of novel versus inherited
-      content, and evaluative assessment of whether the path-dependence is productive
-      (depth/coherence) or limiting (constraint/obsolescence).
+    surface: Brief counterfactual identifying what is most obviously path-dependent versus what could
+      exist independently of prior work.
+    standard: 2-3 paragraph counterfactual analysis separating genuine innovation from inherited intellectual
+      capital, with examples of each and rough proportion estimates.
+    deep: Comprehensive counterfactual with specific examples of what changes in each section of the argument,
+      detailed proportion estimates of novel versus inherited content, and evaluative assessment of whether
+      the path-dependence is productive (depth/coherence) or limiting (constraint/obsolescence).
 - key: detect_cross_domain_transfers
-  description: Identify intellectual toolkits imported from other fields that operate
-    below conscious awareness
+  description: Identify intellectual toolkits imported from other fields that operate below conscious
+    awareness
   produces_dimensions:
   - cross_domain_transfers
   requires_dimensions: []
@@ -419,35 +452,27 @@ capabilities:
   intellectual_grounding:
     thinker: arthur_lovejoy
     concept: unit-ideas
-    method: Lovejoy's history of ideas traces how fundamental conceptual units migrate
-      across disciplines and periods, taking on new meanings in new contexts. This
-      capability applies that insight to track how methodological frameworks and cognitive
-      habits—not just ideas—transfer between fields in an individual author's work,
-      shaping argument below the level of conscious awareness.
+    method: Lovejoy's history of ideas traces how fundamental conceptual units migrate across disciplines
+      and periods, taking on new meanings in new contexts. This capability applies that insight to track
+      how methodological frameworks and cognitive habits—not just ideas—transfer between fields in an
+      individual author's work, shaping argument below the level of conscious awareness.
   indicators:
-  - Characteristic problem-formulations from another discipline appear in the author's
-    argument structure
-  - Metaphors or analogies drawn systematically from a specific field outside the
-    primary discipline
-  - Methodological moves that are standard in another field but novel or unusual in
-    the current domain
+  - Characteristic problem-formulations from another discipline appear in the author's argument structure
+  - Metaphors or analogies drawn systematically from a specific field outside the primary discipline
+  - Methodological moves that are standard in another field but novel or unusual in the current domain
   - Author's training or career history includes significant time in a different discipline
-  - Analytical framework that assumes features of phenomena that are true in one domain
-    but questionable in another
+  - Analytical framework that assumes features of phenomena that are true in one domain but questionable
+    in another
   depth_scaling:
-    surface: Notes any obvious cross-domain influences or frameworks imported from
-      other fields.
-    standard: Maps specific transfers with identification of source fields, what was
-      imported (frameworks/metaphors/methods), and how it shapes the current argument's
-      structure or conclusions.
-    deep: 'Comprehensive toolkit analysis: all transferred frameworks including those
-      invisible to the author, their visibility status, systematic blind spots they
-      create, unique insights they enable, and how transferred frameworks interact
-      with discipline-internal approaches to create the author''s distinctive analytical
-      style.'
+    surface: Notes any obvious cross-domain influences or frameworks imported from other fields.
+    standard: Maps specific transfers with identification of source fields, what was imported (frameworks/metaphors/methods),
+      and how it shapes the current argument's structure or conclusions.
+    deep: 'Comprehensive toolkit analysis: all transferred frameworks including those invisible to the
+      author, their visibility status, systematic blind spots they create, unique insights they enable,
+      and how transferred frameworks interact with discipline-internal approaches to create the author''s
+      distinctive analytical style.'
 - key: synthesize_judgment
-  description: Produce overall assessment of whether intellectual biography is enabling
-    or constraining
+  description: Produce overall assessment of whether intellectual biography is enabling or constraining
   produces_dimensions:
   - synthetic_judgment
   requires_dimensions:
@@ -463,52 +488,42 @@ capabilities:
   intellectual_grounding:
     thinker: foucault
     concept: genealogy
-    method: Foucault's genealogical approach assesses not just how we arrived at present
-      configurations but whether they serve or constrain us—whether inherited structures
-      are productive or demand transformation. This capability applies that evaluative
-      dimension to ask whether an author's relationship to their own intellectual
-      history is productive or limiting, and what transformation might be needed.
+    method: Foucault's genealogical approach assesses not just how we arrived at present configurations
+      but whether they serve or constrain us—whether inherited structures are productive or demand transformation.
+      This capability applies that evaluative dimension to ask whether an author's relationship to their
+      own intellectual history is productive or limiting, and what transformation might be needed.
   indicators:
-  - Moments where the author clearly struggles with or navigates a constraint from
-    prior work
-  - Evidence of self-awareness or lack thereof regarding path-dependencies and transferred
-    frameworks
-  - Patterns across the corpus showing either growth beyond constraints or increasing
-    rigidity
+  - Moments where the author clearly struggles with or navigates a constraint from prior work
+  - Evidence of self-awareness or lack thereof regarding path-dependencies and transferred frameworks
+  - Patterns across the corpus showing either growth beyond constraints or increasing rigidity
   - The author's explicit reflections on their own intellectual development (if any)
-  - Comparison of early and late work showing trajectory toward greater or lesser
-    constraint
+  - Comparison of early and late work showing trajectory toward greater or lesser constraint
   depth_scaling:
-    surface: One-paragraph judgment on whether intellectual biography is primarily
-      enabling or constraining.
-    standard: 2-3 paragraph assessment with specific evidence, covering whether the
-      author manages their history productively, whether they're aware of path-dependence,
-      and what the balance of enabling versus constraining looks like.
-    deep: Comprehensive assessment with detailed evidence from all dimensions, specific
-      recommendations for what the author would need to do differently to escape unproductive
-      constraints or leverage productive ones more effectively, and analysis of implications
-      for the field (whether this pattern is individual or symptomatic of broader
-      dynamics).
+    surface: One-paragraph judgment on whether intellectual biography is primarily enabling or constraining.
+    standard: 2-3 paragraph assessment with specific evidence, covering whether the author manages their
+      history productively, whether they're aware of path-dependence, and what the balance of enabling
+      versus constraining looks like.
+    deep: Comprehensive assessment with detailed evidence from all dimensions, specific recommendations
+      for what the author would need to do differently to escape unproductive constraints or leverage
+      productive ones more effectively, and analysis of implications for the field (whether this pattern
+      is individual or symptomatic of broader dynamics).
 composability:
   shares_with:
-    actors_and_institutions: Institutional actors identified as enabling or constraining
-      the argument
+    actors_and_institutions: Institutional actors identified as enabling or constraining the argument
     temporal_markers: Dates and periods when enabling conditions emerged
-    prior_work_evidence: Specific textual evidence from prior works showing conditions
-      at work
-    path_dependency_chains: Causal chains that other engines can use for temporal
-      analysis
+    prior_work_evidence: Specific textual evidence from prior works showing conditions at work
+    path_dependency_chains: Causal chains that other engines can use for temporal analysis
   consumes_from:
-    conceptual_framework: From conceptual_framework_extraction -- vocabulary and methodology
-      profile of the target work
-    key_commitments: From inferential_commitment_mapper -- explicit and implicit commitments
-      that may create binding constraints
-    dimensional_comparisons: From concept_evolution -- vocabulary/methodology/metaphor/framing
-      shifts between works revealing path-dependence
-    evolution_traces: From concept_appropriation_tracker -- how ideas migrated between
-      works, showing enabling conditions
-    relationship_classifications: From relationship_classification pass -- whether
-      each prior work is direct_precursor, indirect_contextualizer, etc.
+    conceptual_framework: From conceptual_framework_extraction -- vocabulary and methodology profile of
+      the target work
+    key_commitments: From inferential_commitment_mapper -- explicit and implicit commitments that may
+      create binding constraints
+    dimensional_comparisons: From concept_evolution -- vocabulary/methodology/metaphor/framing shifts
+      between works revealing path-dependence
+    evolution_traces: From concept_appropriation_tracker -- how ideas migrated between works, showing
+      enabling conditions
+    relationship_classifications: From relationship_classification pass -- whether each prior work is
+      direct_precursor, indirect_contextualizer, etc.
   synergy_engines:
   - evolution_tactics_detector
   - concept_evolution
@@ -518,21 +533,18 @@ depth_levels:
 - key: surface
   description: Identify the most obvious enabling and constraining conditions
   typical_passes: 1
-  suitable_for: Quick assessment, policy documents, non-academic texts, preliminary
-    scoping
+  suitable_for: Quick assessment, policy documents, non-academic texts, preliminary scoping
 - key: standard
-  description: Map conditions with evidence, path dependencies with chains, unacknowledged
-    debts, and counterfactual analysis
+  description: Map conditions with evidence, path dependencies with chains, unacknowledged debts, and
+    counterfactual analysis
   typical_passes: 2
-  suitable_for: Most academic texts, author with 3-5 prior works, standard genealogy
-    analysis
+  suitable_for: Most academic texts, author with 3-5 prior works, standard genealogy analysis
 - key: deep
-  description: 'Full Foucauldian archaeological analysis: all conditions with mutual
-    dependencies, complete path analysis, cross-domain toolkit mapping, detailed counterfactuals,
-    alternative path scenarios, and synthetic judgment with field-level implications'
+  description: 'Full Foucauldian archaeological analysis: all conditions with mutual dependencies, complete
+    path analysis, cross-domain toolkit mapping, detailed counterfactuals, alternative path scenarios,
+    and synthetic judgment with field-level implications'
   typical_passes: 3
-  suitable_for: Dense philosophical works, prolific authors with 10+ works, comprehensive
-    genealogy studies
+  suitable_for: Dense philosophical works, prolific authors with 10+ works, comprehensive genealogy studies
 legacy_engine_key: conditions_of_possibility_analyzer
 apps:
 - critic

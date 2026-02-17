@@ -55,26 +55,118 @@ problematique: |
   continuity vs. surface-level change.
 researcher_question: What are you really signing up for when you accept these ideas?
 intellectual_lineage:
-  primary: brandom
+  primary:
+    name: brandom
+    description: Robert Brandom (1950–), American philosopher whose inferentialist semantics grounds meaning
+      in patterns of commitment and entitlement rather than representation or reference. His articulation
+      of concepts as nodes in inferential networks—defined by what follows from them, what they follow
+      from, and what they're incompatible with—provides this engine's foundational architecture for mapping
+      the logical structure beneath any system of claims. Brandom's deontic scorekeeping model, which
+      treats discourse as a game of tracking who is committed and entitled to what, becomes the engine's
+      method for revealing hidden commitments authors inherit when endorsing positions.
   secondary:
-  - sellars
-  - frege
-  - toulmin
+  - name: sellars
+    description: Wilfrid Sellars (1912–1989), whose distinction between the 'space of reasons' (where
+      commitments are justified through inference) and the 'space of causes' (where events have causal
+      explanations) anchors this engine's focus on logical rather than merely causal relationships between
+      ideas. His critique of the 'Myth of the Given'—the idea that beliefs can be justified non-inferentially—reinforces
+      the engine's assumption that all commitments exist within networks of mutual support and constraint.
+      Sellars provides the metaphor of inferential space as a distinct ontological domain where this engine
+      operates.
+  - name: frege
+    description: Gottlob Frege (1848–1925), founder of modern logic whose distinction between sense and
+      reference, and whose systematic treatment of logical consequence, established the formal vocabulary
+      for analyzing inferential relationships. His context principle—that words have meaning only in the
+      context of sentences, sentences only in the context of inferences—anticipates Brandom's inferentialism
+      and justifies this engine's holistic approach to commitment structures. Frege's logical rigor provides
+      the standard of precision this engine aspires to when mapping entailment and incompatibility relations.
+  - name: toulmin
+    description: Stephen Toulmin (1922–2009), whose The Uses of Argument (1958) shifted focus from formal
+      validity to the material warrants that actually govern reasoning in practice—law, ethics, science—across
+      different domains. His model of argumentation (claim, warrant, backing, rebuttal) provides this
+      engine with a practical schema for analyzing how commitments are justified in real texts, not just
+      idealized logic. Toulmin's emphasis on field-dependent inferential norms allows the engine to recognize
+      that commitment structures vary by discourse context while remaining systematically analyzable.
   traditions:
-  - inferentialism
-  - space_of_reasons
-  - logical_analysis
-  - argumentation_theory
-  - deontic_scorekeeping
+  - name: inferentialism
+    description: 'The semantic tradition holding that the meaning of any expression is constituted entirely
+      by its inferential role—what follows from it, what it follows from, and what it excludes. Inferentialism
+      rejects representationalist and referentialist semantics in favor of treating concepts as positions
+      in a network of reasoning practices. For this engine, inferentialism is the core methodology: to
+      understand what an author means by a term, map its inferential commitments; to evaluate a position,
+      trace what it entails and what it rules out.'
+  - name: space_of_reasons
+    description: The conceptual domain, articulated by Sellars and developed by Brandom, in which claims
+      stand in rational relations of justification, entitlement, and incompatibility rather than merely
+      causal relations. Entering the space of reasons means becoming subject to norms of inference and
+      assessment. This engine operates entirely within this space, treating texts as moves in the game
+      of giving and asking for reasons, and commitment structures as the underlying rule-systems that
+      govern legitimate moves.
+  - name: logical_analysis
+    description: The philosophical method, dominant in analytic philosophy since Frege and Russell, of
+      clarifying concepts and arguments by exposing their logical form—making explicit the entailment
+      relations, valid inference patterns, and formal structures implicit in ordinary language. This engine
+      inherits logical analysis's commitment to rigor and systematicity, but applies it to material inferential
+      content rather than merely formal validity. The goal is to make the logical skeleton of commitments
+      visible without reducing meaning to symbolic manipulation.
+  - name: argumentation_theory
+    description: The interdisciplinary study of reasoning-in-practice, encompassing rhetoric, informal
+      logic, dialectics, and the analysis of actual arguments in law, science, politics, and everyday
+      discourse. Argumentation theory provides this engine with sensitivity to context-dependent inferential
+      norms and real-world commitment structures that pure formal logic misses. Where formal logic asks
+      'Is this valid?', argumentation theory asks 'What commitments does this speaker undertake by making
+      this move?'—precisely the question driving this engine.
+  - name: deontic_scorekeeping
+    description: 'Brandom''s model of discourse as a social practice of tracking normative statuses—who
+      is committed to what, who is entitled to what claims, whose commitments have been discharged or
+      inherited. The scorekeeping metaphor treats assertions as moves that alter deontic scores: making
+      a claim undertakes commitment, challenges demand entitlement, concessions transfer commitments.
+      This engine applies deontic scorekeeping logic to texts, treating authors as players whose positions
+      generate score-states that can be tracked, compared, and evaluated for consistency and consequence.'
   key_concepts:
-  - inferential_commitment
-  - material_inference
-  - incompatibility
-  - entitlement
-  - deontic_score
-  - package_deal
-  - commitment_chain
-  - performative_contradiction
+  - name: inferential_commitment
+    definition: What you are obligated to defend or accept by virtue of asserting a claim; the downstream
+      consequences and upstream prerequisites that come as a package with any position. The engine maps
+      these commitments to reveal what an author has signed up for beyond their explicit statements—what
+      must be true if their claims are true, what they must reject if they reject certain conclusions.
+  - name: material_inference
+    definition: An inference whose validity depends on the content of concepts involved rather than formal
+      logical structure alone (e.g., 'X is red' entails 'X is colored'). The engine tracks material inferences
+      because most real reasoning operates through content-rich connections that formal logic alone cannot
+      capture, making material inferential networks the actual wiring of intellectual commitments.
+  - name: incompatibility
+    definition: A relation between claims where accepting one rationally forbids accepting the other,
+      creating constraint within commitment space. The engine uses incompatibility detection to identify
+      contradictions, tensions, and impossible combinations—revealing where authors attempt to hold positions
+      that cannot coherently coexist, or where competing schools of thought diverge at the level of basic
+      commitments.
+  - name: entitlement
+    definition: The normative status of being justified in making a claim or drawing an inference; having
+      met the conditions—evidential, inferential, authoritative—that license the assertion. The engine
+      distinguishes between commitments undertaken (what the author claims) and entitlements earned (what
+      the author has justified), exposing gaps where positions are asserted but not warranted by the inferential
+      structure provided.
+  - name: deontic_score
+    definition: The total configuration of commitments and entitlements attributed to a speaker at any
+      point in discourse; the normative status-profile that determines what moves are available or required
+      next. The engine constructs deontic scores for texts to represent their complete commitment landscape,
+      enabling comparison across works, detection of shifts, and assessment of internal consistency.
+  - name: package_deal
+    definition: A cluster of commitments so tightly inferentially bound that accepting any one element
+      rationally requires accepting all others; positions that cannot be unbundled without incoherence.
+      The engine identifies package deals to show readers what seemingly separable claims actually come
+      as mandatory bundles—revealing the hidden scope of what endorsing a theory commits you to.
+  - name: commitment_chain
+    definition: A sequence of inferential steps where each commitment forces the next in cascading fashion,
+      such that accepting the initial premise rationally compels accepting the final conclusion through
+      intermediate steps. The engine traces commitment chains to make explicit the full downstream consequences
+      of initial assumptions, showing how accepting apparently modest premises can lock you into far-reaching
+      positions.
+  - name: performative_contradiction
+    definition: A special case of incoherence where the act of asserting a claim undermines or contradicts
+      the content asserted (e.g., 'I am not speaking'). The engine detects performative contradictions
+      as particularly damaging commitment failures where authors' discursive practices betray incompatibility
+      with their explicit positions—revealing tensions between what is said and what is done in the saying.
 analytical_dimensions:
 - key: explicit_commitments
   description: |
@@ -87,101 +179,87 @@ analytical_dimensions:
   - How central is each commitment -- is it load-bearing or peripheral?
   depth_guidance:
     surface: List the 3-5 most important explicit commitments with centrality assessment
-    standard: Map all significant explicit commitments with centrality ratings, source
-      (original vs. inherited), supporting evidence, and inter-commitment relationships
-    deep: 'Complete explicit commitment inventory: every significant claim mapped
-      with centrality, originality assessment, evidential basis, relationship to other
-      commitments, and assessment of how the author manages the commitment (confidently,
-      tentatively, defensively)'
+    standard: Map all significant explicit commitments with centrality ratings, source (original vs. inherited),
+      supporting evidence, and inter-commitment relationships
+    deep: 'Complete explicit commitment inventory: every significant claim mapped with centrality, originality
+      assessment, evidential basis, relationship to other commitments, and assessment of how the author
+      manages the commitment (confidently, tentatively, defensively)'
 - key: implicit_commitments
   description: |
     What the author is committed to WITHOUT explicitly saying so -- the logical consequences of their stated positions that they may not have noticed, may be avoiding, or may consider too obvious to state. These are the hidden implications that make inferential analysis valuable: they reveal what the author is REALLY arguing, not just what they think they are arguing.
   probing_questions:
-  - What follows logically from the stated positions that the author does not spell
-    out?
-  - Are there commitments the author seems to be avoiding -- implications they do
-    not want to draw?
+  - What follows logically from the stated positions that the author does not spell out?
+  - Are there commitments the author seems to be avoiding -- implications they do not want to draw?
   - What would a careful reader be entitled to conclude that the author has not stated?
-  - Do any implicit commitments conflict with the author's stated values or other
-    positions?
+  - Do any implicit commitments conflict with the author's stated values or other positions?
   - Which implicit commitments would embarrass the author if made explicit?
   depth_guidance:
     surface: Identify the 2-3 most significant unstated implications of the main arguments
-    standard: 'Map implicit commitments: what follows from stated positions, how tight
-      the inference is (locked_in/usually/loosely), whether the author seems aware,
-      and whether the implication is welcome or awkward'
-    deep: 'Complete implicit commitment analysis: every significant unstated implication
-      traced from its source commitment, inference strength assessed, author awareness
-      evaluated, potential embarrassments noted, and assessment of whether the implicit
-      commitments form a coherent position or reveal hidden tensions in the author''s
-      thinking'
+    standard: 'Map implicit commitments: what follows from stated positions, how tight the inference is
+      (locked_in/usually/loosely), whether the author seems aware, and whether the implication is welcome
+      or awkward'
+    deep: 'Complete implicit commitment analysis: every significant unstated implication traced from its
+      source commitment, inference strength assessed, author awareness evaluated, potential embarrassments
+      noted, and assessment of whether the implicit commitments form a coherent position or reveal hidden
+      tensions in the author''s thinking'
 - key: commitment_conflicts
   description: |
     Points where the author's commitments -- explicit or implicit -- are in tension or outright contradiction. These conflicts are diagnostically valuable: they reveal the fault lines in the author's thinking, the unresolved tensions they are managing (or failing to manage), and the points where the argument is most vulnerable to challenge.
   probing_questions:
   - Do any explicit commitments conflict with each other?
   - Do implicit commitments conflict with explicit ones?
-  - Are there commitments inherited from cited authorities that conflict with the
-    author's own positions?
-  - How does the author manage conflicts -- acknowledged and addressed, acknowledged
-    and bracketed, or unacknowledged?
-  - Are any conflicts productive (generating new insights through their tension) rather
-    than damaging?
+  - Are there commitments inherited from cited authorities that conflict with the author's own positions?
+  - How does the author manage conflicts -- acknowledged and addressed, acknowledged and bracketed, or
+    unacknowledged?
+  - Are any conflicts productive (generating new insights through their tension) rather than damaging?
   depth_guidance:
     surface: Note the 1-2 most significant tensions or contradictions in the argument
-    standard: 'Map commitment conflicts: which commitments clash, whether the conflict
-      is acknowledged, how the author navigates it, and whether the tension is productive
-      or damaging'
-    deep: 'Full conflict analysis: every significant tension mapped with involved
-      commitments, conflict type (direct contradiction, pragmatic tension, inherited
-      conflict), author''s navigation strategy, assessment of whether navigation succeeds,
-      and counterfactual analysis of what the argument would look like if the conflict
-      were resolved in each possible direction'
+    standard: 'Map commitment conflicts: which commitments clash, whether the conflict is acknowledged,
+      how the author navigates it, and whether the tension is productive or damaging'
+    deep: 'Full conflict analysis: every significant tension mapped with involved commitments, conflict
+      type (direct contradiction, pragmatic tension, inherited conflict), author''s navigation strategy,
+      assessment of whether navigation succeeds, and counterfactual analysis of what the argument would
+      look like if the conflict were resolved in each possible direction'
 - key: logical_dependencies
   description: |
     The dependency chains between commitments: which commitments require which others as prerequisites, which are foundational (nothing depends on them being justified by other commitments in the text), and which are terminal (many things depend on them but they support nothing further). Dependency chains reveal the load-bearing structure of an argument.
   probing_questions:
-  - Which commitments are foundational -- assumed or asserted without derivation from
-    other commitments in this text?
+  - Which commitments are foundational -- assumed or asserted without derivation from other commitments
+    in this text?
   - Which commitments are derived -- following from earlier commitments in a chain?
   - What are the longest dependency chains, and where are their weakest links?
   - Are there circular dependencies where A supports B supports C supports A?
-  - What is the argument's single point of failure -- the one commitment whose collapse
-    would bring down the most?
+  - What is the argument's single point of failure -- the one commitment whose collapse would bring down
+    the most?
   depth_guidance:
-    surface: Identify the 2-3 most important dependency chains and their foundational
-      commitments
-    standard: 'Map dependency structure: foundational commitments, derived commitments
-      with their chains, weakest links, and single points of failure'
-    deep: 'Complete dependency analysis: full directed graph of commitment dependencies,
-      chain length and strength assessment, circular dependency detection, single-point-of-failure
-      analysis, load-bearing assessment (what collapses if each foundational commitment
-      is removed), and comparison of the author''s stated logical structure with the
-      actual dependency structure'
+    surface: Identify the 2-3 most important dependency chains and their foundational commitments
+    standard: 'Map dependency structure: foundational commitments, derived commitments with their chains,
+      weakest links, and single points of failure'
+    deep: 'Complete dependency analysis: full directed graph of commitment dependencies, chain length
+      and strength assessment, circular dependency detection, single-point-of-failure analysis, load-bearing
+      assessment (what collapses if each foundational commitment is removed), and comparison of the author''s
+      stated logical structure with the actual dependency structure'
 - key: hidden_implications
   description: |
     The real-world, practical, and policy implications of accepting the author's commitments -- the "so what?" that connects abstract argument to concrete consequence. Hidden implications are often where the argument becomes politically or ethically charged, even when the author presents it as purely theoretical.
   probing_questions:
-  - If the author's central claims are true, what follows for practice, policy, or
-    action?
+  - If the author's central claims are true, what follows for practice, policy, or action?
   - Are practical implications acknowledged or left unstated?
   - Do the implications align with or conflict with the author's apparent values?
   - Would the author be comfortable with all the practical implications of their position?
   - Are there implications that would be unwelcome to the author's own audience?
   depth_guidance:
     surface: Note the 2-3 most significant practical implications of the main arguments
-    standard: 'Map hidden implications: what follows for practice, whether acknowledged,
-      whether welcome, and whether consistent with the author''s stated values and
-      audience expectations'
-    deep: 'Complete implication analysis: every significant practical consequence
-      traced from its source commitments, assessment of author awareness and comfort
-      level, audience reception analysis, comparison with implications of rival positions,
-      and evaluation of whether the practical implications are actually embraced,
-      reluctantly accepted, or strategically concealed'
+    standard: 'Map hidden implications: what follows for practice, whether acknowledged, whether welcome,
+      and whether consistent with the author''s stated values and audience expectations'
+    deep: 'Complete implication analysis: every significant practical consequence traced from its source
+      commitments, assessment of author awareness and comfort level, audience reception analysis, comparison
+      with implications of rival positions, and evaluation of whether the practical implications are actually
+      embraced, reluctantly accepted, or strategically concealed'
 capabilities:
 - key: map_explicit_commitments
-  description: Inventory the author's stated claims, positions, and theses with centrality
-    and originality assessment
+  description: Inventory the author's stated claims, positions, and theses with centrality and originality
+    assessment
   produces_dimensions:
   - explicit_commitments
   requires_dimensions: []
@@ -194,31 +272,27 @@ capabilities:
   intellectual_grounding:
     thinker: brandom
     concept: deontic_scorekeeping
-    method: Brandom's notion that discursive practice involves keeping score on who
-      is committed to what allows us to treat explicit commitments as the author's
-      public deontic score—the set of positions they are on the hook for defending,
-      which determines what further moves are available to them in the space of reasons.
+    method: Brandom's notion that discursive practice involves keeping score on who is committed to what
+      allows us to treat explicit commitments as the author's public deontic score—the set of positions
+      they are on the hook for defending, which determines what further moves are available to them in
+      the space of reasons.
   indicators:
-  - Thesis statements or explicit declarations of position ("I argue that...", "My
-    claim is...")
+  - Thesis statements or explicit declarations of position ("I argue that...", "My claim is...")
   - Sustained defense of a particular position across multiple passages or chapters
   - Explicit rejection of rival positions, marking boundaries of commitment
-  - Passages where the author takes responsibility for a claim's justification rather
-    than attributing it to others
-  - Statements presented as foundational or axiomatic within the work's argumentative
-    structure
+  - Passages where the author takes responsibility for a claim's justification rather than attributing
+    it to others
+  - Statements presented as foundational or axiomatic within the work's argumentative structure
   depth_scaling:
     surface: The 3-5 most prominent thesis-level claims with basic centrality assessment.
-    standard: Complete inventory of significant explicit commitments with centrality
-      ratings, originality markers, evidential basis, and preliminary inter-commitment
-      relationships.
-    deep: Exhaustive commitment inventory including peripheral claims, with fine-grained
-      assessment of each commitment's status (confident/tentative/defensive), originality
-      analysis, evidential grounding, role in the overall argument, and how the commitment
-      is performed (asserted/demonstrated/assumed).
+    standard: Complete inventory of significant explicit commitments with centrality ratings, originality
+      markers, evidential basis, and preliminary inter-commitment relationships.
+    deep: Exhaustive commitment inventory including peripheral claims, with fine-grained assessment of
+      each commitment's status (confident/tentative/defensive), originality analysis, evidential grounding,
+      role in the overall argument, and how the commitment is performed (asserted/demonstrated/assumed).
 - key: surface_implicit_commitments
-  description: Trace the unstated logical consequences of explicit positions -- what
-    the author is committed to without saying so
+  description: Trace the unstated logical consequences of explicit positions -- what the author is committed
+    to without saying so
   produces_dimensions:
   - implicit_commitments
   requires_dimensions:
@@ -232,35 +306,31 @@ capabilities:
   intellectual_grounding:
     thinker: brandom
     concept: material_inference
-    method: Brandom's account of material inference—inference that is good by virtue
-      of the conceptual contents involved, not formal logical structure alone—grounds
-      the analysis of implicit commitments as what follows from explicit positions
-      by the material inferential roles of the concepts deployed, tracing consequences
-      that may not be formally valid but are conceptually binding.
+    method: Brandom's account of material inference—inference that is good by virtue of the conceptual
+      contents involved, not formal logical structure alone—grounds the analysis of implicit commitments
+      as what follows from explicit positions by the material inferential roles of the concepts deployed,
+      tracing consequences that may not be formally valid but are conceptually binding.
   indicators:
-  - Explicit commitments that invoke concepts with rich inferential roles (e.g., committing
-    to 'autonomy' implicitly commits to certain views about constraint and freedom)
-  - Theoretical positions that historically or conceptually entail further positions
-    the author does not mention
-  - Asymmetries where the author draws certain implications but not others that follow
-    by parallel reasoning
-  - Frameworks or methods that carry standard commitments the author has not explicitly
-    endorsed
-  - Passages where the author's argument would be stronger if certain unstated implications
-    were made explicit, suggesting they may be unaware of them
+  - Explicit commitments that invoke concepts with rich inferential roles (e.g., committing to 'autonomy'
+    implicitly commits to certain views about constraint and freedom)
+  - Theoretical positions that historically or conceptually entail further positions the author does not
+    mention
+  - Asymmetries where the author draws certain implications but not others that follow by parallel reasoning
+  - Frameworks or methods that carry standard commitments the author has not explicitly endorsed
+  - Passages where the author's argument would be stronger if certain unstated implications were made
+    explicit, suggesting they may be unaware of them
   depth_scaling:
-    surface: The 2-3 most significant immediate logical consequences of main arguments
-      that remain unstated.
+    surface: The 2-3 most significant immediate logical consequences of main arguments that remain unstated.
     standard: Full mapping of implicit commitments with inference strength (locked-in/standard/loose),
-      author awareness indicators, and whether implications are welcome or awkward
-      to the author's stated position.
-    deep: Exhaustive trace of every significant implication with precise inference
-      paths, strength calibration, author awareness evaluation, assessment of whether
-      implications cohere into a consistent position or reveal hidden tensions, and
-      analysis of strategic selection (which implications are emphasized vs. concealed).
+      author awareness indicators, and whether implications are welcome or awkward to the author's stated
+      position.
+    deep: Exhaustive trace of every significant implication with precise inference paths, strength calibration,
+      author awareness evaluation, assessment of whether implications cohere into a consistent position
+      or reveal hidden tensions, and analysis of strategic selection (which implications are emphasized
+      vs. concealed).
 - key: detect_conflicts
-  description: Find tensions and contradictions between commitments -- explicit vs.
-    explicit, explicit vs. implicit, inherited vs. original
+  description: Find tensions and contradictions between commitments -- explicit vs. explicit, explicit
+    vs. implicit, inherited vs. original
   produces_dimensions:
   - commitment_conflicts
   requires_dimensions:
@@ -275,37 +345,33 @@ capabilities:
   intellectual_grounding:
     thinker: brandom
     concept: incompatibility
-    method: Brandom's analysis of incompatibility as a primitive inferential relation—understanding
-      negation and contradiction not through formal logic but through the material
-      exclusions between commitments—allows us to detect conflicts not only as formal
-      contradictions but as substantive incompatibilities where holding both positions
-      requires giving up claims that partially constitute their content.
+    method: Brandom's analysis of incompatibility as a primitive inferential relation—understanding negation
+      and contradiction not through formal logic but through the material exclusions between commitments—allows
+      us to detect conflicts not only as formal contradictions but as substantive incompatibilities where
+      holding both positions requires giving up claims that partially constitute their content.
   indicators:
-  - Explicit statements that appear to contradict earlier or later claims in the same
-    work
+  - Explicit statements that appear to contradict earlier or later claims in the same work
   - Implicit consequences of one commitment that negate another commitment
-  - Methodological commitments (e.g., empiricism) that conflict with substantive claims
-    (e.g., metaphysical postulates)
-  - Inherited positions from cited authorities that the author endorses despite having
-    criticized similar positions elsewhere
-  - Rhetorical tension where the argumentative force moves in a different direction
-    from the explicit conclusion
-  - Defensive or qualifying language clustering around certain claims, suggesting
-    the author senses but has not resolved a tension
+  - Methodological commitments (e.g., empiricism) that conflict with substantive claims (e.g., metaphysical
+    postulates)
+  - Inherited positions from cited authorities that the author endorses despite having criticized similar
+    positions elsewhere
+  - Rhetorical tension where the argumentative force moves in a different direction from the explicit
+    conclusion
+  - Defensive or qualifying language clustering around certain claims, suggesting the author senses but
+    has not resolved a tension
   depth_scaling:
-    surface: The 1-2 most obvious tensions or contradictions flagged without detailed
-      analysis of their implications.
-    standard: Complete conflict map showing which commitments clash, conflict type
-      (logical/pragmatic/inherited), whether acknowledged, and preliminary assessment
-      of navigation strategy.
-    deep: Full conflict analysis with precise conflict typing, detailed evaluation
-      of author's navigation strategy and its success, counterfactual analysis of
-      what resolving the conflict in each direction would entail, and assessment of
-      whether conflicts are genuinely productive or symptomatic of unresolved conceptual
-      problems.
+    surface: The 1-2 most obvious tensions or contradictions flagged without detailed analysis of their
+      implications.
+    standard: Complete conflict map showing which commitments clash, conflict type (logical/pragmatic/inherited),
+      whether acknowledged, and preliminary assessment of navigation strategy.
+    deep: Full conflict analysis with precise conflict typing, detailed evaluation of author's navigation
+      strategy and its success, counterfactual analysis of what resolving the conflict in each direction
+      would entail, and assessment of whether conflicts are genuinely productive or symptomatic of unresolved
+      conceptual problems.
 - key: trace_dependencies
-  description: 'Map the directed dependency graph between commitments: what requires
-    what, where the chains are, where the weak links are'
+  description: 'Map the directed dependency graph between commitments: what requires what, where the chains
+    are, where the weak links are'
   produces_dimensions:
   - logical_dependencies
   requires_dimensions:
@@ -320,37 +386,29 @@ capabilities:
   intellectual_grounding:
     thinker: toulmin
     concept: warrant_and_backing
-    method: Toulmin's analysis of argument structure as involving not just claims
-      and data but warrants (inferential licenses connecting them) and backing (justification
-      for the warrants) provides the framework for tracing dependency chains, distinguishing
-      between what commitments explicitly support others (warrants) and what deeper
-      commitments justify those inferential moves (backing).
+    method: Toulmin's analysis of argument structure as involving not just claims and data but warrants
+      (inferential licenses connecting them) and backing (justification for the warrants) provides the
+      framework for tracing dependency chains, distinguishing between what commitments explicitly support
+      others (warrants) and what deeper commitments justify those inferential moves (backing).
   indicators:
   - Explicitly signaled inferential moves ("therefore", "it follows that", "this implies")
-  - Arguments structured with premises and conclusions where some claims are justified
-    by appeal to others
-  - Foundational claims introduced without justification or marked as axioms, assumptions,
-    or starting points
-  - Lengthy chains of reasoning where a conclusion at step N depends on all prior
-    steps
-  - Passages where the author's justification for a claim points back to an earlier
-    commitment
-  - Claims that appear repeatedly as premises for multiple conclusions, suggesting
-    high load-bearing centrality
+  - Arguments structured with premises and conclusions where some claims are justified by appeal to others
+  - Foundational claims introduced without justification or marked as axioms, assumptions, or starting
+    points
+  - Lengthy chains of reasoning where a conclusion at step N depends on all prior steps
+  - Passages where the author's justification for a claim points back to an earlier commitment
+  - Claims that appear repeatedly as premises for multiple conclusions, suggesting high load-bearing centrality
   depth_scaling:
-    surface: The 2-3 major dependency chains identified with their starting and ending
-      points, plus obvious foundational commitments.
-    standard: Full dependency map showing foundational vs. derived commitments, major
-      chains with weak link identification, and preliminary single-point-of-failure
-      analysis.
-    deep: Complete directed dependency graph with edge types and strengths, chain
-      length and robustness analysis, circular dependency detection and evaluation,
-      comprehensive load-bearing assessment showing cascading collapse scenarios,
-      and comparison of stated vs. actual logical structure revealing where the author's
-      self-understanding of their argument's architecture is accurate or mistaken.
+    surface: The 2-3 major dependency chains identified with their starting and ending points, plus obvious
+      foundational commitments.
+    standard: Full dependency map showing foundational vs. derived commitments, major chains with weak
+      link identification, and preliminary single-point-of-failure analysis.
+    deep: Complete directed dependency graph with edge types and strengths, chain length and robustness
+      analysis, circular dependency detection and evaluation, comprehensive load-bearing assessment showing
+      cascading collapse scenarios, and comparison of stated vs. actual logical structure revealing where
+      the author's self-understanding of their argument's architecture is accurate or mistaken.
 - key: reveal_hidden_implications
-  description: Draw out the practical, policy, and real-world consequences that the
-    author may not acknowledge
+  description: Draw out the practical, policy, and real-world consequences that the author may not acknowledge
   produces_dimensions:
   - hidden_implications
   requires_dimensions:
@@ -366,66 +424,62 @@ capabilities:
   intellectual_grounding:
     thinker: sellars
     concept: space_of_reasons_vs_space_of_causes
-    method: Sellars' distinction between the space of reasons (the realm of justification
-      and inferential relations) and the space of causes (the realm of natural-scientific
-      explanation) grounds the analysis of hidden implications by showing how commitments
-      within the space of reasons have practical force—they constrain what one can
-      consistently do or endorse—thereby bridging normative theoretical commitments
+    method: Sellars' distinction between the space of reasons (the realm of justification and inferential
+      relations) and the space of causes (the realm of natural-scientific explanation) grounds the analysis
+      of hidden implications by showing how commitments within the space of reasons have practical force—they
+      constrain what one can consistently do or endorse—thereby bridging normative theoretical commitments
       to concrete practical consequences.
   indicators:
-  - Theoretical commitments with obvious policy or institutional implications that
-    the author does not discuss
-  - Normative or evaluative vocabulary embedded in supposedly descriptive claims,
-    suggesting practical stakes
-  - Argumentative contexts with high political or ethical stakes where practical implications
-    would be sensitive
-  - Explicit claims about one domain (e.g., epistemology) with clear but unstated
-    implications for another domain (e.g., education policy)
-  - Defensive framing or qualification around certain commitments, suggesting awareness
-    of unwelcome implications
-  - Rival positions that the author criticizes specifically for their practical consequences,
-    implying that practical implications matter to the debate
+  - Theoretical commitments with obvious policy or institutional implications that the author does not
+    discuss
+  - Normative or evaluative vocabulary embedded in supposedly descriptive claims, suggesting practical
+    stakes
+  - Argumentative contexts with high political or ethical stakes where practical implications would be
+    sensitive
+  - Explicit claims about one domain (e.g., epistemology) with clear but unstated implications for another
+    domain (e.g., education policy)
+  - Defensive framing or qualification around certain commitments, suggesting awareness of unwelcome implications
+  - Rival positions that the author criticizes specifically for their practical consequences, implying
+    that practical implications matter to the debate
   depth_scaling:
-    surface: The 2-3 most obvious practical or policy implications of the main arguments,
-      noted without detailed analysis.
-    standard: Complete implication map showing what follows for practice, whether
-      acknowledged by the author, whether consistent with stated values, and preliminary
-      assessment of whether implications would be welcome to the author or their audience.
-    deep: Exhaustive implication analysis tracing every significant practical consequence
-      to its source commitments with precise inferential paths, assessment of author
-      awareness and comfort level, analysis of strategic framing choices, comparison
-      with implications of rival positions, evaluation of whether the author's practical
-      commitments are consistent with their theoretical ones, and counterfactual analysis
-      of what embracing vs. rejecting the implications would mean for the author's
-      overall project.
+    surface: The 2-3 most obvious practical or policy implications of the main arguments, noted without
+      detailed analysis.
+    standard: Complete implication map showing what follows for practice, whether acknowledged by the
+      author, whether consistent with stated values, and preliminary assessment of whether implications
+      would be welcome to the author or their audience.
+    deep: Exhaustive implication analysis tracing every significant practical consequence to its source
+      commitments with precise inferential paths, assessment of author awareness and comfort level, analysis
+      of strategic framing choices, comparison with implications of rival positions, evaluation of whether
+      the author's practical commitments are consistent with their theoretical ones, and counterfactual
+      analysis of what embracing vs. rejecting the implications would mean for the author's overall project.
 composability:
   shares_with:
-    commitment_inventory: Explicit and implicit commitments with centrality ratings
-      -- downstream engines know what the author is committed to
-    conflict_map: Tensions and contradictions between commitments -- reveals fault
-      lines other engines can investigate historically
-    dependency_graph: The load-bearing structure of the argument -- which commitments
-      are foundational, which are derived
-    commitment_chains: Cascading sequences of forced commitments -- the dominoes that
-      fall when you accept a starting position
+    commitment_inventory: Explicit and implicit commitments with centrality ratings -- downstream engines
+      know what the author is committed to
+    conflict_map: Tensions and contradictions between commitments -- reveals fault lines other engines
+      can investigate historically
+    dependency_graph: The load-bearing structure of the argument -- which commitments are foundational,
+      which are derived
+    commitment_chains: Cascading sequences of forced commitments -- the dominoes that fall when you accept
+      a starting position
     package_deals: Bundles of commitments that can only be accepted or rejected together
-    implication_landscape: Practical consequences of the theoretical position -- the
-      bridge from abstract to concrete
+    implication_landscape: Practical consequences of the theoretical position -- the bridge from abstract
+      to concrete
   consumes_from:
-    vocabulary_profile: From conceptual_framework_extraction -- the coined terms and
-      key oppositions that become objects of commitment analysis
-    methodological_fingerprint: From conceptual_framework_extraction -- argumentative
-      habits that reveal which commitments are conscious and which are unreflective
-    framework_architecture: From conceptual_framework_extraction -- structural relationships
-      between frameworks that constrain the space of possible commitments
-    framing_landscape: From conceptual_framework_extraction -- positioning data revealing
-      which commitments are strategic vs. genuine
-    semantic_field_maps: From concept_semantic_constellation -- meaning-relation networks
-      revealing which commitments are semantically entangled
-    concept_cluster_structure: From concept_semantic_constellation -- thematic groupings
-      suggesting which commitments belong to the same package deal
-    boundary_analysis: From concept_semantic_constellation -- contested boundaries
-      between concepts that often encode unresolved commitment conflicts
+    vocabulary_profile: From conceptual_framework_extraction -- the coined terms and key oppositions that
+      become objects of commitment analysis
+    methodological_fingerprint: From conceptual_framework_extraction -- argumentative habits that reveal
+      which commitments are conscious and which are unreflective
+    framework_architecture: From conceptual_framework_extraction -- structural relationships between frameworks
+      that constrain the space of possible commitments
+    framing_landscape: From conceptual_framework_extraction -- positioning data revealing which commitments
+      are strategic vs. genuine
+    semantic_field_maps: From concept_semantic_constellation -- meaning-relation networks revealing which
+      commitments are semantically entangled
+    concept_cluster_structure: From concept_semantic_constellation -- thematic groupings suggesting which
+      commitments belong to the same package deal
+    boundary_analysis: From concept_semantic_constellation -- contested boundaries between concepts that
+      often encode unresolved commitment conflicts
   synergy_engines:
   - conceptual_framework_extraction
   - concept_semantic_constellation
@@ -434,11 +488,11 @@ composability:
   - intellectual_genealogy
 depth_levels:
 - key: surface
-  description: Identify the central explicit commitments, the 2-3 most significant
-    implicit commitments, and any obvious tensions between them
+  description: Identify the central explicit commitments, the 2-3 most significant implicit commitments,
+    and any obvious tensions between them
   typical_passes: 1
-  suitable_for: Quick assessment, policy documents, texts with straightforward argumentation,
-    preliminary scoping
+  suitable_for: Quick assessment, policy documents, texts with straightforward argumentation, preliminary
+    scoping
   passes:
   - pass_number: 1
     label: Commitment Discovery
@@ -458,12 +512,12 @@ depth_levels:
       unstated implications, plus any contradictions visible without
       deep tracing.
 - key: standard
-  description: Full commitment inventory (explicit and implicit) with centrality ratings,
-    conflict map between commitments, major dependency chains with weakest links,
-    package deals, and practical implications with author awareness assessment
+  description: Full commitment inventory (explicit and implicit) with centrality ratings, conflict map
+    between commitments, major dependency chains with weakest links, package deals, and practical implications
+    with author awareness assessment
   typical_passes: 2
-  suitable_for: Most academic texts, standard genealogy target profiling, texts with
-    moderate argumentative complexity
+  suitable_for: Most academic texts, standard genealogy target profiling, texts with moderate argumentative
+    complexity
   passes:
   - pass_number: 1
     label: Full Commitment Inventory
@@ -500,17 +554,15 @@ depth_levels:
       links and single points of failure, and draw out practical
       implications with author awareness assessment.
 - key: deep
-  description: 'Complete inferential archaeology: exhaustive commitment inventory
-    with originality and awareness assessment, full conflict analysis with navigation
-    strategy evaluation, complete dependency graph with single-point-of-failure analysis,
-    cascading commitment chains with strength at every link, package deal identification
-    with incompatibility mapping, hidden implications traced to source commitments,
-    performative contradictions surfaced, and citation baggage analysis revealing
-    inherited commitments the author may not realize they carry'
+  description: 'Complete inferential archaeology: exhaustive commitment inventory with originality and
+    awareness assessment, full conflict analysis with navigation strategy evaluation, complete dependency
+    graph with single-point-of-failure analysis, cascading commitment chains with strength at every link,
+    package deal identification with incompatibility mapping, hidden implications traced to source commitments,
+    performative contradictions surfaced, and citation baggage analysis revealing inherited commitments
+    the author may not realize they carry'
   typical_passes: 4
-  suitable_for: Dense philosophical works, texts with complex or contradictory argumentation,
-    foundational profiling for major genealogy studies, works where the real argument
-    differs from the stated argument
+  suitable_for: Dense philosophical works, texts with complex or contradictory argumentation, foundational
+    profiling for major genealogy studies, works where the real argument differs from the stated argument
   passes:
   - pass_number: 1
     label: Exhaustive Commitment Inventory

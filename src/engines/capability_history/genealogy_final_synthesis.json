@@ -2,6 +2,141 @@
   "engine_key": "genealogy_final_synthesis",
   "entries": [
     {
+      "timestamp": "2026-02-17T15:13:52.071965+00:00",
+      "version": 2,
+      "definition_hash": "c8aec7a16a8f30dcecab7ceb97952796597e0ac5d3889d1b58b9b49f01c18642",
+      "changes": [
+        {
+          "section": "intellectual_lineage",
+          "field": "primary",
+          "action": "modified",
+          "old_value": "foucault",
+          "new_value": "foucault"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "berlin",
+          "new_value": "berlin (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "grafton",
+          "new_value": "grafton (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "nietzsche",
+          "new_value": "nietzsche (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "skinner",
+          "new_value": "skinner (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "genealogy",
+          "new_value": "genealogy (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "genealogy_of_morals",
+          "new_value": "genealogy_of_morals (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "historical_synthesis",
+          "new_value": "historical_synthesis (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "intellectual_history",
+          "new_value": "intellectual_history (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "prosopography",
+          "new_value": "prosopography (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "wissenschaftsgeschichte",
+          "new_value": "wissenschaftsgeschichte (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "confidence_calibration",
+          "new_value": "confidence_calibration (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "effective_history",
+          "new_value": "effective_history (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "entstehung",
+          "new_value": "entstehung (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "genealogical_narrative",
+          "new_value": "genealogical_narrative (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "herkunft",
+          "new_value": "herkunft (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "intellectual_portrait",
+          "new_value": "intellectual_portrait (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "multi_scale_synthesis",
+          "new_value": "multi_scale_synthesis (enriched)"
+        }
+      ],
+      "summary": "Modified intellectual lineage primary; Modified intellectual lineage secondary; Modified intellectual lineage secondary; Modified intellectual lineage secondary; Modified intellectual lineage secondary; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-17T14:22:45.305148+00:00",
       "version": 1,
       "definition_hash": "0caee0106987e26f79a369646d5806680746480e823b76cfbaedb96804b57757",

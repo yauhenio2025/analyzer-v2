@@ -2,6 +2,127 @@
   "engine_key": "concept_taxonomy_argumentative_function",
   "entries": [
     {
+      "timestamp": "2026-02-17T15:13:52.168990+00:00",
+      "version": 2,
+      "definition_hash": "ff769455d530bb50f209e0c316bbdcd891a9975c46a10d27a5b8ae275f94c498",
+      "changes": [
+        {
+          "section": "intellectual_lineage",
+          "field": "primary",
+          "action": "modified",
+          "old_value": "toulmin",
+          "new_value": "toulmin"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "brandom",
+          "new_value": "brandom (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "perelman",
+          "new_value": "perelman (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "walton",
+          "new_value": "walton (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "argumentation_theory",
+          "new_value": "argumentation_theory (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "inferentialism",
+          "new_value": "inferentialism (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "informal_logic",
+          "new_value": "informal_logic (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "new_rhetoric",
+          "new_value": "new_rhetoric (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "structural_analysis",
+          "new_value": "structural_analysis (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "argumentation_scheme",
+          "new_value": "argumentation_scheme (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "argumentative_function",
+          "new_value": "argumentative_function (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "backing",
+          "new_value": "backing (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "load_bearing_structure",
+          "new_value": "load_bearing_structure (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "qualifier",
+          "new_value": "qualifier (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "rebuttal",
+          "new_value": "rebuttal (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "warrant",
+          "new_value": "warrant (enriched)"
+        }
+      ],
+      "summary": "Modified intellectual lineage primary; Modified intellectual lineage secondary; Modified intellectual lineage secondary; Modified intellectual lineage secondary; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-17T14:22:45.403667+00:00",
       "version": 1,
       "definition_hash": "c128518176cf6fa1b3c992c52e0c3626dfcd11d433ec653786c0f9da2a68e4ec",

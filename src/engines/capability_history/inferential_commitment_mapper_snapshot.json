@@ -409,27 +409,78 @@
   "engine_name": "Inferential Commitment Mapper",
   "intellectual_lineage": {
     "key_concepts": [
-      "inferential_commitment",
-      "material_inference",
-      "incompatibility",
-      "entitlement",
-      "deontic_score",
-      "package_deal",
-      "commitment_chain",
-      "performative_contradiction"
+      {
+        "definition": "What you are obligated to defend or accept by virtue of asserting a claim; the downstream consequences and upstream prerequisites that come as a package with any position. The engine maps these commitments to reveal what an author has signed up for beyond their explicit statements\u2014what must be true if their claims are true, what they must reject if they reject certain conclusions.",
+        "name": "inferential_commitment"
+      },
+      {
+        "definition": "An inference whose validity depends on the content of concepts involved rather than formal logical structure alone (e.g., 'X is red' entails 'X is colored'). The engine tracks material inferences because most real reasoning operates through content-rich connections that formal logic alone cannot capture, making material inferential networks the actual wiring of intellectual commitments.",
+        "name": "material_inference"
+      },
+      {
+        "definition": "A relation between claims where accepting one rationally forbids accepting the other, creating constraint within commitment space. The engine uses incompatibility detection to identify contradictions, tensions, and impossible combinations\u2014revealing where authors attempt to hold positions that cannot coherently coexist, or where competing schools of thought diverge at the level of basic commitments.",
+        "name": "incompatibility"
+      },
+      {
+        "definition": "The normative status of being justified in making a claim or drawing an inference; having met the conditions\u2014evidential, inferential, authoritative\u2014that license the assertion. The engine distinguishes between commitments undertaken (what the author claims) and entitlements earned (what the author has justified), exposing gaps where positions are asserted but not warranted by the inferential structure provided.",
+        "name": "entitlement"
+      },
+      {
+        "definition": "The total configuration of commitments and entitlements attributed to a speaker at any point in discourse; the normative status-profile that determines what moves are available or required next. The engine constructs deontic scores for texts to represent their complete commitment landscape, enabling comparison across works, detection of shifts, and assessment of internal consistency.",
+        "name": "deontic_score"
+      },
+      {
+        "definition": "A cluster of commitments so tightly inferentially bound that accepting any one element rationally requires accepting all others; positions that cannot be unbundled without incoherence. The engine identifies package deals to show readers what seemingly separable claims actually come as mandatory bundles\u2014revealing the hidden scope of what endorsing a theory commits you to.",
+        "name": "package_deal"
+      },
+      {
+        "definition": "A sequence of inferential steps where each commitment forces the next in cascading fashion, such that accepting the initial premise rationally compels accepting the final conclusion through intermediate steps. The engine traces commitment chains to make explicit the full downstream consequences of initial assumptions, showing how accepting apparently modest premises can lock you into far-reaching positions.",
+        "name": "commitment_chain"
+      },
+      {
+        "definition": "A special case of incoherence where the act of asserting a claim undermines or contradicts the content asserted (e.g., 'I am not speaking'). The engine detects performative contradictions as particularly damaging commitment failures where authors' discursive practices betray incompatibility with their explicit positions\u2014revealing tensions between what is said and what is done in the saying.",
+        "name": "performative_contradiction"
+      }
     ],
-    "primary": "brandom",
+    "primary": {
+      "description": "Robert Brandom (1950\u2013), American philosopher whose inferentialist semantics grounds meaning in patterns of commitment and entitlement rather than representation or reference. His articulation of concepts as nodes in inferential networks\u2014defined by what follows from them, what they follow from, and what they're incompatible with\u2014provides this engine's foundational architecture for mapping the logical structure beneath any system of claims. Brandom's deontic scorekeeping model, which treats discourse as a game of tracking who is committed and entitled to what, becomes the engine's method for revealing hidden commitments authors inherit when endorsing positions.",
+      "name": "brandom"
+    },
     "secondary": [
-      "sellars",
-      "frege",
-      "toulmin"
+      {
+        "description": "Wilfrid Sellars (1912\u20131989), whose distinction between the 'space of reasons' (where commitments are justified through inference) and the 'space of causes' (where events have causal explanations) anchors this engine's focus on logical rather than merely causal relationships between ideas. His critique of the 'Myth of the Given'\u2014the idea that beliefs can be justified non-inferentially\u2014reinforces the engine's assumption that all commitments exist within networks of mutual support and constraint. Sellars provides the metaphor of inferential space as a distinct ontological domain where this engine operates.",
+        "name": "sellars"
+      },
+      {
+        "description": "Gottlob Frege (1848\u20131925), founder of modern logic whose distinction between sense and reference, and whose systematic treatment of logical consequence, established the formal vocabulary for analyzing inferential relationships. His context principle\u2014that words have meaning only in the context of sentences, sentences only in the context of inferences\u2014anticipates Brandom's inferentialism and justifies this engine's holistic approach to commitment structures. Frege's logical rigor provides the standard of precision this engine aspires to when mapping entailment and incompatibility relations.",
+        "name": "frege"
+      },
+      {
+        "description": "Stephen Toulmin (1922\u20132009), whose The Uses of Argument (1958) shifted focus from formal validity to the material warrants that actually govern reasoning in practice\u2014law, ethics, science\u2014across different domains. His model of argumentation (claim, warrant, backing, rebuttal) provides this engine with a practical schema for analyzing how commitments are justified in real texts, not just idealized logic. Toulmin's emphasis on field-dependent inferential norms allows the engine to recognize that commitment structures vary by discourse context while remaining systematically analyzable.",
+        "name": "toulmin"
+      }
     ],
     "traditions": [
-      "inferentialism",
-      "space_of_reasons",
-      "logical_analysis",
-      "argumentation_theory",
-      "deontic_scorekeeping"
+      {
+        "description": "The semantic tradition holding that the meaning of any expression is constituted entirely by its inferential role\u2014what follows from it, what it follows from, and what it excludes. Inferentialism rejects representationalist and referentialist semantics in favor of treating concepts as positions in a network of reasoning practices. For this engine, inferentialism is the core methodology: to understand what an author means by a term, map its inferential commitments; to evaluate a position, trace what it entails and what it rules out.",
+        "name": "inferentialism"
+      },
+      {
+        "description": "The conceptual domain, articulated by Sellars and developed by Brandom, in which claims stand in rational relations of justification, entitlement, and incompatibility rather than merely causal relations. Entering the space of reasons means becoming subject to norms of inference and assessment. This engine operates entirely within this space, treating texts as moves in the game of giving and asking for reasons, and commitment structures as the underlying rule-systems that govern legitimate moves.",
+        "name": "space_of_reasons"
+      },
+      {
+        "description": "The philosophical method, dominant in analytic philosophy since Frege and Russell, of clarifying concepts and arguments by exposing their logical form\u2014making explicit the entailment relations, valid inference patterns, and formal structures implicit in ordinary language. This engine inherits logical analysis's commitment to rigor and systematicity, but applies it to material inferential content rather than merely formal validity. The goal is to make the logical skeleton of commitments visible without reducing meaning to symbolic manipulation.",
+        "name": "logical_analysis"
+      },
+      {
+        "description": "The interdisciplinary study of reasoning-in-practice, encompassing rhetoric, informal logic, dialectics, and the analysis of actual arguments in law, science, politics, and everyday discourse. Argumentation theory provides this engine with sensitivity to context-dependent inferential norms and real-world commitment structures that pure formal logic misses. Where formal logic asks 'Is this valid?', argumentation theory asks 'What commitments does this speaker undertake by making this move?'\u2014precisely the question driving this engine.",
+        "name": "argumentation_theory"
+      },
+      {
+        "description": "Brandom's model of discourse as a social practice of tracking normative statuses\u2014who is committed to what, who is entitled to what claims, whose commitments have been discharged or inherited. The scorekeeping metaphor treats assertions as moves that alter deontic scores: making a claim undertakes commitment, challenges demand entitlement, concessions transfer commitments. This engine applies deontic scorekeeping logic to texts, treating authors as players whose positions generate score-states that can be tracked, compared, and evaluated for consistency and consequence.",
+        "name": "deontic_scorekeeping"
+      }
     ]
   },
   "kind": "synthesis",

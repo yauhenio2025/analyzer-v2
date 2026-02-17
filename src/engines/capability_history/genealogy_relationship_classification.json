@@ -2,6 +2,127 @@
   "engine_key": "genealogy_relationship_classification",
   "entries": [
     {
+      "timestamp": "2026-02-17T15:13:52.045197+00:00",
+      "version": 2,
+      "definition_hash": "69cca7e46f4b838a420cc96336c53c1780c6c342ae6e40aedbe7232a3035dcdb",
+      "changes": [
+        {
+          "section": "intellectual_lineage",
+          "field": "primary",
+          "action": "modified",
+          "old_value": "bloom",
+          "new_value": "bloom"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "grafton",
+          "new_value": "grafton (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "lovejoy",
+          "new_value": "lovejoy (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "skinner",
+          "new_value": "skinner (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "anxiety_of_influence",
+          "new_value": "anxiety_of_influence (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "bibliometrics",
+          "new_value": "bibliometrics (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "cambridge_school",
+          "new_value": "cambridge_school (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "intellectual_history",
+          "new_value": "intellectual_history (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "reception_history",
+          "new_value": "reception_history (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "anxiety_of_influence",
+          "new_value": "anxiety_of_influence (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "convergent_evolution",
+          "new_value": "convergent_evolution (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "footnote_as_evidence",
+          "new_value": "footnote_as_evidence (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "influence_channels",
+          "new_value": "influence_channels (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "intellectual_triage",
+          "new_value": "intellectual_triage (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "intentionalism",
+          "new_value": "intentionalism (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "strategic_classification",
+          "new_value": "strategic_classification (enriched)"
+        }
+      ],
+      "summary": "Modified intellectual lineage primary; Modified intellectual lineage secondary; Modified intellectual lineage secondary; Modified intellectual lineage secondary; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-17T14:22:45.284638+00:00",
       "version": 1,
       "definition_hash": "3d384a75504f05d45d5c2865098054488922dbdad92fc1c5b32a4e96b719708b",

@@ -138,38 +138,71 @@ def diff_definitions(
     old_lin = old_def.intellectual_lineage
     new_lin = new_def.intellectual_lineage
 
-    if old_lin.primary != new_lin.primary:
+    def _lineage_name(item) -> str:
+        """Extract name from either a rich object or plain string."""
+        if isinstance(item, str):
+            return item
+        return getattr(item, "name", str(item))
+
+    def _lineage_changed(old_item, new_item) -> bool:
+        """Check if a lineage item changed (handles str vs object comparison)."""
+        if type(old_item) != type(new_item):
+            return True  # Type change (str → object) counts as modified
+        if isinstance(old_item, str):
+            return old_item != new_item
+        # Both are objects — compare model dumps
+        return old_item.model_dump() != new_item.model_dump()
+
+    old_primary_name = _lineage_name(old_lin.primary)
+    new_primary_name = _lineage_name(new_lin.primary)
+
+    if _lineage_changed(old_lin.primary, new_lin.primary):
         changes.append(
             FieldChange(
                 section="intellectual_lineage",
                 field="primary",
                 action=ChangeAction.MODIFIED,
-                old_value=old_lin.primary,
-                new_value=new_lin.primary,
+                old_value=_trunc(old_primary_name),
+                new_value=_trunc(new_primary_name),
             )
         )
 
     for list_field in ["secondary", "traditions", "key_concepts"]:
-        old_set = set(getattr(old_lin, list_field))
-        new_set = set(getattr(new_lin, list_field))
-        for item in sorted(new_set - old_set):
+        old_items = getattr(old_lin, list_field)
+        new_items = getattr(new_lin, list_field)
+
+        old_by_name = {_lineage_name(i): i for i in old_items}
+        new_by_name = {_lineage_name(i): i for i in new_items}
+
+        for name in sorted(set(new_by_name) - set(old_by_name)):
             changes.append(
                 FieldChange(
                     section="intellectual_lineage",
                     field=list_field,
                     action=ChangeAction.ADDED,
-                    new_value=item,
+                    new_value=name,
                 )
             )
-        for item in sorted(old_set - new_set):
+        for name in sorted(set(old_by_name) - set(new_by_name)):
             changes.append(
                 FieldChange(
                     section="intellectual_lineage",
                     field=list_field,
                     action=ChangeAction.REMOVED,
-                    old_value=item,
+                    old_value=name,
                 )
             )
+        for name in sorted(set(old_by_name) & set(new_by_name)):
+            if _lineage_changed(old_by_name[name], new_by_name[name]):
+                changes.append(
+                    FieldChange(
+                        section="intellectual_lineage",
+                        field=list_field,
+                        action=ChangeAction.MODIFIED,
+                        old_value=name,
+                        new_value=f"{name} (enriched)",
+                    )
+                )
 
     # ── Analytical Dimensions ──
     old_dims = {d.key: d for d in old_def.analytical_dimensions}

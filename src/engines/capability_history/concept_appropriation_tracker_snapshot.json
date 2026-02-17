@@ -383,29 +383,86 @@
   "engine_name": "Concept Appropriation Tracker",
   "intellectual_lineage": {
     "key_concepts": [
-      "differance",
-      "iterability",
-      "traveling_theory",
-      "heteroglossia",
-      "anxiety_of_influence",
-      "misreading",
-      "appropriation",
-      "semantic_mutation",
-      "acknowledgment_politics"
+      {
+        "definition": "Derrida's neologism combining 'difference' and 'deferral' to describe how meaning is never fully present but always constituted through differential relations and temporal delay. For this engine, differance explains why concepts necessarily change when appropriated into new contexts\u2014each iteration differs from and defers the 'original' meaning, making perfect conceptual continuity between works impossible.",
+        "name": "differance"
+      },
+      {
+        "definition": "The structural necessity that for any sign to function it must be repeatable across different contexts, yet this repeatability ensures the sign will mean differently in each iteration. This engine uses iterability to analyze how self-citation necessarily involves semantic transformation: the 'same' concept appearing in multiple works is never truly the same, as the new context inevitably alters its significance.",
+        "name": "iterability"
+      },
+      {
+        "definition": "Said's concept describing how theories change as they migrate between intellectual contexts, losing some original complexity while gaining new emphases adapted to new settings and purposes. The engine applies this to intra-corpus migration, tracking how concepts are simplified, elaborated, or reoriented as they travel from earlier to later works within a single author's output.",
+        "name": "traveling_theory"
+      },
+      {
+        "definition": "Bakhtin's term for the coexistence of multiple social voices, perspectives, and meaning-systems within language, such that every utterance contains traces of diverse contexts and intentions. This engine uses heteroglossia to detect how an author's later work contains multiple, sometimes conflicting voices from their earlier positions, revealing self-appropriation as internally dialogic and often contradictory rather than seamlessly unified.",
+        "name": "heteroglossia"
+      },
+      {
+        "definition": "Bloom's theory that strong writers struggle with their precursors through creative misreading and strategic distortion to establish originality. Applied to self-relation, this concept helps the engine identify when authors defensively misread or strategically distance themselves from their own earlier work to assert novelty or manage embarrassing contradictions in their intellectual development.",
+        "name": "anxiety_of_influence"
+      },
+      {
+        "definition": "A productive distortion of a source text that enables creative transformation and the establishment of difference. For this engine, misreading names the strategic ways authors reinterpret their own earlier formulations\u2014simplifying, exaggerating, or selectively quoting\u2014to make past work serve present argumentative needs, whether to claim consistency, assert development, or construct a coherent intellectual narrative.",
+        "name": "misreading"
+      },
+      {
+        "definition": "The act of taking concepts, terms, or frameworks from one context and deploying them in another, necessarily involving transformation and re-signification. This engine tracks appropriation patterns to map how authors extract elements from their prior work and repurpose them, examining whether such borrowing is acknowledged, how much transformation occurs, and what interests drive the selective uptake of earlier material.",
+        "name": "appropriation"
+      },
+      {
+        "definition": "The changes in meaning, emphasis, connotation, or scope that concepts undergo as they are appropriated into new contexts. This engine maps semantic mutations to reveal how concepts evolve across an author's corpus\u2014which dimensions get amplified, which fade, which new associations accrue\u2014distinguishing acknowledged development from unacknowledged drift or distortion.",
+        "name": "semantic_mutation"
+      },
+      {
+        "definition": "The strategic choices authors make about whether and how to recognize their intellectual debts, continuities, and borrowings, shaped by interests in establishing novelty, authority, and coherent self-presentation. This engine analyzes acknowledgment politics to detect when authors explicitly mark conceptual inheritance from their earlier work versus when they appropriate without acknowledgment, and what such patterns reveal about their self-fashioning strategies and management of intellectual trajectory.",
+        "name": "acknowledgment_politics"
+      }
     ],
-    "primary": "derrida",
+    "primary": {
+      "description": "Jacques Derrida (1930-2004), founder of deconstruction, demonstrated that concepts carry traces of their previous contexts and can never be perfectly transported into new settings without transformation. His analysis of iterability\u2014the necessary mutation that occurs whenever a sign is repeated in a new context\u2014provides the theoretical foundation for understanding how self-citation is always also self-alteration, making him essential for tracking how authors appropriate and inevitably distort their own prior work.",
+      "name": "derrida"
+    },
     "secondary": [
-      "said",
-      "bakhtin",
-      "bloom",
-      "bourdieu"
+      {
+        "description": "Edward Said (1935-2003), postcolonial theorist who developed the concept of 'traveling theory' to describe how ideas change as they move between intellectual and cultural contexts. His work extends Derrida's insights by emphasizing that conceptual migration is never neutral\u2014theories acquire new emphases, lose original nuances, and serve different political purposes in their new homes, providing this engine with a framework for analyzing the interests and power dynamics embedded in acts of conceptual appropriation.",
+        "name": "said"
+      },
+      {
+        "description": "Mikhail Bakhtin (1895-1975), Russian theorist of dialogism and heteroglossia, argued that every utterance is populated with the intentions of prior speakers and that language is always already appropriated from others. His concept of heteroglossia\u2014the coexistence of multiple voices and meaning-systems within a single text\u2014helps this engine detect how authors' later work ventriloquizes, transforms, or struggles with their own earlier positions, revealing self-citation as a form of internal dialogue fraught with tension and mutation.",
+        "name": "bakhtin"
+      },
+      {
+        "description": "Harold Bloom (1930-2019), literary critic whose theory of 'anxiety of influence' described how poets creatively misread their predecessors to carve out original space. His concept of misreading as creative distortion applies powerfully to self-appropriation: authors often strategically misread their own earlier work to establish novelty, manage contradictions, or assert a coherent intellectual trajectory, making Bloom's framework crucial for detecting patterns of self-distortion and strategic self-relation.",
+        "name": "bloom"
+      },
+      {
+        "description": "Pierre Bourdieu (1930-2002), sociologist who analyzed how intellectual production is shaped by struggles for authority, legitimacy, and symbolic capital within academic fields. His attention to the strategic interests governing citation practices, canon formation, and the presentation of intellectual lineage helps this engine understand why authors selectively appropriate their own work\u2014which prior texts get cited, which get buried, and how self-citation functions as a form of symbolic self-positioning within disciplinary power structures.",
+        "name": "bourdieu"
+      }
     ],
     "traditions": [
-      "deconstruction",
-      "postcolonial_theory",
-      "dialogism",
-      "influence_studies",
-      "sociology_of_knowledge"
+      {
+        "description": "An approach to textual analysis emphasizing that meaning is never stable or fully present, but always deferred through chains of supplementation and contaminated by traces of other contexts. Deconstruction reveals that concepts cannot be transplanted without transformation, providing this engine with the epistemological foundation for treating all conceptual migration\u2014including self-appropriation\u2014as necessarily involving semantic mutation, slippage, and the production of new differences.",
+        "name": "deconstruction"
+      },
+      {
+        "description": "An interdisciplinary tradition examining how knowledge, culture, and identity are shaped by colonial power relations and their afterlives, particularly attentive to processes of appropriation, translation, and the violence of decontextualization. Its sensitivity to how ideas change meaning when moved between centers and peripheries, and its critique of claims to neutral knowledge transfer, equips this engine to analyze the power dynamics and political stakes embedded in acts of conceptual migration, even within a single author's corpus.",
+        "name": "postcolonial_theory"
+      },
+      {
+        "description": "Bakhtin's theory that all language is fundamentally dialogic\u2014shaped by prior utterances and oriented toward anticipated responses\u2014and that meaning emerges from the interaction between multiple voices rather than from isolated speakers. This tradition allows the engine to treat an author's corpus as an internal dialogue where later works respond to, contest, and reaccentuate earlier positions, revealing self-appropriation as a form of heteroglossic struggle rather than simple continuity.",
+        "name": "dialogism"
+      },
+      {
+        "description": "A critical tradition examining how writers relate to their predecessors through patterns of borrowing, transformation, resistance, and anxiety. While traditionally focused on inter-author relations, its methods for detecting misreading, strategic distortion, and the creative transformation of source material prove equally powerful for analyzing intra-author relations, helping this engine map how authors appropriate, distort, and creatively misread their own earlier formulations to serve new argumentative purposes.",
+        "name": "influence_studies"
+      },
+      {
+        "description": "An approach analyzing how knowledge production is shaped by social positions, institutional contexts, field-specific logics, and struggles for recognition and authority. This tradition reveals that citation practices\u2014including self-citation\u2014are never purely intellectual but always also strategic acts of positioning, making visible the career interests, disciplinary pressures, and authority-building projects that shape which concepts authors carry forward, which they abandon, and how they represent their own intellectual trajectories.",
+        "name": "sociology_of_knowledge"
+      }
     ]
   },
   "kind": "synthesis",

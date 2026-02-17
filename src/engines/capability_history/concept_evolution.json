@@ -2,6 +2,141 @@
   "engine_key": "concept_evolution",
   "entries": [
     {
+      "timestamp": "2026-02-17T15:13:52.001802+00:00",
+      "version": 2,
+      "definition_hash": "1d24e48637de40f8dc9ab03db585248a5e2090ea3544f99e7eaa6a1a050ec9eb",
+      "changes": [
+        {
+          "section": "intellectual_lineage",
+          "field": "primary",
+          "action": "modified",
+          "old_value": "koselleck",
+          "new_value": "koselleck"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "kuhn",
+          "new_value": "kuhn (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "lakoff",
+          "new_value": "lakoff (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "skinner",
+          "new_value": "skinner (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "wittgenstein",
+          "new_value": "wittgenstein (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "begriffsgeschichte",
+          "new_value": "begriffsgeschichte (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "cambridge_school",
+          "new_value": "cambridge_school (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "cognitive_linguistics",
+          "new_value": "cognitive_linguistics (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "historical_semantics",
+          "new_value": "historical_semantics (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "paradigm_theory",
+          "new_value": "paradigm_theory (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "begriffsgeschichte",
+          "new_value": "begriffsgeschichte (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "conceptual_genealogy",
+          "new_value": "conceptual_genealogy (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "family_resemblance",
+          "new_value": "family_resemblance (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "framing_trajectory",
+          "new_value": "framing_trajectory (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "metaphor_evolution",
+          "new_value": "metaphor_evolution (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "paradigm_shift",
+          "new_value": "paradigm_shift (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "semantic_drift",
+          "new_value": "semantic_drift (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "vocabulary_birth_death",
+          "new_value": "vocabulary_birth_death (enriched)"
+        }
+      ],
+      "summary": "Modified intellectual lineage primary; Modified intellectual lineage secondary; Modified intellectual lineage secondary; Modified intellectual lineage secondary; Modified intellectual lineage secondary; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-17T14:22:45.249615+00:00",
       "version": 1,
       "definition_hash": "424cf73a0eb5cb0d2248089a58f92e86ac7e33280c283793307fd5bd596f8d83",

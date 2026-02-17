@@ -380,28 +380,82 @@
   "engine_name": "Concept Evolution Tracker",
   "intellectual_lineage": {
     "key_concepts": [
-      "begriffsgeschichte",
-      "semantic_drift",
-      "conceptual_genealogy",
-      "paradigm_shift",
-      "family_resemblance",
-      "metaphor_evolution",
-      "framing_trajectory",
-      "vocabulary_birth_death"
+      {
+        "definition": "The diachronic study of how fundamental concepts absorb and reorganize historical experience, revealing that terms function as temporal indices whose semantic layers compress past meanings and future expectations. This engine uses begriffsgeschichte as its overarching analytical framework for detecting when vocabulary persistence masks semantic transformation: a term shared between early and late work may have undergone complete restructuring of its experiential content and temporal horizons.",
+        "name": "begriffsgeschichte"
+      },
+      {
+        "definition": "The gradual, often imperceptible process by which a term's core meaning, connotations, and typical usage contexts shift across time and texts, comparable to genetic drift in evolutionary biology. The engine tracks semantic drift by measuring changes in collocation patterns, metaphorical associations, and evidential contexts: a concept exhibits drift when it migrates to new discursive domains, attracts different modifiers, or appears in altered argumentative structures across an author's corpus.",
+        "name": "semantic_drift"
+      },
+      {
+        "definition": "The tracing of ancestral relationships between concepts, identifying which terms serve as precursors, successors, or hybrid offspring of others within an intellectual lineage. This engine constructs conceptual genealogies by detecting when a concept in the current work inherits vocabulary from one prior concept, methodology from another, and metaphors from a third, revealing that concepts reproduce through recombination rather than cloning: apparent descendants often have multiple parents and exhibit traits from non-obvious ancestors.",
+        "name": "conceptual_genealogy"
+      },
+      {
+        "definition": "A transformation in interpretive framework so fundamental that it renders earlier and later approaches incommensurable, with shared terms referring to incompatible conceptual structures. The engine detects paradigm shifts not through vocabulary replacement but through methodological rupture: when an author treats the same evidence as supporting opposite conclusions, deploys incompatible standards of validity, or shifts root metaphors across works, a paradigm-level change has occurred beneath surface terminological continuity.",
+        "name": "paradigm_shift"
+      },
+      {
+        "definition": "Wittgenstein's model of conceptual coherence through overlapping similarities rather than shared essence, where meanings form networks of partial overlap without necessary common features. This engine uses family resemblance to track concept evolution through gradual replacement of usage contexts: a concept may maintain apparent continuity while every specific application changes, with later uses resembling earlier ones only through intermediate links in a chain where no two endpoints share defining features.",
+        "name": "family_resemblance"
+      },
+      {
+        "definition": "The transformation of the root metaphors structuring a concept's cognitive architecture, indicating deep reconceptualization beyond terminological or definitional change. The engine tracks metaphor evolution by cataloging source domains: when an author shifts from describing social phenomena through mechanical metaphors to organic ones, or from containment to network imagery, the underlying concept has been restructured at the level of embodied cognition, making this dimension often more revelatory than vocabulary or framing shifts.",
+        "name": "metaphor_evolution"
+      },
+      {
+        "definition": "The path by which a concept's rhetorical positioning and epistemic status changes across an author's works, moving along axes from tentative to axiomatic, polemical to neutral, marginal to central, or contested to settled. This engine maps framing trajectories by analyzing changes in illocutionary force: when a concept once introduced with hedges and qualifiers appears later as an undefended premise, or shifts from a hypothesis requiring argument to a framework organizing arguments, its framing has evolved independently of its semantic content.",
+        "name": "framing_trajectory"
+      },
+      {
+        "definition": "The emergence of new terms and disappearance of old ones within an author's conceptual system, marking moments of explicit terminological innovation or abandonment that may signal underlying conceptual rupture or continuity. The engine tracks vocabulary birth/death as a dimension distinct from semantic drift: a concept may die as a term while surviving in successor vocabulary, or persist terminologically while losing all functional roles, making term-level demography an imperfect but essential index of conceptual evolution and intellectual succession patterns.",
+        "name": "vocabulary_birth_death"
+      }
     ],
-    "primary": "koselleck",
+    "primary": {
+      "description": "Reinhart Koselleck (1923-2006), German historian and founder of Begriffsgeschichte (conceptual history), demonstrated that political and social concepts are not stable carriers of meaning but temporal indices that compress past experience and future horizons. His method of tracking how single terms absorb, shed, and recombine semantic layers across centuries provides this engine's foundational logic: that concept evolution occurs through diachronic transformation of meaning-structures, not mere terminological replacement. Koselleck's insight that a word's continuity often masks radical semantic rupture makes him essential for distinguishing surface vocabulary persistence from deep conceptual mutation.",
+      "name": "koselleck"
+    },
     "secondary": [
-      "skinner",
-      "kuhn",
-      "lakoff",
-      "wittgenstein"
+      {
+        "description": "Quentin Skinner (1940-), Cambridge School historian, pioneered the study of how concepts function as rhetorical moves within specific linguistic contexts, arguing that understanding a text requires reconstructing the speech-acts its author performed. His methodology of reading for illocutionary force complements Koselleck's diachronic semantics by providing tools to detect framing shifts: when an author repositions a concept from tentative hypothesis to axiom, or from polemical claim to neutral description. Skinner's attention to argumentative strategy enables this engine to track not just what concepts mean but what authors DO with them across works.",
+        "name": "skinner"
+      },
+      {
+        "description": "Thomas Kuhn (1922-1996), historian and philosopher of science, revealed that scientific terms remain lexically stable across paradigm shifts while undergoing complete referential transformation\u2014'mass' means fundamentally different things in Newtonian versus relativistic physics despite surface continuity. His analysis of incommensurability provides this engine with a model for detecting methodological rupture masked by vocabulary persistence: when an author retains a term but embeds it in an incompatible evidential or argumentative structure. Kuhn's work licenses the engine's skepticism toward terminological overlap as evidence of conceptual continuity.",
+        "name": "kuhn"
+      },
+      {
+        "description": "George Lakoff (1941-), cognitive linguist, demonstrated that abstract concepts are systematically structured by metaphorical mappings from embodied experience, and that changes in root metaphors constitute changes in conceptual architecture, not mere stylistic variation. His theory of conceptual metaphor provides this engine with diagnostic tools for tracking deep reconceptualization: when an author shifts from mechanical to organic metaphors for social processes, the concept itself has been restructured at a cognitive level. Lakoff's work makes metaphor evolution a primary dimension of analysis rather than an aesthetic supplement.",
+        "name": "lakoff"
+      },
+      {
+        "description": "Ludwig Wittgenstein (1889-1951), philosopher of language, replaced essentialist definitions with the concept of family resemblance: terms gain meaning through overlapping similarities across use-contexts rather than shared cores, and conceptual boundaries are drawn by practices not properties. His later philosophy equips this engine to recognize that concept evolution often proceeds through gradual shifts in the network of resemblances rather than sudden definitional breaks, and that apparent continuity may mask the replacement of every specific usage. Wittgenstein's method authorizes tracking concepts as clusters of shifting practices rather than stable semantic units.",
+        "name": "wittgenstein"
+      }
     ],
     "traditions": [
-      "begriffsgeschichte",
-      "cambridge_school",
-      "paradigm_theory",
-      "historical_semantics",
-      "cognitive_linguistics"
+      {
+        "description": "Begriffsgeschichte (conceptual history), developed primarily in postwar Germany, treats concepts as compressed historical experiences that structure political and social reality while themselves undergoing temporal transformation. Its core commitment is that concepts have histories that cannot be reduced to word histories: a term may persist while its semantic field, temporal structure, and performative force shift radically. This tradition provides the engine's foundational assumption that diachronic semantic analysis reveals not just intellectual change but transformations in the structures of historical experience and expectation.",
+        "name": "begriffsgeschichte"
+      },
+      {
+        "description": "The Cambridge School of intellectual history, associated with Skinner and Pocock, insists that texts must be read as interventions in specific linguistic contexts, with authors performing speech-acts constrained and enabled by available vocabularies. Its methodology treats concepts not as timeless ideas but as moves in situated arguments, making meaning inseparable from rhetorical intention and polemical force. This tradition equips the engine to analyze framing shifts as changes in illocutionary stance: when an author repositions a concept from one speech-act genre to another across works, the concept's function has evolved even if its definition remains stable.",
+        "name": "cambridge_school"
+      },
+      {
+        "description": "Paradigm theory, originating in Kuhn's analysis of scientific revolutions, demonstrates that conceptual frameworks can be incommensurable despite sharing vocabulary: terms embedded in different paradigms lack common measures of comparison because they presuppose incompatible worlds. Its core insight is that revolutionary change often appears as interpretive shift rather than observational correction, with new paradigms reorganizing the same evidence into different patterns. This tradition enables the engine to detect methodological rupture through evidence-reweighting: when an author treats the same data as supporting different conclusions across works, a paradigm-level shift may have occurred beneath terminological continuity.",
+        "name": "paradigm_theory"
+      },
+      {
+        "description": "Historical semantics studies meaning-change in natural language over time, tracking how words acquire, lose, and redistribute senses through processes of generalization, specialization, metaphorical extension, and pragmatic drift. Its empirical methods for documenting semantic fields, collocational patterns, and usage frequencies provide technical tools for measuring vocabulary evolution beyond impressionistic comparison. This tradition supplies the engine with quantifiable metrics for semantic drift: frequency shifts, collocation changes, and domain transfers that indicate a concept's migration across discursive territories even when the term itself remains constant.",
+        "name": "historical_semantics"
+      },
+      {
+        "description": "Cognitive linguistics, emerging from Lakoff and colleagues' work, treats language as grounded in embodied cognition and structured by conceptual metaphors that systematically map concrete domains onto abstract ones. Its central claim is that metaphor is not ornamental but constitutive: changing root metaphors changes conceptual structure, making metaphor analysis essential to understanding thought itself. This tradition justifies the engine's treatment of metaphor evolution as a primary analytical dimension: when an author's metaphors for a concept shift from containment to network structures, the concept has been fundamentally reconceptualized regardless of terminological stability.",
+        "name": "cognitive_linguistics"
+      }
     ]
   },
   "kind": "synthesis",

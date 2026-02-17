@@ -300,26 +300,74 @@
   "engine_name": "Genealogy Relationship Classification",
   "intellectual_lineage": {
     "key_concepts": [
-      "anxiety_of_influence",
-      "intentionalism",
-      "footnote_as_evidence",
-      "influence_channels",
-      "intellectual_triage",
-      "convergent_evolution",
-      "strategic_classification"
+      {
+        "definition": "The concept that creative intellectual work emerges through struggle with precursors, involving active misreading, selective appropriation, and defensive distortion rather than passive reception. This engine uses the concept to recognize that relationship types represent different modes of agonistic engagement\u2014from direct precursor (acknowledged debt) to contradicted position (overt struggle) to parallel development (anxiety avoidance through independent invention).",
+        "name": "anxiety_of_influence"
+      },
+      {
+        "definition": "The methodological principle that intellectual relationships must be classified based on recoverable authorial intentions and historical contexts rather than interpreter-imposed thematic patterns. The engine applies this by prioritizing documentary evidence of actual engagement\u2014citation, explicit reference, temporal sequence\u2014over speculative connections based on conceptual similarity alone.",
+        "name": "intentionalism"
+      },
+      {
+        "definition": "The forensic principle that scholarly apparatus (citations, references, bibliographies) provides material traces revealing the nature and depth of intellectual relationships. This engine treats citation patterns as diagnostic markers: direct precursors appear in sustained engagement, methodological ancestors in structural attribution, indirect contextualizers in casual background reference, enabling rapid relationship classification from textual markers.",
+        "name": "footnote_as_evidence"
+      },
+      {
+        "definition": "The distinct pathways through which prior works shape subsequent arguments\u2014vocabulary transmission, methodological adoption, audience preparation, authority lending, conceptual framing. The engine uses channel identification to refine relationship classification: a methodological ancestor transmits analytical tools, an indirect contextualizer prepares conceptual vocabulary, a contradicted position shapes argumentative rhetoric, each leaving characteristic traces that guide further investigation.",
+        "name": "influence_channels"
+      },
+      {
+        "definition": "The strategic practice of rapidly classifying intellectual relationships to allocate investigative resources efficiently, distinguishing which genealogical links warrant deep analysis versus cursory acknowledgment. This is the engine's core function: sorting prior works into relationship categories that determine subsequent depth of scanning\u2014direct precursors receive intensive tracing, parallel developments minimal attention.",
+        "name": "intellectual_triage"
+      },
+      {
+        "definition": "The phenomenon where similar ideas or arguments emerge independently in separate intellectual contexts without causal transmission, analogous to biological convergent evolution. The engine must distinguish this relationship type (parallel development) from genuine genealogical descent (direct precursor) by examining temporal sequences, citation networks, and whether shared elements are general conceptual units versus specific argumentative formations.",
+        "name": "convergent_evolution"
+      },
+      {
+        "definition": "The understanding that relationship classification is not merely taxonomic description but a decision-making tool that directs subsequent analytical investment\u2014determining where to look, how deeply to read, and what kinds of traces to seek. The engine embodies this concept by treating its five relationship types as investigative strategies: each classification prescribes a different genealogical scanning protocol for Pass 2 analysis.",
+        "name": "strategic_classification"
+      }
     ],
-    "primary": "bloom",
+    "primary": {
+      "description": "Harold Bloom (1930-2019), American literary critic whose theory of the 'anxiety of influence' revolutionized how we understand intellectual genealogy by positing that creative work emerges not from passive reception but from active misreading and struggle with precursors. His six revisionary ratios provide this engine's fundamental insight: that relationships between texts are never neutral transmissions but strategic negotiations involving distortion, completion, and repression. Bloom's framework makes it possible to classify influence not as binary presence/absence but as a spectrum of defensive and transformative stances toward prior works.",
+      "name": "bloom"
+    },
     "secondary": [
-      "skinner",
-      "grafton",
-      "lovejoy"
+      {
+        "description": "Quentin Skinner (1940-), British historian and leading figure of the Cambridge School, whose contextualist methodology insists that intellectual meaning emerges from recovering what authors were *doing* in their historical moment\u2014what speech acts they were performing. Skinner's approach corrects Bloom's sometimes ahistorical psychologizing by grounding relationship classification in documentary evidence of actual reading, citation, and argumentative intent. For this engine, Skinner provides the methodological rigor to distinguish genuine precursors from anachronistic projections, ensuring that classified relationships reflect historical realities rather than superficial thematic similarities.",
+        "name": "skinner"
+      },
+      {
+        "description": "Anthony Grafton (1950-), American historian of the book whose forensic analysis of footnotes, marginalia, and scholarly apparatus reveals the material traces of intellectual relationships. Grafton's work on citation practices demonstrates that influence channels are empirically detectable through specific textual markers\u2014vocabulary adoption, argumentative structure, reference patterns. His method gives this engine its evidentiary foundation: relationship types (precursor, contextualizer, methodological ancestor) leave distinct documentary signatures that can be identified even in truncated excerpts, making rapid triage classification possible.",
+        "name": "grafton"
+      },
+      {
+        "description": "Arthur O. Lovejoy (1873-1962), American philosopher and founder of the history of ideas, whose 'unit-ideas' method tracks concepts across disciplinary and temporal boundaries to reveal hidden genealogies. Lovejoy's approach enables this engine to recognize parallel developments\u2014instances where similar ideas emerge independently without causal influence\u2014by distinguishing between shared conceptual units (which may develop convergently) and specific argumentative formations (which indicate direct transmission). His work underwrites the crucial distinction between genuine precursors and mere topical neighbors in intellectual space.",
+        "name": "lovejoy"
+      }
     ],
     "traditions": [
-      "anxiety_of_influence",
-      "cambridge_school",
-      "reception_history",
-      "bibliometrics",
-      "intellectual_history"
+      {
+        "description": "The critical tradition emerging from Bloom's work that treats intellectual relationships as fundamentally agonistic rather than cumulative, characterized by creative misprision, defensive distortion, and strategic forgetting. This tradition provides this engine's core insight that relationship classification must account for *how* ideas are transformed in transmission\u2014whether adopted, inverted, repressed, or completed\u2014not merely whether influence occurred. It frames the classification task as identifying the precise mode of struggle or appropriation that defines each genealogical link.",
+        "name": "anxiety_of_influence"
+      },
+      {
+        "description": "The contextualist methodology in intellectual history, pioneered by Skinner and Pocock, that insists on recovering authorial intention and historical speech-act contexts to avoid anachronistic interpretation. This tradition disciplines this engine's classification process by requiring that relationship types be grounded in recoverable historical evidence\u2014actual citation networks, documented reading, temporal priority\u2014rather than thematic similarity alone. It provides the methodological constraints that prevent the engine from projecting false genealogies based on superficial conceptual overlap.",
+        "name": "cambridge_school"
+      },
+      {
+        "description": "The tradition of Rezeptionsgeschichte that studies how texts are actively reinterpreted and reappropriated by successive audiences and authors, treating meaning as co-created through historical reception rather than fixed at origin. This tradition informs the engine's understanding that a work can function as precursor, contextualizer, or contradicted position depending on how it is *taken up* by the current argument\u2014the same prior text might serve different genealogical roles in different intellectual contexts. It shifts classification focus from intrinsic textual properties to relational dynamics of reading and response.",
+        "name": "reception_history"
+      },
+      {
+        "description": "The quantitative study of citation patterns, co-citation networks, and publication relationships to map intellectual influence structures empirically. This tradition provides this engine with its commitment to speed and triage efficiency: by treating certain influence signals as rapidly detectable markers (citation density, vocabulary overlap, structural homology), bibliometric methods enable quick classification that can be refined through deeper analysis later. It validates the engine's strategic approach of fast initial sorting followed by selective deep investigation.",
+        "name": "bibliometrics"
+      },
+      {
+        "description": "The discipline that studies the development and transmission of ideas across time, tracking how concepts, arguments, and methodologies evolve through networks of thinkers and texts. This tradition provides the broadest framework for the engine's operation: the understanding that ideas have genealogies that can be traced, that influence operates through multiple channels (vocabulary, methodology, framing, audience preparation), and that intellectual relationships form complex ecosystems requiring systematic classification. It grounds the engine's purpose within an established scholarly methodology for reconstructing how arguments come to be.",
+        "name": "intellectual_history"
+      }
     ]
   },
   "kind": "extraction",

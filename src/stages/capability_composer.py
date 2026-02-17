@@ -369,9 +369,11 @@ def _compose_framing(cap_def: CapabilityEngineDefinition) -> str:
     if lineage.traditions or lineage.key_concepts:
         lines.extend(["", "**Intellectual Tradition**:"])
         if lineage.traditions:
-            lines.append(f"- Traditions: {', '.join(lineage.traditions)}")
+            trad_names = [t.name if hasattr(t, 'name') else t for t in lineage.traditions]
+            lines.append(f"- Traditions: {', '.join(trad_names)}")
         if lineage.key_concepts:
-            lines.append(f"- Key concepts: {', '.join(lineage.key_concepts)}")
+            concept_names = [c.name if hasattr(c, 'name') else c for c in lineage.key_concepts]
+            lines.append(f"- Key concepts: {', '.join(concept_names)}")
 
     return "\n".join(lines)
 

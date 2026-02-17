@@ -400,26 +400,74 @@
   "engine_name": "Concept Taxonomy: Argumentative Function",
   "intellectual_lineage": {
     "key_concepts": [
-      "warrant",
-      "backing",
-      "qualifier",
-      "rebuttal",
-      "argumentation_scheme",
-      "load_bearing_structure",
-      "argumentative_function"
+      {
+        "definition": "The inferential principle that licenses moving from data/grounds to claim, answering 'why does this evidence support this conclusion?' In Toulmin's model, warrants are the bridges that justify inferential steps. This engine identifies conceptual chains functioning as warrants\u2014establishing the legitimacy of moves from one conceptual domain to another.",
+        "name": "warrant"
+      },
+      {
+        "definition": "The support structure underlying a warrant, establishing why the warrant itself is reliable or applicable in this context. The engine identifies conceptual chains that provide backing\u2014not direct evidence for claims but meta-level justification for why certain inferential patterns or conceptual connections are trustworthy.",
+        "name": "backing"
+      },
+      {
+        "definition": "Modal indicators specifying the strength or scope of a claim ('presumably,' 'certainly,' 'in most cases'). The engine tracks how conceptual chains function as qualifiers\u2014limiting, strengthening, or conditioning the applicability of other concepts rather than directly supporting conclusions.",
+        "name": "qualifier"
+      },
+      {
+        "definition": "Conditions or circumstances that would defeat, undermine, or limit a claim despite otherwise adequate warrant. The engine identifies defensive conceptual chains that anticipate objections and specify boundary conditions, revealing where authors perceive their arguments as vulnerable and requiring protection.",
+        "name": "rebuttal"
+      },
+      {
+        "definition": "Recurring patterns of inference with characteristic form and associated critical questions (argument from authority, analogy, consequence, sign, etc.). The engine classifies conceptual chains by scheme type, recognizing that chains performing similar argumentative functions may have different structural vulnerabilities depending on which inferential pattern they instantiate.",
+        "name": "argumentation_scheme"
+      },
+      {
+        "definition": "Conceptual chains or nodes that support extensive downstream reasoning, whose removal or weakness would compromise large portions of the argument. The engine identifies which conceptual developments carry the most structural weight\u2014where failure would be catastrophic versus merely inconvenient\u2014enabling assessment of argumentative resilience.",
+        "name": "load_bearing_structure"
+      },
+      {
+        "definition": "The specific structural role a conceptual chain plays in the overall argument: foundational (establishing premises), elaborative (developing implications), defensive (answering objections), bridge (connecting domains), or culminative (synthesizing conclusions). The engine's primary output is classification of each significant conceptual chain by function, revealing the argument's engineering blueprint.",
+        "name": "argumentative_function"
+      }
     ],
-    "primary": "toulmin",
+    "primary": {
+      "description": "Stephen Toulmin (1922-2009), British philosopher who revolutionized argumentation analysis by proposing that arguments have architectural structure beyond simple premises-and-conclusion. His model identifies six functional components (claim, data, warrant, backing, qualifier, rebuttal) that map how arguments actually work in practical reasoning, providing this engine with its foundational insight that conceptual chains perform distinct structural roles rather than merely accumulating evidence.",
+      "name": "toulmin"
+    },
     "secondary": [
-      "perelman",
-      "walton",
-      "brandom"
+      {
+        "description": "Cha\u00efm Perelman (1912-1984), Belgian philosopher who developed the New Rhetoric by analyzing how arguments establish presence and adherence in audiences through strategic selection and amplification. His work on argumentative techniques and the architecture of persuasion complements Toulmin by showing how conceptual chains create hierarchies of importance\u2014which ideas bear structural weight depends partly on rhetorical strategies that make certain concepts foundational and others derivative.",
+        "name": "perelman"
+      },
+      {
+        "description": "Douglas Walton (1942-2020), Canadian logician who systematized argumentation schemes\u2014recurring patterns of inference used in practical reasoning, each with characteristic critical questions and vulnerabilities. His taxonomy of schemes enables this engine to classify conceptual chains not just by position (foundational, elaborative) but by inferential type, revealing where arguments rely on authority, analogy, consequence, or other specific patterns that carry different epistemic loads.",
+        "name": "walton"
+      },
+      {
+        "description": "Robert Brandom (1950-), American philosopher whose inferentialism treats concepts as nodes in networks of inferential commitments and entitlements. His analysis of how concepts gain content through their inferential role informs this engine's understanding that a concept's argumentative function\u2014what work it does\u2014is inseparable from its position in chains of reasoning, making the mapping of inferential architecture essential to understanding conceptual content itself.",
+        "name": "brandom"
+      }
     ],
     "traditions": [
-      "argumentation_theory",
-      "new_rhetoric",
-      "informal_logic",
-      "inferentialism",
-      "structural_analysis"
+      {
+        "description": "An interdisciplinary field emerging in the mid-20th century that studies argument as structured social practice rather than formal logical validity, examining how claims are supported, challenged, and warranted in actual discourse. This tradition provides the engine with methodological tools for analyzing arguments as functional architectures where different elements perform specific work (establishing premises, connecting grounds to claims, defending against objections) rather than as linear chains of propositions.",
+        "name": "argumentation_theory"
+      },
+      {
+        "description": "A movement initiated by Perelman and Olbrechts-Tyteca (1958) recovering classical rhetorical analysis for philosophical argumentation, focusing on how arguments gain adherence through techniques of presence, association, and dissociation rather than formal proof. This tradition informs the engine's attention to how conceptual chains establish hierarchies\u2014which concepts become foundational versus elaborative often reflects rhetorical strategies of emphasis and framing rather than purely logical necessity.",
+        "name": "new_rhetoric"
+      },
+      {
+        "description": "A field developed since the 1970s analyzing real-world arguments using standards appropriate to practical reasoning rather than formal deductive validity, emphasizing argument structure, fallacy identification, and context-sensitive evaluation. This tradition provides the engine with frameworks for identifying argumentative vulnerabilities\u2014places where conceptual chains doing critical structural work rest on weak or insufficient support\u2014and for distinguishing strong from weak warrants in non-formal reasoning.",
+        "name": "informal_logic"
+      },
+      {
+        "description": "A semantic program, particularly associated with Brandom and Sellars, holding that conceptual content is constituted by inferential role\u2014what follows from applying a concept and what commitments license its application. This tradition grounds the engine's core methodology: understanding what argumentative work a concept does requires mapping its inferential connections, since a concept's function (foundational, elaborative, bridge) is determined by its position in networks of material inference.",
+        "name": "inferentialism"
+      },
+      {
+        "description": "An analytical approach examining how components of complex systems relate to form stable configurations, identifying load-bearing elements, redundancies, and points of potential failure. Adapted from engineering and structuralist thought, this tradition provides the engine with its central metaphor: conceptual systems have architecture where some chains bear argumentative weight, others provide redundancy, and weak points create vulnerability, making the system's structure as important as its content.",
+        "name": "structural_analysis"
+      }
     ]
   },
   "kind": "primitive",

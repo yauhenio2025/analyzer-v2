@@ -437,27 +437,78 @@
   "engine_name": "Conceptual Framework Extractor",
   "intellectual_lineage": {
     "key_concepts": [
-      "research_programme",
-      "paradigm",
-      "vocabulary",
-      "methodological_signature",
-      "metaphor_as_argument",
-      "framing",
-      "domain_crossing",
-      "genealogical_hint"
+      {
+        "definition": "A diachronically extended theoretical structure with a stable hard core of unfalsifiable commitments, a protective belt of modifiable auxiliary hypotheses, and heuristics directing theory development. Used by this engine to identify the persistent analytical commitments that unify an author's work across texts while allowing methodological adaptation.",
+        "name": "research_programme"
+      },
+      {
+        "definition": "A disciplinary matrix of shared exemplars, symbolic generalizations, values, and metaphysical commitments that determines what counts as legitimate problems, solutions, and evidence within a research community. This engine uses it to analyze how analytical frameworks function as gestalt-determining structures that render certain phenomena visible while others become unthinkable.",
+        "name": "paradigm"
+      },
+      {
+        "definition": "A structured set of theoretical terms that confer expressive power and carry inferential commitments, not merely labeling phenomena but enabling certain forms of analysis while foreclosing others. The engine tracks vocabulary as the primary tracer of intellectual lineage\u2014distinctive terminological choices reveal training, influence, and framework commitments.",
+        "name": "vocabulary"
+      },
+      {
+        "definition": "The characteristic argumentative moves, evidential standards, and analytical habits that persist across an author's work, functioning as a recognizable style of intellectual practice. This engine identifies signatures as expressions of deeper programmatic commitments\u2014habitual moves that reveal the author's intellectual formation and framework loyalty.",
+        "name": "methodological_signature"
+      },
+      {
+        "definition": "Figurative language that does genuine analytical work by structuring how phenomena are conceptualized, what relations become visible, and what inferences are licensed\u2014not decorative but constitutive of the framework itself. The engine treats sustained metaphors as framework-carriers that often migrate across texts, making them valuable genealogical tracers.",
+        "name": "metaphor_as_argument"
+      },
+      {
+        "definition": "The selection and organization of analytical focus that determines what aspects of a phenomenon are foregrounded as central while others are backgrounded or rendered invisible. This engine analyzes framing choices as revealing framework commitments\u2014what must be explained versus what can be taken as given exposes the author's theoretical priorities.",
+        "name": "framing"
+      },
+      {
+        "definition": "The migration of analytical frameworks, vocabularies, or methodological approaches from one disciplinary or topical domain to another, often adapting the framework to new phenomena. The engine tracks domain crossings as moments of framework innovation where genealogical threads become visible\u2014the source domain reveals lineage while adaptations show original contribution.",
+        "name": "domain_crossing"
+      },
+      {
+        "definition": "Textual markers that signal intellectual lineage: unjustified terms assuming shared vocabulary, methodological moves that feel habitual rather than argued for, citations that gesture toward authority, or framework choices that seem overdetermined by prior commitments. These hints guide downstream engines toward the intellectual relationships that constitute the author's formation.",
+        "name": "genealogical_hint"
+      }
     ],
-    "primary": "lakatos",
+    "primary": {
+      "description": "Imre Lakatos (1922-1974), philosopher of mathematics and science, developed the methodology of scientific research programmes as an alternative to both Kuhnian paradigms and Popperian falsificationism. His framework is primary here because it treats intellectual frameworks themselves as historical entities with internal logic (hard cores, protective belts, heuristics) that evolve through time while maintaining methodological identity\u2014precisely what this engine must track when analyzing how analytical scaffolding persists and mutates across an author's corpus.",
+      "name": "lakatos"
+    },
     "secondary": [
-      "kuhn",
-      "brandom",
-      "cassirer"
+      {
+        "description": "Thomas Kuhn (1922-1996), historian and philosopher of science, introduced the concept of paradigms as disciplinary matrices that determine what counts as a problem, solution, and evidence within scientific communities. For this engine, Kuhn's attention to incommensurability and gestalt shifts illuminates how different analytical frameworks render certain phenomena visible while others become literally unthinkable\u2014the framing choices that structure what any given conceptual apparatus can see. His work on scientific vocabulary as theory-laden complements Lakatos by showing how terminological choices carry entire worldviews.",
+        "name": "kuhn"
+      },
+      {
+        "description": "Robert Brandom (1950-), analytic philosopher working in pragmatist and inferentialist traditions, argues that conceptual content is constituted by inferential roles\u2014what follows from a claim and what would be evidence for it. His framework is essential here because it makes explicit how vocabulary choices commit authors to entire networks of inference, and how tracing these commitment-patterns reveals intellectual formation. Brandom's notion of vocabulary as conferring expressive power explains why certain theoretical terms become indispensable tools that mark lineage.",
+        "name": "brandom"
+      },
+      {
+        "description": "Ernst Cassirer (1874-1945), neo-Kantian philosopher and historian of ideas, analyzed how symbolic forms and conceptual schemes structure experience across domains from myth to mathematics. His approach to conceptual history as the evolution of organizing categories informs this engine's attention to how analytical frameworks migrate across disciplinary boundaries and how metaphorical structures do genuine cognitive work rather than mere illustration. Cassirer's method of tracking concept-transformation through intellectual history provides the genealogical depth this engine requires.",
+        "name": "cassirer"
+      }
     ],
     "traditions": [
-      "research_programmes",
-      "paradigm_analysis",
-      "inferentialism",
-      "conceptual_history",
-      "vocabulary_analysis"
+      {
+        "description": "The Lakatosian methodology analyzing scientific theories as research programmes with persistent hard cores (unfalsifiable commitments), protective belts (auxiliary hypotheses), and positive/negative heuristics (methodological directives for theory development). This tradition informs the engine's approach to identifying the stable analytical commitments that survive across an author's work while peripheral frameworks mutate, and to recognizing methodological signatures as expressions of deeper programmatic commitments rather than isolated choices.",
+        "name": "research_programmes"
+      },
+      {
+        "description": "The Kuhnian approach to understanding scientific communities through their shared paradigms\u2014exemplary problem-solutions, disciplinary matrices, and symbolic generalizations that define normal science. For this engine, paradigm analysis provides the lens for understanding how analytical frameworks function as gestalt-determining structures: they don't just organize existing observations but determine what counts as an observation, what puzzles are worth solving, and what forms solutions must take. This tradition emphasizes the pre-theoretical commitments embedded in methodological choices.",
+        "name": "paradigm_analysis"
+      },
+      {
+        "description": "The Brandomian philosophical program treating conceptual content as constituted by patterns of inference rather than by reference or representation\u2014what commitments a claim licenses, what would count as evidence, what follows from accepting it. This tradition gives the engine its approach to vocabulary analysis: terms are not merely labels but nodes in inferential networks, and tracking an author's characteristic inferences reveals their conceptual commitments. It makes explicit how framework choices determine evidential standards and argumentative validity.",
+        "name": "inferentialism"
+      },
+      {
+        "description": "The tradition (Begriffsgeschichte) of tracing how fundamental concepts evolve through intellectual history, carrying sedimented meanings and enabling or constraining new thought. Practiced by figures from Cassirer to Koselleck, it treats concepts as historical actors that bear the weight of their past uses while being reconfigured for new analytical work. This tradition informs the engine's genealogical orientation: every theoretical term has a history, and an author's relationship to that history\u2014whether they innovate, inherit, or hybridize\u2014is itself genealogically significant.",
+        "name": "conceptual_history"
+      },
+      {
+        "description": "The practice of treating terminological choices as intellectually consequential, revealing theoretical commitments, disciplinary training, and lineage relationships. Drawing from Brandom's inferentialism and Kuhn's theory-ladenness of observation terms, this tradition holds that vocabularies are not neutral description-tools but frameworks that make certain questions askable and certain answers possible. For this engine, vocabulary analysis is the primary technique for identifying both explicit frameworks and tacit commitments\u2014the terms that need no justification in the text reveal what authority the author assumes.",
+        "name": "vocabulary_analysis"
+      }
     ]
   },
   "kind": "synthesis",

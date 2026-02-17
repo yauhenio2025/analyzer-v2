@@ -63,15 +63,20 @@ def build_engine_context(engine: dict) -> str:
         parts.append(f"RESEARCHER QUESTION: {engine['researcher_question']}")
         parts.append("")
 
-    # Intellectual lineage
+    # Intellectual lineage (handles both flat strings and rich dicts)
     lineage = engine.get('intellectual_lineage', {})
-    parts.append(f"PRIMARY THINKER: {lineage.get('primary', 'N/A')}")
+    primary = lineage.get('primary', 'N/A')
+    primary_name = primary.get('name', primary) if isinstance(primary, dict) else primary
+    parts.append(f"PRIMARY THINKER: {primary_name}")
     if lineage.get('secondary'):
-        parts.append(f"SECONDARY: {', '.join(lineage['secondary'])}")
+        sec_names = [s.get('name', s) if isinstance(s, dict) else s for s in lineage['secondary']]
+        parts.append(f"SECONDARY: {', '.join(sec_names)}")
     if lineage.get('traditions'):
-        parts.append(f"TRADITIONS: {', '.join(lineage['traditions'])}")
+        trad_names = [t.get('name', t) if isinstance(t, dict) else t for t in lineage['traditions']]
+        parts.append(f"TRADITIONS: {', '.join(trad_names)}")
     if lineage.get('key_concepts'):
-        parts.append(f"KEY CONCEPTS: {', '.join(lineage['key_concepts'])}")
+        concept_names = [c.get('name', c) if isinstance(c, dict) else c for c in lineage['key_concepts']]
+        parts.append(f"KEY CONCEPTS: {', '.join(concept_names)}")
     parts.append("")
 
     # Analytical dimensions

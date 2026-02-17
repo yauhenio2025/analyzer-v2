@@ -38,52 +38,144 @@ problematique: |
   Its value lies in enabling the genealogical pipeline to allocate
   investigative resources efficiently -- spending deep attention where it
   will yield the richest findings.
-researcher_question: What is the precise intellectual relationship between this prior
-  work and the current argument?
+researcher_question: What is the precise intellectual relationship between this prior work and the current
+  argument?
 intellectual_lineage:
-  primary: bloom
+  primary:
+    name: bloom
+    description: 'Harold Bloom (1930-2019), American literary critic whose theory of the ''anxiety of
+      influence'' revolutionized how we understand intellectual genealogy by positing that creative work
+      emerges not from passive reception but from active misreading and struggle with precursors. His
+      six revisionary ratios provide this engine''s fundamental insight: that relationships between texts
+      are never neutral transmissions but strategic negotiations involving distortion, completion, and
+      repression. Bloom''s framework makes it possible to classify influence not as binary presence/absence
+      but as a spectrum of defensive and transformative stances toward prior works.'
   secondary:
-  - skinner
-  - grafton
-  - lovejoy
+  - name: skinner
+    description: Quentin Skinner (1940-), British historian and leading figure of the Cambridge School,
+      whose contextualist methodology insists that intellectual meaning emerges from recovering what authors
+      were *doing* in their historical moment—what speech acts they were performing. Skinner's approach
+      corrects Bloom's sometimes ahistorical psychologizing by grounding relationship classification in
+      documentary evidence of actual reading, citation, and argumentative intent. For this engine, Skinner
+      provides the methodological rigor to distinguish genuine precursors from anachronistic projections,
+      ensuring that classified relationships reflect historical realities rather than superficial thematic
+      similarities.
+  - name: grafton
+    description: 'Anthony Grafton (1950-), American historian of the book whose forensic analysis of footnotes,
+      marginalia, and scholarly apparatus reveals the material traces of intellectual relationships. Grafton''s
+      work on citation practices demonstrates that influence channels are empirically detectable through
+      specific textual markers—vocabulary adoption, argumentative structure, reference patterns. His method
+      gives this engine its evidentiary foundation: relationship types (precursor, contextualizer, methodological
+      ancestor) leave distinct documentary signatures that can be identified even in truncated excerpts,
+      making rapid triage classification possible.'
+  - name: lovejoy
+    description: Arthur O. Lovejoy (1873-1962), American philosopher and founder of the history of ideas,
+      whose 'unit-ideas' method tracks concepts across disciplinary and temporal boundaries to reveal
+      hidden genealogies. Lovejoy's approach enables this engine to recognize parallel developments—instances
+      where similar ideas emerge independently without causal influence—by distinguishing between shared
+      conceptual units (which may develop convergently) and specific argumentative formations (which indicate
+      direct transmission). His work underwrites the crucial distinction between genuine precursors and
+      mere topical neighbors in intellectual space.
   traditions:
-  - anxiety_of_influence
-  - cambridge_school
-  - reception_history
-  - bibliometrics
-  - intellectual_history
+  - name: anxiety_of_influence
+    description: The critical tradition emerging from Bloom's work that treats intellectual relationships
+      as fundamentally agonistic rather than cumulative, characterized by creative misprision, defensive
+      distortion, and strategic forgetting. This tradition provides this engine's core insight that relationship
+      classification must account for *how* ideas are transformed in transmission—whether adopted, inverted,
+      repressed, or completed—not merely whether influence occurred. It frames the classification task
+      as identifying the precise mode of struggle or appropriation that defines each genealogical link.
+  - name: cambridge_school
+    description: The contextualist methodology in intellectual history, pioneered by Skinner and Pocock,
+      that insists on recovering authorial intention and historical speech-act contexts to avoid anachronistic
+      interpretation. This tradition disciplines this engine's classification process by requiring that
+      relationship types be grounded in recoverable historical evidence—actual citation networks, documented
+      reading, temporal priority—rather than thematic similarity alone. It provides the methodological
+      constraints that prevent the engine from projecting false genealogies based on superficial conceptual
+      overlap.
+  - name: reception_history
+    description: The tradition of Rezeptionsgeschichte that studies how texts are actively reinterpreted
+      and reappropriated by successive audiences and authors, treating meaning as co-created through historical
+      reception rather than fixed at origin. This tradition informs the engine's understanding that a
+      work can function as precursor, contextualizer, or contradicted position depending on how it is
+      *taken up* by the current argument—the same prior text might serve different genealogical roles
+      in different intellectual contexts. It shifts classification focus from intrinsic textual properties
+      to relational dynamics of reading and response.
+  - name: bibliometrics
+    description: 'The quantitative study of citation patterns, co-citation networks, and publication relationships
+      to map intellectual influence structures empirically. This tradition provides this engine with its
+      commitment to speed and triage efficiency: by treating certain influence signals as rapidly detectable
+      markers (citation density, vocabulary overlap, structural homology), bibliometric methods enable
+      quick classification that can be refined through deeper analysis later. It validates the engine''s
+      strategic approach of fast initial sorting followed by selective deep investigation.'
+  - name: intellectual_history
+    description: 'The discipline that studies the development and transmission of ideas across time, tracking
+      how concepts, arguments, and methodologies evolve through networks of thinkers and texts. This tradition
+      provides the broadest framework for the engine''s operation: the understanding that ideas have genealogies
+      that can be traced, that influence operates through multiple channels (vocabulary, methodology,
+      framing, audience preparation), and that intellectual relationships form complex ecosystems requiring
+      systematic classification. It grounds the engine''s purpose within an established scholarly methodology
+      for reconstructing how arguments come to be.'
   key_concepts:
-  - anxiety_of_influence
-  - intentionalism
-  - footnote_as_evidence
-  - influence_channels
-  - intellectual_triage
-  - convergent_evolution
-  - strategic_classification
+  - name: anxiety_of_influence
+    definition: The concept that creative intellectual work emerges through struggle with precursors,
+      involving active misreading, selective appropriation, and defensive distortion rather than passive
+      reception. This engine uses the concept to recognize that relationship types represent different
+      modes of agonistic engagement—from direct precursor (acknowledged debt) to contradicted position
+      (overt struggle) to parallel development (anxiety avoidance through independent invention).
+  - name: intentionalism
+    definition: The methodological principle that intellectual relationships must be classified based
+      on recoverable authorial intentions and historical contexts rather than interpreter-imposed thematic
+      patterns. The engine applies this by prioritizing documentary evidence of actual engagement—citation,
+      explicit reference, temporal sequence—over speculative connections based on conceptual similarity
+      alone.
+  - name: footnote_as_evidence
+    definition: 'The forensic principle that scholarly apparatus (citations, references, bibliographies)
+      provides material traces revealing the nature and depth of intellectual relationships. This engine
+      treats citation patterns as diagnostic markers: direct precursors appear in sustained engagement,
+      methodological ancestors in structural attribution, indirect contextualizers in casual background
+      reference, enabling rapid relationship classification from textual markers.'
+  - name: influence_channels
+    definition: 'The distinct pathways through which prior works shape subsequent arguments—vocabulary
+      transmission, methodological adoption, audience preparation, authority lending, conceptual framing.
+      The engine uses channel identification to refine relationship classification: a methodological ancestor
+      transmits analytical tools, an indirect contextualizer prepares conceptual vocabulary, a contradicted
+      position shapes argumentative rhetoric, each leaving characteristic traces that guide further investigation.'
+  - name: intellectual_triage
+    definition: 'The strategic practice of rapidly classifying intellectual relationships to allocate
+      investigative resources efficiently, distinguishing which genealogical links warrant deep analysis
+      versus cursory acknowledgment. This is the engine''s core function: sorting prior works into relationship
+      categories that determine subsequent depth of scanning—direct precursors receive intensive tracing,
+      parallel developments minimal attention.'
+  - name: convergent_evolution
+    definition: The phenomenon where similar ideas or arguments emerge independently in separate intellectual
+      contexts without causal transmission, analogous to biological convergent evolution. The engine must
+      distinguish this relationship type (parallel development) from genuine genealogical descent (direct
+      precursor) by examining temporal sequences, citation networks, and whether shared elements are general
+      conceptual units versus specific argumentative formations.
+  - name: strategic_classification
+    definition: 'The understanding that relationship classification is not merely taxonomic description
+      but a decision-making tool that directs subsequent analytical investment—determining where to look,
+      how deeply to read, and what kinds of traces to seek. The engine embodies this concept by treating
+      its five relationship types as investigative strategies: each classification prescribes a different
+      genealogical scanning protocol for Pass 2 analysis.'
 analytical_dimensions:
 - key: relationship_type
   description: |
     The core classification: what kind of intellectual relationship exists between the prior work and the current work? This is a forced-choice among five types, each with distinct implications for how subsequent passes should investigate the connection.
   probing_questions:
-  - Does the current argument directly build on, extend, or refine ideas from this
-    prior work? (direct_precursor)
-  - Does this prior work set a broader intellectual context without directly feeding
-    specific arguments? (indirect_contextualizer)
-  - Does the current work borrow analytical tools, methods, or frameworks from this
-    prior work? (methodological_ancestor)
-  - Does the current work explicitly or implicitly argue against positions taken in
-    this prior work? (contradicted_position)
-  - Do similar ideas appear in both works without evidence of direct causal influence?
-    (parallel_development)
+  - Does the current argument directly build on, extend, or refine ideas from this prior work? (direct_precursor)
+  - Does this prior work set a broader intellectual context without directly feeding specific arguments?
+    (indirect_contextualizer)
+  - Does the current work borrow analytical tools, methods, or frameworks from this prior work? (methodological_ancestor)
+  - Does the current work explicitly or implicitly argue against positions taken in this prior work? (contradicted_position)
+  - Do similar ideas appear in both works without evidence of direct causal influence? (parallel_development)
   depth_guidance:
-    surface: Assign one of the five relationship types based on the most prominent
-      signal
-    standard: Assign relationship type with a brief justification citing specific
-      textual evidence from both works, noting any secondary relationship types that
-      also apply
-    deep: Full classification with primary and secondary types, detailed evidence
-      for each, assessment of how the relationship may have shifted over time, and
-      analysis of whether the author would agree with the classification
+    surface: Assign one of the five relationship types based on the most prominent signal
+    standard: Assign relationship type with a brief justification citing specific textual evidence from
+      both works, noting any secondary relationship types that also apply
+    deep: Full classification with primary and secondary types, detailed evidence for each, assessment
+      of how the relationship may have shifted over time, and analysis of whether the author would agree
+      with the classification
 - key: relationship_evidence
   description: |
     Textual and structural evidence supporting the classification. What specific passages, citations, arguments, or structural echoes justify assigning this relationship type? Evidence quality determines classification confidence.
@@ -91,49 +183,40 @@ analytical_dimensions:
   - Are there direct citations or acknowledgments linking the works?
   - Do shared vocabulary or technical terms appear across both works?
   - Are there structural parallels in argument organization or methodology?
-  - Does the current work respond to, critique, or extend specific claims from the
-    prior work?
+  - Does the current work respond to, critique, or extend specific claims from the prior work?
   - Are there conspicuous absences -- ideas that SHOULD be cited but are not?
   depth_guidance:
     surface: Cite 1-2 strongest pieces of evidence
-    standard: Gather 3-5 pieces of evidence including citations, vocabulary overlap,
-      structural parallels, and conspicuous absences
-    deep: 'Comprehensive evidence map: all citations, vocabulary transfers, structural
-      echoes, rhetorical responses, conspicuous absences, and assessment of evidence
-      reliability'
+    standard: Gather 3-5 pieces of evidence including citations, vocabulary overlap, structural parallels,
+      and conspicuous absences
+    deep: 'Comprehensive evidence map: all citations, vocabulary transfers, structural echoes, rhetorical
+      responses, conspicuous absences, and assessment of evidence reliability'
 - key: relationship_strength
   description: |
     How strong is the connection? A direct precursor with strong influence is fundamentally different from a direct precursor with weak influence. Strength is assessed on a three-point scale: strong, moderate, weak.
   probing_questions:
-  - How central is this prior work to the current argument -- could the argument exist
-    without it?
+  - How central is this prior work to the current argument -- could the argument exist without it?
   - How pervasive is the influence -- does it affect the whole work or just one section?
-  - How direct is the evidence -- explicit citation vs. implicit borrowing vs. structural
-    echo?
+  - How direct is the evidence -- explicit citation vs. implicit borrowing vs. structural echo?
   depth_guidance:
     surface: Assign strong/moderate/weak with one-sentence justification
-    standard: Assign strength with assessment of centrality, pervasiveness, and evidence
-      directness
-    deep: Nuanced strength assessment including how strength varies across different
-      aspects of the work, whether strength is increasing or decreasing over time,
-      and comparison to other prior works' influence
+    standard: Assign strength with assessment of centrality, pervasiveness, and evidence directness
+    deep: Nuanced strength assessment including how strength varies across different aspects of the work,
+      whether strength is increasing or decreasing over time, and comparison to other prior works' influence
 - key: influence_channels
   description: |
     Through which specific channels does the prior work influence the current work? Vocabulary (shared terms and concepts), methodology (analytical tools and approaches), audience (preparation of readers), authority (credibility lending), and framing (how problems are defined and structured). Multiple channels may be active simultaneously.
   probing_questions:
   - Does the current work adopt vocabulary or technical terms from the prior work?
-  - Does the current work use methodological approaches pioneered or refined in the
-    prior work?
+  - Does the current work use methodological approaches pioneered or refined in the prior work?
   - Did the prior work prepare an audience that the current work now addresses?
   - Does the author's authority on this topic derive partly from the prior work?
   - Does the prior work frame the problem space in ways the current work inherits?
   depth_guidance:
     surface: Identify the 1-2 most active influence channels
-    standard: Map all active channels with specific evidence for each and relative
-      importance ranking
-    deep: 'Full channel analysis: all active channels, their interactions, how channels
-      reinforce or undermine each other, and which channels the author is aware of
-      vs. which operate below conscious awareness'
+    standard: Map all active channels with specific evidence for each and relative importance ranking
+    deep: 'Full channel analysis: all active channels, their interactions, how channels reinforce or undermine
+      each other, and which channels the author is aware of vs. which operate below conscious awareness'
 - key: strategic_relevance
   description: |
     How does this classification affect downstream genealogical analysis? What should Pass 2 scanning prioritize given this relationship type? This dimension bridges classification and strategy -- it translates the taxonomic judgment into operational guidance.
@@ -144,17 +227,15 @@ analytical_dimensions:
   - What would a missed classification (wrong type) cost in analytical quality?
   depth_guidance:
     surface: One-sentence scanning recommendation
-    standard: Scanning strategy with priority dimensions, expected trace types, and
-      recommended attention level (high/medium/low)
-    deep: 'Full strategic assessment: priority dimensions ranked, expected trace types
-      with specific hypotheses, attention allocation with justification, risk assessment
-      of misclassification, and recommendations for how to revise classification if
-      Pass 2 evidence contradicts it'
+    standard: Scanning strategy with priority dimensions, expected trace types, and recommended attention
+      level (high/medium/low)
+    deep: 'Full strategic assessment: priority dimensions ranked, expected trace types with specific hypotheses,
+      attention allocation with justification, risk assessment of misclassification, and recommendations
+      for how to revise classification if Pass 2 evidence contradicts it'
 capabilities:
 - key: classify_relationship
-  description: Assign one of five relationship types (direct_precursor, indirect_contextualizer,
-    methodological_ancestor, contradicted_position, parallel_development) based on
-    textual evidence
+  description: Assign one of five relationship types (direct_precursor, indirect_contextualizer, methodological_ancestor,
+    contradicted_position, parallel_development) based on textual evidence
   produces_dimensions:
   - relationship_type
   - relationship_evidence
@@ -168,32 +249,29 @@ capabilities:
   intellectual_grounding:
     thinker: bloom
     concept: anxiety_of_influence
-    method: Bloom argues that influence is not passive reception but active struggle,
-      taking specific forms (clinamen, tessera, kenosis, etc.). This capability applies
-      that insight by insisting that relationships must be typed—that the mode of
-      influence determines its traces and effects.
+    method: Bloom argues that influence is not passive reception but active struggle, taking specific
+      forms (clinamen, tessera, kenosis, etc.). This capability applies that insight by insisting that
+      relationships must be typed—that the mode of influence determines its traces and effects.
   indicators:
-  - Explicit citations that frame the prior work in specific ways ("building on,"
-    "extending," "challenging," "in the context of")
-  - Vocabulary clusters that appear in both works but with different theoretical freight
-    or framing
-  - Methodological parallels (similar analytical moves, similar data structures, similar
-    argument architectures) without explicit acknowledgment
-  - Oppositional rhetoric that defines the current position against an earlier one
-    ("unlike X," "while previous approaches," "against the conventional view")
-  - 'Parallel independent development signals: similar publication dates, different
-    intellectual circles, no citation trail, different terminologies for similar ideas'
+  - Explicit citations that frame the prior work in specific ways ("building on," "extending," "challenging,"
+    "in the context of")
+  - Vocabulary clusters that appear in both works but with different theoretical freight or framing
+  - Methodological parallels (similar analytical moves, similar data structures, similar argument architectures)
+    without explicit acknowledgment
+  - Oppositional rhetoric that defines the current position against an earlier one ("unlike X," "while
+    previous approaches," "against the conventional view")
+  - 'Parallel independent development signals: similar publication dates, different intellectual circles,
+    no citation trail, different terminologies for similar ideas'
   depth_scaling:
-    surface: Primary relationship type assigned based on strongest single textual
-      signal (e.g., explicit citation framing or methodological parallel).
-    standard: Primary type with brief justification from textual evidence, plus identification
-      of any secondary relationship types that also apply.
-    deep: Primary and secondary types with full evidence, assessment of whether relationship
-      has shifted over time, analysis of discrepancy between author's framing and
-      actual connection, evaluation of whether author would agree with classification.
+    surface: Primary relationship type assigned based on strongest single textual signal (e.g., explicit
+      citation framing or methodological parallel).
+    standard: Primary type with brief justification from textual evidence, plus identification of any
+      secondary relationship types that also apply.
+    deep: Primary and secondary types with full evidence, assessment of whether relationship has shifted
+      over time, analysis of discrepancy between author's framing and actual connection, evaluation of
+      whether author would agree with classification.
 - key: assess_strength
-  description: Evaluate the strength of the intellectual relationship on a three-point
-    scale
+  description: Evaluate the strength of the intellectual relationship on a three-point scale
   produces_dimensions:
   - relationship_strength
   requires_dimensions:
@@ -207,33 +285,30 @@ capabilities:
   intellectual_grounding:
     thinker: grafton
     concept: footnote_as_evidence
-    method: Grafton demonstrates that citation patterns reveal intellectual relationships
-      when read critically—not all footnotes signify equal debt. This capability applies
-      that insight by assessing centrality, pervasiveness, and evidence directness
-      rather than simply counting citations.
+    method: Grafton demonstrates that citation patterns reveal intellectual relationships when read critically—not
+      all footnotes signify equal debt. This capability applies that insight by assessing centrality,
+      pervasiveness, and evidence directness rather than simply counting citations.
   indicators:
-  - 'Counterfactual test signals: language suggesting the current work builds essentially
-    on the prior ("following," "as X showed," "X''s framework allows us to")'
-  - 'Pervasiveness signals: the prior work appears in multiple sections, frames multiple
-    arguments, or structures the overall analytical approach'
-  - 'Evidence directness: explicit block quotes and detailed engagement vs. passing
-    citation vs. no citation but clear structural borrowing'
-  - 'Negative evidence: conspicuous absence of a work that should be cited given the
-    topic, suggesting anxiety or deliberate avoidance'
-  - 'Comparative prominence: how this prior work is treated relative to others in
-    the same category'
+  - 'Counterfactual test signals: language suggesting the current work builds essentially on the prior
+    ("following," "as X showed," "X''s framework allows us to")'
+  - 'Pervasiveness signals: the prior work appears in multiple sections, frames multiple arguments, or
+    structures the overall analytical approach'
+  - 'Evidence directness: explicit block quotes and detailed engagement vs. passing citation vs. no citation
+    but clear structural borrowing'
+  - 'Negative evidence: conspicuous absence of a work that should be cited given the topic, suggesting
+    anxiety or deliberate avoidance'
+  - 'Comparative prominence: how this prior work is treated relative to others in the same category'
   depth_scaling:
-    surface: Strong/moderate/weak assignment based on citation frequency and centrality
-      language in one or two key passages.
-    standard: Strength rating with separate assessment of centrality (could argument
-      exist without it), pervasiveness (whole work or sections), and evidence directness
-      (explicit vs. implicit).
-    deep: Nuanced strength profile showing how strength varies across different aspects
-      of the work (methodology vs. substance), whether strength is stable or shifting
-      over time, and comparative strength relative to other prior works in the genealogy.
+    surface: Strong/moderate/weak assignment based on citation frequency and centrality language in one
+      or two key passages.
+    standard: Strength rating with separate assessment of centrality (could argument exist without it),
+      pervasiveness (whole work or sections), and evidence directness (explicit vs. implicit).
+    deep: Nuanced strength profile showing how strength varies across different aspects of the work (methodology
+      vs. substance), whether strength is stable or shifting over time, and comparative strength relative
+      to other prior works in the genealogy.
 - key: map_influence_channels
-  description: 'Identify the specific channels through which influence flows: vocabulary,
-    methodology, audience, authority, framing'
+  description: 'Identify the specific channels through which influence flows: vocabulary, methodology,
+    audience, authority, framing'
   produces_dimensions:
   - influence_channels
   requires_dimensions:
@@ -248,34 +323,30 @@ capabilities:
   intellectual_grounding:
     thinker: skinner
     concept: intentionalism
-    method: Skinner argues that understanding a text requires reconstructing what
-      the author was doing with inherited concepts and vocabularies. This capability
-      applies that insight by mapping the specific channels (vocabulary, methodology,
-      framing) through which those inheritances travel.
+    method: Skinner argues that understanding a text requires reconstructing what the author was doing
+      with inherited concepts and vocabularies. This capability applies that insight by mapping the specific
+      channels (vocabulary, methodology, framing) through which those inheritances travel.
   indicators:
-  - 'Vocabulary signals: technical terms from the prior work appearing in the current
-    work, especially if defined similarly or adapted with explicit acknowledgment'
-  - 'Methodology signals: parallel analytical moves, similar data structures, similar
-    forms of evidence or argumentation, adoption of specific analytical frameworks'
-  - 'Audience signals: statements assuming readers know the prior work, references
-    to debates the prior work initiated, positioning within a conversation the prior
-    work established'
-  - 'Authority signals: citations that lend credibility ("as the definitive study
-    shows"), appeals to the prior work''s empirical or theoretical authority'
-  - 'Framing signals: adoption of how the prior work defines the problem, bounds the
-    domain, identifies what counts as evidence, or structures the analytical space'
+  - 'Vocabulary signals: technical terms from the prior work appearing in the current work, especially
+    if defined similarly or adapted with explicit acknowledgment'
+  - 'Methodology signals: parallel analytical moves, similar data structures, similar forms of evidence
+    or argumentation, adoption of specific analytical frameworks'
+  - 'Audience signals: statements assuming readers know the prior work, references to debates the prior
+    work initiated, positioning within a conversation the prior work established'
+  - 'Authority signals: citations that lend credibility ("as the definitive study shows"), appeals to
+    the prior work''s empirical or theoretical authority'
+  - 'Framing signals: adoption of how the prior work defines the problem, bounds the domain, identifies
+    what counts as evidence, or structures the analytical space'
   depth_scaling:
-    surface: Identification of the 1-2 most obviously active channels based on explicit
-      citations and clear vocabulary transfers.
-    standard: Complete channel map with specific evidence for each active channel
-      and relative importance ranking (primary, secondary, tertiary).
-    deep: Full channel analysis showing interactions between channels (vocabulary
-      transfers carrying methodological assumptions), channels reinforcing or undermining
-      each other, and distinction between channels the author consciously recognizes
-      versus those operating below awareness.
+    surface: Identification of the 1-2 most obviously active channels based on explicit citations and
+      clear vocabulary transfers.
+    standard: Complete channel map with specific evidence for each active channel and relative importance
+      ranking (primary, secondary, tertiary).
+    deep: Full channel analysis showing interactions between channels (vocabulary transfers carrying methodological
+      assumptions), channels reinforcing or undermining each other, and distinction between channels the
+      author consciously recognizes versus those operating below awareness.
 - key: determine_scanning_strategy
-  description: Translate classification into operational guidance for downstream genealogical
-    passes
+  description: Translate classification into operational guidance for downstream genealogical passes
   produces_dimensions:
   - strategic_relevance
   requires_dimensions:
@@ -291,59 +362,52 @@ capabilities:
   intellectual_grounding:
     thinker: lovejoy
     concept: intellectual_triage
-    method: Lovejoy's method of tracing unit-ideas requires determining which historical
-      connections merit deep investigation versus passing acknowledgment. This capability
-      applies that triage logic by translating relationship classifications into prioritized
-      scanning strategies.
+    method: Lovejoy's method of tracing unit-ideas requires determining which historical connections merit
+      deep investigation versus passing acknowledgment. This capability applies that triage logic by translating
+      relationship classifications into prioritized scanning strategies.
   indicators:
-  - 'Classification-strategy fit signals: certain relationship types predictably generate
-    specific trace patterns (methodological_ancestors leave structural traces, contradicted_positions
-    leave rhetorical traces)'
-  - 'Strength-attention correlation signals: language in the current work indicating
-    centrality or pervasiveness that demands high-attention investigation'
-  - 'Channel-dimension alignment signals: active influence channels map onto specific
-    Pass 2 dimensions (vocabulary channel → concept_evolution dimension)'
-  - 'Trace expectation signals: evidence suggesting where scanning should look (methodology
-    channel active → expect traces in analytical architecture, not just citations)'
-  - 'Misclassification risk signals: ambiguous or hybrid relationships where getting
-    the type wrong would send Pass 2 in the wrong direction'
+  - 'Classification-strategy fit signals: certain relationship types predictably generate specific trace
+    patterns (methodological_ancestors leave structural traces, contradicted_positions leave rhetorical
+    traces)'
+  - 'Strength-attention correlation signals: language in the current work indicating centrality or pervasiveness
+    that demands high-attention investigation'
+  - 'Channel-dimension alignment signals: active influence channels map onto specific Pass 2 dimensions
+    (vocabulary channel → concept_evolution dimension)'
+  - 'Trace expectation signals: evidence suggesting where scanning should look (methodology channel active
+    → expect traces in analytical architecture, not just citations)'
+  - 'Misclassification risk signals: ambiguous or hybrid relationships where getting the type wrong would
+    send Pass 2 in the wrong direction'
   depth_scaling:
-    surface: One-sentence scanning recommendation (e.g., "High attention, prioritize
-      structural inheritance and vocabulary transfer dimensions").
-    standard: Scanning strategy specifying priority dimensions (ranked list), expected
-      trace types (structural, rhetorical, conceptual), and attention level (high/medium/low
-      with justification).
-    deep: Complete strategic guidance including ranked priority dimensions with specific
-      hypotheses for each, expected trace types with concrete examples, attention
-      allocation with justification, misclassification risk assessment, and contingency
-      instructions for revising classification if Pass 2 evidence contradicts it.
+    surface: One-sentence scanning recommendation (e.g., "High attention, prioritize structural inheritance
+      and vocabulary transfer dimensions").
+    standard: Scanning strategy specifying priority dimensions (ranked list), expected trace types (structural,
+      rhetorical, conceptual), and attention level (high/medium/low with justification).
+    deep: Complete strategic guidance including ranked priority dimensions with specific hypotheses for
+      each, expected trace types with concrete examples, attention allocation with justification, misclassification
+      risk assessment, and contingency instructions for revising classification if Pass 2 evidence contradicts
+      it.
 composability:
   shares_with:
-    relationship_classifications: Typed relationship between each prior work and the
-      target, used by all downstream passes to calibrate depth
-    influence_channel_map: Which channels are active per prior work, guiding dimensional
-      scanners in Pass 2
+    relationship_classifications: Typed relationship between each prior work and the target, used by all
+      downstream passes to calibrate depth
+    influence_channel_map: Which channels are active per prior work, guiding dimensional scanners in Pass
+      2
     scanning_priorities: Attention allocation recommendations for Pass 2 scanners
-    classification_evidence: Textual evidence supporting each classification, reusable
-      by synthesis passes
+    classification_evidence: Textual evidence supporting each classification, reusable by synthesis passes
   consumes_from:
-    prior_work_summaries: From genealogy_deep_target_profiling -- structured profiles
-      of each prior work
-    target_work_profile: From genealogy_deep_target_profiling -- profile of the current
-      work being analyzed
-    initial_similarity_signals: From genealogy_prior_work_discovery (Pass 1) -- initial
-      indications of relatedness
+    prior_work_summaries: From genealogy_deep_target_profiling -- structured profiles of each prior work
+    target_work_profile: From genealogy_deep_target_profiling -- profile of the current work being analyzed
+    initial_similarity_signals: From genealogy_prior_work_discovery (Pass 1) -- initial indications of
+      relatedness
   synergy_engines:
   - conditions_of_possibility_analyzer
   - concept_evolution
   - evolution_tactics_detector
 depth_levels:
 - key: surface
-  description: 'Rapid classification: assign relationship type and strength based
-    on strongest signal'
+  description: 'Rapid classification: assign relationship type and strength based on strongest signal'
   typical_passes: 1
-  suitable_for: Quick triage of large prior-work sets, preliminary pipeline planning,
-    non-academic texts
+  suitable_for: Quick triage of large prior-work sets, preliminary pipeline planning, non-academic texts
   passes:
   - pass_number: 1
     label: Rapid Relationship Classification
@@ -362,11 +426,9 @@ depth_levels:
       parallel_development) and assess strength (strong/moderate/weak)
       with one-sentence justification for each.
 - key: standard
-  description: Full classification with evidence, all five channels assessed, scanning
-    strategy produced
+  description: Full classification with evidence, all five channels assessed, scanning strategy produced
   typical_passes: 1
-  suitable_for: Standard genealogy pipeline Pass 1.5, most academic texts, authors
-    with 3-10 prior works
+  suitable_for: Standard genealogy pipeline Pass 1.5, most academic texts, authors with 3-10 prior works
   passes:
   - pass_number: 1
     label: Full Classification & Scanning Strategy
@@ -391,12 +453,11 @@ depth_levels:
       specific evidence. Scanning strategy produced with priority
       dimensions and recommended attention level for Pass 2.
 - key: deep
-  description: Nuanced classification with primary and secondary types, temporal evolution
-    of relationship, full channel interaction analysis, detailed strategic guidance
-    with contingency plans
+  description: Nuanced classification with primary and secondary types, temporal evolution of relationship,
+    full channel interaction analysis, detailed strategic guidance with contingency plans
   typical_passes: 1
-  suitable_for: Complex intellectual relationships, works that defy easy classification,
-    cases where misclassification risk is high
+  suitable_for: Complex intellectual relationships, works that defy easy classification, cases where misclassification
+    risk is high
   passes:
   - pass_number: 1
     label: Nuanced Classification & Strategic Guidance

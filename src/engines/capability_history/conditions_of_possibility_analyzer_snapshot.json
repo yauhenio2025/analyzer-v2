@@ -401,26 +401,74 @@
   "engine_name": "Conditions of Possibility Analyzer",
   "intellectual_lineage": {
     "key_concepts": [
-      "episteme",
-      "dispositif",
-      "discursive_formation",
-      "conditions_of_possibility",
-      "path_dependence",
-      "intellectual_toolkit",
-      "counterfactual_analysis"
+      {
+        "definition": "The underlying epistemological configuration that determines, in a given period and domain, what counts as knowledge, what problems are recognizable, and what methods are legitimate. The engine uses this to map the epistemic field an author's prior work has constructed for their current argument \u2014 the implicit rules governing what can be said.",
+        "name": "episteme"
+      },
+      {
+        "definition": "A heterogeneous apparatus linking discourses, institutions, architectural forms, regulations, and practices into a strategic network that produces particular effects. The engine deploys this to trace how an author's prior institutional positions, publication venues, and audience relationships form a material-discursive apparatus shaping what arguments are possible.",
+        "name": "dispositif"
+      },
+      {
+        "definition": "A system of rules that defines what statements are recognizable, valid, and related within a domain, determining which objects can appear and which speaking positions are authorized. The engine uses this to identify how an author's earlier work establishes a discursive formation that both legitimates and constrains their current intervention.",
+        "name": "discursive_formation"
+      },
+      {
+        "definition": "The ensemble of prerequisites \u2014 conceptual, institutional, material, discursive \u2014 that must be in place for a particular statement, practice, or argument to become thinkable and utterable. This is the engine's central analytical target: what conditions did the author's prior work create that make the current argument possible?",
+        "name": "conditions_of_possibility"
+      },
+      {
+        "definition": "The process by which early choices generate self-reinforcing effects that constrain future options, creating lock-in even when alternatives might be superior. The engine uses this to analyze how an author's prior conceptual commitments create momentum and constraint, making certain argumentative moves natural while foreclosing others.",
+        "name": "path_dependence"
+      },
+      {
+        "definition": "The accumulated repertoire of concepts, methods, rhetorical strategies, and frameworks an author has developed through prior work, which becomes both resource and constraint for new arguments. The engine inventories this toolkit to determine what the current argument inherits and what it must work around.",
+        "name": "intellectual_toolkit"
+      },
+      {
+        "definition": "The methodological practice of imagining alternative scenarios \u2014 arguments by authors without particular prior commitments, or trajectories where different choices were made \u2014 to isolate the causal effect of specific conditions. The engine uses counterfactuals to measure what the author's prior work specifically contributes: the difference between what was written and what could have been.",
+        "name": "counterfactual_analysis"
+      }
     ],
-    "primary": "foucault",
+    "primary": {
+      "description": "Michel Foucault (1926-1984), French philosopher and historian of ideas whose archaeological and genealogical methods revealed how systems of thought emerge not from linear progress but from ruptures in epistemic conditions. His concept of 'conditions of possibility' \u2014 the historical a priori that makes certain statements thinkable at particular moments \u2014 provides this engine's foundational question: what had to be assembled (institutionally, discursively, materially) for an argument to become possible, and what constraints did that assembly impose on what could subsequently be said?",
+      "name": "foucault"
+    },
     "secondary": [
-      "skinner",
-      "quentin_skinner",
-      "arthur_lovejoy"
+      {
+        "description": "Quentin Skinner (1940-), British historian and founder of the Cambridge School contextualism, whose methodology demands that texts be understood through the linguistic and ideological conventions available to their authors at the moment of writing. His insistence that we recover what an author could have meant \u2014 not what later interpreters wish they meant \u2014 provides this engine's counterfactual discipline: distinguishing between what an author's prior work made possible versus what the argument actually required.",
+        "name": "skinner"
+      },
+      {
+        "description": "Quentin Skinner (1940-), whose concept of 'rhetorical redescription' shows how intellectual innovation occurs within \u2014 not beyond \u2014 inherited vocabularies, as thinkers stretch, recombine, or subvert available terms. This framework helps the engine identify moments where an author's prior conceptual commitments both enable new arguments (by providing established vocabulary) and constrain them (by binding the author to audiences and frameworks that limit radical departure).",
+        "name": "quentin_skinner"
+      },
+      {
+        "description": "Arthur O. Lovejoy (1873-1962), American philosopher and founder of the history of ideas, who traced 'unit-ideas' across centuries to reveal hidden continuities and constraints in philosophical argument. His method of isolating conceptual building blocks \u2014 showing how complex arguments depend on prior, often unexamined assumptions \u2014 informs this engine's technique of decomposing an author's current position into debts to their earlier work, revealing the genealogical sediment beneath present claims.",
+        "name": "arthur_lovejoy"
+      }
     ],
     "traditions": [
-      "archaeology",
-      "genealogy",
-      "critical_theory",
-      "cambridge_school",
-      "path_dependence_theory"
+      {
+        "description": "Foucauldian archaeology excavates the rules that govern what can be said in a given epoch, identifying discontinuities in discursive formations rather than tracing smooth development. For this engine, archaeology provides a method for identifying the epistemic conditions an author inherits from their own prior work: the conceptual grids, taxonomies, and problem-spaces that structure what arguments become formulable and what questions can be asked.",
+        "name": "archaeology"
+      },
+      {
+        "description": "Foucauldian genealogy traces how present arrangements emerged through contingent struggle, accident, and power rather than necessity or progress, emphasizing the paths not taken and possibilities foreclosed. This tradition equips the engine to ask counterfactual questions: what alternative trajectories were available at each stage of an author's intellectual development, and how did choices made in earlier work constrain or enable later argumentation?",
+        "name": "genealogy"
+      },
+      {
+        "description": "Critical theory, from the Frankfurt School through contemporary variants, interrogates the hidden social and institutional conditions that shape knowledge production, asking whose interests are served by particular framings. This tradition directs the engine to examine not just conceptual but material and institutional conditions: how an author's position, audience, and disciplinary location structure what arguments are possible and which remain unthinkable.",
+        "name": "critical_theory"
+      },
+      {
+        "description": "The Cambridge School of intellectual history, developed by Skinner and Pocock, demands rigorous historical contextualization by reconstructing the linguistic conventions, rhetorical moves, and ideological debates available to historical actors. For this engine, the Cambridge School provides methodological discipline for distinguishing what an author's prior work actually made possible from anachronistic attributions, insisting that intellectual possibilities be mapped through available vocabularies and acknowledged commitments.",
+        "name": "cambridge_school"
+      },
+      {
+        "description": "Path dependence theory, borrowed from institutional economics and science studies, demonstrates how early choices create increasing returns and lock-in effects, making certain trajectories self-reinforcing while foreclosing alternatives. This tradition provides the engine with a framework for analyzing how an author's prior conceptual investments create momentum: established vocabularies attract audiences, prior positions bind future commitments, and accumulated authority makes certain moves possible while rendering others strategically unavailable.",
+        "name": "path_dependence_theory"
+      }
     ]
   },
   "kind": "synthesis",

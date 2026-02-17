@@ -458,26 +458,74 @@
   "engine_name": "Concept Synthesis",
   "intellectual_lineage": {
     "key_concepts": [
-      "hermeneutic_circle",
-      "fusion_of_horizons",
-      "emplotment",
-      "inferential_role",
-      "semantic_drift",
-      "conceptual_archaeology",
-      "path_dependence"
+      {
+        "definition": "The interpretive structure in which understanding any part requires grasping the whole, yet grasping the whole requires understanding the parts, resolved not through logical escape but through iterative refinement of provisional understandings. For this engine, the hermeneutic circle operates at the level of corpus synthesis: each work's concepts can only be understood in light of the author's overall trajectory, yet that trajectory only emerges from integrating individual works, requiring the engine to move recursively between local textual analysis and global pattern recognition.",
+        "name": "hermeneutic_circle"
+      },
+      {
+        "definition": "Gadamer's term for the event of understanding in which the interpreter's present horizon of meaning merges with the historical horizon of the text, creating neither pure retrieval of original meaning nor mere projection of present concerns but a productive third position where both are transformed. This engine uses fusion of horizons to model how an author's later works reinterpret earlier ones: each new articulation fuses with prior conceptual horizons, creating cumulative semantic transformations that alter the meaning of the entire corpus retroactively.",
+        "name": "fusion_of_horizons"
+      },
+      {
+        "definition": "Ric\u0153ur's term for the narrative operation that configures discrete events into a meaningful temporal whole by grasping them together as episodes in a unified story, transforming mere succession into consequence and creating retrospective necessity from historical contingency. The engine employs emplotment as both object and method: it identifies how authors emplot their own conceptual development (creating coherence narratives), while the engine itself must emplot the raw data of per-work analyses into trajectory narratives that distinguish genuine evolution from constructed continuity.",
+        "name": "emplotment"
+      },
+      {
+        "definition": "The pattern of inferential commitments that constitute a concept's semantic content\u2014what conclusions it licenses, what premises it requires, what moves it precludes\u2014treating meaning as a normative position within a space of reasons rather than as representation or reference. For this engine, tracking inferential role changes across works reveals semantic drift invisible to purely terminological analysis: when an author reuses a term but alters what it can justify or what justifies it, the concept's identity has changed even if its name remains constant.",
+        "name": "inferential_role"
+      },
+      {
+        "definition": "The gradual, often unintentional transformation of a concept's meaning across uses, occurring not through explicit redefinition but through accumulated shifts in context, inferential connections, and background assumptions that alter semantic content while preserving surface terminology. The engine treats semantic drift as a primary diagnostic: by comparing inferential profiles and contextual embeddings across works, it detects when concepts have drifted from earlier meanings, distinguishing intentional refinement from inadvertent transformation and identifying moments when terminology becomes decoupled from its original semantic commitments.",
+        "name": "semantic_drift"
+      },
+      {
+        "definition": "The excavation of sedimented layers of meaning within concepts, revealing how present formulations carry forward suppressed earlier articulations, discarded alternatives, and forgotten context-dependencies that continue to structure possibilities even when no longer explicitly acknowledged. This engine performs conceptual archaeology by comparing an author's later conceptual formulations against earlier versions, identifying what semantic elements persist as tacit background, what gets actively repudiated, and what simply drops away unmarked\u2014mapping the stratigraphy of conceptual development.",
+        "name": "conceptual_archaeology"
+      },
+      {
+        "definition": "The phenomenon from historical institutionalism in which early choices constrain later possibilities, creating trajectories where subsequent developments build on prior commitments in ways that make certain options increasingly difficult to reverse even when superior alternatives emerge. The engine uses path dependence to analyze conceptual evolution: early theoretical commitments create inferential dependencies and framework assumptions that channel later developments, explaining why authors sometimes cannot adopt superior formulations without unraveling earlier work\u2014revealing conceptual evolution as constrained negotiation rather than free rational choice.",
+        "name": "path_dependence"
+      }
     ],
-    "primary": "gadamer",
+    "primary": {
+      "description": "Hans-Georg Gadamer (1900-2002), German philosopher whose magnum opus Truth and Method (1960) established that understanding is never a static encounter with fixed meanings but an ongoing dialogue where horizons of past and present continually merge and reshape one another. For this engine, Gadamer provides the foundational insight that concepts are not objects to be observed but horizons to be entered\u2014meaning that tracing conceptual evolution across an author's works requires attending to how each text's horizon fuses with and transforms what came before, creating cumulative reinterpretation rather than simple linear development.",
+      "name": "gadamer"
+    },
     "secondary": [
-      "ricoeur",
-      "brandom",
-      "koselleck"
+      {
+        "description": "Paul Ric\u0153ur (1913-2005), French phenomenologist and hermeneutic philosopher whose work on narrative identity and temporal synthesis (Time and Narrative, 1983-1985) provides this engine with tools for understanding how concepts acquire coherence not through logical consistency but through narrative configuration. Ric\u0153ur's notion of emplotment\u2014the retrospective ordering of disparate elements into meaningful sequences\u2014enables the engine to see conceptual evolution as a story the author tells and retells, where later works reconfigure the meaning of earlier ones through acts of narrative synthesis that create trajectory out of contingency.",
+        "name": "ricoeur"
+      },
+      {
+        "description": "Robert Brandom (b. 1950), American analytic philosopher whose inferentialist semantics (Making It Explicit, 1994) treats conceptual content as constituted by inferential roles\u2014the moves concepts license and preclude in reasoning. For this engine, Brandom supplies the crucial methodological principle that to track concept evolution is to map changing patterns of inferential commitment: what conclusions a concept now warrants, what premises it now requires, and how these inferential profiles shift as the concept migrates across works, sometimes silently altering its semantic identity while retaining surface-level terminological continuity.",
+        "name": "brandom"
+      },
+      {
+        "description": "Reinhart Koselleck (1923-2006), German historian and theorist of Begriffsgeschichte (conceptual history) whose work demonstrates that concepts have temporal depth\u2014they carry sedimented layers of past meaning while simultaneously anticipating future horizons of expectation. Koselleck's methods (Futures Past, 1979) equip this engine to recognize that an author's conceptual evolution occurs within larger semantic fields already structured by historical time, enabling the engine to distinguish between an author's intentional reformulations and the involuntary semantic drift that occurs as the background conditions of intelligibility themselves shift beneath stable terminology.",
+        "name": "koselleck"
+      }
     ],
     "traditions": [
-      "hermeneutics",
-      "narrative_theory",
-      "inferentialism",
-      "conceptual_history",
-      "genealogy"
+      {
+        "description": "The interpretive tradition stemming from Schleiermacher, Dilthey, Heidegger, and Gadamer that treats understanding not as methodological reconstruction but as participatory dialogue between interpreter and text, where meaning emerges through the interpreter's fore-structures of understanding meeting the text's claim to truth. This engine inherits hermeneutics' core commitment to the historicity of understanding: that every concept exists within a tradition that both enables and constrains its possible meanings, making conceptual evolution always a matter of dialogue with prior articulations rather than creation ex nihilo.",
+        "name": "hermeneutics"
+      },
+      {
+        "description": "The interdisciplinary study of how humans organize experience through storytelling, drawing on structuralist poetics (Genette), phenomenology (Ric\u0153ur), and cognitive narratology (Herman), treating narrative as a fundamental cognitive operation that creates coherence by configuring temporal succession into meaningful sequence. For this engine, narrative theory provides the insight that conceptual coherence across multiple works is achieved through narrative ordering\u2014authors construct retrospective continuities, suppress contradictions, and emplot their intellectual development in ways that transform contingent historical sequences into seemingly inevitable trajectories.",
+        "name": "narrative_theory"
+      },
+      {
+        "description": "The semantic program primarily associated with Brandom and Sellars that treats conceptual content as constituted not by representation or reference but by inferential role\u2014the pattern of what follows from a concept's application and what it follows from in turn, making meaning a matter of normative commitments within a space of reasons. This engine adopts inferentialism's methodology to track conceptual evolution by mapping changing inferential profiles: when an author redeploys a term across works, the engine asks not whether the reference remains constant but whether the inferential commitments have shifted, revealing semantic transformations beneath terminological stability.",
+        "name": "inferentialism"
+      },
+      {
+        "description": "The German tradition of Begriffsgeschichte pioneered by Koselleck and the Geschichtliche Grundbegriffe project, which treats concepts as simultaneously indicators and factors of historical change\u2014both reflecting and constituting the socio-political realities they articulate, with particular attention to temporal sediments and the asynchronicity between linguistic persistence and semantic transformation. For this engine, conceptual history supplies the methodological principle that concepts have their own time-signatures: they evolve at different rates than the works containing them, carrying forward sedimented meanings while accruing new layers, making conceptual archaeology essential to synthesis.",
+        "name": "conceptual_history"
+      },
+      {
+        "description": "The critical-historical method developed by Nietzsche and refined by Foucault that traces concepts not as linear developments toward greater truth but as contingent formations marked by discontinuity, strategic redeployment, and the suppression of alternative trajectories\u2014revealing how present configurations of knowledge and practice emerged from forgotten struggles and accidents rather than logical necessity. This engine deploys genealogical suspicion to identify what each conceptual evolution excludes or forgets: not just what a concept becomes but what it might have been, what got foreclosed, and how later formulations retrospectively legitimize contingent outcomes as inevitable developments.",
+        "name": "genealogy"
+      }
     ]
   },
   "kind": "synthesis",

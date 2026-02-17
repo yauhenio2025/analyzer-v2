@@ -2,6 +2,127 @@
   "engine_key": "conditions_of_possibility_analyzer",
   "entries": [
     {
+      "timestamp": "2026-02-17T15:13:51.952385+00:00",
+      "version": 2,
+      "definition_hash": "0681fb3fbbd0707a5fa94d6bda8295648f6efa50c0ac75dfef48a1b595206fad",
+      "changes": [
+        {
+          "section": "intellectual_lineage",
+          "field": "primary",
+          "action": "modified",
+          "old_value": "foucault",
+          "new_value": "foucault"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "arthur_lovejoy",
+          "new_value": "arthur_lovejoy (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "quentin_skinner",
+          "new_value": "quentin_skinner (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "skinner",
+          "new_value": "skinner (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "archaeology",
+          "new_value": "archaeology (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "cambridge_school",
+          "new_value": "cambridge_school (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "critical_theory",
+          "new_value": "critical_theory (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "genealogy",
+          "new_value": "genealogy (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "traditions",
+          "action": "modified",
+          "old_value": "path_dependence_theory",
+          "new_value": "path_dependence_theory (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "conditions_of_possibility",
+          "new_value": "conditions_of_possibility (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "counterfactual_analysis",
+          "new_value": "counterfactual_analysis (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "discursive_formation",
+          "new_value": "discursive_formation (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "dispositif",
+          "new_value": "dispositif (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "episteme",
+          "new_value": "episteme (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "intellectual_toolkit",
+          "new_value": "intellectual_toolkit (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "key_concepts",
+          "action": "modified",
+          "old_value": "path_dependence",
+          "new_value": "path_dependence (enriched)"
+        }
+      ],
+      "summary": "Modified intellectual lineage primary; Modified intellectual lineage secondary; Modified intellectual lineage secondary; Modified intellectual lineage secondary; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage traditions; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts; Modified intellectual lineage key_concepts",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-17T14:22:45.208645+00:00",
       "version": 1,
       "definition_hash": "1679594266e2b7049de78128a8e1f5ad9cdb173369eaa1d4eee274b343f02d40",

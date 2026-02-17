@@ -372,27 +372,78 @@
   "engine_name": "Evolution Tactics Detector",
   "intellectual_lineage": {
     "key_concepts": [
-      "impression_management",
-      "face_work",
-      "cultural_capital",
-      "habitus",
-      "paradigm_shift",
-      "research_programme",
-      "performative_coherence",
-      "strategic_self_presentation"
+      {
+        "definition": "The strategic control of information and performance that individuals use to shape how others perceive them. For this engine, it names the overarching process authors engage in when managing their intellectual identity across time\u2014using specific tactics to control how readers perceive the relationship between earlier and current work, preserving an impression of coherence, rigor, and purposeful development.",
+        "name": "impression_management"
+      },
+      {
+        "definition": "The communicative actions taken to maintain one's positive social value and avoid embarrassment or loss of credibility when interactions threaten it. The engine uses this to understand why certain tactics appear: authors employ them as face-saving moves when position changes might otherwise create vulnerability to charges of inconsistency, error, or intellectual opportunism.",
+        "name": "face_work"
+      },
+      {
+        "definition": "Accumulated prestige, credentials, knowledge, and authority that function as assets in intellectual and cultural fields, enabling influence and access to further resources. This concept explains what authors protect through their self-management tactics: the credibility capital earned through prior work that could be devalued if position changes appear arbitrary or unprincipled rather than as legitimate intellectual evolution.",
+        "name": "cultural_capital"
+      },
+      {
+        "definition": "The durable, transposable dispositions and unconscious schemas that structure how individuals perceive, evaluate, and act in social fields. For this engine, habitus explains why many self-management tactics operate below conscious awareness\u2014they reflect deeply internalized disciplinary and professional dispositions about what constitutes legitimate intellectual conduct and how position changes must be handled to preserve standing.",
+        "name": "habitus"
+      },
+      {
+        "definition": "A fundamental reorganization of the conceptual framework, methods, and problem definitions that structure inquiry within a domain. The engine uses this to identify moments when authors undergo internal paradigm shifts\u2014major theoretical reorientations that create the most acute need for retrospective relationship management with prior work that was produced under different conceptual commitments.",
+        "name": "paradigm_shift"
+      },
+      {
+        "definition": "Lakatos's term for a structured sequence of theories sharing a protected hard core of commitments surrounded by a flexible protective belt of auxiliary hypotheses that can be modified without abandoning the core. This concept helps the engine distinguish tactical maneuvers that defend core intellectual commitments (legitimate programme development) from those that obscure genuine core changes (degenerative tactical management).",
+        "name": "research_programme"
+      },
+      {
+        "definition": "The achieved appearance of intellectual consistency and purposeful development constructed through textual and rhetorical performance rather than reflecting actual linear progression. This names what authors create through successful self-management tactics: a performed narrative of coherent evolution that papers over actual discontinuities, opportunistic pivots, and reactive position changes.",
+        "name": "performative_coherence"
+      },
+      {
+        "definition": "The deliberate crafting of one's public identity and biographical narrative to achieve specific goals or maintain desired impressions. For this engine, it encompasses the full range of tactics authors use to present their intellectual trajectory as principled, progressive, and coherent\u2014actively constructing the relationship between past and present work rather than simply reporting it.",
+        "name": "strategic_self_presentation"
+      }
     ],
-    "primary": "goffman",
+    "primary": {
+      "description": "Erving Goffman (1922-1982), Canadian-American sociologist who pioneered the dramaturgical analysis of social life, examining how individuals perform and manage their public identities through strategic self-presentation. His framework is primary here because intellectual self-management across time is fundamentally a problem of impression management: authors must construct and maintain a coherent intellectual persona even as their actual positions shift, employing tactics that preserve face and credibility before their audience of readers and peers.",
+      "name": "goffman"
+    },
     "secondary": [
-      "bourdieu",
-      "kuhn",
-      "lakatos"
+      {
+        "description": "Pierre Bourdieu (1930-2002), French sociologist and anthropologist who theorized how cultural capital operates as a form of power in intellectual and artistic fields. His framework adds to Goffman's dramaturgical lens by explaining what is at stake in intellectual self-management: accumulated credibility and authority that must be preserved, deployed strategically, and protected from devaluation when positions change\u2014these tactics are moves in a competitive field where symbolic capital is the currency.",
+        "name": "bourdieu"
+      },
+      {
+        "description": "Thomas Kuhn (1922-1996), American physicist and philosopher of science whose analysis of paradigm shifts and scientific revolutions explains why intellectual self-management tactics intensify at certain moments. His framework helps this engine understand that authors experience internal paradigm shifts\u2014moments when their own conceptual frameworks reorganize\u2014and these transitions create the most acute need for retrospective coherence-building and tactical relationship management with prior work.",
+        "name": "kuhn"
+      },
+      {
+        "description": "Imre Lakatos (1922-1974), Hungarian philosopher of mathematics and science who developed the methodology of research programmes, emphasizing how scientists protect theoretical cores through strategic auxiliary hypotheses and problem-shift management. His work informs this engine's understanding of how authors construct protective belts around their evolving positions, using tactics to shield core commitments while allowing peripheral elements to shift\u2014intellectual self-management as progressive versus degenerative programme management.",
+        "name": "lakatos"
+      }
     ],
     "traditions": [
-      "dramaturgical_sociology",
-      "field_theory",
-      "philosophy_of_science",
-      "rhetoric_of_science",
-      "intellectual_history"
+      {
+        "description": "A sociological approach treating social interaction as theatrical performance, where individuals strategically manage impressions through front-stage presentations while backstage realities may differ. This tradition provides the engine's fundamental analytical stance: viewing intellectual production as performance before audiences, where maintaining character consistency across time requires dramaturgical skill, and detecting the tactics authors use to sustain their performed intellectual identity despite position changes.",
+        "name": "dramaturgical_sociology"
+      },
+      {
+        "description": "Bourdieu's analytical framework examining how social spaces operate as competitive fields where agents struggle for position and capital accumulation according to field-specific rules and stakes. This tradition informs the engine's understanding that intellectual self-management occurs within a structured competitive space where credibility and authority are scarce resources, making tactics not merely psychological but strategic responses to field pressures and the imperative to maintain position.",
+        "name": "field_theory"
+      },
+      {
+        "description": "The disciplinary tradition examining the logic, methods, and dynamics of scientific knowledge production, including how theories develop, compete, and succeed or fail over time. This tradition provides the engine with frameworks for understanding intellectual change itself\u2014distinguishing progressive from degenerative shifts, recognizing paradigmatic transitions, and identifying the methodological commitments that structure how authors justify their evolving positions.",
+        "name": "philosophy_of_science"
+      },
+      {
+        "description": "An interdisciplinary tradition analyzing scientific discourse as persuasive communication, examining how scientists use rhetorical strategies to establish credibility, construct facts, and manage controversy. This tradition sensitizes the engine to the textual and linguistic evidence of tactical self-management\u2014how vocabulary choices, hedging patterns, citation practices, and framing devices reveal authors' strategic work to position current claims relative to prior commitments.",
+        "name": "rhetoric_of_science"
+      },
+      {
+        "description": "The historical study of ideas and thinkers across time, examining how concepts develop, migrate between contexts, and how individual intellectuals' thought evolves through engagement with predecessors and contemporaries. This tradition provides the engine with methodology for diachronic analysis: comparing texts across career spans, tracking conceptual transformations, and recognizing that intellectual development is rarely linear but involves complex negotiations between continuity and rupture that require tactical management.",
+        "name": "intellectual_history"
+      }
     ]
   },
   "kind": "extraction",
