@@ -1,22 +1,8 @@
-# Capability Definition: Concept Appropriation Tracker
-#
-# This is the NEW format that describes WHAT the engine investigates,
-# not HOW it formats output. The LLM orchestrator uses this to plan
-# analysis, compose prompts, and determine output structure at runtime.
-#
-# Replaces the legacy JSON definition with its rigid canonical schema.
-# The intellectual content is preserved and enriched; the schema is gone.
-
 engine_key: concept_appropriation_tracker
 engine_name: Concept Appropriation Tracker
 version: 1
 category: concepts
 kind: synthesis
-
-# ============================================================
-# THE WHAT: Rich Intellectual Description
-# ============================================================
-
 problematique: |
   Concepts do not stay where they were born. They migrate between
   contexts, mutate as they travel, get appropriated by new users,
@@ -47,303 +33,509 @@ problematique: |
   It runs once per prior work, consuming concept_evolution's output and
   adding migration paths, semantic mutations, appropriation patterns,
   distortion maps, recombination analysis, and acknowledgment status.
-
-researcher_question: "How have concepts migrated and mutated across contexts?"
-
+researcher_question: How have concepts migrated and mutated across contexts?
 intellectual_lineage:
   primary: derrida
   secondary:
-    - said  # Traveling theory -- how ideas change as they move between cultures
-    - bakhtin  # Dialogism, heteroglossia -- every utterance carries traces of prior uses
-    - bloom  # Anxiety of influence -- the psychodynamics of intellectual debt
-    - bourdieu  # Intellectual capital, field dynamics
+  - said
+  - bakhtin
+  - bloom
+  - bourdieu
   traditions:
-    - deconstruction  # Derrida's analysis of iterability -- meaning changes with every repetition
-    - postcolonial_theory  # Said's framework for how ideas are transformed in transit
-    - dialogism  # Bakhtin's insight that words carry the history of their usage
-    - influence_studies  # Bloom's model of how authors manage intellectual debt
-    - sociology_of_knowledge  # Bourdieu's framework for how ideas function as capital
+  - deconstruction
+  - postcolonial_theory
+  - dialogism
+  - influence_studies
+  - sociology_of_knowledge
   key_concepts:
-    - differance  # Derrida -- meaning is always deferred, never fully present
-    - iterability  # Every repetition of a concept is also an alteration
-    - traveling_theory  # Said -- ideas change as they cross boundaries
-    - heteroglossia  # Bakhtin -- every word carries traces of its prior contexts
-    - anxiety_of_influence  # Bloom -- the burden of intellectual debt
-    - misreading  # Bloom -- creative misreading as a mechanism of intellectual change
-    - appropriation  # Taking ideas and making them serve new purposes
-    - semantic_mutation  # Change in meaning during transit between contexts
-    - acknowledgment_politics  # Strategic decisions about what to cite and what to suppress
-
-# ============================================================
-# ANALYTICAL DIMENSIONS: Directions of Inquiry
-# ============================================================
-
+  - differance
+  - iterability
+  - traveling_theory
+  - heteroglossia
+  - anxiety_of_influence
+  - misreading
+  - appropriation
+  - semantic_mutation
+  - acknowledgment_politics
 analytical_dimensions:
-
-  - key: migration_paths
-    description: >
-      Where did concepts move? Map the journey of each key concept from
-      its location in the prior work to its location in the current work.
-      A concept's migration path includes not just origin and destination
-      but the mechanism of travel: was it explicitly cited, silently
-      borrowed, independently rediscovered, or unconsciously absorbed?
-    probing_questions:
-      - "Which concepts from the prior work appear in the current work?"
-      - "How did each concept travel -- explicit citation, silent borrowing, or unconscious absorption?"
-      - "Did concepts migrate directly, or through intermediate works?"
-      - "Were concepts transplanted whole, or did only fragments survive the journey?"
-      - "What was the context of origin and the context of arrival -- how different are they?"
-    depth_guidance:
-      surface: "List the 3-5 most obvious concept migrations with origin and destination"
-      standard: "Map migration paths with mechanisms of travel, contextual differences between origin and destination, and assessment of whether the migration preserved or transformed the concept"
-      deep: "Full migration cartography: all concept movements traced with mechanisms, intermediate stops, contextual analysis of origin and destination, assessment of what survived transit and what was lost, and comparison of the author's migration patterns (do they tend to cite, borrow silently, or absorb unconsciously?)"
-
-  - key: semantic_mutations
-    description: >
-      How did meaning change during migration? When a concept moves from
-      one work to another, it undergoes semantic mutation. The mutation
-      may be extension (broadening), restriction (narrowing),
-      metaphorization (becoming figurative), distortion (warping), or
-      inversion (meaning the opposite). Each mutation type has different
-      implications for genealogical analysis.
-    probing_questions:
-      - "For each migrated concept, what changed in its meaning?"
-      - "What type of mutation occurred -- extension, restriction, metaphorization, distortion, inversion?"
-      - "Was the mutation gradual or sudden? Acknowledged or concealed?"
-      - "Does the mutation serve the argument (strategic) or appear accidental (drift)?"
-      - "How does the mutation relate to the dimensional changes identified by concept_evolution?"
-    depth_guidance:
-      surface: "Identify the most significant semantic mutations with before/after meanings"
-      standard: "Map mutations with type classification, before/after meanings, evidence from both texts, and assessment of whether mutations were strategic or accidental"
-      deep: "Full mutation analysis: every semantic change catalogued with type, degree, directionality, motivation (strategic vs. drift), relationship to vocabulary/methodology/metaphor/framing changes from concept_evolution, and patterns across mutations (does the author tend toward certain mutation types?)"
-
-  - key: appropriation_patterns
-    description: >
-      What was borrowed, and how was it used? Appropriation goes beyond
-      mere migration: it involves taking a concept and making it serve
-      a new purpose. The appropriation may be faithful (preserving the
-      original intent), adapted (modifying for new context), distorted
-      (warping beyond recognition), or inverted (using against its
-      original purpose). In self-genealogy, authors appropriate from
-      their own past selves.
-    probing_questions:
-      - "What concepts were appropriated from the prior work for new purposes?"
-      - "Is each appropriation faithful, adapted, distorted, or inverted relative to the original?"
-      - "What new purpose does the appropriated concept serve?"
-      - "Does the appropriation strengthen or weaken the original concept?"
-      - "Is the author aware of the appropriation, or do they present borrowed material as new?"
-    depth_guidance:
-      surface: "Identify the most obvious appropriations with original and new purpose"
-      standard: "Map appropriations with relationship-to-original classification, evidence for each, assessment of whether the appropriation is legitimate or questionable, and the new purpose served"
-      deep: "Full appropriation analysis: every borrowing catalogued with fidelity classification, purpose analysis, legitimacy assessment, impact on both the original and new context, and patterns of appropriation (does the author tend to appropriate faithfully or creatively?)"
-
-  - key: distortion_map
-    description: >
-      How were ideas warped in transit? Distortion is a specific and
-      important form of semantic mutation: the concept is not just
-      changed but degraded -- oversimplified, strawmanned, selectively
-      quoted, or inverted. In self-genealogy, distortion reveals
-      interesting dynamics: an author may distort their own earlier
-      positions to make current positions look more novel or more
-      consistent than they are.
-    probing_questions:
-      - "Are any concepts from the prior work distorted in the current work?"
-      - "What type of distortion -- oversimplification, strawmanning, selective quotation, inversion?"
-      - "Who benefits from the distortion -- does it serve the current argument?"
-      - "Is the distortion likely intentional (strategic) or unintentional (forgetting, drift)?"
-      - "How would the current argument change if the distortion were corrected?"
-    depth_guidance:
-      surface: "Note any obvious distortions"
-      standard: "Map distortions with type, original vs. distorted meaning, evidence, likely motivation, and impact on the current argument"
-      deep: "Full distortion analysis: every distortion catalogued with type, degree, motivation, beneficiary, impact assessment, and counterfactual (what changes if the distortion is corrected). Assessment of whether distortion patterns reveal systematic bias in how the author relates to their own past work"
-
-  - key: recombination
-    description: >
-      What new combinations of old ideas have been created? One of the
-      most creative acts in intellectual work is recombination: taking
-      elements from different prior works (or different parts of the
-      same prior work) and combining them into something new. The
-      recombination may produce genuine novelty -- or it may produce
-      the illusion of novelty through rearrangement.
-    probing_questions:
-      - "Are ideas from the prior work combined with ideas from other sources in the current work?"
-      - "Are elements from different parts of the prior work recombined in new ways?"
-      - "Does the recombination produce genuine novelty or rearrangement?"
-      - "Are the recombined elements compatible, or does their combination create tensions?"
-      - "Does the author acknowledge the recombinatory nature of their innovation?"
-    depth_guidance:
-      surface: "Note any obvious recombinations of prior ideas"
-      standard: "Map recombinations with source elements, the new combination, assessment of genuine novelty vs. rearrangement, and any tensions introduced"
-      deep: "Full recombination analysis: all identifiable recombinations catalogued with source elements traced to specific prior works, novelty assessment, tension analysis, acknowledgment status, and evaluation of the author's recombinatory style (are they a synthesizer, a bricoleur, a system-builder?)"
-
-  - key: acknowledgment_status
-    description: >
-      What is cited and what is suppressed? The politics of self-citation
-      are revealing. Authors choose which prior work to reference and
-      which to leave unmentioned. Cited borrowings assert continuity
-      and build authority. Uncited borrowings may indicate embarrassment,
-      desire for novelty, strategic distancing, or genuine forgetting.
-      The pattern of acknowledgment and suppression is itself genealogical
-      evidence of the first order.
-    probing_questions:
-      - "Which borrowings from the prior work are explicitly cited in the current work?"
-      - "Which borrowings are uncited -- present but unacknowledged?"
-      - "What pattern explains the acknowledgment decisions -- what is the logic of citation?"
-      - "Does non-acknowledgment correlate with distortion (suppress what you've warped)?"
-      - "What would change in how we read the current work if all debts were acknowledged?"
-    depth_guidance:
-      surface: "Note whether major borrowings are cited or uncited"
-      standard: "Map acknowledgment status for each identified borrowing, hypothesize reasons for non-acknowledgment, and assess whether the pattern serves the author's rhetorical goals"
-      deep: "Full acknowledgment analysis: every borrowing classified as cited/uncited/partially-cited, pattern analysis (what determines citation?), correlation with distortion and appropriation patterns, strategic interpretation of the acknowledgment pattern, and assessment of what the pattern reveals about the author's self-relation"
-
-# ============================================================
-# CAPABILITIES: What This Engine Can Do
-# ============================================================
-
+- key: migration_paths
+  description: |
+    Where did concepts move? Map the journey of each key concept from its location in the prior work to its location in the current work. A concept's migration path includes not just origin and destination but the mechanism of travel: was it explicitly cited, silently borrowed, independently rediscovered, or unconsciously absorbed?
+  probing_questions:
+  - Which concepts from the prior work appear in the current work?
+  - How did each concept travel -- explicit citation, silent borrowing, or unconscious
+    absorption?
+  - Did concepts migrate directly, or through intermediate works?
+  - Were concepts transplanted whole, or did only fragments survive the journey?
+  - What was the context of origin and the context of arrival -- how different are
+    they?
+  depth_guidance:
+    surface: List the 3-5 most obvious concept migrations with origin and destination
+    standard: Map migration paths with mechanisms of travel, contextual differences
+      between origin and destination, and assessment of whether the migration preserved
+      or transformed the concept
+    deep: 'Full migration cartography: all concept movements traced with mechanisms,
+      intermediate stops, contextual analysis of origin and destination, assessment
+      of what survived transit and what was lost, and comparison of the author''s
+      migration patterns (do they tend to cite, borrow silently, or absorb unconsciously?)'
+- key: semantic_mutations
+  description: |
+    How did meaning change during migration? When a concept moves from one work to another, it undergoes semantic mutation. The mutation may be extension (broadening), restriction (narrowing), metaphorization (becoming figurative), distortion (warping), or inversion (meaning the opposite). Each mutation type has different implications for genealogical analysis.
+  probing_questions:
+  - For each migrated concept, what changed in its meaning?
+  - What type of mutation occurred -- extension, restriction, metaphorization, distortion,
+    inversion?
+  - Was the mutation gradual or sudden? Acknowledged or concealed?
+  - Does the mutation serve the argument (strategic) or appear accidental (drift)?
+  - How does the mutation relate to the dimensional changes identified by concept_evolution?
+  depth_guidance:
+    surface: Identify the most significant semantic mutations with before/after meanings
+    standard: Map mutations with type classification, before/after meanings, evidence
+      from both texts, and assessment of whether mutations were strategic or accidental
+    deep: 'Full mutation analysis: every semantic change catalogued with type, degree,
+      directionality, motivation (strategic vs. drift), relationship to vocabulary/methodology/metaphor/framing
+      changes from concept_evolution, and patterns across mutations (does the author
+      tend toward certain mutation types?)'
+- key: appropriation_patterns
+  description: |
+    What was borrowed, and how was it used? Appropriation goes beyond mere migration: it involves taking a concept and making it serve a new purpose. The appropriation may be faithful (preserving the original intent), adapted (modifying for new context), distorted (warping beyond recognition), or inverted (using against its original purpose). In self-genealogy, authors appropriate from their own past selves.
+  probing_questions:
+  - What concepts were appropriated from the prior work for new purposes?
+  - Is each appropriation faithful, adapted, distorted, or inverted relative to the
+    original?
+  - What new purpose does the appropriated concept serve?
+  - Does the appropriation strengthen or weaken the original concept?
+  - Is the author aware of the appropriation, or do they present borrowed material
+    as new?
+  depth_guidance:
+    surface: Identify the most obvious appropriations with original and new purpose
+    standard: Map appropriations with relationship-to-original classification, evidence
+      for each, assessment of whether the appropriation is legitimate or questionable,
+      and the new purpose served
+    deep: 'Full appropriation analysis: every borrowing catalogued with fidelity classification,
+      purpose analysis, legitimacy assessment, impact on both the original and new
+      context, and patterns of appropriation (does the author tend to appropriate
+      faithfully or creatively?)'
+- key: distortion_map
+  description: |
+    How were ideas warped in transit? Distortion is a specific and important form of semantic mutation: the concept is not just changed but degraded -- oversimplified, strawmanned, selectively quoted, or inverted. In self-genealogy, distortion reveals interesting dynamics: an author may distort their own earlier positions to make current positions look more novel or more consistent than they are.
+  probing_questions:
+  - Are any concepts from the prior work distorted in the current work?
+  - What type of distortion -- oversimplification, strawmanning, selective quotation,
+    inversion?
+  - Who benefits from the distortion -- does it serve the current argument?
+  - Is the distortion likely intentional (strategic) or unintentional (forgetting,
+    drift)?
+  - How would the current argument change if the distortion were corrected?
+  depth_guidance:
+    surface: Note any obvious distortions
+    standard: Map distortions with type, original vs. distorted meaning, evidence,
+      likely motivation, and impact on the current argument
+    deep: 'Full distortion analysis: every distortion catalogued with type, degree,
+      motivation, beneficiary, impact assessment, and counterfactual (what changes
+      if the distortion is corrected). Assessment of whether distortion patterns reveal
+      systematic bias in how the author relates to their own past work'
+- key: recombination
+  description: |
+    What new combinations of old ideas have been created? One of the most creative acts in intellectual work is recombination: taking elements from different prior works (or different parts of the same prior work) and combining them into something new. The recombination may produce genuine novelty -- or it may produce the illusion of novelty through rearrangement.
+  probing_questions:
+  - Are ideas from the prior work combined with ideas from other sources in the current
+    work?
+  - Are elements from different parts of the prior work recombined in new ways?
+  - Does the recombination produce genuine novelty or rearrangement?
+  - Are the recombined elements compatible, or does their combination create tensions?
+  - Does the author acknowledge the recombinatory nature of their innovation?
+  depth_guidance:
+    surface: Note any obvious recombinations of prior ideas
+    standard: Map recombinations with source elements, the new combination, assessment
+      of genuine novelty vs. rearrangement, and any tensions introduced
+    deep: 'Full recombination analysis: all identifiable recombinations catalogued
+      with source elements traced to specific prior works, novelty assessment, tension
+      analysis, acknowledgment status, and evaluation of the author''s recombinatory
+      style (are they a synthesizer, a bricoleur, a system-builder?)'
+- key: acknowledgment_status
+  description: |
+    What is cited and what is suppressed? The politics of self-citation are revealing. Authors choose which prior work to reference and which to leave unmentioned. Cited borrowings assert continuity and build authority. Uncited borrowings may indicate embarrassment, desire for novelty, strategic distancing, or genuine forgetting. The pattern of acknowledgment and suppression is itself genealogical evidence of the first order.
+  probing_questions:
+  - Which borrowings from the prior work are explicitly cited in the current work?
+  - Which borrowings are uncited -- present but unacknowledged?
+  - What pattern explains the acknowledgment decisions -- what is the logic of citation?
+  - Does non-acknowledgment correlate with distortion (suppress what you've warped)?
+  - What would change in how we read the current work if all debts were acknowledged?
+  depth_guidance:
+    surface: Note whether major borrowings are cited or uncited
+    standard: Map acknowledgment status for each identified borrowing, hypothesize
+      reasons for non-acknowledgment, and assess whether the pattern serves the author's
+      rhetorical goals
+    deep: 'Full acknowledgment analysis: every borrowing classified as cited/uncited/partially-cited,
+      pattern analysis (what determines citation?), correlation with distortion and
+      appropriation patterns, strategic interpretation of the acknowledgment pattern,
+      and assessment of what the pattern reveals about the author''s self-relation'
 capabilities:
+- key: trace_migration_paths
+  description: Map where concepts moved from the prior work to the current work, including
+    mechanisms of travel and contextual differences
+  produces_dimensions:
+  - migration_paths
+  requires_dimensions: []
+  extended_description: |-
+    This capability maps the journey of concepts from their location in the prior work to their appearance in the current work, attending not merely to presence or absence but to the mechanisms and conditions of travel. Drawing on Derrida's theory of iterability—the principle that every repetition of a sign is also an alteration—it recognizes that when an author re-uses their own concept, they are not simply transporting a stable meaning but re-inscribing it in a new context where it inevitably takes on new valences. The capability distinguishes between explicit citation (where continuity is asserted), silent borrowing (where the debt is concealed), and unconscious absorption (where the author may not recognize their own influence on themselves). Each mechanism reveals different dynamics of self-relation: citation builds authority and continuity, silent borrowing suggests strategic distancing or novelty-seeking, and unconscious absorption points to foundational patterns that operate below the threshold of awareness.
 
-  - key: trace_migration_paths
-    description: "Map where concepts moved from the prior work to the current work, including mechanisms of travel and contextual differences"
-    produces_dimensions:
-      - migration_paths
-    requires_dimensions: []
+    This capability provides the essential infrastructure for all other appropriation analyses. Without mapping where concepts actually moved, we cannot assess how they mutated (semantic_mutations), why they were borrowed (appropriation_patterns), whether they were distorted (distortion_map), or what was cited versus suppressed (acknowledgment_status). It transforms the dimensional comparisons from concept_evolution—which tell us WHAT changed—into a genealogical narrative of transit that tells us HOW and WHY concepts traveled. The sophistication of this capability lies in recognizing that concepts rarely migrate cleanly: they may move in fragments, travel through intermediate works, or arrive disguised under new terminology while retaining their functional role in the argument.
+  intellectual_grounding:
+    thinker: derrida
+    concept: iterability
+    method: 'Derrida''s iterability shows that every instance of repetition is constitutively
+      different from what it repeats, because context is never fully determinable
+      or controllable. This capability applies that insight to self-citation: each
+      time an author re-uses their own concept, it is iteration not identity, and
+      the differences that emerge in transit are genealogically revealing.'
+  indicators:
+  - The current work uses terminology or concepts that closely resemble phrasing from
+    the prior work, but without explicit citation
+  - The author makes claims that depend on arguments previously established in the
+    prior work, creating conceptual dependencies
+  - Key terms appear in both works but with different surrounding vocabulary or argumentative
+    contexts
+  - The current work's structure or methodology echoes approaches developed in the
+    prior work
+  - Footnotes or citations reference the prior work but do not fully capture the extent
+    of conceptual borrowing
+  depth_scaling:
+    surface: Lists 3-5 most obvious concept migrations with origin and destination
+      locations identified
+    standard: Full migration map with mechanisms of travel (cited/silent/absorbed),
+      contextual analysis of origin vs. destination environments, and initial assessment
+      of preservation vs. transformation
+    deep: Complete migration cartography including intermediate stops, mechanisms,
+      contextual analysis, assessment of what survived vs. what was lost in transit,
+      and meta-analysis of the author's characteristic migration patterns across their
+      corpus
+- key: detect_semantic_mutations
+  description: Classify how meaning changed during migration -- extension, restriction,
+    metaphorization, distortion, inversion
+  produces_dimensions:
+  - semantic_mutations
+  requires_dimensions:
+  - migration_paths
+  extended_description: |-
+    This capability tracks how meaning shifts as concepts move between contexts, recognizing that semantic change is not random drift but patterned transformation that reveals intellectual development, strategic repositioning, or unconscious evolution. It classifies mutations into types—extension (broadening scope), restriction (narrowing application), metaphorization (literalizing or figuralizing), distortion (systematic warping), and inversion (meaning reversal)—because different mutation types have different genealogical implications. A concept that undergoes extension may indicate growing confidence or ambition; one that suffers restriction may reveal the discovery of limits or counterexamples. Metaphorization often signals disciplinary border-crossing (as concepts move from technical to popular registers or vice versa), while inversion suggests fundamental repositioning. The capability distinguishes strategic mutations (serving the current argument's needs) from drift (accidental semantic slippage over time), a distinction central to understanding authorial agency in self-genealogy.
 
-  - key: detect_semantic_mutations
-    description: "Classify how meaning changed during migration -- extension, restriction, metaphorization, distortion, inversion"
-    produces_dimensions:
-      - semantic_mutations
-    requires_dimensions:
-      - migration_paths
+    Semantic mutations are the mechanism by which appropriation happens: you cannot assess appropriation fidelity without knowing what semantic changes occurred. This capability builds directly on migration_paths (you must know a concept traveled before you can track how it changed) and feeds into appropriation_patterns (classifying whether borrowings are faithful, adapted, or distorted depends on mutation analysis) and distortion_map (distortion is a severe form of mutation). The sophistication lies in recognizing that mutations are often partial and multi-directional: a concept may be extended in one dimension while restricted in another, or metaphorized for some purposes while remaining literal for others. Tracking these complex mutation patterns reveals the conceptual labor involved in maintaining coherence across works.
+  intellectual_grounding:
+    thinker: bakhtin
+    concept: heteroglossia
+    method: Bakhtin's heteroglossia demonstrates that words carry multiple, stratified
+      meanings depending on their contexts of use, and that meaning is dialogically
+      constituted through interaction between utterances. This capability treats each
+      re-use of a concept as a dialogic event where the prior meaning encounters the
+      new context, producing semantic mutation through their interaction.
+  indicators:
+  - The same term is used in both works but with noticeably different scope or application
+    range
+  - A concept that was literal/technical in the prior work becomes metaphorical/figurative
+    in the current work, or vice versa
+  - The current work defines or explains a concept differently than the prior work
+    did, even if implicitly
+  - Examples or illustrations used for a concept in the current work differ significantly
+    from those in the prior work, suggesting shifted meaning
+  - The concept's relationship to other concepts has changed (what it's opposed to,
+    what it's aligned with, what it presupposes)
+  depth_scaling:
+    surface: Identifies the most significant semantic mutations with simple before/after
+      meaning descriptions
+    standard: Classifies all major mutations by type (extension/restriction/metaphorization/distortion/inversion)
+      with textual evidence and assessment of strategic vs. drift motivation
+    deep: Complete mutation analysis cataloguing every semantic change, classifying
+      types, assessing degrees and directionality, relating mutations to concept_evolution's
+      dimensional changes, and identifying patterns in the author's mutation tendencies
+- key: analyze_appropriation
+  description: Assess how borrowed concepts serve new purposes, classifying fidelity
+    and legitimacy
+  produces_dimensions:
+  - appropriation_patterns
+  requires_dimensions:
+  - migration_paths
+  - semantic_mutations
+  extended_description: |-
+    This capability assesses how borrowed concepts are put to work in new contexts, evaluating not just that borrowing occurred but the purpose it serves and the fidelity with which it was executed. Drawing on Harold Bloom's anxiety of influence, it recognizes that appropriation is never neutral: authors relate to their sources (including their own prior selves) through complex dynamics of fidelity and deviation, reverence and rebellion. The capability classifies appropriations as faithful (preserving original intent and function), adapted (modified for new context but recognizably continuous), distorted (warped beyond the original's parameters), or inverted (turned against its original purpose). Each classification carries different implications: faithful appropriation suggests cumulative knowledge-building, adaptation indicates contextual sensitivity, distortion may signal forgetting or strategic misreading, and inversion points to fundamental intellectual reorientation. The capability also assesses legitimacy: is the appropriation intellectually honest, does it strengthen or weaken the original concept, and does the author acknowledge the appropriative nature of their move?
 
-  - key: analyze_appropriation
-    description: "Assess how borrowed concepts serve new purposes, classifying fidelity and legitimacy"
-    produces_dimensions:
-      - appropriation_patterns
-    requires_dimensions:
-      - migration_paths
-      - semantic_mutations
+    This capability synthesizes migration_paths (where concepts moved) and semantic_mutations (how they changed) into a judgment about the character of borrowing. It feeds directly into acknowledgment_status (citation patterns correlate with appropriation fidelity) and provides crucial context for distortion_map (distortion is failed or weaponized appropriation). The sophistication of this capability lies in recognizing that appropriation exists on a spectrum rather than in discrete categories, and that authors appropriate differently from themselves than from others—self-appropriation may be more unconscious, more taken-for-granted, and thus more prone to unacknowledged drift. By cataloguing appropriation patterns across multiple works, the capability reveals an author's characteristic style of self-relation: are they faithful stewards of their own ideas, creative adapters, strategic revisers, or forgetful wanderers?
+  intellectual_grounding:
+    thinker: bloom
+    concept: anxiety_of_influence
+    method: Bloom's theory of poetic influence describes how later poets struggle
+      with their precursors through characteristic misreadings (clinamen, tessera,
+      kenosis, etc.). This capability adapts Bloom's framework to self-influence,
+      recognizing that authors also struggle with their own prior works, appropriating
+      from themselves through similar dynamics of creative misreading, though with
+      different motivations (establishing novelty vs. consistency).
+  indicators:
+  - A concept from the prior work is applied to a significantly different domain or
+    problem in the current work
+  - The current work uses a concept in ways that seem to stretch or strain its original
+    definition
+  - The function a concept performs in the argument has shifted (e.g., from foundational
+    premise to illustrative example, or vice versa)
+  - The current work selectively emphasizes certain aspects of a prior concept while
+    ignoring others
+  - The concept is embedded in a new argumentative or methodological framework that
+    changes its implications
+  depth_scaling:
+    surface: Identifies most obvious appropriations with original purpose and new
+      purpose noted
+    standard: Classifies all major appropriations as faithful/adapted/distorted/inverted
+      with evidence, legitimacy assessment, and analysis of the new purpose served
+    deep: Complete appropriation analysis cataloguing every borrowing with fidelity
+      classification, purpose analysis, legitimacy and impact assessment for both
+      original and new contexts, and meta-analysis of the author's appropriative style
+      and patterns
+- key: map_distortions
+  description: Identify where concepts were degraded in transit -- oversimplified,
+    strawmanned, selectively quoted, or inverted
+  produces_dimensions:
+  - distortion_map
+  requires_dimensions:
+  - semantic_mutations
+  extended_description: |-
+    This capability identifies cases where concepts from the prior work have been degraded, simplified, or warped in ways that misrepresent their original form and function. Distortion is a specific and particularly revealing form of semantic mutation: it involves not just change but damage to the concept's integrity. Drawing on Said's concept of traveling theory, which shows how ideas become vulgarized or domesticated as they move between contexts, this capability recognizes that authors can distort their own earlier work—sometimes strategically (to make current positions appear more novel or more consistent than they are), sometimes unconsciously (through forgetting, simplification, or selective memory). The capability classifies distortion types: oversimplification (reducing complexity to a slogan), strawmanning (presenting the prior position in its weakest form), selective quotation (cherry-picking passages that support current views), and inversion (attributing to the prior work a position it explicitly rejected). Each distortion type suggests different genealogical dynamics: oversimplification may indicate popularization or impatience with nuance, strawmanning suggests anxiety about past commitments, selective quotation reveals strategic reading, and inversion points to repressed tensions.
 
-  - key: map_distortions
-    description: "Identify where concepts were degraded in transit -- oversimplified, strawmanned, selectively quoted, or inverted"
-    produces_dimensions:
-      - distortion_map
-    requires_dimensions:
-      - semantic_mutations
+    Distortion analysis depends on semantic_mutations (distortion is severe mutation) but adds a normative dimension: not just how meaning changed but whether it was degraded. This capability feeds into appropriation_patterns (distorted appropriations are illegitimate) and acknowledgment_status (authors may suppress what they've distorted). The sophistication lies in distinguishing intentional from unintentional distortion—a distinction that requires assessing whether the distortion serves the current argument's rhetorical needs. The capability also performs counterfactual analysis: how would the current argument change if the distortion were corrected? This reveals what the distortion accomplishes and whether the current position depends on misrepresenting the past. Patterns of distortion across multiple works reveal systematic biases in how an author relates to their intellectual history.
+  intellectual_grounding:
+    thinker: said
+    concept: traveling_theory
+    method: Said's account of how theories change as they travel between contexts—often
+      losing their critical edge and becoming domesticated—illuminates how an author's
+      own concepts can be distorted in transit between their works. The capability
+      treats each instance of self-appropriation as a case of traveling theory, asking
+      what gets lost, simplified, or vulgarized as ideas move through the author's
+      corpus.
+  indicators:
+  - The current work attributes a simpler or more extreme position to the prior work
+    than the prior work actually held
+  - Complex arguments from the prior work are reduced to single claims or catchphrases
+    in the current work
+  - The current work quotes the prior work selectively in ways that obscure important
+    qualifications or counterarguments
+  - The current work presents as continuous with the prior work while quietly reversing
+    or contradicting key claims
+  - The current work uses the prior work as a foil or negative example in ways that
+    seem ungenerous or inaccurate
+  depth_scaling:
+    surface: Notes any obvious distortions where current representation clearly mismatches
+      prior work's actual position
+    standard: Maps all identifiable distortions with type classification (oversimplification/strawmanning/selective
+      quotation/inversion), evidence from both texts, likely motivation (strategic
+      vs. forgetting), and impact on current argument
+    deep: Complete distortion analysis cataloguing every misrepresentation with type,
+      degree, motivation, beneficiary analysis, impact assessment, counterfactual
+      analysis (what changes if corrected), and pattern analysis revealing systematic
+      biases in the author's self-relation
+- key: detect_recombinations
+  description: Identify new combinations of old ideas and assess whether they produce
+    genuine novelty or rearrangement
+  produces_dimensions:
+  - recombination
+  requires_dimensions:
+  - migration_paths
+  extended_description: |-
+    This capability identifies moments where the author synthesizes elements from different sources—including different parts of the prior work, or elements from the prior work combined with material from other sources—into new configurations. Drawing on Lévi-Strauss's concept of bricolage and Latour's actor-network theory, it recognizes that intellectual creativity often consists not in generating entirely new concepts but in recombining existing elements in productive ways. The capability distinguishes genuine novelty (where recombination produces emergent properties that exceed the sum of parts) from mere rearrangement (where elements are shuffled without fundamental transformation). It tracks the source elements of each recombination, assesses compatibility (do the recombined elements fit together smoothly or create productive tensions?), and evaluates whether the author acknowledges the recombinatory nature of their innovation. In self-genealogy, recombination reveals how authors build on their own foundations: cumulative thinkers tend to recombine elements from multiple prior works into increasingly complex syntheses, while dialectical thinkers may recombine elements in ways that generate contradictions they then work to resolve.
 
-  - key: detect_recombinations
-    description: "Identify new combinations of old ideas and assess whether they produce genuine novelty or rearrangement"
-    produces_dimensions:
-      - recombination
-    requires_dimensions:
-      - migration_paths
+    Recombination analysis depends on migration_paths (you must track where elements came from) but adds a synthetic dimension: not just where concepts moved but how they were combined with others. It complements semantic_mutations (which tracks change) by tracking assembly and composition. The capability feeds into the broader question of intellectual development: is this author's trajectory one of progressive synthesis (building ever-larger structures from prior elements) or iterative exploration (recombining the same basic elements in different ways)? The sophistication lies in recognizing that recombination operates at multiple levels—concepts can be recombined, but so can methods, metaphors, and argumentative structures. Some recombinations are explicitly thematized (the author announces their synthetic ambitions), while others are implicit (the synthesis happens in practice without being named).
+  intellectual_grounding:
+    thinker: latour
+    concept: network_reconfiguration
+    method: Latour's actor-network theory shows how innovation consists in reconfiguring
+      networks of associations between heterogeneous elements. This capability treats
+      each new work as a reconfiguration of the network established in prior works,
+      tracing which elements are carried forward, which new elements are introduced,
+      and how their reassembly produces (or fails to produce) novelty.
+  indicators:
+  - The current work brings together concepts from the prior work that were previously
+    treated in separate chapters or sections
+  - Arguments from the prior work are combined with theoretical frameworks or empirical
+    material from other sources
+  - The current work synthesizes distinctions or taxonomies from the prior work in
+    new ways
+  - Methodological approaches from the prior work are applied to new domains or combined
+    with new techniques
+  - The current work explicitly announces a synthetic ambition (e.g., 'bringing together
+    my earlier work on X with recent developments in Y')
+  depth_scaling:
+    surface: Notes obvious cases where the current work combines previously separate
+      elements from the prior work
+    standard: Maps all identifiable recombinations with source elements specified,
+      assessment of genuine novelty vs. rearrangement, and analysis of compatibility
+      or tensions between recombined elements
+    deep: Complete recombination analysis cataloguing all synthetic moves, tracing
+      source elements to specific locations in prior works, assessing novelty and
+      compatibility, analyzing acknowledgment status, and characterizing the author's
+      recombinatory style (synthesizer/bricoleur/system-builder)
+- key: assess_acknowledgment
+  description: 'Map citation patterns: what is cited vs. suppressed, and what the
+    pattern reveals about the author''s self-relation'
+  produces_dimensions:
+  - acknowledgment_status
+  requires_dimensions:
+  - migration_paths
+  - appropriation_patterns
+  extended_description: |-
+    This capability maps the politics of self-citation: which borrowings from the prior work are explicitly acknowledged through citation or reference, which are silently incorporated, and what logic governs these decisions. Drawing on Bourdieu's sociology of intellectual fields, it recognizes that citation is not merely a neutral scholarly practice but a strategic act within an economy of credit, authority, and positioning. Authors choose which prior work to reference in ways that serve their current rhetorical and institutional goals: citing establishes continuity and builds on accumulated authority, while suppressing citations can create the appearance of novelty, distance the author from positions they now reject, or conceal contradictions. In self-genealogy, these dynamics become particularly interesting because the author controls both the cited and citing text—they are simultaneously creditor and debtor, and their citation decisions reveal how they wish to be read, which aspects of their intellectual history they embrace versus which they obscure.
 
-  - key: assess_acknowledgment
-    description: "Map citation patterns: what is cited vs. suppressed, and what the pattern reveals about the author's self-relation"
-    produces_dimensions:
-      - acknowledgment_status
-    requires_dimensions:
-      - migration_paths
-      - appropriation_patterns
-
-# ============================================================
-# COMPOSABILITY: How It Plays With Others
-# ============================================================
-
+    This capability synthesizes migration_paths (what was borrowed) and appropriation_patterns (how it was used) into an analysis of acknowledgment politics. It reveals correlations: do suppressed borrowings tend to be distorted ones? Are faithful appropriations more likely to be cited than adapted ones? The capability also performs counterfactual analysis: how would the current work be read differently if all debts were acknowledged? This exposes what the citation pattern accomplishes rhetorically. The sophistication lies in recognizing that acknowledgment operates on a spectrum—partial citation (referencing the prior work but understating the extent of borrowing), qualified citation (citing while emphasizing discontinuity), and strategic non-citation (where absence is meaningful)—and that patterns of acknowledgment across multiple works reveal an author's characteristic stance toward their own intellectual history. Some authors are scrupulous self-citers, others are strategic suppressors, and these styles of self-relation shape how their corpus coheres or fragments.
+  intellectual_grounding:
+    thinker: bourdieu
+    concept: symbolic_capital
+    method: 'Bourdieu''s analysis of intellectual fields shows how citation practices
+      function as exchanges of symbolic capital, establishing positions within networks
+      of recognition and authority. This capability treats self-citation as a form
+      of capital management: authors invest in certain aspects of their past work
+      (through citation) while divesting from others (through suppression), strategically
+      curating their intellectual identity.'
+  indicators:
+  - The current work makes claims or uses concepts that clearly derive from the prior
+    work but without citing it
+  - Footnotes reference the prior work but in contexts that understate the depth or
+    breadth of the borrowing
+  - The current work cites some aspects of the prior work while leaving closely related
+    contributions unmentioned
+  - Patterns of selective citation where certain chapters, arguments, or periods of
+    the prior work are referenced while others are passed over
+  - The current work's bibliography includes the prior work but the text itself makes
+    minimal or no reference to it despite conceptual continuities
+  depth_scaling:
+    surface: Notes whether major borrowings are cited or uncited in a basic binary
+      classification
+    standard: Maps acknowledgment status for all identified borrowings (cited/uncited/partially-cited),
+      hypothesizes reasons for non-acknowledgment patterns, and assesses whether citation
+      practices serve the author's rhetorical goals
+    deep: Complete acknowledgment analysis classifying every borrowing's citation
+      status, analyzing patterns (what determines citation?), correlating with distortion
+      and appropriation patterns, interpreting strategic logic, and assessing what
+      the acknowledgment pattern reveals about the author's self-relation and intellectual
+      identity management
 composability:
   shares_with:
-    migration_evidence: "Detailed concept migration paths showing how ideas traveled between works"
-    appropriation_classifications: "Per-concept fidelity assessments (faithful/adapted/distorted/inverted)"
-    distortion_catalog: "Specific distortions with type, motivation, and impact"
-    acknowledgment_patterns: "Citation vs. suppression patterns revealing the politics of self-relation"
-    recombination_maps: "How elements from the prior work were recombined with other sources"
-
+    migration_evidence: Detailed concept migration paths showing how ideas traveled
+      between works
+    appropriation_classifications: Per-concept fidelity assessments (faithful/adapted/distorted/inverted)
+    distortion_catalog: Specific distortions with type, motivation, and impact
+    acknowledgment_patterns: Citation vs. suppression patterns revealing the politics
+      of self-relation
+    recombination_maps: How elements from the prior work were recombined with other
+      sources
   consumes_from:
-    dimensional_comparisons: "From concept_evolution -- vocabulary/methodology/metaphor/framing comparisons providing the evidence base for appropriation analysis"
-    foundational_patterns: "From concept_evolution -- persistent thinking patterns that may be appropriated unconsciously"
-    cross_domain_transfers: "From concept_evolution -- domain crossings that may involve appropriation or distortion"
-    relationship_classification: "From Pass 1.5 -- whether this prior work is direct_precursor, indirect_contextualizer, different_field_relevant, counter_position, or tangential"
-    target_work_profile: "From Pass 1 -- key ideas and vocabulary of the current work"
-
+    dimensional_comparisons: From concept_evolution -- vocabulary/methodology/metaphor/framing
+      comparisons providing the evidence base for appropriation analysis
+    foundational_patterns: From concept_evolution -- persistent thinking patterns
+      that may be appropriated unconsciously
+    cross_domain_transfers: From concept_evolution -- domain crossings that may involve
+      appropriation or distortion
+    relationship_classification: From Pass 1.5 -- whether this prior work is direct_precursor,
+      indirect_contextualizer, different_field_relevant, counter_position, or tangential
+    target_work_profile: From Pass 1 -- key ideas and vocabulary of the current work
   synergy_engines:
-    - concept_evolution  # PREVIOUS in chain -- provides the dimensional comparisons this engine builds on
-    - conditions_of_possibility_analyzer  # DOWNSTREAM -- uses migration/appropriation evidence to assess enabling/constraining conditions
-    - evolution_tactics_detector  # DOWNSTREAM -- uses distortion and acknowledgment patterns to detect specific rhetorical tactics
-    - intellectual_genealogy  # DOWNSTREAM -- uses migration paths to construct multi-author genealogies
-
-# ============================================================
-# DEPTH LEVELS
-# ============================================================
-
+  - concept_evolution
+  - conditions_of_possibility_analyzer
+  - evolution_tactics_detector
+  - intellectual_genealogy
 depth_levels:
-
-  - key: surface
-    description: "Identify the most obvious concept migrations and note whether they are cited or uncited, faithful or adapted"
-    typical_passes: 1
-    suitable_for: "Quick assessment, tangential prior works, preliminary scoping, works with minimal conceptual overlap"
-    passes:
-      - pass_number: 1
-        label: "Migration Discovery"
-        stance: discovery
-        focus_dimensions: [migration_paths, acknowledgment_status]
-        focus_capabilities: [trace_migration_paths, assess_acknowledgment]
-        consumes_from: []
-        description: |
-          Identify the most obvious concept migrations between prior and
-          current work. For each migration, note the mechanism of travel
-          (cited, silently borrowed, absorbed) and whether the concept
-          was carried faithfully or adapted. Quick surface scan for the
-          3-5 clearest cases.
-
-  - key: standard
-    description: "Map migration paths with mechanisms, classify semantic mutations by type, assess appropriation fidelity, identify distortions, and map acknowledgment patterns. Suitable for most genealogical analysis."
-    typical_passes: 1
-    suitable_for: "Most prior work comparisons, direct precursors, works with moderate conceptual overlap, standard genealogy analysis"
-    passes:
-      - pass_number: 1
-        label: "Migration & Appropriation Analysis"
-        stance: inference
-        focus_dimensions: [migration_paths, semantic_mutations, appropriation_patterns, distortion_map, acknowledgment_status]
-        focus_capabilities: [trace_migration_paths, detect_semantic_mutations, analyze_appropriation, map_distortions, assess_acknowledgment]
-        consumes_from: []
-        description: |
-          Map all significant migration paths with mechanisms of travel
-          and contextual analysis. Classify semantic mutations by type
-          (extension, restriction, metaphorization, distortion, inversion).
-          Assess appropriation fidelity for each borrowed concept. Identify
-          distortions with type, motivation, and impact. Map acknowledgment
-          patterns revealing the politics of self-citation.
-
-  - key: deep
-    description: "Full Derridean iterability analysis: every concept migration traced with mechanism, semantic mutation classified and motivated, appropriation assessed for legitimacy, distortions catalogued with counterfactuals, recombinations mapped with novelty assessment, and acknowledgment patterns analyzed for strategic logic. Includes assessment of the author's characteristic appropriation style."
-    typical_passes: 1
-    suitable_for: "The most important prior works, works with extensive conceptual overlap, cases where appropriation or distortion is central to the genealogical question, prolific authors with complex self-citation patterns"
-    passes:
-      - pass_number: 1
-        label: "Full Derridean Iterability Analysis"
-        stance: inference
-        focus_dimensions: [migration_paths, semantic_mutations, appropriation_patterns, distortion_map, recombination, acknowledgment_status]
-        focus_capabilities: [trace_migration_paths, detect_semantic_mutations, analyze_appropriation, map_distortions, detect_recombinations, assess_acknowledgment]
-        consumes_from: []
-        description: |
-          Full Derridean iterability analysis in a single intensive pass.
-          Every concept migration traced with mechanism, intermediate
-          stops, and contextual analysis. Every semantic mutation classified
-          and motivated (strategic vs. drift). Appropriation assessed for
-          legitimacy with impact on both original and new context.
-          Distortions catalogued with counterfactuals. Recombinations
-          mapped with novelty assessment. Acknowledgment patterns analyzed
-          for strategic logic, revealing the author's characteristic
-          appropriation style.
-
-# ============================================================
-# METADATA
-# ============================================================
-
+- key: surface
+  description: Identify the most obvious concept migrations and note whether they
+    are cited or uncited, faithful or adapted
+  typical_passes: 1
+  suitable_for: Quick assessment, tangential prior works, preliminary scoping, works
+    with minimal conceptual overlap
+  passes:
+  - pass_number: 1
+    label: Migration Discovery
+    stance: discovery
+    focus_dimensions:
+    - migration_paths
+    - acknowledgment_status
+    focus_capabilities:
+    - trace_migration_paths
+    - assess_acknowledgment
+    consumes_from: []
+    description: |
+      Identify the most obvious concept migrations between prior and
+      current work. For each migration, note the mechanism of travel
+      (cited, silently borrowed, absorbed) and whether the concept
+      was carried faithfully or adapted. Quick surface scan for the
+      3-5 clearest cases.
+- key: standard
+  description: Map migration paths with mechanisms, classify semantic mutations by
+    type, assess appropriation fidelity, identify distortions, and map acknowledgment
+    patterns. Suitable for most genealogical analysis.
+  typical_passes: 1
+  suitable_for: Most prior work comparisons, direct precursors, works with moderate
+    conceptual overlap, standard genealogy analysis
+  passes:
+  - pass_number: 1
+    label: Migration & Appropriation Analysis
+    stance: inference
+    focus_dimensions:
+    - migration_paths
+    - semantic_mutations
+    - appropriation_patterns
+    - distortion_map
+    - acknowledgment_status
+    focus_capabilities:
+    - trace_migration_paths
+    - detect_semantic_mutations
+    - analyze_appropriation
+    - map_distortions
+    - assess_acknowledgment
+    consumes_from: []
+    description: |
+      Map all significant migration paths with mechanisms of travel
+      and contextual analysis. Classify semantic mutations by type
+      (extension, restriction, metaphorization, distortion, inversion).
+      Assess appropriation fidelity for each borrowed concept. Identify
+      distortions with type, motivation, and impact. Map acknowledgment
+      patterns revealing the politics of self-citation.
+- key: deep
+  description: 'Full Derridean iterability analysis: every concept migration traced
+    with mechanism, semantic mutation classified and motivated, appropriation assessed
+    for legitimacy, distortions catalogued with counterfactuals, recombinations mapped
+    with novelty assessment, and acknowledgment patterns analyzed for strategic logic.
+    Includes assessment of the author''s characteristic appropriation style.'
+  typical_passes: 1
+  suitable_for: The most important prior works, works with extensive conceptual overlap,
+    cases where appropriation or distortion is central to the genealogical question,
+    prolific authors with complex self-citation patterns
+  passes:
+  - pass_number: 1
+    label: Full Derridean Iterability Analysis
+    stance: inference
+    focus_dimensions:
+    - migration_paths
+    - semantic_mutations
+    - appropriation_patterns
+    - distortion_map
+    - recombination
+    - acknowledgment_status
+    focus_capabilities:
+    - trace_migration_paths
+    - detect_semantic_mutations
+    - analyze_appropriation
+    - map_distortions
+    - detect_recombinations
+    - assess_acknowledgment
+    consumes_from: []
+    description: |
+      Full Derridean iterability analysis in a single intensive pass.
+      Every concept migration traced with mechanism, intermediate
+      stops, and contextual analysis. Every semantic mutation classified
+      and motivated (strategic vs. drift). Appropriation assessed for
+      legitimacy with impact on both original and new context.
+      Distortions catalogued with counterfactuals. Recombinations
+      mapped with novelty assessment. Acknowledgment patterns analyzed
+      for strategic logic, revealing the author's characteristic
+      appropriation style.
 legacy_engine_key: concept_appropriation_tracker
-
 apps:
-  - critic
-  - visualizer
-
+- critic
+- visualizer
 paradigm_keys:
-  - genealogical
+- genealogical

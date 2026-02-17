@@ -1,25 +1,8 @@
-# Capability Definition: Concept Semantic Constellation
-#
-# This is the NEW format that describes WHAT the engine investigates,
-# not HOW it formats output. The LLM orchestrator uses this to plan
-# analysis, compose prompts, and determine output structure at runtime.
-#
-# CHAIN POSITION: Engine 2 of 3 in genealogy_target_profiling chain.
-# Consumes the vocabulary profile from conceptual_framework_extraction
-# and maps the full semantic field of each significant concept: related
-# terms, synonyms, boundaries, usage patterns, concept clusters.
-# Its output feeds inferential_commitment_mapper in the next pass.
-
 engine_key: concept_semantic_constellation
 engine_name: Concept Semantic Constellation
 version: 1
 category: concepts
 kind: primitive
-
-# ============================================================
-# THE WHAT: Rich Intellectual Description
-# ============================================================
-
 problematique: |
   A concept is never an island. Every significant term exists within
   a semantic field -- a constellation of related terms, near-synonyms,
@@ -56,365 +39,612 @@ problematique: |
   differences. This landscape then feeds the inferential commitment
   mapper, which asks what logical commitments these semantic
   relationships encode.
-
-researcher_question: "What is the full semantic field of this concept?"
-
+researcher_question: What is the full semantic field of this concept?
 intellectual_lineage:
   primary: saussure
   secondary:
-    - wittgenstein  # Language games -- meaning is use in a form of life
-    - lakoff  # Conceptual metaphors and embodied meaning
-    - rosch  # Prototype theory -- category membership is graded, not binary
+  - wittgenstein
+  - lakoff
+  - rosch
   traditions:
-    - structural_linguistics  # Saussure: meaning through difference, syntagmatic/paradigmatic axes
-    - ordinary_language_philosophy  # Wittgenstein: meaning as use, family resemblances
-    - cognitive_linguistics  # Lakoff/Johnson: conceptual metaphors structure understanding
-    - prototype_theory  # Rosch: graded category membership, radial structure
-    - frame_semantics  # Fillmore: meaning as activation of structured background knowledge
+  - structural_linguistics
+  - ordinary_language_philosophy
+  - cognitive_linguistics
+  - prototype_theory
+  - frame_semantics
   key_concepts:
-    - semantic_field  # The network of meaning-relations surrounding a concept
-    - langue_parole  # Saussure: system vs. use -- what is available vs. what is deployed
-    - language_game  # Wittgenstein: concepts get meaning from their role in practices
-    - family_resemblance  # Wittgenstein: categories without necessary and sufficient conditions
-    - conceptual_metaphor  # Lakoff: abstract concepts structured by embodied metaphors
-    - prototype  # Rosch: best examples vs. peripheral members of a category
-    - semantic_boundary  # Where one concept ends and another begins -- often contested
-    - collocation  # Terms that habitually co-occur, revealing implicit associations
-
-# ============================================================
-# ANALYTICAL DIMENSIONS: Directions of Inquiry
-# ============================================================
-
+  - semantic_field
+  - langue_parole
+  - language_game
+  - family_resemblance
+  - conceptual_metaphor
+  - prototype
+  - semantic_boundary
+  - collocation
 analytical_dimensions:
-
-  - key: semantic_field
-    description: >
-      The complete network of terms semantically related to each
-      significant concept: synonyms, near-synonyms, antonyms,
-      hypernyms, hyponyms, and co-occurring terms. This is not a
-      thesaurus exercise -- it maps how meaning is constituted
-      through relationships in the author's actual usage.
-    probing_questions:
-      - "What terms does the author use as near-synonyms -- and what subtle distinctions does the author draw between them?"
-      - "What antonyms or contrasts define the concept negatively -- what it is NOT?"
-      - "What broader categories does the concept belong to (hypernyms)?"
-      - "What more specific instances fall under the concept (hyponyms)?"
-      - "What terms habitually co-occur with the concept (collocations), and what do these associations reveal?"
-      - "How does the author's semantic field for this concept differ from standard usage in their discipline?"
-    depth_guidance:
-      surface: "For the 3-5 most significant concepts, list related terms with relationship type (synonym, antonym, broader, narrower)"
-      standard: "Map semantic fields for all significant concepts: related terms with relationship types, key distinctions the author draws, co-occurrence patterns, and comparison with standard disciplinary usage"
-      deep: "Complete semantic field analysis: every significant concept mapped with full relationship network, subtle distinctions between near-synonyms traced to their intellectual origins, co-occurrence statistics revealing implicit conceptual architecture, systematic comparison with disciplinary norms, and analysis of how the author's semantic fields have shifted from standard usage (revealing intellectual formation)"
-
-  - key: concept_clusters
-    description: >
-      Groups of concepts that form coherent sub-fields within the
-      work -- terms that travel together, reinforce each other,
-      and constitute a recognizable thematic unit. Clusters reveal
-      the major conceptual building blocks of the work's argument.
-    probing_questions:
-      - "Which concepts cluster together -- appearing in the same contexts, reinforcing the same arguments?"
-      - "What holds each cluster together -- a shared theme, a common origin, a structural role?"
-      - "Are clusters aligned with the work's explicit framework divisions, or do they cut across frameworks?"
-      - "Do any concepts bridge multiple clusters, serving as connective tissue?"
-      - "Are there isolated concepts that belong to no cluster -- orphans that might signal unfinished thinking?"
-    depth_guidance:
-      surface: "Identify 2-3 major concept clusters with their core members and unifying theme"
-      standard: "Map all significant concept clusters: members, unifying theme, bridge concepts connecting clusters, and orphan concepts outside any cluster"
-      deep: "Full cluster analysis: every cluster mapped with internal structure (core vs. peripheral members), inter-cluster relationships (complementary, competing, nested), bridge concepts analyzed for their connective role, orphan concepts assessed for whether they represent nascent clusters or genuine anomalies, and comparison with the work's explicit organizational structure"
-
-  - key: boundary_terms
-    description: >
-      The contested, fuzzy, or strategically ambiguous boundaries
-      between concepts. Where does "power" end and "authority" begin?
-      Boundary terms are where the most interesting intellectual work
-      happens -- they reveal what the author is trying to distinguish
-      and what they are content to conflate.
-    probing_questions:
-      - "Where are the boundaries between related concepts sharp and explicit?"
-      - "Where are boundaries fuzzy or contested -- and does the author acknowledge the fuzziness?"
-      - "Are any boundary ambiguities strategically useful -- allowing the author to shift between meanings?"
-      - "What would change in the argument if certain boundaries were drawn differently?"
-      - "Do boundary terms carry different connotations that do silent argumentative work?"
-    depth_guidance:
-      surface: "Note the 2-3 most significant boundary cases where conceptual distinctions are contested or unclear"
-      standard: "Map boundary terms between all major concept pairs: where boundaries are sharp vs. fuzzy, whether fuzziness is acknowledged, whether ambiguity is strategic, and what the argument gains from how boundaries are drawn"
-      deep: "Complete boundary analysis: every significant conceptual boundary mapped with its sharpness, the author's awareness of boundary issues, strategic uses of ambiguity, comparison with how other authors draw the same boundaries, and counterfactual analysis of how the argument would change if boundaries were drawn differently"
-
-  - key: usage_patterns
-    description: >
-      How concepts are actually deployed in argumentation -- not their
-      definitions but their behavior. A concept might be defined one
-      way but used another. Tracking usage patterns reveals the real
-      meaning, which is often richer and more specific than the stated
-      definition.
-    probing_questions:
-      - "Is the concept's actual usage consistent with its stated definition?"
-      - "Does the concept's meaning shift across different parts of the work?"
-      - "In what argumentative contexts does the concept do the most work?"
-      - "Are there contexts where the concept is conspicuously absent -- where you would expect it but the author avoids it?"
-      - "Does the concept function differently in positive arguments vs. critiques of others?"
-    depth_guidance:
-      surface: "Note any significant gaps between definition and usage for the most important concepts"
-      standard: "Track usage patterns for all significant concepts: definition-usage gaps, meaning shifts across the work, contexts of heavy use vs. conspicuous absence, and differences between constructive and critical deployment"
-      deep: "Complete usage analysis: every significant concept tracked through the work with attention to meaning drift, contextual variation, definition-usage mismatches, strategic deployment (when the concept is used as a tool vs. an object of analysis), and comparison with how the same concept is used by other authors in the field"
-
-  - key: connotation_map
-    description: >
-      The evaluative and associative dimensions of concepts that
-      operate below explicit argumentation. A term like "bureaucracy"
-      might be technically neutral but carry negative connotations
-      that do argumentative work without justification. Connotation
-      mapping reveals the silent rhetoric embedded in vocabulary choices.
-    probing_questions:
-      - "What evaluative connotations attach to key terms -- positive, negative, neutral?"
-      - "Are connotations consistent with the author's stated analytical stance, or do they smuggle in judgments?"
-      - "Do connotations differ from standard disciplinary usage -- has the author loaded the terms?"
-      - "Are there pairs of terms that differ primarily in connotation rather than denotation (e.g., 'freedom fighter' vs. 'terrorist')?"
-      - "What emotional or aesthetic associations do key terms carry, and how do these shape the reader's response?"
-    depth_guidance:
-      surface: "Note the most obviously connotation-loaded terms and whether the loading is acknowledged"
-      standard: "Map connotations for all significant concepts: evaluative charge, consistency with stated stance, departure from disciplinary norms, connotation-based pairs, and assessment of how connotations do argumentative work"
-      deep: "Complete connotation analysis: every significant term assessed for evaluative charge, aesthetic and emotional associations, comparison with disciplinary and everyday connotations, analysis of how the author's connotation choices constitute an implicit rhetoric, and assessment of whether the argument would survive if all connotation-loaded terms were replaced with neutral equivalents"
-
-# ============================================================
-# CAPABILITIES: What This Engine Can Do
-# ============================================================
-
+- key: semantic_field
+  description: |
+    The complete network of terms semantically related to each significant concept: synonyms, near-synonyms, antonyms, hypernyms, hyponyms, and co-occurring terms. This is not a thesaurus exercise -- it maps how meaning is constituted through relationships in the author's actual usage.
+  probing_questions:
+  - What terms does the author use as near-synonyms -- and what subtle distinctions
+    does the author draw between them?
+  - What antonyms or contrasts define the concept negatively -- what it is NOT?
+  - What broader categories does the concept belong to (hypernyms)?
+  - What more specific instances fall under the concept (hyponyms)?
+  - What terms habitually co-occur with the concept (collocations), and what do these
+    associations reveal?
+  - How does the author's semantic field for this concept differ from standard usage
+    in their discipline?
+  depth_guidance:
+    surface: For the 3-5 most significant concepts, list related terms with relationship
+      type (synonym, antonym, broader, narrower)
+    standard: 'Map semantic fields for all significant concepts: related terms with
+      relationship types, key distinctions the author draws, co-occurrence patterns,
+      and comparison with standard disciplinary usage'
+    deep: 'Complete semantic field analysis: every significant concept mapped with
+      full relationship network, subtle distinctions between near-synonyms traced
+      to their intellectual origins, co-occurrence statistics revealing implicit conceptual
+      architecture, systematic comparison with disciplinary norms, and analysis of
+      how the author''s semantic fields have shifted from standard usage (revealing
+      intellectual formation)'
+- key: concept_clusters
+  description: |
+    Groups of concepts that form coherent sub-fields within the work -- terms that travel together, reinforce each other, and constitute a recognizable thematic unit. Clusters reveal the major conceptual building blocks of the work's argument.
+  probing_questions:
+  - Which concepts cluster together -- appearing in the same contexts, reinforcing
+    the same arguments?
+  - What holds each cluster together -- a shared theme, a common origin, a structural
+    role?
+  - Are clusters aligned with the work's explicit framework divisions, or do they
+    cut across frameworks?
+  - Do any concepts bridge multiple clusters, serving as connective tissue?
+  - Are there isolated concepts that belong to no cluster -- orphans that might signal
+    unfinished thinking?
+  depth_guidance:
+    surface: Identify 2-3 major concept clusters with their core members and unifying
+      theme
+    standard: 'Map all significant concept clusters: members, unifying theme, bridge
+      concepts connecting clusters, and orphan concepts outside any cluster'
+    deep: 'Full cluster analysis: every cluster mapped with internal structure (core
+      vs. peripheral members), inter-cluster relationships (complementary, competing,
+      nested), bridge concepts analyzed for their connective role, orphan concepts
+      assessed for whether they represent nascent clusters or genuine anomalies, and
+      comparison with the work''s explicit organizational structure'
+- key: boundary_terms
+  description: |
+    The contested, fuzzy, or strategically ambiguous boundaries between concepts. Where does "power" end and "authority" begin? Boundary terms are where the most interesting intellectual work happens -- they reveal what the author is trying to distinguish and what they are content to conflate.
+  probing_questions:
+  - Where are the boundaries between related concepts sharp and explicit?
+  - Where are boundaries fuzzy or contested -- and does the author acknowledge the
+    fuzziness?
+  - Are any boundary ambiguities strategically useful -- allowing the author to shift
+    between meanings?
+  - What would change in the argument if certain boundaries were drawn differently?
+  - Do boundary terms carry different connotations that do silent argumentative work?
+  depth_guidance:
+    surface: Note the 2-3 most significant boundary cases where conceptual distinctions
+      are contested or unclear
+    standard: 'Map boundary terms between all major concept pairs: where boundaries
+      are sharp vs. fuzzy, whether fuzziness is acknowledged, whether ambiguity is
+      strategic, and what the argument gains from how boundaries are drawn'
+    deep: 'Complete boundary analysis: every significant conceptual boundary mapped
+      with its sharpness, the author''s awareness of boundary issues, strategic uses
+      of ambiguity, comparison with how other authors draw the same boundaries, and
+      counterfactual analysis of how the argument would change if boundaries were
+      drawn differently'
+- key: usage_patterns
+  description: |
+    How concepts are actually deployed in argumentation -- not their definitions but their behavior. A concept might be defined one way but used another. Tracking usage patterns reveals the real meaning, which is often richer and more specific than the stated definition.
+  probing_questions:
+  - Is the concept's actual usage consistent with its stated definition?
+  - Does the concept's meaning shift across different parts of the work?
+  - In what argumentative contexts does the concept do the most work?
+  - Are there contexts where the concept is conspicuously absent -- where you would
+    expect it but the author avoids it?
+  - Does the concept function differently in positive arguments vs. critiques of others?
+  depth_guidance:
+    surface: Note any significant gaps between definition and usage for the most important
+      concepts
+    standard: 'Track usage patterns for all significant concepts: definition-usage
+      gaps, meaning shifts across the work, contexts of heavy use vs. conspicuous
+      absence, and differences between constructive and critical deployment'
+    deep: 'Complete usage analysis: every significant concept tracked through the
+      work with attention to meaning drift, contextual variation, definition-usage
+      mismatches, strategic deployment (when the concept is used as a tool vs. an
+      object of analysis), and comparison with how the same concept is used by other
+      authors in the field'
+- key: connotation_map
+  description: |
+    The evaluative and associative dimensions of concepts that operate below explicit argumentation. A term like "bureaucracy" might be technically neutral but carry negative connotations that do argumentative work without justification. Connotation mapping reveals the silent rhetoric embedded in vocabulary choices.
+  probing_questions:
+  - What evaluative connotations attach to key terms -- positive, negative, neutral?
+  - Are connotations consistent with the author's stated analytical stance, or do
+    they smuggle in judgments?
+  - Do connotations differ from standard disciplinary usage -- has the author loaded
+    the terms?
+  - Are there pairs of terms that differ primarily in connotation rather than denotation
+    (e.g., 'freedom fighter' vs. 'terrorist')?
+  - What emotional or aesthetic associations do key terms carry, and how do these
+    shape the reader's response?
+  depth_guidance:
+    surface: Note the most obviously connotation-loaded terms and whether the loading
+      is acknowledged
+    standard: 'Map connotations for all significant concepts: evaluative charge, consistency
+      with stated stance, departure from disciplinary norms, connotation-based pairs,
+      and assessment of how connotations do argumentative work'
+    deep: 'Complete connotation analysis: every significant term assessed for evaluative
+      charge, aesthetic and emotional associations, comparison with disciplinary and
+      everyday connotations, analysis of how the author''s connotation choices constitute
+      an implicit rhetoric, and assessment of whether the argument would survive if
+      all connotation-loaded terms were replaced with neutral equivalents'
 capabilities:
+- key: map_semantic_fields
+  description: 'Build the complete network of meaning-relations for each significant
+    concept: synonyms, antonyms, hypernyms, hyponyms, collocations'
+  produces_dimensions:
+  - semantic_field
+  requires_dimensions: []
+  extended_description: |-
+    This capability executes the foundational Saussurean insight that meaning is differential and relational rather than referential. It constructs the complete network of meaning-relations for each significant concept by identifying not what a term points to in the world, but what other terms it is defined against, clustered with, and distinguished from. For every concept like 'power,' it asks: what does the author treat as a near-synonym (influence, force, domination)? What stands in contrast (weakness, submission, anarchy)? What broader category does it belong to (social relations, political phenomena)? What specific forms does it take (coercive power, discursive power, economic power)? And crucially, what terms habitually appear in its vicinity, creating a semantic atmosphere that shapes its meaning? This is the work of recovering the langue—the system of differences—that makes any particular parole meaningful.
 
-  - key: map_semantic_fields
-    description: "Build the complete network of meaning-relations for each significant concept: synonyms, antonyms, hypernyms, hyponyms, collocations"
-    produces_dimensions:
-      - semantic_field
-    requires_dimensions: []
+    Without this capability, downstream engines operate on isolated definitions rather than living meanings. The concept_cluster identification needs these relationship networks to understand what holds clusters together. The boundary analysis needs them to know where concepts meet and potentially blur. The usage tracking needs them as a baseline to detect when actual deployment deviates from systemic position. The connotation mapping needs them to distinguish between semantic relations (which are structural) and affective associations (which are rhetorical). This capability transforms a vocabulary list into a semantic topology—a landscape where proximity, distance, opposition, and hierarchy give each concept its position and therefore its meaning.
 
-  - key: identify_concept_clusters
-    description: "Discover groups of concepts that form coherent thematic units, with bridge concepts and orphans"
-    produces_dimensions:
-      - concept_clusters
-    requires_dimensions:
-      - semantic_field
+    The non-trivial challenge is distinguishing the author's semantic field from both standard disciplinary usage and the analyst's own conceptual habits. A naive approach simply lists dictionary synonyms or thesaurus entries. A sophisticated approach reconstructs how THIS author, in THIS text, organizes semantic space—which may involve idiosyncratic distinctions ('power' vs. 'force'), strategic conflations (using 'efficiency' and 'rationality' interchangeably when others distinguish them), or disciplinary boundary-crossing (borrowing 'field' from physics for sociology). The analyst must bracket their own semantic intuitions and attend forensically to the text's actual relationship patterns.
+  intellectual_grounding:
+    thinker: saussure
+    concept: value_through_difference
+    method: Saussure's principle that linguistic signs have no positive terms, only
+      differences, directly informs this capability. Meaning emerges from a term's
+      position in a system of oppositions and associations, not from reference to
+      objects. This capability operationalizes that insight by mapping the differential
+      system within which each concept gains its value.
+  indicators:
+  - Author uses multiple terms for seemingly the same phenomenon without explicitly
+    differentiating them (e.g., 'legitimacy,' 'authority,' 'rightful power')
+  - Author defines concepts negatively through contrasts ('X is not mere Y') more
+    than through positive characterization
+  - Concepts appear consistently in the same argumentative neighborhoods, suggesting
+    systematic co-occurrence patterns
+  - Author's usage of a standard term seems subtly different from disciplinary norm,
+    but the difference is not explicitly marked
+  - Text contains explicit discussion of why certain terms are preferred over apparent
+    synonyms
+  depth_scaling:
+    surface: For 3-5 core concepts, list synonyms, antonyms, broader/narrower terms,
+      and most frequent collocations with relationship labels.
+    standard: For all significant concepts, map full semantic networks with relationship
+      types, document key distinctions the author draws between near-synonyms, provide
+      co-occurrence statistics, and compare with standard disciplinary semantic fields.
+    deep: Exhaustive relationship mapping for every significant concept with statistical
+      co-occurrence data, genealogical tracing of where the author's semantic distinctions
+      originate intellectually, systematic comparison with disciplinary and everyday
+      usage revealing the author's semantic innovations, and analysis of how semantic
+      field evolution across the work signals conceptual development.
+- key: identify_concept_clusters
+  description: Discover groups of concepts that form coherent thematic units, with
+    bridge concepts and orphans
+  produces_dimensions:
+  - concept_clusters
+  requires_dimensions:
+  - semantic_field
+  extended_description: |-
+    This capability discovers the natural joints in a work's conceptual architecture by identifying groups of concepts that form coherent thematic units—terms that travel together, mutually reinforce each other's meanings, and constitute recognizable intellectual gestalts. Drawing on Rosch's prototype theory, it recognizes that semantic organization is not flat but structured around cores and peripheries: some concepts are central exemplars of a cluster (the prototype) while others are marginal members. A cluster around 'rationality' might include 'calculation,' 'optimization,' and 'means-ends reasoning' as core members, with 'deliberation' and 'judgment' as more peripheral participants that bridge to other clusters. These clusters often correspond to theoretical traditions, disciplinary formations, or conceptual schemes the author has inherited or synthesized.
 
-  - key: analyze_boundaries
-    description: "Map the contested, fuzzy, and strategically ambiguous boundaries between related concepts"
-    produces_dimensions:
-      - boundary_terms
-    requires_dimensions:
-      - semantic_field
+    This capability transforms the flat semantic field maps into a three-dimensional landscape with peaks, valleys, and ridges. It reveals the major conceptual building blocks—the 3-5 large thematic units that organize the work's thinking—and identifies bridge concepts that connect otherwise separate clusters (revealing synthetic ambitions) and orphan concepts that belong to no cluster (revealing incomplete integration or nascent thinking). For downstream engines, these clusters provide the semantic architecture against which inferential commitments and argumentative patterns will be analyzed. The boundary analysis needs clusters to know which boundaries matter most (those between major clusters). The usage tracking needs them to detect when a concept is being pulled between different cluster orbits, shifting its meaning.
 
-  - key: track_usage
-    description: "Follow how concepts are actually deployed in argumentation vs. how they are defined"
-    produces_dimensions:
-      - usage_patterns
-    requires_dimensions:
-      - semantic_field
+    The sophistication lies in recognizing that clusters are not simply topics or subjects. A naive approach groups concepts by explicit thematic labels ('economic concepts,' 'political concepts'). A sophisticated approach identifies clusters by actual semantic behavior—which concepts genuinely co-vary in usage, share collocations, and reinforce each other's meanings, regardless of how the author explicitly organizes chapters or sections. Sometimes the most important clusters cut across the work's explicit structure, revealing a deeper conceptual architecture that the surface organization obscures.
+  intellectual_grounding:
+    thinker: rosch
+    concept: prototype_structure
+    method: Rosch's research on category structure—showing that conceptual organization
+      is not definitional but organized around prototypical exemplars with graded
+      membership—informs this capability's recognition that concept clusters have
+      cores and peripheries. The capability identifies which concepts are prototypical
+      centers of semantic fields and which are marginal members, revealing the actual
+      structure of conceptual organization.
+  indicators:
+  - Sets of 3-5 terms that repeatedly appear together in the same paragraphs or argumentative
+    moves
+  - Concepts that are routinely explained through reference to each other, forming
+    a self-reinforcing semantic circle
+  - Terms that share distinctive collocations or grammatical patterns, suggesting
+    they occupy similar functional roles
+  - Explicit discussion of theoretical traditions or intellectual schools, each with
+    its characteristic vocabulary
+  - Isolated technical terms that appear rarely and without integration into any recurring
+    conceptual neighborhood
+  depth_scaling:
+    surface: Identify 2-3 major concept clusters with core members (5-8 terms each)
+      and a label for the unifying theme.
+    standard: Map all significant clusters with core vs. peripheral members, bridge
+      concepts connecting clusters, orphan concepts, and assessment of whether clusters
+      align with explicit organizational structure.
+    deep: Complete cluster topology with internal structure (prototype members, graded
+      membership strength), inter-cluster relationships (complementary, competing,
+      hierarchically nested, synthesized), bridge concepts analyzed for their synthetic
+      function, and assessment of whether orphans represent nascent clusters, borrowed
+      terms not fully integrated, or genuine conceptual anomalies.
+- key: analyze_boundaries
+  description: Map the contested, fuzzy, and strategically ambiguous boundaries between
+    related concepts
+  produces_dimensions:
+  - boundary_terms
+  requires_dimensions:
+  - semantic_field
+  extended_description: |-
+    This capability investigates the edges where concepts meet—the contested, fuzzy, or strategically ambiguous zones that reveal what intellectual work the author is attempting. Wittgenstein's attention to how concepts have blurred edges rather than sharp definitions, and how this fuzziness is often essential to their functioning, grounds this analysis. When an author uses both 'power' and 'influence,' where exactly does one end and the other begin? Is the boundary sharp and explicitly theorized, or is it left deliberately vague? Does the author sometimes slide between the terms as if they were interchangeable, and other times insist on their difference? These boundary behaviors are not defects to be corrected but phenomena to be documented, because they reveal what distinctions matter to the author's argument and what conflations it depends upon.
 
-  - key: map_connotations
-    description: "Surface the evaluative and associative dimensions that do silent argumentative work below explicit claims"
-    produces_dimensions:
-      - connotation_map
-    requires_dimensions:
-      - semantic_field
-      - usage_patterns
+    Boundary analysis is where semantic field mapping becomes diagnostic of argumentative strategy. Many texts derive their analytical leverage precisely from how they draw boundaries differently than predecessors. A theorist who sharply distinguishes 'power' from 'authority' where others conflate them is making a theoretical claim through semantic stipulation. Conversely, an author who strategically leaves boundaries fuzzy may be preserving argumentative flexibility—able to invoke the connotations of both concepts without committing to their distinction. This capability identifies which boundaries are weight-bearing for the argument (where a shift in boundary would change the conclusion) and which are ornamental. It feeds the inferential commitment mapper by identifying which conceptual distinctions carry logical commitments and which are merely nominal.
 
-# ============================================================
-# COMPOSABILITY: How It Plays With Others
-# ============================================================
+    Sophistication requires distinguishing acknowledged fuzziness from unacknowledged confusion. Wittgenstein's notion of family resemblance legitimizes certain kinds of conceptual blurriness—some concepts genuinely have no essence and their boundaries are necessarily vague. But other boundary problems reflect unresolved tensions or equivocations. A sophisticated analysis asks: is this boundary fuzziness the good Wittgensteinian kind (reflecting the concept's genuine structure) or the problematic kind (reflecting the author's failure to work through a distinction)? And it asks whether boundary ambiguities are exploited for argumentative advantage—terms strategically left undefined so they can bear multiple meanings across different parts of the argument.
+  intellectual_grounding:
+    thinker: wittgenstein
+    concept: family_resemblance
+    method: Wittgenstein's argument that many concepts have no essential definitions
+      but instead show family resemblances—overlapping similarities without a common
+      core—licenses this capability's attention to legitimate conceptual fuzziness.
+      It looks for where boundaries are necessarily blurred (because concepts overlap
+      without clean separation) versus where they are strategically maintained as
+      fuzzy, and distinguishes both from simple confusion.
+  indicators:
+  - Author uses two terms in close proximity without clearly distinguishing them,
+    suggesting potential boundary fuzziness
+  - Explicit discussion of what distinguishes one concept from another ('Power differs
+    from authority in that...')
+  - Author's usage suggests a concept's meaning shifts depending on whether it's being
+    contrasted with concept A or concept B
+  - Critiques of other scholars for conflating concepts the author wants to distinguish,
+    or for distinguishing what the author wants to unify
+  - Terms that appear to be used interchangeably in some contexts but carefully distinguished
+    in others
+  depth_scaling:
+    surface: Note 2-3 most significant boundary cases where conceptual distinctions
+      are unclear or contested, with examples of boundary behavior.
+    standard: Map boundaries between all major concept pairs, documenting where boundaries
+      are sharp vs. fuzzy, whether fuzziness is acknowledged, whether it appears strategic,
+      and what argumentative work the boundary-drawing accomplishes.
+    deep: Exhaustive boundary mapping with typology of boundary types (sharp/explicitly
+      theorized, sharp/implicit, legitimately fuzzy, strategically ambiguous, confusedly
+      blurred), comparison with how other authors draw the same boundaries, counterfactual
+      analysis of how arguments would fail if boundaries were drawn differently, and
+      assessment of whether boundary decisions reflect intellectual commitments or
+      argumentative convenience.
+- key: track_usage
+  description: Follow how concepts are actually deployed in argumentation vs. how
+    they are defined
+  produces_dimensions:
+  - usage_patterns
+  requires_dimensions:
+  - semantic_field
+  extended_description: |-
+    This capability operationalizes the ordinary language philosophy insight that meaning is use. It tracks how concepts actually behave in argumentative contexts—not how they are defined in the text's theoretical sections, but how they are deployed in analysis, applied in examples, wielded in critiques, and avoided in contexts where they might have been expected. The gap between definition and usage is often where a concept's real meaning emerges. An author might define 'rationality' abstractly as 'goal-oriented reasoning,' but consistently use it in contexts that imply calculative, means-ends reasoning specifically, never applying it to forms of practical wisdom or deliberation. That usage pattern reveals the operational meaning, which is narrower and more specific than the stated definition.
 
+    This capability also detects meaning drift across a work—moments when a concept's usage subtly shifts as the argument progresses, accumulating new connotations or shedding old ones. It identifies contexts of heavy use (where the concept does the most argumentative work) and conspicuous absence (where you would expect the concept but the author avoids it, suggesting limitations or tensions). It distinguishes between constructive and critical deployment: Does the author use 'ideology' only when criticizing others, never when describing their own framework? That asymmetry is itself meaningful. For downstream engines, usage profiles provide the empirical reality check against which stated commitments can be tested. The inferential commitment mapper needs to know not what the author says a concept commits them to, but what their actual usage demonstrates it commits them to.
+
+    The non-trivial challenge is distinguishing meaningful variation from natural linguistic flexibility. All language involves some contextual variation in concept deployment—that is how language works. A sophisticated analysis identifies patterns of systematic deviation: contexts where the concept reliably means something different, shifts that correlate with argumentative needs, or usages that directly contradict stated definitions. It also recognizes strategic concept avoidance—when an author's framework would seem to demand a certain concept but they systematically substitute a different one, revealing discomfort or suppressed tensions.
+  intellectual_grounding:
+    thinker: wittgenstein
+    concept: meaning_as_use
+    method: Wittgenstein's dictum that 'meaning is use' in language games directly
+      grounds this capability's prioritization of actual deployment over stated definition.
+      The capability treats usage patterns—not dictionary entries or theoretical stipulations—as
+      constitutive of meaning, and tracks how concepts function in the author's particular
+      language game across different argumentative contexts.
+  indicators:
+  - Formal definition of a concept in theoretical sections followed by more specific
+    or narrow usage in analytical sections
+  - Concept used frequently in first half of text but fading or being replaced by
+    different terminology in second half
+  - 'Concept deployed asymmetrically: used to analyze others'' positions but not the
+    author''s own, or vice versa'
+  - Author's examples and case applications of a concept consistently emphasize certain
+    dimensions while ignoring others mentioned in the definition
+  - Contexts where you would expect a concept to appear based on the framework, but
+    the author uses different terminology instead
+  depth_scaling:
+    surface: Note any significant gaps between definition and usage for 3-5 core concepts,
+      with representative examples.
+    standard: Track usage for all significant concepts through the work, documenting
+      definition-usage gaps, meaning shifts across sections, contexts of heavy use
+      vs. conspicuous absence, and asymmetric deployment (constructive vs. critical
+      contexts).
+    deep: Comprehensive usage tracking with statistical frequency analysis across
+      argumentative contexts, detailed meaning drift mapping showing how concepts
+      accumulate or shed connotations through the work, systematic cataloging of conspicuous
+      absences with analysis of what concepts are used instead, comparison with how
+      the same concepts are used by intellectual predecessors and contemporaries,
+      and assessment of whether usage patterns reveal unacknowledged commitments or
+      tensions in the framework.
+- key: map_connotations
+  description: Surface the evaluative and associative dimensions that do silent argumentative
+    work below explicit claims
+  produces_dimensions:
+  - connotation_map
+  requires_dimensions:
+  - semantic_field
+  - usage_patterns
+  extended_description: |-
+    This capability surfaces the evaluative and associative dimensions of concepts that operate below explicit argumentation—the affective loading, aesthetic associations, and ideological freight that do rhetorical work without justification. Lakoff's work on conceptual metaphors and framing reveals how much of political and analytical language carries implicit evaluations that pre-structure thought. When an author describes a policy as 'intervention' versus 'support,' or a social formation as 'organic' versus 'constructed,' or a theoretical approach as 'rigorous' versus 'systematic,' they are not making explicitly defended evaluative claims but selecting terms whose connotations do silent argumentative work. This capability maps that connotation landscape, asking: What evaluative charge do key terms carry? Are those charges consistent with the author's stated analytical neutrality, or do they smuggle in partisan judgments? How do the author's connotations differ from standard disciplinary usage—have they loaded previously neutral terms, or bleached previously loaded ones?
+
+    Connotation mapping reveals the implicit rhetoric of conceptual choices. It identifies connotation-based pairs—terms that differ primarily in affective charge rather than denotation ('freedom fighter' vs. 'insurgent,' 'welfare' vs. 'dependency,' 'market' vs. 'capitalism'). These pairs are diagnostic of ideological position often more reliably than explicit argument. The capability also tracks emotional and aesthetic associations that shape reader response: Does 'community' carry warm, solidaristic connotations while 'collective' carries cold, impersonal ones? These associations structure how arguments land, making certain conclusions feel natural or attractive before any explicit reasoning occurs. For downstream engines, the connotation landscape reveals the pre-argumentative framework—the evaluative structure within which explicit reasoning operates.
+
+    Sophistication requires distinguishing between unavoidable connotation (all language carries some affective charge) and strategic loading. It also demands assessing whether the argument could survive connotation-stripping. Some arguments genuinely depend on explicit reasoning and would hold if all connotations were neutralized. Others derive their persuasive force primarily from connotative selection, and would collapse if terms were replaced with neutral equivalents. A sophisticated analysis performs this counterfactual test: if we replace 'organic solidarity' with 'type-A social cohesion' and 'mechanical solidarity' with 'type-B social cohesion,' does Durkheim's argument still work? If not, how much work is the organic/mechanical metaphor doing, and is that work justified?
+  intellectual_grounding:
+    thinker: lakoff
+    concept: conceptual_metaphor
+    method: Lakoff's theory of conceptual metaphor—that abstract reasoning is structured
+      by metaphorical mappings from concrete domains that carry evaluative and affective
+      associations—grounds this capability's attention to how concept choice pre-structures
+      thought. Metaphorical source domains (organism, machine, market, war) carry
+      connotations that shape what seems natural, good, or possible before explicit
+      argument begins.
+  indicators:
+  - Key concepts drawn from metaphorical source domains with strong affective associations
+    (organic, mechanical, disease, health, war, game, market)
+  - Pairs of near-synonyms where the author consistently chooses one with more positive
+    or negative connotations
+  - Terms used to describe the author's own position that differ in connotation from
+    terms used for rival positions, even when denotation is similar
+  - Explicit discussion of why certain terminology is politically or ideologically
+    charged, with author either embracing or distancing from connotations
+  - Concepts that appear to function as 'thick' ethical concepts—simultaneously descriptive
+    and evaluative (e.g., 'exploitation,' 'flourishing,' 'corruption')
+  depth_scaling:
+    surface: Identify most obviously connotation-loaded terms (3-5), note whether
+      loading is positive/negative, and whether it is explicitly acknowledged.
+    standard: 'Map connotations for all significant concepts: evaluative charge (positive/negative/neutral/ambivalent),
+      consistency with stated analytical neutrality, departure from standard disciplinary
+      connotations, connotation-based pairs, and assessment of how connotations do
+      argumentative work.'
+    deep: Complete connotation landscape with detailed affective and aesthetic profiling,
+      comparison across disciplinary, everyday, and author-specific connotations,
+      analysis of metaphorical source domains and their evaluative structure, identification
+      of thick concepts where description and evaluation are fused, counterfactual
+      analysis of whether arguments survive connotation-stripping, and assessment
+      of the relationship between the author's explicit evaluative commitments and
+      their implicit connotative choices.
 composability:
   shares_with:
-    semantic_field_maps: "Complete meaning-relation networks for each concept -- downstream engines know not just what terms exist but how they relate"
-    concept_cluster_structure: "Thematic groupings revealing the conceptual architecture from a semantic (not logical) perspective"
-    boundary_analysis: "Where concepts meet and how distinctions are drawn -- critical for detecting concept evolution across works"
-    usage_profiles: "How concepts actually behave in argumentation -- the real meaning vs. the stated definition"
-    connotation_landscape: "The silent rhetoric embedded in vocabulary choices -- evaluative loading that does argumentative work"
-
+    semantic_field_maps: Complete meaning-relation networks for each concept -- downstream
+      engines know not just what terms exist but how they relate
+    concept_cluster_structure: Thematic groupings revealing the conceptual architecture
+      from a semantic (not logical) perspective
+    boundary_analysis: Where concepts meet and how distinctions are drawn -- critical
+      for detecting concept evolution across works
+    usage_profiles: How concepts actually behave in argumentation -- the real meaning
+      vs. the stated definition
+    connotation_landscape: The silent rhetoric embedded in vocabulary choices -- evaluative
+      loading that does argumentative work
   consumes_from:
-    vocabulary_profile: "From conceptual_framework_extraction -- the coined terms, repurposed terms, key oppositions, and genealogical hints that become inputs for semantic field mapping"
-    framework_architecture: "From conceptual_framework_extraction -- the structural relationships between frameworks that constrain how concepts cluster"
-    metaphor_inventory: "From conceptual_framework_extraction -- metaphors often constitute the core of semantic fields, especially for abstract concepts"
-
+    vocabulary_profile: From conceptual_framework_extraction -- the coined terms,
+      repurposed terms, key oppositions, and genealogical hints that become inputs
+      for semantic field mapping
+    framework_architecture: From conceptual_framework_extraction -- the structural
+      relationships between frameworks that constrain how concepts cluster
+    metaphor_inventory: From conceptual_framework_extraction -- metaphors often constitute
+      the core of semantic fields, especially for abstract concepts
   synergy_engines:
-    - conceptual_framework_extraction  # Upstream: provides the vocabulary inventory this engine deepens
-    - inferential_commitment_mapper  # Downstream: uses semantic fields to detect logical commitments encoded in concept relationships
-    - concept_evolution  # Parallel: semantic constellations in one work become comparison targets for tracking concept change across works
-    - conditions_of_possibility_analyzer  # Semantic fields reveal what conceptual resources were available -- the conditions of thinkability
-
-# ============================================================
-# DEPTH LEVELS
-# ============================================================
-
+  - conceptual_framework_extraction
+  - inferential_commitment_mapper
+  - concept_evolution
+  - conditions_of_possibility_analyzer
 depth_levels:
+- key: surface
+  description: Map semantic fields for the 3-5 most significant concepts with basic
+    relationship types and note the most obvious concept clusters
+  typical_passes: 1
+  suitable_for: Quick semantic overview, non-academic texts, preliminary scoping,
+    texts with limited conceptual complexity
+  passes:
+  - pass_number: 1
+    label: Core Concept Mapping
+    stance: discovery
+    focus_dimensions:
+    - semantic_field
+    - concept_clusters
+    - boundary_terms
+    - usage_patterns
+    - connotation_map
+    focus_capabilities:
+    - map_semantic_fields
+    - identify_clusters
+    - analyze_boundaries
+    - track_usage
+    - map_connotations
+    consumes_from: []
+    description: |
+      Map the semantic fields of the 3-5 most significant concepts in
+      a single pass. For each concept, identify the immediate semantic
+      neighborhood: synonyms, antonyms, key collocations. Note the
+      most obvious concept clusters and any boundary terms where
+      distinctions are visibly contested. Touch on usage patterns and
+      connotations only where they are immediately apparent. The goal
+      is a usable semantic sketch, not a complete landscape.
+- key: standard
+  description: Full semantic field maps for all significant concepts, concept cluster
+    identification with bridges and orphans, boundary analysis between major concept
+    pairs, usage pattern tracking, and basic connotation assessment
+  typical_passes: 2
+  suitable_for: Most academic texts, standard genealogy target profiling, texts with
+    moderate conceptual density
+  passes:
+  - pass_number: 1
+    label: Semantic Field Inventory
+    stance: discovery
+    focus_dimensions:
+    - semantic_field
+    focus_capabilities:
+    - map_semantic_fields
+    consumes_from: []
+    description: |
+      Build complete semantic field maps for all significant concepts.
+      For each concept, trace the full network of meaning-relations:
+      synonyms and near-synonyms with the subtle distinctions the author
+      draws, antonyms and contrasts that define the concept negatively,
+      broader and narrower categories, and co-occurrence patterns that
+      reveal implicit associations. Compare the author's semantic fields
+      with standard disciplinary usage to detect where meaning has been
+      bent. This inventory becomes the foundation for all structural
+      analysis in the next pass.
+  - pass_number: 2
+    label: Semantic Architecture
+    stance: architecture
+    focus_dimensions:
+    - concept_clusters
+    - boundary_terms
+    - usage_patterns
+    - connotation_map
+    focus_capabilities:
+    - identify_clusters
+    - analyze_boundaries
+    - track_usage
+    - map_connotations
+    consumes_from:
+    - 1
+    description: |
+      With semantic fields mapped, now build the higher-order structures.
+      Identify concept clusters -- groups of terms that travel together
+      and constitute thematic units. Map bridge concepts connecting
+      clusters and orphan concepts outside any cluster. Analyze boundary
+      terms between major concept pairs: where boundaries are sharp vs.
+      fuzzy, whether ambiguity is strategic. Track usage patterns to
+      detect definition-usage gaps and meaning shifts. Assess connotations
+      for the most significant terms, noting where evaluative loading
+      does silent argumentative work.
+- key: deep
+  description: 'Complete semantic archaeology: every concept mapped with full relationship
+    networks and cross-disciplinary comparison, cluster analysis with internal structure
+    and inter-cluster dynamics, exhaustive boundary mapping with strategic ambiguity
+    detection, usage tracking with meaning drift analysis, and full connotation landscape
+    revealing the implicit rhetoric of vocabulary choices'
+  typical_passes: 4
+  suitable_for: Dense philosophical works, texts with high conceptual originality,
+    foundational profiling for comparative genealogy studies
+  passes:
+  - pass_number: 1
+    label: Exhaustive Semantic Field Mapping
+    stance: discovery
+    focus_dimensions:
+    - semantic_field
+    focus_capabilities:
+    - map_semantic_fields
+    consumes_from: []
+    description: |
+      Map every significant concept with its full relationship network.
+      No significance threshold -- trace every term that does intellectual
+      work, including minor variants and terms the author uses without
+      defining. For each concept, build the complete semantic field with
+      cross-disciplinary comparison: how does the author's usage differ
+      from how the same term functions in neighboring fields? Track
+      co-occurrence statistics to reveal the implicit conceptual
+      architecture encoded in language habits. This pass must be
+      exhaustive because subsequent passes build on it.
+  - pass_number: 2
+    label: Structural Analysis and Tension Detection
+    stance: architecture
+    focus_dimensions:
+    - concept_clusters
+    - boundary_terms
+    - usage_patterns
+    focus_capabilities:
+    - identify_clusters
+    - analyze_boundaries
+    - track_usage
+    consumes_from:
+    - 1
+    description: |
+      Build the full structural apparatus from the semantic field data.
+      Map all concept clusters with internal structure (core vs. peripheral
+      members) and inter-cluster dynamics (complementary, competing,
+      nested). Perform exhaustive boundary analysis: every significant
+      conceptual boundary mapped with sharpness, the author's awareness,
+      and strategic uses of ambiguity. Track usage patterns through the
+      entire text with attention to meaning drift, contextual variation,
+      and definition-usage mismatches. Adopt a confrontational stance
+      toward apparent coherence: where do concepts that seem harmonious
+      actually harbor tensions? Where do boundaries that seem clear
+      actually conceal productive ambiguity?
+  - pass_number: 3
+    label: Dialectical Working-Through of Boundary Tensions
+    stance: dialectical
+    focus_dimensions:
+    - boundary_terms
+    - concept_clusters
+    - usage_patterns
+    focus_capabilities:
+    - analyze_boundaries
+    - identify_clusters
+    - track_usage
+    consumes_from:
+    - 1
+    - 2
+    description: |
+      The architecture pass revealed tensions — boundary terms where
+      concepts resist clean separation, clusters that compete rather
+      than complement, usage patterns that contradict definitions. Now
+      inhabit these tensions dialectically rather than resolving them.
 
-  - key: surface
-    description: "Map semantic fields for the 3-5 most significant concepts with basic relationship types and note the most obvious concept clusters"
-    typical_passes: 1
-    suitable_for: "Quick semantic overview, non-academic texts, preliminary scoping, texts with limited conceptual complexity"
-    passes:
-      - pass_number: 1
-        label: "Core Concept Mapping"
-        stance: discovery
-        focus_dimensions: [semantic_field, concept_clusters, boundary_terms, usage_patterns, connotation_map]
-        focus_capabilities: [map_semantic_fields, identify_clusters, analyze_boundaries, track_usage, map_connotations]
-        consumes_from: []
-        description: |
-          Map the semantic fields of the 3-5 most significant concepts in
-          a single pass. For each concept, identify the immediate semantic
-          neighborhood: synonyms, antonyms, key collocations. Note the
-          most obvious concept clusters and any boundary terms where
-          distinctions are visibly contested. Touch on usage patterns and
-          connotations only where they are immediately apparent. The goal
-          is a usable semantic sketch, not a complete landscape.
+      For each significant boundary tension, perform Aufhebung: the
+      boundary between two concepts (say "power" and "authority") is
+      not a line to be drawn but a productive zone where both concepts
+      reveal their limitations. The author's inability to draw a clean
+      boundary is not a failure of precision but a discovery — the
+      boundary IS fuzzy because the phenomena resist the distinction
+      the author needs. Articulate what the boundary tension reveals
+      about the limits of the author's conceptual vocabulary.
 
-  - key: standard
-    description: "Full semantic field maps for all significant concepts, concept cluster identification with bridges and orphans, boundary analysis between major concept pairs, usage pattern tracking, and basic connotation assessment"
-    typical_passes: 2
-    suitable_for: "Most academic texts, standard genealogy target profiling, texts with moderate conceptual density"
-    passes:
-      - pass_number: 1
-        label: "Semantic Field Inventory"
-        stance: discovery
-        focus_dimensions: [semantic_field]
-        focus_capabilities: [map_semantic_fields]
-        consumes_from: []
-        description: |
-          Build complete semantic field maps for all significant concepts.
-          For each concept, trace the full network of meaning-relations:
-          synonyms and near-synonyms with the subtle distinctions the author
-          draws, antonyms and contrasts that define the concept negatively,
-          broader and narrower categories, and co-occurrence patterns that
-          reveal implicit associations. Compare the author's semantic fields
-          with standard disciplinary usage to detect where meaning has been
-          bent. This inventory becomes the foundation for all structural
-          analysis in the next pass.
+      Where concept clusters compete — pulling the same terms toward
+      different thematic centers — do not adjudicate which cluster the
+      term "really" belongs to. Instead, trace what the competition
+      reveals: a concept claimed by two clusters is doing double duty,
+      and that double duty is often where the argument's real work
+      happens. The concept's meaning is constituted by its tension
+      between the clusters, not by its allegiance to either.
 
-      - pass_number: 2
-        label: "Semantic Architecture"
-        stance: architecture
-        focus_dimensions: [concept_clusters, boundary_terms, usage_patterns, connotation_map]
-        focus_capabilities: [identify_clusters, analyze_boundaries, track_usage, map_connotations]
-        consumes_from: [1]
-        description: |
-          With semantic fields mapped, now build the higher-order structures.
-          Identify concept clusters -- groups of terms that travel together
-          and constitute thematic units. Map bridge concepts connecting
-          clusters and orphan concepts outside any cluster. Analyze boundary
-          terms between major concept pairs: where boundaries are sharp vs.
-          fuzzy, whether ambiguity is strategic. Track usage patterns to
-          detect definition-usage gaps and meaning shifts. Assess connotations
-          for the most significant terms, noting where evaluative loading
-          does silent argumentative work.
-
-  - key: deep
-    description: "Complete semantic archaeology: every concept mapped with full relationship networks and cross-disciplinary comparison, cluster analysis with internal structure and inter-cluster dynamics, exhaustive boundary mapping with strategic ambiguity detection, usage tracking with meaning drift analysis, and full connotation landscape revealing the implicit rhetoric of vocabulary choices"
-    typical_passes: 4
-    suitable_for: "Dense philosophical works, texts with high conceptual originality, foundational profiling for comparative genealogy studies"
-    passes:
-      - pass_number: 1
-        label: "Exhaustive Semantic Field Mapping"
-        stance: discovery
-        focus_dimensions: [semantic_field]
-        focus_capabilities: [map_semantic_fields]
-        consumes_from: []
-        description: |
-          Map every significant concept with its full relationship network.
-          No significance threshold -- trace every term that does intellectual
-          work, including minor variants and terms the author uses without
-          defining. For each concept, build the complete semantic field with
-          cross-disciplinary comparison: how does the author's usage differ
-          from how the same term functions in neighboring fields? Track
-          co-occurrence statistics to reveal the implicit conceptual
-          architecture encoded in language habits. This pass must be
-          exhaustive because subsequent passes build on it.
-
-      - pass_number: 2
-        label: "Structural Analysis and Tension Detection"
-        stance: architecture
-        focus_dimensions: [concept_clusters, boundary_terms, usage_patterns]
-        focus_capabilities: [identify_clusters, analyze_boundaries, track_usage]
-        consumes_from: [1]
-        description: |
-          Build the full structural apparatus from the semantic field data.
-          Map all concept clusters with internal structure (core vs. peripheral
-          members) and inter-cluster dynamics (complementary, competing,
-          nested). Perform exhaustive boundary analysis: every significant
-          conceptual boundary mapped with sharpness, the author's awareness,
-          and strategic uses of ambiguity. Track usage patterns through the
-          entire text with attention to meaning drift, contextual variation,
-          and definition-usage mismatches. Adopt a confrontational stance
-          toward apparent coherence: where do concepts that seem harmonious
-          actually harbor tensions? Where do boundaries that seem clear
-          actually conceal productive ambiguity?
-
-      - pass_number: 3
-        label: "Dialectical Working-Through of Boundary Tensions"
-        stance: dialectical
-        focus_dimensions: [boundary_terms, concept_clusters, usage_patterns]
-        focus_capabilities: [analyze_boundaries, identify_clusters, track_usage]
-        consumes_from: [1, 2]
-        description: |
-          The architecture pass revealed tensions — boundary terms where
-          concepts resist clean separation, clusters that compete rather
-          than complement, usage patterns that contradict definitions. Now
-          inhabit these tensions dialectically rather than resolving them.
-
-          For each significant boundary tension, perform Aufhebung: the
-          boundary between two concepts (say "power" and "authority") is
-          not a line to be drawn but a productive zone where both concepts
-          reveal their limitations. The author's inability to draw a clean
-          boundary is not a failure of precision but a discovery — the
-          boundary IS fuzzy because the phenomena resist the distinction
-          the author needs. Articulate what the boundary tension reveals
-          about the limits of the author's conceptual vocabulary.
-
-          Where concept clusters compete — pulling the same terms toward
-          different thematic centers — do not adjudicate which cluster the
-          term "really" belongs to. Instead, trace what the competition
-          reveals: a concept claimed by two clusters is doing double duty,
-          and that double duty is often where the argument's real work
-          happens. The concept's meaning is constituted by its tension
-          between the clusters, not by its allegiance to either.
-
-          Where usage contradicts definition, resist the temptation to
-          declare one "real" and the other "misleading." The gap between
-          definition and usage is itself a semantic fact — it reveals that
-          the concept is richer (or more conflicted) than the author's
-          explicit understanding of it. Trace what the concept is trying
-          to become that its definition cannot yet accommodate.
-
-      - pass_number: 4
-        label: "Connotation Landscape and Semantic Synthesis"
-        stance: integration
-        focus_dimensions: [connotation_map, semantic_field, concept_clusters, boundary_terms, usage_patterns]
-        focus_capabilities: [map_connotations, map_semantic_fields, identify_clusters, analyze_boundaries, track_usage]
-        consumes_from: [1, 2, 3]
-        description: |
-          Complete the connotation landscape: every significant term assessed
-          for evaluative charge, aesthetic and emotional associations, and
-          comparison with disciplinary and everyday connotations. Analyze
-          how the author's connotation choices constitute an implicit rhetoric.
-          Then synthesize all dimensions into the full semantic architecture,
-          now enriched by the dialectical pass's working-through of boundary
-          tensions. Where the dialectical pass found productive fuzziness,
-          the synthesis should preserve it — not flatten it into false
-          precision. Where boundary tensions revealed concepts trying to
-          become something their definitions cannot yet accommodate, note
-          these as sites of semantic evolution. Assess whether the argument
-          would survive if connotation-loaded terms were replaced with
-          neutral equivalents. Produce the integrated semantic profile that
-          downstream engines will consume — one that honors the generative
-          tensions rather than papering over them.
-
-# ============================================================
-# METADATA
-# ============================================================
-
+      Where usage contradicts definition, resist the temptation to
+      declare one "real" and the other "misleading." The gap between
+      definition and usage is itself a semantic fact — it reveals that
+      the concept is richer (or more conflicted) than the author's
+      explicit understanding of it. Trace what the concept is trying
+      to become that its definition cannot yet accommodate.
+  - pass_number: 4
+    label: Connotation Landscape and Semantic Synthesis
+    stance: integration
+    focus_dimensions:
+    - connotation_map
+    - semantic_field
+    - concept_clusters
+    - boundary_terms
+    - usage_patterns
+    focus_capabilities:
+    - map_connotations
+    - map_semantic_fields
+    - identify_clusters
+    - analyze_boundaries
+    - track_usage
+    consumes_from:
+    - 1
+    - 2
+    - 3
+    description: |
+      Complete the connotation landscape: every significant term assessed
+      for evaluative charge, aesthetic and emotional associations, and
+      comparison with disciplinary and everyday connotations. Analyze
+      how the author's connotation choices constitute an implicit rhetoric.
+      Then synthesize all dimensions into the full semantic architecture,
+      now enriched by the dialectical pass's working-through of boundary
+      tensions. Where the dialectical pass found productive fuzziness,
+      the synthesis should preserve it — not flatten it into false
+      precision. Where boundary tensions revealed concepts trying to
+      become something their definitions cannot yet accommodate, note
+      these as sites of semantic evolution. Assess whether the argument
+      would survive if connotation-loaded terms were replaced with
+      neutral equivalents. Produce the integrated semantic profile that
+      downstream engines will consume — one that honors the generative
+      tensions rather than papering over them.
 legacy_engine_key: concept_semantic_constellation
-
 apps:
-  - critic
-
+- critic
 paradigm_keys:
-  - marxist
-  - brandomian
+- marxist
+- brandomian

@@ -48,11 +48,38 @@ class AnalyticalDimension(BaseModel):
     )
 
 
+class CapabilityGrounding(BaseModel):
+    """The intellectual tradition grounding a specific capability.
+
+    Links a capability to the thinker, concept, and method that
+    makes it analytically legitimate — not just what it does, but
+    WHY it's a valid analytical move and where it comes from.
+    """
+
+    thinker: str = Field(
+        ...,
+        description="Primary thinker whose work grounds this capability (e.g., 'Brandom', 'Foucault')",
+    )
+    concept: str = Field(
+        ...,
+        description="Key concept from that thinker (e.g., 'incompatibility', 'episteme')",
+    )
+    method: str = Field(
+        ...,
+        description="How the thinker's approach informs this capability (1-2 sentences)",
+    )
+
+
 class EngineCapability(BaseModel):
     """Something this engine CAN DO.
 
     Capabilities are the unit of composability — the orchestrator
     selects engines based on which capabilities are needed.
+
+    Each capability has both a one-line description (for lists and
+    quick reference) and optionally a rich extended description that
+    grounds it in the engine's intellectual tradition, explains its
+    analytical method, and shows how it scales across depths.
     """
 
     key: str = Field(
@@ -63,6 +90,26 @@ class EngineCapability(BaseModel):
     description: str = Field(
         ...,
         description="What this capability does (1 sentence)",
+    )
+    extended_description: Optional[str] = Field(
+        default=None,
+        description="Rich 2-3 paragraph description grounding this capability in the "
+        "engine's intellectual tradition, explaining its analytical method, "
+        "and connecting it to the problematique.",
+    )
+    intellectual_grounding: Optional[CapabilityGrounding] = Field(
+        default=None,
+        description="The thinker, concept, and method that ground this capability",
+    )
+    indicators: list[str] = Field(
+        default_factory=list,
+        description="Textual signals that indicate this capability is needed "
+        "(e.g., 'Contradictory premises in the same argument')",
+    )
+    depth_scaling: dict[str, str] = Field(
+        default_factory=dict,
+        description="How this capability's output scales across depths: "
+        "{'surface': '...', 'standard': '...', 'deep': '...'}",
     )
     requires_dimensions: list[str] = Field(
         default_factory=list,
