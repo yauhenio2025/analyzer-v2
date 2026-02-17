@@ -84,11 +84,11 @@
   - `POST /v1/llm/operationalization-generate-sequence` - LLM generate depth sequence with data flow
 - **Frontend** (analyzer-mgmt):
   - `frontend/src/pages/operationalizations/index.tsx` - Coverage grid + engine list
-  - `frontend/src/pages/operationalizations/[key].tsx` - Stance cards + depth sequence viewer
+  - `frontend/src/pages/operationalizations/[key].tsx` - Interactive editor: drag-and-drop depth sequence editing, add/remove stance passes, per-stance Generate/Preview buttons, save/reset with dirty tracking
   - `frontend/src/types/index.ts` - TypeScript types for operationalization entities
-  - `frontend/src/lib/api.ts` - API client methods (direct fetch to ANALYZER_V2_URL)
+  - `frontend/src/lib/api.ts` - API client methods incl. full PUT update (direct fetch to ANALYZER_V2_URL)
   - `frontend/src/components/Layout.tsx` - Navigation item
-- **Added**: 2026-02-17
+- **Added**: 2026-02-17 | **Modified**: 2026-02-17
 
 ## Schema-on-Read / Prose Pipeline (the-critic)
 

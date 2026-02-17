@@ -49,6 +49,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
   - **LLM generation endpoints**: `POST /v1/llm/operationalization-generate` (single), `operationalization-generate-all` (bulk), `operationalization-generate-sequence` (depth sequence with data flow)
   - **Prompt composer integration**: `compose_all_pass_prompts()` now checks operationalization registry first, falls back to inline passes. Verified byte-identical output for all 10 extracted engines.
   - **Frontend** (analyzer-mgmt): Types, API client, coverage grid list page, engine detail page with stance cards + depth sequence viewer, navigation item
+  - **Interactive depth sequence editor** — Drag-and-drop pass reordering with automatic renumbering and consumes_from rewiring, add pass (+) with stance picker dropdown, remove pass (x) on hover, save/reset with dirty tracking and unsaved-changes banner
+  - **Per-stance controls** — Individual Generate button (LLM regeneration per stance-engine pair), Compose Preview button showing assembled prompt in dark code panel
+  - **Full operationalization PUT** — `api.operationalizations.update()` for saving entire operationalization after edits
 
 - **Dialectical passes added to 4 engines' deep modes** — Engines whose deep analysis most benefits from Hegelian working-through of contradictions now include a dialectical pass:
   - `inferential_commitment_mapper.yaml` — Deep: 4 passes (discovery → confrontation → **dialectical** → integration). Dialectical pass works through commitment conflicts: which are productive (generating insight through irresolution) vs. destructive (genuine flaws), traces cascading contradictions, articulates unstated positions the commitment landscape points toward.
