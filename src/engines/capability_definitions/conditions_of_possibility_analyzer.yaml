@@ -35,19 +35,15 @@ intellectual_lineage:
       an argument to become possible, and what constraints did that assembly impose on what could subsequently
       be said?'
   secondary:
-  - name: skinner
+  - name: quentin_skinner
     description: 'Quentin Skinner (1940-), British historian and founder of the Cambridge School contextualism,
       whose methodology demands that texts be understood through the linguistic and ideological conventions
       available to their authors at the moment of writing. His insistence that we recover what an author
       could have meant — not what later interpreters wish they meant — provides this engine''s counterfactual
-      discipline: distinguishing between what an author''s prior work made possible versus what the argument
-      actually required.'
-  - name: quentin_skinner
-    description: Quentin Skinner (1940-), whose concept of 'rhetorical redescription' shows how intellectual
-      innovation occurs within — not beyond — inherited vocabularies, as thinkers stretch, recombine,
-      or subvert available terms. This framework helps the engine identify moments where an author's prior
-      conceptual commitments both enable new arguments (by providing established vocabulary) and constrain
-      them (by binding the author to audiences and frameworks that limit radical departure).
+      discipline, while his concept of ''rhetorical redescription'' shows how intellectual innovation occurs
+      within inherited vocabularies, helping the engine identify moments where prior conceptual commitments
+      both enable new arguments and constrain them by binding the author to audiences and frameworks that
+      limit radical departure.'
   - name: arthur_lovejoy
     description: Arthur O. Lovejoy (1873-1962), American philosopher and founder of the history of ideas,
       who traced 'unit-ideas' across centuries to reveal hidden continuities and constraints in philosophical
