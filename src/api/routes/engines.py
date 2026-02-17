@@ -506,6 +506,35 @@ async def get_capability_definition(engine_key: str) -> CapabilityEngineDefiniti
     return cap_def
 
 
+@router.get("/{engine_key}/capability-definition/history")
+async def get_capability_history(
+    engine_key: str,
+    limit: int = Query(50, ge=1, le=200, description="Max entries to return"),
+) -> dict:
+    """Get change history for a capability engine definition.
+
+    Returns timestamped history entries with field-level diffs,
+    sorted newest first. History is auto-detected by comparing
+    YAML files against stored snapshots on startup/reload.
+    """
+    registry = get_engine_registry()
+    cap_def = registry.get_capability_definition(engine_key)
+    if cap_def is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No capability definition found for engine: {engine_key}",
+        )
+
+    from src.engines.history_tracker import load_history
+
+    history = load_history(engine_key)
+    return {
+        "engine_key": engine_key,
+        "entry_count": len(history.entries),
+        "entries": [e.model_dump(mode="json") for e in history.entries[:limit]],
+    }
+
+
 @router.get("/{engine_key}/capability-prompt", response_model=CapabilityPrompt)
 async def get_capability_prompt(
     engine_key: str,

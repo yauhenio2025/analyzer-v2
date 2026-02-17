@@ -1,0 +1,391 @@
+{
+  "analytical_dimensions": [
+    {
+      "depth_guidance": {
+        "deep": "3-4 paragraphs with nuanced assessment, surprising findings highlighted, practical implications for multiple audiences (scholars, students, the author themselves), and placement within broader disciplinary genealogies",
+        "standard": "2-3 paragraphs covering dominant influences, key evolution patterns, significant unacknowledged debts, and reading implications",
+        "surface": "One paragraph capturing the single most important genealogical finding"
+      },
+      "description": "A concise 2-3 paragraph overview of the genealogical findings. Must be readable by someone who will read nothing else. Captures the most important discoveries: the dominant intellectual influences, the most significant evolution patterns, the key unacknowledged debts, and the overall character of the author's intellectual development.\n",
+      "key": "executive_summary",
+      "probing_questions": [
+        "What are the 3-5 most important things we learned about this work's intellectual genealogy?",
+        "What would surprise the author most about these findings?",
+        "What single sentence best captures the genealogical story?",
+        "What are the practical implications -- how should a reader approach this work differently knowing its genealogy?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Full genealogical narrative: origin story, transformation moments with close textual analysis, abandoned paths with hypothesized reasons, institutional context, the current work as both culmination and new departure, and assessment of the trajectory's coherence and productivity",
+        "standard": "Multi-paragraph narrative covering trajectory, transformation moments, abandonments, and the current work's self-positioning, with specific textual evidence",
+        "surface": "1-2 paragraph sketch of the main trajectory from earliest to current work"
+      },
+      "description": "The detailed narrative of intellectual development. This is the MAIN DELIVERABLE -- a sustained analytical narrative that tells the story of how this work came to be what it is, tracing the author's intellectual trajectory from earliest relevant prior work to the present. Not a chronological summary but a GENEALOGICAL narrative that privileges descent (herkunft) and emergence (entstehung).\n",
+      "key": "genealogical_portrait",
+      "probing_questions": [
+        "What is the origin story -- where did the seeds of the current argument first appear?",
+        "What were the key transformation moments -- when did ideas change character?",
+        "What was abandoned along the way, and why?",
+        "How does the current work position itself relative to the trajectory -- as continuation, break, or synthesis?",
+        "What tensions in prior work does the current work resolve, and what new tensions does it create?",
+        "What is the relationship between intellectual evolution and institutional/career evolution?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Comprehensive idea genealogies for all significant concepts: detailed timelines with textual evidence at each stage, multi-paragraph evolution narratives, co-evolution analysis showing how ideas influenced each other's development, and assessment of which transformations were progressive and which were regressive",
+        "standard": "5-8 idea genealogies each with timeline (work, year, form of the idea) and 1-2 paragraph evolution narrative describing key transformations",
+        "surface": "Identify 3-5 key ideas with brief genealogical notes (first appearance, current form)"
+      },
+      "description": "Per-idea genealogies: for each major idea, concept, or method in the current work, a timeline showing when it first appeared, how it was transformed in successive works, and what it became in the current argument. Each idea genealogy includes both a timeline (structured data) and an evolution narrative (analytical prose).\n",
+      "key": "idea_genealogies",
+      "probing_questions": [
+        "What are the 5-10 most important ideas in the current work that have genealogical histories?",
+        "For each idea, when and where did it first appear?",
+        "How was each idea transformed across works -- what was added, dropped, reframed?",
+        "Are there ideas that the author thinks are new but actually have deep genealogical roots?",
+        "Are there ideas from prior work that were silently abandoned -- present in earlier work but absent from current work?",
+        "Do ideas evolve independently or do they co-evolve -- does changing one idea force changes to others?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Full intellectual portrait: recurring patterns with specific examples, strengths and weaknesses mapped across works, debt-handling strategies analyzed, intellectual temperament characterized with nuance, comparison to other thinkers with similar profiles, and assessment of growth vs. stagnation over time",
+        "standard": "Multi-paragraph profile covering habits, strengths, weaknesses, debt-handling patterns, and intellectual temperament, with evidence from genealogical findings",
+        "surface": "2-3 sentence characterization of dominant intellectual habits"
+      },
+      "description": "A characterization of the author's intellectual habits, strengths, and weaknesses as revealed by the genealogical analysis. This is not biography but INTELLECTUAL PROSOPOGRAPHY of a single thinker: what patterns of thinking recur, what blind spots persist, what kinds of moves the author characteristically makes.\n",
+      "key": "author_intellectual_profile",
+      "probing_questions": [
+        "What intellectual habits recur across works -- favorite moves, recurring strategies?",
+        "What are the author's characteristic strengths as revealed by genealogical analysis?",
+        "What blind spots or weaknesses persist across works?",
+        "How does the author handle intellectual debts -- generous acknowledgment, strategic concealment, genuine oversight?",
+        "Is the author a hedgehog (one big idea) or a fox (many ideas)? Or something more complex?",
+        "How does the author respond to criticism -- does the genealogy show course corrections?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Full methodological reflection: per-finding confidence with evidence quality assessment, comprehensive limitations inventory, all classification revisions with reasons, detailed follow-up research agenda, and reflexive analysis of potential biases in the genealogical method itself",
+        "standard": "Structured assessment: confidence levels per major finding (high/medium/low with justification), data limitations, classification revisions from Pass 1.5, and 2-3 recommended follow-up investigations",
+        "surface": "Brief note on overall confidence level and most significant limitation"
+      },
+      "description": "How the analysis was conducted, what confidence levels attach to which findings, what limitations were encountered, and what further investigation would strengthen the genealogical picture. This dimension practices what genealogy preaches: reflexive awareness of the conditions of one's own knowledge production.\n",
+      "key": "methodological_notes",
+      "probing_questions": [
+        "Which findings are high-confidence (strong textual evidence) vs. hypothetical (inferred from patterns)?",
+        "What prior works were unavailable or only partially analyzed?",
+        "Where did the classification from Pass 1.5 prove wrong or insufficient?",
+        "What would additional investigation most productively focus on?",
+        "What biases might the analytical process itself introduce?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "5 key findings with extended analysis: detailed evidence, implications for multiple audiences, connection to broader patterns in the field, and assessment of how the author might respond to each finding",
+        "standard": "3-5 key findings, each with a paragraph explaining the finding, its evidence, and its implications for reading the current work",
+        "surface": "3 key findings, each in one sentence"
+      },
+      "description": "The 3-5 most important discoveries from the genealogical analysis. These are the findings that most change how a reader should understand the current work. Each finding should be surprising or non-obvious -- things that would not be apparent from reading the current work alone.\n",
+      "key": "key_findings",
+      "probing_questions": [
+        "What discovery most changes how we should read the current work?",
+        "What is the most important unacknowledged debt?",
+        "What is the most significant abandoned idea -- something from prior work that is conspicuously absent?",
+        "What is the most interesting evolution -- an idea that changed character in unexpected ways?",
+        "What is the most important tension -- a contradiction between prior commitments and current claims?"
+      ]
+    }
+  ],
+  "apps": [
+    "critic",
+    "visualizer"
+  ],
+  "capabilities": [
+    {
+      "depth_scaling": {
+        "deep": "Three to four paragraphs with nuanced assessment of the trajectory's coherence, surprising findings that would discomfit the author, implications segmented by audience type (scholars, students, the author), and placement of this genealogy within broader disciplinary intellectual histories.",
+        "standard": "Two to three paragraphs covering dominant influences, key evolutionary transformations, significant unacknowledged debts, and practical implications for how different audiences should read the work.",
+        "surface": "Single paragraph identifying the most important genealogical finding\u2014the one discovery that most changes how readers should understand the work's intellectual provenance."
+      },
+      "description": "Distill all genealogical findings into a concise 2-3 paragraph overview suitable for readers who will read nothing else",
+      "extended_description": "This capability performs the most difficult distillation in the genealogical pipeline: reducing potentially decades of intellectual evolution into a narrative compact enough to fit in a busy reader's mind yet comprehensive enough to reorient their understanding of the current work. This is not mere summarization but what Foucault called 'effective history' (wirkliche Historie) in miniature\u2014a compressed genealogical portrait that reveals how the present form of the author's thought emerged from contingent developments rather than teleological necessity. The summary must name the unacknowledged debts, the abandoned paths, and the transformations that made the current work possible, while remaining accessible to readers who may never engage the full genealogical apparatus.\n\nThis capability serves as the primary interface between the genealogical investigation and its audiences. It must synthesize findings from all other capabilities\u2014the narrative arc from genealogical_portrait, the specific conceptual transformations from idea_genealogies, the character patterns from author_intellectual_profile\u2014into a coherent statement of what the genealogy reveals. Without this distillation, the genealogical labor remains trapped in specialist discourse; with it, the findings can reshape how scholars, students, and even the author themselves understand the work's intellectual provenance.\n\nThe sophistication lies in what gets selected for inclusion. A naive summary merely lists influences chronologically; a genealogical summary identifies the ruptures, the concealed continuities, and the transformations that would most surprise or discomfit the author. It must capture both herkunft (descent, where ideas came from) and entstehung (emergence, the contingent circumstances of their appearance) while maintaining the narrative economy that makes it readable as a standalone text.",
+      "indicators": [
+        "The current work presents itself as a natural evolution from prior work, suggesting a seamless narrative that conceals ruptures or abandonments",
+        "The author acknowledges some influences but the genealogical investigation reveals more significant unacknowledged debts",
+        "Multiple prior works contain seeds of current arguments in radically different forms, requiring synthesis to show transformation",
+        "The genealogy reveals institutional or career pressures that shaped intellectual choices but are invisible in the current work's self-presentation",
+        "Key concepts in the current work have complex evolutionary histories that would surprise readers treating them as straightforward"
+      ],
+      "intellectual_grounding": {
+        "concept": "effective_history",
+        "method": "Foucault's effective history rejects teleological narratives in favor of revealing discontinuities, accidents, and power relations that shaped the present. This capability applies that method to distillation: the summary must highlight what was contingent, what was concealed, and what naturalized assumptions the genealogy denaturalizes.",
+        "thinker": "foucault"
+      },
+      "key": "compose_executive_summary",
+      "produces_dimensions": [
+        "executive_summary",
+        "key_findings"
+      ],
+      "requires_dimensions": []
+    },
+    {
+      "depth_scaling": {
+        "deep": "Full genealogical narrative analyzing: origin story with close textual reading, transformation moments contextualized by institutional/career factors, abandoned paths with hypothesized reasons grounded in evidence, current work as both culmination and new departure, co-evolution of ideas and methods across works, and meta-level assessment of whether the trajectory shows intellectual growth or entrenchment.",
+        "standard": "Multi-paragraph narrative with clear sections: origins, key transformation moments with textual evidence, abandonments and their likely reasons, current work's self-positioning, and assessment of trajectory coherence.",
+        "surface": "One to two paragraph sketch identifying origin points, major transformation moments, and the current work's position as continuation or rupture."
+      },
+      "description": "Compose the main genealogical narrative tracing the author's intellectual trajectory through descent and emergence",
+      "extended_description": "This capability constructs the main analytical narrative of the synthesis: a sustained genealogical account that traces the author's intellectual development from earliest relevant work to the present text. Unlike chronological intellectual biography, genealogical portraiture privileges descent (herkunft) and emergence (entstehung) over continuity and progress. It asks not 'how did the author steadily develop these ideas?' but 'under what contingent conditions did these ideas take the forms they did?' and 'what alternative paths were foreclosed by particular intellectual or institutional choices?' Drawing on Nietzsche's genealogical method, this narrative treats current meanings as potentially concealing radically different origins\u2014the polished argument in the present work may have emerged from abandoned projects, responses to criticism, or institutional pressures invisible in the final text.\n\nThis capability provides the narrative spine for the entire synthesis. Where idea_genealogies traces specific concepts and author_intellectual_profile characterizes thinking patterns, genealogical_portrait weaves these threads into a coherent story of intellectual becoming. It must maintain coherence across multiple temporal scales: the macro-arc from earliest to latest work, the meso-scale transformations where specific ideas changed character, and the micro-scale textual evidence grounding each claim. The portrait must also attend to what was abandoned\u2014the promising lines of inquiry dropped, the methods forsaken, the questions left behind\u2014because these abandonments reveal the contingency of the current work's form.\n\nSophistication here means resisting hagiography and teleology alike. A naive portrait treats the author's trajectory as progressive refinement toward truth; a genealogical portrait reveals the accidents, the course corrections forced by criticism, the institutional pressures that shaped 'intellectual' choices, and the tensions between earlier commitments and current positions. It must show how the author came to forget certain origins\u2014how debts became invisible, how contingent choices came to seem necessary\u2014while providing enough textual evidence that the author could not simply dismiss the genealogy as misreading.",
+      "indicators": [
+        "The current work makes claims that directly contradict or abandon positions defended in earlier works without acknowledging the shift",
+        "Recurring concepts across works undergo significant semantic transformations that the author treats as mere 'refinements'",
+        "The temporal gap between prior works reveals periods of intense productivity alternating with silence, suggesting intellectual or institutional crises",
+        "Early works employ methods or vocabularies later abandoned, indicating methodological transformations requiring explanation",
+        "The author's career trajectory (positions held, institutional affiliations, audiences addressed) correlates with intellectual shifts in ways the work's internal logic doesn't acknowledge"
+      ],
+      "intellectual_grounding": {
+        "concept": "genealogy_of_morals",
+        "method": "Nietzsche's genealogy reveals how current meanings conceal radically different origins\u2014how 'good' once meant aristocratic power rather than altruism. This capability applies that suspicion to intellectual history: the current work's self-presentation may naturalize what was contingent, conceal what was appropriated, and forget what was abandoned.",
+        "thinker": "nietzsche"
+      },
+      "key": "narrate_genealogical_portrait",
+      "produces_dimensions": [
+        "genealogical_portrait"
+      ],
+      "requires_dimensions": [
+        "executive_summary"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Comprehensive genealogies for all significant concepts: detailed timelines with textual evidence at each stage, multi-paragraph evolution narratives, co-evolution analysis showing how ideas influenced each other's development, assessment of which transformations were progressive versus regressive, and identification of concepts the author treats as novel that actually have deep genealogical roots.",
+        "standard": "Five to eight detailed idea genealogies, each with structured timeline (work, year, form) and one to two paragraph evolution narrative explaining key transformations and their significance.",
+        "surface": "Identify three to five key concepts with brief notes on first appearance and current form, sufficient to show that genealogical work was done."
+      },
+      "description": "Construct per-idea timelines and evolution narratives for each major concept in the current work",
+      "extended_description": "This capability constructs detailed genealogies for each major idea, concept, or method in the current work, tracing its first appearance in the author's corpus, documenting transformations across successive works, and analyzing what it became in the present argument. Each idea genealogy combines structured data (timeline showing work, year, and form of the idea) with analytical narrative (interpretation of why and how the idea transformed). This is genealogy at the concept level: tracking herkunft (where did this idea come from?) and entstehung (under what circumstances did it take its current form?) for specific intellectual objects. The method draws on Begriffsgeschichte (conceptual history) but radicalizes it through Foucault's attention to rupture and discontinuity\u2014concepts don't merely evolve, they undergo transformations that may radically alter their function and meaning.\n\nIdea genealogies provide the empirical foundation for broader genealogical claims. Where genealogical_portrait offers a narrative synthesis and author_intellectual_profile characterizes patterns, idea_genealogies grounds these in specific conceptual transformations documented with textual evidence. The capability must identify not only how ideas changed but also co-evolution patterns: did changing concept X force reconfigurations of concept Y? It must track silent abandonments\u2014concepts prominent in early work but absent from recent work without explanation\u2014as vigorously as explicit developments. These absences are often more revealing than continuities.\n\nSophistication requires distinguishing genuine conceptual evolution from terminological drift. A concept may keep the same name while undergoing radical functional transformation (Nietzschean genealogical insight), or may change names while preserving core content (requiring detective work to track the hidden continuity). The capability must also assess whether transformations were progressive (genuine refinements solving problems in earlier formulations) or regressive (abandoning hard-won insights under external pressure). Finally, it must identify concepts the author treats as novel innovations that actually have deep roots in earlier work\u2014places where the author has forgotten their own genealogy.",
+      "indicators": [
+        "A central concept in the current work appeared in substantially different form in earlier works, indicating conceptual evolution requiring documentation",
+        "The current work uses terminology that differs from earlier work even when discussing related topics, suggesting either terminological drift or genuine conceptual transformation",
+        "Concepts that were central to earlier arguments are conspicuously absent from the current work without explanation, indicating silent abandonments",
+        "The current work presents ideas as novel contributions that close reading reveals have roots in earlier work, suggesting forgotten genealogies",
+        "Multiple concepts in the current work seem to have evolved in tandem, suggesting co-evolution patterns where changes to one concept necessitated changes to others"
+      ],
+      "intellectual_grounding": {
+        "concept": "intellectual_history_method",
+        "method": "Grafton's approach to intellectual history emphasizes meticulous documentation of textual transmission and transformation. This capability applies that scholarly rigor to tracing ideas across an author's corpus: each transformation must be documented with specific textual evidence, timelines must be accurate, and claims about conceptual change must be grounded in close reading of what the concept actually did in different works.",
+        "thinker": "grafton"
+      },
+      "key": "trace_idea_genealogies",
+      "produces_dimensions": [
+        "idea_genealogies"
+      ],
+      "requires_dimensions": []
+    },
+    {
+      "depth_scaling": {
+        "deep": "Full intellectual portrait with: recurring patterns documented across multiple works, strengths and weaknesses mapped to show dialectical relationships, debt-handling strategies analyzed with specific examples, nuanced temperament characterization beyond binary categories, comparison to other thinkers with similar intellectual profiles, and assessment of intellectual growth versus stagnation with evidence from how the author responds (or doesn't respond) to criticism over time.",
+        "standard": "Multi-paragraph profile covering recurring intellectual moves, characteristic strengths, persistent weaknesses, debt-handling patterns, and temperament classification (hedgehog/fox/hybrid), all grounded in specific genealogical evidence.",
+        "surface": "Two to three sentences characterizing the most dominant intellectual habit or pattern that recurs across works."
+      },
+      "description": "Characterize the author's intellectual habits, strengths, weaknesses, and temperament from genealogical evidence",
+      "extended_description": "This capability constructs a prosopographical portrait of the author's intellectual character as revealed through genealogical analysis. It asks not 'what does this author think?' but 'how does this author think?' and 'what patterns of intellectual practice recur across works?' Drawing on Isaiah Berlin's distinction between hedgehogs (who know one big thing) and foxes (who know many things), but refusing to reduce complexity to binary classification, this profile identifies characteristic intellectual moves, recurring argumentative strategies, persistent blind spots, and habitual ways of engaging (or evading) intellectual debts. This is prosopography applied to a single thinker: the attempt to characterize a distinctive intellectual style through pattern recognition across a body of work.\n\nThis capability synthesizes findings from other dimensions into an assessment of intellectual character. Where genealogical_portrait traces the trajectory and idea_genealogies documents conceptual transformations, author_intellectual_profile asks what these reveal about the author as a thinker. Does the genealogy show growth\u2014evidence of learning from criticism, abandoning unproductive paths, refining methods\u2014or entrenchment\u2014doubling down on contested positions, ignoring criticism, recycling arguments? How does the author handle intellectual debts: generous acknowledgment (Berlin's scholarly virtue), strategic concealment (the anxiety of influence), or genuine oversight (the limits of reflexivity)? The profile must be evidence-based, grounded in specific patterns documented by the genealogical investigation, not speculative psychology.\n\nSophistication means avoiding both hagiography (treating every move as brilliant) and denunciation (treating every debt as plagiarism). The profile must be fair while being honest about weaknesses. It should compare the author to other thinkers with similar intellectual temperaments\u2014not to diminish originality but to contextualize patterns. A naive profile lists traits; a sophisticated profile shows how intellectual strengths and weaknesses are often dialectically related\u2014the same characteristic that enables certain insights may produce blind spots elsewhere. The profile should be specific enough that the author would recognize themselves while potentially surprised by what the pattern recognition reveals.",
+      "indicators": [
+        "The same argumentative strategies recur across works even when addressing different topics, indicating characteristic intellectual moves",
+        "Certain types of objections or criticisms are consistently ignored or evaded across works, suggesting systematic blind spots",
+        "The pattern of citations and acknowledgments across works reveals consistent practices in handling intellectual debts (generous, strategic, or forgetful)",
+        "The genealogy reveals that the author repeatedly returns to certain core ideas or questions despite periodic attempts to move beyond them, indicating hedgehog versus fox tendencies",
+        "Successive works show (or fail to show) evidence of learning from criticism, revising failed arguments, or correcting errors, indicating intellectual growth or entrenchment"
+      ],
+      "intellectual_grounding": {
+        "concept": "intellectual_temperament",
+        "method": "Berlin's approach to intellectual history emphasizes that thinkers have characteristic temperaments that shape what questions they find interesting, what answers they find plausible, and what kinds of thinking they find congenial. This capability applies that insight reflexively: genealogical analysis reveals not just what an author thought but how their intellectual character shaped what became thinkable for them.",
+        "thinker": "berlin"
+      },
+      "key": "profile_intellectual_character",
+      "produces_dimensions": [
+        "author_intellectual_profile"
+      ],
+      "requires_dimensions": [
+        "genealogical_portrait",
+        "idea_genealogies"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Full methodological reflection including: per-finding confidence assessments with detailed evidence quality evaluations, comprehensive inventory of limitations (unavailable sources, partial analyses, time constraints), all relationship classification revisions with genealogical reasons, detailed follow-up research agenda explaining why specific investigations would be most productive, and reflexive analysis of potential biases in the genealogical method itself\u2014how the analytical apparatus may have shaped what became visible and what remained obscure.",
+        "standard": "Structured assessment with: confidence levels for major findings (high/medium/low with justifications), data limitations clearly stated, relationship classification revisions from Pass 1.5 with reasons, and two to three specific recommended follow-up investigations.",
+        "surface": "Brief note stating overall confidence level (high/medium/low) and identifying the single most significant limitation or data gap."
+      },
+      "description": "Assess confidence levels, limitations, classification revisions, and recommended follow-up investigations",
+      "extended_description": "This capability performs reflexive epistemological assessment of the genealogical investigation itself, documenting confidence levels for specific findings, acknowledging limitations in data or method, noting where preliminary classifications (from Pass 1.5) proved inadequate, and identifying follow-up investigations that would strengthen the genealogical picture. This is genealogy practicing what it preaches: Foucault's genealogical method insists on reflexive awareness of one's own conditions of possibility, the recognition that all knowledge production operates under constraints that shape what becomes visible. A genealogical synthesis that fails to interrogate its own methodology betrays genealogy's founding insight\u2014that truth claims must be understood in relation to their conditions of production.\n\nThis dimension prevents the genealogical synthesis from presenting itself with false certainty. Not all findings are equally well-grounded: some claims rest on extensive textual evidence (high confidence), others on pattern recognition across limited data (medium confidence), still others on inference from absence or silence (low confidence but potentially significant). The methodology notes must be specific: which findings have what confidence levels, and why? What prior works were unavailable or only partially analyzed, creating gaps in the genealogical record? Where did the relationship classifications from Pass 1.5 prove wrong\u2014works classified as minor influences that turned out to be foundational, or vice versa? These revisions are intellectually productive, not embarrassing admissions.\n\nSophistication lies in using limitations productively rather than defensively. A naive methodology section treats limitations as mere caveats ('more research is needed'); a sophisticated reflection identifies specific follow-up investigations that would most productively extend the genealogy, explaining why those particular inquiries matter. It practices what Skinner calls the 'hermeneutics of suspicion' on itself: what biases might the analytical process introduce? Does attention to textual continuity make us blind to rupture? Does focus on acknowledged influences make us miss appropriations? The reflection should make the genealogical synthesis more usable by downstream consumers, who need to know what confidence to place in which findings.",
+      "indicators": [
+        "Some findings rest on strong textual evidence (direct quotations, explicit citations) while others rest on inference from patterns or absences, requiring confidence differentiation",
+        "Certain prior works were unavailable in full text or were only partially analyzed, creating gaps in the genealogical record that must be acknowledged",
+        "Initial relationship classifications from Pass 1.5 proved inadequate as deeper analysis revealed different relationship types, requiring revision documentation",
+        "The genealogical investigation revealed areas where additional research (archival work, unpublished materials, interview data) would significantly strengthen findings",
+        "The analytical process itself may have introduced biases\u2014for example, attention to continuity potentially obscuring ruptures, or focus on acknowledged influences missing concealed appropriations\u2014requiring reflexive critique"
+      ],
+      "intellectual_grounding": {
+        "concept": "reflexivity",
+        "method": "Foucault insisted that genealogical analysis must remain aware of its own historical situatedness and methodological constraints. This capability applies that reflexivity to the genealogical synthesis itself: documenting confidence levels, acknowledging limitations, and remaining suspicious of the genealogist's own claims to comprehensive vision\u2014recognizing that every genealogy is partial, situated, and shaped by its own conditions of possibility.",
+        "thinker": "foucault"
+      },
+      "key": "reflect_on_methodology",
+      "produces_dimensions": [
+        "methodological_notes"
+      ],
+      "requires_dimensions": [
+        "executive_summary",
+        "genealogical_portrait",
+        "idea_genealogies"
+      ]
+    }
+  ],
+  "category": "scholarly",
+  "composability": {
+    "consumes_from": {
+      "conditions_analysis": "From conditions_of_possibility_analyzer (Pass 3) -- enabling conditions, constraining conditions, path dependencies, counterfactuals",
+      "cross_work_synthesis": "From Pass 3 cross-work synthesis engines -- patterns across all prior works",
+      "dimensional_scan_results": "From Pass 2 dimensional scanners -- concept_evolution, evolution_tactics_detector, concept_appropriation_tracker findings per prior work",
+      "prior_work_profiles": "From genealogy_deep_target_profiling (Pass 1) -- structured profiles of all prior works and the target work",
+      "relationship_classifications": "From genealogy_relationship_classification (Pass 1.5) -- typed relationships between each prior work and the target"
+    },
+    "shares_with": {
+      "author_profile": "Intellectual character profile reusable for audience-specific adaptation",
+      "confidence_map": "Per-finding confidence levels for downstream filtering and presentation",
+      "genealogical_report": "The complete genealogical synthesis -- final deliverable for consumers",
+      "idea_timelines": "Structured per-idea timelines usable by visualization engines",
+      "key_findings_digest": "The 3-5 most important discoveries, suitable for executive summaries"
+    },
+    "synergy_engines": [
+      "conditions_of_possibility_analyzer",
+      "concept_evolution",
+      "evolution_tactics_detector",
+      "intellectual_genealogy"
+    ]
+  },
+  "depth_levels": [
+    {
+      "description": "Executive summary and key findings only -- the genealogical picture in miniature",
+      "key": "surface",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Produce the genealogical picture in miniature: a concise\nexecutive summary capturing the most important discoveries\nand 3 key findings that most change how a reader should\nunderstand the current work. Synthesize all available upstream\ndata into the most compact meaningful form.\n",
+          "focus_capabilities": [
+            "compose_executive_summary"
+          ],
+          "focus_dimensions": [
+            "executive_summary",
+            "key_findings"
+          ],
+          "label": "Genealogy in Miniature",
+          "pass_number": 1,
+          "stance": "integration"
+        }
+      ],
+      "suitable_for": "Quick genealogical overview, when prior passes yielded limited data, non-academic texts, preliminary reports",
+      "typical_passes": 1
+    },
+    {
+      "description": "Full synthesis: executive summary, genealogical portrait, 5-8 idea genealogies with timelines, author profile, methodological notes, and key findings",
+      "key": "standard",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Full synthesis integrating all upstream pass data. Executive\nsummary with dominant influences and key evolution patterns.\nGenealogical portrait narrating the author's intellectual\ntrajectory through descent and emergence. 5-8 idea genealogies\nwith timelines and evolution narratives. Author intellectual\nprofile characterizing habits, strengths, and weaknesses.\nMethodological notes with confidence levels and limitations.\n3-5 key findings with implications.\n",
+          "focus_capabilities": [
+            "compose_executive_summary",
+            "narrate_genealogical_portrait",
+            "trace_idea_genealogies",
+            "profile_intellectual_character",
+            "reflect_on_methodology"
+          ],
+          "focus_dimensions": [
+            "executive_summary",
+            "genealogical_portrait",
+            "idea_genealogies",
+            "author_intellectual_profile",
+            "methodological_notes",
+            "key_findings"
+          ],
+          "label": "Full Genealogical Synthesis",
+          "pass_number": 1,
+          "stance": "integration"
+        }
+      ],
+      "suitable_for": "Standard genealogy pipeline final output, most academic texts, authors with 3-10 prior works",
+      "typical_passes": 1
+    },
+    {
+      "description": "Comprehensive synthesis with extended narratives: detailed genealogical portrait with close textual analysis, comprehensive idea genealogies with co-evolution analysis, full intellectual portrait with field comparisons, reflexive methodological assessment, and key findings with multi-audience implications",
+      "key": "deep",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Comprehensive synthesis with extended narratives. Detailed\ngenealogical portrait with close textual analysis tracing\norigin stories, transformation moments, and abandoned paths.\nComprehensive idea genealogies with co-evolution analysis\nshowing how changing one idea forced changes to others. Full\nintellectual portrait with field comparisons and growth\nassessment. Reflexive methodological assessment examining\nbiases in the genealogical method itself. Key findings with\nmulti-audience implications and assessment of how the author\nmight respond to each finding.\n",
+          "focus_capabilities": [
+            "compose_executive_summary",
+            "narrate_genealogical_portrait",
+            "trace_idea_genealogies",
+            "profile_intellectual_character",
+            "reflect_on_methodology"
+          ],
+          "focus_dimensions": [
+            "executive_summary",
+            "genealogical_portrait",
+            "idea_genealogies",
+            "author_intellectual_profile",
+            "methodological_notes",
+            "key_findings"
+          ],
+          "label": "Comprehensive Genealogical Synthesis",
+          "pass_number": 1,
+          "stance": "integration"
+        }
+      ],
+      "suitable_for": "Dense philosophical works, prolific authors with 10+ prior works, publication-quality genealogical studies, comprehensive intellectual biography projects",
+      "typical_passes": 1
+    }
+  ],
+  "engine_key": "genealogy_final_synthesis",
+  "engine_name": "Genealogy Final Synthesis",
+  "intellectual_lineage": {
+    "key_concepts": [
+      "herkunft",
+      "entstehung",
+      "effective_history",
+      "intellectual_portrait",
+      "genealogical_narrative",
+      "multi_scale_synthesis",
+      "confidence_calibration"
+    ],
+    "primary": "foucault",
+    "secondary": [
+      "nietzsche",
+      "berlin",
+      "grafton",
+      "skinner"
+    ],
+    "traditions": [
+      "genealogy",
+      "genealogy_of_morals",
+      "intellectual_history",
+      "historical_synthesis",
+      "prosopography",
+      "wissenschaftsgeschichte"
+    ]
+  },
+  "kind": "synthesis",
+  "legacy_engine_key": "genealogy_pass7_final_synthesis",
+  "paradigm_keys": [
+    "genealogical"
+  ],
+  "problematique": "All genealogical investigation converges here. The prior passes have\ndone the archaeological work: discovering prior works, classifying\nrelationships, scanning for dimensional traces, and analyzing\nconditions of possibility. Now the question becomes: what does it\nall MEAN? What is the comprehensive genealogical picture of this\nwork's relationship to its author's prior intellectual output?\n\nThis engine performs the most demanding intellectual operation in\nthe genealogy pipeline: SYNTHESIS. Not mere aggregation -- not a\ncompilation of findings from earlier passes -- but genuine intellectual\nsynthesis that reveals patterns invisible in any single pass. The\ngenealogical portrait must tell a STORY: how did this author's\nthinking evolve, what intellectual currents fed into the current\nwork, where did ideas originate and how were they transformed,\nwhat debts remain unacknowledged, and what does all of this tell\nus about the nature of intellectual production itself?\n\nThe synthesis operates at multiple scales simultaneously. At the\nmacro scale: the author's overall intellectual trajectory and the\ncurrent work's place within it. At the meso scale: per-idea\ngenealogies showing how specific concepts, methods, and arguments\nevolved across works. At the micro scale: specific textual evidence\ngrounding every claim. The challenge is maintaining coherence across\nthese scales -- the macro narrative must be consistent with the\nmicro evidence, and the meso genealogies must connect to both.\n\nFoucault's genealogical method insists that we attend not only to\nwhat persists but to what was abandoned, not only to acknowledged\ndebts but to hidden ones, not only to the logic of ideas but to\nthe material and institutional conditions that shaped them.\nNietzsche's genealogy of morals taught us that the current meaning\nof a concept often conceals a completely different origin -- that\ngenealogy is the art of revealing how things came to seem natural\nthat were in fact contingent. Berlin's approach to intellectual\nhistory reminds us that ideas have CONSEQUENCES, that intellectual\ngenealogies matter because they shape what people do, not just\nwhat they think.\n\nThis engine must honor all three traditions: Foucault's attention\nto discontinuity and concealment, Nietzsche's suspicion toward\napparent naturalness, and Berlin's insistence on the practical\nstakes of intellectual history.\n",
+  "researcher_question": "What is the comprehensive genealogical picture of this work's relationship to the author's prior intellectual output?",
+  "version": 1
+}

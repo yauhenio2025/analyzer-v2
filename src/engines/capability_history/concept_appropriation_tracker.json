@@ -1,0 +1,13 @@
+{
+  "engine_key": "concept_appropriation_tracker",
+  "entries": [
+    {
+      "timestamp": "2026-02-17T14:22:45.269774+00:00",
+      "version": 1,
+      "definition_hash": "c780ebafb0539d51d98995a93241367d32b007622eb41dba39e1eca6fbaa9320",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

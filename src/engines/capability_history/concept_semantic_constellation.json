@@ -1,0 +1,13 @@
+{
+  "engine_key": "concept_semantic_constellation",
+  "entries": [
+    {
+      "timestamp": "2026-02-17T14:22:45.363260+00:00",
+      "version": 1,
+      "definition_hash": "5ef930fed0b0bb176e2ae8b1012e679fbef3c7fd3993319ed64dc17c3202173d",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "engine_key": "concept_synthesis",
+  "entries": [
+    {
+      "timestamp": "2026-02-17T14:22:45.385479+00:00",
+      "version": 1,
+      "definition_hash": "eb990afa51aebcbc756f018a6f700fceb9557f1bc10b9a21891784a68fa54014",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

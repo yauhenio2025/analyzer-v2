@@ -1,0 +1,13 @@
+{
+  "engine_key": "genealogy_relationship_classification",
+  "entries": [
+    {
+      "timestamp": "2026-02-17T14:22:45.284638+00:00",
+      "version": 1,
+      "definition_hash": "3d384a75504f05d45d5c2865098054488922dbdad92fc1c5b32a4e96b719708b",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

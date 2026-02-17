@@ -1,0 +1,13 @@
+{
+  "engine_key": "conceptual_framework_extraction",
+  "entries": [
+    {
+      "timestamp": "2026-02-17T14:22:45.229627+00:00",
+      "version": 1,
+      "definition_hash": "24e6616c445cc81dd073ec3ad789075f6b2a4ddefac6fa8b4a8286a16cec1568",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

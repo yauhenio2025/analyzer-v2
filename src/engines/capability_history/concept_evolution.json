@@ -1,0 +1,13 @@
+{
+  "engine_key": "concept_evolution",
+  "entries": [
+    {
+      "timestamp": "2026-02-17T14:22:45.249615+00:00",
+      "version": 1,
+      "definition_hash": "424cf73a0eb5cb0d2248089a58f92e86ac7e33280c283793307fd5bd596f8d83",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

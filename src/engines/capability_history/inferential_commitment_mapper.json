@@ -1,0 +1,13 @@
+{
+  "engine_key": "inferential_commitment_mapper",
+  "entries": [
+    {
+      "timestamp": "2026-02-17T14:22:45.343040+00:00",
+      "version": 1,
+      "definition_hash": "553f4c8a443c844d242b6bfcf38948fc7b78af0441f0faa1a1d3d50b192fd593",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "engine_key": "conditions_of_possibility_analyzer",
+  "entries": [
+    {
+      "timestamp": "2026-02-17T14:22:45.208645+00:00",
+      "version": 1,
+      "definition_hash": "1679594266e2b7049de78128a8e1f5ad9cdb173369eaa1d4eee274b343f02d40",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

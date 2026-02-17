@@ -232,6 +232,8 @@ class EngineRegistry:
             self._capability_loaded = True
             return
 
+        from .history_tracker import check_and_record_changes
+
         for yaml_file in self.capability_definitions_dir.glob("*.yaml"):
             try:
                 with open(yaml_file, "r") as f:
@@ -239,6 +241,15 @@ class EngineRegistry:
                 cap_engine = CapabilityEngineDefinition.model_validate(data)
                 self._capability_engines[cap_engine.engine_key] = cap_engine
                 logger.debug(f"Loaded capability definition: {cap_engine.engine_key}")
+
+                # Auto-detect changes and record history
+                try:
+                    entry = check_and_record_changes(cap_engine)
+                    if entry and not entry.is_baseline:
+                        logger.info(f"Change detected for {cap_engine.engine_key}: {entry.summary}")
+                except Exception as e:
+                    logger.error(f"Failed to check history for {cap_engine.engine_key}: {e}")
+
             except Exception as e:
                 logger.error(f"Failed to load capability definition from {yaml_file}: {e}")
 

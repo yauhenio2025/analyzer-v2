@@ -1,0 +1,433 @@
+{
+  "analytical_dimensions": [
+    {
+      "depth_guidance": {
+        "deep": "Comprehensive functional analysis: every chain classified with multi-layered function assessment, diachronic function tracking (how argumentative role changed over the author's career), assessment of whether the author is aware of each chain's actual function, and comparison of stated vs actual argumentative roles",
+        "standard": "Full classification of all significant chains with primary and secondary functions, textual evidence, function-shift tracking across works, and confidence ratings",
+        "surface": "Classify the 5-7 most significant chains with brief functional labels and one-line evidence"
+      },
+      "description": "Classifying each significant conceptual chain by its argumentative function. A chain may serve multiple functions across different works or even within a single work. The five primary functions are: foundational (establishing premises, grounding the argument), elaborative (developing implications, extending scope, adding detail), defensive (responding to objections, shoring up vulnerabilities), bridge (connecting otherwise separate domains or sub-arguments), and culminative (drawing conclusions, reaching endpoints of argumentative arcs). Each classification must cite specific textual evidence for the assigned function.\n",
+      "key": "functional_classification",
+      "probing_questions": [
+        "For each conceptual chain, what argumentative job does it primarily do?",
+        "Does the chain serve different functions in different works or contexts?",
+        "What textual evidence supports this functional classification?",
+        "Are there chains whose function is ambiguous or contested?",
+        "Has the chain's argumentative function shifted over the author's career?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Complete architectural analysis: full dependency graph, structural logic classification, diachronic architecture evolution, comparison of the author's explicit argument structure with the implicit architecture revealed by functional analysis, and identification of where the architecture is most elegant and where it is most kludgy",
+        "standard": "Map the full argumentative architecture showing dependencies, hierarchies, bottlenecks, and structural logic across the corpus",
+        "surface": "Sketch the main architectural connections between the 3-5 most important chains"
+      },
+      "description": "How the functionally classified chains compose into larger argumentative structures. This is the macroscopic view -- not just what each chain does, but how they fit together. Which foundational chains support which elaborative chains? Which defensive chains protect which claims? Which bridges enable which connections? The architecture reveals the argument's engineering: its hierarchies, its bottlenecks, its redundancies, and its overall structural logic.\n",
+      "key": "argumentative_architecture",
+      "probing_questions": [
+        "How do foundational chains connect to the elaborative and culminative chains they support?",
+        "What is the hierarchical structure -- which chains depend on which?",
+        "Are there bottleneck chains where the entire argument flows through a single point?",
+        "What is the overall structural logic -- linear, branching, converging, cyclic?",
+        "How does the architecture change between the author's earlier and later works?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Complete structural engineering analysis: load distribution map, stress testing (what happens if each load-bearing chain is weakened), support deficit identification (where critical chains lack adequate backing), comparison of the author's perceived vs actual load-bearing structure, and recommendations for structural reinforcement",
+        "standard": "Full load analysis: all load-bearing chains ranked by structural importance, support proportionality assessment, single points of failure, and prominence vs importance comparison",
+        "surface": "Identify the 2-3 most structurally critical chains and note their support level"
+      },
+      "description": "Which conceptual chains are structurally essential -- if removed, the argument collapses? Load-bearing chains may not be the most prominent or the most discussed; sometimes the most critical structural member is an unexamined assumption or a quiet bridge concept. This analysis identifies which chains carry the most argumentative weight and assesses whether that weight is proportional to the evidential support they receive.\n",
+      "key": "load_bearing_analysis",
+      "probing_questions": [
+        "Which chains, if removed, would cause the most structural damage to the argument?",
+        "Is the load distribution proportional -- do heavily loaded chains receive proportional support?",
+        "Are there load-bearing chains that the author treats as obvious or uncontroversial?",
+        "What is the relationship between a chain's prominence in the text and its structural importance?",
+        "Are there single points of failure -- chains where the entire argument depends on one contested premise?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Full redundancy audit: complete overlap map, intentionality assessment for each redundancy, resilience analysis (how the argument survives if redundant chains are removed), historical redundancy trajectory, and comparison with what an optimal argumentative architecture would look like",
+        "standard": "Map all significant redundancies and gaps, assess intentionality, and compare redundancy levels across argumentative functions",
+        "surface": "Note the most obvious redundancies and single-thread dependencies"
+      },
+      "description": "Where do multiple conceptual chains do the same argumentative work? Redundancy is not necessarily a flaw -- in engineering, redundancy provides resilience. But in argumentation, unintended redundancy may indicate confusion, while intentional redundancy may indicate strategic reinforcement. This dimension maps overlapping argumentative functions and assesses whether the redundancy is productive (providing alternative routes to the same conclusion) or wasteful (repeating the same work without adding value).\n",
+      "key": "redundancy_map",
+      "probing_questions": [
+        "Which chains perform overlapping argumentative functions?",
+        "Is the redundancy intentional (strategic reinforcement) or accidental (conceptual confusion)?",
+        "Does the redundancy add resilience or just complexity?",
+        "Are there argumentative functions that have NO redundancy -- single-thread dependencies?",
+        "Has redundancy increased or decreased across the author's career?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Complete vulnerability assessment: all weak points mapped with severity and exploitability ratings, simulated adversarial attacks, recommendations for structural reinforcement, comparison of vulnerabilities across the author's career (are they getting better or worse at structural defense?), and assessment of whether some vulnerabilities are productive (enabling flexibility) vs dangerous (threatening collapse)",
+        "standard": "Map all significant vulnerabilities with severity ratings, attack vectors, and assessment of how the author could address them",
+        "surface": "Identify the 2-3 most significant vulnerabilities"
+      },
+      "description": "Where is the argument weakest? This synthesizes the load-bearing analysis and redundancy map to identify the points of maximum vulnerability. An argument is vulnerable where: load-bearing chains lack adequate support, single-thread dependencies have no redundancy, defensive chains are weak or absent where they are most needed, and bridge concepts do unacknowledged heavy lifting. The vulnerability assessment is not a hostile critique but a structural diagnosis -- understanding where an argument is vulnerable is the first step toward strengthening it.\n",
+      "key": "vulnerability_assessment",
+      "probing_questions": [
+        "Where does the argument have the least structural support for the most critical claims?",
+        "Which defensive chains are weakest relative to the objections they face?",
+        "Where are bridge concepts doing unacknowledged heavy lifting?",
+        "What are the most likely points of failure under critical examination?",
+        "How would a sophisticated interlocutor attack this argument, and where would it break?"
+      ]
+    }
+  ],
+  "apps": [
+    "critic"
+  ],
+  "capabilities": [
+    {
+      "depth_scaling": {
+        "deep": "Exhaustive multi-layered functional analysis including stated vs. actual functions, authorial awareness assessment, function evolution across career, ambiguous cases adjudicated, and comparison of functional architecture across different periods",
+        "standard": "Complete functional classification of all significant chains including primary and secondary functions, confidence ratings, diachronic function tracking, and detailed textual evidence",
+        "surface": "Primary function labels for 5-7 major chains with one-line textual evidence for each classification"
+      },
+      "description": "Assign foundational/elaborative/defensive/bridge/culminative functions to each conceptual chain with textual evidence",
+      "extended_description": "This capability performs the foundational work of identifying what argumentative job each conceptual chain actually does within the author's corpus. Drawing on Toulmin's insight that arguments have internal structure\u2014not just claims but warrants, backing, qualifiers, and rebuttals\u2014it moves beyond content analysis to functional analysis. A concept may appear to be about epistemology, but argumentatively it functions as a warrant for an ethical claim; another may seem central thematically but actually plays a defensive role, shoring up a vulnerability the author barely acknowledges. The classification into five functions (foundational, elaborative, defensive, bridge, culminative) is not taxonomic pedantry but structural diagnosis: it reveals what each conceptual element is actually doing in the argument's architecture.\n\nThis capability provides the essential input for all downstream analyses. Without functional classification, we cannot map argumentative architecture (which requires knowing what each chain does), identify load-bearing elements (since load depends on function), detect redundancy (overlapping functions), or assess vulnerabilities (weak chains in critical functional roles). It transforms concept_synthesis's diachronic account of conceptual evolution into a synchronic picture of argumentative structure. The non-trivial dimension is recognizing when a chain's actual function diverges from its apparent function\u2014when an author treats something as elaborative that is actually load-bearing, or when a defensive move is disguised as neutral elaboration.",
+      "indicators": [
+        "Conceptual chains that appear repeatedly at the beginning of argumentative sequences, establishing premises for subsequent moves",
+        "Chains that emerge primarily in contexts where the author is responding to critics or anticipating objections",
+        "Concepts that connect otherwise disparate domains or sub-arguments, enabling the author to move between them",
+        "Chains that appear at the culmination of argumentative arcs, drawing together previously separate threads",
+        "Divergence between how prominently a concept is discussed and how much argumentative weight it actually bears"
+      ],
+      "intellectual_grounding": {
+        "concept": "warrant",
+        "method": "Toulmin's layout of arguments distinguishes data, claim, warrant, backing, qualifier, and rebuttal\u2014each playing a specific structural role. This capability applies that functional differentiation to conceptual chains, asking not 'what does this chain mean?' but 'what argumentative work does it do?'\u2014whether it grounds (foundational), extends (elaborative), connects (bridge), protects (defensive), or concludes (culminative).",
+        "thinker": "toulmin"
+      },
+      "key": "classify_argumentative_functions",
+      "produces_dimensions": [
+        "functional_classification"
+      ],
+      "requires_dimensions": []
+    },
+    {
+      "depth_scaling": {
+        "deep": "Comprehensive architectural analysis including full inferential network, diachronic evolution of structure, explicit vs. implicit architecture comparison, elegance assessment, and identification of structural kludges where the argument is held together awkwardly",
+        "standard": "Complete dependency graph showing hierarchies, bottlenecks, structural logic classification, and flow patterns across the full corpus",
+        "surface": "Sketch showing how 3-5 major chains connect, identifying whether the overall structure is primarily linear, branching, or converging"
+      },
+      "description": "Compose functionally classified chains into macroscopic argumentative structures showing hierarchies and dependencies",
+      "extended_description": "This capability constructs the macroscopic view of how functionally classified chains compose into larger argumentative structures. It answers the question: how does the argument hold together? Drawing on structural analysis traditions, it treats the argument as an engineered object with hierarchies, dependencies, and flow patterns. Which foundational chains support which elaborative developments? Where do defensive chains protect load-bearing claims? How do bridge concepts enable otherwise impossible connections? The architecture reveals whether the argument is linear (each step following sequentially), branching (multiple independent lines from common premises), converging (separate arguments leading to unified conclusions), or cyclic (concepts that mutually reinforce in loops).\n\nThis capability depends on functional_classification but transcends it: knowing what each chain does is necessary but not sufficient for understanding how they compose. A foundational chain only matters structurally if other chains actually depend on it; a bridge concept only functions architecturally if it genuinely connects domains that would otherwise be separate. The mapping reveals bottlenecks (single chains through which the entire argument flows), redundant pathways (multiple routes to the same conclusion), and structural elegance or awkwardness. The non-trivial aspect is distinguishing the author's explicit argument structure (how they say their argument proceeds) from the implicit architecture (how the conceptual chains actually relate). Often these diverge significantly\u2014an author may present a linear argument whose actual structure is radically branching, or claim independence for sub-arguments that share hidden dependencies.",
+      "indicators": [
+        "Explicit statements of argumentative dependency ('as we established in...', 'this rests on...', 'from this it follows that...')",
+        "Conceptual chains that only appear after other specific chains have been established, suggesting hierarchical dependency",
+        "Passages where multiple previously separate argumentative lines converge onto a single claim",
+        "Moments where the argument appears to loop back, with later developments reinforcing or reinterpreting earlier foundations",
+        "Transitions between domains or registers that require specific bridge concepts to accomplish"
+      ],
+      "intellectual_grounding": {
+        "concept": "inferential articulation",
+        "method": "Brandom's account of concepts as nodes in inferential networks\u2014individuated by their role in reasoning, their position in the 'space of reasons'\u2014informs this architectural mapping. Each conceptual chain's argumentative identity depends on its inferential relations to others: what it supports, what supports it, what it enables, what it blocks. The architecture is the made-explicit inferential network.",
+        "thinker": "brandom"
+      },
+      "key": "map_argumentative_architecture",
+      "produces_dimensions": [
+        "argumentative_architecture"
+      ],
+      "requires_dimensions": [
+        "functional_classification"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Full structural engineering analysis including load distribution mapping, stress testing for each chain, support deficit quantification, authorial awareness comparison (perceived vs. actual load-bearers), and specific recommendations for structural reinforcement where load exceeds support",
+        "standard": "Complete ranking of load-bearing chains by structural importance, proportionality assessment for each, single-point-of-failure identification, and comparison of prominence versus actual load",
+        "surface": "Identification of 2-3 most critical chains with brief assessment of whether their support level matches their structural importance"
+      },
+      "description": "Identify structurally essential chains and assess whether their load is proportional to their support",
+      "extended_description": "This capability identifies which conceptual chains are structurally essential\u2014if removed or significantly weakened, the argument collapses or requires major restructuring. Load-bearing analysis treats the argument as an engineering problem: which elements carry weight, how much weight, and whether the support is proportional to the load? A chain bears load when other significant argumentative moves depend on it, either as foundation (supporting subsequent claims), as warrant (licensing inferential moves), or as bridge (enabling connections). The critical insight is that load-bearing status is not the same as prominence: sometimes the most structurally essential claims are treated as obvious background assumptions, while heavily discussed concepts may turn out to be ornamental.\n\nThis capability requires both functional_classification (to know what each chain does) and argumentative_architecture (to see what depends on what). It produces a ranking of structural importance that often surprises: the chain doing the most work may not be the one receiving the most attention. The analysis also assesses proportionality\u2014whether heavily loaded chains receive adequate backing and defense. A load-bearing chain supported only by assertion or thin evidence is a structural vulnerability. The non-trivial dimension is recognizing hidden load-bearers: chains that appear only briefly, are treated as uncontroversial, or are never explicitly defended, yet turn out to be indispensable. Often these are methodological assumptions, meta-level commitments, or bridge concepts whose removal would disconnect entire domains of the argument.",
+      "indicators": [
+        "Conceptual chains that are referenced or presupposed by many other argumentative moves without being extensively defended",
+        "Chains whose removal would require the author to substantially restructure multiple other arguments",
+        "Concepts treated as obvious or uncontroversial that nevertheless enable significant inferential moves",
+        "Single chains that appear in multiple argumentative contexts, doing different but essential work in each",
+        "Disproportionate attention patterns: either extensive discussion of structurally minor points or passing treatment of structurally essential ones"
+      ],
+      "intellectual_grounding": {
+        "concept": "backing",
+        "method": "Toulmin distinguishes warrants (inference licenses) from backing (support for warrants): warrants bear argumentative load by enabling inferential moves, but they themselves require backing proportional to their load. This capability extends that insight: it identifies which conceptual chains function as load-bearing warrants and assesses whether their backing is adequate to the weight they carry\u2014whether support is proportional to structural importance.",
+        "thinker": "toulmin"
+      },
+      "key": "analyze_load_bearing",
+      "produces_dimensions": [
+        "load_bearing_analysis"
+      ],
+      "requires_dimensions": [
+        "functional_classification",
+        "argumentative_architecture"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Exhaustive redundancy audit including complete overlap map, genuine vs. pseudo-redundancy distinction, resilience testing (argument survival if redundant chains removed), historical trajectory of redundancy patterns across career, and normative comparison with optimal redundancy architecture",
+        "standard": "Complete overlap mapping showing all significant redundancies, intentionality assessment for each, resilience analysis, and comparison of redundancy levels across different argumentative functions",
+        "surface": "Identification of most obvious redundancies and single-thread dependencies with brief assessment of whether redundancy seems intentional"
+      },
+      "description": "Detect overlapping argumentative functions and assess whether redundancy is productive or wasteful",
+      "extended_description": "This capability detects where multiple conceptual chains perform overlapping or identical argumentative functions. In structural engineering, redundancy is a virtue\u2014it provides resilience, alternative load paths when one element fails. But argumentative redundancy is ambiguous: it can be strategic reinforcement (multiple independent routes to the same conclusion, strengthening the argument's resilience) or conceptual confusion (the same work repeated without recognition, adding complexity without value). This capability maps functional overlaps and assesses their character. Productive redundancy offers genuinely independent paths\u2014if one chain is challenged, others remain intact. Wasteful redundancy merely restates the same move in different vocabulary, creating the illusion of multiple supports while actually depending on the same premises.\n\nThis analysis complements load_bearing_analysis: where that capability identifies critical single points of failure, this one identifies areas of structural resilience (multiple chains doing the same work) and areas of conceptual profligacy (unnecessary duplication). The mapping also reveals gaps\u2014argumentative functions with no redundancy, where the entire argument depends on a single chain with no backup. The non-trivial dimension is distinguishing genuine redundancy (truly independent alternative paths) from pseudo-redundancy (apparent alternatives that secretly depend on the same premises or that differ only superficially). It requires tracking whether redundant chains have independent evidential bases, whether they appeal to different warrants, and whether they could survive independent challenges.",
+      "indicators": [
+        "Multiple conceptual chains that appear in similar argumentative contexts, doing similar work",
+        "Different terminology or frameworks used to reach identical or near-identical conclusions",
+        "Passages where the author seems to restart an argument rather than building linearly on previous work",
+        "Explicitly acknowledged alternative paths ('another way to see this...', 'independently, we can argue...')",
+        "Critical argumentative moves that have only a single supporting chain with no alternative routes"
+      ],
+      "intellectual_grounding": {
+        "concept": "argumentation schemes",
+        "method": "Perelman's new rhetoric emphasizes that arguments gain strength through multiple independent lines of reasoning\u2014redundancy of argumentation schemes provides resilience. This capability applies that insight: it identifies where authors deploy multiple argumentative strategies for the same claim and assesses whether the redundancy genuinely diversifies the argument's support (strategic) or merely repeats the same move (wasteful).",
+        "thinker": "perelman"
+      },
+      "key": "map_redundancy",
+      "produces_dimensions": [
+        "redundancy_map"
+      ],
+      "requires_dimensions": [
+        "functional_classification"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Comprehensive adversarial analysis including full vulnerability catalogue with severity and exploitability ratings, simulated attacks by sophisticated critics, specific structural reinforcement recommendations, diachronic comparison of vulnerability patterns across career, and distinction between dangerous vulnerabilities (threatening collapse) and productive vulnerabilities (enabling flexibility)",
+        "standard": "Complete vulnerability mapping with severity ratings, attack vectors, exploitation assessment, and recommendations for how the author could strengthen weak points",
+        "surface": "Identification of 2-3 most significant vulnerabilities with brief severity assessment"
+      },
+      "description": "Synthesize load and redundancy analyses to identify points of maximum argumentative vulnerability",
+      "extended_description": "This capability synthesizes load_bearing_analysis and redundancy_map to diagnose the argument's structural weaknesses\u2014points where it is most susceptible to collapse under critical pressure. An argument is vulnerable where: essential load-bearing chains lack adequate support (high load, low backing), critical functions depend on single chains with no redundancy (single points of failure), defensive chains are weak or absent where objections are strongest, and bridge concepts do unacknowledged heavy lifting (connections that seem obvious but rest on contested premises). This is not hostile critique but structural diagnosis: making vulnerabilities visible is the first step toward understanding and potentially strengthening them.\n\nThe assessment goes beyond identifying weak points to evaluating their severity and exploitability. A vulnerability is severe if its failure cascades\u2014weakening one chain undermines many others. It is exploitable if a sophisticated interlocutor could readily identify and attack it. The capability simulates adversarial engagement: how would a knowledgeable critic approach this argument? Where would they apply pressure? What would break first? This requires understanding not just the argument's internal structure but also the broader dialectical context\u2014what objections exist in the literature, what premises are contested, what moves are controversial. The non-trivial dimension is distinguishing dangerous vulnerabilities (points where the argument genuinely risks collapse) from productive vulnerabilities (points of flexibility where the argument can accommodate revision without losing its core).",
+      "indicators": [
+        "Load-bearing chains with minimal textual support or defense, treated as obvious when they are actually controversial",
+        "Single chains connecting entire domains with no alternative bridges, where the connection rests on contested premises",
+        "Defensive chains that respond to objections but remain weak relative to the strength of those objections",
+        "Cascading dependencies where weakening one chain would undermine multiple downstream arguments",
+        "Gaps in argumentation where expected defensive moves are absent or where known objections go unaddressed"
+      ],
+      "intellectual_grounding": {
+        "concept": "critical questions",
+        "method": "Walton's approach to argumentation schemes includes 'critical questions'\u2014standard challenges that test each scheme's application. This capability extends that dialectical method to entire argumentative architectures: it identifies where critical questions would be most damaging, where the argument lacks resources to answer them, and where structural weaknesses make the argument exploitable by sophisticated critics.",
+        "thinker": "walton"
+      },
+      "key": "assess_vulnerabilities",
+      "produces_dimensions": [
+        "vulnerability_assessment"
+      ],
+      "requires_dimensions": [
+        "load_bearing_analysis",
+        "redundancy_map"
+      ]
+    }
+  ],
+  "category": "concepts",
+  "composability": {
+    "consumes_from": {
+      "concept_synthesis": "Evolution timelines, semantic cores, convergence/divergence maps, and aggregated traces from the synthesis engine",
+      "conceptual_framework_extraction": "From Pass 1 -- vocabulary and methodology profile providing the raw conceptual material",
+      "inferential_commitment_mapper": "From Pass 1 -- explicit and implicit commitments forming the logical skeleton"
+    },
+    "shares_with": {
+      "argumentative_architecture": "Macroscopic argument structure showing how chains compose",
+      "functional_classifications": "Per-chain argumentative function labels with evidence, available for downstream engines",
+      "load_bearing_chains": "Structurally essential chains ranked by importance",
+      "vulnerability_map": "Points of structural weakness with severity and exploitability ratings"
+    },
+    "synergy_engines": [
+      "concept_synthesis",
+      "evolution_tactics_detector",
+      "conditions_of_possibility_analyzer",
+      "inferential_commitment_mapper"
+    ]
+  },
+  "depth_levels": [
+    {
+      "description": "Classify the most significant chains and sketch the main architectural connections",
+      "key": "surface",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "A single pass to classify the 5-7 most significant conceptual\nchains by their argumentative function (foundational, elaborative,\ndefensive, bridge, culminative) and sketch the main architectural\nconnections between them. Note the most obvious load-bearing\nchains, any visible redundancies, and the most apparent\nvulnerabilities. The goal is a structural sketch sufficient\nfor preliminary assessment, not a complete engineering analysis.\n",
+          "focus_capabilities": [
+            "classify_argumentative_functions",
+            "map_argumentative_architecture",
+            "analyze_load_bearing",
+            "map_redundancy",
+            "assess_vulnerabilities"
+          ],
+          "focus_dimensions": [
+            "functional_classification",
+            "argumentative_architecture",
+            "load_bearing_analysis",
+            "redundancy_map",
+            "vulnerability_assessment"
+          ],
+          "label": "Functional Classification Scan",
+          "pass_number": 1,
+          "stance": "discovery"
+        }
+      ],
+      "suitable_for": "Quick structural overview, policy documents, preliminary assessment of argument structure",
+      "typical_passes": 1
+    },
+    {
+      "description": "Full functional classification of all significant chains, complete architectural mapping, load-bearing analysis, redundancy mapping, and vulnerability assessment",
+      "key": "standard",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Systematic classification of all significant conceptual chains\nby their argumentative function. For each chain, assign primary\nand secondary functions with textual evidence. Track whether\nthe chain's function shifts across different works or contexts.\nNote chains whose function is ambiguous or contested. Assess\nconfidence in each classification. This pass produces the\nfunctional inventory that architectural analysis requires --\nyou cannot map the architecture until you know what each\ncomponent does.\n",
+          "focus_capabilities": [
+            "classify_argumentative_functions"
+          ],
+          "focus_dimensions": [
+            "functional_classification"
+          ],
+          "label": "Complete Functional Classification",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "With functional classifications in hand, build the complete\nargumentative architecture. Map how chains compose: which\nfoundational chains support which elaborative chains, which\ndefensive chains protect which claims, which bridges enable\nwhich connections. Identify load-bearing chains and assess\nwhether their structural importance is proportional to their\nevidential support. Map redundancies and single-thread\ndependencies. Synthesize load and redundancy analyses into a\nvulnerability assessment: where is the argument weakest, and\nwhat are the most likely points of failure under critical\nexamination?\n",
+          "focus_capabilities": [
+            "map_argumentative_architecture",
+            "analyze_load_bearing",
+            "map_redundancy",
+            "assess_vulnerabilities"
+          ],
+          "focus_dimensions": [
+            "argumentative_architecture",
+            "load_bearing_analysis",
+            "redundancy_map",
+            "vulnerability_assessment"
+          ],
+          "label": "Architectural and Structural Analysis",
+          "pass_number": 2,
+          "stance": "architecture"
+        }
+      ],
+      "suitable_for": "Most academic texts, standard genealogy analysis, peer review preparation, structural critique",
+      "typical_passes": 2
+    },
+    {
+      "description": "Comprehensive structural engineering analysis: diachronic function tracking, complete dependency graph, stress testing, adversarial attack simulation, full redundancy audit, and comparison of the author's perceived vs actual argumentative architecture",
+      "key": "deep",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Exhaustive classification of every significant conceptual chain\nwith multi-layered function assessment. For each chain, determine\nprimary, secondary, and tertiary functions with detailed textual\nevidence. Track diachronic function shifts: how has the chain's\nargumentative role changed over the author's career? Assess\nwhether the author is aware of each chain's actual function.\nCompare stated vs. actual argumentative roles. No chain is too\nminor to classify -- peripheral chains often do unrecognized\nstructural work.\n",
+          "focus_capabilities": [
+            "classify_argumentative_functions"
+          ],
+          "focus_dimensions": [
+            "functional_classification"
+          ],
+          "label": "Exhaustive Functional Classification",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "Build the complete dependency graph of the argumentative\narchitecture. Map every hierarchical relationship, bottleneck,\nand structural logic pattern (linear, branching, converging,\ncyclic). Perform comprehensive load-bearing analysis: rank all\nload-bearing chains by structural importance, assess support\nproportionality, identify single points of failure, compare\nprominence with importance. Execute full redundancy audit:\ncomplete overlap map with intentionality assessment for each\nredundancy, resilience analysis, and historical redundancy\ntrajectory. Compare the author's explicit argument structure\nwith the implicit architecture revealed by functional analysis.\n",
+          "focus_capabilities": [
+            "map_argumentative_architecture",
+            "analyze_load_bearing",
+            "map_redundancy"
+          ],
+          "focus_dimensions": [
+            "argumentative_architecture",
+            "load_bearing_analysis",
+            "redundancy_map"
+          ],
+          "label": "Complete Architectural Engineering",
+          "pass_number": 2,
+          "stance": "architecture"
+        },
+        {
+          "consumes_from": [
+            1,
+            2
+          ],
+          "description": "Subject the entire argumentative architecture to adversarial\nstress-testing. Simulate how a sophisticated interlocutor would\nattack: which chains would they target, what objections would\nthey raise, where would the argument break? Map all weak points\nwith severity and exploitability ratings. Assess which defensive\nchains are weakest relative to the objections they face. Identify\nbridge concepts doing unacknowledged heavy lifting. Reflect on\nwhether some vulnerabilities are productive (enabling flexibility\nand future development) vs. dangerous (threatening collapse under\nscrutiny). Compare vulnerability patterns across the author's\ncareer: are they getting better or worse at structural defense?\nProduce recommendations for structural reinforcement.\n",
+          "focus_capabilities": [
+            "assess_vulnerabilities"
+          ],
+          "focus_dimensions": [
+            "vulnerability_assessment"
+          ],
+          "label": "Adversarial Vulnerability Assessment",
+          "pass_number": 3,
+          "stance": "confrontation"
+        },
+        {
+          "consumes_from": [
+            1,
+            2,
+            3
+          ],
+          "description": "The confrontation pass identified vulnerabilities; now inhabit\nthem dialectically. The key question is not \"how can these\nweaknesses be fixed?\" but \"what do these structural tensions\nPRODUCE?\" An argument's vulnerabilities are not merely flaws\nto be patched \u2014 they are often the sites of the argument's\ngreatest generative power.\n\nFor each significant structural tension, perform Aufhebung.\nA load-bearing chain that lacks adequate support is vulnerable,\nyes \u2014 but it may be load-bearing BECAUSE it is doing genuinely\nnovel work that existing argumentative resources cannot yet\nsupport. The vulnerability is a symptom of intellectual\nambition outrunning available justification. Articulate what\neach vulnerable chain is reaching for that the current\nargumentative architecture cannot yet deliver.\n\nWhere redundancy exists, ask whether the multiplied chains\nare genuinely saying the same thing or whether the apparent\nredundancy conceals a dialectical development \u2014 each\n\"redundant\" chain actually advancing the argument by\napproaching the same conclusion from a different angle,\nand the convergence of these different angles constituting\na stronger form of justification than any single chain could\nprovide. What looks like waste may be dialectical triangulation.\n\nWhere single-thread dependencies create fragility, do not\nsimply flag the risk. Trace WHY the author could not build\nredundancy at that point. Often, single-thread dependencies\nmark the places where the argument is most original \u2014 where\nthe author had to forge a new path with no existing support\nstructures to draw on. The fragility and the originality\nare two faces of the same intellectual situation. Articulate\nthis relationship: where is fragility the price of ambition,\nand where is it simply carelessness?\n\nThe overall question: does the argument's structural tension\ncreate a productive instability that drives intellectual\ndevelopment, or a destructive instability that threatens\ncollapse? Most arguments contain both kinds. Distinguish them.\n",
+          "focus_capabilities": [
+            "assess_vulnerabilities",
+            "analyze_load_bearing",
+            "map_redundancy"
+          ],
+          "focus_dimensions": [
+            "vulnerability_assessment",
+            "load_bearing_analysis",
+            "redundancy_map"
+          ],
+          "label": "Dialectical Working-Through of Structural Tensions",
+          "pass_number": 4,
+          "stance": "dialectical"
+        }
+      ],
+      "suitable_for": "Dense philosophical works, prolific authors, publication-grade structural analysis, comprehensive genealogy studies",
+      "typical_passes": 4
+    }
+  ],
+  "engine_key": "concept_taxonomy_argumentative_function",
+  "engine_name": "Concept Taxonomy: Argumentative Function",
+  "intellectual_lineage": {
+    "key_concepts": [
+      "warrant",
+      "backing",
+      "qualifier",
+      "rebuttal",
+      "argumentation_scheme",
+      "load_bearing_structure",
+      "argumentative_function"
+    ],
+    "primary": "toulmin",
+    "secondary": [
+      "perelman",
+      "walton",
+      "brandom"
+    ],
+    "traditions": [
+      "argumentation_theory",
+      "new_rhetoric",
+      "informal_logic",
+      "inferentialism",
+      "structural_analysis"
+    ]
+  },
+  "kind": "primitive",
+  "legacy_engine_key": "concept_taxonomy_argumentative_function",
+  "paradigm_keys": [
+    "genealogical"
+  ],
+  "problematique": "Not all concepts in a body of work do the same job. Some serve as\nfoundations -- they establish the premises on which everything else\nrests. Others elaborate -- they develop implications, extend scope,\nor fill in detail. Still others are defensive -- they anticipate\nand respond to objections, shoring up vulnerabilities. Bridge\nconcepts connect domains that would otherwise remain separate,\nenabling cross-pollination. And culminative concepts bring threads\ntogether into conclusions, the endpoints of argumentative arcs.\n\nThis engine takes the evolution timelines and synthesis output from\nconcept_synthesis and asks: what ARGUMENTATIVE WORK does each\nconceptual chain do? It classifies every significant chain into\none or more functional categories: foundational, elaborative,\ndefensive, bridge, or culminative. But it goes beyond mere\nclassification. It maps the ARGUMENTATIVE ARCHITECTURE -- how\nchains compose into larger argumentative structures, which chains\nbear the most structural load, where redundancy exists (multiple\nchains doing the same argumentative work), and where the argument\nis most vulnerable (chains doing critical work with weak support).\n\nThe key insight is Toulmin's: arguments are not just claims and\nevidence but complex structures with warrants, backing, qualifiers,\nand rebuttals. Each conceptual chain plays a specific role in this\nstructure. Understanding WHICH role reveals the argument's\nengineering -- its load-bearing members, its redundancies, its\npoints of failure. An author may not consciously design this\narchitecture, but it is there, and making it visible exposes both\nthe argument's strengths and its structural weaknesses.\n",
+  "researcher_question": "What argumentative work does each conceptual chain do?",
+  "version": 1
+}

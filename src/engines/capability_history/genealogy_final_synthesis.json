@@ -1,0 +1,13 @@
+{
+  "engine_key": "genealogy_final_synthesis",
+  "entries": [
+    {
+      "timestamp": "2026-02-17T14:22:45.305148+00:00",
+      "version": 1,
+      "definition_hash": "0caee0106987e26f79a369646d5806680746480e823b76cfbaedb96804b57757",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

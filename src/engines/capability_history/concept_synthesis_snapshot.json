@@ -1,0 +1,491 @@
+{
+  "analytical_dimensions": [
+    {
+      "depth_guidance": {
+        "deep": "Comprehensive timeline reconstruction for every traceable concept, including proto-forms and abandoned variants, with detailed transition drivers, mutual timeline interactions (how one concept's evolution influenced another's), and rich narratives situating each evolution in intellectual-historical context",
+        "standard": "Full timelines for all concepts appearing in 2+ works, with framing tracking, transition analysis, evolution pattern classification, and narrative summaries",
+        "surface": "Construct timelines for the 3-5 most significant concepts with key stage descriptions"
+      },
+      "description": "Chronological reconstruction of how each significant concept changes form across the author's body of work. Each timeline tracks a single concept through every work where it appears, noting its form (proto-form, full articulation, modified, abandoned), its framing (tentative, qualified, definitive, axiomatic, exploratory), and what drove the transition between each stage. The evolution pattern is classified: gradual refinement, sharp reversal, silent drift, strategic reframe, or consistent deepening.\n",
+      "key": "evolution_timelines",
+      "probing_questions": [
+        "For each concept appearing in 2+ works, what is the chronological sequence of its forms?",
+        "At each stage, how is the concept framed -- tentatively, definitively, axiomatically?",
+        "What drove the transition between stages -- new evidence, new context, new influences, or strategic repositioning?",
+        "Is the overall evolution pattern refinement, reversal, drift, reframe, or deepening?",
+        "How long does the concept's evolution span, and how many works does it traverse?",
+        "What is the 2-3 paragraph narrative of this concept's intellectual journey?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Full aggregation with cross-concept interaction analysis (how the evolution of concept A drove changes in concept B), deep orphan investigation (tracing possible external sources), and assessment of the corpus's conceptual metabolism -- how quickly and thoroughly the author processes and transforms ideas",
+        "standard": "Per-concept aggregation summaries, consistency assessments, ranked evolution rankings, and orphan concept analysis with hypotheses about their origins",
+        "surface": "List most-evolved, most-stable, and orphan concepts with brief notes"
+      },
+      "description": "Merging per-work scan results into unified per-concept summaries. Pass 2 produces traces for each prior work separately; this dimension aggregates them. Which concepts changed most across the corpus? Which remained remarkably stable? Which concepts in the current (target) work have no detectable ancestry in prior works -- the orphan concepts that appear to be genuine innovations or unacknowledged borrowings from outside the author's own corpus?\n",
+      "key": "multi_work_trace_aggregation",
+      "probing_questions": [
+        "Which concepts show the most dramatic change across the full corpus?",
+        "Which concepts have remained stable -- and is that stability genuine or illusory?",
+        "Which concepts in the target work have no ancestry in any scanned prior work?",
+        "Do orphan concepts suggest genuine innovation, or untraced external influence?",
+        "How consistent is each concept across all the works where it appears?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Full convergence/divergence cartography: all points mapped with mutual interactions, assessment of the author's synthesis craft, detailed hidden dependency chains, and counterfactual analysis of what the argument would look like if key convergences had not occurred",
+        "standard": "Map all significant convergence/divergence points with contributing works, what converges/conflicts, synthesis quality assessment, and hidden dependency analysis",
+        "surface": "Identify the 2-3 most significant convergence and divergence points"
+      },
+      "description": "Mapping where ideas from different prior works come together in the target work (convergence) and where they conflict or pull in different directions (divergence). Convergence points reveal synthesis -- the author bringing together threads from different periods or different intellectual concerns. Divergence points reveal unresolved tensions the author either manages, suppresses, or fails to notice. Hidden dependencies -- where the target work's argument depends on specific prior evolution paths without acknowledgment -- are especially revealing.\n",
+      "key": "convergence_divergence",
+      "probing_questions": [
+        "Where do ideas from separate prior works converge in the target work?",
+        "How well does the author integrate these converging influences?",
+        "Where do ideas from different prior works create tensions in the target work?",
+        "Does the author acknowledge, resolve, suppress, or ignore these tensions?",
+        "What hidden dependencies exist -- arguments that only work because of specific, unacknowledged evolution paths?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Full toolkit archaeology: all indirect enablers mapped with interaction effects, visibility assessment, comparison of acknowledged vs actual influences, and analysis of how the indirect toolkit both enabled and constrained the conceptual evolution in ways the direct lineage alone cannot explain",
+        "standard": "Map indirect enablers by source, what was transferred, how it shaped development, and whether the author is aware of the influence",
+        "surface": "Note the most obvious cross-domain influences and their effects"
+      },
+      "description": "Non-obvious influences that shaped concept development from outside the direct lineage. These come from works classified as 'indirect contextualizers' or 'different field relevant' in the relationship classification pass. An author trained in game theory doesn't just borrow specific game-theoretic ideas -- they import a WAY OF THINKING that shapes how all their concepts develop. These transferred frameworks, foundational patterns, and cross-domain cognitive habits are often invisible to the author themselves but powerfully shape the trajectory of concept evolution.\n",
+      "key": "indirect_enablers",
+      "probing_questions": [
+        "What foundational patterns from indirect contextualizer works shaped concept development?",
+        "What cognitive frameworks were imported from different-field works?",
+        "Are these indirect influences acknowledged or invisible to the author?",
+        "How did the author's broader intellectual toolkit -- from non-direct-precursor works -- influence trajectories?",
+        "Which evolution transitions that seem internally motivated were actually driven by external toolkit imports?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Deep semantic archaeology: layered definitions showing how meaning accreted over time, full tension analysis with assessment of productive vs destructive tensions, complete argumentative architecture with vulnerability analysis, and comparison of the concept's actual semantic core with the author's stated understanding of it",
+        "standard": "Full semantic core analysis with synthesized definitions, tension mapping, argumentative architecture (supporting claims, dependencies, enabling assumptions, logical vulnerabilities), and cross-work role assessment",
+        "surface": "For each major concept, provide a unified definition and note key tensions"
+      },
+      "description": "The stable conceptual nucleus that persists across the author's body of work beneath surface-level changes. What definition of each major concept integrates all its manifestations? What productive tensions remain unresolved? What argumentative role does the concept play across texts -- not just within any single work? The semantic core is not a lowest-common-denominator definition but a rich synthesis that preserves the tensions and evolution while identifying what is genuinely stable.\n",
+      "key": "semantic_core",
+      "probing_questions": [
+        "What synthesized definition integrates all perspectives on this concept across texts?",
+        "What key tensions remain productively unresolved within this concept?",
+        "What argumentative role does this concept consistently play across the corpus?",
+        "Is the semantic core genuinely stable, or does surface stability mask deep drift?",
+        "What supporting claims, dependent concepts, and enabling assumptions constitute the argumentative architecture?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Full critical assessment with detailed evidence chains, field-level implications of the conceptual trajectory, recommendations for the author and for other scholars working with these concepts, and assessment of whether the evolution represents genuine development or intellectual path-dependence",
+        "standard": "Multi-paragraph assessment with specific evidence, strengths/weaknesses analysis, unacknowledged debts, and alternative paths",
+        "surface": "One-paragraph overall assessment per major concept"
+      },
+      "description": "The integrative assessment that pulls together all synthesis dimensions into a judgment about the author's conceptual project. What works well? What doesn't? What intellectual debts remain unacknowledged? What alternative paths were available but not taken? The critical verdict must be grounded in specific evidence from the synthesis, not impressionistic. It separates what was gained from what was lost in the evolution, and assesses whether the overall trajectory represents genuine intellectual development or accumulation of path-dependent commitments.\n",
+      "key": "critical_verdict",
+      "probing_questions": [
+        "What is the integrated critical assessment of this concept across the body of work?",
+        "What strengths does the conceptual evolution demonstrate?",
+        "What weaknesses or problems does it reveal?",
+        "What intellectual debts does the author not acknowledge?",
+        "What alternative paths were available but not taken, and what would they have yielded?",
+        "What was gained and what was lost in the evolution?"
+      ]
+    }
+  ],
+  "apps": [
+    "critic",
+    "visualizer"
+  ],
+  "capabilities": [
+    {
+      "depth_scaling": {
+        "deep": "Exhaustive timeline reconstruction including proto-forms and abandoned variants, with mutual timeline interactions, detailed transition drivers, rich intellectual-historical situating, and counterfactual analysis of alternative evolution paths",
+        "standard": "Complete timelines for all multi-work concepts with framing analysis, transition drivers, evolution pattern classification, and narrative summaries",
+        "surface": "Timelines for 3-5 major concepts with stage labels and brief transition notes"
+      },
+      "description": "Build chronological timelines of concept evolution across the author's corpus, classifying evolution patterns and composing narrative accounts",
+      "extended_description": "This capability reconstructs the chronological trajectory of each significant concept as it migrates across the author's body of work, tracking not merely its appearances but its substantive transformations. Drawing on Koselleck's method of conceptual history (Begriffsgeschichte), it treats each concept as bearing sedimented layers of meaning that accumulate, shift, and sometimes contradict across time. The timeline is not a neutral chronicle but an interpretive reconstruction that asks: what drove each transition? Was the evolution responsive to new evidence, shaped by changing intellectual contexts, or driven by strategic rhetorical repositioning? The capability classifies evolution patterns\u2014gradual refinement, sharp reversal, silent drift, strategic reframe, consistent deepening\u2014and composes a narrative that situates the concept's journey within the author's broader intellectual project.\n\nThis capability is foundational to the entire synthesis engine, providing the temporal architecture upon which all other analyses depend. Without evolution timelines, convergence-divergence mapping cannot identify which version of a concept is meeting which other version; semantic core establishment lacks the diachronic depth to distinguish genuine stability from surface continuity masking deep drift. The timelines enable multi-work trace aggregation by providing the chronological scaffolding for comparison, and they supply indirect enabler analysis with the detailed transitions that reveal when external cognitive frameworks were imported.\n\nThe non-trivial challenge is distinguishing meaningful evolution from mere terminological variation. A naive version tracks lexical continuity; a sophisticated version recognizes that the same term can house fundamentally different commitments, and that conceptual continuity can persist across terminological shifts. It must detect proto-forms\u2014where a concept exists in embryonic form before being named\u2014and abandoned variants that represent roads not taken. The capability must also assess whether the author is aware of their own concept's evolution or is engaged in what Brandom would call 'implicit' semantic drift, where inferential roles change without explicit acknowledgment.",
+      "indicators": [
+        "The same term appears in multiple works but with notably different surrounding vocabulary, suggesting the concept's inferential neighborhood has shifted",
+        "The author explicitly marks a concept as revised, refined, or corrected from earlier work",
+        "A concept's definitional framing changes from tentative/exploratory to axiomatic/definitive (or vice versa) across works",
+        "Key supporting claims for a concept in later works contradict or bypass claims made in earlier works",
+        "A concept disappears from the corpus after sustained use, suggesting abandonment or silent absorption into other concepts"
+      ],
+      "intellectual_grounding": {
+        "concept": "temporal_layers_of_meaning",
+        "method": "Koselleck's Begriffsgeschichte treats concepts as historically sedimented, bearing multiple temporal layers that must be excavated. This capability applies that method to individual authorial corpora, treating each work as a stratum and reconstructing how concepts accrete, shed, and transform meaning across the author's intellectual time.",
+        "thinker": "koselleck"
+      },
+      "key": "construct_evolution_timelines",
+      "produces_dimensions": [
+        "evolution_timelines"
+      ],
+      "requires_dimensions": []
+    },
+    {
+      "depth_scaling": {
+        "deep": "Full aggregation with cross-concept interaction analysis showing how one concept's evolution drove another's changes, deep orphan investigation tracing possible external sources, and assessment of the corpus's conceptual metabolism with evidence-based claims about the author's revision patterns",
+        "standard": "Per-concept aggregation summaries with consistency assessments across dimensions, ranked evolution measures, and orphan concept analysis with source hypotheses",
+        "surface": "Lists of most-evolved, most-stable, and orphan concepts with brief notes on their aggregate characteristics"
+      },
+      "description": "Merge per-work scan outputs into unified per-concept summaries, identifying most-evolved, most-stable, and orphan concepts",
+      "extended_description": "This capability synthesizes the distributed evidence from per-work scans into unified per-concept portraits, transforming a collection of local observations into a coherent picture of each concept's career across the corpus. It performs what Gadamer calls a 'fusion of horizons'\u2014bringing the multiple perspectives on each concept from different works into productive dialogue. The aggregation is not mechanical summation but interpretive synthesis: it must assess whether apparent stability is genuine continuity or merely terminological persistence masking semantic drift. It identifies the concepts that evolved most dramatically, those that remained remarkably stable, and\u2014crucially\u2014the orphan concepts that appear in the target work with no detectable ancestry in the author's prior corpus.\n\nThis capability serves as the empirical foundation for semantic core establishment, providing the raw material of all textual manifestations that must be integrated. It enables convergence-divergence mapping by clarifying which concepts from which works are actually in play. The aggregated traces answer the metabolic question: how quickly and thoroughly does this author process and transform ideas? An author who radically reconceives concepts every few years operates very differently from one who maintains stable frameworks while adding incremental refinements. The orphan concept analysis is particularly revealing\u2014these apparent innovations may represent genuine breakthroughs, unacknowledged borrowings from sources outside the analyzed corpus, or concepts so thoroughly transformed that their ancestry became invisible.\n\nThe sophisticated version of this capability recognizes that concepts can be 'the same' at multiple levels simultaneously. A concept might be terminologically identical, semantically drifting, but inferentially stable\u2014or vice versa. It must track consistency separately across vocabulary, methodology, metaphorical framing, and inferential role, recognizing that these can vary independently. The naive version produces flat summaries; the sophisticated version produces layered portraits that preserve the texture of variation while identifying genuine patterns.",
+      "indicators": [
+        "A concept appears in 3+ works with variations that seem significant but whose overall pattern is unclear without synthesis",
+        "Per-work scans identify overlapping but non-identical concept uses that require integration to assess overall trajectory",
+        "A concept central to the target work appears to lack direct precursors in prior works, demanding orphan analysis",
+        "The author makes cross-referential claims about a concept's stability or change that require empirical verification across the corpus",
+        "Different works use the concept with different methodological commitments, requiring assessment of whether the concept itself or its application context changed"
+      ],
+      "intellectual_grounding": {
+        "concept": "fusion_of_horizons",
+        "method": "Gadamer's fusion of horizons describes how understanding emerges from bringing different historical perspectives into productive dialogue rather than flattening them into uniformity. This capability applies that hermeneutic principle to synthesize multiple textual manifestations of concepts across works, preserving their differences while identifying genuine continuities.",
+        "thinker": "gadamer"
+      },
+      "key": "aggregate_multi_work_traces",
+      "produces_dimensions": [
+        "multi_work_trace_aggregation"
+      ],
+      "requires_dimensions": []
+    },
+    {
+      "depth_scaling": {
+        "deep": "Full cartography with mutual interactions between convergence/divergence points, detailed assessment of the author's synthetic craft, complete hidden dependency chains, and counterfactual analysis showing what the argument would look like under alternative evolution paths",
+        "standard": "Comprehensive mapping of all significant convergence/divergence points with contributing works identified, synthesis quality assessment, and hidden dependency analysis",
+        "surface": "Identification of 2-3 major convergence points and 2-3 major divergence points with brief characterization"
+      },
+      "description": "Detect where ideas from different prior works come together or conflict in the target work, including hidden dependencies",
+      "extended_description": "This capability cartographs the intellectual topology of the target work by identifying where conceptual threads from different prior works come together (convergence) and where they generate tension or contradiction (divergence). Drawing on Ricoeur's notion of narrative emplotment, it treats the target work as attempting to configure disparate conceptual materials into a coherent whole\u2014a synthesis that may succeed, partially succeed, or fail in illuminating ways. Convergence points reveal the author's synthetic achievements: where ideas developed separately are brought into productive relationship. Divergence points reveal unresolved tensions that the author may acknowledge and manage, suppress through strategic silence, or fail to notice entirely. The capability performs what could be called 'inferential stress-testing'\u2014examining whether concepts imported from different prior works with different inferential commitments can actually coexist without contradiction.\n\nThis capability depends on evolution timelines and trace aggregation to know which version of which concepts are entering the convergence space. It enables semantic core establishment by revealing which tensions are productive (generating conceptual richness) versus destructive (undermining coherence). The critical verdict draws heavily on convergence-divergence findings to assess the author's synthetic craft. A particularly powerful feature is hidden dependency analysis: identifying where the target work's arguments depend on specific, unacknowledged evolution paths. An argument may seem internally coherent but only work because concept X underwent transformation Y in prior work Z\u2014a dependency the author has rendered invisible.\n\nThe sophisticated version recognizes that not all convergence is synthesis and not all divergence is failure. Forced convergence\u2014where the author papers over real tensions\u2014may be less intellectually honest than acknowledged divergence. Some productive tensions should remain unresolved. The capability must distinguish between contradictions the author has dialectically worked through versus those they have simply suppressed. It performs counterfactual analysis: what would the argument look like if key convergences had not occurred? This reveals how contingent the target work's synthesis is on the specific path the prior evolution took.",
+      "indicators": [
+        "The target work explicitly brings together concepts or frameworks that were developed separately in different prior works",
+        "Close reading reveals that two concepts imported from different prior works have incompatible inferential commitments",
+        "The author makes a claim that depends on a concept having a specific form it only achieved in a particular prior work, without acknowledging that dependency",
+        "Key terms or frameworks appear to carry different meanings depending on which conceptual context from prior works is being activated",
+        "The author's argument requires reconciling positions that were in tension across different prior works, but the reconciliation work is either absent or unconvincing"
+      ],
+      "intellectual_grounding": {
+        "concept": "emplotment",
+        "method": "Ricoeur's theory of emplotment describes how narrative configures disparate events into meaningful wholes through selective synthesis. This capability applies that configurational logic to conceptual synthesis, examining how the author attempts to emplot concepts from different works into a coherent intellectual narrative and where that emplotment succeeds or fractures under internal tensions.",
+        "thinker": "ricoeur"
+      },
+      "key": "map_convergence_divergence",
+      "produces_dimensions": [
+        "convergence_divergence"
+      ],
+      "requires_dimensions": [
+        "evolution_timelines",
+        "multi_work_trace_aggregation"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Complete toolkit archaeology with all indirect enablers mapped, interaction effects analyzed, visibility assessment (acknowledged versus invisible influences), and detailed analysis of how the toolkit both enabled specific conceptual moves and foreclosed alternative evolution paths that the direct lineage alone cannot explain",
+        "standard": "Mapping of indirect enablers by source work, specification of what was transferred (framework, method, cognitive habit), analysis of how it shaped development, and assessment of author awareness",
+        "surface": "Identification of the most obvious cross-domain influences with brief notes on their effects"
+      },
+      "description": "Surface non-obvious influences from indirect contextualizer and different-field works that shaped concept trajectories",
+      "extended_description": "This capability performs what might be called 'toolkit archaeology'\u2014excavating the cognitive frameworks, methodological habits, and cross-domain patterns that shaped concept evolution from outside the direct conceptual lineage. Drawing on Foucault's genealogical method, it recognizes that an author's intellectual formation includes not just the explicit precursor works in the same domain but the entire apparatus of thinking habits imported from adjacent fields and earlier training. An author trained in economics doesn't just occasionally apply economic concepts; they import an entire way of framing problems, assessing evidence, and modeling relationships that shapes how all their concepts develop. These indirect enablers are often invisible to the author themselves, operating as what Brandom would call the 'implicit background commitments' that make certain conceptual moves feel natural while rendering others unthinkable.\n\nThis capability depends on evolution timelines to identify transition points where concepts change in ways that seem internally unmotivated\u2014these are often sites where external frameworks were imported. It feeds into semantic core establishment by revealing how the core was enabled and constrained by the broader cognitive toolkit. The indirect enablers often explain why concepts evolved in the specific directions they did rather than equally plausible alternatives. A concept might evolve toward mathematical formalization not because the subject matter demands it but because the author's training in formal methods makes that direction of development feel like 'rigor' while alternative developments feel impressionistic.\n\nThe sophisticated version distinguishes between acknowledged and invisible influences. Some authors explicitly discuss their cross-domain borrowings; others import frameworks without awareness. The capability assesses whether the author is engaging in deliberate appropriation or unconscious transposition. It also evaluates enabling versus constraining effects: the imported toolkit makes certain conceptual moves possible but forecloses others. The most revealing analysis examines cases where the direct lineage alone cannot explain evolution patterns\u2014why a concept evolved in direction X rather than Y becomes clear only when the indirect toolkit is excavated.",
+      "indicators": [
+        "Works classified as 'indirect contextualizers' or 'different field relevant' show methodological or framing patterns that reappear in how the author develops concepts in the target work",
+        "The author's treatment of concepts shows structural patterns characteristic of a different discipline (e.g., economic modeling applied to social theory)",
+        "Concept evolution transitions show formal or methodological commitments that are not justified by the subject matter but align with the author's training or adjacent work",
+        "The author's conceptual vocabulary includes terms or distinctions imported from frameworks not explicitly discussed in the conceptual lineage",
+        "Metaphors or analogies from the author's work in different domains structure how concepts are articulated and developed"
+      ],
+      "intellectual_grounding": {
+        "concept": "genealogical_method",
+        "method": "Foucault's genealogy examines how practices, concepts, and ways of thinking emerge from contingent configurations of power, institutions, and adjacent discourses rather than internal logical development. This capability applies genealogical analysis to authorial concept evolution, revealing how concepts were shaped by the author's broader cognitive toolkit imported from outside the direct conceptual lineage.",
+        "thinker": "foucault"
+      },
+      "key": "analyze_indirect_enablers",
+      "produces_dimensions": [
+        "indirect_enablers"
+      ],
+      "requires_dimensions": [
+        "evolution_timelines"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Deep semantic archaeology with layered definitions showing meaning accretion over time, complete tension analysis, full argumentative architecture with logical vulnerability assessment, and comparison between the concept's actual operative semantic core and the author's explicit statements about its meaning",
+        "standard": "Full semantic core analysis with synthesized definitions integrating all manifestations, tension mapping (productive versus destructive), and argumentative architecture specification (supporting claims, dependencies, enabling assumptions)",
+        "surface": "Unified definition for each major concept with key tensions noted"
+      },
+      "description": "Synthesize stable conceptual nuclei integrating all manifestations, with argumentative architecture mapping",
+      "extended_description": "This capability constructs the stable conceptual nucleus that persists across the author's body of work beneath surface-level variation\u2014what Brandom would call the concept's essential 'inferential role' that remains invariant across different contexts of application. It synthesizes all textual manifestations identified through trace aggregation and chronological development tracked through timelines into a unified account that preserves rather than erases productive tensions. The semantic core is not a lowest-common-denominator definition but a rich integration that asks: what must be true about this concept to make sense of all its uses? What argumentative work does it consistently perform? What inferential commitments does it reliably carry? The capability maps the concept's full argumentative architecture: the supporting claims it rests on, the dependent concepts that presuppose it, the enabling assumptions that make it operative, and the logical vulnerabilities it creates.\n\nThis capability requires evolution timelines to distinguish genuine stability from surface continuity masking drift, and trace aggregation to access all manifestations requiring integration. It enables the critical verdict by clarifying what the author has actually achieved conceptually versus what they claim to have achieved. The semantic core analysis reveals whether concepts have the coherence and determinacy the author attributes to them or whether they function more as 'floating signifiers' whose meaning shifts opportunistically across contexts. It identifies productive tensions\u2014where a concept's internal complexity generates insights\u2014versus destructive tensions that undermine its utility.\n\nThe sophisticated version performs layered analysis, showing how meaning accreted over time rather than presenting a synchronic snapshot. It distinguishes the concept's actual semantic core from the author's explicit statements about what the concept means, often revealing a gap between intended and operative meaning. The argumentative architecture mapping is particularly crucial: it shows not just what the concept is but what it does\u2014what claims it supports, what it depends on, and where it is vulnerable to challenge. This enables assessment of whether surface-level conceptual stability masks underlying shifts in the supporting architecture.",
+      "indicators": [
+        "A concept appears with stable terminological form across works but with varying surrounding vocabulary and supporting arguments, requiring synthesis to determine what actually remains constant",
+        "The author makes claims about a concept's meaning or centrality that require verification against the concept's actual deployment across the corpus",
+        "A concept shows tension between different textual manifestations that must be either resolved or acknowledged as productive",
+        "The concept's argumentative role\u2014what it enables the author to claim\u2014shifts across works in ways that suggest the core may be less stable than it appears",
+        "Supporting claims, dependent concepts, or enabling assumptions for the concept vary significantly across works, suggesting the architecture may have shifted even if the concept's explicit definition has not"
+      ],
+      "intellectual_grounding": {
+        "concept": "inferential_role_semantics",
+        "method": "Brandom's inferential role semantics holds that a concept's meaning is constituted by its position in a network of inferential relations\u2014what it allows you to infer and what you must be committed to in order to deploy it. This capability applies that framework to establish what inferential role remains stable across the author's corpus, revealing the concept's genuine semantic core beneath terminological variation.",
+        "thinker": "brandom"
+      },
+      "key": "establish_semantic_core",
+      "produces_dimensions": [
+        "semantic_core"
+      ],
+      "requires_dimensions": [
+        "evolution_timelines",
+        "multi_work_trace_aggregation"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Comprehensive critical assessment with detailed evidence chains, assessment of gains versus losses in evolution, analysis of whether evolution represents genuine development or path-dependence, field-level implications of the conceptual trajectory, and recommendations for the author and for other scholars working with these concepts",
+        "standard": "Multi-paragraph assessment with specific evidence citations, strengths/weaknesses analysis, identification of unacknowledged debts, and discussion of alternative evolution paths",
+        "surface": "One-paragraph assessment per major concept noting key strengths and weaknesses"
+      },
+      "description": "Produce integrative assessment of the author's conceptual project with evidence-grounded strengths, weaknesses, debts, and alternative paths",
+      "extended_description": "This capability delivers the engine's culminating judgment: an integrative assessment of the author's conceptual project that synthesizes all prior analytical dimensions into evidence-grounded evaluation. Drawing on the hermeneutic tradition's emphasis on understanding as inseparable from critical assessment, it asks whether the conceptual evolution represents genuine intellectual development, accumulation of path-dependent commitments, strategic repositioning, or some combination. The verdict must specify what works\u2014where the author achieved genuine synthesis, conceptual innovation, or progressive refinement\u2014and what doesn't\u2014where concepts drifted unproductively, contradictions were suppressed rather than resolved, or intellectual debts remained unacknowledged. It performs what Ricoeur called 'the hermeneutics of suspicion,' examining not just what the author claims to have accomplished but what the evidence reveals they actually accomplished.\n\nThis capability requires input from all other synthesis dimensions: evolution timelines provide the trajectory evidence, trace aggregation supplies the empirical foundation, convergence-divergence mapping reveals synthetic successes and failures, indirect enablers show hidden influences, and semantic cores establish what was actually stable versus merely claimed as stable. The verdict must be specific rather than impressionistic, citing concrete evidence. It separates gains from losses: conceptual evolution often involves trade-offs where increased precision costs breadth, or formalization costs accessibility. The verdict assesses whether these trade-offs were worth it and whether the author was aware of making them.\n\nThe sophisticated version performs alternative path analysis: given the author's starting point and available intellectual resources, what other evolution paths were possible, and what would they have yielded? This counterfactual dimension reveals whether the actual path taken was intellectually optimal or merely contingent on factors like institutional positioning, audience demands, or path-dependent commitments. The deep version includes field-level implications\u2014how this author's conceptual trajectory affects debates beyond their immediate work\u2014and recommendations for both the author (in ongoing work) and other scholars engaging with these concepts.",
+      "indicators": [
+        "Synthesis reveals significant gaps between the author's explicit claims about conceptual stability or development and the actual evolution patterns",
+        "Convergence-divergence mapping shows unresolved tensions or hidden dependencies that affect the coherence of the overall project",
+        "Evolution timelines reveal conceptual drift in directions that seem more responsive to external pressures (institutional, audience, strategic) than internal intellectual development",
+        "Indirect enabler analysis shows major unacknowledged intellectual debts that shaped the conceptual trajectory",
+        "Semantic core establishment reveals that key concepts lack the determinacy or stability the author's arguments require"
+      ],
+      "intellectual_grounding": {
+        "concept": "hermeneutics_of_suspicion",
+        "method": "Ricoeur's hermeneutics of suspicion, drawing on Marx, Nietzsche, and Freud, insists that interpretation must go beyond taking texts at face value to examine what they reveal despite or against their explicit claims. This capability applies that critical hermeneutic to assess what the author's conceptual evolution actually accomplished versus what they claim to have accomplished, grounding judgment in textual evidence.",
+        "thinker": "ricoeur"
+      },
+      "key": "render_critical_verdict",
+      "produces_dimensions": [
+        "critical_verdict"
+      ],
+      "requires_dimensions": [
+        "evolution_timelines",
+        "multi_work_trace_aggregation",
+        "convergence_divergence",
+        "semantic_core"
+      ]
+    }
+  ],
+  "category": "concepts",
+  "composability": {
+    "consumes_from": {
+      "concept_appropriation_tracker": "From Pass 2 -- per-work traces of how ideas migrated between works",
+      "concept_evolution": "From Pass 2 -- per-work dimensional comparisons (vocabulary, methodology, metaphor, framing shifts)",
+      "concept_semantic_constellation": "From Pass 1 -- concept relationships and clusters in the target work",
+      "conceptual_framework_extraction": "From Pass 1 -- vocabulary, methodology, metaphors, and framing of the target work",
+      "inferential_commitment_mapper": "From Pass 1 -- argumentative structure and logical dependencies in the target work",
+      "relationship_classification": "From Pass 1.5 -- how each prior work relates to the target (direct_precursor, indirect_contextualizer, etc.)"
+    },
+    "shares_with": {
+      "aggregated_traces": "Per-concept unified summaries merging all per-work scan results",
+      "convergence_divergence_map": "Where ideas from different works interact -- convergence and divergence points with evidence",
+      "evolution_timelines": "Chronological concept trajectories with evolution patterns, available for downstream engines",
+      "orphan_concepts": "Concepts in the target work with no detectable ancestry in prior works",
+      "semantic_cores": "Synthesized per-concept definitions integrating all textual manifestations"
+    },
+    "synergy_engines": [
+      "concept_taxonomy_argumentative_function",
+      "evolution_tactics_detector",
+      "conditions_of_possibility_analyzer",
+      "concept_evolution"
+    ]
+  },
+  "depth_levels": [
+    {
+      "description": "Quick synthesis of the 3-5 most significant concepts with evolution timelines and basic convergence/divergence",
+      "key": "surface",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "A single integrative sweep across all available per-work scan data\nto produce the most important synthesis outputs. Construct evolution\ntimelines for the 3-5 most significant concepts, noting the major\ntransition points. Aggregate traces to identify the most-evolved\nand most-stable concepts. Note the most obvious convergence and\ndivergence points. Sketch semantic cores for the key concepts and\nprovide a brief critical assessment. Indirect enablers only where\nimmediately apparent. The goal is a usable synthesis, not a\ncomprehensive one.\n",
+          "focus_capabilities": [
+            "construct_evolution_timelines",
+            "aggregate_multi_work_traces",
+            "map_convergence_divergence",
+            "analyze_indirect_enablers",
+            "establish_semantic_core",
+            "render_critical_verdict"
+          ],
+          "focus_dimensions": [
+            "evolution_timelines",
+            "multi_work_trace_aggregation",
+            "convergence_divergence",
+            "indirect_enablers",
+            "semantic_core",
+            "critical_verdict"
+          ],
+          "label": "Rapid Synthesis",
+          "pass_number": 1,
+          "stance": "integration"
+        }
+      ],
+      "suitable_for": "Preliminary assessment, small corpora (2-3 works), non-academic texts, scoping analysis",
+      "typical_passes": 1
+    },
+    {
+      "description": "Full synthesis with evolution timelines for all multi-work concepts, trace aggregation, convergence/divergence mapping, indirect enabler analysis, semantic cores, and critical verdicts",
+      "key": "standard",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Build the raw material for synthesis. Construct full evolution\ntimelines for every concept appearing in 2+ works: chronological\nsequence of forms, framing at each stage, transition drivers,\nevolution pattern classification, and narrative summaries. Aggregate\nall per-work scan traces into unified per-concept summaries. Rank\nconcepts by evolution magnitude. Identify orphan concepts in the\ntarget work that have no ancestry in scanned prior works. This\npass produces the factual substrate -- what happened -- that the\nnext pass will interpret.\n",
+          "focus_capabilities": [
+            "construct_evolution_timelines",
+            "aggregate_multi_work_traces"
+          ],
+          "focus_dimensions": [
+            "evolution_timelines",
+            "multi_work_trace_aggregation"
+          ],
+          "label": "Timeline and Trace Assembly",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "With timelines and aggregated traces in hand, now produce the\ninterpretive synthesis. Map convergence and divergence points:\nwhere do ideas from separate works come together, where do they\nconflict, and what hidden dependencies exist? Analyze indirect\nenablers: cross-domain influences that shaped trajectories without\nbeing part of the direct lineage. Establish semantic cores that\nintegrate all manifestations while preserving productive tensions.\nRender critical verdicts grounded in specific evidence from the\ntimelines: strengths, weaknesses, unacknowledged debts, and\nalternative paths not taken.\n",
+          "focus_capabilities": [
+            "map_convergence_divergence",
+            "analyze_indirect_enablers",
+            "establish_semantic_core",
+            "render_critical_verdict"
+          ],
+          "focus_dimensions": [
+            "convergence_divergence",
+            "indirect_enablers",
+            "semantic_core",
+            "critical_verdict"
+          ],
+          "label": "Interpretive Synthesis",
+          "pass_number": 2,
+          "stance": "integration"
+        }
+      ],
+      "suitable_for": "Most academic corpora, authors with 3-7 prior works, standard genealogy analysis",
+      "typical_passes": 2
+    },
+    {
+      "description": "Comprehensive synthesis: exhaustive timelines including proto-forms and abandoned variants, deep orphan investigation, full convergence/divergence cartography with counterfactuals, toolkit archaeology of indirect enablers, layered semantic core analysis, and detailed critical verdicts with field-level implications",
+      "key": "deep",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Exhaustive reconstruction of the raw conceptual history. Build\ncomprehensive timelines for every traceable concept including\nproto-forms and abandoned variants. Track mutual timeline\ninteractions -- how one concept's evolution influenced another's.\nProduce full aggregation with cross-concept interaction analysis.\nDeep orphan investigation: trace possible external sources for\nconcepts without corpus ancestry. Assess the corpus's conceptual\nmetabolism -- how quickly and thoroughly the author processes and\ntransforms ideas. Leave no factual stone unturned.\n",
+          "focus_capabilities": [
+            "construct_evolution_timelines",
+            "aggregate_multi_work_traces"
+          ],
+          "focus_dimensions": [
+            "evolution_timelines",
+            "multi_work_trace_aggregation"
+          ],
+          "label": "Comprehensive Timeline and Trace Reconstruction",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "Stress-test the evolution picture produced in Pass 1. Map all\nconvergence and divergence points with mutual interactions.\nChallenge apparent convergences: are they genuine synthesis or\nsuperficial juxtaposition? Expose hidden dependencies -- arguments\nthat only work because of specific, unacknowledged evolution paths.\nPerform counterfactual analysis: what would the argument look like\nif key convergences had not occurred? Conduct full toolkit\narchaeology of indirect enablers: all non-obvious influences mapped\nwith interaction effects, visibility assessment, and comparison of\nacknowledged vs. actual influences. Adopt an architectural stance\ntoward the structural skeleton of the evolution.\n",
+          "focus_capabilities": [
+            "map_convergence_divergence",
+            "analyze_indirect_enablers"
+          ],
+          "focus_dimensions": [
+            "convergence_divergence",
+            "indirect_enablers"
+          ],
+          "label": "Convergence Stress-Testing and Enabler Archaeology",
+          "pass_number": 2,
+          "stance": "confrontation"
+        },
+        {
+          "consumes_from": [
+            1,
+            2
+          ],
+          "description": "The confrontation pass stress-tested convergences and exposed\nhidden dependencies. Now inhabit the deepest tensions dialectically.\nIntellectual evolution is not a smooth refinement but a process\ndriven by internal contradiction \u2014 concepts evolve BECAUSE they\nare under pressure from within, not despite it.\n\nFor each major divergence point \u2014 where ideas from different works\npull in opposite directions \u2014 perform genuine dialectical work.\nDo not ask which direction is \"correct.\" Ask: what does the\ndivergence reveal about what the concept is trying to become?\nWhen an author's early and late positions on the same concept\ncontradict each other, the contradiction is not a mistake to be\nexplained away but a record of the concept's own dialectical\ndevelopment. The early position contained, in embryo, the seeds\nof its own negation \u2014 and the late position is the determinate\nnegation that preserved what was valuable while transcending\nwhat was inadequate.\n\nFor convergence points \u2014 where separately evolved ideas come\ntogether \u2014 ask whether the synthesis is genuine Aufhebung or\nmere juxtaposition. A genuine synthesis produces something that\nneither contributing thread could have generated alone. A mere\njuxtaposition places ideas side by side without the collision\nthat generates new understanding. Most authors believe their\nconvergences are genuine syntheses; dialectical scrutiny often\nreveals they are juxtapositions with synthetic aspirations.\n\nTrace the longest arcs of contradiction across the corpus.\nWhere does the author's thought negate itself most dramatically?\nWhere is that negation most productive \u2014 yielding the author's\nmost original contributions? The hypothesis is that the deepest\ninsights emerge not from the stable commitments but from the\nunstable ones: the ideas that the author could never quite\nreconcile, that kept generating new attempts at resolution,\neach attempt itself becoming a contribution.\n",
+          "focus_capabilities": [
+            "map_convergence_divergence",
+            "establish_semantic_core",
+            "analyze_indirect_enablers"
+          ],
+          "focus_dimensions": [
+            "convergence_divergence",
+            "semantic_core",
+            "indirect_enablers"
+          ],
+          "label": "Dialectical Working-Through of Convergence and Divergence",
+          "pass_number": 3,
+          "stance": "dialectical"
+        },
+        {
+          "consumes_from": [
+            1,
+            2,
+            3
+          ],
+          "description": "Produce the culminating synthesis, now enriched by the dialectical\npass's working-through of convergence and divergence tensions.\nEstablish layered semantic cores showing how meaning accreted\nover time \u2014 but where the dialectical pass found that contradictions\ndrove the evolution, let the semantic core preserve the productive\ntension rather than smoothing it into false coherence. Build\ncomplete argumentative architecture with vulnerability analysis.\nRender detailed critical verdicts with evidence chains, field-level\nimplications, and recommendations. Where the dialectical pass\nfound that the author's most original contributions emerged from\nunstable, contradictory commitments rather than stable ones,\nincorporate this into the critical assessment \u2014 recognizing that\nintellectual fertility and logical consistency may be in genuine\ntension. Reflect on the methodology itself: what does this\nsynthesis reveal about the limits of the genealogical method?\nWhat could a different analytical approach have discovered that\nthis one missed?\n",
+          "focus_capabilities": [
+            "establish_semantic_core",
+            "render_critical_verdict"
+          ],
+          "focus_dimensions": [
+            "semantic_core",
+            "critical_verdict"
+          ],
+          "label": "Semantic Core Synthesis and Critical Verdict",
+          "pass_number": 4,
+          "stance": "integration"
+        }
+      ],
+      "suitable_for": "Dense philosophical corpora, prolific authors with 10+ works, comprehensive genealogy studies, publication-grade analysis",
+      "typical_passes": 4
+    }
+  ],
+  "engine_key": "concept_synthesis",
+  "engine_name": "Concept Synthesis",
+  "intellectual_lineage": {
+    "key_concepts": [
+      "hermeneutic_circle",
+      "fusion_of_horizons",
+      "emplotment",
+      "inferential_role",
+      "semantic_drift",
+      "conceptual_archaeology",
+      "path_dependence"
+    ],
+    "primary": "gadamer",
+    "secondary": [
+      "ricoeur",
+      "brandom",
+      "koselleck"
+    ],
+    "traditions": [
+      "hermeneutics",
+      "narrative_theory",
+      "inferentialism",
+      "conceptual_history",
+      "genealogy"
+    ]
+  },
+  "kind": "synthesis",
+  "legacy_engine_key": "concept_synthesis",
+  "paradigm_keys": [
+    "genealogical"
+  ],
+  "problematique": "When an author writes across many works over many years, their concepts\ndo not simply sit in isolation -- they evolve, migrate, recombine,\nand sometimes silently contradict their earlier selves. No single\nper-work analysis can reveal this. What is needed is a SYNTHESIS\nENGINE that takes all the per-work scans and the target profiling\ndata and constructs a unified, cross-work picture.\n\nThis engine is the integrator. It receives the outputs of Pass 1\n(deep target profiling: conceptual frameworks, semantic constellations,\ninferential commitments) and Pass 2 (per-work scans: concept evolution\ntraces, appropriation tracking across each prior work). From these\nraw materials, it builds: evolution timelines showing how concepts\nchange form across the author's body of work; multi-work trace\naggregations that merge per-work findings into unified per-concept\nsummaries; convergence/divergence maps showing where separately\nevolved ideas come together or pull apart; indirect enabler\nanalyses revealing how works that never discussed a concept directly\nnevertheless shaped its development through transferred frameworks\nand cognitive habits; and a semantic core -- the stable conceptual\nnucleus that persists beneath surface-level changes.\n\nThe critical question is always: what is the TRAJECTORY? Not just\nwhat the concept looks like in any single work, but the arc of its\ndevelopment. Was this gradual refinement, sharp reversal, silent\ndrift, or strategic reframing? What drove each transition -- new\nevidence, changing context, intellectual influence, or strategic\npositioning? And crucially: what was LOST in the evolution, not\njust what was gained? The engine culminates in a critical verdict\nthat assesses the coherence and integrity of the author's\nconceptual project as a whole.\n",
+  "researcher_question": "What is the unified picture of how concepts function across a body of work?",
+  "version": 1
+}

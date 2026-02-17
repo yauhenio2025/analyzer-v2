@@ -1,0 +1,13 @@
+{
+  "engine_key": "concept_taxonomy_argumentative_function",
+  "entries": [
+    {
+      "timestamp": "2026-02-17T14:22:45.403667+00:00",
+      "version": 1,
+      "definition_hash": "c128518176cf6fa1b3c992c52e0c3626dfcd11d433ec653786c0f9da2a68e4ec",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

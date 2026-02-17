@@ -1,0 +1,13 @@
+{
+  "engine_key": "evolution_tactics_detector",
+  "entries": [
+    {
+      "timestamp": "2026-02-17T14:22:45.323089+00:00",
+      "version": 1,
+      "definition_hash": "631bac37e682fdd49bd9c6010629357e60964fd4b4b3a7349d8de8dd9a49b733",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}
