@@ -530,17 +530,150 @@ depth_levels:
   description: Identify the most obvious enabling and constraining conditions
   typical_passes: 1
   suitable_for: Quick assessment, policy documents, non-academic texts, preliminary scoping
+  passes:
+  - pass_number: 1
+    label: Archaeological Survey
+    stance: discovery
+    focus_dimensions:
+    - enabling_conditions
+    - constraining_conditions
+    focus_capabilities:
+    - map_enabling_conditions
+    - detect_constraints
+    consumes_from: []
+    description: |
+      Identify the 3-5 most obvious enabling conditions (conceptual
+      foundations, audience preparation, established authority, reused
+      frameworks) and the 2-3 strongest constraining conditions (binding
+      prior commitments, audience expectations, framework lock-in). At
+      surface depth, aim for the strongest signals of what made the
+      argument possible and what paths it forecloses.
 - key: standard
   description: Map conditions with evidence, path dependencies with chains, unacknowledged debts, and
     counterfactual analysis
   typical_passes: 2
   suitable_for: Most academic texts, author with 3-5 prior works, standard genealogy analysis
+  passes:
+  - pass_number: 1
+    label: Full Archaeological Excavation
+    stance: discovery
+    focus_dimensions:
+    - enabling_conditions
+    - constraining_conditions
+    - unacknowledged_debts
+    - cross_domain_transfers
+    focus_capabilities:
+    - map_enabling_conditions
+    - detect_constraints
+    - reveal_debts
+    - detect_cross_domain_transfers
+    consumes_from: []
+    description: |
+      Comprehensive archaeological excavation of the conditions landscape.
+      Map enabling conditions with essentiality ratings and evidence of
+      reliance. Detect constraints with binding force assessment and
+      navigation strategy identification. Surface unacknowledged debts
+      with hypothesized reasons for concealment. Identify cross-domain
+      frameworks operating below conscious awareness.
+  - pass_number: 2
+    label: Path Analysis & Counterfactual Reasoning
+    stance: confrontation
+    focus_dimensions:
+    - path_dependencies
+    - alternative_paths
+    - counterfactual_analysis
+    - synthetic_judgment
+    focus_capabilities:
+    - trace_path_dependence
+    - map_alternative_paths
+    - explore_counterfactuals
+    - synthesize_judgment
+    consumes_from:
+    - 1
+    description: |
+      With the full conditions landscape from Pass 1, trace the causal
+      chains of path dependence showing how prior positions accumulated
+      into current constraints and enablements. Map branching points
+      where different trajectories were available and analyze why the
+      chosen path was preferred. Execute the central counterfactual:
+      what remains if we imagine this argument without the author's
+      history? Produce synthetic judgment on whether path-dependence
+      is enabling or constraining overall.
 - key: deep
   description: 'Full Foucauldian archaeological analysis: all conditions with mutual dependencies, complete
     path analysis, cross-domain toolkit mapping, detailed counterfactuals, alternative path scenarios,
     and synthetic judgment with field-level implications'
   typical_passes: 3
   suitable_for: Dense philosophical works, prolific authors with 10+ works, comprehensive genealogy studies
+  passes:
+  - pass_number: 1
+    label: Comprehensive Archaeological Excavation
+    stance: discovery
+    focus_dimensions:
+    - enabling_conditions
+    - constraining_conditions
+    - unacknowledged_debts
+    - cross_domain_transfers
+    focus_capabilities:
+    - map_enabling_conditions
+    - detect_constraints
+    - reveal_debts
+    - detect_cross_domain_transfers
+    consumes_from: []
+    description: |
+      Exhaustive archaeological excavation. Map every significant enabling
+      condition with essentiality rating, evidence, and author management
+      strategy. Full constraint landscape with binding force and navigation
+      analysis. Complete debt structure with evidence from prior works and
+      reasons for concealment. Comprehensive toolkit analysis of transferred
+      frameworks including those invisible to the author, their blind spots
+      and unique insights.
+  - pass_number: 2
+    label: Genealogical Confrontation
+    stance: confrontation
+    focus_dimensions:
+    - path_dependencies
+    - alternative_paths
+    - counterfactual_analysis
+    focus_capabilities:
+    - trace_path_dependence
+    - map_alternative_paths
+    - explore_counterfactuals
+    consumes_from:
+    - 1
+    description: |
+      Confront the archaeological findings with genealogical analysis.
+      Trace all significant path dependency chains showing how positions
+      from work N-3 became unexamined premises in work N. Map every
+      significant branching point with detailed counterfactual scenarios
+      showing how the argument would differ if alternative paths had been
+      taken. Execute the full counterfactual thought experiment with
+      specific examples of what changes in each section and proportion
+      estimates of novel versus inherited content.
+  - pass_number: 3
+    label: Synthetic Judgment & Field Implications
+    stance: integration
+    focus_dimensions:
+    - synthetic_judgment
+    - enabling_conditions
+    - constraining_conditions
+    - counterfactual_analysis
+    focus_capabilities:
+    - synthesize_judgment
+    consumes_from:
+    - 1
+    - 2
+    description: |
+      Integrate all findings into a comprehensive synthetic judgment.
+      Assess whether the intellectual biography is on balance enabling
+      or constraining. Evaluate the author's self-awareness and management
+      of path-dependence. Identify where constraints are productive
+      (forcing rigor and coherence) versus limiting (preventing growth).
+      Provide specific recommendations for what the author would need
+      to do differently to escape unproductive constraints or leverage
+      productive enablements more effectively. Analyze implications for
+      the field: whether this pattern of path-dependence is idiosyncratic
+      or symptomatic of broader disciplinary dynamics.
 legacy_engine_key: conditions_of_possibility_analyzer
 apps:
 - critic
