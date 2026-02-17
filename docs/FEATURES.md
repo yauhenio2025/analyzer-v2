@@ -59,6 +59,37 @@
   - `GET /v1/engines/{key}/pass-prompts/{pass_number}?depth=deep` - Single pass prompt
 - **Added**: 2026-02-16 | **Modified**: 2026-02-17
 
+## Operationalization Layer (Stance-Engine Bridge)
+
+### Operationalization Registry
+- **Status**: Active
+- **Description**: Third layer bridging abstract stances (HOW to think) and concrete engines (WHAT to think about). Each engine gets an operationalization YAML specifying how each stance applies (label, description, focus dimensions/capabilities) and what depth sequences are available. Pre-generated artifacts that are inspectable, editable, version-controlled, and LLM-(re)generatable.
+- **Entry Points**:
+  - `src/operationalizations/schemas.py:1-140` - StanceOperationalization, DepthPassEntry, DepthSequence, EngineOperationalization, summary/coverage models
+  - `src/operationalizations/registry.py:1-170` - OperationalizationRegistry with CRUD, coverage_matrix(), get_stance_for_engine(), get_depth_sequence()
+  - `src/operationalizations/definitions/*.yaml` - 10 engine operationalization files extracted from capability definitions
+  - `src/api/routes/operationalizations.py:1-200` - Full CRUD API with compose-preview endpoint
+  - `src/api/routes/llm.py:410-840` - LLM generation endpoints for single, bulk, and sequence generation
+  - `src/stages/capability_composer.py:196-290` - compose_all_pass_prompts() with operationalization-first fallback pattern
+  - `scripts/extract_operationalizations.py` - One-time extraction script
+- **API Endpoints**:
+  - `GET /v1/operationalizations/` - List summaries
+  - `GET /v1/operationalizations/coverage` - Engine x Stance coverage matrix
+  - `GET /v1/operationalizations/{engine_key}` - Full engine operationalization
+  - `GET/PUT /v1/operationalizations/{engine_key}/stances/{stance_key}` - Single stance op CRUD
+  - `GET/PUT /v1/operationalizations/{engine_key}/depths/{depth_key}` - Depth sequence CRUD
+  - `POST /v1/operationalizations/{engine_key}/compose-preview` - Preview composed prompt
+  - `POST /v1/llm/operationalization-generate` - LLM generate single stance op
+  - `POST /v1/llm/operationalization-generate-all` - LLM generate all stances for engine
+  - `POST /v1/llm/operationalization-generate-sequence` - LLM generate depth sequence with data flow
+- **Frontend** (analyzer-mgmt):
+  - `frontend/src/pages/operationalizations/index.tsx` - Coverage grid + engine list
+  - `frontend/src/pages/operationalizations/[key].tsx` - Stance cards + depth sequence viewer
+  - `frontend/src/types/index.ts` - TypeScript types for operationalization entities
+  - `frontend/src/lib/api.ts` - API client methods (direct fetch to ANALYZER_V2_URL)
+  - `frontend/src/components/Layout.tsx` - Navigation item
+- **Added**: 2026-02-17
+
 ## Schema-on-Read / Prose Pipeline (the-critic)
 
 ### Prose Output Infrastructure

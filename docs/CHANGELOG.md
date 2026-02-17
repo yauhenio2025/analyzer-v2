@@ -40,6 +40,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
   - `genealogy_final_synthesis.yaml` - Single-pass capstone at all depths: Surface (integration); Standard (integration); Deep (integration)
   - All 6 analytical stances used: discovery, inference, confrontation, architecture, integration, reflection
 
+- **Operationalization Layer** — New `src/operationalizations/` module decouples stance operationalizations from engine YAML definitions, creating a three-layer architecture: Stances (HOW) x Engines (WHAT) = Operationalizations (bridge)
+  - `src/operationalizations/schemas.py` — StanceOperationalization, DepthPassEntry, DepthSequence, EngineOperationalization models + summary/coverage types
+  - `src/operationalizations/registry.py` — OperationalizationRegistry with full CRUD, coverage_matrix(), get_stance_for_engine(), get_depth_sequence()
+  - `src/operationalizations/definitions/` — 10 extracted YAML files (one per engine with capability definitions)
+  - `scripts/extract_operationalizations.py` — Extraction script that migrated inline pass definitions to standalone operationalization files
+  - **API routes** at `/v1/operationalizations/`: list, get, update, per-stance CRUD, per-depth CRUD, coverage matrix, compose-preview
+  - **LLM generation endpoints**: `POST /v1/llm/operationalization-generate` (single), `operationalization-generate-all` (bulk), `operationalization-generate-sequence` (depth sequence with data flow)
+  - **Prompt composer integration**: `compose_all_pass_prompts()` now checks operationalization registry first, falls back to inline passes. Verified byte-identical output for all 10 extracted engines.
+  - **Frontend** (analyzer-mgmt): Types, API client, coverage grid list page, engine detail page with stance cards + depth sequence viewer, navigation item
+
 - **Dialectical passes added to 4 engines' deep modes** — Engines whose deep analysis most benefits from Hegelian working-through of contradictions now include a dialectical pass:
   - `inferential_commitment_mapper.yaml` — Deep: 4 passes (discovery → confrontation → **dialectical** → integration). Dialectical pass works through commitment conflicts: which are productive (generating insight through irresolution) vs. destructive (genuine flaws), traces cascading contradictions, articulates unstated positions the commitment landscape points toward.
   - `concept_semantic_constellation.yaml` — Deep: 4 passes (discovery → architecture → **dialectical** → integration). Dialectical pass inhabits boundary tensions as generative sites: fuzzy boundaries reveal conceptual limits, competing clusters show double-duty concepts, definition-usage gaps reveal what concepts are trying to become.

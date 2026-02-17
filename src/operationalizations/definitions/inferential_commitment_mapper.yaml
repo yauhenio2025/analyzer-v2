@@ -1,0 +1,128 @@
+engine_key: inferential_commitment_mapper
+engine_name: Inferential Commitment Mapper
+stance_operationalizations:
+- stance_key: discovery
+  label: Exhaustive Commitment Inventory
+  description: |-
+    Exhaustive inventory of every significant commitment: all explicit
+    claims with centrality, originality, evidential basis, and
+    management style; all implicit commitments with inference strength,
+    author awareness, and assessment of whether each implication is
+    welcome or awkward.
+  focus_dimensions:
+  - explicit_commitments
+  - implicit_commitments
+  focus_capabilities:
+  - map_explicit_commitments
+  - surface_implicit_commitments
+- stance_key: confrontation
+  label: Full Conflict & Dependency Analysis
+  description: |-
+    Full conflict analysis: every significant tension mapped with
+    conflict type, navigation strategy, and success assessment.
+    Complete dependency graph: foundational commitments, derived
+    chains, circular dependencies, single-point-of-failure analysis,
+    and load-bearing assessment for each foundational commitment.
+  focus_dimensions:
+  - commitment_conflicts
+  - logical_dependencies
+  focus_capabilities:
+  - detect_conflicts
+  - trace_dependencies
+- stance_key: dialectical
+  label: Dialectical Working-Through of Commitment Conflicts
+  description: |-
+    Do not resolve the commitment conflicts found in Pass 2 — inhabit
+    them. For each significant tension between commitments, perform
+    genuine dialectical work: state the thesis (the commitment in its
+    strongest form), identify its internal negation (the point where
+    the commitment's own logic undermines itself), and dwell in the
+    collision until a higher-order understanding emerges.
+
+    Which commitment conflicts are PRODUCTIVE — generating insight
+    precisely because they cannot be resolved? The tension between a
+    commitment to individual autonomy and a commitment to social
+    determination, for instance, may be the engine that drives the
+    entire argument forward. Collapsing it would not fix the argument
+    but destroy it. Identify these generative contradictions and
+    articulate what they produce that neither side could generate alone.
+
+    Which conflicts are genuinely DESTRUCTIVE — where the author is
+    committed to incompatible positions and the incompatibility is not
+    productive but simply a flaw? For these, trace what a determinate
+    negation would look like: not just "this fails" but "this fails in
+    a way that points toward what is actually needed." Every negation
+    should contain, in embryo, the specification of what would succeed.
+
+    Pay special attention to commitment chains where accepting premise A
+    forces commitment B, which contradicts commitment C, which the
+    author also needs. These cascading contradictions often reveal that
+    the author's real position is not any of the stated commitments but
+    an unstated position that would require restructuring the entire
+    commitment landscape. Articulate what that unstated position might be.
+  focus_dimensions:
+  - commitment_conflicts
+  - logical_dependencies
+  - implicit_commitments
+  focus_capabilities:
+  - detect_conflicts
+  - trace_dependencies
+- stance_key: integration
+  label: Hidden Implications & Commitment Landscape Synthesis
+  description: |-
+    Synthesize the full commitment landscape, now enriched by the
+    dialectical pass's working-through of commitment conflicts.
+    Hidden implications traced to source commitments, performative
+    contradictions surfaced, citation baggage analysis revealing
+    inherited commitments the author may not realize they carry,
+    package deal identification with incompatibility mapping. The
+    dialectical pass distinguished productive from destructive
+    contradictions — integrate this into the overall commitment
+    landscape synthesis. Where contradictions are productive, the
+    synthesis should preserve them as generative tensions. Where
+    they are destructive, the synthesis should articulate what
+    restructuring of commitments the analysis points toward. The
+    result is a map of what you are really signing up for — including
+    which tensions come with the package and which signal genuine
+    problems in the author's position.
+  focus_dimensions:
+  - hidden_implications
+  - commitment_conflicts
+  - logical_dependencies
+  focus_capabilities:
+  - reveal_hidden_implications
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: confrontation
+    consumes_from:
+    - 1
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: confrontation
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: dialectical
+    consumes_from:
+    - 1
+    - 2
+  - pass_number: 4
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2
+    - 3

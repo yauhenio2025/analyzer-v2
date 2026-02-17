@@ -1,0 +1,57 @@
+engine_key: concept_evolution
+engine_name: Concept Evolution Tracker
+stance_operationalizations:
+- stance_key: discovery
+  label: Concept Discovery Scan
+  description: |-
+    Scan for shared concepts between prior and current work. Note
+    obvious vocabulary changes (births, deaths, renames) and list
+    the dominant evolution types (expansion, narrowing, reversal).
+    At surface depth this is a quick scan for the strongest signals.
+  focus_dimensions:
+  - vocabulary_evolution
+  - concept_trajectory
+  focus_capabilities:
+  - track_vocabulary_evolution
+  - trace_concept_lifecycles
+- stance_key: inference
+  label: Full Koselleckian Conceptual History
+  description: |-
+    Complete Koselleckian conceptual history in a single intensive
+    pass. Full term inventories for both works with detailed drift
+    analysis and quoted evidence. Metaphor archaeology tracing
+    source domains and evolution trajectories. Framing trajectory
+    mapping with confidence arcs. Coupling analysis across all four
+    dimensions revealing change archetypes. Concept genealogy trees
+    showing ancestor-descendant relationships and co-evolution
+    patterns.
+  focus_dimensions:
+  - vocabulary_evolution
+  - methodology_evolution
+  - metaphor_evolution
+  - framing_evolution
+  - concept_trajectory
+  - dimensional_comparison_matrix
+  focus_capabilities:
+  - track_vocabulary_evolution
+  - compare_methodology
+  - trace_metaphor_change
+  - analyze_framing_shifts
+  - trace_concept_lifecycles
+  - synthesize_dimensional_matrix
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: inference
+    consumes_from: []
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: inference
+    consumes_from: []

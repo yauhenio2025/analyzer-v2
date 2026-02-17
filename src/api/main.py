@@ -12,11 +12,12 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import audiences, chains, engines, functions, llm, operations, paradigms, styles, primitives, display, workflows
+from src.api.routes import audiences, chains, engines, functions, llm, operations, operationalizations, paradigms, styles, primitives, display, workflows
 from src.audiences.registry import get_audience_registry
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
 from src.functions.registry import get_function_registry
+from src.operationalizations.registry import get_operationalization_registry
 from src.operations.registry import StanceRegistry
 from src.paradigms.registry import get_paradigm_registry
 from src.styles.registry import get_style_registry
@@ -78,10 +79,17 @@ async def lifespan(app: FastAPI):
     logger.info("Loading analytical stances...")
     stance_registry = StanceRegistry()
     operations.init_registry(stance_registry)
-    # Also make stances available to the capability composer
+    # Also make stances available to the capability composer and LLM generation
     from src.stages.capability_composer import init_stance_registry
     init_stance_registry(stance_registry)
+    from src.api.routes.llm import init_stance_registry_for_llm
+    init_stance_registry_for_llm(stance_registry)
     logger.info(f"Loaded {stance_registry.count} analytical stances")
+
+    logger.info("Loading operationalizations...")
+    op_registry = get_operationalization_registry()
+    op_registry.load()
+    logger.info(f"Loaded {op_registry.count()} engine operationalizations")
 
     logger.info("Analyzer v2 API ready")
     yield
@@ -135,6 +143,7 @@ app.include_router(workflows.router, prefix="/v1")
 app.include_router(audiences.router, prefix="/v1")
 app.include_router(functions.router, prefix="/v1")
 app.include_router(operations.router)
+app.include_router(operationalizations.router, prefix="/v1")
 app.include_router(llm.router, prefix="/v1")
 
 
@@ -157,6 +166,7 @@ async def root():
             "display": "/v1/display",
             "functions": "/v1/functions",
             "operations": "/v1/operations",
+            "operationalizations": "/v1/operationalizations",
         },
     }
 
@@ -172,6 +182,7 @@ async def health():
     function_registry = get_function_registry()
     style_registry = get_style_registry()
     style_stats = style_registry.get_stats()
+    op_registry = get_operationalization_registry()
 
     return {
         "status": "healthy",
@@ -183,6 +194,7 @@ async def health():
         "functions_loaded": function_registry.count(),
         "styles_loaded": style_stats["styles_loaded"],
         "style_affinities": style_stats["engine_affinities"],
+        "operationalizations_loaded": op_registry.count(),
     }
 
 

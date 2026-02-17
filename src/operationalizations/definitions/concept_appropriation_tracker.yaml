@@ -1,0 +1,59 @@
+engine_key: concept_appropriation_tracker
+engine_name: Concept Appropriation Tracker
+stance_operationalizations:
+- stance_key: discovery
+  label: Migration Discovery
+  description: |-
+    Identify the most obvious concept migrations between prior and
+    current work. For each migration, note the mechanism of travel
+    (cited, silently borrowed, absorbed) and whether the concept
+    was carried faithfully or adapted. Quick surface scan for the
+    3-5 clearest cases.
+  focus_dimensions:
+  - migration_paths
+  - acknowledgment_status
+  focus_capabilities:
+  - trace_migration_paths
+  - assess_acknowledgment
+- stance_key: inference
+  label: Full Derridean Iterability Analysis
+  description: |-
+    Full Derridean iterability analysis in a single intensive pass.
+    Every concept migration traced with mechanism, intermediate
+    stops, and contextual analysis. Every semantic mutation classified
+    and motivated (strategic vs. drift). Appropriation assessed for
+    legitimacy with impact on both original and new context.
+    Distortions catalogued with counterfactuals. Recombinations
+    mapped with novelty assessment. Acknowledgment patterns analyzed
+    for strategic logic, revealing the author's characteristic
+    appropriation style.
+  focus_dimensions:
+  - migration_paths
+  - semantic_mutations
+  - appropriation_patterns
+  - distortion_map
+  - recombination
+  - acknowledgment_status
+  focus_capabilities:
+  - trace_migration_paths
+  - detect_semantic_mutations
+  - analyze_appropriation
+  - map_distortions
+  - detect_recombinations
+  - assess_acknowledgment
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: inference
+    consumes_from: []
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: inference
+    consumes_from: []

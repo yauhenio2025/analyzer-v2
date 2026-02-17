@@ -1,0 +1,148 @@
+engine_key: concept_synthesis
+engine_name: Concept Synthesis
+stance_operationalizations:
+- stance_key: integration
+  label: Semantic Core Synthesis and Critical Verdict
+  description: |-
+    Produce the culminating synthesis, now enriched by the dialectical
+    pass's working-through of convergence and divergence tensions.
+    Establish layered semantic cores showing how meaning accreted
+    over time — but where the dialectical pass found that contradictions
+    drove the evolution, let the semantic core preserve the productive
+    tension rather than smoothing it into false coherence. Build
+    complete argumentative architecture with vulnerability analysis.
+    Render detailed critical verdicts with evidence chains, field-level
+    implications, and recommendations. Where the dialectical pass
+    found that the author's most original contributions emerged from
+    unstable, contradictory commitments rather than stable ones,
+    incorporate this into the critical assessment — recognizing that
+    intellectual fertility and logical consistency may be in genuine
+    tension. Reflect on the methodology itself: what does this
+    synthesis reveal about the limits of the genealogical method?
+    What could a different analytical approach have discovered that
+    this one missed?
+  focus_dimensions:
+  - semantic_core
+  - critical_verdict
+  focus_capabilities:
+  - establish_semantic_core
+  - render_critical_verdict
+- stance_key: discovery
+  label: Comprehensive Timeline and Trace Reconstruction
+  description: |-
+    Exhaustive reconstruction of the raw conceptual history. Build
+    comprehensive timelines for every traceable concept including
+    proto-forms and abandoned variants. Track mutual timeline
+    interactions -- how one concept's evolution influenced another's.
+    Produce full aggregation with cross-concept interaction analysis.
+    Deep orphan investigation: trace possible external sources for
+    concepts without corpus ancestry. Assess the corpus's conceptual
+    metabolism -- how quickly and thoroughly the author processes and
+    transforms ideas. Leave no factual stone unturned.
+  focus_dimensions:
+  - evolution_timelines
+  - multi_work_trace_aggregation
+  focus_capabilities:
+  - construct_evolution_timelines
+  - aggregate_multi_work_traces
+- stance_key: confrontation
+  label: Convergence Stress-Testing and Enabler Archaeology
+  description: |-
+    Stress-test the evolution picture produced in Pass 1. Map all
+    convergence and divergence points with mutual interactions.
+    Challenge apparent convergences: are they genuine synthesis or
+    superficial juxtaposition? Expose hidden dependencies -- arguments
+    that only work because of specific, unacknowledged evolution paths.
+    Perform counterfactual analysis: what would the argument look like
+    if key convergences had not occurred? Conduct full toolkit
+    archaeology of indirect enablers: all non-obvious influences mapped
+    with interaction effects, visibility assessment, and comparison of
+    acknowledged vs. actual influences. Adopt an architectural stance
+    toward the structural skeleton of the evolution.
+  focus_dimensions:
+  - convergence_divergence
+  - indirect_enablers
+  focus_capabilities:
+  - map_convergence_divergence
+  - analyze_indirect_enablers
+- stance_key: dialectical
+  label: Dialectical Working-Through of Convergence and Divergence
+  description: |-
+    The confrontation pass stress-tested convergences and exposed
+    hidden dependencies. Now inhabit the deepest tensions dialectically.
+    Intellectual evolution is not a smooth refinement but a process
+    driven by internal contradiction — concepts evolve BECAUSE they
+    are under pressure from within, not despite it.
+
+    For each major divergence point — where ideas from different works
+    pull in opposite directions — perform genuine dialectical work.
+    Do not ask which direction is "correct." Ask: what does the
+    divergence reveal about what the concept is trying to become?
+    When an author's early and late positions on the same concept
+    contradict each other, the contradiction is not a mistake to be
+    explained away but a record of the concept's own dialectical
+    development. The early position contained, in embryo, the seeds
+    of its own negation — and the late position is the determinate
+    negation that preserved what was valuable while transcending
+    what was inadequate.
+
+    For convergence points — where separately evolved ideas come
+    together — ask whether the synthesis is genuine Aufhebung or
+    mere juxtaposition. A genuine synthesis produces something that
+    neither contributing thread could have generated alone. A mere
+    juxtaposition places ideas side by side without the collision
+    that generates new understanding. Most authors believe their
+    convergences are genuine syntheses; dialectical scrutiny often
+    reveals they are juxtapositions with synthetic aspirations.
+
+    Trace the longest arcs of contradiction across the corpus.
+    Where does the author's thought negate itself most dramatically?
+    Where is that negation most productive — yielding the author's
+    most original contributions? The hypothesis is that the deepest
+    insights emerge not from the stable commitments but from the
+    unstable ones: the ideas that the author could never quite
+    reconcile, that kept generating new attempts at resolution,
+    each attempt itself becoming a contribution.
+  focus_dimensions:
+  - convergence_divergence
+  - semantic_core
+  - indirect_enablers
+  focus_capabilities:
+  - map_convergence_divergence
+  - establish_semantic_core
+  - analyze_indirect_enablers
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: integration
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: integration
+    consumes_from:
+    - 1
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: confrontation
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: dialectical
+    consumes_from:
+    - 1
+    - 2
+  - pass_number: 4
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2
+    - 3

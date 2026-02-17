@@ -1,0 +1,145 @@
+engine_key: concept_taxonomy_argumentative_function
+engine_name: 'Concept Taxonomy: Argumentative Function'
+stance_operationalizations:
+- stance_key: discovery
+  label: Exhaustive Functional Classification
+  description: |-
+    Exhaustive classification of every significant conceptual chain
+    with multi-layered function assessment. For each chain, determine
+    primary, secondary, and tertiary functions with detailed textual
+    evidence. Track diachronic function shifts: how has the chain's
+    argumentative role changed over the author's career? Assess
+    whether the author is aware of each chain's actual function.
+    Compare stated vs. actual argumentative roles. No chain is too
+    minor to classify -- peripheral chains often do unrecognized
+    structural work.
+  focus_dimensions:
+  - functional_classification
+  focus_capabilities:
+  - classify_argumentative_functions
+- stance_key: architecture
+  label: Complete Architectural Engineering
+  description: |-
+    Build the complete dependency graph of the argumentative
+    architecture. Map every hierarchical relationship, bottleneck,
+    and structural logic pattern (linear, branching, converging,
+    cyclic). Perform comprehensive load-bearing analysis: rank all
+    load-bearing chains by structural importance, assess support
+    proportionality, identify single points of failure, compare
+    prominence with importance. Execute full redundancy audit:
+    complete overlap map with intentionality assessment for each
+    redundancy, resilience analysis, and historical redundancy
+    trajectory. Compare the author's explicit argument structure
+    with the implicit architecture revealed by functional analysis.
+  focus_dimensions:
+  - argumentative_architecture
+  - load_bearing_analysis
+  - redundancy_map
+  focus_capabilities:
+  - map_argumentative_architecture
+  - analyze_load_bearing
+  - map_redundancy
+- stance_key: confrontation
+  label: Adversarial Vulnerability Assessment
+  description: |-
+    Subject the entire argumentative architecture to adversarial
+    stress-testing. Simulate how a sophisticated interlocutor would
+    attack: which chains would they target, what objections would
+    they raise, where would the argument break? Map all weak points
+    with severity and exploitability ratings. Assess which defensive
+    chains are weakest relative to the objections they face. Identify
+    bridge concepts doing unacknowledged heavy lifting. Reflect on
+    whether some vulnerabilities are productive (enabling flexibility
+    and future development) vs. dangerous (threatening collapse under
+    scrutiny). Compare vulnerability patterns across the author's
+    career: are they getting better or worse at structural defense?
+    Produce recommendations for structural reinforcement.
+  focus_dimensions:
+  - vulnerability_assessment
+  focus_capabilities:
+  - assess_vulnerabilities
+- stance_key: dialectical
+  label: Dialectical Working-Through of Structural Tensions
+  description: |-
+    The confrontation pass identified vulnerabilities; now inhabit
+    them dialectically. The key question is not "how can these
+    weaknesses be fixed?" but "what do these structural tensions
+    PRODUCE?" An argument's vulnerabilities are not merely flaws
+    to be patched — they are often the sites of the argument's
+    greatest generative power.
+
+    For each significant structural tension, perform Aufhebung.
+    A load-bearing chain that lacks adequate support is vulnerable,
+    yes — but it may be load-bearing BECAUSE it is doing genuinely
+    novel work that existing argumentative resources cannot yet
+    support. The vulnerability is a symptom of intellectual
+    ambition outrunning available justification. Articulate what
+    each vulnerable chain is reaching for that the current
+    argumentative architecture cannot yet deliver.
+
+    Where redundancy exists, ask whether the multiplied chains
+    are genuinely saying the same thing or whether the apparent
+    redundancy conceals a dialectical development — each
+    "redundant" chain actually advancing the argument by
+    approaching the same conclusion from a different angle,
+    and the convergence of these different angles constituting
+    a stronger form of justification than any single chain could
+    provide. What looks like waste may be dialectical triangulation.
+
+    Where single-thread dependencies create fragility, do not
+    simply flag the risk. Trace WHY the author could not build
+    redundancy at that point. Often, single-thread dependencies
+    mark the places where the argument is most original — where
+    the author had to forge a new path with no existing support
+    structures to draw on. The fragility and the originality
+    are two faces of the same intellectual situation. Articulate
+    this relationship: where is fragility the price of ambition,
+    and where is it simply carelessness?
+
+    The overall question: does the argument's structural tension
+    create a productive instability that drives intellectual
+    development, or a destructive instability that threatens
+    collapse? Most arguments contain both kinds. Distinguish them.
+  focus_dimensions:
+  - vulnerability_assessment
+  - load_bearing_analysis
+  - redundancy_map
+  focus_capabilities:
+  - assess_vulnerabilities
+  - analyze_load_bearing
+  - map_redundancy
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: confrontation
+    consumes_from:
+    - 1
+    - 2
+  - pass_number: 4
+    stance_key: dialectical
+    consumes_from:
+    - 1
+    - 2
+    - 3

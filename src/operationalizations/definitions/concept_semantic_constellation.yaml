@@ -1,0 +1,145 @@
+engine_key: concept_semantic_constellation
+engine_name: Concept Semantic Constellation
+stance_operationalizations:
+- stance_key: discovery
+  label: Exhaustive Semantic Field Mapping
+  description: |-
+    Map every significant concept with its full relationship network.
+    No significance threshold -- trace every term that does intellectual
+    work, including minor variants and terms the author uses without
+    defining. For each concept, build the complete semantic field with
+    cross-disciplinary comparison: how does the author's usage differ
+    from how the same term functions in neighboring fields? Track
+    co-occurrence statistics to reveal the implicit conceptual
+    architecture encoded in language habits. This pass must be
+    exhaustive because subsequent passes build on it.
+  focus_dimensions:
+  - semantic_field
+  focus_capabilities:
+  - map_semantic_fields
+- stance_key: architecture
+  label: Structural Analysis and Tension Detection
+  description: |-
+    Build the full structural apparatus from the semantic field data.
+    Map all concept clusters with internal structure (core vs. peripheral
+    members) and inter-cluster dynamics (complementary, competing,
+    nested). Perform exhaustive boundary analysis: every significant
+    conceptual boundary mapped with sharpness, the author's awareness,
+    and strategic uses of ambiguity. Track usage patterns through the
+    entire text with attention to meaning drift, contextual variation,
+    and definition-usage mismatches. Adopt a confrontational stance
+    toward apparent coherence: where do concepts that seem harmonious
+    actually harbor tensions? Where do boundaries that seem clear
+    actually conceal productive ambiguity?
+  focus_dimensions:
+  - concept_clusters
+  - boundary_terms
+  - usage_patterns
+  focus_capabilities:
+  - identify_clusters
+  - analyze_boundaries
+  - track_usage
+- stance_key: dialectical
+  label: Dialectical Working-Through of Boundary Tensions
+  description: |-
+    The architecture pass revealed tensions — boundary terms where
+    concepts resist clean separation, clusters that compete rather
+    than complement, usage patterns that contradict definitions. Now
+    inhabit these tensions dialectically rather than resolving them.
+
+    For each significant boundary tension, perform Aufhebung: the
+    boundary between two concepts (say "power" and "authority") is
+    not a line to be drawn but a productive zone where both concepts
+    reveal their limitations. The author's inability to draw a clean
+    boundary is not a failure of precision but a discovery — the
+    boundary IS fuzzy because the phenomena resist the distinction
+    the author needs. Articulate what the boundary tension reveals
+    about the limits of the author's conceptual vocabulary.
+
+    Where concept clusters compete — pulling the same terms toward
+    different thematic centers — do not adjudicate which cluster the
+    term "really" belongs to. Instead, trace what the competition
+    reveals: a concept claimed by two clusters is doing double duty,
+    and that double duty is often where the argument's real work
+    happens. The concept's meaning is constituted by its tension
+    between the clusters, not by its allegiance to either.
+
+    Where usage contradicts definition, resist the temptation to
+    declare one "real" and the other "misleading." The gap between
+    definition and usage is itself a semantic fact — it reveals that
+    the concept is richer (or more conflicted) than the author's
+    explicit understanding of it. Trace what the concept is trying
+    to become that its definition cannot yet accommodate.
+  focus_dimensions:
+  - boundary_terms
+  - concept_clusters
+  - usage_patterns
+  focus_capabilities:
+  - analyze_boundaries
+  - identify_clusters
+  - track_usage
+- stance_key: integration
+  label: Connotation Landscape and Semantic Synthesis
+  description: |-
+    Complete the connotation landscape: every significant term assessed
+    for evaluative charge, aesthetic and emotional associations, and
+    comparison with disciplinary and everyday connotations. Analyze
+    how the author's connotation choices constitute an implicit rhetoric.
+    Then synthesize all dimensions into the full semantic architecture,
+    now enriched by the dialectical pass's working-through of boundary
+    tensions. Where the dialectical pass found productive fuzziness,
+    the synthesis should preserve it — not flatten it into false
+    precision. Where boundary tensions revealed concepts trying to
+    become something their definitions cannot yet accommodate, note
+    these as sites of semantic evolution. Assess whether the argument
+    would survive if connotation-loaded terms were replaced with
+    neutral equivalents. Produce the integrated semantic profile that
+    downstream engines will consume — one that honors the generative
+    tensions rather than papering over them.
+  focus_dimensions:
+  - connotation_map
+  - semantic_field
+  - concept_clusters
+  - boundary_terms
+  - usage_patterns
+  focus_capabilities:
+  - map_connotations
+  - map_semantic_fields
+  - identify_clusters
+  - analyze_boundaries
+  - track_usage
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: dialectical
+    consumes_from:
+    - 1
+    - 2
+  - pass_number: 4
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2
+    - 3

@@ -1,0 +1,101 @@
+engine_key: conceptual_framework_extraction
+engine_name: Conceptual Framework Extractor
+stance_operationalizations:
+- stance_key: discovery
+  label: Exhaustive Lexical and Methodological Excavation
+  description: |-
+    Exhaustive inventory with no significance threshold. Every coined
+    term, every repurposed term, every terminological cluster traced
+    to its intellectual tradition. Full methodological fingerprint
+    cross-referenced with traditions that favor these methods, including
+    mismatches between stated and practiced methodology. Complete
+    metaphor archaeology: maturity assessment (fresh vs. polished
+    through reuse), what each metaphor reveals and conceals. Framing
+    politics: what alternative framings were available but not used,
+    who benefits from the chosen framing. Leave nothing for later
+    passes to discover at this level.
+  focus_dimensions:
+  - vocabulary_map
+  - methodological_signature
+  - metaphor_tracking
+  - framing_analysis
+  focus_capabilities:
+  - extract_vocabulary
+  - profile_methodology
+  - track_metaphors
+  - analyze_framing
+- stance_key: architecture
+  label: Structural Architecture and Cross-Domain Tracing
+  description: |-
+    Build the complete structural skeleton of the work's conceptual
+    apparatus. Map every dependency between frameworks -- foundational,
+    dependent, peripheral, competing, complementary, emergent. Perform
+    load-bearing assessment: what collapses if each framework is
+    removed? Trace every cross-domain import to its source tradition,
+    assess how adaptation changed the original, and map what the source
+    domain's assumptions smuggle into the current argument. The
+    architecture should be detailed enough to serve as a structural
+    blueprint of the author's intellectual edifice.
+  focus_dimensions:
+  - conceptual_architecture
+  - domain_crossings
+  focus_capabilities:
+  - map_architecture
+  - detect_domain_crossings
+- stance_key: integration
+  label: Integrative Profile Synthesis
+  description: |-
+    Synthesize all dimensions into the complete target profile that
+    downstream engines will consume. Cross-reference vocabulary clusters
+    with architectural dependencies -- do terminological families align
+    with framework hierarchies? Assess how the methodological signature
+    constrains which frameworks can be deployed. Evaluate the coherence
+    of the whole ensemble: does the conceptual architecture support the
+    framing claims? Do domain crossings enrich or distort the framework
+    architecture? Produce genealogical implications: what does this
+    profile predict about the author's intellectual formation, and what
+    should downstream engines (semantic constellation, inferential
+    commitment mapper) look for?
+  focus_dimensions:
+  - vocabulary_map
+  - methodological_signature
+  - metaphor_tracking
+  - framing_analysis
+  - conceptual_architecture
+  - domain_crossings
+  focus_capabilities:
+  - extract_vocabulary
+  - profile_methodology
+  - track_metaphors
+  - analyze_framing
+  - map_architecture
+  - detect_domain_crossings
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2

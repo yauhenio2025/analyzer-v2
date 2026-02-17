@@ -1,0 +1,45 @@
+engine_key: genealogy_final_synthesis
+engine_name: Genealogy Final Synthesis
+stance_operationalizations:
+- stance_key: integration
+  label: Comprehensive Genealogical Synthesis
+  description: |-
+    Comprehensive synthesis with extended narratives. Detailed
+    genealogical portrait with close textual analysis tracing
+    origin stories, transformation moments, and abandoned paths.
+    Comprehensive idea genealogies with co-evolution analysis
+    showing how changing one idea forced changes to others. Full
+    intellectual portrait with field comparisons and growth
+    assessment. Reflexive methodological assessment examining
+    biases in the genealogical method itself. Key findings with
+    multi-audience implications and assessment of how the author
+    might respond to each finding.
+  focus_dimensions:
+  - executive_summary
+  - genealogical_portrait
+  - idea_genealogies
+  - author_intellectual_profile
+  - methodological_notes
+  - key_findings
+  focus_capabilities:
+  - compose_executive_summary
+  - narrate_genealogical_portrait
+  - trace_idea_genealogies
+  - profile_intellectual_character
+  - reflect_on_methodology
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: integration
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: integration
+    consumes_from: []
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: integration
+    consumes_from: []

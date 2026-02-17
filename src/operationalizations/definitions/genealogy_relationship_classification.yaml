@@ -1,0 +1,54 @@
+engine_key: genealogy_relationship_classification
+engine_name: Genealogy Relationship Classification
+stance_operationalizations:
+- stance_key: discovery
+  label: Rapid Relationship Classification
+  description: |-
+    Rapid classification based on the strongest signal. Assign one
+    of the five relationship types (direct_precursor, indirect_
+    contextualizer, methodological_ancestor, contradicted_position,
+    parallel_development) and assess strength (strong/moderate/weak)
+    with one-sentence justification for each.
+  focus_dimensions:
+  - relationship_type
+  - relationship_strength
+  focus_capabilities:
+  - classify_relationship
+  - assess_strength
+- stance_key: inference
+  label: Nuanced Classification & Strategic Guidance
+  description: |-
+    Nuanced classification with primary and secondary types, each
+    supported by detailed evidence. Assessment of how the
+    relationship may have shifted over time (temporal evolution).
+    Full channel interaction analysis showing how influence channels
+    reinforce or undermine each other. Detailed strategic guidance
+    with contingency plans: priority dimensions ranked, expected
+    trace types with specific hypotheses, and recommendations for
+    revising classification if Pass 2 evidence contradicts it.
+  focus_dimensions:
+  - relationship_type
+  - relationship_strength
+  - influence_channels
+  - strategic_relevance
+  focus_capabilities:
+  - classify_relationship
+  - assess_strength
+  - map_influence_channels
+  - determine_scanning_strategy
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: inference
+    consumes_from: []
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: inference
+    consumes_from: []

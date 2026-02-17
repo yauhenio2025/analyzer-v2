@@ -1,0 +1,74 @@
+engine_key: evolution_tactics_detector
+engine_name: Evolution Tactics Detector
+stance_operationalizations:
+- stance_key: discovery
+  label: Exhaustive Tactic Detection
+  description: |-
+    Exhaustive detection including borderline cases with explicit
+    reasoning for inclusion/exclusion. Every detectable tactic
+    instance mapped with comprehensive vocabulary, framing, and
+    methodological evidence. Include comparison of the same tactic
+    across multiple work-pairs where applicable.
+  focus_dimensions:
+  - tactic_detection
+  focus_capabilities:
+  - detect_tactics
+- stance_key: architecture
+  label: Pattern Analysis & Management Style
+  description: |-
+    With the full detection catalog, analyze patterns: distribution
+    across the 10 tactic types, cluster identification showing which
+    tactics reinforce each other, and characterization of the author's
+    overall intellectual management style (escalator, reviser,
+    narrator, amnesiac). Brief effectiveness assessment for each
+    detected instance.
+  focus_dimensions:
+  - tactic_patterns
+  - tactic_effectiveness
+  focus_capabilities:
+  - analyze_tactic_patterns
+  - assess_tactic_effectiveness
+- stance_key: reflection
+  label: Effectiveness, Taxonomy & Reflexive Assessment
+  description: |-
+    Comprehensive effectiveness analysis: each instance rated for
+    execution quality, audience-relative effectiveness, and
+    transparency. Full taxonomy instantiation: every category
+    assessed for fit, hybrids and novel tactics documented with
+    proposed classifications. Reflexive assessment of whether this
+    author's practice reveals limitations in the taxonomy itself.
+  focus_dimensions:
+  - tactic_effectiveness
+  - tactic_taxonomy
+  focus_capabilities:
+  - assess_tactic_effectiveness
+  - instantiate_taxonomy
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: reflection
+    consumes_from:
+    - 1
+    - 2

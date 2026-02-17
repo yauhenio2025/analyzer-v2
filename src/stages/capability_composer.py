@@ -24,6 +24,7 @@ from pydantic import BaseModel, Field
 
 from src.engines.schemas_v2 import CapabilityEngineDefinition, PassDefinition
 from src.operations.registry import StanceRegistry
+from src.operationalizations.registry import get_operationalization_registry
 
 logger = logging.getLogger(__name__)
 
@@ -196,13 +197,41 @@ def compose_pass_prompt(
 def compose_all_pass_prompts(
     cap_def: CapabilityEngineDefinition,
     depth: str = "standard",
+    use_operationalizations: bool = True,
 ) -> list[PassPrompt]:
     """Compose prompts for all passes in a depth level.
 
     Returns a list of PassPrompts in pass order, WITHOUT shared context
     filled in (that comes at runtime when prior pass output is available).
     This is useful for previewing the full pass structure.
+
+    Checks the operationalization registry first. If an operationalization
+    exists for this engine at this depth, builds PassDefinitions from
+    the operationalization layer instead of inline engine YAML passes.
+    Falls back to inline passes if no operationalization is found.
     """
+    # ── Try operationalization layer first ──────────────────────────
+    if use_operationalizations:
+        pass_defs = _build_pass_defs_from_operationalization(
+            cap_def.engine_key, depth
+        )
+        if pass_defs:
+            logger.debug(
+                f"Using operationalization layer for {cap_def.engine_key} at {depth}: "
+                f"{len(pass_defs)} passes"
+            )
+            prompts = []
+            for pass_def in pass_defs:
+                prompt = compose_pass_prompt(
+                    cap_def=cap_def,
+                    pass_def=pass_def,
+                    depth=depth,
+                    shared_context=None,
+                )
+                prompts.append(prompt)
+            return prompts
+
+    # ── Fall back to inline passes from engine YAML ────────────────
     depth_level = None
     for dl in cap_def.depth_levels:
         if dl.key == depth:
@@ -227,6 +256,49 @@ def compose_all_pass_prompts(
         prompts.append(prompt)
 
     return prompts
+
+
+def _build_pass_defs_from_operationalization(
+    engine_key: str,
+    depth: str,
+) -> list[PassDefinition] | None:
+    """Build PassDefinitions from the operationalization registry.
+
+    Returns None if no operationalization exists for this engine/depth,
+    triggering fallback to inline passes.
+    """
+    op_reg = get_operationalization_registry()
+    op = op_reg.get(engine_key)
+    if op is None:
+        return None
+
+    depth_seq = op.get_depth_sequence(depth)
+    if depth_seq is None or not depth_seq.passes:
+        return None
+
+    pass_defs = []
+    for entry in sorted(depth_seq.passes, key=lambda p: p.pass_number):
+        stance_op = op.get_stance_op(entry.stance_key)
+        if stance_op is None:
+            logger.warning(
+                f"Operationalization for {engine_key} references stance "
+                f"'{entry.stance_key}' but no operationalization found — skipping pass"
+            )
+            continue
+
+        pass_defs.append(
+            PassDefinition(
+                pass_number=entry.pass_number,
+                label=stance_op.label,
+                stance=entry.stance_key,
+                description=stance_op.description,
+                focus_dimensions=stance_op.focus_dimensions,
+                focus_capabilities=stance_op.focus_capabilities,
+                consumes_from=entry.consumes_from,
+            )
+        )
+
+    return pass_defs if pass_defs else None
 
 
 def _compose_stance_section(name: str, stance_text: str, cognitive_mode: str) -> str:
