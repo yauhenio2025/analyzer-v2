@@ -32,10 +32,11 @@
 ## Capability Engine Definitions (v2 Format)
 
 ### Capability-Driven Engine Definitions
-- **Status**: Active (11 engines with capability definitions, 10 with explicit pass definitions; 4 engines use dialectical stance in deep mode)
-- **Description**: New engine definition format describing WHAT an engine investigates (problematique, analytical dimensions, capabilities, composability) rather than HOW it formats output (fixed schemas, extraction steps). Part of the schema-on-read architecture. Now includes PassDefinition for explicit multi-pass structure with analytical stances. Four engines use the dialectical stance in their deep analysis mode: inferential_commitment_mapper, concept_semantic_constellation, concept_synthesis, concept_taxonomy_argumentative_function.
+- **Status**: Active (11 engines with capability definitions, 61 enriched capabilities, all 11 with operationalizations; 4 engines use dialectical stance in deep mode)
+- **Description**: New engine definition format describing WHAT an engine investigates (problematique, analytical dimensions, capabilities, composability) rather than HOW it formats output (fixed schemas, extraction steps). Part of the schema-on-read architecture. Now includes PassDefinition for explicit multi-pass structure with analytical stances. Four engines use the dialectical stance in their deep analysis mode: inferential_commitment_mapper, concept_semantic_constellation, concept_synthesis, concept_taxonomy_argumentative_function. All 11 engines have 0 orphaned dimensions and genuine multi-pass at deep depth. All 61 capabilities enriched with extended_description, intellectual_grounding (thinker/concept/method), indicators, and depth_scaling.
 - **Entry Points**:
-  - `src/engines/schemas_v2.py:1-292` - Pydantic models (CapabilityEngineDefinition, AnalyticalDimension, EngineCapability, ComposabilitySpec, DepthLevel, PassDefinition, IntellectualLineage, CapabilityEngineSummary)
+  - `src/engines/schemas_v2.py:1-310` - Pydantic models (CapabilityEngineDefinition, AnalyticalDimension, EngineCapability, CapabilityGrounding, ComposabilitySpec, DepthLevel, PassDefinition, IntellectualLineage, CapabilityEngineSummary)
+  - `scripts/enrich_capabilities.py:1-290` - Generation script using Claude API to enrich capabilities with intellectual grounding
   - `src/engines/capability_definitions/conditions_of_possibility_analyzer.yaml:1-314` - First capability definition (8 dimensions, 8 capabilities, composability, 3 depth levels)
   - `src/engines/capability_definitions/concept_evolution.yaml:1-253` - Concept Evolution Tracker (6 dimensions: vocabulary/methodology/metaphor/framing evolution, concept trajectory, dimensional comparison matrix; Koselleck/Skinner/Kuhn lineage; first engine in Pass 2 scanning chain)
   - `src/engines/capability_definitions/concept_appropriation_tracker.yaml:1-261` - Concept Appropriation Tracker (6 dimensions: migration paths, semantic mutations, appropriation patterns, distortion map, recombination, acknowledgment status; Derrida/Said/Bakhtin/Bloom lineage; second engine in Pass 2 scanning chain)
@@ -63,11 +64,11 @@
 
 ### Operationalization Registry
 - **Status**: Active
-- **Description**: Third layer bridging abstract stances (HOW to think) and concrete engines (WHAT to think about). Each engine gets an operationalization YAML specifying how each stance applies (label, description, focus dimensions/capabilities) and what depth sequences are available. Pre-generated artifacts that are inspectable, editable, version-controlled, and LLM-(re)generatable.
+- **Description**: Third layer bridging abstract stances (HOW to think) and concrete engines (WHAT to think about). Each engine gets an operationalization YAML specifying how each stance applies (label, description, focus dimensions/capabilities) and what depth sequences are available. Pre-generated artifacts that are inspectable, editable, version-controlled, and LLM-(re)generatable. All 11 engines now have operationalizations with 0 orphaned dimensions and genuine multi-pass depth escalation.
 - **Entry Points**:
   - `src/operationalizations/schemas.py:1-140` - StanceOperationalization, DepthPassEntry, DepthSequence, EngineOperationalization, summary/coverage models
   - `src/operationalizations/registry.py:1-170` - OperationalizationRegistry with CRUD, coverage_matrix(), get_stance_for_engine(), get_depth_sequence()
-  - `src/operationalizations/definitions/*.yaml` - 10 engine operationalization files extracted from capability definitions
+  - `src/operationalizations/definitions/*.yaml` - 11 engine operationalization files (all capability engines covered)
   - `src/api/routes/operationalizations.py:1-200` - Full CRUD API with compose-preview endpoint
   - `src/api/routes/llm.py:410-840` - LLM generation endpoints for single, bulk, and sequence generation
   - `src/stages/capability_composer.py:196-290` - compose_all_pass_prompts() with operationalization-first fallback pattern
@@ -88,6 +89,18 @@
   - `frontend/src/types/index.ts` - TypeScript types for operationalization entities
   - `frontend/src/lib/api.ts` - API client methods incl. full PUT update (direct fetch to ANALYZER_V2_URL)
   - `frontend/src/components/Layout.tsx` - Navigation item
+- **Operationalization Files** (11 total):
+  - `conditions_of_possibility_analyzer.yaml` - 4 stances (discovery/architecture/confrontation/integration), deep=4 passes
+  - `inferential_commitment_mapper.yaml` - 4 stances, deep=4 passes
+  - `concept_semantic_constellation.yaml` - 4 stances, deep=4 passes
+  - `concept_synthesis.yaml` - 4 stances, deep=4 passes
+  - `concept_taxonomy_argumentative_function.yaml` - 4 stances, deep=3 passes
+  - `conceptual_framework_extraction.yaml` - 4 stances, deep=3 passes
+  - `concept_evolution.yaml` - 4 stances (discovery/inference/architecture/integration), deep=3 passes
+  - `concept_appropriation_tracker.yaml` - 4 stances (discovery/inference/architecture/integration), deep=3 passes
+  - `evolution_tactics_detector.yaml` - 3 stances, deep=3 passes
+  - `genealogy_relationship_classification.yaml` - 2 stances (discovery/inference), deep=2 passes
+  - `genealogy_final_synthesis.yaml` - 1 stance (integration), intentionally single-pass at all depths
 - **Added**: 2026-02-17 | **Modified**: 2026-02-17
 
 ## Schema-on-Read / Prose Pipeline (the-critic)

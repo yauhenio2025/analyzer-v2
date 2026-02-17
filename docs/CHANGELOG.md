@@ -5,6 +5,15 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+- **Enriched capability definitions for all 61 capabilities across 11 engines** — Each capability now has 4 new fields:
+  - `extended_description`: 2-3 paragraphs grounded in the engine's intellectual tradition (~1600-2600 chars each)
+  - `intellectual_grounding`: per-capability thinker/concept/method linking (thinkers span Brandom, Foucault, Koselleck, Toulmin, Derrida, Goffman, Saussure, Gadamer, Lakatos, Bloom, Sellars, Kuhn, Lakoff, Skinner, Nietzsche, Berlin, Grafton, Cassirer, Perelman, Walton, Lovejoy)
+  - `indicators`: 5 textual signals per capability for when the capability is needed
+  - `depth_scaling`: surface/standard/deep output expectations per capability
+  - New Pydantic models: `CapabilityGrounding`, enriched `EngineCapability` with optional fields
+  - Generation script: `scripts/enrich_capabilities.py` (uses Claude API with full engine context)
+
 ### Fixed
 - **Orphaned dimensions**: `tactic_evolution` added to evolution_tactics_detector (architecture + reflection stances), `relationship_evidence` added to genealogy_relationship_classification (discovery + inference stances)
 - **Missing operationalization**: Created `conditions_of_possibility_analyzer.yaml` with 4 stances (discovery, architecture, confrontation, integration), 8 dimensions, 3 depth levels — completing 11/11 engine coverage
