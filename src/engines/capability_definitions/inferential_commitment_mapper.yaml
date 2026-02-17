@@ -322,7 +322,7 @@ depth_levels:
 
   - key: deep
     description: "Complete inferential archaeology: exhaustive commitment inventory with originality and awareness assessment, full conflict analysis with navigation strategy evaluation, complete dependency graph with single-point-of-failure analysis, cascading commitment chains with strength at every link, package deal identification with incompatibility mapping, hidden implications traced to source commitments, performative contradictions surfaced, and citation baggage analysis revealing inherited commitments the author may not realize they carry"
-    typical_passes: 3
+    typical_passes: 4
     suitable_for: "Dense philosophical works, texts with complex or contradictory argumentation, foundational profiling for major genealogy studies, works where the real argument differs from the stated argument"
     passes:
       - pass_number: 1
@@ -350,19 +350,63 @@ depth_levels:
           chains, circular dependencies, single-point-of-failure analysis,
           and load-bearing assessment for each foundational commitment.
       - pass_number: 3
+        label: "Dialectical Working-Through of Commitment Conflicts"
+        stance: dialectical
+        focus_dimensions: [commitment_conflicts, logical_dependencies, implicit_commitments]
+        focus_capabilities: [detect_conflicts, trace_dependencies]
+        consumes_from: [1, 2]
+        description: |
+          Do not resolve the commitment conflicts found in Pass 2 — inhabit
+          them. For each significant tension between commitments, perform
+          genuine dialectical work: state the thesis (the commitment in its
+          strongest form), identify its internal negation (the point where
+          the commitment's own logic undermines itself), and dwell in the
+          collision until a higher-order understanding emerges.
+
+          Which commitment conflicts are PRODUCTIVE — generating insight
+          precisely because they cannot be resolved? The tension between a
+          commitment to individual autonomy and a commitment to social
+          determination, for instance, may be the engine that drives the
+          entire argument forward. Collapsing it would not fix the argument
+          but destroy it. Identify these generative contradictions and
+          articulate what they produce that neither side could generate alone.
+
+          Which conflicts are genuinely DESTRUCTIVE — where the author is
+          committed to incompatible positions and the incompatibility is not
+          productive but simply a flaw? For these, trace what a determinate
+          negation would look like: not just "this fails" but "this fails in
+          a way that points toward what is actually needed." Every negation
+          should contain, in embryo, the specification of what would succeed.
+
+          Pay special attention to commitment chains where accepting premise A
+          forces commitment B, which contradicts commitment C, which the
+          author also needs. These cascading contradictions often reveal that
+          the author's real position is not any of the stated commitments but
+          an unstated position that would require restructuring the entire
+          commitment landscape. Articulate what that unstated position might be.
+
+      - pass_number: 4
         label: "Hidden Implications & Commitment Landscape Synthesis"
         stance: integration
         focus_dimensions: [hidden_implications, commitment_conflicts, logical_dependencies]
         focus_capabilities: [reveal_hidden_implications]
-        consumes_from: [1, 2]
+        consumes_from: [1, 2, 3]
         description: |
-          Synthesize the full commitment landscape: hidden implications
-          traced to source commitments, performative contradictions surfaced,
-          citation baggage analysis revealing inherited commitments the
-          author may not realize they carry, package deal identification
-          with incompatibility mapping, and overall commitment landscape
-          synthesis integrating conflicts, dependencies, and implications
-          into a coherent map of what you are really signing up for.
+          Synthesize the full commitment landscape, now enriched by the
+          dialectical pass's working-through of commitment conflicts.
+          Hidden implications traced to source commitments, performative
+          contradictions surfaced, citation baggage analysis revealing
+          inherited commitments the author may not realize they carry,
+          package deal identification with incompatibility mapping. The
+          dialectical pass distinguished productive from destructive
+          contradictions — integrate this into the overall commitment
+          landscape synthesis. Where contradictions are productive, the
+          synthesis should preserve them as generative tensions. Where
+          they are destructive, the synthesis should articulate what
+          restructuring of commitments the analysis points toward. The
+          result is a map of what you are really signing up for — including
+          which tensions come with the package and which signal genuine
+          problems in the author's position.
 
 # ============================================================
 # METADATA

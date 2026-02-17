@@ -32,8 +32,8 @@
 ## Capability Engine Definitions (v2 Format)
 
 ### Capability-Driven Engine Definitions
-- **Status**: Active (11 engines with capability definitions, 10 with explicit pass definitions)
-- **Description**: New engine definition format describing WHAT an engine investigates (problematique, analytical dimensions, capabilities, composability) rather than HOW it formats output (fixed schemas, extraction steps). Part of the schema-on-read architecture. Now includes PassDefinition for explicit multi-pass structure with analytical stances.
+- **Status**: Active (11 engines with capability definitions, 10 with explicit pass definitions; 4 engines use dialectical stance in deep mode)
+- **Description**: New engine definition format describing WHAT an engine investigates (problematique, analytical dimensions, capabilities, composability) rather than HOW it formats output (fixed schemas, extraction steps). Part of the schema-on-read architecture. Now includes PassDefinition for explicit multi-pass structure with analytical stances. Four engines use the dialectical stance in their deep analysis mode: inferential_commitment_mapper, concept_semantic_constellation, concept_synthesis, concept_taxonomy_argumentative_function.
 - **Entry Points**:
   - `src/engines/schemas_v2.py:1-292` - Pydantic models (CapabilityEngineDefinition, AnalyticalDimension, EngineCapability, ComposabilitySpec, DepthLevel, PassDefinition, IntellectualLineage, CapabilityEngineSummary)
   - `src/engines/capability_definitions/conditions_of_possibility_analyzer.yaml:1-314` - First capability definition (8 dimensions, 8 capabilities, composability, 3 depth levels)

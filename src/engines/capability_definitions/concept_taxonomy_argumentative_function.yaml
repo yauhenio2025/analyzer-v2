@@ -316,7 +316,7 @@ depth_levels:
 
   - key: deep
     description: "Comprehensive structural engineering analysis: diachronic function tracking, complete dependency graph, stress testing, adversarial attack simulation, full redundancy audit, and comparison of the author's perceived vs actual argumentative architecture"
-    typical_passes: 3
+    typical_passes: 4
     suitable_for: "Dense philosophical works, prolific authors, publication-grade structural analysis, comprehensive genealogy studies"
     passes:
       - pass_number: 1
@@ -374,6 +374,53 @@ depth_levels:
           scrutiny). Compare vulnerability patterns across the author's
           career: are they getting better or worse at structural defense?
           Produce recommendations for structural reinforcement.
+
+      - pass_number: 4
+        label: "Dialectical Working-Through of Structural Tensions"
+        stance: dialectical
+        focus_dimensions: [vulnerability_assessment, load_bearing_analysis, redundancy_map]
+        focus_capabilities: [assess_vulnerabilities, analyze_load_bearing, map_redundancy]
+        consumes_from: [1, 2, 3]
+        description: |
+          The confrontation pass identified vulnerabilities; now inhabit
+          them dialectically. The key question is not "how can these
+          weaknesses be fixed?" but "what do these structural tensions
+          PRODUCE?" An argument's vulnerabilities are not merely flaws
+          to be patched — they are often the sites of the argument's
+          greatest generative power.
+
+          For each significant structural tension, perform Aufhebung.
+          A load-bearing chain that lacks adequate support is vulnerable,
+          yes — but it may be load-bearing BECAUSE it is doing genuinely
+          novel work that existing argumentative resources cannot yet
+          support. The vulnerability is a symptom of intellectual
+          ambition outrunning available justification. Articulate what
+          each vulnerable chain is reaching for that the current
+          argumentative architecture cannot yet deliver.
+
+          Where redundancy exists, ask whether the multiplied chains
+          are genuinely saying the same thing or whether the apparent
+          redundancy conceals a dialectical development — each
+          "redundant" chain actually advancing the argument by
+          approaching the same conclusion from a different angle,
+          and the convergence of these different angles constituting
+          a stronger form of justification than any single chain could
+          provide. What looks like waste may be dialectical triangulation.
+
+          Where single-thread dependencies create fragility, do not
+          simply flag the risk. Trace WHY the author could not build
+          redundancy at that point. Often, single-thread dependencies
+          mark the places where the argument is most original — where
+          the author had to forge a new path with no existing support
+          structures to draw on. The fragility and the originality
+          are two faces of the same intellectual situation. Articulate
+          this relationship: where is fragility the price of ambition,
+          and where is it simply carelessness?
+
+          The overall question: does the argument's structural tension
+          create a productive instability that drives intellectual
+          development, or a destructive instability that threatens
+          collapse? Most arguments contain both kinds. Distinguish them.
 
 # ============================================================
 # METADATA

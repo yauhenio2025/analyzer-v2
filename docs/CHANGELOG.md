@@ -40,6 +40,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
   - `genealogy_final_synthesis.yaml` - Single-pass capstone at all depths: Surface (integration); Standard (integration); Deep (integration)
   - All 6 analytical stances used: discovery, inference, confrontation, architecture, integration, reflection
 
+- **Dialectical passes added to 4 engines' deep modes** — Engines whose deep analysis most benefits from Hegelian working-through of contradictions now include a dialectical pass:
+  - `inferential_commitment_mapper.yaml` — Deep: 4 passes (discovery → confrontation → **dialectical** → integration). Dialectical pass works through commitment conflicts: which are productive (generating insight through irresolution) vs. destructive (genuine flaws), traces cascading contradictions, articulates unstated positions the commitment landscape points toward.
+  - `concept_semantic_constellation.yaml` — Deep: 4 passes (discovery → architecture → **dialectical** → integration). Dialectical pass inhabits boundary tensions as generative sites: fuzzy boundaries reveal conceptual limits, competing clusters show double-duty concepts, definition-usage gaps reveal what concepts are trying to become.
+  - `concept_synthesis.yaml` — Deep: 4 passes (discovery → confrontation → **dialectical** → integration). Dialectical pass traces how intellectual evolution is driven by internal contradiction: divergences reveal what concepts are trying to become, convergences tested for genuine Aufhebung vs. mere juxtaposition, deepest insights emerge from unstable commitments.
+  - `concept_taxonomy_argumentative_function.yaml` — Deep: 4 passes (discovery → architecture → confrontation → **dialectical**). Dialectical pass asks what structural tensions produce: vulnerable load-bearing chains may signal ambition outrunning justification, apparent redundancy may be dialectical triangulation, fragility may be the price of originality.
+
 ### Fixed
 - **consumes_from field in 2 YAMLs** — `inferential_commitment_mapper.yaml` and `evolution_tactics_detector.yaml` had dimension keys (strings) in `consumes_from` instead of pass numbers (integers). Fixed to use `[1]` and `[1, 2]` per the PassDefinition schema.
 
