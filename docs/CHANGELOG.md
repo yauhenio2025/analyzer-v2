@@ -6,6 +6,15 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Capability definition history tracking** — File-based JSON history system that auto-detects YAML changes on startup
+  - Computes stable SHA-256 hashes per definition, generates field-level diffs across all sections (lineage, dimensions, capabilities, depth, composability)
+  - `history_schemas.py`: FieldChange, HistoryEntry, CapabilityHistory Pydantic models
+  - `history_tracker.py`: hash computation, diff engine, summary generator, check_and_record_changes entry point
+  - Storage in `src/engines/capability_history/` (committed to git for persistence across deploys)
+  - 11 baseline entries auto-created for all capability engines
+  - API endpoint: `GET /v1/engines/{key}/capability-definition/history?limit=50`
+  - Registry integration: history checked on every YAML load (failure-safe, never blocks engine loading)
+
 - **Enriched capability definitions for all 61 capabilities across 11 engines** — Each capability now has 4 new fields:
   - `extended_description`: 2-3 paragraphs grounded in the engine's intellectual tradition (~1600-2600 chars each)
   - `intellectual_grounding`: per-capability thinker/concept/method linking (thinkers span Brandom, Foucault, Koselleck, Toulmin, Derrida, Goffman, Saussure, Gadamer, Lakatos, Bloom, Sellars, Kuhn, Lakoff, Skinner, Nietzsche, Berlin, Grafton, Cassirer, Perelman, Walton, Lovejoy)

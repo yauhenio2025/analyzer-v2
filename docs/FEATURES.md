@@ -29,6 +29,20 @@
   - `GET /v1/operations/stances/position/{position}` - Filter by typical position (early/middle/late)
 - **Added**: 2026-02-17
 
+## Capability Definition History Tracking
+
+### Auto-Detection History System
+- **Status**: Active
+- **Description**: File-based JSON history system that detects YAML capability definition changes on startup. Computes stable SHA-256 hashes, generates field-level diffs across all 6 sections (top_level, intellectual_lineage, analytical_dimensions, capabilities, composability, depth_levels), stores baseline + change entries committed to git for persistence across deploys.
+- **Entry Points**:
+  - `src/engines/history_schemas.py:1-55` - Pydantic models: ChangeAction, FieldChange, HistoryEntry, CapabilityHistory
+  - `src/engines/history_tracker.py:1-320` - Core logic: compute_definition_hash, diff_definitions, generate_summary, check_and_record_changes, file I/O
+  - `src/engines/registry.py:261-271` - Integration into _load_capability_definitions() (try/except wrapped)
+  - `src/api/routes/engines.py:509-537` - GET /{key}/capability-definition/history endpoint
+  - `src/engines/capability_history/` - 11 JSON history files + 11 snapshot files (auto-populated)
+- **API Endpoints**: `GET /v1/engines/{key}/capability-definition/history?limit=50`
+- **Added**: 2026-02-17
+
 ## Capability Engine Definitions (v2 Format)
 
 ### Capability-Driven Engine Definitions
