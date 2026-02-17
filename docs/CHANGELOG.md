@@ -6,9 +6,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
-- **Analytical Stances library** — New `src/operations/` module implementing 6 shared cognitive postures for multi-pass analysis
+- **Analytical Stances library** — New `src/operations/` module implementing 7 shared cognitive postures for multi-pass analysis
   - Stances describe HOW to think in a given pass, not what output format to produce (preserving prose-first architecture)
-  - 6 stances: discovery (divergent), inference (deductive), confrontation (adversarial), architecture (structural), integration (convergent), reflection (meta-cognitive)
+  - 7 stances: discovery (divergent), inference (deductive), confrontation (adversarial), architecture (structural), integration (convergent), reflection (meta-cognitive), dialectical (generative-contradictory)
+  - **Dialectical stance** — Genuinely Hegelian cognitive posture for inhabiting contradictions productively. Covers Aufhebung (sublation), determinate negation, the negative as equally positive, concrete universals. Sits between confrontation (finds tensions) and integration (resolves them). 5 paragraphs, 3065 chars.
   - `src/operations/schemas.py` - AnalyticalStance and StanceSummary models
   - `src/operations/definitions/stances.yaml` - Stance definitions with rich prose descriptions
   - `src/operations/registry.py` - StanceRegistry with get, list, filter by position

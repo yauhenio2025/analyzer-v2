@@ -6,20 +6,21 @@
 
 ### Analytical Stances Library
 - **Status**: Active
-- **Description**: Shared cognitive postures for multi-pass analysis. 6 stances describing HOW an LLM should think in a given pass — discovery, inference, confrontation, architecture, integration, reflection. Stances are prose descriptions injected into prompts, NOT output templates.
+- **Description**: Shared cognitive postures for multi-pass analysis. 7 stances describing HOW an LLM should think in a given pass — discovery, inference, confrontation, architecture, integration, reflection, dialectical. Stances are prose descriptions injected into prompts, NOT output templates.
 - **Entry Points**:
   - `src/operations/schemas.py:1-30` - AnalyticalStance and StanceSummary Pydantic models
-  - `src/operations/definitions/stances.yaml:1-80` - 6 stance definitions with prose descriptions, cognitive modes, typical positions
+  - `src/operations/definitions/stances.yaml:1-230` - 7 stance definitions with prose descriptions, cognitive modes, typical positions
   - `src/operations/registry.py:1-80` - StanceRegistry class (get, list, filter by position)
   - `src/api/routes/operations.py:1-82` - API routes for stances
   - `src/api/main.py:78-84` - Stance registry loading in lifespan, init_stance_registry for capability composer
-- **Stances** (6 total):
+- **Stances** (7 total):
   - `discovery` (early, divergent) — Cast the widest net, surface everything without filtering
   - `inference` (early, deductive) — Trace what follows from what, map logical chains
   - `confrontation` (middle, adversarial) — Pit findings against each other, test robustness
   - `architecture` (middle, structural) — Map load-bearing skeleton, classify structures
   - `integration` (late, convergent) — Synthesize across dimensions into unified narrative
   - `reflection` (late, meta-cognitive) — Assess the assessment, identify blindspots
+  - `dialectical` (middle, generative-contradictory) — Inhabit contradictions productively; Hegelian Aufhebung, determinate negation, concrete universals
 - **API Endpoints**:
   - `GET /v1/operations/stances` - List stance summaries
   - `GET /v1/operations/stances/full` - List all stances with full prose
