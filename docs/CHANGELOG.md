@@ -6,6 +6,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Enriched intellectual lineage** — All 11 capability engines now have rich lineage objects instead of flat strings:
+  - `ThinkerReference`: name + 2-3 sentence bio (primary + secondary thinkers)
+  - `TraditionEntry`: name + 2-3 sentence tradition description
+  - `KeyConceptEntry`: name + 1-2 sentence working definition
+  - New Pydantic models: `ThinkerReference`, `TraditionEntry`, `KeyConceptEntry` in `schemas_v2.py`
+  - Union types on `IntellectualLineage` (`ThinkerReference | str`) for backwards compatibility
+  - Enrichment script: `scripts/enrich_lineage.py` (uses Claude API with full engine context)
+  - Updated `history_tracker.py` for object-based lineage diffs (name-keyed comparison)
+  - Updated `capability_composer.py` for `.name` attribute access on traditions/concepts
+  - Updated `enrich_capabilities.py` for dict-style lineage extraction
+
 - **Capability definition history tracking** — File-based JSON history system that auto-detects YAML changes on startup
   - Computes stable SHA-256 hashes per definition, generates field-level diffs across all sections (lineage, dimensions, capabilities, depth, composability)
   - `history_schemas.py`: FieldChange, HistoryEntry, CapabilityHistory Pydantic models
