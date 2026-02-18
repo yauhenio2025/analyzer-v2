@@ -6,6 +6,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Transformation Templates — Schema-on-Read Execution Service** (`src/transformations/`) — Reusable transformation recipes that execute the `TransformationSpec` already declared in view definitions. Five types: passthrough (none), field renaming (schema_map), structured extraction from prose (llm_extract), summarization (llm_summarize), and aggregation (group/count/sort). Includes in-memory TTL cache for LLM results.
+  - `TransformationTemplate` schema with full execution config (model, fallback, max_tokens), applicability (renderer types, engines), and metadata (tags, status, source)
+  - `TransformationRegistry` with JSON-per-file loading, CRUD, filter by type/tag/engine/renderer
+  - `TransformationExecutor` with all 5 transformation types, stance resolution, and TTL cache
+  - 5 seed templates extracted from The Critic's `presentation.py`: conditions_extraction, tactics_extraction, functional_extraction, synthesis_extraction (all llm_extract), chain_log_field_map (schema_map)
+  - Full REST API: CRUD + `/execute` endpoint + `/for-engine/{key}` + `/for-renderer/{type}` + `/reload`
+  - ([`src/transformations/schemas.py`](src/transformations/schemas.py), [`src/transformations/registry.py`](src/transformations/registry.py), [`src/transformations/executor.py`](src/transformations/executor.py), [`src/transformations/definitions/*.json`](src/transformations/definitions/), [`src/api/routes/transformations.py`](src/api/routes/transformations.py))
+- **Shared LLM Client** (`src/llm/client.py`) — Extracted common LLM utilities from `src/api/routes/llm.py` into reusable module: `get_anthropic_client()`, `parse_llm_json_response()`, `call_extraction_model()` with Haiku→Sonnet fallback. Used by both transformation executor and LLM routes.
+- **Transformations Management UI** (analyzer-mgmt) — List page with type-colored badges and search/filter, detail page with 6 tabs (Identity, Specification, Applicability, Execution Config, Test, Preview), create/edit/delete, and live execute testing. Sidebar nav item with Repeat icon between Views and Operationalizations.
+  - ([`frontend/src/pages/transformations/index.tsx`], [`frontend/src/pages/transformations/[key].tsx`], [`frontend/src/types/index.ts`], [`frontend/src/lib/api.ts`], [`frontend/src/components/Layout.tsx`])
+- **View Apply Template** (analyzer-mgmt) — "Apply Transformation Template" dropdown in views/[key].tsx Transformation tab. One-time copy of a template's spec fields into the view's transformation. Fetches template list from analyzer-v2, applies selected template, shows confirmation banner.
+
 - **View Definitions — Rendering Layer** (`src/views/`) — Declarative specs for how analytical outputs become UI. A ViewDefinition declares: data source -> renderer type -> position in app. Consumer apps fetch view trees and dispatch to their component registries. No execution logic — just definitions.
   - `ViewDefinition` schema with `DataSourceRef` (workflow/phase/engine/chain pointers) and `TransformationSpec` (none, schema_map, llm_extract, llm_summarize, aggregate)
   - `ViewRegistry` with JSON-per-file loading, CRUD, `compose_tree()` for building nested page layouts, `for_workflow()` lookup

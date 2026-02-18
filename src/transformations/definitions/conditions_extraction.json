@@ -1,0 +1,39 @@
+{
+  "template_key": "conditions_extraction",
+  "template_name": "Conditions of Possibility Extraction",
+  "description": "Extracts structured enabling/constraining conditions from prose output of the conditions_of_possibility_analyzer engine. Produces typed condition objects with evidence and counterfactual analysis.",
+  "version": 1,
+  "transformation_type": "llm_extract",
+  "llm_extraction_schema": {
+    "enabling_conditions": [
+      {
+        "condition_id": "string (ec_1, ec_2, ...)",
+        "condition_type": "enum: conceptual_foundation|audience_preparation|authority_establishment|framework_provision|problem_definition|methodological_precedent|intellectual_toolkit|cross_domain_transfer",
+        "description": "string",
+        "prior_works_involved": ["string"],
+        "how_it_enables": "string",
+        "how_managed": "enum: explicitly_acknowledged|implicitly_leveraged|strategically_deployed|taken_for_granted",
+        "evidence": "string"
+      }
+    ],
+    "constraining_conditions": [
+      {
+        "constraint_id": "string (cc_1, cc_2, ...)",
+        "description": "string",
+        "type": "enum: conceptual_commitment|audience_expectation|methodological_lock_in|rhetorical_position|institutional_role",
+        "how_navigated": "string"
+      }
+    ],
+    "counterfactual_analysis": "string (2-4 paragraphs)",
+    "synthetic_judgment": "string (2-4 paragraphs)"
+  },
+  "llm_prompt_template": "You are a precise data extraction assistant. Your task is to extract structured JSON from an analytical prose text about \"conditions of possibility\".\n\nExtract the following fields from the analysis text. Be thorough \u2014 capture ALL conditions mentioned, not just the first few.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"enabling_conditions\": [\n    {\n      \"condition_id\": \"ec_1\",\n      \"condition_type\": \"<one of: conceptual_foundation, audience_preparation, authority_establishment, framework_provision, problem_definition, methodological_precedent, intellectual_toolkit, cross_domain_transfer>\",\n      \"description\": \"<1-2 sentence description of this enabling condition>\",\n      \"prior_works_involved\": [\"<title or short reference of works that create this condition>\"],\n      \"how_it_enables\": \"<how this condition makes the current argument possible>\",\n      \"how_managed\": \"<one of: explicitly_acknowledged, implicitly_leveraged, strategically_deployed, taken_for_granted>\",\n      \"evidence\": \"<specific textual or analytical evidence for this condition>\"\n    }\n  ],\n  \"constraining_conditions\": [\n    {\n      \"constraint_id\": \"cc_1\",\n      \"description\": \"<1-2 sentence description of this constraint>\",\n      \"type\": \"<one of: conceptual_commitment, audience_expectation, methodological_lock_in, rhetorical_position, institutional_role>\",\n      \"how_navigated\": \"<how the author deals with this constraint>\"\n    }\n  ],\n  \"counterfactual_analysis\": \"<What would the argument look like without the author's prior work? 2-4 paragraphs>\",\n  \"synthetic_judgment\": \"<Overall assessment of the conditions-of-possibility landscape. 2-4 paragraphs>\"\n}\n\nIMPORTANT RULES:\n1. Return ONLY the JSON object \u2014 no markdown code fences, no commentary\n2. Use sequential IDs: ec_1, ec_2, ... for enabling; cc_1, cc_2, ... for constraining\n3. The condition_type MUST be one of the listed values (use closest match)\n4. If the analysis mentions a condition but doesn't specify all fields, fill in what you can and leave others as brief summaries\n5. Aim for 6-12 enabling conditions and 3-8 constraining conditions\n6. The counterfactual_analysis and synthetic_judgment should be rich paragraphs, not bullet points\n7. Preserve the analytical depth of the original prose \u2014 don't oversimplify",
+  "applicable_renderer_types": ["accordion", "card_grid", "prose"],
+  "applicable_engines": ["conditions_of_possibility_analyzer"],
+  "tags": ["genealogy", "conditions", "extraction", "prose-to-structured"],
+  "status": "active",
+  "model": "claude-haiku-4-5-20251001",
+  "model_fallback": "claude-sonnet-4-5-20250929",
+  "max_tokens": 8000,
+  "source": "Extracted from the-critic/analyzer/presentation.py _build_conditions_extraction_prompt()"
+}

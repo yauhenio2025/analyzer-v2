@@ -1,0 +1,48 @@
+{
+  "template_key": "synthesis_extraction",
+  "template_name": "Final Synthesis Extraction",
+  "description": "Extracts structured synthesis data from prose output of the genealogy_final_synthesis engine. Produces executive summary, genealogical portrait, key findings, idea genealogies, and author intellectual profile.",
+  "version": 1,
+  "transformation_type": "llm_extract",
+  "llm_extraction_schema": {
+    "executive_summary": "string (2-3 paragraphs)",
+    "genealogical_portrait": "string (3-5 paragraphs)",
+    "key_findings": [
+      {
+        "finding": "string",
+        "significance": "string",
+        "evidence_strength": "enum: strong|moderate|weak"
+      }
+    ],
+    "idea_genealogies": [
+      {
+        "idea_id": "string",
+        "idea_name": "string",
+        "genealogy_summary": "string (1-2 paragraphs)",
+        "evolution_pattern": "enum: gradual_refinement|radical_transformation|strategic_repurposing|synthesis_of_influences",
+        "tactics_involved": ["string"],
+        "functional_role": "string"
+      }
+    ],
+    "author_intellectual_profile": {
+      "evolution_style": "string",
+      "dominant_tactics": ["string"],
+      "intellectual_honesty_assessment": "string",
+      "biographical_interpretation": "string"
+    },
+    "methodological_notes": {
+      "limitations": ["string"],
+      "areas_requiring_further_investigation": ["string"],
+      "confidence_assessment": "string"
+    }
+  },
+  "llm_prompt_template": "You are a precise data extraction assistant. Extract structured JSON from a genealogical final synthesis analysis.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"executive_summary\": \"<2-3 paragraph executive summary of the genealogical analysis>\",\n  \"genealogical_portrait\": \"<3-5 paragraph intellectual portrait of the author's evolution>\",\n  \"key_findings\": [\n    {\n      \"finding\": \"<concise statement of the finding>\",\n      \"significance\": \"<why this finding matters>\",\n      \"evidence_strength\": \"<one of: strong, moderate, weak>\"\n    }\n  ],\n  \"idea_genealogies\": [\n    {\n      \"idea_id\": \"<idea identifier if mentioned>\",\n      \"idea_name\": \"<name of the concept/idea>\",\n      \"genealogy_summary\": \"<1-2 paragraph summary of this idea's evolution>\",\n      \"evolution_pattern\": \"<e.g.: gradual_refinement, radical_transformation, strategic_repurposing, synthesis_of_influences>\",\n      \"tactics_involved\": [\"<tactic types used in evolving this idea>\"],\n      \"functional_role\": \"<what role this idea plays in the author's overall project>\"\n    }\n  ],\n  \"author_intellectual_profile\": {\n    \"evolution_style\": \"<characterization of how this author evolves intellectually>\",\n    \"dominant_tactics\": [\"<most characteristic tactics>\"],\n    \"intellectual_honesty_assessment\": \"<assessment of how honestly the author handles their own evolution>\",\n    \"biographical_interpretation\": \"<how life circumstances shape intellectual evolution>\"\n  },\n  \"methodological_notes\": {\n    \"limitations\": [\"<limitation of the analysis>\"],\n    \"areas_requiring_further_investigation\": [\"<area needing more work>\"],\n    \"confidence_assessment\": \"<overall confidence in the analysis>\"\n  }\n}\n\nRULES:\n1. Return ONLY JSON \u2014 no markdown fences, no commentary\n2. key_findings should have 5-10 findings, ordered by significance\n3. idea_genealogies should cover all major ideas discussed\n4. The executive_summary and genealogical_portrait should be rich prose, not bullet points\n5. Preserve the analytical depth of the original text",
+  "applicable_renderer_types": ["prose", "card_grid", "tab"],
+  "applicable_engines": ["genealogy_final_synthesis"],
+  "tags": ["genealogy", "synthesis", "extraction", "prose-to-structured"],
+  "status": "active",
+  "model": "claude-haiku-4-5-20251001",
+  "model_fallback": "claude-sonnet-4-5-20250929",
+  "max_tokens": 8000,
+  "source": "Extracted from the-critic/analyzer/presentation.py _build_synthesis_extraction_prompt()"
+}

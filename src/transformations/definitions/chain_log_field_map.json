@@ -1,0 +1,23 @@
+{
+  "template_key": "chain_log_field_map",
+  "template_name": "Chain Execution Log Field Mapping",
+  "description": "Maps chain execution metadata fields to display-friendly column names. Used by the Chain Execution Log debug view to normalize field names from the execution metadata format.",
+  "version": 1,
+  "transformation_type": "schema_map",
+  "field_mapping": {
+    "phase_number": "phase",
+    "engine_key": "engine",
+    "execution_time_ms": "duration_ms",
+    "input_tokens": "tokens_in",
+    "output_tokens": "tokens_out",
+    "completion_status": "status"
+  },
+  "applicable_renderer_types": ["table"],
+  "applicable_engines": [],
+  "tags": ["debug", "execution", "metadata", "schema-map"],
+  "status": "active",
+  "model": "claude-haiku-4-5-20251001",
+  "model_fallback": "claude-sonnet-4-5-20250929",
+  "max_tokens": 8000,
+  "source": "Extracted from analyzer-v2/src/views/definitions/genealogy_chain_log.json field_mapping"
+}

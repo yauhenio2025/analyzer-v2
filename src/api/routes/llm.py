@@ -6,7 +6,6 @@ Requires ANTHROPIC_API_KEY environment variable to be set.
 
 import json
 import logging
-import os
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException
@@ -14,6 +13,7 @@ from pydantic import BaseModel, Field
 
 from src.engines.registry import get_engine_registry
 from src.engines.schemas import EngineProfile
+from src.llm.client import get_anthropic_client, parse_llm_json_response
 from src.operationalizations.registry import get_operationalization_registry
 from src.operationalizations.schemas import (
     DepthPassEntry,
@@ -79,20 +79,6 @@ class ProfileSuggestionResponse(BaseModel):
 # ============================================================================
 # LLM Client
 # ============================================================================
-
-
-def get_anthropic_client():
-    """Get Anthropic client if API key is available."""
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        return None
-    try:
-        import anthropic
-
-        return anthropic.Anthropic(api_key=api_key)
-    except ImportError:
-        logger.warning("anthropic library not installed")
-        return None
 
 
 def generate_profile_with_llm(
@@ -188,15 +174,7 @@ Output ONLY valid JSON, no markdown code fences or other text."""
         )
 
         # Parse response
-        content = response.content[0].text
-        # Clean up potential markdown fences
-        if content.startswith("```"):
-            content = content.split("\n", 1)[1]
-        if content.endswith("```"):
-            content = content.rsplit("```", 1)[0]
-        content = content.strip()
-
-        profile_data = json.loads(content)
+        profile_data = parse_llm_json_response(response.content[0].text)
         return EngineProfile(**profile_data)
 
     except json.JSONDecodeError as e:
@@ -369,14 +347,7 @@ Output ONLY valid JSON."""
             messages=[{"role": "user", "content": prompt}],
         )
 
-        content = response.content[0].text
-        if content.startswith("```"):
-            content = content.split("\n", 1)[1]
-        if content.endswith("```"):
-            content = content.rsplit("```", 1)[0]
-        content = content.strip()
-
-        result = json.loads(content)
+        result = parse_llm_json_response(response.content[0].text)
 
         return ProfileSuggestionResponse(
             engine_key=request.engine_key,
@@ -594,14 +565,7 @@ Output ONLY valid JSON, no markdown code fences."""
             messages=[{"role": "user", "content": prompt}],
         )
 
-        content = response.content[0].text
-        if content.startswith("```"):
-            content = content.split("\n", 1)[1]
-        if content.endswith("```"):
-            content = content.rsplit("```", 1)[0]
-        content = content.strip()
-
-        data = json.loads(content)
+        data = parse_llm_json_response(response.content[0].text)
         op = StanceOperationalization(
             stance_key=request.stance_key,
             label=data["label"],
@@ -699,14 +663,7 @@ Output ONLY valid JSON array, no markdown code fences."""
             messages=[{"role": "user", "content": prompt}],
         )
 
-        content = response.content[0].text
-        if content.startswith("```"):
-            content = content.split("\n", 1)[1]
-        if content.endswith("```"):
-            content = content.rsplit("```", 1)[0]
-        content = content.strip()
-
-        data = json.loads(content)
+        data = parse_llm_json_response(response.content[0].text)
         ops = [
             StanceOperationalization(
                 stance_key=item["stance_key"],
@@ -805,14 +762,7 @@ Output ONLY valid JSON array."""
             messages=[{"role": "user", "content": prompt}],
         )
 
-        content = response.content[0].text
-        if content.startswith("```"):
-            content = content.split("\n", 1)[1]
-        if content.endswith("```"):
-            content = content.rsplit("```", 1)[0]
-        content = content.strip()
-
-        data = json.loads(content)
+        data = parse_llm_json_response(response.content[0].text)
         passes = [
             DepthPassEntry(
                 pass_number=item["pass_number"],

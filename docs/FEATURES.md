@@ -166,6 +166,43 @@
   - `genealogy_final_synthesis.yaml` - 3 stances (discovery/architecture/integration), deep=3 passes (discovery→architecture→integration)
 - **Added**: 2026-02-17 | **Modified**: 2026-02-18
 
+## Transformation Templates (LLM Transformation Service)
+
+### Transformation Template Entity
+- **Status**: Active
+- **Description**: Named, reusable transformation recipes for schema-on-read data transformation. 5 types: none (passthrough), schema_map (field renaming), llm_extract (structured extraction from prose via Claude Haiku), llm_summarize (summarization via Claude Haiku), aggregate (group-by/count/sort). Templates can be applied to view definitions as one-time copies. Includes in-memory TTL cache for LLM results.
+- **Entry Points**:
+  - `src/transformations/schemas.py:1-80` - Pydantic models: AggregateConfig, TransformationTemplate, TransformationTemplateSummary
+  - `src/transformations/registry.py:1-150` - TransformationRegistry: load from JSON, singleton, CRUD, filter by type/tag/engine
+  - `src/transformations/executor.py:1-200` - TransformationExecutor: executes all 5 types, TTL cache, Claude Haiku with Sonnet fallback
+  - `src/transformations/definitions/*.json` - 5 seed templates
+  - `src/api/routes/transformations.py:1-335` - Full REST API: CRUD + execute + for-engine + for-renderer + reload
+  - `src/api/main.py:18` - Router registration and lifespan loading
+  - `src/llm/client.py:1-100` - Shared LLM utilities: get_anthropic_client, parse_llm_json_response, call_extraction_model
+- **Seed Templates** (5 total):
+  - `conditions_extraction` (llm_extract) - Extract structured conditions from genealogy prose
+  - `tactics_extraction` (llm_extract) - Extract evolution tactics from genealogy prose
+  - `functional_extraction` (llm_extract) - Extract functional analysis from genealogy prose
+  - `synthesis_extraction` (llm_extract) - Extract synthesis structure from genealogy prose
+  - `chain_log_field_map` (schema_map) - Rename chain execution log fields for display
+- **API Endpoints**:
+  - `GET /v1/transformations` - List summaries (?type=&tag=)
+  - `GET /v1/transformations/{template_key}` - Full template
+  - `POST /v1/transformations` - Create
+  - `PUT /v1/transformations/{template_key}` - Update
+  - `DELETE /v1/transformations/{template_key}` - Delete
+  - `POST /v1/transformations/reload` - Reload from disk
+  - `GET /v1/transformations/for-engine/{engine_key}` - By engine
+  - `GET /v1/transformations/for-renderer/{renderer_type}` - By renderer
+  - `POST /v1/transformations/execute` - Execute transformation (inline spec or template reference)
+- **Frontend** (analyzer-mgmt):
+  - `frontend/src/pages/transformations/index.tsx` - List page with type-colored badges, search, type filter
+  - `frontend/src/pages/transformations/[key].tsx` - Detail page: 6 tabs (Identity, Specification, Applicability, Execution Config, Test, Preview)
+  - `frontend/src/types/index.ts` - TypeScript types for transformation entities
+  - `frontend/src/lib/api.ts` - API client methods (direct fetch to ANALYZER_V2_URL)
+  - `frontend/src/components/Layout.tsx` - Navigation item
+- **Added**: 2026-02-18
+
 ## Schema-on-Read / Prose Pipeline (the-critic)
 
 ### Prose Output Infrastructure

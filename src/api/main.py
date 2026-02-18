@@ -12,13 +12,14 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import audiences, chains, engines, functions, llm, meta, operations, operationalizations, paradigms, styles, primitives, display, views, workflows
+from src.api.routes import audiences, chains, engines, functions, llm, meta, operations, operationalizations, paradigms, styles, primitives, display, transformations, views, workflows
 from src.audiences.registry import get_audience_registry
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
 from src.functions.registry import get_function_registry
 from src.operationalizations.registry import get_operationalization_registry
 from src.operations.registry import StanceRegistry
+from src.transformations.registry import get_transformation_registry
 from src.views.registry import get_view_registry
 from src.paradigms.registry import get_paradigm_registry
 from src.styles.registry import get_style_registry
@@ -96,6 +97,10 @@ async def lifespan(app: FastAPI):
     op_registry.load()
     logger.info(f"Loaded {op_registry.count()} engine operationalizations")
 
+    logger.info("Loading transformation templates...")
+    transformation_registry = get_transformation_registry()
+    logger.info(f"Loaded {transformation_registry.count()} transformation templates")
+
     logger.info("Analyzer v2 API ready")
     yield
     # Shutdown
@@ -148,6 +153,7 @@ app.include_router(workflows.router, prefix="/v1")
 app.include_router(audiences.router, prefix="/v1")
 app.include_router(functions.router, prefix="/v1")
 app.include_router(views.router, prefix="/v1")
+app.include_router(transformations.router, prefix="/v1")
 app.include_router(operations.router)
 app.include_router(operationalizations.router, prefix="/v1")
 app.include_router(llm.router, prefix="/v1")
@@ -173,6 +179,7 @@ async def root():
             "display": "/v1/display",
             "functions": "/v1/functions",
             "views": "/v1/views",
+            "transformations": "/v1/transformations",
             "operations": "/v1/operations",
             "operationalizations": "/v1/operationalizations",
         },
@@ -192,6 +199,7 @@ async def health():
     style_stats = style_registry.get_stats()
     op_registry = get_operationalization_registry()
     view_registry = get_view_registry()
+    transformation_registry = get_transformation_registry()
 
     return {
         "status": "healthy",
@@ -202,6 +210,7 @@ async def health():
         "audiences_loaded": audience_registry.count(),
         "functions_loaded": function_registry.count(),
         "views_loaded": view_registry.count(),
+        "transformations_loaded": transformation_registry.count(),
         "styles_loaded": style_stats["styles_loaded"],
         "style_affinities": style_stats["engine_affinities"],
         "operationalizations_loaded": op_registry.count(),
