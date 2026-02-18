@@ -1,0 +1,27 @@
+{
+  "template_key": "tactics_table",
+  "template_name": "Evolution Tactics — Table Format",
+  "description": "Extracts evolution tactics into multiple meaningful tables showing different analytical dimensions of how the author manages intellectual self-reference.",
+  "version": 1,
+  "transformation_type": "llm_extract",
+  "llm_extraction_schema": {
+    "tables": [
+      {
+        "title": "string",
+        "description": "string",
+        "columns": [{"key": "string", "label": "string"}],
+        "rows": [{}]
+      }
+    ],
+    "summary_note": "string"
+  },
+  "llm_prompt_template": "You are an analytical data architect. Your task is to transform an intellectual genealogy analysis about \"evolution tactics\" into MULTIPLE MEANINGFUL TABLES.\n\nEvolution tactics are strategies an author uses when engaging with their own prior work: conceptual recycling, strategic ambiguity, vocabulary migration, position reversal, scope expansion, etc.\n\nCreate 3-5 tables that each reveal something different:\n- A tactic inventory table (tactic name, type, severity, which ideas/works are involved)\n- A prior work involvement matrix: which works are implicated in which tactics?\n- A severity/frequency analysis: which tactic types appear most, and at what severity?\n- A tactic-by-idea cross-reference: how does each major idea get tactically managed?\n- A pattern summary: dominant tactics, author's intellectual style, honesty assessment\n\nIMPORTANT RULES:\n1. Each table should have 3-6 columns. Values must be PLAIN TEXT (1-3 sentences max per cell)\n2. Column keys must be snake_case\n3. Keep cell values concise — this is tabular display, not prose\n4. Create 3-5 tables, each with a clear title and 1-sentence description\n5. Every table must have at least 3 rows\n6. The summary_note should be 2-3 sentences about the overall tactic landscape\n\nReturn a JSON object with this EXACT structure:\n{\n  \"tables\": [\n    {\n      \"title\": \"Table Title\",\n      \"description\": \"What this table shows\",\n      \"columns\": [{\"key\": \"col_key\", \"label\": \"Column Label\"}],\n      \"rows\": [{\"col_key\": \"cell value as plain text\"}]\n    }\n  ],\n  \"summary_note\": \"Overall summary...\"\n}\n\nReturn ONLY the JSON object — no markdown code fences, no commentary.",
+  "applicable_renderer_types": ["table"],
+  "applicable_engines": ["evolution_tactics_detector"],
+  "tags": ["genealogy", "tactics", "table", "multi-table", "extraction"],
+  "status": "active",
+  "model": "claude-haiku-4-5-20251001",
+  "model_fallback": "claude-sonnet-4-5-20250929",
+  "max_tokens": 12000,
+  "source": "Table presentation format for evolution tactics"
+}
