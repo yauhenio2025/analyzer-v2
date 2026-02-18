@@ -528,7 +528,9 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
 - **Entry Points**:
   - `src/workflows/extension_points.py:1-130` - Pydantic schemas (DimensionCoverage, CapabilityGap, CandidateEngine, PhaseExtensionPoint, WorkflowExtensionAnalysis)
   - `src/workflows/extension_scorer.py:1-400` - 5-tier scoring algorithm, phase context builder, dimension coverage analysis
-  - `src/api/routes/workflows.py:88-110` - GET endpoint with depth, phase_number, min_score, max_candidates params
+  - `src/api/routes/workflows.py:88-110` - GET extension-points endpoint
+  - `src/api/routes/workflows.py:114-240` - POST add-engine-to-phase endpoint
+  - `src/chains/registry.py:106-140` - ChainRegistry.save() with file-path tracking
 - **Scoring Tiers**:
   - Synergy (0.30 weight) — explicit synergy_engines match, bidirectional
   - Dimension production (0.25) — produces dimensions consumed by phase engines
@@ -536,8 +538,10 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
   - Capability gap (0.15) — fills capabilities the phase lacks
   - Category affinity (0.10) — same analytical category/kind
 - **Recommendation Tiers**: strong (>=0.65), moderate (>=0.40), exploratory (>=0.20), tangential (<0.20, filtered)
-- **API Endpoint**: `GET /v1/workflows/{key}/extension-points?depth=standard&phase_number=1.0&min_score=0.20&max_candidates=15`
-- **Added**: 2026-02-18
+- **API Endpoints**:
+  - `GET /v1/workflows/{key}/extension-points?depth=standard&phase_number=1.0&min_score=0.20&max_candidates=15`
+  - `POST /v1/workflows/{key}/phases/{phase_num}/add-engine` — mutates chain/workflow to add engine
+- **Added**: 2026-02-18 | **Modified**: 2026-02-18
 
 ### Influence Pass Engines (5 new)
 - **Status**: Active

@@ -22,6 +22,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
   - API endpoint: `GET /v1/workflows/{key}/extension-points?depth=standard&phase_number=1.0`
   - ([`src/workflows/extension_points.py`](src/workflows/extension_points.py), [`src/workflows/extension_scorer.py`](src/workflows/extension_scorer.py), [`src/api/routes/workflows.py`](src/api/routes/workflows.py))
 
+- **Add Engine to Phase mutation** — `POST /v1/workflows/{key}/phases/{phase_num}/add-engine` lets users add recommended engines directly from the extension points UI
+  - If phase uses a chain: appends engine to chain's `engine_keys` and saves chain JSON
+  - If phase has standalone `engine_key`: creates new sequential chain with both engines, updates phase to reference it
+  - Duplicate prevention (409 if engine already present), engine validation (404 if engine doesn't exist)
+  - `ChainRegistry.save()` tracks original file paths to handle `_chain.json` suffix pattern
+  - Frontend: "Add to Phase" button on each candidate engine card, 2.5s confirmation before card disappears
+  - ([`src/api/routes/workflows.py`](src/api/routes/workflows.py), [`src/chains/registry.py`](src/chains/registry.py))
+
 - **Intellectual Genealogy Workflow v3** — Complete redesign of the genealogy pipeline to exploit the new modular architecture
   - Migrated stale engine keys: `genealogy_pass1b_relationship_classification` → `genealogy_relationship_classification`, `genealogy_pass7_final_synthesis` → `genealogy_final_synthesis`
   - Renumbered legacy pass 7 → pass 4 (sequential numbering)
