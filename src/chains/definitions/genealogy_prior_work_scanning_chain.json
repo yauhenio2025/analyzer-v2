@@ -2,6 +2,7 @@
   "chain_key": "genealogy_prior_work_scanning",
   "chain_name": "Genealogy: Prior Work Scanning",
   "description": "Scans a prior work for genealogical traces relative to a target work, adapting strategy based on relationship type. Runs concept evolution analysis (dimensional comparison across vocabulary, methodology, metaphor, and framing) followed by concept appropriation tracking (detecting how ideas migrate between works). Accepts runtime context specifying the relationship type (from classification pass) and target ideas (from profiling pass) to focus the analysis.",
+  "base_description": "Scans a prior work for genealogical traces relative to a target work, adapting strategy based on relationship type",
   "version": 1,
   "engine_keys": [
     "concept_evolution",

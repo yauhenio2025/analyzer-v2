@@ -2,6 +2,7 @@
   "chain_key": "power_politics_chain",
   "chain_name": "Power & Politics Analysis Chain",
   "description": "Maps power dynamics, stakeholder interests, resource flows, and institutional capture patterns",
+  "base_description": "Maps power dynamics, stakeholder interests, resource flows, and institutional capture patterns",
   "version": 1,
   "engine_keys": [
     "stakeholder_power_interest",

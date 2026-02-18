@@ -2,6 +2,7 @@
   "chain_key": "epistemological_critique_chain",
   "chain_name": "Epistemological Critique Chain",
   "description": "Identifies epistemic weaknesses - unearned certainty, false profundity, calibration failures, and stance inconsistencies",
+  "base_description": "Identifies epistemic weaknesses - unearned certainty, false profundity, calibration failures, and stance inconsistencies",
   "version": 1,
   "engine_keys": [
     "unearned_certainty_detector",

@@ -2,6 +2,7 @@
   "chain_key": "argument_analysis_chain",
   "chain_name": "Argument Analysis Chain",
   "description": "Comprehensive argument structure analysis - maps logical architecture, excavates assumptions, detects rhetorical maneuvers, and steelmans positions",
+  "base_description": "Comprehensive argument structure analysis - maps logical architecture, excavates assumptions, detects rhetorical maneuvers, and steelmans positions",
   "version": 1,
   "engine_keys": [
     "argument_architecture",

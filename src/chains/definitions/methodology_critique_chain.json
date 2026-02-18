@@ -2,6 +2,7 @@
   "chain_key": "methodology_critique_chain",
   "chain_name": "Methodology Critique Chain",
   "description": "Evaluates research methodology - confounds, selection bias, sample issues, measurement validity, replication status",
+  "base_description": "Evaluates research methodology - confounds, selection bias, sample issues, measurement validity, and replication status",
   "version": 1,
   "engine_keys": [
     "methodological_approach",

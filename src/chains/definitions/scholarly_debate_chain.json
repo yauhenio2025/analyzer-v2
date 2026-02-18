@@ -2,6 +2,7 @@
   "chain_key": "scholarly_debate_chain",
   "chain_name": "Scholarly Debate Mapping Chain",
   "description": "Maps academic debates, citation networks, intellectual lineages, and paradigm conflicts",
+  "base_description": "Maps academic debates, citation networks, intellectual lineages, and paradigm conflicts",
   "version": 1,
   "engine_keys": [
     "scholarly_debate_map",

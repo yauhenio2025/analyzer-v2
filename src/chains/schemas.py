@@ -39,6 +39,12 @@ class EngineChainSpec(BaseModel):
     description: str = Field(
         ..., description="What this chain does and when to use it"
     )
+    base_description: Optional[str] = Field(
+        default=None,
+        description="Human-written invariant summary of the chain's purpose. "
+        "When present, 'description' is auto-computed from this + the engine list on save. "
+        "When absent, 'description' is used as-is (backwards compatible).",
+    )
     version: int = Field(default=1, description="Chain specification version")
 
     # Engine composition

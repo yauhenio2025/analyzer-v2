@@ -2,6 +2,7 @@
   "chain_key": "comparative_synthesis_chain",
   "chain_name": "Comparative & Synthesis Chain",
   "description": "Performs thematic synthesis, comparative analysis, cross-cultural variation, and interdisciplinary connections",
+  "base_description": "Performs thematic synthesis, comparative analysis, cross-cultural variation, and interdisciplinary connections",
   "version": 1,
   "engine_keys": [
     "thematic_synthesis",

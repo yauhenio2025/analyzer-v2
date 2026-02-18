@@ -2,6 +2,7 @@
   "chain_key": "strategic_forecasting_chain",
   "chain_name": "Strategic Forecasting Chain",
   "description": "Scenario planning, early warning detection, opportunity-vulnerability mapping, and escalation trajectory analysis",
+  "base_description": "Scenario planning, early warning detection, opportunity-vulnerability mapping, and escalation trajectory analysis",
   "version": 1,
   "engine_keys": [
     "scenario_planning_framework",

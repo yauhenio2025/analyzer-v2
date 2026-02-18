@@ -2,6 +2,7 @@
   "chain_key": "critical_analysis_chain",
   "chain_name": "Critical Analysis Chain",
   "description": "Multi-stage critical analysis: argument structure, then epistemological scrutiny, then institutional power analysis",
+  "base_description": "Multi-stage critical analysis covering argument structure, epistemological scrutiny, and institutional power analysis",
   "version": 1,
   "engine_keys": [
     "argument_architecture",

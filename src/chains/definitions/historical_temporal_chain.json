@@ -2,6 +2,7 @@
   "chain_key": "historical_temporal_chain",
   "chain_name": "Historical & Temporal Analysis Chain",
   "description": "Analyzes temporal dynamics - timelines, cycles, discontinuities, periodization, and path dependencies",
+  "base_description": "Analyzes temporal dynamics - timelines, cycles, discontinuities, periodization, and path dependencies",
   "version": 1,
   "engine_keys": [
     "event_timeline_causal",

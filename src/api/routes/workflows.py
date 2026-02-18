@@ -3,7 +3,9 @@
 Provides CRUD operations for workflow definitions and phase prompt composition.
 """
 
+import json
 import logging
+from pathlib import Path
 from typing import Literal, Optional
 
 from fastapi import APIRouter, HTTPException, Query
@@ -12,7 +14,17 @@ from pydantic import BaseModel, Field
 from src.chains.registry import get_chain_registry
 from src.chains.schemas import BlendMode, EngineChainSpec
 from src.engines.registry import get_engine_registry
+from src.persistence.github_client import (
+    CommitFile,
+    GitHubPersistence,
+    get_github_persistence,
+)
 from src.stages.composer import StageComposer
+from src.workflows.description_generator import (
+    generate_chain_description,
+    generate_phase_description,
+)
+from src.api.routes.meta import mark_definitions_modified
 from src.workflows.extension_points import WorkflowExtensionAnalysis
 from src.workflows.extension_scorer import analyze_workflow_extensions
 from src.workflows.registry import get_workflow_registry
@@ -133,6 +145,11 @@ class AddEngineResponse(BaseModel):
     chain_key: str
     chain_engine_keys: list[str]
     created_new_chain: bool
+    chain_description: str = ""
+    phase_description: str = ""
+    git_committed: bool = False
+    commit_sha: Optional[str] = None
+    cascaded_workflows: list[str] = Field(default_factory=list)
 
 
 @router.post("/{workflow_key}/phases/{phase_number}/add-engine", response_model=AddEngineResponse)
@@ -141,11 +158,17 @@ async def add_engine_to_phase(
     phase_number: float,
     request: AddEngineRequest,
 ) -> AddEngineResponse:
-    """Add an engine to a workflow phase.
+    """Add an engine to a workflow phase with full propagation.
 
     If the phase uses a chain, appends the engine to the chain's engine_keys.
     If the phase uses a standalone engine_key, creates a new sequential chain
     containing both the existing engine and the new one, then updates the phase.
+
+    Propagation:
+    1. Updates chain engine_keys
+    2. Auto-regenerates chain description (if base_description exists)
+    3. Auto-regenerates phase description in all workflows using this chain
+    4. Commits all modified files to GitHub atomically
     """
     workflow_registry = get_workflow_registry()
     chain_registry = get_chain_registry()
@@ -176,6 +199,9 @@ async def add_engine_to_phase(
         )
 
     created_new_chain = False
+    updated_chain: Optional[EngineChainSpec] = None
+    result_chain_key = ""
+    result_engine_keys: list[str] = []
 
     # Case 1: Phase already has a chain_key — add engine to chain
     if phase_def.chain_key:
@@ -200,29 +226,30 @@ async def add_engine_to_phase(
         else:
             new_engine_keys.append(request.engine_key)
 
-        # Update chain
-        updated_chain = chain.model_copy(update={"engine_keys": new_engine_keys})
+        # Build updated chain with new engine list
+        chain_updates = {
+            "engine_keys": new_engine_keys,
+            "max_engines": len(new_engine_keys),
+        }
+
+        # Auto-regenerate chain description if base_description exists
+        updated_chain = chain.model_copy(update=chain_updates)
+        if updated_chain.base_description:
+            updated_chain = updated_chain.model_copy(update={
+                "description": generate_chain_description(updated_chain, engine_registry),
+            })
+
+        # Save chain locally
         success = chain_registry.save(chain.chain_key, updated_chain)
         if not success:
             raise HTTPException(status_code=500, detail="Failed to save chain")
 
-        logger.info(
-            f"Added engine '{request.engine_key}' to chain '{chain.chain_key}' "
-            f"in workflow '{workflow_key}' phase {phase_number}"
-        )
-
-        return AddEngineResponse(
-            status="added",
-            workflow_key=workflow_key,
-            phase_number=phase_number,
-            engine_key=request.engine_key,
-            chain_key=chain.chain_key,
-            chain_engine_keys=new_engine_keys,
-            created_new_chain=False,
-        )
+        result_chain_key = chain.chain_key
+        result_engine_keys = new_engine_keys
+        created_new_chain = False
 
     # Case 2: Phase has a standalone engine_key — create new chain
-    if phase_def.engine_key:
+    elif phase_def.engine_key:
         existing_engine_key = phase_def.engine_key
 
         # Check not adding the same engine
@@ -236,7 +263,7 @@ async def add_engine_to_phase(
         phase_slug = phase_def.phase_name.lower().replace(" ", "_").replace("-", "_")
         new_chain_key = f"{workflow_key}_{phase_slug}_chain"
 
-        # Check if this chain key already exists (unlikely but handle it)
+        # Check if this chain key already exists
         if chain_registry.get(new_chain_key) is not None:
             new_chain_key = f"{new_chain_key}_{int(phase_number)}"
 
@@ -245,17 +272,23 @@ async def add_engine_to_phase(
         if request.position == 0:
             engine_keys = [request.engine_key, existing_engine_key]
 
+        # Create chain with base_description for future auto-updates
+        base_desc = f"{phase_def.phase_name} chain"
         new_chain = EngineChainSpec(
             chain_key=new_chain_key,
             chain_name=f"{phase_def.phase_name} Chain",
-            description=f"Auto-created chain for workflow '{workflow_key}' phase {phase_number}. "
-                        f"Contains engines: {', '.join(engine_keys)}.",
+            description="",  # Will be auto-generated below
+            base_description=base_desc,
             version=1,
             engine_keys=engine_keys,
             blend_mode=BlendMode.SEQUENTIAL,
             pass_context=True,
             category=workflow.category.value if workflow.category else None,
         )
+        # Auto-generate description from base + engines
+        new_chain = new_chain.model_copy(update={
+            "description": generate_chain_description(new_chain, engine_registry),
+        })
 
         # Save the new chain
         success = chain_registry.save(new_chain_key, new_chain)
@@ -268,31 +301,119 @@ async def add_engine_to_phase(
             "chain_key": new_chain_key,
         })
         workflow.phases[phase_idx] = updated_phase
-        success = workflow_registry.save(workflow_key, workflow)
-        if not success:
-            raise HTTPException(status_code=500, detail="Failed to update workflow")
 
+        updated_chain = new_chain
+        result_chain_key = new_chain_key
+        result_engine_keys = engine_keys
         created_new_chain = True
 
-        logger.info(
-            f"Created chain '{new_chain_key}' with engines {engine_keys} "
-            f"for workflow '{workflow_key}' phase {phase_number}"
-        )
-
-        return AddEngineResponse(
-            status="added",
-            workflow_key=workflow_key,
-            phase_number=phase_number,
-            engine_key=request.engine_key,
-            chain_key=new_chain_key,
-            chain_engine_keys=engine_keys,
-            created_new_chain=True,
-        )
-
     # Case 3: Phase has neither chain_key nor engine_key
-    raise HTTPException(
-        status_code=400,
-        detail=f"Phase {phase_number} has no chain_key or engine_key — cannot add engine",
+    else:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Phase {phase_number} has no chain_key or engine_key — cannot add engine",
+        )
+
+    # ── Cascade: update descriptions in all workflows using this chain ──
+
+    cascaded_workflows: list[str] = []
+    affected_workflow_keys: set[str] = set()
+
+    # Find all workflow phases referencing this chain
+    chain_refs = workflow_registry.find_by_chain_key(result_chain_key)
+
+    for wf_key, phase_i in chain_refs:
+        wf = workflow_registry.get(wf_key)
+        if wf is None:
+            continue
+        phase = wf.phases[phase_i]
+
+        # Auto-regenerate phase description if base exists
+        if phase.base_phase_description and updated_chain:
+            new_phase_desc = generate_phase_description(
+                phase, updated_chain, engine_registry
+            )
+            wf.phases[phase_i] = phase.model_copy(
+                update={"phase_description": new_phase_desc}
+            )
+            affected_workflow_keys.add(wf_key)
+
+    # Save all affected workflows
+    for wf_key in affected_workflow_keys:
+        wf = workflow_registry.get(wf_key)
+        if wf:
+            workflow_registry.save(wf_key, wf)
+            if wf_key != workflow_key:
+                cascaded_workflows.append(wf_key)
+
+    # Also save the primary workflow if it wasn't already saved via cascade
+    if workflow_key not in affected_workflow_keys:
+        workflow_registry.save(workflow_key, workflow)
+
+    # ── Git commit: persist all changes atomically ──
+
+    github = get_github_persistence()
+    commit_result = None
+
+    if github.enabled:
+        files_to_commit: list[CommitFile] = []
+
+        # Chain file
+        chain_file_path = chain_registry._file_map.get(result_chain_key)
+        if chain_file_path and updated_chain:
+            repo_path = GitHubPersistence.absolute_to_repo_path(chain_file_path)
+            chain_json = json.dumps(updated_chain.model_dump(), indent=2) + "\n"
+            files_to_commit.append(CommitFile(repo_path=repo_path, content=chain_json))
+
+        # All affected workflow files
+        for wf_key in affected_workflow_keys | {workflow_key}:
+            wf = workflow_registry.get(wf_key)
+            if wf:
+                wf_file = workflow_registry.definitions_dir / f"{wf_key}.json"
+                repo_path = GitHubPersistence.absolute_to_repo_path(wf_file)
+                wf_json = json.dumps(wf.model_dump(), indent=2) + "\n"
+                files_to_commit.append(CommitFile(repo_path=repo_path, content=wf_json))
+
+        if files_to_commit:
+            commit_msg = (
+                f"Add {request.engine_key} to {result_chain_key} "
+                f"(workflow: {workflow_key}, phase {phase_number})"
+            )
+            commit_result = await github.commit_files(files_to_commit, commit_msg)
+
+    # Get final descriptions for response
+    final_chain = chain_registry.get(result_chain_key)
+    final_workflow = workflow_registry.get(workflow_key)
+    final_phase_desc = ""
+    if final_workflow:
+        for p in final_workflow.phases:
+            if p.phase_number == phase_number:
+                final_phase_desc = p.phase_description
+                break
+
+    # Mark definitions as modified for cache versioning
+    mark_definitions_modified()
+
+    logger.info(
+        f"Added engine '{request.engine_key}' to chain '{result_chain_key}' "
+        f"in workflow '{workflow_key}' phase {phase_number} "
+        f"(git_committed={commit_result.success if commit_result else False}, "
+        f"cascaded={cascaded_workflows})"
+    )
+
+    return AddEngineResponse(
+        status="added",
+        workflow_key=workflow_key,
+        phase_number=phase_number,
+        engine_key=request.engine_key,
+        chain_key=result_chain_key,
+        chain_engine_keys=result_engine_keys,
+        created_new_chain=created_new_chain,
+        chain_description=final_chain.description if final_chain else "",
+        phase_description=final_phase_desc,
+        git_committed=commit_result.success if commit_result else False,
+        commit_sha=commit_result.sha if commit_result else None,
+        cascaded_workflows=cascaded_workflows,
     )
 
 

@@ -2,6 +2,7 @@
   "chain_key": "causal_mechanism_chain",
   "chain_name": "Causal Mechanism Analysis Chain",
   "description": "Identifies causal relationships, counterfactuals, competing explanations, and explanatory patterns",
+  "base_description": "Identifies causal relationships, counterfactuals, competing explanations, and explanatory patterns",
   "version": 1,
   "engine_keys": [
     "causal_inference_auditor",

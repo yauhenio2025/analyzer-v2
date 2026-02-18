@@ -2,6 +2,7 @@
   "chain_key": "rhetorical_analysis_chain",
   "chain_name": "Rhetorical Analysis Chain",
   "description": "Analyzes persuasive techniques, amplification patterns, metaphorical structures, and rhetorical strategies",
+  "base_description": "Analyzes persuasive techniques, amplification patterns, metaphorical structures, and rhetorical strategies",
   "version": 1,
   "engine_keys": [
     "rhetorical_strategy",

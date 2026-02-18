@@ -2,6 +2,7 @@
   "chain_key": "concept_analysis_suite",
   "chain_name": "Concept Analysis Suite",
   "description": "Comprehensive concept analysis using multiple philosophical lenses - centrality mapping, evolution tracking, affordance analysis, and demarcation",
+  "base_description": "Comprehensive concept analysis using multiple philosophical lenses - centrality mapping, evolution tracking, affordance analysis, and demarcation",
   "version": 1,
   "engine_keys": [
     "concept_centrality_mapper",

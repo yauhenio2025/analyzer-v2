@@ -2,6 +2,7 @@
   "chain_key": "evidence_quality_chain",
   "chain_name": "Evidence Quality Assessment Chain",
   "description": "Evaluates the quality, reliability, and triangulation of evidence and data sources",
+  "base_description": "Evaluates the quality, reliability, and triangulation of evidence and data sources",
   "version": 1,
   "engine_keys": [
     "evidence_quality_assessment",

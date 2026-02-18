@@ -2,6 +2,7 @@
   "chain_key": "adversarial_stress_test_chain",
   "chain_name": "Adversarial Stress Test Chain",
   "description": "Stress tests arguments through adversarial probing, boundary testing, and robustness evaluation",
+  "base_description": "Stress tests arguments through adversarial probing, boundary testing, and robustness evaluation",
   "version": 1,
   "engine_keys": [
     "adversarial_robustness_tester",

@@ -2,6 +2,7 @@
   "chain_key": "concept_analysis_12_phase",
   "chain_name": "12-Phase Concept Analysis",
   "description": "Comprehensive 12-phase deep concept analysis pipeline matching The Critic's concept analyzer. Progresses from semantic understanding through structural analysis to synthesis.",
+  "base_description": "Comprehensive deep concept analysis pipeline progressing from semantic understanding through structural analysis to synthesis",
   "version": 1,
   "engine_keys": [
     "concept_semantic_constellation",

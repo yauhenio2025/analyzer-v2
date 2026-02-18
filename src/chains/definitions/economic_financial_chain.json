@@ -2,6 +2,7 @@
   "chain_key": "economic_financial_chain",
   "chain_name": "Economic & Financial Analysis Chain",
   "description": "Analyzes market dynamics, financial flows, policy impacts, and economic positioning",
+  "base_description": "Analyzes market dynamics, financial flows, policy impacts, and economic positioning",
   "version": 1,
   "engine_keys": [
     "financial_forensics_analyzer",

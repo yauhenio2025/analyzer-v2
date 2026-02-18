@@ -37,6 +37,12 @@ class WorkflowPhase(BaseModel):
     phase_description: str = Field(
         default="", description="What this phase accomplishes"
     )
+    base_phase_description: Optional[str] = Field(
+        default=None,
+        description="Human-written invariant phase summary. When present, 'phase_description' "
+        "is auto-computed from this + the engine/chain info on save. "
+        "When absent, 'phase_description' is used as-is (backwards compatible).",
+    )
     engine_key: Optional[str] = Field(
         default=None,
         description="Engine to use for this phase (if engine-backed)",

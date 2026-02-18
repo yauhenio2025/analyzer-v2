@@ -2,6 +2,7 @@
   "chain_key": "philosophical_foundations_chain",
   "chain_name": "Philosophical Foundations Chain",
   "description": "Excavates conceptual conditions, paradigmatic assumptions, absent centers, and foundational frameworks",
+  "base_description": "Excavates conceptual conditions, paradigmatic assumptions, absent centers, and foundational frameworks",
   "version": 1,
   "engine_keys": [
     "conditions_of_possibility",

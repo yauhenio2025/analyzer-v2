@@ -2,6 +2,7 @@
   "chain_key": "trend_emergence_chain",
   "chain_name": "Trend & Emergence Detection Chain",
   "description": "Detects emerging trends, conceptual anomalies, literature gaps, and contrarian patterns",
+  "base_description": "Detects emerging trends, conceptual anomalies, literature gaps, and contrarian patterns",
   "version": 1,
   "engine_keys": [
     "emerging_trend_detector",

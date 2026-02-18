@@ -151,6 +151,23 @@ class WorkflowRegistry:
         logger.error(f"Phase {phase_number} not found in workflow {workflow_key}")
         return False
 
+    def find_by_chain_key(self, chain_key: str) -> list[tuple[str, int]]:
+        """Find all workflows and phase indices that reference a given chain_key.
+
+        Args:
+            chain_key: The chain key to search for
+
+        Returns:
+            List of (workflow_key, phase_index) tuples
+        """
+        self.load()
+        results = []
+        for wf in self._workflows.values():
+            for i, phase in enumerate(wf.phases):
+                if phase.chain_key == chain_key:
+                    results.append((wf.workflow_key, i))
+        return results
+
     def delete(self, workflow_key: str) -> bool:
         """Delete a workflow definition.
 
