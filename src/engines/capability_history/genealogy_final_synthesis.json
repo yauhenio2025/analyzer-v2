@@ -2,6 +2,43 @@
   "engine_key": "genealogy_final_synthesis",
   "entries": [
     {
+      "timestamp": "2026-02-18T03:19:14.746544+00:00",
+      "version": 3,
+      "definition_hash": "569c25556e9ba86280c0d4c87f82a91a9666b8b075a1b7d9595e0f53597effb8",
+      "changes": [
+        {
+          "section": "composability",
+          "field": "consumes_from",
+          "action": "modified",
+          "old_value": "{\"conditions_analysis\": \"From conditions_of_possibility_analyzer (Pass 3) -- enabling conditions, constraining conditions, path dependencies, counterfactuals\", \"cross_work_synthesis\": \"From Pass 3 cross-work synthesis engines -- patterns across all prior works\", \"dimensional_scan_results\": \"From Pas...",
+          "new_value": "{\"target_work_profile\": \"From genealogy_target_profiling chain (Pass 1) -- conceptual_framework_extraction + concept_semantic_constellation + inferential_commitment_mapper output\", \"relationship_classifications\": \"From genealogy_relationship_classification (Pass 1.5) -- typed relationships between e..."
+        },
+        {
+          "section": "composability",
+          "field": "synergy_engines",
+          "action": "modified",
+          "old_value": "[\"conditions_of_possibility_analyzer\", \"concept_evolution\", \"evolution_tactics_detector\", \"intellectual_genealogy\"]",
+          "new_value": "[\"conditions_of_possibility_analyzer\", \"concept_evolution\", \"evolution_tactics_detector\", \"concept_synthesis\"]"
+        },
+        {
+          "section": "depth_levels",
+          "field": "deep",
+          "action": "modified",
+          "old_value": "1 passes",
+          "new_value": "3 passes"
+        },
+        {
+          "section": "depth_levels",
+          "field": "standard",
+          "action": "modified",
+          "old_value": "1 passes",
+          "new_value": "2 passes"
+        }
+      ],
+      "summary": "Modified composability consumes_from; Modified composability synergy_engines; Modified depth levels deep; Modified depth levels standard",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-17T15:13:52.071965+00:00",
       "version": 2,
       "definition_hash": "c8aec7a16a8f30dcecab7ceb97952796597e0ac5d3889d1b58b9b49f01c18642",

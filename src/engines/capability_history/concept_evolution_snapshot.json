@@ -319,30 +319,43 @@
       "passes": [
         {
           "consumes_from": [],
-          "description": "Full multi-dimensional comparison in a single pass. For each\nkey concept: vocabulary drift analysis with evidence from both\ntexts, methodology comparison, metaphor evolution, and framing\ntrajectory. Produce per-concept dimensional matrix showing\nwhich dimensions changed and which remained stable. Identify\nfoundational patterns and cross-domain transfers.\n",
+          "description": "Independently excavate the four evolution dimensions. Track\nvocabulary drift with evidence from both texts \u2014 births, deaths,\nrenames, semantic shifts. Compare methodology across works \u2014\nevidence types, analytical moves, reasoning patterns. Trace\nmetaphor migration between source domains. Map framing shifts\nin how problems are positioned and confidence levels change.\n",
           "focus_capabilities": [
             "track_vocabulary_evolution",
             "compare_methodology",
             "trace_metaphor_change",
-            "analyze_framing_shifts",
-            "trace_concept_lifecycles",
-            "synthesize_dimensional_matrix"
+            "analyze_framing_shifts"
           ],
           "focus_dimensions": [
             "vocabulary_evolution",
             "methodology_evolution",
             "metaphor_evolution",
-            "framing_evolution",
+            "framing_evolution"
+          ],
+          "label": "Four-Dimension Excavation",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "With the four-dimension excavation complete, trace individual\nconcept lifecycles showing expansion, narrowing, reversal,\nsplitting, or merger trajectories. Synthesize the dimensional\ncomparison matrix revealing which dimensions changed in tandem\nand which remained stable \u2014 identifying foundational patterns\nand cross-domain transfers.\n",
+          "focus_capabilities": [
+            "trace_concept_lifecycles",
+            "synthesize_dimensional_matrix"
+          ],
+          "focus_dimensions": [
             "concept_trajectory",
             "dimensional_comparison_matrix"
           ],
-          "label": "Multi-Dimensional Comparison",
-          "pass_number": 1,
-          "stance": "inference"
+          "label": "Trajectory Synthesis & Dimensional Matrix",
+          "pass_number": 2,
+          "stance": "architecture"
         }
       ],
       "suitable_for": "Most prior work comparisons, direct precursors with 3-10 shared concepts, standard genealogy analysis",
-      "typical_passes": 1
+      "typical_passes": 2
     },
     {
       "description": "Full Koselleckian conceptual history: complete term inventories, detailed drift analysis with quoted evidence, metaphor archaeology, framing trajectory mapping, coupling analysis across dimensions, concept genealogy trees, and assessment of intellectual change archetypes. Suitable for the most important prior works.",
@@ -350,30 +363,63 @@
       "passes": [
         {
           "consumes_from": [],
-          "description": "Complete Koselleckian conceptual history in a single intensive\npass. Full term inventories for both works with detailed drift\nanalysis and quoted evidence. Metaphor archaeology tracing\nsource domains and evolution trajectories. Framing trajectory\nmapping with confidence arcs. Coupling analysis across all four\ndimensions revealing change archetypes. Concept genealogy trees\nshowing ancestor-descendant relationships and co-evolution\npatterns.\n",
+          "description": "Exhaustive excavation of all four evolution dimensions. Full\nterm inventories for both works with detailed drift analysis\nand quoted evidence. Methodology comparison with evolution\ntype classification. Metaphor archaeology tracing source\ndomains, evolution trajectories, and structural implications.\nFraming trajectory mapping with confidence arcs showing how\nthe author's relationship to ideas changed over time.\n",
           "focus_capabilities": [
             "track_vocabulary_evolution",
             "compare_methodology",
             "trace_metaphor_change",
-            "analyze_framing_shifts",
-            "trace_concept_lifecycles",
-            "synthesize_dimensional_matrix"
+            "analyze_framing_shifts"
           ],
           "focus_dimensions": [
             "vocabulary_evolution",
             "methodology_evolution",
             "metaphor_evolution",
-            "framing_evolution",
-            "concept_trajectory",
-            "dimensional_comparison_matrix"
+            "framing_evolution"
           ],
-          "label": "Full Koselleckian Conceptual History",
+          "label": "Comprehensive Four-Dimension Excavation",
           "pass_number": 1,
-          "stance": "inference"
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "Trace complete concept lifecycles with the four-dimension\nevidence in hand. Map ancestor-descendant relationships between\nconcepts across works. Identify co-evolution patterns where\nchanges in one dimension drive changes in others. Analyze\ncoupling across dimensions \u2014 does vocabulary change predict\nmethodology change? Do metaphor shifts precede framing shifts?\nThese coupling patterns reveal change archetypes.\n",
+          "focus_capabilities": [
+            "trace_concept_lifecycles",
+            "track_vocabulary_evolution",
+            "trace_metaphor_change"
+          ],
+          "focus_dimensions": [
+            "concept_trajectory",
+            "vocabulary_evolution",
+            "metaphor_evolution"
+          ],
+          "label": "Concept Lifecycle & Coupling Analysis",
+          "pass_number": 2,
+          "stance": "architecture"
+        },
+        {
+          "consumes_from": [
+            1,
+            2
+          ],
+          "description": "Full Koselleckian synthesis integrating all findings. Produce\nthe dimensional comparison matrix showing which dimensions\nchanged and which remained stable for each concept, with\ncoupling analysis revealing change archetypes. Concept\ngenealogy trees showing ancestor-descendant relationships,\nco-evolution patterns, and the overall intellectual change\nprofile. Assessment of whether evolution is continuous or\npunctuated, convergent or divergent across dimensions.\n",
+          "focus_capabilities": [
+            "synthesize_dimensional_matrix",
+            "trace_concept_lifecycles"
+          ],
+          "focus_dimensions": [
+            "dimensional_comparison_matrix",
+            "concept_trajectory"
+          ],
+          "label": "Koselleckian Dimensional Synthesis",
+          "pass_number": 3,
+          "stance": "integration"
         }
       ],
       "suitable_for": "Key prior works with extensive conceptual overlap, prolific authors, works spanning multiple domains, direct precursors to the author's most important ideas",
-      "typical_passes": 1
+      "typical_passes": 3
     }
   ],
   "engine_key": "concept_evolution",

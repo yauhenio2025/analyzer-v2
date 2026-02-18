@@ -201,9 +201,8 @@
   "category": "scholarly",
   "composability": {
     "consumes_from": {
-      "initial_similarity_signals": "From genealogy_prior_work_discovery (Pass 1) -- initial indications of relatedness",
-      "prior_work_summaries": "From genealogy_deep_target_profiling -- structured profiles of each prior work",
-      "target_work_profile": "From genealogy_deep_target_profiling -- profile of the current work being analyzed"
+      "prior_work_excerpts": "From the prior works collection -- truncated excerpts of each prior work for rapid classification",
+      "target_work_profile": "From genealogy_target_profiling chain (Pass 1) -- conceptual_framework_extraction + concept_semantic_constellation + inferential_commitment_mapper profile of the target work"
     },
     "shares_with": {
       "classification_evidence": "Textual evidence supporting each classification, reusable by synthesis passes",
@@ -247,26 +246,40 @@
       "passes": [
         {
           "consumes_from": [],
-          "description": "Full classification with textual evidence from both works.\nRelationship type assigned with justification and secondary\ntypes noted. Strength assessed across centrality, pervasiveness,\nand evidence directness. All five influence channels (vocabulary,\nmethodology, audience, authority, framing) evaluated with\nspecific evidence. Scanning strategy produced with priority\ndimensions and recommended attention level for Pass 2.\n",
+          "description": "Full classification with textual evidence from both works.\nRelationship type assigned with justification and secondary\ntypes noted. Strength assessed across centrality (could the\nargument exist without this prior work), pervasiveness (whole\nwork or specific sections), and evidence directness (explicit\ncitation vs. implicit reliance).\n",
           "focus_capabilities": [
             "classify_relationship",
-            "assess_strength",
+            "assess_strength"
+          ],
+          "focus_dimensions": [
+            "relationship_type",
+            "relationship_evidence",
+            "relationship_strength"
+          ],
+          "label": "Relationship Classification & Strength Assessment",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "With relationship type and strength established, map all five\ninfluence channels (vocabulary, methodology, audience, authority,\nframing) with specific evidence for each. Translate the complete\nclassification into operational scanning strategy: priority\ndimensions ranked, expected trace types, and recommended\nattention level for Pass 2 dimensional scanners.\n",
+          "focus_capabilities": [
             "map_influence_channels",
             "determine_scanning_strategy"
           ],
           "focus_dimensions": [
-            "relationship_type",
-            "relationship_strength",
             "influence_channels",
             "strategic_relevance"
           ],
-          "label": "Full Classification & Scanning Strategy",
-          "pass_number": 1,
-          "stance": "inference"
+          "label": "Channel Mapping & Scanning Strategy",
+          "pass_number": 2,
+          "stance": "architecture"
         }
       ],
       "suitable_for": "Standard genealogy pipeline Pass 1.5, most academic texts, authors with 3-10 prior works",
-      "typical_passes": 1
+      "typical_passes": 2
     },
     {
       "description": "Nuanced classification with primary and secondary types, temporal evolution of relationship, full channel interaction analysis, detailed strategic guidance with contingency plans",
@@ -274,26 +287,57 @@
       "passes": [
         {
           "consumes_from": [],
-          "description": "Nuanced classification with primary and secondary types, each\nsupported by detailed evidence. Assessment of how the\nrelationship may have shifted over time (temporal evolution).\nFull channel interaction analysis showing how influence channels\nreinforce or undermine each other. Detailed strategic guidance\nwith contingency plans: priority dimensions ranked, expected\ntrace types with specific hypotheses, and recommendations for\nrevising classification if Pass 2 evidence contradicts it.\n",
+          "description": "Nuanced classification with primary and secondary types, each\nsupported by detailed textual evidence. Assessment of how the\nrelationship may have shifted over time \u2014 was this work a\ndirect precursor early in the author's career that became mere\nbackground later? Strength profiled across different aspects\n(methodology vs. substance) with temporal stability assessment.\n",
           "focus_capabilities": [
             "classify_relationship",
-            "assess_strength",
-            "map_influence_channels",
-            "determine_scanning_strategy"
+            "assess_strength"
           ],
           "focus_dimensions": [
             "relationship_type",
-            "relationship_strength",
-            "influence_channels",
-            "strategic_relevance"
+            "relationship_evidence",
+            "relationship_strength"
           ],
-          "label": "Nuanced Classification & Strategic Guidance",
+          "label": "Nuanced Relationship Classification",
           "pass_number": 1,
-          "stance": "inference"
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "Full channel interaction analysis. Map all five influence\nchannels with detailed evidence, then analyze how channels\nreinforce or undermine each other \u2014 vocabulary transfers\ncarrying methodological assumptions, audience preparation\nenabling authority transfer. Distinguish channels the author\nrecognizes from those operating below awareness. Identify\nnegative channels where influence operates through deliberate\navoidance or rejection.\n",
+          "focus_capabilities": [
+            "map_influence_channels",
+            "classify_relationship"
+          ],
+          "focus_dimensions": [
+            "influence_channels",
+            "relationship_type"
+          ],
+          "label": "Channel Interaction Analysis",
+          "pass_number": 2,
+          "stance": "architecture"
+        },
+        {
+          "consumes_from": [
+            1,
+            2
+          ],
+          "description": "Translate the complete classification into detailed strategic\nguidance for downstream passes. Priority dimensions ranked\nwith specific hypotheses for each. Expected trace types with\nconcrete examples. Attention allocation with justification.\nMisclassification risk assessment \u2014 what would a wrong\nclassification cost? Contingency instructions for revising\nclassification if Pass 2 evidence contradicts it. Identify\nprior works that should be scanned together due to\nreinforcing channels.\n",
+          "focus_capabilities": [
+            "determine_scanning_strategy"
+          ],
+          "focus_dimensions": [
+            "strategic_relevance",
+            "influence_channels"
+          ],
+          "label": "Strategic Guidance & Contingency Planning",
+          "pass_number": 3,
+          "stance": "confrontation"
         }
       ],
       "suitable_for": "Complex intellectual relationships, works that defy easy classification, cases where misclassification risk is high",
-      "typical_passes": 1
+      "typical_passes": 3
     }
   ],
   "engine_key": "genealogy_relationship_classification",

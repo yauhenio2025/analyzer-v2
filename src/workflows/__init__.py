@@ -1,18 +1,22 @@
-"""Workflows module for multi-pass analysis pipelines.
+"""Workflows module for multi-phase analysis pipelines.
 
 Workflows differ from chains in that they:
-- Support multi-pass analysis with intermediate state
+- Support multi-phase analysis with intermediate state
 - Can require external documents beyond the corpus
-- Support caching between passes
+- Support caching between phases
 - Are resumable
+
+Terminology: workflow-level steps are "phases" (not "passes").
+Engine-level stance iterations within depth levels remain "passes".
 """
 
-from .schemas import WorkflowDefinition, WorkflowPass, WorkflowCategory
+from .schemas import WorkflowDefinition, WorkflowPhase, WorkflowPass, WorkflowCategory
 from .registry import WorkflowRegistry
 
 __all__ = [
     "WorkflowDefinition",
-    "WorkflowPass",
+    "WorkflowPhase",
+    "WorkflowPass",  # backwards compat alias
     "WorkflowCategory",
     "WorkflowRegistry",
 ]

@@ -371,28 +371,143 @@
       "evolution_tactics_detector",
       "concept_evolution",
       "inferential_commitment_mapper",
-      "intellectual_genealogy"
+      "concept_taxonomy_argumentative_function"
     ]
   },
   "depth_levels": [
     {
       "description": "Identify the most obvious enabling and constraining conditions",
       "key": "surface",
-      "passes": [],
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Identify the 3-5 most obvious enabling conditions (conceptual\nfoundations, audience preparation, established authority, reused\nframeworks) and the 2-3 strongest constraining conditions (binding\nprior commitments, audience expectations, framework lock-in). At\nsurface depth, aim for the strongest signals of what made the\nargument possible and what paths it forecloses.\n",
+          "focus_capabilities": [
+            "map_enabling_conditions",
+            "detect_constraints"
+          ],
+          "focus_dimensions": [
+            "enabling_conditions",
+            "constraining_conditions"
+          ],
+          "label": "Archaeological Survey",
+          "pass_number": 1,
+          "stance": "discovery"
+        }
+      ],
       "suitable_for": "Quick assessment, policy documents, non-academic texts, preliminary scoping",
       "typical_passes": 1
     },
     {
       "description": "Map conditions with evidence, path dependencies with chains, unacknowledged debts, and counterfactual analysis",
       "key": "standard",
-      "passes": [],
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Comprehensive archaeological excavation of the conditions landscape.\nMap enabling conditions with essentiality ratings and evidence of\nreliance. Detect constraints with binding force assessment and\nnavigation strategy identification. Surface unacknowledged debts\nwith hypothesized reasons for concealment. Identify cross-domain\nframeworks operating below conscious awareness.\n",
+          "focus_capabilities": [
+            "map_enabling_conditions",
+            "detect_constraints",
+            "reveal_debts",
+            "detect_cross_domain_transfers"
+          ],
+          "focus_dimensions": [
+            "enabling_conditions",
+            "constraining_conditions",
+            "unacknowledged_debts",
+            "cross_domain_transfers"
+          ],
+          "label": "Full Archaeological Excavation",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "With the full conditions landscape from Pass 1, trace the causal\nchains of path dependence showing how prior positions accumulated\ninto current constraints and enablements. Map branching points\nwhere different trajectories were available and analyze why the\nchosen path was preferred. Execute the central counterfactual:\nwhat remains if we imagine this argument without the author's\nhistory? Produce synthetic judgment on whether path-dependence\nis enabling or constraining overall.\n",
+          "focus_capabilities": [
+            "trace_path_dependence",
+            "map_alternative_paths",
+            "explore_counterfactuals",
+            "synthesize_judgment"
+          ],
+          "focus_dimensions": [
+            "path_dependencies",
+            "alternative_paths",
+            "counterfactual_analysis",
+            "synthetic_judgment"
+          ],
+          "label": "Path Analysis & Counterfactual Reasoning",
+          "pass_number": 2,
+          "stance": "confrontation"
+        }
+      ],
       "suitable_for": "Most academic texts, author with 3-5 prior works, standard genealogy analysis",
       "typical_passes": 2
     },
     {
       "description": "Full Foucauldian archaeological analysis: all conditions with mutual dependencies, complete path analysis, cross-domain toolkit mapping, detailed counterfactuals, alternative path scenarios, and synthetic judgment with field-level implications",
       "key": "deep",
-      "passes": [],
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Exhaustive archaeological excavation. Map every significant enabling\ncondition with essentiality rating, evidence, and author management\nstrategy. Full constraint landscape with binding force and navigation\nanalysis. Complete debt structure with evidence from prior works and\nreasons for concealment. Comprehensive toolkit analysis of transferred\nframeworks including those invisible to the author, their blind spots\nand unique insights.\n",
+          "focus_capabilities": [
+            "map_enabling_conditions",
+            "detect_constraints",
+            "reveal_debts",
+            "detect_cross_domain_transfers"
+          ],
+          "focus_dimensions": [
+            "enabling_conditions",
+            "constraining_conditions",
+            "unacknowledged_debts",
+            "cross_domain_transfers"
+          ],
+          "label": "Comprehensive Archaeological Excavation",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "Confront the archaeological findings with genealogical analysis.\nTrace all significant path dependency chains showing how positions\nfrom work N-3 became unexamined premises in work N. Map every\nsignificant branching point with detailed counterfactual scenarios\nshowing how the argument would differ if alternative paths had been\ntaken. Execute the full counterfactual thought experiment with\nspecific examples of what changes in each section and proportion\nestimates of novel versus inherited content.\n",
+          "focus_capabilities": [
+            "trace_path_dependence",
+            "map_alternative_paths",
+            "explore_counterfactuals"
+          ],
+          "focus_dimensions": [
+            "path_dependencies",
+            "alternative_paths",
+            "counterfactual_analysis"
+          ],
+          "label": "Genealogical Confrontation",
+          "pass_number": 2,
+          "stance": "confrontation"
+        },
+        {
+          "consumes_from": [
+            1,
+            2
+          ],
+          "description": "Integrate all findings into a comprehensive synthetic judgment.\nAssess whether the intellectual biography is on balance enabling\nor constraining. Evaluate the author's self-awareness and management\nof path-dependence. Identify where constraints are productive\n(forcing rigor and coherence) versus limiting (preventing growth).\nProvide specific recommendations for what the author would need\nto do differently to escape unproductive constraints or leverage\nproductive enablements more effectively. Analyze implications for\nthe field: whether this pattern of path-dependence is idiosyncratic\nor symptomatic of broader disciplinary dynamics.\n",
+          "focus_capabilities": [
+            "synthesize_judgment"
+          ],
+          "focus_dimensions": [
+            "synthetic_judgment",
+            "enabling_conditions",
+            "constraining_conditions",
+            "counterfactual_analysis"
+          ],
+          "label": "Synthetic Judgment & Field Implications",
+          "pass_number": 3,
+          "stance": "integration"
+        }
+      ],
       "suitable_for": "Dense philosophical works, prolific authors with 10+ works, comprehensive genealogy studies",
       "typical_passes": 3
     }
@@ -436,11 +551,7 @@
     },
     "secondary": [
       {
-        "description": "Quentin Skinner (1940-), British historian and founder of the Cambridge School contextualism, whose methodology demands that texts be understood through the linguistic and ideological conventions available to their authors at the moment of writing. His insistence that we recover what an author could have meant \u2014 not what later interpreters wish they meant \u2014 provides this engine's counterfactual discipline: distinguishing between what an author's prior work made possible versus what the argument actually required.",
-        "name": "skinner"
-      },
-      {
-        "description": "Quentin Skinner (1940-), whose concept of 'rhetorical redescription' shows how intellectual innovation occurs within \u2014 not beyond \u2014 inherited vocabularies, as thinkers stretch, recombine, or subvert available terms. This framework helps the engine identify moments where an author's prior conceptual commitments both enable new arguments (by providing established vocabulary) and constrain them (by binding the author to audiences and frameworks that limit radical departure).",
+        "description": "Quentin Skinner (1940-), British historian and founder of the Cambridge School contextualism, whose methodology demands that texts be understood through the linguistic and ideological conventions available to their authors at the moment of writing. His insistence that we recover what an author could have meant \u2014 not what later interpreters wish they meant \u2014 provides this engine's counterfactual discipline, while his concept of 'rhetorical redescription' shows how intellectual innovation occurs within inherited vocabularies, helping the engine identify moments where prior conceptual commitments both enable new arguments and constrain them by binding the author to audiences and frameworks that limit radical departure.",
         "name": "quentin_skinner"
       },
       {

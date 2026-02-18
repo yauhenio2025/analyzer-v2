@@ -2,6 +2,57 @@
   "engine_key": "conditions_of_possibility_analyzer",
   "entries": [
     {
+      "timestamp": "2026-02-18T03:19:14.775335+00:00",
+      "version": 3,
+      "definition_hash": "a745ce1c16b19acc1b58b9f88cb306f79ce47744d79afc4b47e343867be166fc",
+      "changes": [
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "removed",
+          "old_value": "skinner",
+          "new_value": null
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "quentin_skinner",
+          "new_value": "quentin_skinner (enriched)"
+        },
+        {
+          "section": "composability",
+          "field": "synergy_engines",
+          "action": "modified",
+          "old_value": "[\"evolution_tactics_detector\", \"concept_evolution\", \"inferential_commitment_mapper\", \"intellectual_genealogy\"]",
+          "new_value": "[\"evolution_tactics_detector\", \"concept_evolution\", \"inferential_commitment_mapper\", \"concept_taxonomy_argumentative_function\"]"
+        },
+        {
+          "section": "depth_levels",
+          "field": "deep",
+          "action": "modified",
+          "old_value": "0 passes",
+          "new_value": "3 passes"
+        },
+        {
+          "section": "depth_levels",
+          "field": "standard",
+          "action": "modified",
+          "old_value": "0 passes",
+          "new_value": "2 passes"
+        },
+        {
+          "section": "depth_levels",
+          "field": "surface",
+          "action": "modified",
+          "old_value": "0 passes",
+          "new_value": "1 passes"
+        }
+      ],
+      "summary": "Removed 'skinner' from intellectual lineage secondary; Modified intellectual lineage secondary; Modified composability synergy_engines; Modified depth levels deep; Modified depth levels standard; Modified depth levels surface",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-17T15:13:51.952385+00:00",
       "version": 2,
       "definition_hash": "0681fb3fbbd0707a5fa94d6bda8295648f6efa50c0ac75dfef48a1b595206fad",

@@ -4,16 +4,16 @@
   "description": "5-pass workflow analyzing how faithfully an author uses cited thinkers. Identifies intellectual debts, misappropriations, and strategic invocations.",
   "category": "influence",
   "version": 2,
-  "passes": [
+  "phases": [
     {
-      "pass_number": 1,
-      "pass_name": "Thinker Identification",
-      "pass_description": "Identify all thinkers cited or invoked in the author's work",
+      "phase_number": 1,
+      "phase_name": "Thinker Identification",
+      "phase_description": "Identify all thinkers cited or invoked in the author's work",
       "engine_key": "influence_pass1_thinker_identification",
       "prompt_template": null,
       "requires_external_docs": false,
       "caches_result": true,
-      "depends_on_passes": [],
+      "depends_on_phases": [],
       "output_schema": {
         "thinkers": [
           {
@@ -38,14 +38,14 @@
       }
     },
     {
-      "pass_number": 2,
-      "pass_name": "Hypothesis Generation",
-      "pass_description": "Generate hypotheses about how each thinker is being used or misused",
+      "phase_number": 2,
+      "phase_name": "Hypothesis Generation",
+      "phase_description": "Generate hypotheses about how each thinker is being used or misused",
       "engine_key": "influence_pass2_hypothesis_generation",
       "prompt_template": null,
       "requires_external_docs": false,
       "caches_result": true,
-      "depends_on_passes": [
+      "depends_on_phases": [
         1
       ],
       "output_schema": {
@@ -67,14 +67,14 @@
       }
     },
     {
-      "pass_number": 3,
-      "pass_name": "Textual Sampling",
-      "pass_description": "Sample relevant passages from the cited thinkers' actual works",
+      "phase_number": 3,
+      "phase_name": "Textual Sampling",
+      "phase_description": "Sample relevant passages from the cited thinkers' actual works",
       "engine_key": "influence_pass3_textual_sampling",
       "prompt_template": null,
       "requires_external_docs": true,
       "caches_result": true,
-      "depends_on_passes": [
+      "depends_on_phases": [
         2
       ],
       "output_schema": {
@@ -92,14 +92,14 @@
       }
     },
     {
-      "pass_number": 4,
-      "pass_name": "Deep Engagement",
-      "pass_description": "Compare author's use of thinker against the thinker's actual positions",
+      "phase_number": 4,
+      "phase_name": "Deep Engagement",
+      "phase_description": "Compare author's use of thinker against the thinker's actual positions",
       "engine_key": "influence_pass4_deep_engagement",
       "prompt_template": null,
       "requires_external_docs": true,
       "caches_result": true,
-      "depends_on_passes": [
+      "depends_on_phases": [
         3
       ],
       "output_schema": {
@@ -121,14 +121,14 @@
       }
     },
     {
-      "pass_number": 5,
-      "pass_name": "Synthesis Report",
-      "pass_description": "Synthesize findings into a comprehensive influence analysis report",
+      "phase_number": 5,
+      "phase_name": "Synthesis Report",
+      "phase_description": "Synthesize findings into a comprehensive influence analysis report",
       "engine_key": "influence_pass5_report_generation",
       "prompt_template": null,
       "requires_external_docs": false,
       "caches_result": true,
-      "depends_on_passes": [
+      "depends_on_phases": [
         4
       ],
       "output_schema": {
@@ -163,6 +163,6 @@
   ],
   "output_description": "Comprehensive analysis of intellectual influence fidelity with graded assessment",
   "final_output_schema": null,
-  "estimated_passes": 5,
+  "estimated_phases": 5,
   "source_project": "the-critic"
 }

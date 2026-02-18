@@ -1,6 +1,6 @@
 """Workflow API routes.
 
-Provides CRUD operations for workflow definitions and pass prompt composition.
+Provides CRUD operations for workflow definitions and phase prompt composition.
 """
 
 from typing import Literal, Optional
@@ -10,15 +10,17 @@ from fastapi import APIRouter, HTTPException, Query
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
 from src.stages.composer import StageComposer
+from src.workflows.extension_points import WorkflowExtensionAnalysis
+from src.workflows.extension_scorer import analyze_workflow_extensions
 from src.workflows.registry import get_workflow_registry
 from src.workflows.schemas import (
     WorkflowCategory,
     WorkflowDefinition,
-    WorkflowPass,
+    WorkflowPhase,
     WorkflowSummary,
 )
 
-# Lazy-loaded composer for pass prompt composition
+# Lazy-loaded composer for phase prompt composition
 _composer: Optional[StageComposer] = None
 
 
@@ -83,9 +85,34 @@ async def get_workflow(workflow_key: str) -> WorkflowDefinition:
     return workflow
 
 
-@router.get("/{workflow_key}/passes", response_model=list[WorkflowPass])
-async def get_workflow_passes(workflow_key: str) -> list[WorkflowPass]:
-    """Get just the passes for a workflow."""
+@router.get("/{workflow_key}/extension-points", response_model=WorkflowExtensionAnalysis)
+async def get_extension_points(
+    workflow_key: str,
+    depth: str = Query("standard", pattern="^(surface|standard|deep)$"),
+    phase_number: Optional[float] = Query(None, description="Specific phase to analyze"),
+    min_score: float = Query(0.20, description="Minimum composite score to include"),
+    max_candidates: int = Query(15, description="Max candidates per phase"),
+) -> WorkflowExtensionAnalysis:
+    """Analyze extension points for a workflow at a given depth.
+
+    Scores all engines in the system for composability fit with each phase
+    and returns ranked candidates with rationale.
+    """
+    try:
+        return analyze_workflow_extensions(
+            workflow_key=workflow_key,
+            depth=depth,
+            phase_number=phase_number,
+            min_score=min_score,
+            max_candidates=max_candidates,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@router.get("/{workflow_key}/phases", response_model=list[WorkflowPhase])
+async def get_workflow_phases(workflow_key: str) -> list[WorkflowPhase]:
+    """Get just the phases for a workflow."""
     registry = get_workflow_registry()
     workflow = registry.get(workflow_key)
     if workflow is None:
@@ -93,12 +120,19 @@ async def get_workflow_passes(workflow_key: str) -> list[WorkflowPass]:
             status_code=404,
             detail=f"Workflow not found: {workflow_key}",
         )
-    return workflow.passes
+    return workflow.phases
 
 
-@router.get("/{workflow_key}/pass/{pass_number}")
-async def get_workflow_pass(workflow_key: str, pass_number: float) -> WorkflowPass:
-    """Get a specific pass from a workflow."""
+# Deprecated alias for backwards compatibility
+@router.get("/{workflow_key}/passes", response_model=list[WorkflowPhase], include_in_schema=False)
+async def get_workflow_passes_deprecated(workflow_key: str) -> list[WorkflowPhase]:
+    """Deprecated: use /phases instead."""
+    return await get_workflow_phases(workflow_key)
+
+
+@router.get("/{workflow_key}/phase/{phase_number}")
+async def get_workflow_phase(workflow_key: str, phase_number: float) -> WorkflowPhase:
+    """Get a specific phase from a workflow."""
     registry = get_workflow_registry()
     workflow = registry.get(workflow_key)
     if workflow is None:
@@ -106,28 +140,35 @@ async def get_workflow_pass(workflow_key: str, pass_number: float) -> WorkflowPa
             status_code=404,
             detail=f"Workflow not found: {workflow_key}",
         )
-    for p in workflow.passes:
-        if p.pass_number == pass_number:
+    for p in workflow.phases:
+        if p.phase_number == phase_number:
             return p
     raise HTTPException(
         status_code=404,
-        detail=f"Pass {pass_number} not found in workflow {workflow_key}",
+        detail=f"Phase {phase_number} not found in workflow {workflow_key}",
     )
 
 
-@router.get("/{workflow_key}/pass/{pass_number}/prompt")
-async def get_workflow_pass_prompt(
+# Deprecated alias for backwards compatibility
+@router.get("/{workflow_key}/pass/{pass_number}", include_in_schema=False)
+async def get_workflow_pass_deprecated(workflow_key: str, pass_number: float) -> WorkflowPhase:
+    """Deprecated: use /phase/{phase_number} instead."""
+    return await get_workflow_phase(workflow_key, pass_number)
+
+
+@router.get("/{workflow_key}/phase/{phase_number}/prompt")
+async def get_workflow_phase_prompt(
     workflow_key: str,
-    pass_number: float,
+    phase_number: float,
     audience: AudienceType = Query(
         "analyst",
         description="Target audience for vocabulary calibration",
     ),
 ) -> dict:
-    """Get the composed prompt for a workflow pass.
+    """Get the composed prompt for a workflow phase.
 
-    If the pass has an engine_key, composes the extraction prompt for that engine.
-    If the pass has a custom prompt_template, returns that template.
+    If the phase has an engine_key, composes the extraction prompt for that engine.
+    If the phase has a custom prompt_template, returns that template.
     Returns an error if neither is defined.
     """
     workflow_registry = get_workflow_registry()
@@ -138,25 +179,25 @@ async def get_workflow_pass_prompt(
             detail=f"Workflow not found: {workflow_key}",
         )
 
-    pass_def = None
-    for p in workflow.passes:
-        if p.pass_number == pass_number:
-            pass_def = p
+    phase_def = None
+    for p in workflow.phases:
+        if p.phase_number == phase_number:
+            phase_def = p
             break
-    if pass_def is None:
+    if phase_def is None:
         raise HTTPException(
             status_code=404,
-            detail=f"Pass {pass_number} not found in workflow {workflow_key}",
+            detail=f"Phase {phase_number} not found in workflow {workflow_key}",
         )
 
-    # If pass has a chain_key, compose prompts for each engine in the chain
-    if pass_def.chain_key:
+    # If phase has a chain_key, compose prompts for each engine in the chain
+    if phase_def.chain_key:
         chain_registry = get_chain_registry()
-        chain = chain_registry.get(pass_def.chain_key)
+        chain = chain_registry.get(phase_def.chain_key)
         if chain is None:
             raise HTTPException(
                 status_code=404,
-                detail=f"Chain not found: {pass_def.chain_key}",
+                detail=f"Chain not found: {phase_def.chain_key}",
             )
 
         engine_registry = get_engine_registry()
@@ -193,34 +234,34 @@ async def get_workflow_pass_prompt(
 
         return {
             "workflow_key": workflow_key,
-            "pass_number": pass_number,
-            "pass_name": pass_def.pass_name,
-            "chain_key": pass_def.chain_key,
+            "phase_number": phase_number,
+            "phase_name": phase_def.phase_name,
+            "chain_key": phase_def.chain_key,
             "engine_key": None,
             "prompt_type": "chain",
             "blend_mode": chain.blend_mode.value,
             "engine_prompts": engine_prompts,
-            "context_parameters": pass_def.context_parameters,
+            "context_parameters": phase_def.context_parameters,
             "context_parameter_schema": chain.context_parameter_schema,
             "audience": audience,
             "framework_used": None,
         }
 
-    # If pass has an engine_key, compose the engine's extraction prompt
-    if pass_def.engine_key:
+    # If phase has an engine_key, compose the engine's extraction prompt
+    if phase_def.engine_key:
         engine_registry = get_engine_registry()
-        engine = engine_registry.get(pass_def.engine_key)
+        engine = engine_registry.get(phase_def.engine_key)
         if engine is None:
             raise HTTPException(
                 status_code=404,
-                detail=f"Engine not found: {pass_def.engine_key}",
+                detail=f"Engine not found: {phase_def.engine_key}",
             )
 
         composer = get_composer()
         try:
             composed = composer.compose(
                 stage="extraction",
-                engine_key=pass_def.engine_key,
+                engine_key=phase_def.engine_key,
                 stage_context=engine.stage_context,
                 audience=audience,
                 canonical_schema=engine.canonical_schema,
@@ -233,26 +274,26 @@ async def get_workflow_pass_prompt(
 
         return {
             "workflow_key": workflow_key,
-            "pass_number": pass_number,
-            "pass_name": pass_def.pass_name,
-            "engine_key": pass_def.engine_key,
+            "phase_number": phase_number,
+            "phase_name": phase_def.phase_name,
+            "engine_key": phase_def.engine_key,
             "prompt_type": "extraction",
             "prompt": composed.prompt,
-            "context_parameters": pass_def.context_parameters,
+            "context_parameters": phase_def.context_parameters,
             "audience": audience,
             "framework_used": composed.framework_used,
         }
 
-    # If pass has a custom prompt template, return it
-    if pass_def.prompt_template:
+    # If phase has a custom prompt template, return it
+    if phase_def.prompt_template:
         return {
             "workflow_key": workflow_key,
-            "pass_number": pass_number,
-            "pass_name": pass_def.pass_name,
+            "phase_number": phase_number,
+            "phase_name": phase_def.phase_name,
             "engine_key": None,
             "prompt_type": "custom_template",
-            "prompt": pass_def.prompt_template,
-            "context_parameters": pass_def.context_parameters,
+            "prompt": phase_def.prompt_template,
+            "context_parameters": phase_def.context_parameters,
             "audience": audience,
             "framework_used": None,
         }
@@ -260,8 +301,19 @@ async def get_workflow_pass_prompt(
     # Neither engine, chain, nor template defined
     raise HTTPException(
         status_code=404,
-        detail=f"Pass {pass_number} has no engine_key, chain_key, or prompt_template defined",
+        detail=f"Phase {phase_number} has no engine_key, chain_key, or prompt_template defined",
     )
+
+
+# Deprecated alias for backwards compatibility
+@router.get("/{workflow_key}/pass/{pass_number}/prompt", include_in_schema=False)
+async def get_workflow_pass_prompt_deprecated(
+    workflow_key: str,
+    pass_number: float,
+    audience: AudienceType = Query("analyst"),
+) -> dict:
+    """Deprecated: use /phase/{phase_number}/prompt instead."""
+    return await get_workflow_phase_prompt(workflow_key, pass_number, audience)
 
 
 @router.post("", response_model=WorkflowDefinition)
@@ -325,30 +377,39 @@ async def update_workflow(
     return definition
 
 
-@router.put("/{workflow_key}/pass/{pass_number}", response_model=WorkflowPass)
-async def update_workflow_pass(
-    workflow_key: str, pass_number: float, pass_def: WorkflowPass
-) -> WorkflowPass:
-    """Update a single pass in a workflow.
+@router.put("/{workflow_key}/phase/{phase_number}", response_model=WorkflowPhase)
+async def update_workflow_phase(
+    workflow_key: str, phase_number: float, phase_def: WorkflowPhase
+) -> WorkflowPhase:
+    """Update a single phase in a workflow.
 
-    The pass_number in the URL must match the pass_def's pass_number.
+    The phase_number in the URL must match the phase_def's phase_number.
     """
-    if pass_number != pass_def.pass_number:
+    if phase_number != phase_def.phase_number:
         raise HTTPException(
             status_code=400,
-            detail="URL pass_number must match pass definition's pass_number",
+            detail="URL phase_number must match phase definition's phase_number",
         )
 
     registry = get_workflow_registry()
 
-    success = registry.update_pass(workflow_key, pass_number, pass_def)
+    success = registry.update_phase(workflow_key, phase_number, phase_def)
     if not success:
         raise HTTPException(
             status_code=500,
-            detail=f"Failed to update pass {pass_number} in workflow {workflow_key}",
+            detail=f"Failed to update phase {phase_number} in workflow {workflow_key}",
         )
 
-    return pass_def
+    return phase_def
+
+
+# Deprecated alias for backwards compatibility
+@router.put("/{workflow_key}/pass/{pass_number}", response_model=WorkflowPhase, include_in_schema=False)
+async def update_workflow_pass_deprecated(
+    workflow_key: str, pass_number: float, phase_def: WorkflowPhase
+) -> WorkflowPhase:
+    """Deprecated: use /phase/{phase_number} instead."""
+    return await update_workflow_phase(workflow_key, pass_number, phase_def)
 
 
 @router.delete("/{workflow_key}")

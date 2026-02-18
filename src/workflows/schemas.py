@@ -1,8 +1,11 @@
-"""Workflow schemas for multi-pass analysis pipelines.
+"""Workflow schemas for multi-phase analysis pipelines.
 
-Workflows are complex, multi-pass analysis pipelines that differ from chains:
+Workflows are complex, multi-phase analysis pipelines that differ from chains:
 - Chains: Combine engines, run once, produce single output
-- Workflows: Multi-pass pipelines with intermediate state, caching, resumability
+- Workflows: Multi-phase pipelines with intermediate state, caching, resumability
+
+Terminology: workflow-level steps are "phases" (not "passes").
+Engine-level stance iterations within depth levels remain "passes".
 """
 
 from enum import Enum
@@ -17,30 +20,34 @@ class WorkflowCategory(str, Enum):
     SYNTHESIS = "synthesis"       # Essay and argument construction
     INFLUENCE = "influence"       # Intellectual debt analysis
     OUTLINE = "outline"           # Essay outline management
-    ANALYSIS = "analysis"               # Multi-pass analytical workflows
+    ANALYSIS = "analysis"               # Multi-phase analytical workflows
     GENEALOGY = "genealogy"             # Intellectual genealogy / self-influence analysis
     DECISION_SUPPORT = "decision_support"  # Decision support system workflows
 
 
-class WorkflowPass(BaseModel):
-    """A single pass within a workflow."""
+class WorkflowPhase(BaseModel):
+    """A single phase within a workflow.
 
-    pass_number: float = Field(..., description="Order of this pass (1-indexed, supports .5 for intermediate passes)")
-    pass_name: str = Field(..., description="Human-readable name for this pass")
-    pass_description: str = Field(
-        default="", description="What this pass accomplishes"
+    Note: workflow-level steps are called "phases" to distinguish from
+    engine-level "passes" (stance iterations within depth levels).
+    """
+
+    phase_number: float = Field(..., description="Order of this phase (1-indexed, supports .5 for intermediate phases)")
+    phase_name: str = Field(..., description="Human-readable name for this phase")
+    phase_description: str = Field(
+        default="", description="What this phase accomplishes"
     )
     engine_key: Optional[str] = Field(
         default=None,
-        description="Engine to use for this pass (if engine-backed)",
+        description="Engine to use for this phase (if engine-backed)",
     )
     function_key: Optional[str] = Field(
         default=None,
-        description="Function to use for this pass (if function-backed)",
+        description="Function to use for this phase (if function-backed)",
     )
     chain_key: Optional[str] = Field(
         default=None,
-        description="Chain to execute for this pass (if chain-backed). "
+        description="Chain to execute for this phase (if chain-backed). "
         "Mutually exclusive with engine_key and function_key.",
     )
     context_parameters: Optional[dict[str, Any]] = Field(
@@ -55,23 +62,39 @@ class WorkflowPass(BaseModel):
     )
     requires_external_docs: bool = Field(
         default=False,
-        description="Whether this pass needs documents beyond the corpus",
+        description="Whether this phase needs documents beyond the corpus",
     )
     caches_result: bool = Field(
         default=True,
-        description="Whether to cache pass results for resumability",
+        description="Whether to cache phase results for resumability",
     )
-    depends_on_passes: list[float] = Field(
+    depends_on_phases: list[float] = Field(
         default_factory=list,
-        description="Pass numbers this pass depends on (supports .5 for intermediate passes)",
+        description="Phase numbers this phase depends on (supports .5 for intermediate phases)",
     )
     output_schema: Optional[dict[str, Any]] = Field(
         default=None,
-        description="Expected output schema for this pass",
+        description="Expected output schema for this phase",
     )
 
+    @model_validator(mode="before")
+    @classmethod
+    def _migrate_pass_fields(cls, data: Any) -> Any:
+        """Backwards compatibility: accept old 'pass_*' field names."""
+        if isinstance(data, dict):
+            renames = {
+                "pass_number": "phase_number",
+                "pass_name": "phase_name",
+                "pass_description": "phase_description",
+                "depends_on_passes": "depends_on_phases",
+            }
+            for old_key, new_key in renames.items():
+                if old_key in data and new_key not in data:
+                    data[new_key] = data.pop(old_key)
+        return data
+
     @model_validator(mode="after")
-    def validate_execution_target(self) -> "WorkflowPass":
+    def validate_execution_target(self) -> "WorkflowPhase":
         """Ensure at most one execution target is set."""
         targets = [
             ("engine_key", self.engine_key),
@@ -87,8 +110,12 @@ class WorkflowPass(BaseModel):
         return self
 
 
+# Backwards compatibility alias
+WorkflowPass = WorkflowPhase
+
+
 class WorkflowDefinition(BaseModel):
-    """Definition for a multi-pass analysis workflow."""
+    """Definition for a multi-phase analysis workflow."""
 
     workflow_key: str = Field(
         ...,
@@ -108,9 +135,9 @@ class WorkflowDefinition(BaseModel):
     )
     version: int = Field(default=1, description="Workflow definition version")
 
-    passes: list[WorkflowPass] = Field(
+    phases: list[WorkflowPhase] = Field(
         ...,
-        description="Ordered list of passes in this workflow",
+        description="Ordered list of phases in this workflow",
     )
 
     # Input requirements
@@ -134,14 +161,25 @@ class WorkflowDefinition(BaseModel):
     )
 
     # Metadata
-    estimated_passes: Optional[int] = Field(
+    estimated_phases: Optional[int] = Field(
         default=None,
-        description="Typical number of passes (may vary based on content)",
+        description="Typical number of phases (may vary based on content)",
     )
     source_project: Optional[str] = Field(
         default=None,
         description="Project this workflow was extracted from",
     )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _migrate_pass_fields(cls, data: Any) -> Any:
+        """Backwards compatibility: accept old 'passes'/'estimated_passes' field names."""
+        if isinstance(data, dict):
+            if "passes" in data and "phases" not in data:
+                data["phases"] = data.pop("passes")
+            if "estimated_passes" in data and "estimated_phases" not in data:
+                data["estimated_phases"] = data.pop("estimated_passes")
+        return data
 
 
 class WorkflowSummary(BaseModel):
@@ -151,5 +189,5 @@ class WorkflowSummary(BaseModel):
     workflow_name: str
     description: str
     category: WorkflowCategory
-    pass_count: int
+    phase_count: int
     version: int

@@ -248,11 +248,10 @@
   "category": "scholarly",
   "composability": {
     "consumes_from": {
-      "conditions_analysis": "From conditions_of_possibility_analyzer (Pass 3) -- enabling conditions, constraining conditions, path dependencies, counterfactuals",
-      "cross_work_synthesis": "From Pass 3 cross-work synthesis engines -- patterns across all prior works",
-      "dimensional_scan_results": "From Pass 2 dimensional scanners -- concept_evolution, evolution_tactics_detector, concept_appropriation_tracker findings per prior work",
-      "prior_work_profiles": "From genealogy_deep_target_profiling (Pass 1) -- structured profiles of all prior works and the target work",
-      "relationship_classifications": "From genealogy_relationship_classification (Pass 1.5) -- typed relationships between each prior work and the target"
+      "dimensional_scan_results": "From genealogy_prior_work_scanning chain (Pass 2) -- concept_evolution and concept_appropriation_tracker findings per prior work",
+      "relationship_classifications": "From genealogy_relationship_classification (Pass 1.5) -- typed relationships between each prior work and the target",
+      "synthesis_analysis": "From genealogy_synthesis chain (Pass 3) -- concept_synthesis evolution timelines, concept_taxonomy_argumentative_function classifications, evolution_tactics_detector tactic catalog, conditions_of_possibility_analyzer path dependencies and counterfactuals",
+      "target_work_profile": "From genealogy_target_profiling chain (Pass 1) -- conceptual_framework_extraction + concept_semantic_constellation + inferential_commitment_mapper output"
     },
     "shares_with": {
       "author_profile": "Intellectual character profile reusable for audience-specific adaptation",
@@ -265,7 +264,7 @@
       "conditions_of_possibility_analyzer",
       "concept_evolution",
       "evolution_tactics_detector",
-      "intellectual_genealogy"
+      "concept_synthesis"
     ]
   },
   "depth_levels": [
@@ -297,29 +296,42 @@
       "passes": [
         {
           "consumes_from": [],
-          "description": "Full synthesis integrating all upstream pass data. Executive\nsummary with dominant influences and key evolution patterns.\nGenealogical portrait narrating the author's intellectual\ntrajectory through descent and emergence. 5-8 idea genealogies\nwith timelines and evolution narratives. Author intellectual\nprofile characterizing habits, strengths, and weaknesses.\nMethodological notes with confidence levels and limitations.\n3-5 key findings with implications.\n",
+          "description": "Establish the two independent foundations of the synthesis.\nCompose executive summary distilling all upstream pass data\ninto dominant influences and key evolution patterns with 3-5\nkey findings. Trace 5-8 idea genealogies with structured\ntimelines (work, year, form) and evolution narratives for\neach significant concept. These two outputs are independent\nand provide the factual base for the narrative synthesis.\n",
           "focus_capabilities": [
             "compose_executive_summary",
+            "trace_idea_genealogies"
+          ],
+          "focus_dimensions": [
+            "executive_summary",
+            "idea_genealogies",
+            "key_findings"
+          ],
+          "label": "Foundations \u2014 Summary & Idea Genealogies",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "With executive summary and idea genealogies in hand, compose\nthe narrative synthesis. Genealogical portrait narrating the\nauthor's intellectual trajectory through descent and emergence.\nAuthor intellectual profile characterizing habits, strengths,\nweaknesses, and debt-handling patterns. Methodological notes\nwith confidence levels for major findings, data limitations,\nand recommended follow-up investigations.\n",
+          "focus_capabilities": [
             "narrate_genealogical_portrait",
-            "trace_idea_genealogies",
             "profile_intellectual_character",
             "reflect_on_methodology"
           ],
           "focus_dimensions": [
-            "executive_summary",
             "genealogical_portrait",
-            "idea_genealogies",
             "author_intellectual_profile",
-            "methodological_notes",
-            "key_findings"
+            "methodological_notes"
           ],
-          "label": "Full Genealogical Synthesis",
-          "pass_number": 1,
+          "label": "Narrative Synthesis & Reflexive Assessment",
+          "pass_number": 2,
           "stance": "integration"
         }
       ],
       "suitable_for": "Standard genealogy pipeline final output, most academic texts, authors with 3-10 prior works",
-      "typical_passes": 1
+      "typical_passes": 2
     },
     {
       "description": "Comprehensive synthesis with extended narratives: detailed genealogical portrait with close textual analysis, comprehensive idea genealogies with co-evolution analysis, full intellectual portrait with field comparisons, reflexive methodological assessment, and key findings with multi-audience implications",
@@ -327,29 +339,59 @@
       "passes": [
         {
           "consumes_from": [],
-          "description": "Comprehensive synthesis with extended narratives. Detailed\ngenealogical portrait with close textual analysis tracing\norigin stories, transformation moments, and abandoned paths.\nComprehensive idea genealogies with co-evolution analysis\nshowing how changing one idea forced changes to others. Full\nintellectual portrait with field comparisons and growth\nassessment. Reflexive methodological assessment examining\nbiases in the genealogical method itself. Key findings with\nmulti-audience implications and assessment of how the author\nmight respond to each finding.\n",
+          "description": "Exhaustive foundational work. Executive summary with full\naccounting of all upstream evidence. Comprehensive idea\ngenealogies for all significant concepts with detailed\ntimelines, textual evidence at each stage, and co-evolution\nanalysis showing how changing one idea forced changes to\nothers. Key findings ranked by significance with multi-\naudience implications.\n",
           "focus_capabilities": [
             "compose_executive_summary",
-            "narrate_genealogical_portrait",
-            "trace_idea_genealogies",
-            "profile_intellectual_character",
-            "reflect_on_methodology"
+            "trace_idea_genealogies"
           ],
           "focus_dimensions": [
             "executive_summary",
-            "genealogical_portrait",
             "idea_genealogies",
-            "author_intellectual_profile",
-            "methodological_notes",
             "key_findings"
           ],
-          "label": "Comprehensive Genealogical Synthesis",
+          "label": "Comprehensive Foundations",
           "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "Detailed genealogical portrait with close textual analysis\ntracing origin stories, transformation moments, and abandoned\npaths. The narrative should make the author's intellectual\njourney legible as a story with turning points, not merely\na chronological list. Full intellectual portrait with field\ncomparisons: characteristic moves, recurring strategies,\npersistent blind spots, and assessment of growth versus\nentrenchment over time.\n",
+          "focus_capabilities": [
+            "narrate_genealogical_portrait",
+            "profile_intellectual_character"
+          ],
+          "focus_dimensions": [
+            "genealogical_portrait",
+            "author_intellectual_profile"
+          ],
+          "label": "Genealogical Portrait & Intellectual Character",
+          "pass_number": 2,
+          "stance": "architecture"
+        },
+        {
+          "consumes_from": [
+            1,
+            2
+          ],
+          "description": "Reflexive assessment examining biases in the genealogical\nmethod itself. Per-finding confidence assessments with\nevidence quality evaluations. Comprehensive inventory of\nlimitations \u2014 unavailable sources, partial analyses, time\nconstraints. All relationship classification revisions with\nreasons. Detailed follow-up research agenda explaining why\nspecific investigations would be most productive. Assessment\nof how the author might respond to each finding. Final\nrevision of executive summary and key findings in light of\nthe full narrative synthesis.\n",
+          "focus_capabilities": [
+            "reflect_on_methodology",
+            "compose_executive_summary"
+          ],
+          "focus_dimensions": [
+            "methodological_notes",
+            "executive_summary",
+            "key_findings"
+          ],
+          "label": "Reflexive Methodological Assessment",
+          "pass_number": 3,
           "stance": "integration"
         }
       ],
       "suitable_for": "Dense philosophical works, prolific authors with 10+ prior works, publication-quality genealogical studies, comprehensive intellectual biography projects",
-      "typical_passes": 1
+      "typical_passes": 3
     }
   ],
   "engine_key": "genealogy_final_synthesis",

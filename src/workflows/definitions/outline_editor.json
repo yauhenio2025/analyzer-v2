@@ -4,47 +4,61 @@
   "description": "AI-assisted essay construction workflow from annotations and findings to polished outline with synthesis.",
   "category": "outline",
   "version": 1,
-  "passes": [
+  "phases": [
     {
-      "pass_number": 1,
-      "pass_name": "Talking Point Generation",
-      "pass_description": "Transform annotations and findings into talking points",
+      "phase_number": 1,
+      "phase_name": "Talking Point Generation",
+      "phase_description": "Transform annotations and findings into talking points",
       "engine_key": "outline_talking_point_generator",
       "requires_external_docs": false,
       "caches_result": true,
-      "depends_on_passes": []
+      "depends_on_phases": []
     },
     {
-      "pass_number": 2,
-      "pass_name": "Notes Extraction",
-      "pass_description": "Extract additional points from raw notes and dictations",
+      "phase_number": 2,
+      "phase_name": "Notes Extraction",
+      "phase_description": "Extract additional points from raw notes and dictations",
       "engine_key": "outline_notes_extractor",
       "requires_external_docs": false,
       "caches_result": true,
-      "depends_on_passes": [1]
+      "depends_on_phases": [
+        1
+      ]
     },
     {
-      "pass_number": 3,
-      "pass_name": "Point Upgrade",
-      "pass_description": "Improve talking points with full outline context",
+      "phase_number": 3,
+      "phase_name": "Point Upgrade",
+      "phase_description": "Improve talking points with full outline context",
       "engine_key": "outline_talking_point_upgrader",
       "requires_external_docs": false,
       "caches_result": true,
-      "depends_on_passes": [1, 2]
+      "depends_on_phases": [
+        1,
+        2
+      ]
     },
     {
-      "pass_number": 4,
-      "pass_name": "Section Summarization",
-      "pass_description": "Generate synthesis summaries for outline sections",
+      "phase_number": 4,
+      "phase_name": "Section Summarization",
+      "phase_description": "Generate synthesis summaries for outline sections",
       "engine_key": "outline_synthesis_generator",
       "requires_external_docs": false,
       "caches_result": true,
-      "depends_on_passes": [3]
+      "depends_on_phases": [
+        3
+      ]
     }
   ],
-  "required_inputs": ["outline_structure"],
-  "optional_inputs": ["annotations", "notes", "findings", "document_summaries"],
+  "required_inputs": [
+    "outline_structure"
+  ],
+  "optional_inputs": [
+    "annotations",
+    "notes",
+    "findings",
+    "document_summaries"
+  ],
   "output_description": "Polished essay outline with talking points and section syntheses",
-  "estimated_passes": 4,
+  "estimated_phases": 4,
   "source_project": "the-critic"
 }

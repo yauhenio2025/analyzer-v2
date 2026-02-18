@@ -4,17 +4,17 @@
   "description": "The core question-answer loop in decider-v2. Coordinates question selection, generation, delivery, and answer processing across dual tracks (IDEAS + PROCESS).",
   "category": "decision_support",
   "version": 1,
-  "passes": [
+  "phases": [
     {
-      "pass_number": 1,
-      "pass_name": "Coordinator Decision",
-      "pass_description": "Strategic coordinator analyzes current state and decides what question to ask next, which vector to target, and what information to seek",
+      "phase_number": 1,
+      "phase_name": "Coordinator Decision",
+      "phase_description": "Strategic coordinator analyzes current state and decides what question to ask next, which vector to target, and what information to seek",
       "function_key": "coordinator_decision",
       "engine_key": null,
       "prompt_template": null,
       "requires_external_docs": false,
       "caches_result": true,
-      "depends_on_passes": [],
+      "depends_on_phases": [],
       "output_schema": {
         "target_vector": "string",
         "question_text": "string",
@@ -23,15 +23,17 @@
       }
     },
     {
-      "pass_number": 2,
-      "pass_name": "Question Generation",
-      "pass_description": "Generates the actual interview question based on coordinator's decision, including bespoke answer format and context",
+      "phase_number": 2,
+      "phase_name": "Question Generation",
+      "phase_description": "Generates the actual interview question based on coordinator's decision, including bespoke answer format and context",
       "function_key": "question_generation",
       "engine_key": null,
       "prompt_template": null,
       "requires_external_docs": false,
       "caches_result": true,
-      "depends_on_passes": [1],
+      "depends_on_phases": [
+        1
+      ],
       "output_schema": {
         "question_text": "string",
         "answer_format": "object",
@@ -39,15 +41,17 @@
       }
     },
     {
-      "pass_number": 3,
-      "pass_name": "Quality Check",
-      "pass_description": "Validates question quality, checks for redundancy with recent questions, and ensures appropriate difficulty level",
+      "phase_number": 3,
+      "phase_name": "Quality Check",
+      "phase_description": "Validates question quality, checks for redundancy with recent questions, and ensures appropriate difficulty level",
       "function_key": "quality_checker",
       "engine_key": null,
       "prompt_template": null,
       "requires_external_docs": false,
       "caches_result": false,
-      "depends_on_passes": [2],
+      "depends_on_phases": [
+        2
+      ],
       "output_schema": {
         "is_valid": "boolean",
         "issues": "array",
@@ -55,15 +59,17 @@
       }
     },
     {
-      "pass_number": 4,
-      "pass_name": "Emergent Synthesis",
-      "pass_description": "After answer is received, synthesizes emerging patterns and updates the synthesis state with new insights",
+      "phase_number": 4,
+      "phase_name": "Emergent Synthesis",
+      "phase_description": "After answer is received, synthesizes emerging patterns and updates the synthesis state with new insights",
       "function_key": "emergent_synthesis",
       "engine_key": null,
       "prompt_template": null,
       "requires_external_docs": false,
       "caches_result": true,
-      "depends_on_passes": [3],
+      "depends_on_phases": [
+        3
+      ],
       "output_schema": {
         "synthesis_update": "object",
         "emerging_themes": "array",
@@ -71,24 +77,32 @@
       }
     },
     {
-      "pass_number": 5,
-      "pass_name": "Implication Drawing",
-      "pass_description": "Draws implications from recent answers and synthesis state, generating cross-track items",
+      "phase_number": 5,
+      "phase_name": "Implication Drawing",
+      "phase_description": "Draws implications from recent answers and synthesis state, generating cross-track items",
       "function_key": "implication_drawing",
       "engine_key": null,
       "prompt_template": null,
       "requires_external_docs": false,
       "caches_result": true,
-      "depends_on_passes": [4],
+      "depends_on_phases": [
+        4
+      ],
       "output_schema": {
         "implications": "array",
         "cross_track_items": "array"
       }
     }
   ],
-  "required_inputs": ["session_context", "synthesis_state", "recent_questions"],
-  "optional_inputs": ["user_preferences"],
+  "required_inputs": [
+    "session_context",
+    "synthesis_state",
+    "recent_questions"
+  ],
+  "optional_inputs": [
+    "user_preferences"
+  ],
   "output_description": "A complete question-answer cycle with synthesis updates and implications drawn",
-  "estimated_passes": 5,
+  "estimated_phases": 5,
   "source_project": "decider-v2"
 }

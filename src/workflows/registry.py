@@ -5,7 +5,7 @@ import logging
 from pathlib import Path
 from typing import Optional
 
-from .schemas import WorkflowDefinition, WorkflowSummary, WorkflowCategory, WorkflowPass
+from .schemas import WorkflowDefinition, WorkflowSummary, WorkflowCategory, WorkflowPhase
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +57,7 @@ class WorkflowRegistry:
                 workflow_name=w.workflow_name,
                 description=w.description,
                 category=w.category,
-                pass_count=len(w.passes),
+                phase_count=len(w.phases),
                 version=w.version,
             )
             for w in self._workflows.values()
@@ -72,7 +72,7 @@ class WorkflowRegistry:
                 workflow_name=w.workflow_name,
                 description=w.description,
                 category=w.category,
-                pass_count=len(w.passes),
+                phase_count=len(w.phases),
                 version=w.version,
             )
             for w in self._workflows.values()
@@ -123,15 +123,15 @@ class WorkflowRegistry:
             logger.error(f"Failed to save workflow {workflow_key}: {e}")
             return False
 
-    def update_pass(
-        self, workflow_key: str, pass_number: float, pass_def: WorkflowPass
+    def update_phase(
+        self, workflow_key: str, phase_number: float, phase_def: WorkflowPhase
     ) -> bool:
-        """Update a single pass in a workflow.
+        """Update a single phase in a workflow.
 
         Args:
             workflow_key: Key of the workflow
-            pass_number: Pass number to update (matches pass_number field, e.g. 1, 1.5, 2)
-            pass_def: The updated pass definition
+            phase_number: Phase number to update (matches phase_number field, e.g. 1, 1.5, 2)
+            phase_def: The updated phase definition
 
         Returns:
             True if update was successful, False otherwise
@@ -142,13 +142,13 @@ class WorkflowRegistry:
             logger.error(f"Workflow not found: {workflow_key}")
             return False
 
-        # Find pass by pass_number value, not by index
-        for i, p in enumerate(workflow.passes):
-            if p.pass_number == pass_number:
-                workflow.passes[i] = pass_def
+        # Find phase by phase_number value, not by index
+        for i, p in enumerate(workflow.phases):
+            if p.phase_number == phase_number:
+                workflow.phases[i] = phase_def
                 return self.save(workflow_key, workflow)
 
-        logger.error(f"Pass {pass_number} not found in workflow {workflow_key}")
+        logger.error(f"Phase {phase_number} not found in workflow {workflow_key}")
         return False
 
     def delete(self, workflow_key: str) -> bool:

@@ -2,6 +2,29 @@
   "engine_key": "concept_evolution",
   "entries": [
     {
+      "timestamp": "2026-02-18T03:19:14.694595+00:00",
+      "version": 3,
+      "definition_hash": "25326a27d8f47b20ff68013124cade49b60fbf7407fc15be433101b5ddbebf3e",
+      "changes": [
+        {
+          "section": "depth_levels",
+          "field": "deep",
+          "action": "modified",
+          "old_value": "1 passes",
+          "new_value": "3 passes"
+        },
+        {
+          "section": "depth_levels",
+          "field": "standard",
+          "action": "modified",
+          "old_value": "1 passes",
+          "new_value": "2 passes"
+        }
+      ],
+      "summary": "Modified depth levels deep; Modified depth levels standard",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-17T15:13:52.001802+00:00",
       "version": 2,
       "definition_hash": "1d24e48637de40f8dc9ab03db585248a5e2090ea3544f99e7eaa6a1a050ec9eb",

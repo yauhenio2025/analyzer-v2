@@ -2,6 +2,29 @@
   "engine_key": "concept_appropriation_tracker",
   "entries": [
     {
+      "timestamp": "2026-02-18T03:19:14.719422+00:00",
+      "version": 3,
+      "definition_hash": "abc3cc6a6f44870931093e0fa1d53dabcc67007e60d7083788f369ba19fd0ab9",
+      "changes": [
+        {
+          "section": "depth_levels",
+          "field": "deep",
+          "action": "modified",
+          "old_value": "1 passes",
+          "new_value": "3 passes"
+        },
+        {
+          "section": "depth_levels",
+          "field": "standard",
+          "action": "modified",
+          "old_value": "1 passes",
+          "new_value": "2 passes"
+        }
+      ],
+      "summary": "Modified depth levels deep; Modified depth levels standard",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-17T15:13:52.026694+00:00",
       "version": 2,
       "definition_hash": "12831c2cdcdf64e3a671f4d6875a94299d6571f43e83a36d4116a4f6cbbfa485",
