@@ -206,16 +206,18 @@
 ## Schema-on-Read / Prose Pipeline (the-critic)
 
 ### Prose Output Infrastructure
-- **Status**: Active (PoC — conditions_of_possibility engine only)
-- **Description**: Full prose-mode pipeline where LLM outputs analytical prose instead of forced JSON. Structured data extracted at presentation time using Claude Haiku.
+- **Status**: Active — All 4 sections (conditions, tactics, functional, synthesis) via analyzer-v2 delegation
+- **Description**: Full prose-mode pipeline where LLM outputs analytical prose instead of forced JSON. Structured data extracted at presentation time via analyzer-v2's transformation service (Phase 5), with local Claude Haiku fallback when v2 is unreachable. The Critic is a thin orchestrator: load prose → check DB cache → delegate to v2 → cache result.
 - **Entry Points** (in the-critic project):
   - `analyzer/output_store.py` - Persistent storage for prose outputs with lineage tracking and presentation cache
   - `analyzer/context_broker.py` - Cross-pass prose context assembly for LLM prompts
-  - `analyzer/presentation.py` - Schema-on-read extraction using Claude Haiku, with caching
+  - `analyzer/presentation.py` - Generic SECTION_CONFIG-driven extraction: v2-first with local fallback, ~454 lines (refactored from ~700)
+  - `analyzer/concept_analyzer/analyzer_v2_client.py` - `execute_transformation()` + sync wrapper for v2 delegation
   - `analyzer/analyze_genealogy.py` - output_mode="prose" parameter, capability-based prompts, prose output saving
-  - `api/server.py` - `POST /api/genealogy/{job_id}/present/conditions` endpoint, pre-extraction on job completion
+  - `api/server.py` - `POST /api/genealogy/{job_id}/present/{section}` generic endpoint (replaces 4 hardcoded), pre-extraction on job completion
   - `webapp/src/pages/GenealogyPage.tsx` - ConditionsTab dual-mode rendering (legacy JSON or prose extraction)
   - `webapp/src/pages/GenealogyPage.css` - Prose mode UI styles (spinner, badges, error states)
+- **Modified**: 2026-02-18
 - **Data Flow**: analyze_genealogy (prose output) → analysis_outputs DB → presentation.py (Haiku extraction) → presentation_cache DB → frontend
 - **Added**: 2026-02-16
 
