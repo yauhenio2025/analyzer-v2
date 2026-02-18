@@ -3,11 +3,14 @@
 Provides CRUD operations for workflow definitions and phase prompt composition.
 """
 
+import logging
 from typing import Literal, Optional
 
 from fastapi import APIRouter, HTTPException, Query
+from pydantic import BaseModel, Field
 
 from src.chains.registry import get_chain_registry
+from src.chains.schemas import BlendMode, EngineChainSpec
 from src.engines.registry import get_engine_registry
 from src.stages.composer import StageComposer
 from src.workflows.extension_points import WorkflowExtensionAnalysis
@@ -19,6 +22,8 @@ from src.workflows.schemas import (
     WorkflowPhase,
     WorkflowSummary,
 )
+
+logger = logging.getLogger(__name__)
 
 # Lazy-loaded composer for phase prompt composition
 _composer: Optional[StageComposer] = None
@@ -108,6 +113,187 @@ async def get_extension_points(
         )
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
+
+
+class AddEngineRequest(BaseModel):
+    """Request to add an engine to a workflow phase."""
+    engine_key: str = Field(..., description="Engine key to add")
+    position: Optional[int] = Field(
+        default=None,
+        description="Position in chain engine_keys (0-indexed). None = append at end.",
+    )
+
+
+class AddEngineResponse(BaseModel):
+    """Response after adding an engine to a workflow phase."""
+    status: str
+    workflow_key: str
+    phase_number: float
+    engine_key: str
+    chain_key: str
+    chain_engine_keys: list[str]
+    created_new_chain: bool
+
+
+@router.post("/{workflow_key}/phases/{phase_number}/add-engine", response_model=AddEngineResponse)
+async def add_engine_to_phase(
+    workflow_key: str,
+    phase_number: float,
+    request: AddEngineRequest,
+) -> AddEngineResponse:
+    """Add an engine to a workflow phase.
+
+    If the phase uses a chain, appends the engine to the chain's engine_keys.
+    If the phase uses a standalone engine_key, creates a new sequential chain
+    containing both the existing engine and the new one, then updates the phase.
+    """
+    workflow_registry = get_workflow_registry()
+    chain_registry = get_chain_registry()
+    engine_registry = get_engine_registry()
+
+    # Validate workflow exists
+    workflow = workflow_registry.get(workflow_key)
+    if workflow is None:
+        raise HTTPException(status_code=404, detail=f"Workflow not found: {workflow_key}")
+
+    # Validate engine exists
+    engine = engine_registry.get(request.engine_key)
+    if engine is None:
+        raise HTTPException(status_code=404, detail=f"Engine not found: {request.engine_key}")
+
+    # Find the phase
+    phase_def = None
+    phase_idx = None
+    for i, p in enumerate(workflow.phases):
+        if p.phase_number == phase_number:
+            phase_def = p
+            phase_idx = i
+            break
+    if phase_def is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Phase {phase_number} not found in workflow {workflow_key}",
+        )
+
+    created_new_chain = False
+
+    # Case 1: Phase already has a chain_key — add engine to chain
+    if phase_def.chain_key:
+        chain = chain_registry.get(phase_def.chain_key)
+        if chain is None:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Chain not found: {phase_def.chain_key}",
+            )
+
+        # Check if engine is already in the chain
+        if request.engine_key in chain.engine_keys:
+            raise HTTPException(
+                status_code=409,
+                detail=f"Engine '{request.engine_key}' is already in chain '{chain.chain_key}'",
+            )
+
+        # Insert at position or append
+        new_engine_keys = list(chain.engine_keys)
+        if request.position is not None and 0 <= request.position <= len(new_engine_keys):
+            new_engine_keys.insert(request.position, request.engine_key)
+        else:
+            new_engine_keys.append(request.engine_key)
+
+        # Update chain
+        updated_chain = chain.model_copy(update={"engine_keys": new_engine_keys})
+        success = chain_registry.save(chain.chain_key, updated_chain)
+        if not success:
+            raise HTTPException(status_code=500, detail="Failed to save chain")
+
+        logger.info(
+            f"Added engine '{request.engine_key}' to chain '{chain.chain_key}' "
+            f"in workflow '{workflow_key}' phase {phase_number}"
+        )
+
+        return AddEngineResponse(
+            status="added",
+            workflow_key=workflow_key,
+            phase_number=phase_number,
+            engine_key=request.engine_key,
+            chain_key=chain.chain_key,
+            chain_engine_keys=new_engine_keys,
+            created_new_chain=False,
+        )
+
+    # Case 2: Phase has a standalone engine_key — create new chain
+    if phase_def.engine_key:
+        existing_engine_key = phase_def.engine_key
+
+        # Check not adding the same engine
+        if request.engine_key == existing_engine_key:
+            raise HTTPException(
+                status_code=409,
+                detail=f"Engine '{request.engine_key}' is already in this phase",
+            )
+
+        # Generate a chain key from the phase name
+        phase_slug = phase_def.phase_name.lower().replace(" ", "_").replace("-", "_")
+        new_chain_key = f"{workflow_key}_{phase_slug}_chain"
+
+        # Check if this chain key already exists (unlikely but handle it)
+        if chain_registry.get(new_chain_key) is not None:
+            new_chain_key = f"{new_chain_key}_{int(phase_number)}"
+
+        # Build engine list
+        engine_keys = [existing_engine_key, request.engine_key]
+        if request.position == 0:
+            engine_keys = [request.engine_key, existing_engine_key]
+
+        new_chain = EngineChainSpec(
+            chain_key=new_chain_key,
+            chain_name=f"{phase_def.phase_name} Chain",
+            description=f"Auto-created chain for workflow '{workflow_key}' phase {phase_number}. "
+                        f"Contains engines: {', '.join(engine_keys)}.",
+            version=1,
+            engine_keys=engine_keys,
+            blend_mode=BlendMode.SEQUENTIAL,
+            pass_context=True,
+            category=workflow.category.value if workflow.category else None,
+        )
+
+        # Save the new chain
+        success = chain_registry.save(new_chain_key, new_chain)
+        if not success:
+            raise HTTPException(status_code=500, detail="Failed to create chain")
+
+        # Update the phase: swap engine_key for chain_key
+        updated_phase = phase_def.model_copy(update={
+            "engine_key": None,
+            "chain_key": new_chain_key,
+        })
+        workflow.phases[phase_idx] = updated_phase
+        success = workflow_registry.save(workflow_key, workflow)
+        if not success:
+            raise HTTPException(status_code=500, detail="Failed to update workflow")
+
+        created_new_chain = True
+
+        logger.info(
+            f"Created chain '{new_chain_key}' with engines {engine_keys} "
+            f"for workflow '{workflow_key}' phase {phase_number}"
+        )
+
+        return AddEngineResponse(
+            status="added",
+            workflow_key=workflow_key,
+            phase_number=phase_number,
+            engine_key=request.engine_key,
+            chain_key=new_chain_key,
+            chain_engine_keys=engine_keys,
+            created_new_chain=True,
+        )
+
+    # Case 3: Phase has neither chain_key nor engine_key
+    raise HTTPException(
+        status_code=400,
+        detail=f"Phase {phase_number} has no chain_key or engine_key — cannot add engine",
+    )
 
 
 @router.get("/{workflow_key}/phases", response_model=list[WorkflowPhase])

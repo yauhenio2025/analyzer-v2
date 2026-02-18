@@ -27,6 +27,7 @@ class ChainRegistry:
             definitions_dir = Path(__file__).parent / "definitions"
         self.definitions_dir = definitions_dir
         self._chains: dict[str, EngineChainSpec] = {}
+        self._file_map: dict[str, Path] = {}  # chain_key -> source file path
         self._loaded = False
 
     def load(self) -> None:
@@ -45,6 +46,7 @@ class ChainRegistry:
                     data = json.load(f)
                 chain = EngineChainSpec.model_validate(data)
                 self._chains[chain.chain_key] = chain
+                self._file_map[chain.chain_key] = json_file
                 logger.debug(f"Loaded chain: {chain.chain_key}")
             except Exception as e:
                 logger.error(f"Failed to load chain from {json_file}: {e}")
@@ -102,6 +104,42 @@ class ChainRegistry:
         """List chains with a specific blend mode."""
         self.load()
         return [c for c in self._chains.values() if c.blend_mode == blend_mode]
+
+    def save(self, chain_key: str, chain: EngineChainSpec) -> bool:
+        """Save a chain definition to a JSON file.
+
+        If the chain was loaded from an existing file, saves back to that file.
+        For new chains, creates {chain_key}.json.
+
+        Args:
+            chain_key: Key for the chain
+            chain: The chain definition to save
+
+        Returns:
+            True if save was successful, False otherwise
+        """
+        self.load()
+
+        # Use existing file path if available, otherwise create new
+        json_file = self._file_map.get(chain_key, self.definitions_dir / f"{chain_key}.json")
+
+        try:
+            self.definitions_dir.mkdir(parents=True, exist_ok=True)
+
+            with open(json_file, "w") as f:
+                json.dump(chain.model_dump(), f, indent=2)
+                f.write("\n")
+
+            # Update in-memory cache and file map
+            self._chains[chain_key] = chain
+            self._file_map[chain_key] = json_file
+
+            logger.info(f"Saved chain: {chain_key} -> {json_file}")
+            return True
+
+        except Exception as e:
+            logger.error(f"Failed to save chain {chain_key}: {e}")
+            return False
 
     def count(self) -> int:
         """Get total number of chains."""
