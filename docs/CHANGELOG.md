@@ -6,6 +6,22 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Changed
+- **Workflow "passes" renamed to "phases"** — Workflow-level orchestration steps are now "phases" to eliminate terminology collision with engine-level "passes" (stance iterations within depth levels). Backwards compatibility preserved via Pydantic model validators and deprecated API aliases (`/passes` → `/phases`, `/pass/{num}` → `/phase/{num}`). All 7 workflow JSON definitions updated. Frontend updated across implementations and workflows pages.
+  - `WorkflowPass` → `WorkflowPhase` (backwards alias kept)
+  - `pass_number` → `phase_number`, `pass_name` → `phase_name`, etc.
+  - API: new canonical paths use `/phases`; old `/passes` paths kept as deprecated
+  - ([`src/workflows/schemas.py`](src/workflows/schemas.py), [`src/workflows/registry.py`](src/workflows/registry.py), [`src/api/routes/workflows.py`](src/api/routes/workflows.py), all 7 JSON definitions)
+
+### Added
+- **Extension Points System** — Analyzes WHERE in a workflow additional engines could be plugged in, scores all engines for composability fit using a 5-tier weighted algorithm, and surfaces ranked candidates with rationale
+  - 5-tier scoring: synergy (0.30), dimension production (0.25), dimension novelty (0.20), capability gap (0.15), category affinity (0.10)
+  - Recommendation tiers: strong (>=0.65), moderate (>=0.40), exploratory (>=0.20)
+  - Graceful degradation: 11 v2 engines get full scoring; ~185 legacy engines scored by category/kind
+  - Per-phase analysis: dimension coverage, capability gaps, ranked candidates with rationale
+  - Workflow-level insights: underserved dimensions, total candidates, summary
+  - API endpoint: `GET /v1/workflows/{key}/extension-points?depth=standard&phase_number=1.0`
+  - ([`src/workflows/extension_points.py`](src/workflows/extension_points.py), [`src/workflows/extension_scorer.py`](src/workflows/extension_scorer.py), [`src/api/routes/workflows.py`](src/api/routes/workflows.py))
+
 - **Intellectual Genealogy Workflow v3** — Complete redesign of the genealogy pipeline to exploit the new modular architecture
   - Migrated stale engine keys: `genealogy_pass1b_relationship_classification` → `genealogy_relationship_classification`, `genealogy_pass7_final_synthesis` → `genealogy_final_synthesis`
   - Renumbered legacy pass 7 → pass 4 (sequential numbering)

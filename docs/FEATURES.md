@@ -161,11 +161,11 @@
 - **Status**: Active
 - **Description**: Function-backed workflow definitions for decider-v2's main loops using `function_key` instead of `engine_key`
 - **Entry Points**:
-  - `src/workflows/definitions/decider_question_lifecycle.json` - 5-pass: coordinator → question gen → quality check → synthesis → implications
-  - `src/workflows/definitions/decider_onboarding.json` - 4-pass: vector init (IDEAS + PROCESS) → dedup → grid analysis
-  - `src/workflows/definitions/decider_answer_processing.json` - 6-pass: category → synthesis → implications → handoff → weight → grid
+  - `src/workflows/definitions/decider_question_lifecycle.json` - 5-phase: coordinator → question gen → quality check → synthesis → implications
+  - `src/workflows/definitions/decider_onboarding.json` - 4-phase: vector init (IDEAS + PROCESS) → dedup → grid analysis
+  - `src/workflows/definitions/decider_answer_processing.json` - 6-phase: category → synthesis → implications → handoff → weight → grid
 - **Category**: DECISION_SUPPORT (new WorkflowCategory)
-- **Schema Extension**: `WorkflowPass.function_key` field added alongside `engine_key`
+- **Schema Extension**: `WorkflowPhase.function_key` field added alongside `engine_key`
 - **Added**: 2026-02-12
 
 ## Audiences (First-Class Entity)
@@ -490,35 +490,54 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
 
 ### Workflow Registry
 - **Status**: Active
-- **Description**: Multi-pass analysis pipelines that differ from chains (intermediate state, caching, resumability)
+- **Description**: Multi-phase analysis pipelines that differ from chains (intermediate state, caching, resumability). Workflow-level steps are "phases"; engine-level stance iterations are "passes".
 - **Entry Points**:
-  - `src/workflows/schemas.py:1-123` - WorkflowDefinition, WorkflowPass, WorkflowCategory
-  - `src/workflows/registry.py:1-175` - WorkflowRegistry class with save/update/delete methods
-  - `src/workflows/definitions/*.json` - 3 workflow definitions
-  - `src/api/routes/workflows.py:1-230` - Workflow API endpoints with full CRUD
+  - `src/workflows/schemas.py:1-194` - WorkflowDefinition, WorkflowPhase, WorkflowCategory (backwards compat: WorkflowPass alias)
+  - `src/workflows/registry.py:1-203` - WorkflowRegistry class with save/update_phase/delete methods
+  - `src/workflows/definitions/*.json` - 7 workflow definitions
+  - `src/api/routes/workflows.py:1-420` - Workflow API endpoints with full CRUD + extension points
 - **Workflows** (7 total):
-  - `lines_of_attack` - Extract targeted critiques from external thinkers (2 passes)
-  - `anxiety_of_influence` - Analyze intellectual debt fidelity (5 passes, engine-backed)
-  - `outline_editor` - AI-assisted essay construction (4 passes, engine-backed)
-  - `intellectual_genealogy` - **v3**: 11 capability engines, 3 chains, 5 workflow passes. Traces how an author's ideas evolved across prior works. Target profiling → relationship classification → per-work scanning → analysis/synthesis → final synthesis
+  - `lines_of_attack` - Extract targeted critiques from external thinkers (2 phases)
+  - `anxiety_of_influence` - Analyze intellectual debt fidelity (5 phases, engine-backed)
+  - `outline_editor` - AI-assisted essay construction (4 phases, engine-backed)
+  - `intellectual_genealogy` - **v3**: 11 capability engines, 3 chains, 5 workflow phases. Traces how an author's ideas evolved across prior works. Target profiling → relationship classification → per-work scanning → analysis/synthesis → final synthesis
   - `decider_question_lifecycle` - Function-backed: coordinator → question gen → quality check → synthesis → implications
   - `decider_onboarding` - Function-backed: vector init → dedup → grid analysis
   - `decider_answer_processing` - Function-backed: category → synthesis → implications → handoff → weight → grid
 - **API Endpoints**:
   - `GET /v1/workflows` - List all workflows
   - `GET /v1/workflows/{key}` - Get workflow definition
-  - `GET /v1/workflows/{key}/passes` - Get workflow passes
-  - `GET /v1/workflows/{key}/pass/{n}` - Get specific pass
-  - `GET /v1/workflows/{key}/pass/{n}/prompt` - Get composed prompt for a pass
+  - `GET /v1/workflows/{key}/phases` - Get workflow phases
+  - `GET /v1/workflows/{key}/phase/{n}` - Get specific phase
+  - `GET /v1/workflows/{key}/phase/{n}/prompt` - Get composed prompt for a phase
+  - `GET /v1/workflows/{key}/extension-points` - Analyze extension opportunities per phase
   - `GET /v1/workflows/category/{category}` - Filter by category
   - `POST /v1/workflows` - Create new workflow
   - `PUT /v1/workflows/{key}` - Update workflow definition
-  - `PUT /v1/workflows/{key}/pass/{n}` - Update single pass
+  - `PUT /v1/workflows/{key}/phase/{n}` - Update single phase
   - `DELETE /v1/workflows/{key}` - Delete workflow
   - `POST /v1/workflows/reload` - Force reload from disk
+  - Deprecated aliases: `/passes`, `/pass/{n}`, `/pass/{n}/prompt` still work
 - **Dependencies**: Pydantic v2
 - **Source**: The Critic
-- **Added**: 2026-02-06 | **Modified**: 2026-02-08
+- **Added**: 2026-02-06 | **Modified**: 2026-02-18
+
+### Extension Points System
+- **Status**: Active
+- **Description**: Analyzes WHERE in a workflow additional engines could be plugged in. Scores all engines for composability fit using a 5-tier weighted algorithm (synergy 0.30, dimension production 0.25, dimension novelty 0.20, capability gap 0.15, category affinity 0.10). Returns ranked candidates with human-readable rationale. Graceful degradation for engines without v2 capability definitions.
+- **Entry Points**:
+  - `src/workflows/extension_points.py:1-130` - Pydantic schemas (DimensionCoverage, CapabilityGap, CandidateEngine, PhaseExtensionPoint, WorkflowExtensionAnalysis)
+  - `src/workflows/extension_scorer.py:1-400` - 5-tier scoring algorithm, phase context builder, dimension coverage analysis
+  - `src/api/routes/workflows.py:88-110` - GET endpoint with depth, phase_number, min_score, max_candidates params
+- **Scoring Tiers**:
+  - Synergy (0.30 weight) — explicit synergy_engines match, bidirectional
+  - Dimension production (0.25) — produces dimensions consumed by phase engines
+  - Dimension novelty (0.20) — covers dimensions no current engine covers
+  - Capability gap (0.15) — fills capabilities the phase lacks
+  - Category affinity (0.10) — same analytical category/kind
+- **Recommendation Tiers**: strong (>=0.65), moderate (>=0.40), exploratory (>=0.20), tangential (<0.20, filtered)
+- **API Endpoint**: `GET /v1/workflows/{key}/extension-points?depth=standard&phase_number=1.0&min_score=0.20&max_candidates=15`
+- **Added**: 2026-02-18
 
 ### Influence Pass Engines (5 new)
 - **Status**: Active
