@@ -1,17 +1,18 @@
 {
   "chain_key": "genealogy_target_profiling",
   "chain_name": "Genealogy: Deep Target Profiling",
-  "description": "Comprehensive profiling of a target work's ideas, vocabulary, methodology, metaphors, and framing. Runs three complementary engines in sequence: conceptual framework extraction (vocabulary, methodology, metaphors, framing), semantic constellation mapping (concept relationships and clusters), and inferential commitment mapping (argumentative structure and logical dependencies). Designed for intellectual genealogy but reusable for any deep text profiling.",
+  "description": "Comprehensive profiling of a target work's ideas, vocabulary, methodology, metaphors, and framing. Runs 4 engines in sequence: (1) Conceptual Framework Extractor; (2) Concept Semantic Constellation; (3) Inferential Commitment Mapper; (4) Concept Evolution Tracker. Each engine builds on the previous engine's output.",
   "base_description": "Comprehensive profiling of a target work's ideas, vocabulary, methodology, metaphors, and framing",
   "version": 1,
   "engine_keys": [
     "conceptual_framework_extraction",
     "concept_semantic_constellation",
-    "inferential_commitment_mapper"
+    "inferential_commitment_mapper",
+    "concept_evolution"
   ],
   "blend_mode": "sequential",
   "selection_criteria": null,
-  "max_engines": 3,
+  "max_engines": 4,
   "merge_strategy": null,
   "pass_context": true,
   "category": "genealogy",

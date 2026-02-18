@@ -6,11 +6,12 @@
   "version": 3,
   "phases": [
     {
-      "phase_number": 1,
+      "phase_number": 1.0,
       "phase_name": "Deep Target Work Profiling",
-      "phase_description": "Comprehensive profiling of the target work through a 3-engine chain: (1) conceptual_framework_extraction maps vocabulary, methodology, metaphors, framing, conceptual architecture, and domain crossings; (2) concept_semantic_constellation maps semantic fields, concept clusters, boundary terms, and connotation landscapes; (3) inferential_commitment_mapper surfaces explicit/implicit commitments, conflicts, logical dependencies, and hidden implications. Each engine runs at the workflow's configured depth using its own multi-pass stance progression.",
+      "phase_description": "Comprehensive profiling of the target work through a multi-engine chain that maps vocabulary, methodology, metaphors, framing, semantic fields, concept clusters, and argumentative structure \u2014 4-engine chain: (1) Conceptual Framework Extractor; (2) Concept Semantic Constellation; (3) Inferential Commitment Mapper; (4) Concept Evolution Tracker. Each engine runs at the workflow's configured depth using its own multi-pass stance progression.",
       "base_phase_description": "Comprehensive profiling of the target work through a multi-engine chain that maps vocabulary, methodology, metaphors, framing, semantic fields, concept clusters, and argumentative structure",
       "engine_key": null,
+      "function_key": null,
       "chain_key": "genealogy_target_profiling",
       "context_parameters": null,
       "prompt_template": null,
@@ -25,6 +26,7 @@
       "phase_description": "Classify each prior work's relationship to the target (direct_precursor, indirect_contextualizer, methodological_ancestor, contradicted_position, parallel_development). Assesses relationship strength and influence channels (vocabulary, methodology, audience, authority, framing). Produces scanning strategies that determine how Pass 2 analyzes each work. Runs once per prior work, independent of Pass 1.",
       "base_phase_description": "Classify each prior work's relationship to the target, assessing relationship strength and influence channels to produce scanning strategies",
       "engine_key": "genealogy_relationship_classification",
+      "function_key": null,
       "chain_key": null,
       "context_parameters": null,
       "prompt_template": null,
@@ -34,11 +36,12 @@
       "output_schema": null
     },
     {
-      "phase_number": 2,
+      "phase_number": 2.0,
       "phase_name": "Prior Work Scanning",
       "phase_description": "Scan each prior work for genealogical traces using a 2-engine chain: (1) concept_evolution performs dimensional comparison (vocabulary, methodology, metaphor, framing evolution, concept trajectory) informed by Pass 1 target profile; (2) concept_appropriation_tracker maps migration paths, semantic mutations, appropriation patterns, and recombination. Adapts strategy based on relationship classification from Pass 1.5. Runs once per prior work.",
       "base_phase_description": "Scan each prior work for genealogical traces, performing dimensional comparison and concept appropriation tracking",
       "engine_key": null,
+      "function_key": null,
       "chain_key": "genealogy_prior_work_scanning",
       "context_parameters": {
         "source": "phase_1.5",
@@ -48,17 +51,18 @@
       "requires_external_docs": true,
       "caches_result": true,
       "depends_on_phases": [
-        1,
+        1.0,
         1.5
       ],
       "output_schema": null
     },
     {
-      "phase_number": 3,
+      "phase_number": 3.0,
       "phase_name": "Analysis & Synthesis",
       "phase_description": "Multi-stage analysis through a 4-engine sequential chain: (1) concept_synthesis aggregates per-work traces into cross-work evolution timelines, convergence/divergence maps, and semantic core analysis; (2) concept_taxonomy_argumentative_function classifies each conceptual chain's argumentative role (foundational/elaborative/defensive/bridge/culminative) and maps the argument's structural architecture; (3) evolution_tactics_detector identifies the author's 10+ intellectual self-management tactics with evidence chains; (4) conditions_of_possibility_analyzer performs Foucauldian analysis of enabling/constraining conditions, path dependencies, and counterfactuals.",
       "base_phase_description": "Multi-stage analysis aggregating per-work traces into cross-work evolution timelines, argumentative function mapping, evolution tactics detection, and conditions of possibility analysis",
       "engine_key": null,
+      "function_key": null,
       "chain_key": "genealogy_synthesis",
       "context_parameters": {
         "target_profile": "phase_1",
@@ -69,17 +73,18 @@
       "requires_external_docs": false,
       "caches_result": true,
       "depends_on_phases": [
-        1,
-        2
+        1.0,
+        2.0
       ],
       "output_schema": null
     },
     {
-      "phase_number": 4,
+      "phase_number": 4.0,
       "phase_name": "Final Synthesis",
       "phase_description": "Comprehensive genealogical synthesis: executive summary, genealogical portrait (Foucauldian descent + emergence narrative), per-idea genealogies with evolution timelines, author intellectual profile (prosopographic characterization), key findings, and reflexive methodological assessment. Consumes all upstream pass outputs to produce the final deliverable.",
       "base_phase_description": "Comprehensive genealogical synthesis producing executive summary, genealogical portrait, per-idea genealogies, author intellectual profile, and reflexive methodological assessment",
       "engine_key": "genealogy_final_synthesis",
+      "function_key": null,
       "chain_key": null,
       "context_parameters": {
         "target_profile": "phase_1",
@@ -91,10 +96,10 @@
       "requires_external_docs": false,
       "caches_result": false,
       "depends_on_phases": [
-        1,
+        1.0,
         1.5,
-        2,
-        3
+        2.0,
+        3.0
       ],
       "output_schema": null
     }
