@@ -41,7 +41,7 @@
   "presentation_stance": "comparison",
   "position": 2.0,
   "parent_view_key": null,
-  "tab_count_field": null,
+  "tab_count_field": "pass1_ideas.ideas",
   "visibility": "if_data_exists",
   "audience_overrides": {},
   "status": "active",

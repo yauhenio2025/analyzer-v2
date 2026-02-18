@@ -8,11 +8,13 @@
   "target_section": "results",
   "renderer_type": "card_grid",
   "renderer_config": {
-    "card_title_field": "tactic_name",
-    "card_body_field": "description",
-    "card_evidence_field": "evidence_chains",
+    "cell_renderer": "tactic_card",
+    "group_by": "tactic_type",
+    "group_style_map": "tactic_styles",
     "columns": 2,
-    "expandable": true
+    "expandable": true,
+    "items_path": "tactics_detected",
+    "prose_endpoint": "tactics"
   },
   "data_source": {
     "workflow_key": "intellectual_genealogy",
@@ -28,7 +30,7 @@
   "presentation_stance": "evidence",
   "position": 3.0,
   "parent_view_key": null,
-  "tab_count_field": "tactics_detected.length",
+  "tab_count_field": "pass5_tactics.tactics_detected",
   "visibility": "if_data_exists",
   "audience_overrides": {},
   "status": "active",

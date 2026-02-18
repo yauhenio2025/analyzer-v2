@@ -14,7 +14,8 @@
       {"key": "path_dependencies", "title": "Path Dependencies"},
       {"key": "counterfactuals", "title": "Counterfactuals"}
     ],
-    "expand_first": true
+    "expand_first": true,
+    "prose_endpoint": "conditions"
   },
   "data_source": {
     "workflow_key": "intellectual_genealogy",
