@@ -543,6 +543,24 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
   - `POST /v1/workflows/{key}/phases/{phase_num}/add-engine` — mutates chain/workflow to add engine
 - **Added**: 2026-02-18 | **Modified**: 2026-02-18
 
+### Dynamic Propagation System
+- **Status**: Active
+- **Description**: When engines are added to workflow phases via the UI, changes persist permanently via GitHub commits, descriptions auto-update from engine lists, and cascade to all dependent workflows. Consumer cache versioning via SHA-256 fingerprint endpoint.
+- **Entry Points**:
+  - `src/persistence/__init__.py` - Persistence package init
+  - `src/persistence/github_client.py:1-180` - GitHubPersistence class: atomic multi-file commits via Git Data API, graceful degradation without token
+  - `src/workflows/description_generator.py:1-100` - Template-based description generation: `generate_chain_description()`, `generate_phase_description()`
+  - `src/api/routes/meta.py:1-80` - Definitions version endpoint: SHA-256 hash, last-modified, counts, persistence status
+  - `src/api/routes/workflows.py:114-240` - Add-engine endpoint with description regeneration, cascade, and GitHub commit
+  - `src/workflows/registry.py:175-190` - `find_by_chain_key()` method for cross-workflow cascade
+  - `src/chains/schemas.py:25-30` - `base_description` field on `EngineChainSpec`
+  - `src/workflows/schemas.py:30-35` - `base_phase_description` field on `WorkflowPhase`
+- **API Endpoints**:
+  - `GET /v1/meta/definitions-version` - Cache validation: version hash, last modified, counts, persistence status
+  - `POST /v1/workflows/{key}/phases/{phase_num}/add-engine` - (Enhanced) Now auto-generates descriptions, cascades, commits to GitHub
+- **Dependencies**: httpx (GitHub API), GITHUB_TOKEN + GITHUB_REPO env vars (optional — graceful degradation)
+- **Added**: 2026-02-18
+
 ### Influence Pass Engines (5 new)
 - **Status**: Active
 - **Description**: Engine definitions for the anxiety_of_influence workflow passes

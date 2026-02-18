@@ -5,6 +5,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+- **Dynamic Propagation System** — When engines are added to workflow phases via the UI, changes now persist permanently via GitHub commits, descriptions auto-update, and cascade to all dependent objects
+  - **GitHub Persistence Layer** (`src/persistence/github_client.py`): Atomic multi-file commits via Git Data API (blobs → trees → commits → refs). Graceful degradation when no token configured — changes still work locally but are ephemeral.
+  - **Description Auto-Generation** (`src/workflows/description_generator.py`): Template-based description generation from engine lists. Chains get `base_description` (invariant summary) + auto-computed `description` enumerating engines. Workflow phases get `base_phase_description` + auto-computed `phase_description`.
+  - **Cascade Updates**: When a chain's engine_keys change, ALL workflow phases referencing that chain get their descriptions regenerated. Cross-workflow: finds all workflows using a modified chain via `find_by_chain_key()`.
+  - **Consumer Cache Versioning** (`src/api/routes/meta.py`): `GET /v1/meta/definitions-version` returns SHA-256 fingerprint of all definitions, chain engine_keys, last-modified timestamp, and persistence status. Consumers can poll to invalidate caches.
+  - **Enhanced AddEngineResponse**: Now returns `chain_description`, `phase_description`, `git_committed`, `commit_sha`, `cascaded_workflows` — frontend shows "committed to git" indicator.
+  - **Schema additions**: `base_description` on `EngineChainSpec`, `base_phase_description` on `WorkflowPhase` (both optional, backwards-compatible). Backfilled across all 23 chains and 7 workflows.
+  - ([`src/persistence/github_client.py`](src/persistence/github_client.py), [`src/workflows/description_generator.py`](src/workflows/description_generator.py), [`src/api/routes/meta.py`](src/api/routes/meta.py), [`src/api/routes/workflows.py`](src/api/routes/workflows.py), [`src/chains/schemas.py`](src/chains/schemas.py), [`src/workflows/schemas.py`](src/workflows/schemas.py))
+
 ### Changed
 - **Workflow "passes" renamed to "phases"** — Workflow-level orchestration steps are now "phases" to eliminate terminology collision with engine-level "passes" (stance iterations within depth levels). Backwards compatibility preserved via Pydantic model validators and deprecated API aliases (`/passes` → `/phases`, `/pass/{num}` → `/phase/{num}`). All 7 workflow JSON definitions updated. Frontend updated across implementations and workflows pages.
   - `WorkflowPass` → `WorkflowPhase` (backwards alias kept)
