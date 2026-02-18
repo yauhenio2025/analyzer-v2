@@ -1,19 +1,65 @@
 engine_key: genealogy_final_synthesis
 engine_name: Genealogy Final Synthesis
 stance_operationalizations:
+- stance_key: discovery
+  label: Comprehensive Foundations — Summary & Idea Genealogies
+  description: |-
+    Exhaustive foundational work establishing the empirical base for
+    the genealogical synthesis. Compose executive summary distilling
+    all upstream evidence into dominant influences, key evolution
+    patterns, and surprising findings. Trace idea genealogies for
+    every significant concept: detailed timelines (work, year, form
+    of the idea at each stage) with textual evidence, and evolution
+    narratives explaining key transformations and their significance.
+    Identify co-evolution patterns showing how changing one idea
+    forced changes to others. Rank key findings by significance with
+    multi-audience implications. These two outputs — summary and idea
+    genealogies — are independent and provide the factual base for
+    the narrative synthesis in subsequent passes.
+  focus_dimensions:
+  - executive_summary
+  - idea_genealogies
+  - key_findings
+  focus_capabilities:
+  - compose_executive_summary
+  - trace_idea_genealogies
+- stance_key: architecture
+  label: Genealogical Portrait & Intellectual Character
+  description: |-
+    With the factual foundations from the discovery pass, construct the
+    structural narrative. Compose the genealogical portrait: a sustained
+    analytical narrative tracing the author's intellectual trajectory
+    through Nietzschean descent (herkunft) and emergence (entstehung).
+    The narrative should map origin stories, key transformation moments
+    with close textual analysis, abandoned paths with hypothesized
+    reasons, and the current work's position as both culmination and
+    new departure. Compose the intellectual character profile: recurring
+    intellectual moves, characteristic strengths, persistent weaknesses,
+    debt-handling patterns (generous acknowledgment, strategic concealment,
+    genuine oversight), and assessment of growth versus entrenchment over
+    time. Compare to other thinkers with similar intellectual profiles
+    where illuminating.
+  focus_dimensions:
+  - genealogical_portrait
+  - author_intellectual_profile
+  focus_capabilities:
+  - narrate_genealogical_portrait
+  - profile_intellectual_character
 - stance_key: integration
   label: Comprehensive Genealogical Synthesis
   description: |-
-    Comprehensive synthesis with extended narratives. Detailed
-    genealogical portrait with close textual analysis tracing
-    origin stories, transformation moments, and abandoned paths.
-    Comprehensive idea genealogies with co-evolution analysis
-    showing how changing one idea forced changes to others. Full
-    intellectual portrait with field comparisons and growth
-    assessment. Reflexive methodological assessment examining
-    biases in the genealogical method itself. Key findings with
-    multi-audience implications and assessment of how the author
-    might respond to each finding.
+    Comprehensive synthesis integrating all prior pass outputs into a
+    unified deliverable. At surface depth, this is the only pass and
+    must produce executive summary, key findings, and brief genealogical
+    portrait from all available upstream data. At standard and deep
+    depths, this pass integrates findings from discovery and architecture
+    passes: reflexive methodological assessment examining biases in the
+    genealogical method itself, per-finding confidence assessments with
+    evidence quality evaluations, comprehensive inventory of limitations,
+    all relationship classification revisions with reasons, and detailed
+    follow-up research agenda. Final revision of executive summary and
+    key findings in light of the full narrative synthesis. Assessment
+    of how the author might respond to each finding.
   focus_dimensions:
   - executive_summary
   - genealogical_portrait
@@ -36,10 +82,23 @@ depth_sequences:
 - depth_key: standard
   passes:
   - pass_number: 1
-    stance_key: integration
+    stance_key: discovery
     consumes_from: []
+  - pass_number: 2
+    stance_key: integration
+    consumes_from:
+    - 1
 - depth_key: deep
   passes:
   - pass_number: 1
-    stance_key: integration
+    stance_key: discovery
     consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2

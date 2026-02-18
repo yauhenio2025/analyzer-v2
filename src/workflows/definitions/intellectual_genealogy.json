@@ -1,14 +1,14 @@
 {
   "workflow_key": "intellectual_genealogy",
   "workflow_name": "Intellectual Genealogy Analysis",
-  "description": "Traces how an author's own prior works serve as conditions of possibility for their current arguments. Uses composed chains of enhanced engines to profile the target work, scan prior works with relationship-aware strategies, and synthesize findings through multi-stage analysis (cross-work synthesis, functional analysis, evolution tactics, conditions of possibility). Classifies each prior work's relationship type and adapts analysis accordingly. Operates in comprehensive mode (extract all ideas, trace all) or targeted mode (probe specific ideas).",
+  "description": "Traces how an author's own prior works serve as conditions of possibility for their current arguments. Uses composed chains of capability engines to profile the target work, scan prior works with relationship-aware strategies, and synthesize findings through multi-stage analysis (cross-work synthesis, functional analysis, evolution tactics, conditions of possibility). Classifies each prior work's relationship type and adapts analysis accordingly. Each engine operates through analytical stances (discovery, inference, confrontation, architecture, integration, reflection, dialectical) at configurable depth levels (surface/standard/deep).",
   "category": "genealogy",
-  "version": 2,
+  "version": 3,
   "passes": [
     {
       "pass_number": 1,
       "pass_name": "Deep Target Work Profiling",
-      "pass_description": "Comprehensive profiling of a target work's ideas, vocabulary, methodology, metaphors, and framing through a 3-engine chain: conceptual framework extraction, semantic constellation mapping, and inferential commitment mapping.",
+      "pass_description": "Comprehensive profiling of the target work through a 3-engine chain: (1) conceptual_framework_extraction maps vocabulary, methodology, metaphors, framing, conceptual architecture, and domain crossings; (2) concept_semantic_constellation maps semantic fields, concept clusters, boundary terms, and connotation landscapes; (3) inferential_commitment_mapper surfaces explicit/implicit commitments, conflicts, logical dependencies, and hidden implications. Each engine runs at the workflow's configured depth using its own multi-pass stance progression.",
       "engine_key": null,
       "chain_key": "genealogy_target_profiling",
       "context_parameters": null,
@@ -21,8 +21,8 @@
     {
       "pass_number": 1.5,
       "pass_name": "Relationship Classification",
-      "pass_description": "Classify each prior work's relationship to the current work (direct precursor, indirect contextualizer, different-field-relevant, counter-position, tangential). Fast classification that determines how Pass 2 analyzes each work. Runs once per prior work. Independent of Pass 1 output — depends only on the prior works collection.",
-      "engine_key": "genealogy_pass1b_relationship_classification",
+      "pass_description": "Classify each prior work's relationship to the target (direct_precursor, indirect_contextualizer, methodological_ancestor, contradicted_position, parallel_development). Assesses relationship strength and influence channels (vocabulary, methodology, audience, authority, framing). Produces scanning strategies that determine how Pass 2 analyzes each work. Runs once per prior work, independent of Pass 1.",
+      "engine_key": "genealogy_relationship_classification",
       "chain_key": null,
       "context_parameters": null,
       "prompt_template": null,
@@ -34,10 +34,13 @@
     {
       "pass_number": 2,
       "pass_name": "Prior Work Scanning",
-      "pass_description": "Scan each prior work for genealogical traces using a 2-engine chain (concept evolution + concept appropriation tracking). Adapts analysis strategy based on relationship classification from Pass 1.5, with runtime context parameters injected dynamically. Runs once per prior work.",
+      "pass_description": "Scan each prior work for genealogical traces using a 2-engine chain: (1) concept_evolution performs dimensional comparison (vocabulary, methodology, metaphor, framing evolution, concept trajectory) informed by Pass 1 target profile; (2) concept_appropriation_tracker maps migration paths, semantic mutations, appropriation patterns, and recombination. Adapts strategy based on relationship classification from Pass 1.5. Runs once per prior work.",
       "engine_key": null,
       "chain_key": "genealogy_prior_work_scanning",
-      "context_parameters": {"source": "pass_1.5"},
+      "context_parameters": {
+        "source": "pass_1.5",
+        "target_profile": "pass_1"
+      },
       "prompt_template": null,
       "requires_external_docs": true,
       "caches_result": true,
@@ -47,10 +50,14 @@
     {
       "pass_number": 3,
       "pass_name": "Analysis & Synthesis",
-      "pass_description": "Multi-stage analysis through a 4-engine chain: (1) cross-work idea synthesis with evolution timelines and convergence/divergence detection, (2) functional analysis of how concepts serve the argument, (3) evolution tactics detection (10 intellectual self-management tactics), and (4) conditions of possibility analysis (Foucauldian path-dependence). Collapses former passes 3-6 into a single chain execution.",
+      "pass_description": "Multi-stage analysis through a 4-engine sequential chain: (1) concept_synthesis aggregates per-work traces into cross-work evolution timelines, convergence/divergence maps, and semantic core analysis; (2) concept_taxonomy_argumentative_function classifies each conceptual chain's argumentative role (foundational/elaborative/defensive/bridge/culminative) and maps the argument's structural architecture; (3) evolution_tactics_detector identifies the author's 10+ intellectual self-management tactics with evidence chains; (4) conditions_of_possibility_analyzer performs Foucauldian analysis of enabling/constraining conditions, path dependencies, and counterfactuals.",
       "engine_key": null,
       "chain_key": "genealogy_synthesis",
-      "context_parameters": null,
+      "context_parameters": {
+        "target_profile": "pass_1",
+        "relationship_classifications": "pass_1.5",
+        "prior_work_scans": "pass_2"
+      },
       "prompt_template": null,
       "requires_external_docs": false,
       "caches_result": true,
@@ -58,22 +65,27 @@
       "output_schema": null
     },
     {
-      "pass_number": 7,
+      "pass_number": 4,
       "pass_name": "Final Synthesis",
-      "pass_description": "Generate comprehensive genealogical report synthesizing all findings from the profiling, scanning, and analysis passes into a unified narrative.",
-      "engine_key": "genealogy_pass7_final_synthesis",
+      "pass_description": "Comprehensive genealogical synthesis: executive summary, genealogical portrait (Foucauldian descent + emergence narrative), per-idea genealogies with evolution timelines, author intellectual profile (prosopographic characterization), key findings, and reflexive methodological assessment. Consumes all upstream pass outputs to produce the final deliverable.",
+      "engine_key": "genealogy_final_synthesis",
       "chain_key": null,
-      "context_parameters": null,
+      "context_parameters": {
+        "target_profile": "pass_1",
+        "relationship_classifications": "pass_1.5",
+        "prior_work_scans": "pass_2",
+        "synthesis_analysis": "pass_3"
+      },
       "prompt_template": null,
       "requires_external_docs": false,
       "caches_result": false,
-      "depends_on_passes": [1, 3],
+      "depends_on_passes": [1, 1.5, 2, 3],
       "output_schema": null
     }
   ],
   "required_inputs": ["corpus", "prior_works"],
   "optional_inputs": ["target_ideas"],
-  "output_description": "Comprehensive genealogical analysis tracing idea evolution, detecting tactics, and assessing conditions of possibility through composed engine chains",
+  "output_description": "Comprehensive genealogical analysis: executive summary, per-idea evolution timelines, evolution tactics with evidence, conditions of possibility analysis, and synthesized genealogical portrait — all produced through composed capability engine chains with analytical stances at configurable depth",
   "final_output_schema": null,
   "estimated_passes": 5,
   "source_project": "critic"

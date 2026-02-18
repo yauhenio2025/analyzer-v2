@@ -5,6 +5,43 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+- **Intellectual Genealogy Workflow v3** — Complete redesign of the genealogy pipeline to exploit the new modular architecture
+  - Migrated stale engine keys: `genealogy_pass1b_relationship_classification` → `genealogy_relationship_classification`, `genealogy_pass7_final_synthesis` → `genealogy_final_synthesis`
+  - Renumbered legacy pass 7 → pass 4 (sequential numbering)
+  - Added `context_parameters` to passes 2, 3, 4 for inter-pass data threading (target_profile, relationship_classifications, prior_work_scans, etc.)
+  - Updated final synthesis dependencies from `[1, 3]` to `[1, 1.5, 2, 3]` (receives all upstream)
+  - Enriched all pass descriptions with specific engine/dimension/stance details
+  - Bumped version 2 → 3
+  - ([`src/workflows/definitions/intellectual_genealogy.json`](src/workflows/definitions/intellectual_genealogy.json))
+
+- **Enriched `genealogy_final_synthesis` operationalization** — Was single-pass integration at all depths; now has multi-pass depth escalation matching the engine YAML
+  - Added `discovery` stance: "Comprehensive Foundations — Summary & Idea Genealogies" (executive_summary, idea_genealogies, key_findings)
+  - Added `architecture` stance: "Genealogical Portrait & Intellectual Character" (genealogical_portrait, author_intellectual_profile)
+  - Depth sequences: surface=1 pass (integration), standard=2 passes (discovery→integration), deep=3 passes (discovery→architecture→integration)
+  - ([`src/operationalizations/definitions/genealogy_final_synthesis.yaml`](src/operationalizations/definitions/genealogy_final_synthesis.yaml))
+
+- **Enriched `genealogy_relationship_classification` operationalization** — Was 2 stances (discovery/inference); now aligned with engine YAML depth structure
+  - Added `architecture` stance: "Channel Mapping & Scanning Strategy" (influence_channels, strategic_relevance)
+  - Added `confrontation` stance: "Classification Stress-Testing & Contingency Planning" (strategic_relevance, relationship_type, influence_channels)
+  - Depth sequences: surface=1 pass (discovery), standard=2 passes (discovery→architecture), deep=3 passes (discovery→architecture→confrontation)
+  - ([`src/operationalizations/definitions/genealogy_relationship_classification.yaml`](src/operationalizations/definitions/genealogy_relationship_classification.yaml))
+
+### Fixed
+- **Stale composability references** in 3 capability definition YAMLs:
+  - `genealogy_final_synthesis.yaml`: Replaced `intellectual_genealogy` (workflow, not engine) in synergy_engines with `concept_synthesis`; replaced stale `genealogy_deep_target_profiling` consumes_from with accurate chain references
+  - `conditions_of_possibility_analyzer.yaml`: Replaced `intellectual_genealogy` in synergy_engines with `concept_taxonomy_argumentative_function`
+  - `genealogy_relationship_classification.yaml`: Fixed stale `genealogy_deep_target_profiling` and `genealogy_prior_work_discovery` consumes_from references
+
+### Added
+- **Genealogy Pipeline Data Flow Walkthrough** — Comprehensive narrative documentation of the v3 pipeline
+  - Pass-by-pass walkthrough: engines, stances, depth levels, data consumed/produced
+  - Pipeline overview diagram (ASCII)
+  - Depth control table with LLM call estimates
+  - Context threading explanation (intra-chain via pass_context, inter-pass via context_parameters)
+  - Key architectural decisions documented
+  - ([`docs/GENEALOGY_PIPELINE_DATA_FLOW.md`](docs/GENEALOGY_PIPELINE_DATA_FLOW.md))
+
 ### Added
 - **Enriched intellectual lineage** — All 11 capability engines now have rich lineage objects instead of flat strings:
   - `ThinkerReference`: name + 2-3 sentence bio (primary + secondary thinkers)

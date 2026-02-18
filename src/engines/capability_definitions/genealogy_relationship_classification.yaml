@@ -395,10 +395,10 @@ composability:
     scanning_priorities: Attention allocation recommendations for Pass 2 scanners
     classification_evidence: Textual evidence supporting each classification, reusable by synthesis passes
   consumes_from:
-    prior_work_summaries: From genealogy_deep_target_profiling -- structured profiles of each prior work
-    target_work_profile: From genealogy_deep_target_profiling -- profile of the current work being analyzed
-    initial_similarity_signals: From genealogy_prior_work_discovery (Pass 1) -- initial indications of
-      relatedness
+    target_work_profile: From genealogy_target_profiling chain (Pass 1) -- conceptual_framework_extraction
+      + concept_semantic_constellation + inferential_commitment_mapper profile of the target work
+    prior_work_excerpts: From the prior works collection -- truncated excerpts of each prior work for
+      rapid classification
   synergy_engines:
   - conditions_of_possibility_analyzer
   - concept_evolution

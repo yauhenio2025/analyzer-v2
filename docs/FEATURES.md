@@ -1,6 +1,6 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-02-17
+> Auto-maintained by Claude Code. Last updated: 2026-02-18
 
 ## Analytical Stances (Operations)
 
@@ -114,9 +114,9 @@
   - `concept_evolution.yaml` - 4 stances (discovery/inference/architecture/integration), deep=3 passes
   - `concept_appropriation_tracker.yaml` - 4 stances (discovery/inference/architecture/integration), deep=3 passes
   - `evolution_tactics_detector.yaml` - 3 stances, deep=3 passes
-  - `genealogy_relationship_classification.yaml` - 2 stances (discovery/inference), deep=2 passes
-  - `genealogy_final_synthesis.yaml` - 1 stance (integration), intentionally single-pass at all depths
-- **Added**: 2026-02-17 | **Modified**: 2026-02-17
+  - `genealogy_relationship_classification.yaml` - 4 stances (discovery/inference/architecture/confrontation), deep=3 passes (discovery→architecture→confrontation)
+  - `genealogy_final_synthesis.yaml` - 3 stances (discovery/architecture/integration), deep=3 passes (discovery→architecture→integration)
+- **Added**: 2026-02-17 | **Modified**: 2026-02-18
 
 ## Schema-on-Read / Prose Pipeline (the-critic)
 
@@ -496,10 +496,14 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
   - `src/workflows/registry.py:1-175` - WorkflowRegistry class with save/update/delete methods
   - `src/workflows/definitions/*.json` - 3 workflow definitions
   - `src/api/routes/workflows.py:1-230` - Workflow API endpoints with full CRUD
-- **Workflows** (3 total):
+- **Workflows** (7 total):
   - `lines_of_attack` - Extract targeted critiques from external thinkers (2 passes)
   - `anxiety_of_influence` - Analyze intellectual debt fidelity (5 passes, engine-backed)
   - `outline_editor` - AI-assisted essay construction (4 passes, engine-backed)
+  - `intellectual_genealogy` - **v3**: 11 capability engines, 3 chains, 5 workflow passes. Traces how an author's ideas evolved across prior works. Target profiling → relationship classification → per-work scanning → analysis/synthesis → final synthesis
+  - `decider_question_lifecycle` - Function-backed: coordinator → question gen → quality check → synthesis → implications
+  - `decider_onboarding` - Function-backed: vector init → dedup → grid analysis
+  - `decider_answer_processing` - Function-backed: category → synthesis → implications → handoff → weight → grid
 - **API Endpoints**:
   - `GET /v1/workflows` - List all workflows
   - `GET /v1/workflows/{key}` - Get workflow definition

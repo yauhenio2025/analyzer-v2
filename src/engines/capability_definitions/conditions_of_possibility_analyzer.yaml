@@ -524,7 +524,7 @@ composability:
   - evolution_tactics_detector
   - concept_evolution
   - inferential_commitment_mapper
-  - intellectual_genealogy
+  - concept_taxonomy_argumentative_function
 depth_levels:
 - key: surface
   description: Identify the most obvious enabling and constraining conditions

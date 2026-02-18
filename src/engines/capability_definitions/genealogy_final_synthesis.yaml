@@ -526,20 +526,20 @@ composability:
     confidence_map: Per-finding confidence levels for downstream filtering and presentation
     key_findings_digest: The 3-5 most important discoveries, suitable for executive summaries
   consumes_from:
-    prior_work_profiles: From genealogy_deep_target_profiling (Pass 1) -- structured profiles of all prior
-      works and the target work
+    target_work_profile: From genealogy_target_profiling chain (Pass 1) -- conceptual_framework_extraction
+      + concept_semantic_constellation + inferential_commitment_mapper output
     relationship_classifications: From genealogy_relationship_classification (Pass 1.5) -- typed relationships
       between each prior work and the target
-    dimensional_scan_results: From Pass 2 dimensional scanners -- concept_evolution, evolution_tactics_detector,
+    dimensional_scan_results: From genealogy_prior_work_scanning chain (Pass 2) -- concept_evolution and
       concept_appropriation_tracker findings per prior work
-    conditions_analysis: From conditions_of_possibility_analyzer (Pass 3) -- enabling conditions, constraining
-      conditions, path dependencies, counterfactuals
-    cross_work_synthesis: From Pass 3 cross-work synthesis engines -- patterns across all prior works
+    synthesis_analysis: From genealogy_synthesis chain (Pass 3) -- concept_synthesis evolution timelines,
+      concept_taxonomy_argumentative_function classifications, evolution_tactics_detector tactic catalog,
+      conditions_of_possibility_analyzer path dependencies and counterfactuals
   synergy_engines:
   - conditions_of_possibility_analyzer
   - concept_evolution
   - evolution_tactics_detector
-  - intellectual_genealogy
+  - concept_synthesis
 depth_levels:
 - key: surface
   description: Executive summary and key findings only -- the genealogical picture in miniature
