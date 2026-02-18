@@ -1,0 +1,44 @@
+{
+  "view_key": "genealogy_per_work_scan",
+  "view_name": "Per-Work Scan Detail",
+  "description": "For each prior work, shows vocabulary, methodology, metaphor, and framing comparisons from Pass 2's per-work scanning chain. Currently only partially surfaced — this view makes the full per-work granularity accessible.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "genealogy",
+  "target_section": "results",
+  "renderer_type": "card",
+  "renderer_config": {
+    "card_title_field": "work_title",
+    "subsections": ["vocabulary", "methodology", "metaphor", "framing"],
+    "show_relationship_badge": true,
+    "expandable": true
+  },
+  "data_source": {
+    "workflow_key": "intellectual_genealogy",
+    "phase_number": 2.0,
+    "chain_key": "genealogy_prior_work_scanning",
+    "result_path": "",
+    "scope": "per_item"
+  },
+  "secondary_sources": [
+    {
+      "workflow_key": "intellectual_genealogy",
+      "phase_number": 1.5,
+      "engine_key": "genealogy_relationship_classification",
+      "result_path": "relationship_type",
+      "scope": "per_item"
+    }
+  ],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "comparison",
+  "position": 2.0,
+  "parent_view_key": "genealogy_idea_evolution",
+  "tab_count_field": "length",
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "status": "active",
+  "tags": ["genealogy", "per-work", "scanning", "nested"],
+  "source_project": "critic"
+}

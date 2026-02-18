@@ -13,6 +13,7 @@ from fastapi import APIRouter
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
 from src.persistence.github_client import get_github_persistence
+from src.views.registry import get_view_registry
 from src.workflows.registry import get_workflow_registry
 
 logger = logging.getLogger(__name__)
@@ -38,14 +39,17 @@ def _compute_definitions_hash() -> str:
     engine_registry = get_engine_registry()
     chain_registry = get_chain_registry()
     workflow_registry = get_workflow_registry()
+    view_registry = get_view_registry()
 
     # Build a fingerprint from registry contents
     fingerprint_parts = [
         f"engines:{engine_registry.count()}",
         f"chains:{chain_registry.count()}",
         f"workflows:{workflow_registry.count()}",
+        f"views:{view_registry.count()}",
         f"chain_keys:{','.join(sorted(chain_registry.list_keys()))}",
         f"workflow_keys:{','.join(sorted(workflow_registry.get_workflow_keys()))}",
+        f"view_keys:{','.join(sorted(view_registry.list_keys()))}",
         f"modified:{_last_modified_at}",
     ]
 
@@ -77,6 +81,7 @@ async def get_definitions_version() -> dict:
     engine_registry = get_engine_registry()
     chain_registry = get_chain_registry()
     workflow_registry = get_workflow_registry()
+    view_registry = get_view_registry()
     github = get_github_persistence()
 
     return {
@@ -85,6 +90,7 @@ async def get_definitions_version() -> dict:
         "engine_count": engine_registry.count(),
         "chain_count": chain_registry.count(),
         "workflow_count": workflow_registry.count(),
+        "view_count": view_registry.count(),
         "persistence": {
             "github_enabled": github.enabled,
             "repo": github.repo if github.enabled else None,

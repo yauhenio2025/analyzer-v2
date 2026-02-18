@@ -12,13 +12,14 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import audiences, chains, engines, functions, llm, meta, operations, operationalizations, paradigms, styles, primitives, display, workflows
+from src.api.routes import audiences, chains, engines, functions, llm, meta, operations, operationalizations, paradigms, styles, primitives, display, views, workflows
 from src.audiences.registry import get_audience_registry
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
 from src.functions.registry import get_function_registry
 from src.operationalizations.registry import get_operationalization_registry
 from src.operations.registry import StanceRegistry
+from src.views.registry import get_view_registry
 from src.paradigms.registry import get_paradigm_registry
 from src.styles.registry import get_style_registry
 from src.primitives.registry import get_primitives_registry
@@ -71,6 +72,10 @@ async def lifespan(app: FastAPI):
     logger.info("Loading audience definitions...")
     audience_registry = get_audience_registry()
     logger.info(f"Loaded {audience_registry.count()} audiences")
+
+    logger.info("Loading view definitions...")
+    view_registry = get_view_registry()
+    logger.info(f"Loaded {view_registry.count()} view definitions")
 
     logger.info("Loading function definitions...")
     function_registry = get_function_registry()
@@ -142,6 +147,7 @@ app.include_router(display.router, prefix="/v1")
 app.include_router(workflows.router, prefix="/v1")
 app.include_router(audiences.router, prefix="/v1")
 app.include_router(functions.router, prefix="/v1")
+app.include_router(views.router, prefix="/v1")
 app.include_router(operations.router)
 app.include_router(operationalizations.router, prefix="/v1")
 app.include_router(llm.router, prefix="/v1")
@@ -166,6 +172,7 @@ async def root():
             "primitives": "/v1/primitives",
             "display": "/v1/display",
             "functions": "/v1/functions",
+            "views": "/v1/views",
             "operations": "/v1/operations",
             "operationalizations": "/v1/operationalizations",
         },
@@ -184,6 +191,7 @@ async def health():
     style_registry = get_style_registry()
     style_stats = style_registry.get_stats()
     op_registry = get_operationalization_registry()
+    view_registry = get_view_registry()
 
     return {
         "status": "healthy",
@@ -193,6 +201,7 @@ async def health():
         "workflows_loaded": workflow_registry.count(),
         "audiences_loaded": audience_registry.count(),
         "functions_loaded": function_registry.count(),
+        "views_loaded": view_registry.count(),
         "styles_loaded": style_stats["styles_loaded"],
         "style_affinities": style_stats["engine_affinities"],
         "operationalizations_loaded": op_registry.count(),
@@ -208,6 +217,7 @@ async def api_v1_root():
     workflow_registry = get_workflow_registry()
     audience_registry = get_audience_registry()
     function_registry = get_function_registry()
+    view_registry = get_view_registry()
     style_registry = get_style_registry()
     style_stats = style_registry.get_stats()
 
@@ -277,6 +287,18 @@ async def api_v1_root():
                     "GET /v1/functions/{key}/prompts",
                     "GET /v1/functions/{key}/implementations",
                     "GET /v1/functions/project/{project}",
+                ],
+            },
+            "views": {
+                "count": view_registry.count(),
+                "endpoints": [
+                    "GET /v1/views",
+                    "GET /v1/views/{key}",
+                    "GET /v1/views/compose/{app}/{page}",
+                    "GET /v1/views/for-workflow/{workflow_key}",
+                    "POST /v1/views",
+                    "PUT /v1/views/{key}",
+                    "DELETE /v1/views/{key}",
                 ],
             },
             "styles": {

@@ -238,3 +238,158 @@ stances:
       an abstraction that ignores particulars, but a richer
       understanding that comprehends why the contradiction was
       necessary and what it was trying to articulate all along.
+
+# ── Presentation Stances ─────────────────────────────────────────
+#
+# These guide HOW to render analytical output for display.
+# Analytical stances guide HOW to think.
+# Presentation stances guide HOW to present.
+#
+# ViewDefinitions reference presentation stances. When data needs
+# LLM transformation (prose -> structured), the stance guides the
+# extraction: "Extract this prose into summary format" vs. "Extract
+# this prose into evidence-chain format."
+
+  - key: summary
+    name: "Summary"
+    stance_type: presentation
+    cognitive_mode: "distillation — compress to headlines and key points"
+    typical_position: any
+    pairs_well_with: [narrative, diagnostic]
+    ui_pattern: "stat cards, bullet lists, executive briefs"
+    stance: |
+      Distill the analytical output to its essence. Extract the 3-7
+      most important findings, each as a single clear statement with
+      a brief supporting explanation. Think executive summary: someone
+      who reads only this should grasp what matters most.
+
+      Prioritize ruthlessly. Not everything the analysis found is
+      equally important. What would surprise the reader? What changes
+      how they should think about this? What are the non-obvious
+      insights that only emerge from deep analysis?
+
+      Format for quick scanning: headlines first, supporting detail
+      beneath. Use quantitative markers where available — counts,
+      percentages, confidence levels. Each point should stand on its
+      own while contributing to a coherent overall picture.
+
+  - key: evidence
+    name: "Evidence"
+    stance_type: presentation
+    cognitive_mode: "evidentiary — foreground sources, quotes, traceability"
+    typical_position: any
+    pairs_well_with: [comparison, diagnostic]
+    ui_pattern: "quote cards with attribution, citation trails, evidence chains"
+    stance: |
+      Foreground the evidence. Every claim should trace back to a
+      specific source: a direct quote, a paraphrase with page
+      reference, a pattern observed across multiple texts.
+
+      Present evidence in chains: Claim → Primary Evidence →
+      Supporting Evidence → Counter-evidence (if any) → Assessment
+      of evidential strength. The reader should be able to evaluate
+      each claim independently by examining its evidential basis.
+
+      Attribution is sacred. Distinguish between: direct textual
+      evidence (the author said X), inferential evidence (the text
+      implies Y because Z), and analytical evidence (pattern P
+      emerged across works A, B, C). Different evidence types carry
+      different epistemic weight — make this visible.
+
+  - key: comparison
+    name: "Comparison"
+    stance_type: presentation
+    cognitive_mode: "differential — side-by-side highlighting"
+    typical_position: any
+    pairs_well_with: [evidence, diagnostic]
+    ui_pattern: "split panels, diff views, parallel timelines"
+    stance: |
+      Structure for side-by-side comparison. Whatever is being
+      compared — works, ideas, time periods, methodological
+      approaches — present them in parallel so differences and
+      similarities become immediately visible.
+
+      Use consistent dimensions across items being compared. If
+      comparing works, use the same analytical categories for each.
+      If comparing evolution over time, use the same vocabulary
+      and methodology dimensions at each temporal point.
+
+      Highlight both convergence (what's shared, what's stable) and
+      divergence (what changed, what differs). Neither is inherently
+      more interesting — the analytical value is in the pattern.
+      Flag surprising similarities as well as surprising differences.
+
+  - key: narrative
+    name: "Narrative"
+    stance_type: presentation
+    cognitive_mode: "narrative — flowing prose with structure markers"
+    typical_position: any
+    pairs_well_with: [summary, evidence]
+    ui_pattern: "formatted long-form with section anchors, reading time estimate"
+    stance: |
+      Present as flowing, connected prose organized by section
+      anchors. This is the mode for when the analysis is best
+      understood as a story — an unfolding argument, a historical
+      trajectory, a process of intellectual development.
+
+      Structure with clear sections and subsections, each with a
+      descriptive heading that stands as a one-line summary. Within
+      sections, write in connected paragraphs — not bullet points
+      or fragments. The reader should be able to read straight
+      through as a coherent text.
+
+      Use transitional language that makes the logical structure
+      visible: "This leads to...", "In contrast...", "Building on
+      this foundation...", "The key tension emerges when...". The
+      narrative should carry the reader through the analysis,
+      building understanding cumulatively.
+
+  - key: interactive
+    name: "Interactive"
+    stance_type: presentation
+    cognitive_mode: "explorative — drill-down affordances"
+    typical_position: any
+    pairs_well_with: [summary, diagnostic]
+    ui_pattern: "expandable cards, nested tabs, filter controls"
+    stance: |
+      Structure for interactive exploration. Present a compact
+      overview that invites drill-down: each item or finding
+      should have a visible summary and a hidden detail layer
+      that expands on request.
+
+      Organize hierarchically: top-level categories → individual
+      items → item details → supporting evidence. At each level,
+      provide enough information to decide whether to go deeper.
+      The summary level should answer "what is this?" The detail
+      level should answer "how does this work?" The evidence level
+      should answer "why should I believe this?"
+
+      Include filter and sort affordances: tag items by type,
+      category, confidence, importance. Let the reader construct
+      their own path through the material rather than imposing
+      a single linear reading order.
+
+  - key: diagnostic
+    name: "Diagnostic"
+    stance_type: presentation
+    cognitive_mode: "meta-analytical — expose methodology, confidence, gaps"
+    typical_position: any
+    pairs_well_with: [evidence, comparison]
+    ui_pattern: "confidence meters, coverage matrices, debug panels"
+    stance: |
+      Expose the analytical machinery. Show not just what was
+      found but how confident the analysis is, what methodology
+      was used, what was covered vs. what was missed, where the
+      analysis is strongest and where it's weakest.
+
+      Present confidence assessments per finding: high confidence
+      (multiple independent evidence lines), medium confidence
+      (suggestive but not definitive), low confidence (speculative
+      or based on thin evidence). Make the epistemic status of
+      each claim visible at a glance.
+
+      Include coverage assessment: what dimensions were analyzed,
+      what was excluded, what couldn't be assessed with available
+      data. Show the boundary between what the analysis can say
+      and what lies beyond its reach. This is the self-reflexive
+      layer that prevents overclaiming.

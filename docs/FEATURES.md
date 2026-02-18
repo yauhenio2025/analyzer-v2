@@ -2,32 +2,80 @@
 
 > Auto-maintained by Claude Code. Last updated: 2026-02-18
 
-## Analytical Stances (Operations)
+## View Definitions (Rendering Layer)
 
-### Analytical Stances Library
+### View Definitions
 - **Status**: Active
-- **Description**: Shared cognitive postures for multi-pass analysis. 7 stances describing HOW an LLM should think in a given pass — discovery, inference, confrontation, architecture, integration, reflection, dialectical. Stances are prose descriptions injected into prompts, NOT output templates.
+- **Description**: Declarative specs for how analytical outputs become UI. A ViewDefinition declares: data source -> renderer type -> position in consumer app. Consumer apps fetch view trees for their pages and dispatch to their own component registries. No execution logic — just definitions. Supports nested views (subtabs within tabs), presentation stances for LLM transformation guidance, and audience overrides.
 - **Entry Points**:
-  - `src/operations/schemas.py:1-30` - AnalyticalStance and StanceSummary Pydantic models
-  - `src/operations/definitions/stances.yaml:1-230` - 7 stance definitions with prose descriptions, cognitive modes, typical positions
-  - `src/operations/registry.py:1-80` - StanceRegistry class (get, list, filter by position)
-  - `src/api/routes/operations.py:1-82` - API routes for stances
-  - `src/api/main.py:78-84` - Stance registry loading in lifespan, init_stance_registry for capability composer
-- **Stances** (7 total):
+  - `src/views/schemas.py:1-195` - Pydantic models: ViewDefinition, DataSourceRef, TransformationSpec, ViewSummary, ComposedView, ComposedPageResponse
+  - `src/views/registry.py:1-195` - ViewRegistry: load, get, list_summaries (with app/page filters), compose_tree, for_workflow, save, delete, reload
+  - `src/views/definitions/*.json` - 10 view definition JSON files
+  - `src/api/routes/views.py:1-165` - Full REST API with compose endpoint
+  - `src/api/main.py:16` - Router registration and lifespan loading
+- **Schema**:
+  - `ViewDefinition` — Identity (view_key, view_name, version), WHERE (target_app, target_page, target_section), WHAT component (renderer_type, renderer_config), WHAT data (data_source, secondary_sources), HOW to transform (transformation, presentation_stance), LAYOUT (position, parent_view_key, tab_count_field), VISIBILITY, AUDIENCE overrides, METADATA
+  - `DataSourceRef` — workflow_key, phase_number, engine_key, chain_key, result_path (JSONPath), scope (aggregated/per_item)
+  - `TransformationSpec` — type (none/schema_map/llm_extract/llm_summarize/aggregate), field_mapping, llm_extraction_schema, llm_prompt_template, stance_key override
+- **Genealogy Views** (10 total):
+  - **Top-level tabs**:
+    - `genealogy_relationship_landscape` (matrix, diagnostic) — Pass 1.5 relationship classifications
+    - `genealogy_idea_evolution` (tab, comparison) — Pass 1+2+3 idea evolution traces
+    - `genealogy_tactics` (card_grid, evidence) — Pass 3 evolution tactics
+    - `genealogy_conditions` (accordion, narrative) — Pass 3 conditions of possibility
+    - `genealogy_portrait` (prose, narrative) — Pass 4 final synthesis
+  - **Nested children**:
+    - `genealogy_target_profile` (accordion, diagnostic) — nested under idea_evolution, Pass 1 chain results
+    - `genealogy_per_work_scan` (card, comparison) — nested under idea_evolution, Pass 2 per-work results
+    - `genealogy_author_profile` (stat_summary, summary) — nested under portrait, Pass 4 extracted
+  - **On-demand debug**:
+    - `genealogy_raw_output` (raw_json, diagnostic) — raw engine JSON, visibility=on_demand
+    - `genealogy_chain_log` (table, diagnostic) — execution metadata, visibility=on_demand
+- **API Endpoints**:
+  - `GET /v1/views` - List all views (with ?app=X&page=Y filters)
+  - `GET /v1/views/{key}` - Single view definition
+  - `GET /v1/views/compose/{app}/{page}` - **Primary consumer endpoint**: sorted tree with nested children
+  - `GET /v1/views/for-workflow/{workflow_key}` - All views referencing a workflow
+  - `POST /v1/views` - Create view
+  - `PUT /v1/views/{key}` - Update view
+  - `DELETE /v1/views/{key}` - Delete view
+  - `POST /v1/views/reload` - Force reload from disk
+- **Consumer Usage Pattern**: `GET /v1/views/compose/the-critic/genealogy` returns tree → app renders tabs from top-level views → dispatches to component by renderer_type → nests children → uses presentation_stance for LLM transforms
+- **Added**: 2026-02-18
+
+## Analytical & Presentation Stances (Operations)
+
+### Stances Library
+- **Status**: Active
+- **Description**: Two types of stances: (1) Analytical stances (7) describe HOW an LLM should think in a given pass — discovery, inference, confrontation, architecture, integration, reflection, dialectical. (2) Presentation stances (6) describe HOW to render output for display — summary, evidence, comparison, narrative, interactive, diagnostic. Both are prose descriptions; analytical stances are injected into LLM prompts, presentation stances guide LLM transformations from prose to structured formats. Distinguished by `stance_type` field.
+- **Entry Points**:
+  - `src/operations/schemas.py:1-70` - AnalyticalStance (with stance_type, ui_pattern fields) and StanceSummary Pydantic models
+  - `src/operations/definitions/stances.yaml:1-360` - 13 stance definitions (7 analytical + 6 presentation)
+  - `src/operations/registry.py:1-90` - StanceRegistry class (get, list with stance_type filter, filter by position)
+  - `src/api/routes/operations.py:1-82` - API routes with ?type= query parameter
+  - `src/api/main.py:82-90` - Stance registry loading in lifespan, init_stance_registry for capability composer
+- **Analytical Stances** (7 total, stance_type="analytical"):
   - `discovery` (early, divergent) — Cast the widest net, surface everything without filtering
   - `inference` (early, deductive) — Trace what follows from what, map logical chains
   - `confrontation` (middle, adversarial) — Pit findings against each other, test robustness
   - `architecture` (middle, structural) — Map load-bearing skeleton, classify structures
   - `integration` (late, convergent) — Synthesize across dimensions into unified narrative
   - `reflection` (late, meta-cognitive) — Assess the assessment, identify blindspots
-  - `dialectical` (middle, generative-contradictory) — Inhabit contradictions productively; Hegelian Aufhebung, determinate negation, concrete universals
+  - `dialectical` (middle, generative-contradictory) — Inhabit contradictions productively
+- **Presentation Stances** (6 total, stance_type="presentation"):
+  - `summary` — Distill to headlines and key points (stat cards, bullet lists, executive briefs)
+  - `evidence` — Foreground sources, quotes, traceability (quote cards, citation trails)
+  - `comparison` — Side-by-side differential highlighting (split panels, diff views)
+  - `narrative` — Flowing prose with structure markers (formatted long-form, section anchors)
+  - `interactive` — Drill-down affordances (expandable cards, nested tabs, filter controls)
+  - `diagnostic` — Expose methodology, confidence, gaps (confidence meters, coverage matrices)
 - **API Endpoints**:
-  - `GET /v1/operations/stances` - List stance summaries
-  - `GET /v1/operations/stances/full` - List all stances with full prose
+  - `GET /v1/operations/stances` - List stance summaries (with ?type=analytical or ?type=presentation filter)
+  - `GET /v1/operations/stances/full` - List all stances with full prose (with ?type= filter)
   - `GET /v1/operations/stances/{key}` - Get single stance
   - `GET /v1/operations/stances/{key}/text` - Get just the stance prose for prompt injection
   - `GET /v1/operations/stances/position/{position}` - Filter by typical position (early/middle/late)
-- **Added**: 2026-02-17
+- **Added**: 2026-02-17 | **Modified**: 2026-02-18
 
 ## Capability Definition History Tracking
 

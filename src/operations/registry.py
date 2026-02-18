@@ -47,20 +47,27 @@ class StanceRegistry:
         """Get a stance by key."""
         return self._stances.get(key)
 
-    def list_all(self) -> list[AnalyticalStance]:
-        """List all stances."""
-        return list(self._stances.values())
+    def list_all(self, stance_type: Optional[str] = None) -> list[AnalyticalStance]:
+        """List all stances, optionally filtered by type."""
+        stances = list(self._stances.values())
+        if stance_type:
+            stances = [s for s in stances if s.stance_type == stance_type]
+        return stances
 
-    def list_summaries(self) -> list[StanceSummary]:
-        """List stance summaries."""
+    def list_summaries(self, stance_type: Optional[str] = None) -> list[StanceSummary]:
+        """List stance summaries, optionally filtered by type."""
+        stances = self._stances.values()
+        if stance_type:
+            stances = [s for s in stances if s.stance_type == stance_type]
         return [
             StanceSummary(
                 key=s.key,
                 name=s.name,
                 cognitive_mode=s.cognitive_mode,
                 typical_position=s.typical_position,
+                stance_type=s.stance_type,
             )
-            for s in self._stances.values()
+            for s in stances
         ]
 
     def get_by_position(self, position: str) -> list[AnalyticalStance]:

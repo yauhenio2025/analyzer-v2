@@ -1,0 +1,37 @@
+{
+  "view_key": "genealogy_tactics",
+  "view_name": "Tactics & Strategies",
+  "description": "Evolution tactics with evidence chains — how the author self-manages intellectual transformation. Shows the 10+ tactic types detected by the evolution_tactics_detector engine with supporting quotes and patterns.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "genealogy",
+  "target_section": "results",
+  "renderer_type": "card_grid",
+  "renderer_config": {
+    "card_title_field": "tactic_name",
+    "card_body_field": "description",
+    "card_evidence_field": "evidence_chains",
+    "columns": 2,
+    "expandable": true
+  },
+  "data_source": {
+    "workflow_key": "intellectual_genealogy",
+    "phase_number": 3.0,
+    "engine_key": "evolution_tactics_detector",
+    "result_path": "tactics_detected",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "evidence",
+  "position": 3.0,
+  "parent_view_key": null,
+  "tab_count_field": "tactics_detected.length",
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "status": "active",
+  "tags": ["genealogy", "tactics", "evidence"],
+  "source_project": "critic"
+}

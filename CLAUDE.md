@@ -48,6 +48,11 @@ analyzer-v2/
 │   │   ├── registry.py    # AudienceRegistry (CRUD + guidance/vocab/weight)
 │   │   └── definitions/   # 5 JSON files (analyst, executive, researcher, activist, social_movements)
 │   │
+│   ├── views/             # View definitions (rendering layer)
+│   │   ├── schemas.py     # ViewDefinition, DataSourceRef, TransformationSpec
+│   │   ├── registry.py    # ViewRegistry (CRUD + compose_tree)
+│   │   └── definitions/   # 10 JSON files (genealogy views)
+│   │
 │   └── api/               # FastAPI application
 │       ├── main.py        # App entry point
 │       └── routes/        # Endpoint handlers
@@ -92,6 +97,17 @@ GET  /v1/audiences/{key}/engine-weight/{engine_key}
 PUT  /v1/audiences/{key}             # Update audience
 POST /v1/audiences                   # Create audience
 DELETE /v1/audiences/{key}           # Delete audience
+
+GET  /v1/views                         # List all views (with ?app=X&page=Y)
+GET  /v1/views/{key}                   # Single view definition
+GET  /v1/views/compose/{app}/{page}    # Tree of views for a page (primary consumer endpoint)
+GET  /v1/views/for-workflow/{wf_key}   # Views referencing a workflow
+POST /v1/views                         # Create view
+PUT  /v1/views/{key}                   # Update view
+DELETE /v1/views/{key}                 # Delete view
+
+GET  /v1/operations/stances            # List stances (with ?type=analytical|presentation)
+GET  /v1/operations/stances/{key}      # Get stance
 
 GET  /v1/llm/status                  # Check LLM availability
 POST /v1/llm/profile-generate        # Generate profile with AI

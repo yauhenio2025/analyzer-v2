@@ -1,0 +1,35 @@
+{
+  "view_key": "genealogy_portrait",
+  "view_name": "Genealogical Portrait",
+  "description": "The comprehensive final synthesis — executive summary, per-idea genealogies, author profile, and methodological assessment. The culminating deliverable that integrates all upstream analysis passes.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "genealogy",
+  "target_section": "results",
+  "renderer_type": "prose",
+  "renderer_config": {
+    "section_anchors": true,
+    "table_of_contents": true,
+    "highlight_key_findings": true
+  },
+  "data_source": {
+    "workflow_key": "intellectual_genealogy",
+    "phase_number": 4.0,
+    "engine_key": "genealogy_final_synthesis",
+    "result_path": "",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "narrative",
+  "position": 5.0,
+  "parent_view_key": null,
+  "tab_count_field": null,
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "status": "active",
+  "tags": ["genealogy", "portrait", "synthesis", "final"],
+  "source_project": "critic"
+}

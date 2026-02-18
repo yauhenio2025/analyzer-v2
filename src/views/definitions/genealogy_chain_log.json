@@ -1,0 +1,42 @@
+{
+  "view_key": "genealogy_chain_log",
+  "view_name": "Chain Execution Log",
+  "description": "Debug panel showing chain execution metadata: which engines ran, in what order, timing, token usage. Helps diagnose performance and quality issues.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "genealogy",
+  "target_section": "debug",
+  "renderer_type": "table",
+  "renderer_config": {
+    "columns": ["phase", "engine", "duration_ms", "tokens_in", "tokens_out", "status"],
+    "sortable": true,
+    "filterable": true
+  },
+  "data_source": {
+    "workflow_key": "intellectual_genealogy",
+    "phase_number": null,
+    "result_path": "_execution_metadata",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "schema_map",
+    "field_mapping": {
+      "phase_number": "phase",
+      "engine_key": "engine",
+      "execution_time_ms": "duration_ms",
+      "input_tokens": "tokens_in",
+      "output_tokens": "tokens_out",
+      "completion_status": "status"
+    }
+  },
+  "presentation_stance": "diagnostic",
+  "position": 11.0,
+  "parent_view_key": null,
+  "tab_count_field": null,
+  "visibility": "on_demand",
+  "audience_overrides": {},
+  "status": "active",
+  "tags": ["genealogy", "debug", "execution", "performance"],
+  "source_project": "critic"
+}

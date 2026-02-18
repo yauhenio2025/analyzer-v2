@@ -1,6 +1,8 @@
 """API routes for analytical stances / operations."""
 
-from fastapi import APIRouter, HTTPException
+from typing import Optional
+
+from fastapi import APIRouter, HTTPException, Query
 
 from src.operations.registry import StanceRegistry
 from src.operations.schemas import AnalyticalStance, StanceSummary
@@ -25,15 +27,25 @@ def _get_registry() -> StanceRegistry:
 
 
 @router.get("/stances", response_model=list[StanceSummary])
-async def list_stances():
-    """List all analytical stances (summaries)."""
-    return _get_registry().list_summaries()
+async def list_stances(
+    type: Optional[str] = Query(
+        None,
+        description="Filter by stance type: 'analytical' or 'presentation'",
+    ),
+):
+    """List stances (summaries). Filter by type=analytical or type=presentation."""
+    return _get_registry().list_summaries(stance_type=type)
 
 
 @router.get("/stances/full", response_model=list[AnalyticalStance])
-async def list_stances_full():
+async def list_stances_full(
+    type: Optional[str] = Query(
+        None,
+        description="Filter by stance type: 'analytical' or 'presentation'",
+    ),
+):
     """List all stances with full prose descriptions."""
-    return _get_registry().list_all()
+    return _get_registry().list_all(stance_type=type)
 
 
 # ── Detail endpoints ─────────────────────────────────────

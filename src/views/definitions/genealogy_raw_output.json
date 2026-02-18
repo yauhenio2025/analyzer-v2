@@ -1,0 +1,34 @@
+{
+  "view_key": "genealogy_raw_output",
+  "view_name": "Raw Engine Output",
+  "description": "Developer/debug view showing raw JSON output from any pass. Useful for understanding what data is available and debugging rendering issues.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "genealogy",
+  "target_section": "debug",
+  "renderer_type": "raw_json",
+  "renderer_config": {
+    "collapsible": true,
+    "syntax_highlight": true,
+    "pass_selector": true
+  },
+  "data_source": {
+    "workflow_key": "intellectual_genealogy",
+    "phase_number": null,
+    "result_path": "_engine_results",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "diagnostic",
+  "position": 10.0,
+  "parent_view_key": null,
+  "tab_count_field": null,
+  "visibility": "on_demand",
+  "audience_overrides": {},
+  "status": "active",
+  "tags": ["genealogy", "debug", "raw"],
+  "source_project": "critic"
+}

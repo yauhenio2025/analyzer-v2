@@ -6,6 +6,25 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **View Definitions — Rendering Layer** (`src/views/`) — Declarative specs for how analytical outputs become UI. A ViewDefinition declares: data source -> renderer type -> position in app. Consumer apps fetch view trees and dispatch to their component registries. No execution logic — just definitions.
+  - `ViewDefinition` schema with `DataSourceRef` (workflow/phase/engine/chain pointers) and `TransformationSpec` (none, schema_map, llm_extract, llm_summarize, aggregate)
+  - `ViewRegistry` with JSON-per-file loading, CRUD, `compose_tree()` for building nested page layouts, `for_workflow()` lookup
+  - 10 genealogy view definitions: 5 top-level tabs (Relationship Landscape, Idea Evolution Map, Tactics & Strategies, Conditions of Possibility, Genealogical Portrait), 3 nested child views (Target Work Profile, Per-Work Scan Detail, Author Intellectual Profile), 2 on-demand debug views (Raw Engine Output, Chain Execution Log)
+  - `GET /v1/views/compose/{app}/{page}` — primary consumer endpoint returning sorted tree with nested children
+  - Full CRUD: `POST /v1/views`, `PUT /v1/views/{key}`, `DELETE /v1/views/{key}`
+  - Views included in version hash (`/v1/meta/definitions-version`), health endpoint, and `/v1` root
+  - ([`src/views/schemas.py`](src/views/schemas.py), [`src/views/registry.py`](src/views/registry.py), [`src/views/definitions/*.json`](src/views/definitions/), [`src/api/routes/views.py`](src/api/routes/views.py))
+- **Presentation Stances** (6 new) — Alongside the 7 analytical stances, 6 presentation stances guide HOW to render output for display. Each has a UI pattern description.
+  - `summary` — Distill to headlines and key points (stat cards, bullet lists, executive briefs)
+  - `evidence` — Foreground sources, quotes, traceability (quote cards with attribution, citation trails)
+  - `comparison` — Side-by-side differential highlighting (split panels, diff views, parallel timelines)
+  - `narrative` — Flowing prose with structure markers (formatted long-form with section anchors)
+  - `interactive` — Drill-down affordances (expandable cards, nested tabs, filter controls)
+  - `diagnostic` — Expose methodology, confidence, gaps (confidence meters, coverage matrices, debug panels)
+  - New `stance_type` field ("analytical" or "presentation") on `AnalyticalStance` schema
+  - Filter by type: `GET /v1/operations/stances?type=presentation`
+  - ([`src/operations/definitions/stances.yaml`](src/operations/definitions/stances.yaml), [`src/operations/schemas.py`](src/operations/schemas.py), [`src/operations/registry.py`](src/operations/registry.py))
+
 - **Dynamic Propagation System** — When engines are added to workflow phases via the UI, changes now persist permanently via GitHub commits, descriptions auto-update, and cascade to all dependent objects
   - **GitHub Persistence Layer** (`src/persistence/github_client.py`): Atomic multi-file commits via Git Data API (blobs → trees → commits → refs). Graceful degradation when no token configured — changes still work locally but are ephemeral.
   - **Description Auto-Generation** (`src/workflows/description_generator.py`): Template-based description generation from engine lists. Chains get `base_description` (invariant summary) + auto-computed `description` enumerating engines. Workflow phases get `base_phase_description` + auto-computed `phase_description`.
