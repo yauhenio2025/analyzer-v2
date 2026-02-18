@@ -427,61 +427,111 @@ depth_levels:
       with one-sentence justification for each.
 - key: standard
   description: Full classification with evidence, all five channels assessed, scanning strategy produced
-  typical_passes: 1
+  typical_passes: 2
   suitable_for: Standard genealogy pipeline Pass 1.5, most academic texts, authors with 3-10 prior works
   passes:
   - pass_number: 1
-    label: Full Classification & Scanning Strategy
-    stance: inference
+    label: Relationship Classification & Strength Assessment
+    stance: discovery
     focus_dimensions:
     - relationship_type
+    - relationship_evidence
     - relationship_strength
-    - influence_channels
-    - strategic_relevance
     focus_capabilities:
     - classify_relationship
     - assess_strength
-    - map_influence_channels
-    - determine_scanning_strategy
     consumes_from: []
     description: |
       Full classification with textual evidence from both works.
       Relationship type assigned with justification and secondary
-      types noted. Strength assessed across centrality, pervasiveness,
-      and evidence directness. All five influence channels (vocabulary,
-      methodology, audience, authority, framing) evaluated with
-      specific evidence. Scanning strategy produced with priority
-      dimensions and recommended attention level for Pass 2.
+      types noted. Strength assessed across centrality (could the
+      argument exist without this prior work), pervasiveness (whole
+      work or specific sections), and evidence directness (explicit
+      citation vs. implicit reliance).
+  - pass_number: 2
+    label: Channel Mapping & Scanning Strategy
+    stance: architecture
+    focus_dimensions:
+    - influence_channels
+    - strategic_relevance
+    focus_capabilities:
+    - map_influence_channels
+    - determine_scanning_strategy
+    consumes_from:
+    - 1
+    description: |
+      With relationship type and strength established, map all five
+      influence channels (vocabulary, methodology, audience, authority,
+      framing) with specific evidence for each. Translate the complete
+      classification into operational scanning strategy: priority
+      dimensions ranked, expected trace types, and recommended
+      attention level for Pass 2 dimensional scanners.
 - key: deep
   description: Nuanced classification with primary and secondary types, temporal evolution of relationship,
     full channel interaction analysis, detailed strategic guidance with contingency plans
-  typical_passes: 1
+  typical_passes: 3
   suitable_for: Complex intellectual relationships, works that defy easy classification, cases where misclassification
     risk is high
   passes:
   - pass_number: 1
-    label: Nuanced Classification & Strategic Guidance
-    stance: inference
+    label: Nuanced Relationship Classification
+    stance: discovery
     focus_dimensions:
     - relationship_type
+    - relationship_evidence
     - relationship_strength
-    - influence_channels
-    - strategic_relevance
     focus_capabilities:
     - classify_relationship
     - assess_strength
-    - map_influence_channels
-    - determine_scanning_strategy
     consumes_from: []
     description: |
       Nuanced classification with primary and secondary types, each
-      supported by detailed evidence. Assessment of how the
-      relationship may have shifted over time (temporal evolution).
-      Full channel interaction analysis showing how influence channels
-      reinforce or undermine each other. Detailed strategic guidance
-      with contingency plans: priority dimensions ranked, expected
-      trace types with specific hypotheses, and recommendations for
-      revising classification if Pass 2 evidence contradicts it.
+      supported by detailed textual evidence. Assessment of how the
+      relationship may have shifted over time — was this work a
+      direct precursor early in the author's career that became mere
+      background later? Strength profiled across different aspects
+      (methodology vs. substance) with temporal stability assessment.
+  - pass_number: 2
+    label: Channel Interaction Analysis
+    stance: architecture
+    focus_dimensions:
+    - influence_channels
+    - relationship_type
+    focus_capabilities:
+    - map_influence_channels
+    - classify_relationship
+    consumes_from:
+    - 1
+    description: |
+      Full channel interaction analysis. Map all five influence
+      channels with detailed evidence, then analyze how channels
+      reinforce or undermine each other — vocabulary transfers
+      carrying methodological assumptions, audience preparation
+      enabling authority transfer. Distinguish channels the author
+      recognizes from those operating below awareness. Identify
+      negative channels where influence operates through deliberate
+      avoidance or rejection.
+  - pass_number: 3
+    label: Strategic Guidance & Contingency Planning
+    stance: confrontation
+    focus_dimensions:
+    - strategic_relevance
+    - influence_channels
+    focus_capabilities:
+    - determine_scanning_strategy
+    consumes_from:
+    - 1
+    - 2
+    description: |
+      Translate the complete classification into detailed strategic
+      guidance for downstream passes. Priority dimensions ranked
+      with specific hypotheses for each. Expected trace types with
+      concrete examples. Attention allocation with justification.
+      Misclassification risk assessment — what would a wrong
+      classification cost? Contingency instructions for revising
+      classification if Pass 2 evidence contradicts it. Identify
+      prior works that should be scanned together due to
+      reinforcing channels.
 legacy_engine_key: genealogy_pass1b_relationship_classification
 apps:
 - critic

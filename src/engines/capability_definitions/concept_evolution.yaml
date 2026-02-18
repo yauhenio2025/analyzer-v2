@@ -555,71 +555,122 @@ depth_levels:
   description: Multi-dimensional comparison across vocabulary, methodology, metaphor, and framing for
     each key concept. Per-concept trajectories with evidence. Foundational patterns and cross-domain transfers
     identified.
-  typical_passes: 1
+  typical_passes: 2
   suitable_for: Most prior work comparisons, direct precursors with 3-10 shared concepts, standard genealogy
     analysis
   passes:
   - pass_number: 1
-    label: Multi-Dimensional Comparison
-    stance: inference
+    label: Four-Dimension Excavation
+    stance: discovery
     focus_dimensions:
     - vocabulary_evolution
     - methodology_evolution
     - metaphor_evolution
     - framing_evolution
-    - concept_trajectory
-    - dimensional_comparison_matrix
     focus_capabilities:
     - track_vocabulary_evolution
     - compare_methodology
     - trace_metaphor_change
     - analyze_framing_shifts
-    - trace_concept_lifecycles
-    - synthesize_dimensional_matrix
     consumes_from: []
     description: |
-      Full multi-dimensional comparison in a single pass. For each
-      key concept: vocabulary drift analysis with evidence from both
-      texts, methodology comparison, metaphor evolution, and framing
-      trajectory. Produce per-concept dimensional matrix showing
-      which dimensions changed and which remained stable. Identify
-      foundational patterns and cross-domain transfers.
+      Independently excavate the four evolution dimensions. Track
+      vocabulary drift with evidence from both texts — births, deaths,
+      renames, semantic shifts. Compare methodology across works —
+      evidence types, analytical moves, reasoning patterns. Trace
+      metaphor migration between source domains. Map framing shifts
+      in how problems are positioned and confidence levels change.
+  - pass_number: 2
+    label: Trajectory Synthesis & Dimensional Matrix
+    stance: architecture
+    focus_dimensions:
+    - concept_trajectory
+    - dimensional_comparison_matrix
+    focus_capabilities:
+    - trace_concept_lifecycles
+    - synthesize_dimensional_matrix
+    consumes_from:
+    - 1
+    description: |
+      With the four-dimension excavation complete, trace individual
+      concept lifecycles showing expansion, narrowing, reversal,
+      splitting, or merger trajectories. Synthesize the dimensional
+      comparison matrix revealing which dimensions changed in tandem
+      and which remained stable — identifying foundational patterns
+      and cross-domain transfers.
 - key: deep
   description: 'Full Koselleckian conceptual history: complete term inventories, detailed drift analysis
     with quoted evidence, metaphor archaeology, framing trajectory mapping, coupling analysis across dimensions,
     concept genealogy trees, and assessment of intellectual change archetypes. Suitable for the most important
     prior works.'
-  typical_passes: 1
+  typical_passes: 3
   suitable_for: Key prior works with extensive conceptual overlap, prolific authors, works spanning multiple
     domains, direct precursors to the author's most important ideas
   passes:
   - pass_number: 1
-    label: Full Koselleckian Conceptual History
-    stance: inference
+    label: Comprehensive Four-Dimension Excavation
+    stance: discovery
     focus_dimensions:
     - vocabulary_evolution
     - methodology_evolution
     - metaphor_evolution
     - framing_evolution
-    - concept_trajectory
-    - dimensional_comparison_matrix
     focus_capabilities:
     - track_vocabulary_evolution
     - compare_methodology
     - trace_metaphor_change
     - analyze_framing_shifts
-    - trace_concept_lifecycles
-    - synthesize_dimensional_matrix
     consumes_from: []
     description: |
-      Complete Koselleckian conceptual history in a single intensive
-      pass. Full term inventories for both works with detailed drift
-      analysis and quoted evidence. Metaphor archaeology tracing
-      source domains and evolution trajectories. Framing trajectory
-      mapping with confidence arcs. Coupling analysis across all four
-      dimensions revealing change archetypes. Concept genealogy trees
-      showing ancestor-descendant relationships and co-evolution
-      patterns.
+      Exhaustive excavation of all four evolution dimensions. Full
+      term inventories for both works with detailed drift analysis
+      and quoted evidence. Methodology comparison with evolution
+      type classification. Metaphor archaeology tracing source
+      domains, evolution trajectories, and structural implications.
+      Framing trajectory mapping with confidence arcs showing how
+      the author's relationship to ideas changed over time.
+  - pass_number: 2
+    label: Concept Lifecycle & Coupling Analysis
+    stance: architecture
+    focus_dimensions:
+    - concept_trajectory
+    - vocabulary_evolution
+    - metaphor_evolution
+    focus_capabilities:
+    - trace_concept_lifecycles
+    - track_vocabulary_evolution
+    - trace_metaphor_change
+    consumes_from:
+    - 1
+    description: |
+      Trace complete concept lifecycles with the four-dimension
+      evidence in hand. Map ancestor-descendant relationships between
+      concepts across works. Identify co-evolution patterns where
+      changes in one dimension drive changes in others. Analyze
+      coupling across dimensions — does vocabulary change predict
+      methodology change? Do metaphor shifts precede framing shifts?
+      These coupling patterns reveal change archetypes.
+  - pass_number: 3
+    label: Koselleckian Dimensional Synthesis
+    stance: integration
+    focus_dimensions:
+    - dimensional_comparison_matrix
+    - concept_trajectory
+    focus_capabilities:
+    - synthesize_dimensional_matrix
+    - trace_concept_lifecycles
+    consumes_from:
+    - 1
+    - 2
+    description: |
+      Full Koselleckian synthesis integrating all findings. Produce
+      the dimensional comparison matrix showing which dimensions
+      changed and which remained stable for each concept, with
+      coupling analysis revealing change archetypes. Concept
+      genealogy trees showing ancestor-descendant relationships,
+      co-evolution patterns, and the overall intellectual change
+      profile. Assessment of whether evolution is continuous or
+      punctuated, convergent or divergent across dimensions.
 legacy_engine_key: concept_evolution
 apps:
 - critic

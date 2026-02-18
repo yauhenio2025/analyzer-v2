@@ -524,71 +524,124 @@ depth_levels:
 - key: standard
   description: Map migration paths with mechanisms, classify semantic mutations by type, assess appropriation
     fidelity, identify distortions, and map acknowledgment patterns. Suitable for most genealogical analysis.
-  typical_passes: 1
+  typical_passes: 2
   suitable_for: Most prior work comparisons, direct precursors, works with moderate conceptual overlap,
     standard genealogy analysis
   passes:
   - pass_number: 1
-    label: Migration & Appropriation Analysis
-    stance: inference
+    label: Migration Path Tracing
+    stance: discovery
     focus_dimensions:
     - migration_paths
     - semantic_mutations
+    focus_capabilities:
+    - trace_migration_paths
+    - detect_semantic_mutations
+    consumes_from: []
+    description: |
+      Trace all significant concept migrations between prior and
+      current work. For each migrated concept, map the mechanism of
+      travel (explicit citation, silent borrowing, unconscious
+      absorption, independent rediscovery) and detect semantic
+      mutations that occurred in transit — extensions, restrictions,
+      metaphorizations, distortions, and inversions. This establishes
+      the factual base for appropriation analysis.
+  - pass_number: 2
+    label: Appropriation & Acknowledgment Assessment
+    stance: confrontation
+    focus_dimensions:
     - appropriation_patterns
     - distortion_map
     - acknowledgment_status
     focus_capabilities:
-    - trace_migration_paths
-    - detect_semantic_mutations
     - analyze_appropriation
     - map_distortions
     - assess_acknowledgment
-    consumes_from: []
+    consumes_from:
+    - 1
     description: |
-      Map all significant migration paths with mechanisms of travel
-      and contextual analysis. Classify semantic mutations by type
-      (extension, restriction, metaphorization, distortion, inversion).
-      Assess appropriation fidelity for each borrowed concept. Identify
-      distortions with type, motivation, and impact. Map acknowledgment
-      patterns revealing the politics of self-citation.
+      With migration paths and mutations mapped, assess how concepts
+      were appropriated — faithfully preserved, adapted for new
+      context, distorted for strategic purposes, or inverted against
+      original intent. Map distortions with type, motivation, and
+      impact assessment. Analyze acknowledgment patterns to reveal
+      the politics of self-citation: what is credited, what is
+      silently borrowed, and what strategic logic governs the choices.
 - key: deep
   description: 'Full Derridean iterability analysis: every concept migration traced with mechanism, semantic
     mutation classified and motivated, appropriation assessed for legitimacy, distortions catalogued with
     counterfactuals, recombinations mapped with novelty assessment, and acknowledgment patterns analyzed
     for strategic logic. Includes assessment of the author''s characteristic appropriation style.'
-  typical_passes: 1
+  typical_passes: 3
   suitable_for: The most important prior works, works with extensive conceptual overlap, cases where appropriation
     or distortion is central to the genealogical question, prolific authors with complex self-citation
     patterns
   passes:
   - pass_number: 1
-    label: Full Derridean Iterability Analysis
-    stance: inference
+    label: Comprehensive Migration Tracing
+    stance: discovery
     focus_dimensions:
     - migration_paths
     - semantic_mutations
-    - appropriation_patterns
-    - distortion_map
-    - recombination
-    - acknowledgment_status
     focus_capabilities:
     - trace_migration_paths
     - detect_semantic_mutations
+    consumes_from: []
+    description: |
+      Exhaustive migration tracing. Every concept that appears in
+      both works traced with mechanism of travel, intermediate stops,
+      and contextual analysis. Every semantic mutation classified by
+      type and motivated — distinguishing strategic mutations (the
+      author deliberately changed the concept) from drift (meaning
+      shifted through changing context). Map the full migration
+      landscape between the two works.
+  - pass_number: 2
+    label: Appropriation Architecture & Distortion Mapping
+    stance: architecture
+    focus_dimensions:
+    - appropriation_patterns
+    - distortion_map
+    - recombination
+    focus_capabilities:
     - analyze_appropriation
     - map_distortions
     - detect_recombinations
-    - assess_acknowledgment
-    consumes_from: []
+    consumes_from:
+    - 1
     description: |
-      Full Derridean iterability analysis in a single intensive pass.
-      Every concept migration traced with mechanism, intermediate
-      stops, and contextual analysis. Every semantic mutation classified
-      and motivated (strategic vs. drift). Appropriation assessed for
-      legitimacy with impact on both original and new context.
-      Distortions catalogued with counterfactuals. Recombinations
-      mapped with novelty assessment. Acknowledgment patterns analyzed
-      for strategic logic, revealing the author's characteristic
-      appropriation style.
+      With the migration landscape established, analyze the
+      architecture of appropriation. Classify each appropriation
+      for fidelity and legitimacy with impact assessment on both
+      original and new contexts. Catalogue distortions with
+      counterfactuals — what would the concept mean if not distorted?
+      Map recombinations where elements from different prior works
+      or different parts of the same work are combined into novel
+      configurations, assessing whether recombination produces
+      genuine novelty or merely the illusion of it.
+  - pass_number: 3
+    label: Acknowledgment Politics & Appropriation Style
+    stance: confrontation
+    focus_dimensions:
+    - acknowledgment_status
+    - appropriation_patterns
+    - distortion_map
+    focus_capabilities:
+    - assess_acknowledgment
+    - analyze_appropriation
+    consumes_from:
+    - 1
+    - 2
+    description: |
+      Full analysis of the politics of self-citation and the
+      author's characteristic appropriation style. Map what is
+      acknowledged versus suppressed and hypothesize the strategic
+      logic — embarrassment about prior positions, desire for
+      novelty, strategic distancing, or genuine forgetting. Assess
+      whether the overall appropriation pattern is faithful
+      inheritance, creative transformation, or strategic distortion.
+      Identify the author's signature appropriation style: do they
+      tend toward faithful preservation, creative adaptation, or
+      systematic rebranding?
 legacy_engine_key: concept_appropriation_tracker
 apps:
 - critic

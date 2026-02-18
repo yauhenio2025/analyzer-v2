@@ -565,73 +565,122 @@ depth_levels:
 - key: standard
   description: 'Full synthesis: executive summary, genealogical portrait, 5-8 idea genealogies with timelines,
     author profile, methodological notes, and key findings'
-  typical_passes: 1
+  typical_passes: 2
   suitable_for: Standard genealogy pipeline final output, most academic texts, authors with 3-10 prior
     works
   passes:
   - pass_number: 1
-    label: Full Genealogical Synthesis
-    stance: integration
+    label: Foundations — Summary & Idea Genealogies
+    stance: discovery
     focus_dimensions:
     - executive_summary
-    - genealogical_portrait
     - idea_genealogies
-    - author_intellectual_profile
-    - methodological_notes
     - key_findings
     focus_capabilities:
     - compose_executive_summary
-    - narrate_genealogical_portrait
     - trace_idea_genealogies
-    - profile_intellectual_character
-    - reflect_on_methodology
     consumes_from: []
     description: |
-      Full synthesis integrating all upstream pass data. Executive
-      summary with dominant influences and key evolution patterns.
-      Genealogical portrait narrating the author's intellectual
-      trajectory through descent and emergence. 5-8 idea genealogies
-      with timelines and evolution narratives. Author intellectual
-      profile characterizing habits, strengths, and weaknesses.
-      Methodological notes with confidence levels and limitations.
-      3-5 key findings with implications.
+      Establish the two independent foundations of the synthesis.
+      Compose executive summary distilling all upstream pass data
+      into dominant influences and key evolution patterns with 3-5
+      key findings. Trace 5-8 idea genealogies with structured
+      timelines (work, year, form) and evolution narratives for
+      each significant concept. These two outputs are independent
+      and provide the factual base for the narrative synthesis.
+  - pass_number: 2
+    label: Narrative Synthesis & Reflexive Assessment
+    stance: integration
+    focus_dimensions:
+    - genealogical_portrait
+    - author_intellectual_profile
+    - methodological_notes
+    focus_capabilities:
+    - narrate_genealogical_portrait
+    - profile_intellectual_character
+    - reflect_on_methodology
+    consumes_from:
+    - 1
+    description: |
+      With executive summary and idea genealogies in hand, compose
+      the narrative synthesis. Genealogical portrait narrating the
+      author's intellectual trajectory through descent and emergence.
+      Author intellectual profile characterizing habits, strengths,
+      weaknesses, and debt-handling patterns. Methodological notes
+      with confidence levels for major findings, data limitations,
+      and recommended follow-up investigations.
 - key: deep
   description: 'Comprehensive synthesis with extended narratives: detailed genealogical portrait with
     close textual analysis, comprehensive idea genealogies with co-evolution analysis, full intellectual
     portrait with field comparisons, reflexive methodological assessment, and key findings with multi-audience
     implications'
-  typical_passes: 1
+  typical_passes: 3
   suitable_for: Dense philosophical works, prolific authors with 10+ prior works, publication-quality
     genealogical studies, comprehensive intellectual biography projects
   passes:
   - pass_number: 1
-    label: Comprehensive Genealogical Synthesis
-    stance: integration
+    label: Comprehensive Foundations
+    stance: discovery
     focus_dimensions:
     - executive_summary
-    - genealogical_portrait
     - idea_genealogies
-    - author_intellectual_profile
-    - methodological_notes
     - key_findings
     focus_capabilities:
     - compose_executive_summary
-    - narrate_genealogical_portrait
     - trace_idea_genealogies
-    - profile_intellectual_character
-    - reflect_on_methodology
     consumes_from: []
     description: |
-      Comprehensive synthesis with extended narratives. Detailed
-      genealogical portrait with close textual analysis tracing
-      origin stories, transformation moments, and abandoned paths.
-      Comprehensive idea genealogies with co-evolution analysis
-      showing how changing one idea forced changes to others. Full
-      intellectual portrait with field comparisons and growth
-      assessment. Reflexive methodological assessment examining
-      biases in the genealogical method itself. Key findings with
-      multi-audience implications and assessment of how the author
-      might respond to each finding.
+      Exhaustive foundational work. Executive summary with full
+      accounting of all upstream evidence. Comprehensive idea
+      genealogies for all significant concepts with detailed
+      timelines, textual evidence at each stage, and co-evolution
+      analysis showing how changing one idea forced changes to
+      others. Key findings ranked by significance with multi-
+      audience implications.
+  - pass_number: 2
+    label: Genealogical Portrait & Intellectual Character
+    stance: architecture
+    focus_dimensions:
+    - genealogical_portrait
+    - author_intellectual_profile
+    focus_capabilities:
+    - narrate_genealogical_portrait
+    - profile_intellectual_character
+    consumes_from:
+    - 1
+    description: |
+      Detailed genealogical portrait with close textual analysis
+      tracing origin stories, transformation moments, and abandoned
+      paths. The narrative should make the author's intellectual
+      journey legible as a story with turning points, not merely
+      a chronological list. Full intellectual portrait with field
+      comparisons: characteristic moves, recurring strategies,
+      persistent blind spots, and assessment of growth versus
+      entrenchment over time.
+  - pass_number: 3
+    label: Reflexive Methodological Assessment
+    stance: integration
+    focus_dimensions:
+    - methodological_notes
+    - executive_summary
+    - key_findings
+    focus_capabilities:
+    - reflect_on_methodology
+    - compose_executive_summary
+    consumes_from:
+    - 1
+    - 2
+    description: |
+      Reflexive assessment examining biases in the genealogical
+      method itself. Per-finding confidence assessments with
+      evidence quality evaluations. Comprehensive inventory of
+      limitations — unavailable sources, partial analyses, time
+      constraints. All relationship classification revisions with
+      reasons. Detailed follow-up research agenda explaining why
+      specific investigations would be most productive. Assessment
+      of how the author might respond to each finding. Final
+      revision of executive summary and key findings in light of
+      the full narrative synthesis.
 legacy_engine_key: genealogy_pass7_final_synthesis
 apps:
 - critic
