@@ -6,6 +6,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Consumer Integration — Milestone 4B** — The Critic rewired to delegate genealogy execution to analyzer-v2's all-in-one orchestrator pipeline. See The Critic's changelog for full details. This milestone completes the 4-milestone orchestrator project: plan (M1) → execute (M2) → present (M3) → integrate (M4). The full pipeline is now: Critic UI → `POST /v1/orchestrator/analyze` → plan + execute + present → PagePresentation → Critic renders ViewPayloads.
+
 - **All-in-One Analysis Pipeline — Milestone 4A** (`src/orchestrator/pipeline.py`, `src/orchestrator/pipeline_schemas.py`) — Top-level orchestration endpoint that chains document upload -> plan generation -> execution -> presentation into a single async job. `POST /v1/orchestrator/analyze` accepts inline document texts + thinker context, uploads to document store, generates WorkflowExecutionPlan via Claude Opus, starts background execution, returns {job_id, plan_id} for polling. Supports autonomous mode (default, skip_plan_review=true) and checkpoint mode (skip_plan_review=false returns plan_id for review). Auto-presentation trigger added to `workflow_runner.execute_plan()` — runs view refinement + transformation bridge on successful completion (non-fatal). Convenience endpoint `GET /v1/orchestrator/analyze/{job_id}` returns progress while running, PagePresentation when complete.
   - New schemas: `AnalyzeRequest` (with `PriorWorkWithText`), `AnalyzeResponse`
   - 2 new REST endpoints under `/v1/orchestrator/`: analyze, analyze/{job_id}
