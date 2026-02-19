@@ -86,6 +86,17 @@ def execute_plan(
         # Extract prior work titles
         prior_work_titles = [pw.title for pw in plan.prior_works]
 
+        # Precompute context char overrides from plan (Milestone 5)
+        # Phases with max_context_chars_override get higher char limits
+        # when their output is consumed by downstream phases
+        context_char_overrides: dict[float, int] = {}
+        for pp in plan.phases:
+            if pp.max_context_chars_override:
+                context_char_overrides[pp.phase_number] = pp.max_context_chars_override
+
+        if context_char_overrides:
+            logger.info(f"Context char overrides: {context_char_overrides}")
+
         # Build dependency groups for parallel execution
         phase_groups = _build_execution_order(plan.phases, workflow_phases)
 
@@ -147,6 +158,7 @@ def execute_plan(
                         phase_statuses=phase_statuses,
                         total_phases=total_phases,
                     ),
+                    context_char_overrides=context_char_overrides or None,
                 )
 
                 _record_phase_result(
@@ -165,6 +177,7 @@ def execute_plan(
                     phase_statuses=phase_statuses,
                     all_results=all_results,
                     total_phases=total_phases,
+                    context_char_overrides=context_char_overrides or None,
                 )
 
         # Final status
@@ -216,6 +229,7 @@ def _run_parallel_phases(
     phase_statuses: dict[str, str],
     all_results: dict[float, PhaseResult],
     total_phases: int,
+    context_char_overrides: Optional[dict[float, int]] = None,
 ) -> None:
     """Run multiple phases in parallel."""
     # Mark all as running
@@ -250,6 +264,7 @@ def _run_parallel_phases(
                 prior_work_titles=prior_work_titles,
                 cancellation_check=lambda: is_cancelled(job_id),
                 progress_callback=None,  # Skip per-phase progress in parallel mode
+                context_char_overrides=context_char_overrides,
             )
             futures[future] = plan_phase
 

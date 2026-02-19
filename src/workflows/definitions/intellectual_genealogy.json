@@ -23,7 +23,7 @@
     {
       "phase_number": 1.5,
       "phase_name": "Relationship Classification",
-      "phase_description": "Classify each prior work's relationship to the target (direct_precursor, indirect_contextualizer, methodological_ancestor, contradicted_position, parallel_development). Assesses relationship strength and influence channels (vocabulary, methodology, audience, authority, framing). Produces scanning strategies that determine how Pass 2 analyzes each work. Runs once per prior work, independent of Pass 1.",
+      "phase_description": "Classify each prior work's relationship to the target (direct_precursor, indirect_contextualizer, methodological_ancestor, contradicted_position, parallel_development). Assesses relationship strength and influence channels (vocabulary, methodology, audience, authority, framing). Produces scanning strategies that determine how Pass 2 analyzes each work. Runs once per prior work. Depends on Phase 1.0 so it can use the distilled target analysis instead of raw text.",
       "base_phase_description": "Classify each prior work's relationship to the target, assessing relationship strength and influence channels to produce scanning strategies",
       "engine_key": "genealogy_relationship_classification",
       "function_key": null,
@@ -32,7 +32,7 @@
       "prompt_template": null,
       "requires_external_docs": true,
       "caches_result": true,
-      "depends_on_phases": [],
+      "depends_on_phases": [1.0],
       "output_schema": null
     },
     {

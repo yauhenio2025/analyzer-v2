@@ -43,6 +43,7 @@ def run_phase(
     prior_work_titles: Optional[list[str]] = None,
     cancellation_check: Optional[Callable[[], bool]] = None,
     progress_callback: Optional[Callable[[str], None]] = None,
+    context_char_overrides: Optional[dict[float, int]] = None,
 ) -> PhaseResult:
     """Execute a single workflow phase with plan overrides.
 
@@ -54,6 +55,9 @@ def run_phase(
         prior_work_titles: List of prior work titles (for per-work phases)
         cancellation_check: Callable that returns True to cancel
         progress_callback: Callable for progress updates
+        context_char_overrides: Per-phase max context chars (Milestone 5).
+            Allows Phase 1.0's expanded analysis to pass through at higher
+            char limits when consumed by downstream phases.
 
     Returns:
         PhaseResult with all engine outputs and metadata.
@@ -89,6 +93,7 @@ def run_phase(
                 job_id=job_id,
                 upstream_phases=workflow_phase.depends_on_phases,
                 context_emphasis=plan_phase.context_emphasis,
+                phase_max_chars_override=context_char_overrides,
             )
 
         # Determine if this is a per-work phase
@@ -217,6 +222,91 @@ def _run_standard_phase(
             f"Phase {phase_number} has no chain_key or engine_key"
         )
 
+    # --- Milestone 5: Supplementary chain execution ---
+    # After the primary chain/engine, run any supplementary chains the
+    # orchestrator selected. Each supplementary chain receives the primary
+    # output as upstream context and the same document text. All outputs
+    # are concatenated into the phase's final output, creating a rich
+    # multi-engine analysis that downstream per-work phases consume as
+    # distilled context (instead of raw document text).
+    if plan_phase.supplementary_chains:
+        supp_engine_results = {}
+        supp_total_tokens = 0
+        primary_output = result["final_output"]
+
+        for supp_idx, supp_chain_key in enumerate(plan_phase.supplementary_chains):
+            if cancellation_check and cancellation_check():
+                raise InterruptedError(
+                    f"Cancelled before supplementary chain {supp_chain_key}"
+                )
+
+            if progress_callback:
+                progress_callback(
+                    f"Supplementary {supp_idx + 1}/{len(plan_phase.supplementary_chains)}: "
+                    f"{supp_chain_key}"
+                )
+
+            logger.info(
+                f"Phase {phase_number}: running supplementary chain "
+                f"'{supp_chain_key}' ({supp_idx + 1}/{len(plan_phase.supplementary_chains)})"
+            )
+
+            try:
+                supp_result = run_chain(
+                    chain_key=supp_chain_key,
+                    document_text=document_text,
+                    job_id=job_id,
+                    phase_number=phase_number,
+                    depth=plan_phase.depth,
+                    engine_overrides=engine_overrides,
+                    context_emphasis=plan_phase.context_emphasis,
+                    # Feed primary chain output as upstream context
+                    upstream_context=(upstream_context + "\n\n---\n\n" + primary_output)
+                        if upstream_context else primary_output,
+                    model_hint=plan_phase.model_hint,
+                    requires_full_documents=plan_phase.requires_full_documents,
+                    cancellation_check=cancellation_check,
+                    progress_callback=progress_callback,
+                )
+
+                supp_engine_results.update(supp_result["engine_results"])
+                supp_total_tokens += supp_result["total_tokens"]
+
+                logger.info(
+                    f"Supplementary chain '{supp_chain_key}' complete: "
+                    f"{supp_result['total_tokens']:,} tokens"
+                )
+            except InterruptedError:
+                raise
+            except Exception as e:
+                logger.error(
+                    f"Supplementary chain '{supp_chain_key}' failed (non-fatal): {e}",
+                    exc_info=True,
+                )
+                # Continue with remaining supplementary chains
+
+        # Merge supplementary results into the primary result
+        result["engine_results"].update(supp_engine_results)
+        result["total_tokens"] += supp_total_tokens
+
+        # Concatenate all outputs: primary + each supplementary chain's final output
+        combined_parts = [primary_output]
+        for supp_chain_key in plan_phase.supplementary_chains:
+            # Each supplementary chain may have contributed multiple engines;
+            # take the last engine's last pass as that chain's contribution
+            for eng_key, passes in supp_engine_results.items():
+                if passes:
+                    combined_parts.append(
+                        f"\n\n## Supplementary Analysis: {eng_key}\n\n{passes[-1].content}"
+                    )
+
+        result["final_output"] = "\n\n---\n\n".join(combined_parts)
+
+        logger.info(
+            f"Phase {phase_number}: {len(plan_phase.supplementary_chains)} supplementary "
+            f"chains complete, total supplementary tokens: {supp_total_tokens:,}"
+        )
+
     duration_ms = int((time.time() - start_time) * 1000)
 
     return PhaseResult(
@@ -253,6 +343,19 @@ def _run_per_work_phase(
     total_tokens = 0
     errors: list[str] = []
 
+    # Milestone 5: Determine if we should use distilled analysis
+    # If upstream_context is available AND this is a per-work phase (1.5 or 2.0),
+    # use the distilled analysis from Phase 1.0 instead of raw target text.
+    # The upstream_context comes from the context broker's assembly of Phase 1.0
+    # outputs (which may include supplementary chain outputs).
+    use_distilled = bool(upstream_context) and phase_number in (1.5, 2.0)
+    if use_distilled:
+        logger.info(
+            f"Phase {phase_number}: using distilled analysis "
+            f"({len(upstream_context):,} chars) instead of raw target text "
+            f"for {len(prior_work_titles)} per-work iterations"
+        )
+
     def run_one_work(work_title: str) -> tuple[str, dict, int]:
         """Execute the phase for a single prior work. Returns (title, results, tokens)."""
         if cancellation_check and cancellation_check():
@@ -272,16 +375,28 @@ def _run_per_work_phase(
         # Get document text for this work
         doc_text = _get_work_document_text(work_title, document_ids)
 
-        # Get target document text too (some phases need both)
-        target_text = _get_target_document_text(document_ids)
-
-        # Combine target + work text for phases that analyze both
-        combined_text = _combine_document_texts(
-            target_text=target_text,
-            work_text=doc_text,
-            work_title=work_title,
-            phase_number=phase_number,
-        )
+        # Milestone 5: Use distilled analysis path when available
+        if use_distilled:
+            # Replace raw target text with distilled multi-engine analysis
+            combined_text = _combine_with_distilled_analysis(
+                distilled_analysis=upstream_context,
+                work_text=doc_text,
+                work_title=work_title,
+                phase_number=phase_number,
+            )
+            # Don't pass upstream_context again to the chain/engine — it's
+            # already embedded in the combined_text
+            effective_upstream = ""
+        else:
+            # Legacy path: concatenate both full texts
+            target_text = _get_target_document_text(document_ids)
+            combined_text = _combine_document_texts(
+                target_text=target_text,
+                work_text=doc_text,
+                work_title=work_title,
+                phase_number=phase_number,
+            )
+            effective_upstream = upstream_context
 
         # Engine overrides from plan
         engine_overrides = None
@@ -303,7 +418,7 @@ def _run_per_work_phase(
                 depth=work_depth,
                 engine_overrides=engine_overrides,
                 context_emphasis=plan_phase.context_emphasis,
-                upstream_context=upstream_context,
+                upstream_context=effective_upstream,
                 model_hint=plan_phase.model_hint,
                 requires_full_documents=plan_phase.requires_full_documents,
                 cancellation_check=cancellation_check,
@@ -317,7 +432,7 @@ def _run_per_work_phase(
                 work_key=work_key,
                 depth=work_depth,
                 focus_dimensions=work_focus_dims,
-                upstream_context=upstream_context,
+                upstream_context=effective_upstream,
                 context_emphasis=plan_phase.context_emphasis,
                 model_hint=plan_phase.model_hint,
                 requires_full_documents=plan_phase.requires_full_documents,
@@ -414,6 +529,10 @@ def _combine_document_texts(
 
     Phase 1.5 (classification) needs both target and prior work.
     Phase 2.0 (scanning) primarily needs the prior work + target context.
+
+    NOTE: This is the LEGACY path used when no distilled analysis is available.
+    Milestone 5 introduced _combine_with_distilled_analysis() which should be
+    preferred when upstream context from Phase 1.0 is available.
     """
     if phase_number == 1.5:
         # Classification: both texts needed equally
@@ -433,6 +552,49 @@ def _combine_document_texts(
         # Generic: both texts
         return (
             f"# Target Work\n\n{target_text}\n\n"
+            f"---\n\n"
+            f"# Prior Work: {work_title}\n\n{work_text}"
+        )
+
+
+def _combine_with_distilled_analysis(
+    distilled_analysis: str,
+    work_text: str,
+    work_title: str,
+    phase_number: float,
+) -> str:
+    """Combine distilled target analysis + prior work text for per-work phases.
+
+    Milestone 5: Instead of sending TWO full book texts (target + prior work),
+    we send the DISTILLED ANALYSIS from Phase 1.0 (typically ~100-150K chars of
+    multi-engine analysis) + the full prior work text. This dramatically reduces
+    token counts while giving the LLM more useful context.
+
+    The distilled analysis comes from the context broker's assembly of all
+    Phase 1.0 outputs (including supplementary chains if the orchestrator
+    selected them).
+    """
+    if phase_number == 1.5:
+        # Classification: distilled analysis of target + prior work text
+        return (
+            f"# Target Work Analysis (distilled from multi-engine profiling)\n\n"
+            f"{distilled_analysis}\n\n"
+            f"---\n\n"
+            f"# Prior Work: {work_title}\n\n{work_text}"
+        )
+    elif phase_number == 2.0:
+        # Scanning: prior work is primary, distilled target analysis is context
+        return (
+            f"# Prior Work: {work_title}\n\n{work_text}\n\n"
+            f"---\n\n"
+            f"# Target Work Analysis (distilled from multi-engine profiling)\n\n"
+            f"{distilled_analysis}"
+        )
+    else:
+        # Generic: distilled analysis + work text
+        return (
+            f"# Target Work Analysis (distilled from multi-engine profiling)\n\n"
+            f"{distilled_analysis}\n\n"
             f"---\n\n"
             f"# Prior Work: {work_title}\n\n{work_text}"
         )

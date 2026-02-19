@@ -26,6 +26,7 @@ def assemble_phase_context(
     upstream_phases: list[float],
     context_emphasis: Optional[str] = None,
     max_chars_per_block: int = MAX_CHARS_PER_BLOCK,
+    phase_max_chars_override: Optional[dict[float, int]] = None,
 ) -> str:
     """Assemble prose context from upstream phases for the next phase.
 
@@ -33,7 +34,11 @@ def assemble_phase_context(
         job_id: The job whose outputs to read
         upstream_phases: Which phase numbers to include
         context_emphasis: Plan-driven emphasis text to inject as framing
-        max_chars_per_block: Truncate individual blocks beyond this
+        max_chars_per_block: Default truncation for individual blocks
+        phase_max_chars_override: Per-phase override for max chars.
+            Keys are phase_numbers, values are char limits.
+            Allows Phase 1.0's rich analysis to pass through at higher limits
+            when it has supplementary engines (Milestone 5).
 
     Returns:
         Markdown-formatted context string ready to inject into a prompt.
@@ -54,7 +59,13 @@ def assemble_phase_context(
     # Build labeled context blocks
     blocks = []
     for output in outputs:
-        block = _format_output_block(output, max_chars_per_block)
+        # Use phase-specific char cap if available (Milestone 5)
+        phase_num = output.get("phase_number", 0)
+        effective_max = max_chars_per_block
+        if phase_max_chars_override and phase_num in phase_max_chars_override:
+            effective_max = phase_max_chars_override[phase_num]
+
+        block = _format_output_block(output, effective_max)
         if block:
             blocks.append(block)
 

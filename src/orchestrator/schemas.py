@@ -111,6 +111,20 @@ class PhaseExecutionSpec(BaseModel):
         "Keys are work titles, values are {depth, focus_dimensions} dicts.",
     )
 
+    # Milestone 5 additions: expanded target analysis & distilled context
+    supplementary_chains: Optional[list[str]] = Field(
+        default=None,
+        description="Additional chain keys to run AFTER the phase's primary chain/engine. "
+        "The orchestrator selects these based on the thinker's profile. "
+        "All supplementary chain outputs are concatenated with the primary output.",
+    )
+    max_context_chars_override: Optional[int] = Field(
+        default=None,
+        description="Override the default 50K per-block context cap for this phase's output "
+        "when consumed by downstream phases. Set higher for phases that produce "
+        "rich analysis intended to replace raw document text.",
+    )
+
 
 class ViewRecommendation(BaseModel):
     """A recommended view for presenting analysis results."""

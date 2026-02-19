@@ -6,6 +6,20 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Expanded Target Analysis & Distilled Context — Milestone 5** — Addresses a fundamental design flaw discovered during first real Varoufakis execution: per-work phases (1.5, 2.0) concatenated TWO FULL BOOK TEXTS (1.1-1.5M chars each), causing 30+ minute stalls. The fix: expand Phase 1.0 with orchestrator-selected supplementary engines, then feed DISTILLED ANALYSIS (not raw text) to downstream per-work phases.
+  - Two new fields on `PhaseExecutionSpec`: `supplementary_chains` (list of additional chain keys to run after primary), `max_context_chars_override` (override 50K per-block context cap for rich analyses)
+  - Phase 1.5 now depends on Phase 1.0 (no longer parallel): `depends_on_phases: [1.0]` in workflow definition
+  - New execution DAG: Group1=[1.0] → Group2=[1.5] → Group3=[2.0] → Group4=[3.0] → Group5=[4.0]
+  - `_run_standard_phase()` extended with supplementary chain execution — runs 1-3 additional chains after primary, merging outputs
+  - New `_combine_with_distilled_analysis()` replaces raw target text with distilled multi-engine analysis in per-work phases
+  - `assemble_phase_context()` enhanced with `phase_max_chars_override` parameter for per-phase char limits
+  - `context_char_overrides` threaded from `workflow_runner` through `phase_runner` to `context_broker`
+  - Planner system prompt updated: guidelines for supplementary chain selection, document strategy for per-work phases, updated JSON output format
+  - Catalog text updated: note about supplementary chains for Phase 1.0
+  - Backward compatible: existing plans without new fields work unchanged
+  - Token economy: ~13% reduction in total input tokens, with dramatically improved quality-per-token ratio
+  - ([`src/orchestrator/schemas.py`](src/orchestrator/schemas.py), [`src/executor/phase_runner.py`](src/executor/phase_runner.py), [`src/executor/context_broker.py`](src/executor/context_broker.py), [`src/executor/workflow_runner.py`](src/executor/workflow_runner.py), [`src/orchestrator/planner.py`](src/orchestrator/planner.py), [`src/orchestrator/catalog.py`](src/orchestrator/catalog.py), [`src/workflows/definitions/intellectual_genealogy.json`](src/workflows/definitions/intellectual_genealogy.json))
+
 - **Consumer Integration — Milestone 4B** — The Critic rewired to delegate genealogy execution to analyzer-v2's all-in-one orchestrator pipeline. See The Critic's changelog for full details. This milestone completes the 4-milestone orchestrator project: plan (M1) → execute (M2) → present (M3) → integrate (M4). The full pipeline is now: Critic UI → `POST /v1/orchestrator/analyze` → plan + execute + present → PagePresentation → Critic renders ViewPayloads.
 
 - **All-in-One Analysis Pipeline — Milestone 4A** (`src/orchestrator/pipeline.py`, `src/orchestrator/pipeline_schemas.py`) — Top-level orchestration endpoint that chains document upload -> plan generation -> execution -> presentation into a single async job. `POST /v1/orchestrator/analyze` accepts inline document texts + thinker context, uploads to document store, generates WorkflowExecutionPlan via Claude Opus, starts background execution, returns {job_id, plan_id} for polling. Supports autonomous mode (default, skip_plan_review=true) and checkpoint mode (skip_plan_review=false returns plan_id for review). Auto-presentation trigger added to `workflow_runner.execute_plan()` — runs view refinement + transformation bridge on successful completion (non-fatal). Convenience endpoint `GET /v1/orchestrator/analyze/{job_id}` returns progress while running, PagePresentation when complete.

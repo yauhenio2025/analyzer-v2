@@ -72,6 +72,27 @@ Produce a WorkflowExecutionPlan (JSON) that configures:
 - You CAN recommend skipping phases, but this should be rare
 - Only skip if the corpus clearly doesn't warrant it (e.g., single prior work → simplified scanning)
 
+### Expanded Target Analysis (Phase 1.0) — Supplementary Chains
+Phase 1.0 runs a core 4-engine chain (genealogy_target_profiling). You can ALSO select 1-3 supplementary chains from the catalog to run AFTER the core chain. Their outputs concatenate with the core analysis, creating a richer distilled target profile.
+
+**When to add supplementary chains**:
+- Thinker has a rich argumentative style → add `argument_analysis_chain` (argument_architecture + rhetorical_strategy)
+- Thinker has complex rhetorical patterns → add `rhetorical_analysis_chain`
+- Thinker draws from specific intellectual traditions → add `conceptual_deep_dive_chain`
+- Thinker is known for anomalous claims → add `anomaly_evidence_chain`
+- When in doubt, add 1-2 supplementary chains. The cost is moderate but the downstream benefit is significant.
+
+**When you add supplementary chains**, also set `max_context_chars_override: 150000` on Phase 1.0 so the expanded analysis passes through to downstream phases without being truncated at the default 50K limit.
+
+**Supplementary chains field**: `"supplementary_chains": ["argument_analysis_chain", "rhetorical_analysis_chain"]`
+
+### Document Strategy for Per-Work Phases (1.5, 2.0)
+Per-work phases (1.5 Relationship Classification, 2.0 Prior Work Scanning) now receive the DISTILLED target analysis from Phase 1.0 instead of the raw target text. This means:
+- `requires_full_documents` on Phases 1.5 and 2.0 should be `false` (the distilled analysis is ~100-150K chars, not 500K+)
+- Phase 1.0 should have `requires_full_documents: true` (it processes the raw target text)
+- The per-work phases depend on Phase 1.0 completing first (1.5 now has `depends_on_phases: [1.0]`)
+- Each per-work call sees: ~37K distilled analysis + ~200K prior work text = ~237K total (vs. ~370K before)
+
 ## Output Format
 
 Return ONLY valid JSON matching this exact structure (no markdown fences, no explanation outside JSON):
@@ -84,6 +105,9 @@ Return ONLY valid JSON matching this exact structure (no markdown fences, no exp
       "phase_name": "Deep Target Work Profiling",
       "skip": false,
       "depth": "deep",
+      "requires_full_documents": true,
+      "supplementary_chains": ["argument_analysis_chain", "rhetorical_analysis_chain"],
+      "max_context_chars_override": 150000,
       "engine_overrides": {
         "conceptual_framework_extraction": {
           "engine_key": "conceptual_framework_extraction",
@@ -93,7 +117,15 @@ Return ONLY valid JSON matching this exact structure (no markdown fences, no exp
         }
       },
       "context_emphasis": "Focus on economic vocabulary and Marxist conceptual framework",
-      "rationale": "Deep profiling needed because Varoufakis has a complex vocabulary..."
+      "rationale": "Deep profiling with supplementary argument + rhetorical analysis needed because Varoufakis has a complex vocabulary and distinctive argumentative style..."
+    },
+    {
+      "phase_number": 1.5,
+      "phase_name": "Relationship Classification",
+      "skip": false,
+      "depth": "standard",
+      "requires_full_documents": false,
+      "rationale": "Uses distilled target analysis from Phase 1.0, not raw text..."
     }
   ],
   "recommended_views": [
@@ -345,6 +377,13 @@ def generate_plan(request: OrchestratorPlanRequest) -> WorkflowExecutionPlan:
             engine_overrides=engine_overrides,
             context_emphasis=phase_data.get("context_emphasis"),
             rationale=phase_data.get("rationale", ""),
+            # Milestone 2 fields
+            model_hint=phase_data.get("model_hint"),
+            requires_full_documents=phase_data.get("requires_full_documents", False),
+            per_work_overrides=phase_data.get("per_work_overrides"),
+            # Milestone 5 fields
+            supplementary_chains=phase_data.get("supplementary_chains"),
+            max_context_chars_override=phase_data.get("max_context_chars_override"),
         )
         plan.phases.append(phase)
 
@@ -476,6 +515,11 @@ Return ONLY the JSON — no markdown fences, no explanation outside the JSON."""
             engine_overrides=engine_overrides,
             context_emphasis=phase_data.get("context_emphasis"),
             rationale=phase_data.get("rationale", ""),
+            model_hint=phase_data.get("model_hint"),
+            requires_full_documents=phase_data.get("requires_full_documents", False),
+            per_work_overrides=phase_data.get("per_work_overrides"),
+            supplementary_chains=phase_data.get("supplementary_chains"),
+            max_context_chars_override=phase_data.get("max_context_chars_override"),
         )
         updated_plan.phases.append(phase)
 

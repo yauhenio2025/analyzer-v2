@@ -302,6 +302,17 @@ def catalog_to_text(catalog: dict[str, Any]) -> str:
         lines.append(f"- Engines: {engines}")
         lines.append("")
 
+    # Supplementary chains note
+    lines.append("### Note: Supplementary Chains for Phase 1.0")
+    lines.append("Any general-purpose chain (non-genealogy-specific) can be selected as a")
+    lines.append("**supplementary chain** for Phase 1.0. Supplementary chains run AFTER the core")
+    lines.append("genealogy_target_profiling chain, receiving its output as upstream context.")
+    lines.append("Their outputs concatenate into a rich multi-engine target analysis that")
+    lines.append("downstream per-work phases (1.5, 2.0) consume as distilled context")
+    lines.append("instead of the raw target text. Good candidates: argument_analysis_chain,")
+    lines.append("rhetorical_analysis_chain, conceptual_deep_dive_chain, anomaly_evidence_chain.")
+    lines.append("")
+
     # Capability Engines
     lines.append("## CAPABILITY ENGINES (11 total)")
     lines.append("")

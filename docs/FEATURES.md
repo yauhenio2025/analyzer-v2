@@ -9,15 +9,15 @@
 - **Description**: Context-driven orchestrator that takes a thinker + corpus + research question and uses Claude Opus to generate a WorkflowExecutionPlan — a concrete, contextualized plan for executing the 5-phase genealogy workflow. Assembles a capability catalog from all registries (engines, chains, stances, operationalizations, views, workflows) and presents it to the LLM as a structured "menu". Plans are inspectable, editable, and refinable.
 - **Entry Points**:
   - `src/orchestrator/__init__.py:1-11` - Module docstring
-  - `src/orchestrator/schemas.py:1-217` - Pydantic models: TargetWork, PriorWork, EngineExecutionSpec, PhaseExecutionSpec, ViewRecommendation, OrchestratorPlanRequest, PlanRefinementRequest, WorkflowExecutionPlan
-  - `src/orchestrator/catalog.py:1-369` - Catalog assembly from all registries + catalog_to_text() for LLM consumption
-  - `src/orchestrator/planner.py:1-493` - LLM-powered plan generation (Claude Opus with streaming + extended thinking), plan refinement, file-based plan storage
+  - `src/orchestrator/schemas.py:1-246` - Pydantic models: TargetWork, PriorWork, EngineExecutionSpec, PhaseExecutionSpec (incl. supplementary_chains, max_context_chars_override), ViewRecommendation, OrchestratorPlanRequest, PlanRefinementRequest, WorkflowExecutionPlan
+  - `src/orchestrator/catalog.py:1-380` - Catalog assembly from all registries + catalog_to_text() for LLM consumption (incl. supplementary chains note)
+  - `src/orchestrator/planner.py:1-536` - LLM-powered plan generation (Claude Opus with streaming + extended thinking), plan refinement, file-based plan storage, supplementary chains + document strategy guidelines in system prompt
   - `src/api/routes/orchestrator.py:1-155` - REST API: plan generation, CRUD, refinement, catalog
   - `src/api/main.py:16` - Router registration
   - `src/orchestrator/plans/` - File-based plan storage (JSON)
 - **Key Schemas**:
   - `WorkflowExecutionPlan` — plan_id, thinker context, strategy_summary, phases (list of PhaseExecutionSpec), recommended_views, estimated_llm_calls, status
-  - `PhaseExecutionSpec` — phase_number, depth, skip, engine_overrides (dict of EngineExecutionSpec), context_emphasis, rationale
+  - `PhaseExecutionSpec` — phase_number, depth, skip, engine_overrides (dict of EngineExecutionSpec), context_emphasis, rationale, model_hint, requires_full_documents, per_work_overrides, supplementary_chains, max_context_chars_override
   - `EngineExecutionSpec` — engine_key, depth, focus_dimensions, focus_capabilities, rationale
   - `ViewRecommendation` — view_key, priority (primary/secondary/optional), rationale
 - **Capability Catalog**: Assembled from 11 capability engines, 23 chains, 13 stances, 7 workflows, 10 views, 11 operationalizations. Available as raw JSON or LLM-readable markdown.
@@ -42,10 +42,10 @@
   - `src/executor/schemas.py:1-170` - JobStatus, PhaseStatus, EngineCallResult, PhaseResult, JobProgress, ExecutorJob, StartJobRequest, JobStatusResponse, PhaseOutputSummary, DocumentUpload, DocumentRecord
   - `src/executor/db.py:1-283` - Dual-backend DB abstraction (Postgres via psycopg2 + SQLite), init_db(), execute(), 4 tables
   - `src/executor/engine_runner.py:1-274` - Atomic LLM call: MODEL_CONFIGS (opus/sonnet/haiku), PHASE_MODEL_DEFAULTS, streaming with extended thinking, 1M context beta, heartbeat monitoring, exponential backoff retry (5 attempts)
-  - `src/executor/context_broker.py:1-190` - Cross-phase context assembly with emphasis injection, inner-pass context threading, chain context forwarding
-  - `src/executor/chain_runner.py:1-340` - Sequential chain execution using capability_composer, multi-pass operationalization support, run_chain() + run_single_engine()
-  - `src/executor/phase_runner.py:1-310` - Phase resolution (chain_key/engine_key), per-work iteration with ThreadPoolExecutor, plan override application
-  - `src/executor/workflow_runner.py:1-310` - Top-level DAG execution, dependency-aware parallel phases, progress tracking, execute_plan() + start_execution_thread()
+  - `src/executor/context_broker.py:1-200` - Cross-phase context assembly with emphasis injection, inner-pass context threading, chain context forwarding, phase_max_chars_override (M5)
+  - `src/executor/chain_runner.py:1-494` - Sequential chain execution using capability_composer, multi-pass operationalization support, run_chain() + run_single_engine()
+  - `src/executor/phase_runner.py:1-610` - Phase resolution (chain_key/engine_key), per-work iteration with ThreadPoolExecutor, plan override application, supplementary chain execution (M5), _combine_with_distilled_analysis (M5)
+  - `src/executor/workflow_runner.py:1-481` - Top-level DAG execution, dependency-aware parallel phases, progress tracking, context_char_overrides threading (M5), execute_plan() + start_execution_thread()
   - `src/executor/job_manager.py:1-240` - Job lifecycle (create/update/cancel/delete), progress updates, in-memory cancellation flags, DB persistence
   - `src/executor/output_store.py:1-256` - Incremental prose output persistence with lineage, presentation cache with source_hash freshness
   - `src/executor/document_store.py:1-97` - Store/retrieve uploaded document texts
@@ -65,7 +65,8 @@
   - `GET /v1/executor/documents` - List documents
   - `GET /v1/executor/documents/{doc_id}` - Retrieve document
   - `DELETE /v1/executor/documents/{doc_id}` - Delete document
-- **PhaseExecutionSpec additions**: model_hint (opus/sonnet/None), requires_full_documents (1M context), per_work_overrides (differential depth per prior work)
+- **PhaseExecutionSpec additions**: model_hint (opus/sonnet/None), requires_full_documents (1M context), per_work_overrides (differential depth per prior work), supplementary_chains (additional chains after primary, Milestone 5), max_context_chars_override (per-phase context cap override, Milestone 5)
+- **Milestone 5 Enhancements**: Supplementary chain execution in `_run_standard_phase()`, distilled analysis path in `_combine_with_distilled_analysis()` for per-work phases, `phase_max_chars_override` in context broker, `context_char_overrides` threaded from workflow_runner. Phase 1.5 now depends on Phase 1.0 (sequential, not parallel).
 - **Added**: 2026-02-19
 
 ## Presenter — Adaptive View Selection & Presentation Bridge (Milestone 3)
