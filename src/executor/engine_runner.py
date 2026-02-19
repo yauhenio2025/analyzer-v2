@@ -231,10 +231,10 @@ def _execute_streaming_call(
     last_chunk_time = time.time()
 
     if use_beta:
-        # Use beta endpoint for 1M context
+        # Use beta endpoint for 1M context window
         stream_cm = client.beta.messages.stream(
             **kwargs,
-            betas=["interleaved-thinking-2025-05-14"],
+            betas=["context-1m-2025-08-07"],
         )
     else:
         stream_cm = client.messages.stream(**kwargs)
