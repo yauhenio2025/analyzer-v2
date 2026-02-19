@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 MODEL_CONFIGS = {
     "opus": {
         "model": "claude-opus-4-5-20251101",
-        "max_tokens": 128000,
+        "max_tokens": 64000,
         "thinking_budget": 10000,
         "use_thinking": True,
     },
@@ -173,6 +173,10 @@ def run_engine_call(
                 raise RuntimeError(f"[{label}] Authentication error (not retrying): {e}")
             if "context_length_exceeded" in error_str or "too many tokens" in error_str:
                 raise RuntimeError(f"[{label}] Context too long (not retrying): {e}")
+            if "prompt is too long" in error_str:
+                raise RuntimeError(f"[{label}] Prompt too long (not retrying): {e}")
+            if "max_tokens" in error_str and "maximum allowed" in error_str:
+                raise RuntimeError(f"[{label}] max_tokens exceeds model limit (not retrying): {e}")
 
     raise RuntimeError(
         f"[{label}] Failed after {MAX_RETRIES} attempts. Last error: {last_error}"
@@ -211,8 +215,13 @@ def _execute_streaming_call(
             "budget_tokens": config["thinking_budget"],
         }
 
-    # 1M context window
+    # 1M context window — also auto-enable if prompt is very large
+    total_chars = len(system_prompt) + len(user_message)
     use_beta = config.get("use_1m_context", False)
+    if not use_beta and total_chars > 600_000:
+        # ~150K tokens at 4 chars/token — approaching 200K limit, use 1M
+        logger.info(f"[{label}] Auto-enabling 1M context: {total_chars:,} chars in prompt")
+        use_beta = True
 
     # Accumulate response
     raw_text = ""
