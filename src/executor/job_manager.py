@@ -298,6 +298,55 @@ def clear_cancellation(job_id: str) -> None:
         _cancellation_flags.pop(job_id, None)
 
 
+def recover_orphaned_jobs() -> int:
+    """Mark any 'running' or 'pending' jobs as failed on startup.
+
+    When Render recycles an instance, daemon execution threads die silently.
+    The DB still shows status='running' but nothing is actually executing.
+    This function runs on startup to clean up these zombie jobs.
+
+    Returns the number of jobs recovered.
+    """
+    now = datetime.utcnow().isoformat()
+
+    # Find orphaned running jobs
+    running_jobs = execute(
+        """SELECT job_id, plan_id, status, started_at
+           FROM executor_jobs
+           WHERE status IN ('running', 'pending')""",
+        fetch="all",
+    )
+
+    if not running_jobs:
+        return 0
+
+    count = 0
+    for job in running_jobs:
+        job_id = job["job_id"]
+        execute(
+            """UPDATE executor_jobs
+               SET status = 'failed',
+                   completed_at = %s,
+                   error = %s
+               WHERE job_id = %s AND status IN ('running', 'pending')""",
+            (
+                now,
+                "Process terminated unexpectedly (instance recycled). "
+                "The execution thread was killed before completion. "
+                "Please retry the analysis.",
+                job_id,
+            ),
+        )
+        clear_cancellation(job_id)
+        count += 1
+        logger.warning(
+            f"Recovered orphaned job {job_id} (was {job['status']}) → failed"
+        )
+
+    logger.info(f"Startup recovery: marked {count} orphaned job(s) as failed")
+    return count
+
+
 def delete_job(job_id: str) -> bool:
     """Delete a job and all its outputs.
 

@@ -7,6 +7,7 @@ This API serves analytical definitions without execution logic:
 """
 
 import logging
+import signal
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -106,10 +107,34 @@ async def lifespan(app: FastAPI):
     init_db()
     logger.info("Executor database initialized")
 
+    # Recover orphaned jobs from previous instance crashes
+    from src.executor.job_manager import recover_orphaned_jobs
+    orphaned = recover_orphaned_jobs()
+    if orphaned:
+        logger.warning(f"Recovered {orphaned} orphaned job(s) from previous instance")
+
+    # Register SIGTERM handler for graceful shutdown
+    # Render sends SIGTERM before killing the process — mark running jobs as failed
+    def _sigterm_handler(signum, frame):
+        logger.warning("SIGTERM received — marking running jobs as failed")
+        try:
+            recover_orphaned_jobs()
+        except Exception as e:
+            logger.error(f"SIGTERM handler failed: {e}")
+        # Re-raise to let uvicorn handle shutdown
+        raise SystemExit(0)
+
+    signal.signal(signal.SIGTERM, _sigterm_handler)
+    logger.info("SIGTERM handler registered for graceful job cleanup")
+
     logger.info("Analyzer v2 API ready")
     yield
-    # Shutdown
+    # Shutdown — also recover orphaned jobs as a fallback
     logger.info("Shutting down Analyzer v2 API")
+    try:
+        recover_orphaned_jobs()
+    except Exception as e:
+        logger.error(f"Shutdown job recovery failed: {e}")
 
 
 # Create FastAPI app
