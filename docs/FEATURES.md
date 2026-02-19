@@ -107,6 +107,22 @@
 - **Database**: view_refinements table (Postgres + SQLite) for persisting refined recommendations
 - **Added**: 2026-02-19
 
+### All-in-One Analysis Pipeline (Milestone 4A)
+- **Status**: Active (Milestone 4A complete)
+- **Description**: All-in-one orchestration endpoint that chains documents -> plan generation -> execution -> presentation into a single async job. Accepts inline document texts + thinker context, uploads documents, generates a WorkflowExecutionPlan, starts execution, and returns immediately with job_id for polling. Auto-presentation trigger in workflow_runner runs view refinement + transformation bridge when execution completes. Supports autonomous mode (default) and checkpoint mode (skip_plan_review=false returns plan_id for review).
+- **Entry Points**:
+  - `src/orchestrator/pipeline_schemas.py:1-80` - AnalyzeRequest, PriorWorkWithText, AnalyzeResponse
+  - `src/orchestrator/pipeline.py:1-149` - run_analysis_pipeline(), _upload_documents(), _build_plan_request()
+  - `src/executor/workflow_runner.py:404-449` - _run_auto_presentation() — non-fatal auto view refinement + transformation bridge on completion
+  - `src/api/routes/orchestrator.py:204-296` - POST /analyze, GET /analyze/{job_id}
+- **API Endpoints**:
+  - `POST /v1/orchestrator/analyze` - All-in-one: documents + plan + execution (returns {job_id, plan_id, status})
+  - `GET /v1/orchestrator/analyze/{job_id}` - Convenience: progress while running, PagePresentation when complete
+- **Key Schemas**:
+  - `AnalyzeRequest` — thinker_name, target_work, target_work_text, prior_works (with text), research_question, skip_plan_review
+  - `AnalyzeResponse` — job_id, plan_id, document_ids, status, message
+- **Added**: 2026-02-19
+
 ## View Definitions (Rendering Layer)
 
 ### View Definitions

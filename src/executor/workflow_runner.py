@@ -184,6 +184,10 @@ def execute_plan(
             else:
                 update_job_status(job_id, "completed")
 
+                # Auto-presentation: run view refinement + transformation bridge
+                # so PagePresentation is ready by the time the client polls
+                _run_auto_presentation(job_id, plan_id)
+
         logger.info(
             f"Job {job_id} finished: "
             f"{len(completed_phases)} phases completed, "
@@ -398,6 +402,47 @@ def _build_execution_order(
         f"Execution order: {[[p.phase_number for p in g] for g in groups]}"
     )
     return groups
+
+
+def _run_auto_presentation(job_id: str, plan_id: str) -> None:
+    """Auto-run view refinement + transformation bridge after execution completes.
+
+    This is non-fatal: if presentation fails, the job is still "completed"
+    and the client can access raw prose outputs. The presentation layer
+    is a convenience optimization, not a requirement.
+    """
+    try:
+        logger.info(f"Auto-presentation starting for job {job_id}")
+
+        # Step 1: Refine view recommendations based on actual results
+        try:
+            from src.presenter.view_refiner import refine_views
+            refinement = refine_views(job_id=job_id, plan_id=plan_id)
+            logger.info(
+                f"Auto-presentation: view refinement complete — "
+                f"{len(refinement.refined_views)} views, "
+                f"{refinement.tokens_used} tokens"
+            )
+        except Exception as e:
+            logger.warning(f"Auto-presentation: view refinement failed (continuing): {e}")
+
+        # Step 2: Run transformations for recommended views
+        try:
+            from src.presenter.presentation_bridge import prepare_presentation
+            bridge_result = prepare_presentation(job_id=job_id)
+            logger.info(
+                f"Auto-presentation: transformation bridge complete — "
+                f"{bridge_result.tasks_completed} transformed, "
+                f"{bridge_result.cached_results} cached, "
+                f"{bridge_result.tasks_skipped} skipped"
+            )
+        except Exception as e:
+            logger.warning(f"Auto-presentation: transformation bridge failed (continuing): {e}")
+
+        logger.info(f"Auto-presentation complete for job {job_id}")
+
+    except Exception as e:
+        logger.warning(f"Auto-presentation failed for job {job_id} (non-fatal): {e}")
 
 
 def start_execution_thread(

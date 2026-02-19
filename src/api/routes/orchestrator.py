@@ -11,6 +11,8 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException, Query
 
 from src.orchestrator.catalog import assemble_full_catalog, catalog_to_text
+from src.orchestrator.pipeline import run_analysis_pipeline
+from src.orchestrator.pipeline_schemas import AnalyzeRequest, AnalyzeResponse
 from src.orchestrator.planner import generate_plan, load_plan, list_plans, refine_plan
 from src.orchestrator.schemas import (
     OrchestratorPlanRequest,
@@ -197,3 +199,112 @@ async def update_plan_status(plan_id: str, status: str = Query(...)):
     _save_plan(plan)
     logger.info(f"Plan {plan_id} status → {status}")
     return {"plan_id": plan_id, "status": status}
+
+
+# ── All-in-One Analysis Pipeline ──────────────────────────────
+
+
+@router.post("/analyze", response_model=AnalyzeResponse)
+async def analyze(request: AnalyzeRequest):
+    """All-in-one analysis: documents + plan + execution + presentation.
+
+    Accepts inline document texts + thinker context and runs the full pipeline:
+    1. Upload documents to the document store
+    2. Generate a WorkflowExecutionPlan (Claude Opus, 15-30s)
+    3. Start execution (background thread, 5-60+ minutes)
+
+    Returns immediately after step 3 with {job_id, plan_id} for polling.
+    Presentation runs automatically when execution completes.
+
+    Set skip_plan_review=false to stop after step 2 (returns plan_id
+    for review; manually start execution later with POST /v1/executor/jobs).
+    """
+    try:
+        result = run_analysis_pipeline(request)
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.error(f"Analysis pipeline failed: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Analysis pipeline failed: {e}",
+        )
+
+    logger.info(
+        f"Analysis pipeline initiated for {request.thinker_name}: "
+        f"plan={result.plan_id}, job={result.job_id}, status={result.status}"
+    )
+    return result
+
+
+@router.get("/analyze/{job_id}")
+async def get_analysis(job_id: str):
+    """Convenience endpoint: combines job status + PagePresentation.
+
+    - If job is running: returns job status with progress
+    - If job is completed: returns PagePresentation (render-ready)
+    - If job is failed/cancelled: returns job status with error + partial PagePresentation
+    """
+    from src.executor.job_manager import get_job
+    from src.executor.schemas import JobStatusResponse
+
+    job = get_job(job_id)
+    if job is None:
+        raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+
+    status = job.get("status", "unknown")
+
+    # Running or pending: return progress
+    if status in ("pending", "running"):
+        return {
+            "job_id": job_id,
+            "plan_id": job.get("plan_id", ""),
+            "status": status,
+            "progress": job.get("progress", {}),
+            "total_llm_calls": job.get("total_llm_calls", 0),
+            "total_input_tokens": job.get("total_input_tokens", 0),
+            "total_output_tokens": job.get("total_output_tokens", 0),
+        }
+
+    # Completed: return PagePresentation
+    if status == "completed":
+        try:
+            from src.presenter.presentation_api import assemble_page
+            page = assemble_page(job_id)
+            return {
+                "job_id": job_id,
+                "plan_id": job.get("plan_id", ""),
+                "status": "completed",
+                "presentation": page.model_dump(),
+            }
+        except Exception as e:
+            logger.warning(f"Page assembly failed for completed job {job_id}: {e}")
+            return {
+                "job_id": job_id,
+                "plan_id": job.get("plan_id", ""),
+                "status": "completed",
+                "presentation": None,
+                "presentation_error": str(e),
+            }
+
+    # Failed/cancelled: return status + try partial presentation
+    result = {
+        "job_id": job_id,
+        "plan_id": job.get("plan_id", ""),
+        "status": status,
+        "error": job.get("error"),
+        "total_llm_calls": job.get("total_llm_calls", 0),
+        "total_input_tokens": job.get("total_input_tokens", 0),
+        "total_output_tokens": job.get("total_output_tokens", 0),
+    }
+
+    try:
+        from src.presenter.presentation_api import assemble_page
+        page = assemble_page(job_id)
+        result["presentation"] = page.model_dump()
+    except Exception:
+        result["presentation"] = None
+
+    return result

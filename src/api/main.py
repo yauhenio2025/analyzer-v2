@@ -191,6 +191,7 @@ async def root():
             "operations": "/v1/operations",
             "operationalizations": "/v1/operationalizations",
             "orchestrator": "/v1/orchestrator",
+            "analyze": "/v1/orchestrator/analyze",
             "executor": "/v1/executor",
             "presenter": "/v1/presenter",
         },
