@@ -1,6 +1,36 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-02-18
+> Auto-maintained by Claude Code. Last updated: 2026-02-19
+
+## Context-Driven Orchestrator
+
+### Orchestrator — LLM-Powered Plan Generation
+- **Status**: Active (Milestone 1 complete)
+- **Description**: Context-driven orchestrator that takes a thinker + corpus + research question and uses Claude Opus to generate a WorkflowExecutionPlan — a concrete, contextualized plan for executing the 5-phase genealogy workflow. Assembles a capability catalog from all registries (engines, chains, stances, operationalizations, views, workflows) and presents it to the LLM as a structured "menu". Plans are inspectable, editable, and refinable.
+- **Entry Points**:
+  - `src/orchestrator/__init__.py:1-11` - Module docstring
+  - `src/orchestrator/schemas.py:1-217` - Pydantic models: TargetWork, PriorWork, EngineExecutionSpec, PhaseExecutionSpec, ViewRecommendation, OrchestratorPlanRequest, PlanRefinementRequest, WorkflowExecutionPlan
+  - `src/orchestrator/catalog.py:1-369` - Catalog assembly from all registries + catalog_to_text() for LLM consumption
+  - `src/orchestrator/planner.py:1-493` - LLM-powered plan generation (Claude Opus with streaming + extended thinking), plan refinement, file-based plan storage
+  - `src/api/routes/orchestrator.py:1-155` - REST API: plan generation, CRUD, refinement, catalog
+  - `src/api/main.py:16` - Router registration
+  - `src/orchestrator/plans/` - File-based plan storage (JSON)
+- **Key Schemas**:
+  - `WorkflowExecutionPlan` — plan_id, thinker context, strategy_summary, phases (list of PhaseExecutionSpec), recommended_views, estimated_llm_calls, status
+  - `PhaseExecutionSpec` — phase_number, depth, skip, engine_overrides (dict of EngineExecutionSpec), context_emphasis, rationale
+  - `EngineExecutionSpec` — engine_key, depth, focus_dimensions, focus_capabilities, rationale
+  - `ViewRecommendation` — view_key, priority (primary/secondary/optional), rationale
+- **Capability Catalog**: Assembled from 11 capability engines, 23 chains, 13 stances, 7 workflows, 10 views, 11 operationalizations. Available as raw JSON or LLM-readable markdown.
+- **API Endpoints**:
+  - `GET /v1/orchestrator/capability-catalog` - Full capability catalog (?format=text for markdown)
+  - `POST /v1/orchestrator/plan` - Generate new plan (Claude Opus, ~20s)
+  - `GET /v1/orchestrator/plans` - List all plans (summary)
+  - `GET /v1/orchestrator/plans/{plan_id}` - Get full plan
+  - `PUT /v1/orchestrator/plans/{plan_id}` - Manual edit (no LLM)
+  - `POST /v1/orchestrator/plans/{plan_id}/refine` - LLM-assisted refinement
+  - `PATCH /v1/orchestrator/plans/{plan_id}/status` - Update plan status
+- **Tested**: Varoufakis plan generated with 5 phases (deep profiling, standard classification, deep scanning, deep synthesis, deep final), 42 estimated LLM calls, 10 view recommendations (4 primary, 4 secondary, 2 optional), engine-specific focus dimensions
+- **Added**: 2026-02-19
 
 ## View Definitions (Rendering Layer)
 

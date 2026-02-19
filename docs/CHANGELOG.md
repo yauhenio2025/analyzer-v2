@@ -6,6 +6,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Context-Driven Orchestrator — Milestone 1: Plan Generation** (`src/orchestrator/`) — LLM-powered orchestrator that takes a thinker + corpus + research question and generates a WorkflowExecutionPlan adapted to the thinker's intellectual profile. Assembles capability catalog from all registries, calls Claude Opus with extended thinking, returns validated plan with per-phase depth, engine overrides, context emphasis, and view recommendations.
+  - `WorkflowExecutionPlan` schema with PhaseExecutionSpec, EngineExecutionSpec, ViewRecommendation
+  - Capability catalog assembly from 11 capability engines, 23 chains, 13 stances, 10 views, 11 operationalizations
+  - `catalog_to_text()` for LLM-readable structured markdown
+  - Plan generation via Claude Opus with streaming + extended thinking (10k budget)
+  - Plan refinement endpoint (LLM re-plans based on user feedback)
+  - File-based plan persistence in `src/orchestrator/plans/`
+  - Full REST API: generate, list, get, update, refine, status update
+  - Tested with Varoufakis context: 42 estimated LLM calls, differentiated depth per phase, engine-specific focus dimensions
+  - ([`src/orchestrator/schemas.py`](src/orchestrator/schemas.py), [`src/orchestrator/catalog.py`](src/orchestrator/catalog.py), [`src/orchestrator/planner.py`](src/orchestrator/planner.py), [`src/api/routes/orchestrator.py`](src/api/routes/orchestrator.py))
+
 - **Transformation Templates — Schema-on-Read Execution Service** (`src/transformations/`) — Reusable transformation recipes that execute the `TransformationSpec` already declared in view definitions. Five types: passthrough (none), field renaming (schema_map), structured extraction from prose (llm_extract), summarization (llm_summarize), and aggregation (group/count/sort). Includes in-memory TTL cache for LLM results.
   - `TransformationTemplate` schema with full execution config (model, fallback, max_tokens), applicability (renderer types, engines), and metadata (tags, status, source)
   - `TransformationRegistry` with JSON-per-file loading, CRUD, filter by type/tag/engine/renderer
