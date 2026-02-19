@@ -12,7 +12,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import audiences, chains, engines, functions, llm, meta, operations, operationalizations, orchestrator, paradigms, styles, primitives, display, transformations, views, workflows
+from src.api.routes import audiences, chains, engines, executor, functions, llm, meta, operations, operationalizations, orchestrator, paradigms, styles, primitives, display, transformations, views, workflows
 from src.audiences.registry import get_audience_registry
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
@@ -101,6 +101,11 @@ async def lifespan(app: FastAPI):
     transformation_registry = get_transformation_registry()
     logger.info(f"Loaded {transformation_registry.count()} transformation templates")
 
+    logger.info("Initializing executor database...")
+    from src.executor.db import init_db
+    init_db()
+    logger.info("Executor database initialized")
+
     logger.info("Analyzer v2 API ready")
     yield
     # Shutdown
@@ -159,6 +164,7 @@ app.include_router(operationalizations.router, prefix="/v1")
 app.include_router(llm.router, prefix="/v1")
 app.include_router(meta.router, prefix="/v1")
 app.include_router(orchestrator.router, prefix="/v1")
+app.include_router(executor.router, prefix="/v1")
 
 
 @app.get("/")
@@ -184,6 +190,7 @@ async def root():
             "operations": "/v1/operations",
             "operationalizations": "/v1/operationalizations",
             "orchestrator": "/v1/orchestrator",
+            "executor": "/v1/executor",
         },
     }
 

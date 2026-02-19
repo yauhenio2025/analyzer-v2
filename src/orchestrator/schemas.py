@@ -95,6 +95,22 @@ class PhaseExecutionSpec(BaseModel):
         description="WHY this configuration for this phase given the thinker/context",
     )
 
+    # Milestone 2 additions: executor-relevant fields
+    model_hint: Optional[str] = Field(
+        default=None,
+        description="Suggested model: 'opus', 'sonnet', or None (auto). "
+        "Executor may override based on cost/latency constraints.",
+    )
+    requires_full_documents: bool = Field(
+        default=False,
+        description="Whether this phase needs full document texts (triggers 1M context).",
+    )
+    per_work_overrides: Optional[dict[str, dict]] = Field(
+        default=None,
+        description="Per-prior-work depth/focus overrides. "
+        "Keys are work titles, values are {depth, focus_dimensions} dicts.",
+    )
+
 
 class ViewRecommendation(BaseModel):
     """A recommended view for presenting analysis results."""

@@ -1,0 +1,448 @@
+"""Phase runner: executes a single workflow phase.
+
+The phase runner resolves what a phase MEANS:
+- chain_key → run the chain (sequential engines)
+- engine_key → run a single engine (multi-pass via operationalizations)
+- Per-work iteration (Phase 1.5, 2.0) → run N times, once per prior work
+
+It applies plan overrides (depth, focus_dimensions, context_emphasis, model_hint)
+and handles the per-work parallelism when applicable.
+
+Ported from The Critic's analyze_genealogy.py phase dispatching logic,
+now fully plan-driven instead of hardcoded.
+"""
+
+import logging
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Callable, Optional
+
+from src.executor.chain_runner import run_chain, run_single_engine
+from src.executor.context_broker import assemble_phase_context
+from src.executor.document_store import get_document_text
+from src.executor.schemas import (
+    EngineCallResult,
+    PhaseResult,
+    PhaseStatus,
+)
+from src.orchestrator.schemas import PhaseExecutionSpec
+from src.workflows.schemas import WorkflowPhase
+
+logger = logging.getLogger(__name__)
+
+# Max concurrent per-work executions (to avoid flooding the API)
+MAX_WORK_CONCURRENCY = 3
+
+
+def run_phase(
+    workflow_phase: WorkflowPhase,
+    plan_phase: PhaseExecutionSpec,
+    *,
+    job_id: str,
+    document_ids: Optional[dict[str, str]] = None,
+    prior_work_titles: Optional[list[str]] = None,
+    cancellation_check: Optional[Callable[[], bool]] = None,
+    progress_callback: Optional[Callable[[str], None]] = None,
+) -> PhaseResult:
+    """Execute a single workflow phase with plan overrides.
+
+    Args:
+        workflow_phase: The phase definition from the workflow
+        plan_phase: The plan's configuration for this phase
+        job_id: Job ID for output persistence
+        document_ids: Map of work title -> doc_id for uploaded texts
+        prior_work_titles: List of prior work titles (for per-work phases)
+        cancellation_check: Callable that returns True to cancel
+        progress_callback: Callable for progress updates
+
+    Returns:
+        PhaseResult with all engine outputs and metadata.
+    """
+    phase_number = plan_phase.phase_number
+    phase_name = plan_phase.phase_name
+    start_time = time.time()
+
+    logger.info(
+        f"=== Phase {phase_number}: {phase_name} ===\n"
+        f"  depth={plan_phase.depth}, skip={plan_phase.skip}, "
+        f"model_hint={plan_phase.model_hint}, "
+        f"requires_full_docs={plan_phase.requires_full_documents}"
+    )
+
+    # Skip check
+    if plan_phase.skip:
+        logger.info(f"Phase {phase_number} skipped: {plan_phase.skip_reason}")
+        return PhaseResult(
+            phase_number=phase_number,
+            phase_name=phase_name,
+            status=PhaseStatus.SKIPPED,
+        )
+
+    if progress_callback:
+        progress_callback(f"Starting phase {phase_number}: {phase_name}")
+
+    try:
+        # Assemble upstream context
+        upstream_context = ""
+        if workflow_phase.depends_on_phases:
+            upstream_context = assemble_phase_context(
+                job_id=job_id,
+                upstream_phases=workflow_phase.depends_on_phases,
+                context_emphasis=plan_phase.context_emphasis,
+            )
+
+        # Determine if this is a per-work phase
+        is_per_work = _is_per_work_phase(phase_number, prior_work_titles)
+
+        if is_per_work and prior_work_titles:
+            # Per-work execution (Phase 1.5, 2.0)
+            return _run_per_work_phase(
+                workflow_phase=workflow_phase,
+                plan_phase=plan_phase,
+                job_id=job_id,
+                document_ids=document_ids or {},
+                prior_work_titles=prior_work_titles,
+                upstream_context=upstream_context,
+                cancellation_check=cancellation_check,
+                progress_callback=progress_callback,
+                start_time=start_time,
+            )
+        else:
+            # Standard single-execution phase
+            return _run_standard_phase(
+                workflow_phase=workflow_phase,
+                plan_phase=plan_phase,
+                job_id=job_id,
+                document_ids=document_ids or {},
+                upstream_context=upstream_context,
+                cancellation_check=cancellation_check,
+                progress_callback=progress_callback,
+                start_time=start_time,
+            )
+
+    except InterruptedError:
+        raise
+    except Exception as e:
+        duration_ms = int((time.time() - start_time) * 1000)
+        logger.error(f"Phase {phase_number} failed: {e}", exc_info=True)
+        return PhaseResult(
+            phase_number=phase_number,
+            phase_name=phase_name,
+            status=PhaseStatus.FAILED,
+            error=str(e),
+            duration_ms=duration_ms,
+        )
+
+
+def _is_per_work_phase(
+    phase_number: float,
+    prior_work_titles: Optional[list[str]],
+) -> bool:
+    """Determine if a phase should run per-work.
+
+    Phases 1.5 (relationship classification) and 2.0 (prior work scanning)
+    run once per prior work. Other phases run once overall.
+    """
+    if not prior_work_titles:
+        return False
+    return phase_number in (1.5, 2.0)
+
+
+def _run_standard_phase(
+    workflow_phase: WorkflowPhase,
+    plan_phase: PhaseExecutionSpec,
+    job_id: str,
+    document_ids: dict[str, str],
+    upstream_context: str,
+    cancellation_check: Optional[Callable[[], bool]],
+    progress_callback: Optional[Callable[[str], None]],
+    start_time: float,
+) -> PhaseResult:
+    """Run a standard (non-per-work) phase."""
+    phase_number = plan_phase.phase_number
+    phase_name = plan_phase.phase_name
+
+    # Get document text for the target work
+    document_text = _get_target_document_text(document_ids)
+
+    # Resolve engine overrides from the plan
+    engine_overrides = None
+    if plan_phase.engine_overrides:
+        engine_overrides = {
+            k: v if isinstance(v, dict) else v.model_dump()
+            for k, v in plan_phase.engine_overrides.items()
+        }
+
+    # Run chain or single engine
+    if workflow_phase.chain_key:
+        result = run_chain(
+            chain_key=workflow_phase.chain_key,
+            document_text=document_text,
+            job_id=job_id,
+            phase_number=phase_number,
+            depth=plan_phase.depth,
+            engine_overrides=engine_overrides,
+            context_emphasis=plan_phase.context_emphasis,
+            upstream_context=upstream_context,
+            model_hint=plan_phase.model_hint,
+            requires_full_documents=plan_phase.requires_full_documents,
+            cancellation_check=cancellation_check,
+            progress_callback=progress_callback,
+        )
+    elif workflow_phase.engine_key:
+        # Resolve per-engine override for the single engine
+        focus_dims = None
+        engine_depth = plan_phase.depth
+        if engine_overrides and workflow_phase.engine_key in engine_overrides:
+            ov = engine_overrides[workflow_phase.engine_key]
+            engine_depth = ov.get("depth", plan_phase.depth) if isinstance(ov, dict) else plan_phase.depth
+            focus_dims = ov.get("focus_dimensions") if isinstance(ov, dict) else None
+
+        result = run_single_engine(
+            engine_key=workflow_phase.engine_key,
+            document_text=document_text,
+            job_id=job_id,
+            phase_number=phase_number,
+            depth=engine_depth,
+            focus_dimensions=focus_dims,
+            upstream_context=upstream_context,
+            context_emphasis=plan_phase.context_emphasis,
+            model_hint=plan_phase.model_hint,
+            requires_full_documents=plan_phase.requires_full_documents,
+            cancellation_check=cancellation_check,
+            progress_callback=progress_callback,
+        )
+    else:
+        raise ValueError(
+            f"Phase {phase_number} has no chain_key or engine_key"
+        )
+
+    duration_ms = int((time.time() - start_time) * 1000)
+
+    return PhaseResult(
+        phase_number=phase_number,
+        phase_name=phase_name,
+        status=PhaseStatus.COMPLETED,
+        engine_results=result["engine_results"],
+        final_output=result["final_output"],
+        duration_ms=duration_ms,
+        total_tokens=result["total_tokens"],
+    )
+
+
+def _run_per_work_phase(
+    workflow_phase: WorkflowPhase,
+    plan_phase: PhaseExecutionSpec,
+    job_id: str,
+    document_ids: dict[str, str],
+    prior_work_titles: list[str],
+    upstream_context: str,
+    cancellation_check: Optional[Callable[[], bool]],
+    progress_callback: Optional[Callable[[str], None]],
+    start_time: float,
+) -> PhaseResult:
+    """Run a phase that iterates over prior works.
+
+    Each work gets its own execution with potentially different depth/focus
+    based on per_work_overrides from the plan.
+    """
+    phase_number = plan_phase.phase_number
+    phase_name = plan_phase.phase_name
+
+    work_results: dict[str, dict[str, list[EngineCallResult]]] = {}
+    total_tokens = 0
+    errors: list[str] = []
+
+    def run_one_work(work_title: str) -> tuple[str, dict, int]:
+        """Execute the phase for a single prior work. Returns (title, results, tokens)."""
+        if cancellation_check and cancellation_check():
+            raise InterruptedError(f"Cancelled before processing {work_title}")
+
+        if progress_callback:
+            progress_callback(f"{phase_name}: {work_title}")
+
+        # Resolve per-work overrides
+        work_depth = plan_phase.depth
+        work_focus_dims = None
+        if plan_phase.per_work_overrides and work_title in plan_phase.per_work_overrides:
+            override = plan_phase.per_work_overrides[work_title]
+            work_depth = override.get("depth", plan_phase.depth)
+            work_focus_dims = override.get("focus_dimensions")
+
+        # Get document text for this work
+        doc_text = _get_work_document_text(work_title, document_ids)
+
+        # Get target document text too (some phases need both)
+        target_text = _get_target_document_text(document_ids)
+
+        # Combine target + work text for phases that analyze both
+        combined_text = _combine_document_texts(
+            target_text=target_text,
+            work_text=doc_text,
+            work_title=work_title,
+            phase_number=phase_number,
+        )
+
+        # Engine overrides from plan
+        engine_overrides = None
+        if plan_phase.engine_overrides:
+            engine_overrides = {
+                k: v if isinstance(v, dict) else v.model_dump()
+                for k, v in plan_phase.engine_overrides.items()
+            }
+
+        work_key = _sanitize_work_key(work_title)
+
+        if workflow_phase.chain_key:
+            result = run_chain(
+                chain_key=workflow_phase.chain_key,
+                document_text=combined_text,
+                job_id=job_id,
+                phase_number=phase_number,
+                work_key=work_key,
+                depth=work_depth,
+                engine_overrides=engine_overrides,
+                context_emphasis=plan_phase.context_emphasis,
+                upstream_context=upstream_context,
+                model_hint=plan_phase.model_hint,
+                requires_full_documents=plan_phase.requires_full_documents,
+                cancellation_check=cancellation_check,
+            )
+        elif workflow_phase.engine_key:
+            result = run_single_engine(
+                engine_key=workflow_phase.engine_key,
+                document_text=combined_text,
+                job_id=job_id,
+                phase_number=phase_number,
+                work_key=work_key,
+                depth=work_depth,
+                focus_dimensions=work_focus_dims,
+                upstream_context=upstream_context,
+                context_emphasis=plan_phase.context_emphasis,
+                model_hint=plan_phase.model_hint,
+                requires_full_documents=plan_phase.requires_full_documents,
+                cancellation_check=cancellation_check,
+            )
+        else:
+            raise ValueError(
+                f"Phase {phase_number} has no chain_key or engine_key"
+            )
+
+        return work_title, result["engine_results"], result["total_tokens"]
+
+    # Execute per-work — use thread pool for parallelism
+    with ThreadPoolExecutor(max_workers=MAX_WORK_CONCURRENCY) as executor:
+        futures = {
+            executor.submit(run_one_work, title): title
+            for title in prior_work_titles
+        }
+
+        for future in as_completed(futures):
+            work_title = futures[future]
+            try:
+                title, eng_results, tokens = future.result()
+                work_key = _sanitize_work_key(title)
+                work_results[work_key] = eng_results
+                total_tokens += tokens
+            except InterruptedError:
+                raise
+            except Exception as e:
+                logger.error(f"Per-work execution failed for '{work_title}': {e}")
+                errors.append(f"{work_title}: {e}")
+
+    duration_ms = int((time.time() - start_time) * 1000)
+
+    # Combine final outputs from all works
+    final_parts = []
+    for work_key, eng_results in work_results.items():
+        for eng_key, pass_results in eng_results.items():
+            if pass_results:
+                final_parts.append(
+                    f"## {work_key} ({eng_key})\n\n{pass_results[-1].content}"
+                )
+    final_output = "\n\n---\n\n".join(final_parts)
+
+    status = PhaseStatus.COMPLETED if not errors else PhaseStatus.FAILED
+
+    return PhaseResult(
+        phase_number=phase_number,
+        phase_name=phase_name,
+        status=status,
+        work_results=work_results,
+        final_output=final_output,
+        duration_ms=duration_ms,
+        total_tokens=total_tokens,
+        error="; ".join(errors) if errors else None,
+    )
+
+
+def _get_target_document_text(document_ids: dict[str, str]) -> str:
+    """Get the target work's document text."""
+    # Convention: target work is stored under key "target"
+    target_doc_id = document_ids.get("target")
+    if target_doc_id:
+        text = get_document_text(target_doc_id)
+        if text:
+            return text
+    # If no target document, return a placeholder
+    # (the plan should have ensured documents are uploaded)
+    logger.warning("No target document found — using empty text")
+    return "[No target document text provided]"
+
+
+def _get_work_document_text(
+    work_title: str,
+    document_ids: dict[str, str],
+) -> str:
+    """Get a prior work's document text."""
+    doc_id = document_ids.get(work_title)
+    if doc_id:
+        text = get_document_text(doc_id)
+        if text:
+            return text
+    logger.warning(f"No document found for prior work: {work_title}")
+    return f"[No document text provided for: {work_title}]"
+
+
+def _combine_document_texts(
+    target_text: str,
+    work_text: str,
+    work_title: str,
+    phase_number: float,
+) -> str:
+    """Combine target and work texts for per-work phases.
+
+    Phase 1.5 (classification) needs both target and prior work.
+    Phase 2.0 (scanning) primarily needs the prior work + target context.
+    """
+    if phase_number == 1.5:
+        # Classification: both texts needed equally
+        return (
+            f"# Target Work\n\n{target_text}\n\n"
+            f"---\n\n"
+            f"# Prior Work: {work_title}\n\n{work_text}"
+        )
+    elif phase_number == 2.0:
+        # Scanning: prior work is primary, target is context
+        return (
+            f"# Prior Work: {work_title}\n\n{work_text}\n\n"
+            f"---\n\n"
+            f"# Target Work (for reference)\n\n{target_text}"
+        )
+    else:
+        # Generic: both texts
+        return (
+            f"# Target Work\n\n{target_text}\n\n"
+            f"---\n\n"
+            f"# Prior Work: {work_title}\n\n{work_text}"
+        )
+
+
+def _sanitize_work_key(title: str) -> str:
+    """Convert a work title to a safe key string."""
+    # Keep only alphanumeric, spaces, and hyphens, then normalize
+    safe = "".join(
+        c if c.isalnum() or c in " -" else "_"
+        for c in title
+    )
+    return safe.strip().replace("  ", " ")[:100]
