@@ -229,6 +229,9 @@ def _execute_streaming_call(
     input_tokens = 0
     output_tokens = 0
     last_chunk_time = time.time()
+    last_heartbeat_log = time.time()
+    chunk_count = 0
+    HEARTBEAT_LOG_INTERVAL = 30  # Log every 30s to confirm call is alive
 
     if use_beta:
         # Use beta endpoint for 1M context window
@@ -241,6 +244,7 @@ def _execute_streaming_call(
 
     with stream_cm as stream:
         for event in stream:
+            chunk_count += 1
             # Heartbeat check
             now = time.time()
             if now - last_chunk_time > HEARTBEAT_TIMEOUT:
@@ -248,6 +252,14 @@ def _execute_streaming_call(
                     f"[{label}] No data received for {HEARTBEAT_TIMEOUT}s — connection stalled"
                 )
             last_chunk_time = now
+
+            # Periodic heartbeat logging
+            if now - last_heartbeat_log > HEARTBEAT_LOG_INTERVAL:
+                elapsed = int(now - start_time)
+                logger.info(
+                    f"[{label}] Still streaming: {chunk_count} chunks, {elapsed}s elapsed"
+                )
+                last_heartbeat_log = now
 
             # Cancellation check during streaming
             if cancellation_check and cancellation_check():

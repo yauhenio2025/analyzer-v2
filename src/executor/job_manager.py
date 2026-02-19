@@ -65,6 +65,15 @@ def create_job(
     }
 
 
+def _normalize_timestamps(row: dict) -> dict:
+    """Convert datetime objects to ISO strings (Postgres returns datetimes for TIMESTAMP columns)."""
+    for key in ("created_at", "started_at", "completed_at"):
+        val = row.get(key)
+        if val is not None and isinstance(val, datetime):
+            row[key] = val.isoformat()
+    return row
+
+
 def get_job(job_id: str) -> Optional[dict]:
     """Get a job record by ID."""
     row = execute(
@@ -80,6 +89,9 @@ def get_job(job_id: str) -> Optional[dict]:
         row["progress"] = _json_loads(row["progress"])
     if isinstance(row.get("phase_results"), str):
         row["phase_results"] = _json_loads(row["phase_results"])
+
+    # Normalize timestamps (Postgres returns datetime objects, schemas expect strings)
+    _normalize_timestamps(row)
 
     return row
 
@@ -216,6 +228,7 @@ def list_jobs(
     for row in rows:
         if isinstance(row.get("progress"), str):
             row["progress"] = _json_loads(row["progress"])
+        _normalize_timestamps(row)
 
     return rows
 
