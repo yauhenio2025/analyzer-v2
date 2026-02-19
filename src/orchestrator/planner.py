@@ -142,13 +142,25 @@ Return ONLY valid JSON matching this exact structure (no markdown fences, no exp
 
 
 def _get_client():
-    """Get Anthropic client for plan generation."""
+    """Get Anthropic client for plan generation.
+
+    Configured with HTTP timeouts to prevent infinite hangs on dead sockets.
+    """
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         return None
     try:
+        import httpx
         import anthropic
-        return anthropic.Anthropic(api_key=api_key)
+        return anthropic.Anthropic(
+            api_key=api_key,
+            timeout=httpx.Timeout(
+                connect=60.0,
+                read=300.0,   # 5 min max silence on socket
+                write=60.0,
+                pool=60.0,
+            ),
+        )
     except ImportError:
         logger.warning("anthropic library not installed")
         return None

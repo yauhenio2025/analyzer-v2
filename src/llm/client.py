@@ -22,15 +22,25 @@ GENERATION_MODEL = "claude-sonnet-4-6"
 def get_anthropic_client():
     """Get Anthropic client if API key is available.
 
+    Configured with HTTP timeouts to prevent infinite hangs on dead sockets.
     Returns None if ANTHROPIC_API_KEY is not set or anthropic is not installed.
     """
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         return None
     try:
+        import httpx
         import anthropic
 
-        return anthropic.Anthropic(api_key=api_key)
+        return anthropic.Anthropic(
+            api_key=api_key,
+            timeout=httpx.Timeout(
+                connect=60.0,
+                read=300.0,   # 5 min max silence on socket
+                write=60.0,
+                pool=60.0,
+            ),
+        )
     except ImportError:
         logger.warning("anthropic library not installed")
         return None

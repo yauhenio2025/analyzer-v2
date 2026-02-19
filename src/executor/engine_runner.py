@@ -199,10 +199,29 @@ def _execute_streaming_call(
     CRITICAL: Accumulates text incrementally from stream deltas so that partial
     output can be salvaged on connection errors. Without this, a connection reset
     after 2+ hours of Opus streaming loses ALL output.
+
+    Uses httpx read timeout (5 min) as a network-level safety net. If the TCP
+    socket blocks for >5 min (dead connection without RST), httpx raises
+    ReadTimeout which our exception handler catches. This prevents daemon threads
+    from hanging forever on dead sockets — the in-loop heartbeat check only works
+    while events are flowing.
     """
+    import httpx
     from anthropic import Anthropic
 
-    client = Anthropic()
+    # Configure HTTP timeouts to prevent infinite hangs on dead sockets.
+    # The read timeout (300s) is the max time between any two bytes on the wire.
+    # This is our last-resort safety net — the in-loop heartbeat check (120s)
+    # catches stalls when events flow but the loop iterates; the httpx timeout
+    # catches stalls when the socket itself blocks (no events at all).
+    client = Anthropic(
+        timeout=httpx.Timeout(
+            connect=60.0,     # 60s to establish TCP connection
+            read=300.0,       # 5 min max silence on the socket
+            write=60.0,       # 60s to send the request
+            pool=60.0,        # 60s to acquire a connection from pool
+        ),
+    )
     start_time = time.time()
 
     # Build API call kwargs
