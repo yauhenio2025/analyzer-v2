@@ -68,7 +68,10 @@ class AnalyzeResponse(BaseModel):
         default=None,
         description="Execution job ID (None if skip_plan_review=False)",
     )
-    plan_id: str
+    plan_id: Optional[str] = Field(
+        default=None,
+        description="Plan ID (None until plan is generated in async mode)",
+    )
     document_ids: dict[str, str] = Field(
         default_factory=dict,
         description="Mapping of role/title -> document ID. "

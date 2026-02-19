@@ -96,6 +96,15 @@ def get_job(job_id: str) -> Optional[dict]:
     return row
 
 
+def update_job_plan_id(job_id: str, plan_id: str) -> None:
+    """Update the plan_id on an existing job (used by async pipeline)."""
+    execute(
+        "UPDATE executor_jobs SET plan_id = %s WHERE job_id = %s",
+        (plan_id, job_id),
+    )
+    logger.info(f"Job {job_id} plan_id → {plan_id}")
+
+
 def update_job_status(
     job_id: str,
     status: str,

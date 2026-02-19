@@ -5,6 +5,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+- **Async pipeline: /analyze endpoint returns immediately** — The `POST /v1/orchestrator/analyze` endpoint was blocking for ~2 minutes (document upload + Opus plan generation) before returning `{job_id}`. This caused The Critic's HTTP client to time out. Fix: the endpoint now returns a `job_id` in <1 second, spawning the entire pipeline (doc upload → plan generation → execution) in a background thread. Progress is reported via the existing job polling endpoint. `plan_id` is now Optional in `AnalyzeResponse` (set by background thread once plan generation completes). Added `update_job_plan_id()` to job_manager for deferred plan_id assignment. ([`src/orchestrator/pipeline.py`](src/orchestrator/pipeline.py), [`src/orchestrator/pipeline_schemas.py`](src/orchestrator/pipeline_schemas.py), [`src/executor/job_manager.py`](src/executor/job_manager.py))
+
 ### Added
 - **Expanded Target Analysis & Distilled Context — Milestone 5** — Addresses a fundamental design flaw discovered during first real Varoufakis execution: per-work phases (1.5, 2.0) concatenated TWO FULL BOOK TEXTS (1.1-1.5M chars each), causing 30+ minute stalls. The fix: expand Phase 1.0 with orchestrator-selected supplementary engines, then feed DISTILLED ANALYSIS (not raw text) to downstream per-work phases.
   - Two new fields on `PhaseExecutionSpec`: `supplementary_chains` (list of additional chain keys to run after primary), `max_context_chars_override` (override 50K per-block context cap for rich analyses)
