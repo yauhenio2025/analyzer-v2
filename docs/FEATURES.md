@@ -68,6 +68,45 @@
 - **PhaseExecutionSpec additions**: model_hint (opus/sonnet/None), requires_full_documents (1M context), per_work_overrides (differential depth per prior work)
 - **Added**: 2026-02-19
 
+## Presenter — Adaptive View Selection & Presentation Bridge (Milestone 3)
+
+### Post-Execution View Refinement (3A)
+- **Status**: Active (Milestone 3 complete)
+- **Description**: LLM-driven post-execution view refinement that inspects phase result summaries + output previews and adjusts the planner's recommended_views. Uses Sonnet for lightweight curatorial decisions. Adjusts priorities (primary/secondary/optional/hidden), stances, data quality assessments based on actual output quality. Falls back to passthrough if no LLM available.
+- **Entry Points**:
+  - `src/presenter/view_refiner.py:1-273` - refine_views() with LLM call, _build_refinement_context(), _passthrough_result()
+  - `src/presenter/store.py:1-90` - save_view_refinement(), load_view_refinement() — DB persistence for view_refinements table
+  - `src/presenter/schemas.py:1-175` - RefinedViewRecommendation, ViewRefinementResult, RefineViewsRequest
+  - `src/api/routes/presenter.py:28-47` - POST /v1/presenter/refine-views endpoint
+- **Refinement Triggers**: Phase failed → hide views; rich output → upgrade to primary; thin output → downgrade; stance adjustments based on content type
+- **Added**: 2026-02-19
+
+### Presentation Bridge (3B)
+- **Status**: Active (Milestone 3 complete)
+- **Description**: Automated transformation pipeline connecting executor prose outputs → transformation templates → presentation_cache. For each recommended view: resolves data_source → finds phase_outputs → checks cache → finds applicable template (by engine_key + renderer_type) → runs TransformationExecutor → persists to presentation_cache. Handles both per_item (one per prior work) and aggregated scopes.
+- **Entry Points**:
+  - `src/presenter/presentation_bridge.py:1-375` - prepare_presentation(), _get_recommended_views(), _group_latest_by_work_key(), _load_output_by_id()
+  - `src/presenter/schemas.py:60-120` - TransformationTask, TransformationTaskResult, PresentationBridgeResult, PrepareRequest
+  - `src/api/routes/presenter.py:50-69` - POST /v1/presenter/prepare endpoint
+- **Added**: 2026-02-19
+
+### Presentation API (3C)
+- **Status**: Active (Milestone 3 complete)
+- **Description**: Consumer-facing presentation assembly. Combines view definitions, structured data (from presentation_cache), and raw prose (from phase_outputs) into a single PagePresentation that The Critic can render directly. Builds parent-child view tree with nested children sorted by position.
+- **Entry Points**:
+  - `src/presenter/presentation_api.py:1-467` - assemble_page(), assemble_single_view(), get_presentation_status(), _build_view_payload(), _load_aggregated_data(), _load_per_item_data(), _build_view_tree()
+  - `src/presenter/schemas.py:120-175` - ViewPayload, PagePresentation, ComposeRequest
+  - `src/api/routes/presenter.py:72-182` - GET /page/{job_id}, GET /view/{job_id}/{view_key}, GET /status/{job_id}, POST /compose
+- **API Endpoints**:
+  - `POST /v1/presenter/refine-views` - Refine view recommendations post-execution (LLM)
+  - `POST /v1/presenter/prepare` - Run transformations and populate presentation_cache
+  - `GET /v1/presenter/page/{job_id}` - Full render-ready PagePresentation
+  - `GET /v1/presenter/view/{job_id}/{view_key}` - Single view data (lazy loading)
+  - `GET /v1/presenter/status/{job_id}` - Presentation readiness (ready/prose_only/empty per view)
+  - `POST /v1/presenter/compose` - All-in-one: refine + prepare + assemble
+- **Database**: view_refinements table (Postgres + SQLite) for persisting refined recommendations
+- **Added**: 2026-02-19
+
 ## View Definitions (Rendering Layer)
 
 ### View Definitions

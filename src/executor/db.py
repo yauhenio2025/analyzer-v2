@@ -207,6 +207,17 @@ def _init_postgres():
         char_count INTEGER DEFAULT 0,
         created_at TIMESTAMP DEFAULT NOW()
     );
+
+    CREATE TABLE IF NOT EXISTS view_refinements (
+        id SERIAL PRIMARY KEY,
+        job_id VARCHAR(100) NOT NULL UNIQUE,
+        plan_id VARCHAR(100) NOT NULL,
+        refined_views JSONB NOT NULL DEFAULT '[]',
+        changes_summary TEXT DEFAULT '',
+        model_used VARCHAR(100),
+        tokens_used INTEGER DEFAULT 0,
+        created_at TIMESTAMP DEFAULT NOW()
+    );
     """
     with get_connection() as conn:
         cursor = conn.cursor()
@@ -273,6 +284,17 @@ def _init_sqlite():
         role TEXT NOT NULL DEFAULT 'target',
         text TEXT NOT NULL,
         char_count INTEGER DEFAULT 0,
+        created_at TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS view_refinements (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        job_id TEXT NOT NULL UNIQUE,
+        plan_id TEXT NOT NULL,
+        refined_views TEXT NOT NULL DEFAULT '[]',
+        changes_summary TEXT DEFAULT '',
+        model_used TEXT,
+        tokens_used INTEGER DEFAULT 0,
         created_at TEXT
     );
     """

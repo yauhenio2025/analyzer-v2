@@ -12,7 +12,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import audiences, chains, engines, executor, functions, llm, meta, operations, operationalizations, orchestrator, paradigms, styles, primitives, display, transformations, views, workflows
+from src.api.routes import audiences, chains, engines, executor, functions, llm, meta, operations, operationalizations, orchestrator, paradigms, presenter, styles, primitives, display, transformations, views, workflows
 from src.audiences.registry import get_audience_registry
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
@@ -165,6 +165,7 @@ app.include_router(llm.router, prefix="/v1")
 app.include_router(meta.router, prefix="/v1")
 app.include_router(orchestrator.router, prefix="/v1")
 app.include_router(executor.router, prefix="/v1")
+app.include_router(presenter.router, prefix="/v1")
 
 
 @app.get("/")
@@ -191,6 +192,7 @@ async def root():
             "operationalizations": "/v1/operationalizations",
             "orchestrator": "/v1/orchestrator",
             "executor": "/v1/executor",
+            "presenter": "/v1/presenter",
         },
     }
 
