@@ -53,6 +53,24 @@ analyzer-v2/
 │   │   ├── registry.py    # ViewRegistry (CRUD + compose_tree)
 │   │   └── definitions/   # 10 JSON files (genealogy views)
 │   │
+│   ├── orchestrator/      # LLM-powered plan generation (Milestone 1)
+│   │   ├── schemas.py     # WorkflowExecutionPlan, PhaseExecutionSpec
+│   │   ├── catalog.py     # Capability catalog assembly
+│   │   ├── planner.py     # Claude Opus plan generation
+│   │   └── plans/         # File-based plan storage (JSON)
+│   │
+│   ├── executor/          # Plan-driven workflow execution (Milestone 2)
+│   │   ├── schemas.py     # ExecutorJob, PhaseResult, EngineCallResult
+│   │   ├── db.py          # Dual-backend DB (Postgres + SQLite)
+│   │   ├── engine_runner.py  # Atomic LLM calls with streaming/retry
+│   │   ├── context_broker.py # Cross-phase context assembly
+│   │   ├── chain_runner.py   # Sequential chain execution
+│   │   ├── phase_runner.py   # Phase resolution + per-work iteration
+│   │   ├── workflow_runner.py # DAG execution with parallel phases
+│   │   ├── job_manager.py    # Job lifecycle + cancellation
+│   │   ├── output_store.py   # Prose output persistence
+│   │   └── document_store.py # Document text storage
+│   │
 │   └── api/               # FastAPI application
 │       ├── main.py        # App entry point
 │       └── routes/        # Endpoint handlers
@@ -113,6 +131,27 @@ GET  /v1/llm/status                  # Check LLM availability
 POST /v1/llm/profile-generate        # Generate profile with AI
 POST /v1/llm/profile-suggestions     # Get AI suggestions for profile
 POST /v1/chains/recommend            # LLM recommends chain
+
+# Orchestrator
+GET  /v1/orchestrator/capability-catalog  # Full capability catalog
+POST /v1/orchestrator/plan                # Generate new plan (Claude Opus)
+GET  /v1/orchestrator/plans               # List plans
+GET  /v1/orchestrator/plans/{plan_id}     # Get plan
+PUT  /v1/orchestrator/plans/{plan_id}     # Update plan
+POST /v1/orchestrator/plans/{plan_id}/refine  # LLM-assisted refinement
+
+# Executor
+POST /v1/executor/jobs                    # Start execution from plan_id
+GET  /v1/executor/jobs                    # List jobs
+GET  /v1/executor/jobs/{job_id}           # Poll status + progress
+POST /v1/executor/jobs/{job_id}/cancel    # Cancel running job
+GET  /v1/executor/jobs/{job_id}/results   # Phase output summaries
+GET  /v1/executor/jobs/{job_id}/phases/{n}  # Full phase prose
+DELETE /v1/executor/jobs/{job_id}         # Delete completed job
+POST /v1/executor/documents               # Upload document text
+GET  /v1/executor/documents               # List documents
+GET  /v1/executor/documents/{doc_id}      # Retrieve document
+DELETE /v1/executor/documents/{doc_id}    # Delete document
 ```
 
 ## Documentation

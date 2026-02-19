@@ -32,6 +32,42 @@
 - **Tested**: Varoufakis plan generated with 5 phases (deep profiling, standard classification, deep scanning, deep synthesis, deep final), 42 estimated LLM calls, 10 view recommendations (4 primary, 4 secondary, 2 optional), engine-specific focus dimensions
 - **Added**: 2026-02-19
 
+## Execution Engine (Milestone 2)
+
+### Executor — Plan-Driven Workflow Execution
+- **Status**: Active (Milestone 2 complete)
+- **Description**: Full executor module that takes a WorkflowExecutionPlan and runs it: calling LLMs, threading context between phases, persisting outputs to Postgres, and tracking progress. Replaces The Critic's hardcoded pipeline with plan-driven model selection, depth, and focus. Supports dependency-aware parallel phases (1.0 || 1.5), per-work iteration (Phases 1.5, 2.0), multi-pass operationalization-driven prompts, and cancellation.
+- **Entry Points**:
+  - `src/executor/__init__.py:1-20` - Module architecture docstring
+  - `src/executor/schemas.py:1-170` - JobStatus, PhaseStatus, EngineCallResult, PhaseResult, JobProgress, ExecutorJob, StartJobRequest, JobStatusResponse, PhaseOutputSummary, DocumentUpload, DocumentRecord
+  - `src/executor/db.py:1-283` - Dual-backend DB abstraction (Postgres via psycopg2 + SQLite), init_db(), execute(), 4 tables
+  - `src/executor/engine_runner.py:1-274` - Atomic LLM call: MODEL_CONFIGS (opus/sonnet/haiku), PHASE_MODEL_DEFAULTS, streaming with extended thinking, 1M context beta, heartbeat monitoring, exponential backoff retry (5 attempts)
+  - `src/executor/context_broker.py:1-190` - Cross-phase context assembly with emphasis injection, inner-pass context threading, chain context forwarding
+  - `src/executor/chain_runner.py:1-340` - Sequential chain execution using capability_composer, multi-pass operationalization support, run_chain() + run_single_engine()
+  - `src/executor/phase_runner.py:1-310` - Phase resolution (chain_key/engine_key), per-work iteration with ThreadPoolExecutor, plan override application
+  - `src/executor/workflow_runner.py:1-310` - Top-level DAG execution, dependency-aware parallel phases, progress tracking, execute_plan() + start_execution_thread()
+  - `src/executor/job_manager.py:1-240` - Job lifecycle (create/update/cancel/delete), progress updates, in-memory cancellation flags, DB persistence
+  - `src/executor/output_store.py:1-256` - Incremental prose output persistence with lineage, presentation cache with source_hash freshness
+  - `src/executor/document_store.py:1-97` - Store/retrieve uploaded document texts
+  - `src/api/routes/executor.py:1-200` - 11 REST endpoints for jobs, documents
+  - `src/api/main.py:16` - Router registration and DB init in lifespan
+- **Database**: Render Postgres (4 tables: executor_jobs, phase_outputs, presentation_cache, executor_documents). Dual-backend: Postgres for production, SQLite for local dev.
+- **Model Selection**: Plan-driven via model_hint → PHASE_MODEL_DEFAULTS → depth heuristic. Opus for profiling/synthesis, Sonnet for scanning/classification, Haiku disabled by default.
+- **API Endpoints**:
+  - `POST /v1/executor/jobs` - Start execution from plan_id
+  - `GET /v1/executor/jobs` - List jobs
+  - `GET /v1/executor/jobs/{job_id}` - Poll status + progress
+  - `POST /v1/executor/jobs/{job_id}/cancel` - Cancel running job
+  - `GET /v1/executor/jobs/{job_id}/results` - Phase output summaries
+  - `GET /v1/executor/jobs/{job_id}/phases/{phase}` - Full phase prose
+  - `DELETE /v1/executor/jobs/{job_id}` - Delete completed job
+  - `POST /v1/executor/documents` - Upload document text
+  - `GET /v1/executor/documents` - List documents
+  - `GET /v1/executor/documents/{doc_id}` - Retrieve document
+  - `DELETE /v1/executor/documents/{doc_id}` - Delete document
+- **PhaseExecutionSpec additions**: model_hint (opus/sonnet/None), requires_full_documents (1M context), per_work_overrides (differential depth per prior work)
+- **Added**: 2026-02-19
+
 ## View Definitions (Rendering Layer)
 
 ### View Definitions

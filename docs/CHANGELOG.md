@@ -6,6 +6,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Execution Engine — Milestone 2: Plan-Driven Workflow Execution** (`src/executor/`) — Full executor module that takes a WorkflowExecutionPlan and runs it. Architecture layers (bottom-up): engine_runner (atomic LLM calls with streaming, extended thinking, 1M context, heartbeat, retry) → context_broker (cross-phase context assembly with emphasis injection) → chain_runner (sequential multi-engine execution with operationalization-driven multi-pass) → phase_runner (resolves phases to chains/engines, handles per-work iteration) → workflow_runner (dependency-aware parallel DAG execution) → job_manager (DB-persistent lifecycle, cancellation). Database: 4 tables in Render Postgres via dual-backend abstraction (Postgres + SQLite). 11 API endpoints under /v1/executor/ for job CRUD, cancellation, phase output retrieval, and document management. PhaseExecutionSpec extended with model_hint, requires_full_documents, per_work_overrides.
+  - ([`src/executor/`](src/executor/), [`src/api/routes/executor.py`](src/api/routes/executor.py), [`src/orchestrator/schemas.py`](src/orchestrator/schemas.py), [`requirements.txt`](requirements.txt), [`src/api/main.py`](src/api/main.py))
+
 - **Context-Driven Orchestrator — Milestone 1: Plan Generation** (`src/orchestrator/`) — LLM-powered orchestrator that takes a thinker + corpus + research question and generates a WorkflowExecutionPlan adapted to the thinker's intellectual profile. Assembles capability catalog from all registries, calls Claude Opus with extended thinking, returns validated plan with per-phase depth, engine overrides, context emphasis, and view recommendations.
   - `WorkflowExecutionPlan` schema with PhaseExecutionSpec, EngineExecutionSpec, ViewRecommendation
   - Capability catalog assembly from 11 capability engines, 23 chains, 13 stances, 10 views, 11 operationalizations
