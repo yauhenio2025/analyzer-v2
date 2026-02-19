@@ -15,8 +15,8 @@ logger = logging.getLogger(__name__)
 
 # Default models
 EXTRACTION_MODEL = "claude-haiku-4-5-20251001"
-EXTRACTION_MODEL_FALLBACK = "claude-sonnet-4-5-20250929"
-GENERATION_MODEL = "claude-opus-4-5-20251101"
+EXTRACTION_MODEL_FALLBACK = "claude-sonnet-4-6"
+GENERATION_MODEL = "claude-sonnet-4-6"
 
 
 def get_anthropic_client():

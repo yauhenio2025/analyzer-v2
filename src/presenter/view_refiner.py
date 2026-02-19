@@ -22,7 +22,7 @@ from .store import save_view_refinement
 
 logger = logging.getLogger(__name__)
 
-REFINEMENT_MODEL = "claude-sonnet-4-5-20250929"
+REFINEMENT_MODEL = "claude-sonnet-4-6"
 MAX_TOKENS = 8000
 
 SYSTEM_PROMPT = """You are a presentation curator for intellectual genealogy analyses.

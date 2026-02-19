@@ -25,13 +25,14 @@ logger = logging.getLogger(__name__)
 
 MODEL_CONFIGS = {
     "opus": {
-        "model": "claude-opus-4-5-20251101",
+        # Sonnet 4.6 replaces Opus 4.5 — faster, 1M context, 64K output
+        "model": "claude-sonnet-4-6",
         "max_tokens": 64000,
         "thinking_budget": 10000,
         "use_thinking": True,
     },
     "sonnet": {
-        "model": "claude-sonnet-4-5-20250929",
+        "model": "claude-sonnet-4-6",
         "max_tokens": 64000,
         "thinking_budget": 5000,
         "use_thinking": True,

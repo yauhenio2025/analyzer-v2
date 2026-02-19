@@ -102,7 +102,7 @@ class TransformationTemplate(BaseModel):
         description="Primary model for LLM transformations",
     )
     model_fallback: str = Field(
-        default="claude-sonnet-4-5-20250929",
+        default="claude-sonnet-4-6",
         description="Fallback model if primary fails",
     )
     max_tokens: int = Field(

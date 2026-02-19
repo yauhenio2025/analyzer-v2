@@ -75,7 +75,7 @@ class TransformationExecutor:
         stance_key: Optional[str] = None,
         aggregate_config: Optional[AggregateConfig] = None,
         model: str = "claude-haiku-4-5-20251001",
-        model_fallback: str = "claude-sonnet-4-5-20250929",
+        model_fallback: str = "claude-sonnet-4-6",
         max_tokens: int = 8000,
         cache_key: Optional[str] = None,
     ) -> TransformationResult:

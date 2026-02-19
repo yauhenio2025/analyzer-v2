@@ -249,7 +249,7 @@ def prepare_presentation(
                     llm_prompt_template=template.llm_prompt_template,
                     stance_key=template.stance_key,
                     model=template.model or "claude-haiku-4-5-20251001",
-                    model_fallback=template.model_fallback or "claude-sonnet-4-5-20250929",
+                    model_fallback=template.model_fallback or "claude-sonnet-4-6",
                     max_tokens=template.max_tokens or 8000,
                 )
             )
@@ -266,7 +266,7 @@ def prepare_presentation(
                         llm_prompt_template=template.llm_prompt_template,
                         stance_key=template.stance_key,
                         model=template.model or "claude-haiku-4-5-20251001",
-                        model_fallback=template.model_fallback or "claude-sonnet-4-5-20250929",
+                        model_fallback=template.model_fallback or "claude-sonnet-4-6",
                         max_tokens=template.max_tokens or 8000,
                     )
                 )

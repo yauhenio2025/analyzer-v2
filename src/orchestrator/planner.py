@@ -277,8 +277,8 @@ def generate_plan(request: OrchestratorPlanRequest) -> WorkflowExecutionPlan:
         f"{len(request.prior_works)} prior works"
     )
 
-    # Call Claude Opus with streaming for extended thinking support
-    model = "claude-opus-4-5-20251101"
+    # Call Claude Sonnet 4.6 with streaming for extended thinking support
+    model = "claude-sonnet-4-6"
 
     # Use streaming to handle extended thinking / long contexts
     raw_text = ""
@@ -439,7 +439,7 @@ Preserve everything that doesn't need changing. Explain your changes in the rati
 
 Return ONLY the JSON — no markdown fences, no explanation outside the JSON."""
 
-    model = "claude-opus-4-5-20251101"
+    model = "claude-sonnet-4-6"
 
     try:
         with client.messages.stream(
