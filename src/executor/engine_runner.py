@@ -194,6 +194,10 @@ def _execute_streaming_call(
 
     Uses streaming for all calls (required for extended thinking and 1M context).
     Monitors heartbeat to detect stalled connections.
+
+    CRITICAL: Accumulates text incrementally from stream deltas so that partial
+    output can be salvaged on connection errors. Without this, a connection reset
+    after 2+ hours of Opus streaming loses ALL output.
     """
     from anthropic import Anthropic
 
@@ -223,7 +227,9 @@ def _execute_streaming_call(
         logger.info(f"[{label}] Auto-enabling 1M context: {total_chars:,} chars in prompt")
         use_beta = True
 
-    # Accumulate response
+    # Accumulate response INCREMENTALLY from stream deltas
+    # This is critical: if the connection drops after hours of streaming,
+    # we can salvage the partial output instead of losing everything.
     raw_text = ""
     thinking_text = ""
     input_tokens = 0
@@ -232,6 +238,7 @@ def _execute_streaming_call(
     last_heartbeat_log = time.time()
     chunk_count = 0
     HEARTBEAT_LOG_INTERVAL = 30  # Log every 30s to confirm call is alive
+    MIN_SALVAGEABLE_CHARS = 5000  # Minimum text chars to salvage on connection error
 
     if use_beta:
         # Use beta endpoint for 1M context window
@@ -242,49 +249,97 @@ def _execute_streaming_call(
     else:
         stream_cm = client.messages.stream(**kwargs)
 
-    with stream_cm as stream:
-        for event in stream:
-            chunk_count += 1
-            # Heartbeat check
-            now = time.time()
-            if now - last_chunk_time > HEARTBEAT_TIMEOUT:
-                raise TimeoutError(
-                    f"[{label}] No data received for {HEARTBEAT_TIMEOUT}s — connection stalled"
-                )
-            last_chunk_time = now
+    connection_error = None
 
-            # Periodic heartbeat logging
-            if now - last_heartbeat_log > HEARTBEAT_LOG_INTERVAL:
-                elapsed = int(now - start_time)
-                logger.info(
-                    f"[{label}] Still streaming: {chunk_count} chunks, {elapsed}s elapsed"
-                )
-                last_heartbeat_log = now
+    try:
+        with stream_cm as stream:
+            for event in stream:
+                chunk_count += 1
 
-            # Cancellation check during streaming
-            if cancellation_check and cancellation_check():
-                raise InterruptedError(f"[{label}] Cancelled during streaming")
+                # --- Accumulate text from stream deltas ---
+                if hasattr(event, "type") and event.type == "content_block_delta":
+                    delta = event.delta
+                    if hasattr(delta, "type"):
+                        if delta.type == "text_delta" and hasattr(delta, "text"):
+                            raw_text += delta.text
+                        elif delta.type == "thinking_delta" and hasattr(delta, "thinking"):
+                            thinking_text += delta.thinking
 
-        # Get final message
-        response = stream.get_final_message()
+                # Track output tokens from message_delta events
+                if hasattr(event, "type") and event.type == "message_delta":
+                    if hasattr(event, "usage") and hasattr(event.usage, "output_tokens"):
+                        output_tokens = event.usage.output_tokens
 
-    # Extract content from response blocks
-    for block in response.content:
-        if hasattr(block, "thinking"):
-            thinking_text += block.thinking
-        elif hasattr(block, "text"):
-            raw_text += block.text
+                # Heartbeat check
+                now = time.time()
+                if now - last_chunk_time > HEARTBEAT_TIMEOUT:
+                    raise TimeoutError(
+                        f"[{label}] No data received for {HEARTBEAT_TIMEOUT}s — connection stalled"
+                    )
+                last_chunk_time = now
 
-    # Token counts
-    input_tokens = response.usage.input_tokens
-    output_tokens = response.usage.output_tokens
+                # Periodic heartbeat logging (now includes accumulated text size)
+                if now - last_heartbeat_log > HEARTBEAT_LOG_INTERVAL:
+                    elapsed = int(now - start_time)
+                    logger.info(
+                        f"[{label}] Still streaming: {chunk_count} chunks, {elapsed}s elapsed, "
+                        f"{len(raw_text):,} text chars, {len(thinking_text):,} thinking chars"
+                    )
+                    last_heartbeat_log = now
+
+                # Cancellation check during streaming
+                if cancellation_check and cancellation_check():
+                    raise InterruptedError(f"[{label}] Cancelled during streaming")
+
+            # Stream completed normally — get final message for accurate counts
+            response = stream.get_final_message()
+
+            # Use final message content (most accurate, includes all blocks)
+            final_text = ""
+            final_thinking = ""
+            for block in response.content:
+                if hasattr(block, "thinking"):
+                    final_thinking += block.thinking
+                elif hasattr(block, "text"):
+                    final_text += block.text
+
+            # Prefer final message content if available (belt-and-suspenders)
+            if len(final_text) >= len(raw_text):
+                raw_text = final_text
+            if len(final_thinking) >= len(thinking_text):
+                thinking_text = final_thinking
+
+            input_tokens = response.usage.input_tokens
+            output_tokens = response.usage.output_tokens
+
+    except InterruptedError:
+        raise  # Don't salvage on explicit cancellation
+
+    except Exception as e:
+        # Check if we accumulated enough text to salvage
+        if len(raw_text.strip()) >= MIN_SALVAGEABLE_CHARS:
+            duration_ms = int((time.time() - start_time) * 1000)
+            logger.warning(
+                f"[{label}] Connection lost after {chunk_count} chunks ({duration_ms}ms), "
+                f"salvaging {len(raw_text):,} text chars + {len(thinking_text):,} thinking chars. "
+                f"Error: {e}"
+            )
+            # Estimate tokens if we don't have accurate counts
+            if input_tokens == 0:
+                input_tokens = total_chars // 4
+            if output_tokens == 0:
+                output_tokens = len(raw_text) // 4
+            connection_error = str(e)
+            # Fall through to return partial result
+        else:
+            raise  # Not enough output to salvage — let retry logic handle it
 
     duration_ms = int((time.time() - start_time) * 1000)
 
     if not raw_text.strip():
         raise RuntimeError(f"[{label}] Empty response from {config['model']}")
 
-    return {
+    result = {
         "content": raw_text.strip(),
         "model_used": config["model"],
         "input_tokens": input_tokens,
@@ -292,3 +347,13 @@ def _execute_streaming_call(
         "thinking_tokens": len(thinking_text),
         "duration_ms": duration_ms,
     }
+
+    if connection_error:
+        result["partial"] = True
+        result["connection_error"] = connection_error
+        logger.info(
+            f"[{label}] Returning partial result: {len(raw_text):,} chars "
+            f"(connection lost: {connection_error})"
+        )
+
+    return result
