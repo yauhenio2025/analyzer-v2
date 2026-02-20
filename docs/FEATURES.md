@@ -41,7 +41,7 @@
   - `src/executor/__init__.py:1-20` - Module architecture docstring
   - `src/executor/schemas.py:1-170` - JobStatus, PhaseStatus, EngineCallResult, PhaseResult, JobProgress, ExecutorJob, StartJobRequest, JobStatusResponse, PhaseOutputSummary, DocumentUpload, DocumentRecord
   - `src/executor/db.py:1-283` - Dual-backend DB abstraction (Postgres via psycopg2 + SQLite), init_db(), execute(), 4 tables
-  - `src/executor/engine_runner.py:1-887` - Atomic LLM call: MODEL_CONFIGS (opus/sonnet/haiku), PHASE_MODEL_DEFAULTS, sync API by default (PREFER_SYNC=true, 100x faster on Render), streaming with adaptive thinking when ENABLE_STREAMING=true, smart 1M context avoidance (prefer standard 200K by reducing max_tokens), auto-fallback to 1M beta for both sync and streaming, dynamic effort scaling for large inputs, partial output salvage on connection drop, heartbeat monitoring with [std]/[1M] tags, exponential backoff retry (5 attempts), document chunking (disabled by default — CHUNK_THRESHOLD=999M)
+  - `src/executor/engine_runner.py:1-887` - Atomic LLM call: MODEL_CONFIGS (opus/sonnet/haiku), PHASE_MODEL_DEFAULTS, sync API by default (PREFER_SYNC=true, 100x faster on Render), streaming with adaptive thinking when ENABLE_STREAMING=true, smart 1M context avoidance (prefer standard 200K by reducing max_tokens), auto-fallback to 1M beta for both sync and streaming, dynamic effort scaling for large inputs, partial output salvage on connection drop, heartbeat monitoring with [std]/[1M] tags, exponential backoff retry (5 attempts), document chunking (CHUNK_THRESHOLD=200K chars, re-enabled — O(n²) attention is model-side)
   - `src/executor/context_broker.py:1-200` - Cross-phase context assembly with emphasis injection, inner-pass context threading, chain context forwarding, phase_max_chars_override (M5)
   - `src/executor/chain_runner.py:1-494` - Sequential chain execution using capability_composer, multi-pass operationalization support, run_chain() + run_single_engine()
   - `src/executor/phase_runner.py:1-610` - Phase resolution (chain_key/engine_key), per-work iteration with ThreadPoolExecutor, plan override application, supplementary chain execution (M5), _combine_with_distilled_analysis (M5)
@@ -55,7 +55,7 @@
 - **Model Selection**: Plan-driven via model_hint → PHASE_MODEL_DEFAULTS → depth heuristic. Opus for profiling/synthesis, Sonnet for scanning/classification, Haiku disabled by default.
 - **Resumable Jobs**: Jobs persist `plan_data` (full WorkflowExecutionPlan JSONB) and `document_ids` to Postgres. On instance restart, `recover_orphaned_jobs()` resumes jobs with plan_data via `start_resume_thread()`. Three-level resume: phase-level (skip completed phases), engine-level (skip completed engines), pass-level (skip completed passes). Pre-resume jobs fail cleanly.
 - **Sync API Default**: `PREFER_SYNC=true` by default (100x faster on Render). Disables extended thinking but avoids SSE buffering bottleneck. Set `ENABLE_STREAMING=true` for local dev with thinking.
-- **Document Chunking**: Disabled (`CHUNK_THRESHOLD=999M`). Sync API generates at full speed regardless of input size, so chunking is unnecessary. Whole books sent as single documents via 1M context beta.
+- **Document Chunking**: Re-enabled (`CHUNK_THRESHOLD=200K chars`). O(n²) attention is model-side — at 183K tokens, generation drops to 0.5 tok/s. Documents >200K chars are split into ~180K char chunks, extracted per-chunk, then synthesized.
 - **API Endpoints**:
   - `POST /v1/executor/jobs` - Start execution from plan_id
   - `GET /v1/executor/jobs` - List jobs

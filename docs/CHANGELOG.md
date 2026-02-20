@@ -13,7 +13,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ### Changed
 - **Sync API by default for all LLM calls** — Render's reverse proxy buffers SSE events, throttling streaming throughput to ~0.5 tokens/s vs ~42 tokens/s for sync API. Default is now sync (`client.messages.create()`) for all calls. Sync disables extended thinking (requires streaming) — acceptable tradeoff since medium-effort thinking on 180K+ token inputs was already disabled by dynamic effort scaling. Set `ENABLE_STREAMING=true` env var to re-enable streaming with thinking for local dev. ([`src/executor/engine_runner.py`](src/executor/engine_runner.py))
 
-- **Disabled document chunking** — With sync API, the O(n^2) attention slowdown that motivated chunking no longer applies (sync generates server-side at full speed regardless of input size). `CHUNK_THRESHOLD` set to 999M (effectively disabled). Whole books now sent as single documents, processed via 1M context beta when needed. Simpler, more reliable, and preserves full document context for the LLM. ([`src/executor/engine_runner.py`](src/executor/engine_runner.py))
+- **Re-enabled document chunking** — O(n²) attention slowdown is model-side, not transport-side (affects sync and streaming equally). At 183K tokens, generation drops to ~0.5 tok/s vs ~43 tok/s at 30K tokens. `CHUNK_THRESHOLD` restored to 200K chars. Large documents are split into ~180K char chunks for fast extraction, then synthesized. ([`src/executor/engine_runner.py`](src/executor/engine_runner.py))
+
+- **Planner uses sync API** — Plan generation and refinement switched from streaming to sync API. Structured JSON output doesn't need extended thinking, and sync is 100x faster on Render. ([`src/orchestrator/planner.py`](src/orchestrator/planner.py))
 
 - **1M beta support for sync API calls** — `_execute_sync_call()` now uses `client.beta.messages.create(betas=["context-1m-2025-08-07"])` when input exceeds standard 200K context. Same smart avoidance logic as streaming path: reduce max_tokens to fit standard context when possible, fall back to 1M beta only when necessary. ([`src/executor/engine_runner.py`](src/executor/engine_runner.py))
 
