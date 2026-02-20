@@ -84,12 +84,15 @@ MAX_RETRIES = 5
 RETRY_DELAYS = [30, 60, 90, 120, 180]  # seconds
 HEARTBEAT_TIMEOUT = 120  # seconds without a chunk before considering stalled
 
-# Document chunking — DISABLED
-# The whole book goes as one file. The 1M context window handles up to ~4M chars.
-# The O(n²) attention slowdown (0.5 tokens/s at 183K tokens) was observed with
-# STREAMING — sync API generates server-side at full speed regardless of input size.
-CHUNK_THRESHOLD = 999_999_999  # effectively disabled — send whole book
-MAX_CHUNK_CHARS = 180_000  # unused but kept for reference
+# Document chunking for large inputs.
+# Transformer attention scales O(n²) with input length. This is a MODEL property,
+# not a transport issue — affects sync and streaming equally.
+# Empirical data: 30K tokens → 43 tok/s, 183K tokens → 0.5 tok/s (86x slower).
+# Solution: chunk large documents into ~50K-token pieces for fast extraction,
+# then synthesize. Total time: 4×30s chunks + 1×30s synthesis = ~3 min
+# vs 60+ min for one 183K-token call.
+CHUNK_THRESHOLD = 200_000  # chars (~50K tokens) — chunk above this
+MAX_CHUNK_CHARS = 180_000  # chars per chunk (~45K tokens)
 
 
 def resolve_model_config(
