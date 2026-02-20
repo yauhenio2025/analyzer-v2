@@ -11,8 +11,7 @@ Key features:
 - Exponential backoff retry (5 attempts)
 - Heartbeat monitoring for long calls (60s timeout per chunk)
 - Cancellation checks between retries
-- **Document chunking** for large inputs (>200K chars) to avoid O(n²)
-  attention slowdown. Splits document → extracts per chunk → synthesizes.
+- Document chunking (DISABLED — whole-book 1M beta sync is 13x faster)
 
 Ported from The Critic's `_call_claude_raw()` with plan-driven model selection.
 """
@@ -85,14 +84,21 @@ RETRY_DELAYS = [30, 60, 90, 120, 180]  # seconds
 HEARTBEAT_TIMEOUT = 120  # seconds without a chunk before considering stalled
 
 # Document chunking for large inputs.
-# Transformer attention scales O(n²) with input length. This is a MODEL property,
-# not a transport issue — affects sync and streaming equally.
-# Empirical data: 30K tokens → 43 tok/s, 183K tokens → 0.5 tok/s (86x slower).
-# Solution: chunk large documents into ~50K-token pieces for fast extraction,
-# then synthesize. Total time: 4×30s chunks + 1×30s synthesis = ~3 min
-# vs 60+ min for one 183K-token call.
-CHUNK_THRESHOLD = 200_000  # chars (~50K tokens) — chunk above this
-MAX_CHUNK_CHARS = 180_000  # chars per chunk (~45K tokens)
+# DISABLED: Empirical data from production sync calls shows the whole-book
+# approach is ~13x FASTER than chunking:
+#   - Whole book [1M beta sync]: 200K tokens → 5K output in ~100s (37 tok/s)
+#   - Chunked (5 chunks): 50K tokens each → 10K output/chunk in ~250s, then synthesis
+#     Total: ~4,400s per engine vs ~313s whole-book
+#
+# The O(n²) prefill cost at 200K tokens is only ~10-20s. The bottleneck is
+# generation (O(K×n)), and K is small (5K tokens output vs 10K per chunk).
+# Chunking produces MORE output per chunk (redundant extraction) and needs
+# a synthesis step, making it much slower overall.
+#
+# The "0.5 tok/s at 183K tokens" was STREAMING event delivery rate, not
+# actual generation speed. Sync API bypasses the streaming bottleneck.
+CHUNK_THRESHOLD = 999_999_999  # effectively disabled — whole book as one call
+MAX_CHUNK_CHARS = 180_000  # chars per chunk (only used if threshold lowered)
 
 
 def resolve_model_config(
