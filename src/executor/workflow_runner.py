@@ -22,6 +22,7 @@ from typing import Callable, Optional
 
 from src.executor.job_manager import (
     clear_cancellation,
+    get_job,
     is_cancelled,
     save_phase_result,
     update_job_progress,
@@ -51,14 +52,18 @@ def execute_plan(
     job_id: str,
     plan_id: str,
     document_ids: Optional[dict[str, str]] = None,
+    plan_object: Optional[WorkflowExecutionPlan] = None,
 ) -> None:
     """Execute a workflow plan. Called from background thread.
 
     This is the main entry point. It:
-    1. Loads the plan
+    1. Loads the plan (from file, DB, or passed object)
     2. Resolves workflow phases
-    3. Runs phases in dependency order
+    3. Runs phases in dependency order (skipping already-completed ones on resume)
     4. Updates job status on completion/failure
+
+    Args:
+        plan_object: Pre-loaded plan (used for resume when file-based plan is gone).
     """
     # Guard against double-execution
     with _active_jobs_lock:
@@ -73,10 +78,21 @@ def execute_plan(
     try:
         update_job_status(job_id, "running")
 
-        # Load the plan
-        plan = load_plan(plan_id)
+        # Load the plan: prefer passed object, then file, then DB
+        plan = plan_object
         if plan is None:
-            raise ValueError(f"Plan not found: {plan_id}")
+            plan = load_plan(plan_id)
+        if plan is None:
+            # Try loading from job's plan_data column
+            job_record = get_job(job_id)
+            if job_record and job_record.get("plan_data"):
+                try:
+                    plan = WorkflowExecutionPlan(**job_record["plan_data"])
+                    logger.info(f"Loaded plan from DB plan_data for job {job_id}")
+                except Exception as e:
+                    logger.error(f"Failed to parse plan_data from DB: {e}")
+        if plan is None:
+            raise ValueError(f"Plan not found: {plan_id} (file, object, and DB all empty)")
 
         logger.info(
             f"Starting execution of plan {plan_id} for job {job_id}\n"
@@ -123,6 +139,27 @@ def execute_plan(
         phase_statuses: dict[str, str] = {}
         all_results: dict[float, PhaseResult] = {}
 
+        # RESUME: Check which phases already completed (from prior execution)
+        job_record = get_job(job_id)
+        prior_phase_results = {}
+        if job_record:
+            prior_phase_results = job_record.get("phase_results", {})
+            if isinstance(prior_phase_results, str):
+                import json
+                prior_phase_results = json.loads(prior_phase_results)
+
+        already_completed = set()
+        for pn_str, pr in prior_phase_results.items():
+            if isinstance(pr, dict) and pr.get("status") == "completed":
+                already_completed.add(float(pn_str))
+                completed_phases.append(f"{pn_str}: {pr.get('phase_name', '')}")
+                phase_statuses[pn_str] = "completed"
+
+        if already_completed:
+            logger.info(
+                f"RESUME: {len(already_completed)} phases already completed: {already_completed}"
+            )
+
         # Execute phase groups
         for group_idx, group in enumerate(phase_groups):
             if is_cancelled(job_id):
@@ -134,10 +171,21 @@ def execute_plan(
                 f"{[p.phase_number for p in group]}"
             )
 
+            # RESUME: Filter out already-completed phases from this group
+            remaining_group = [
+                p for p in group if p.phase_number not in already_completed
+            ]
+            if not remaining_group:
+                logger.info(
+                    f"RESUME: Skipping group {group_idx + 1} — all phases already completed: "
+                    f"{[p.phase_number for p in group]}"
+                )
+                continue
+
             # Run phases in this group — parallel if >1
-            if len(group) == 1:
+            if len(remaining_group) == 1:
                 # Single phase — run directly
-                plan_phase = group[0]
+                plan_phase = remaining_group[0]
                 wf_phase = workflow_phases.get(plan_phase.phase_number)
                 if wf_phase is None:
                     logger.error(
@@ -146,7 +194,7 @@ def execute_plan(
                     continue
 
                 # Update progress
-                for p in group:
+                for p in remaining_group:
                     phase_statuses[str(p.phase_number)] = "running"
                 update_job_progress(
                     job_id,
@@ -184,7 +232,7 @@ def execute_plan(
             else:
                 # Multiple phases — run in parallel
                 _run_parallel_phases(
-                    group=group,
+                    group=remaining_group,
                     workflow_phases=workflow_phases,
                     job_id=job_id,
                     document_ids=document_ids,
@@ -496,4 +544,40 @@ def start_execution_thread(
     )
     thread.start()
     logger.info(f"Started execution thread for job {job_id}")
+    return thread
+
+
+def start_resume_thread(
+    job_id: str,
+    plan_data: dict,
+    document_ids: Optional[dict[str, str]] = None,
+) -> threading.Thread:
+    """Spawn a background thread to RESUME a previously interrupted job.
+
+    Called from recover_orphaned_jobs() when an instance recycles and
+    an orphaned running job has plan_data stored in the DB.
+
+    The plan is passed as a dict (from DB) and converted to a
+    WorkflowExecutionPlan object. The execution will skip already-completed
+    phases and engine passes (checked via phase_outputs table).
+    """
+    try:
+        plan_object = WorkflowExecutionPlan(**plan_data)
+    except Exception as e:
+        logger.error(f"Failed to deserialize plan_data for resume of job {job_id}: {e}")
+        from src.executor.job_manager import update_job_status
+        update_job_status(job_id, "failed", error=f"Resume failed: bad plan_data: {e}")
+        return None
+
+    plan_id = plan_data.get("plan_id", "unknown")
+
+    thread = threading.Thread(
+        target=execute_plan,
+        args=(job_id, plan_id, document_ids),
+        kwargs={"plan_object": plan_object},
+        name=f"executor-resume-{job_id}",
+        daemon=True,
+    )
+    thread.start()
+    logger.info(f"Started RESUME thread for job {job_id} (plan {plan_id})")
     return thread

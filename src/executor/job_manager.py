@@ -31,8 +31,14 @@ _flags_lock = threading.Lock()
 def create_job(
     job_id: str,
     plan_id: str,
+    plan_data: Optional[dict] = None,
+    document_ids: Optional[dict[str, str]] = None,
 ) -> dict:
     """Create a new executor job in the database.
+
+    Args:
+        plan_data: Full serialized plan (for resume after instance recycle).
+        document_ids: Mapping of work titles to document IDs.
 
     Returns the job record as a dict.
     """
@@ -50,9 +56,11 @@ def create_job(
         """INSERT INTO executor_jobs
            (job_id, plan_id, status, progress, phase_results, error,
             total_llm_calls, total_input_tokens, total_output_tokens,
-            created_at)
-           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-        (job_id, plan_id, "pending", progress, "{}", None, 0, 0, 0, now),
+            plan_data, document_ids, created_at)
+           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+        (job_id, plan_id, "pending", progress, "{}", None, 0, 0, 0,
+         _json_dumps(plan_data) if plan_data else None,
+         _json_dumps(document_ids or {}), now),
     )
 
     logger.info(f"Created job {job_id} for plan {plan_id}")
@@ -89,6 +97,10 @@ def get_job(job_id: str) -> Optional[dict]:
         row["progress"] = _json_loads(row["progress"])
     if isinstance(row.get("phase_results"), str):
         row["phase_results"] = _json_loads(row["phase_results"])
+    if isinstance(row.get("plan_data"), str):
+        row["plan_data"] = _json_loads(row["plan_data"])
+    if isinstance(row.get("document_ids"), str):
+        row["document_ids"] = _json_loads(row["document_ids"])
 
     # Normalize timestamps (Postgres returns datetime objects, schemas expect strings)
     _normalize_timestamps(row)
@@ -298,53 +310,109 @@ def clear_cancellation(job_id: str) -> None:
         _cancellation_flags.pop(job_id, None)
 
 
-def recover_orphaned_jobs() -> int:
-    """Mark any 'running' or 'pending' jobs as failed on startup.
+def recover_orphaned_jobs() -> tuple[int, int]:
+    """Resume orphaned running jobs or mark them as failed on startup.
 
     When Render recycles an instance, daemon execution threads die silently.
     The DB still shows status='running' but nothing is actually executing.
-    This function runs on startup to clean up these zombie jobs.
 
-    Returns the number of jobs recovered.
+    This function:
+    1. Finds orphaned running/pending jobs
+    2. For jobs WITH plan_data stored: resume them (spawn new execution thread)
+    3. For jobs WITHOUT plan_data: mark as failed (can't resume without the plan)
+
+    Returns (resumed_count, failed_count).
     """
-    now = datetime.utcnow().isoformat()
+    from src.executor.output_store import get_completed_phases
 
     # Find orphaned running jobs
     running_jobs = execute(
-        """SELECT job_id, plan_id, status, started_at
+        """SELECT job_id, plan_id, status, started_at, plan_data, document_ids
            FROM executor_jobs
            WHERE status IN ('running', 'pending')""",
         fetch="all",
     )
 
     if not running_jobs:
-        return 0
+        return (0, 0)
 
-    count = 0
+    resumed = 0
+    failed = 0
+    now = datetime.utcnow().isoformat()
+
     for job in running_jobs:
         job_id = job["job_id"]
-        execute(
-            """UPDATE executor_jobs
-               SET status = 'failed',
-                   completed_at = %s,
-                   error = %s
-               WHERE job_id = %s AND status IN ('running', 'pending')""",
-            (
-                now,
-                "Process terminated unexpectedly (instance recycled). "
-                "The execution thread was killed before completion. "
-                "Please retry the analysis.",
-                job_id,
-            ),
-        )
-        clear_cancellation(job_id)
-        count += 1
-        logger.warning(
-            f"Recovered orphaned job {job_id} (was {job['status']}) → failed"
-        )
+        plan_data = job.get("plan_data")
+        document_ids_raw = job.get("document_ids")
 
-    logger.info(f"Startup recovery: marked {count} orphaned job(s) as failed")
-    return count
+        # Parse plan_data and document_ids
+        if isinstance(plan_data, str):
+            try:
+                plan_data = _json_loads(plan_data)
+            except Exception:
+                plan_data = None
+        if isinstance(document_ids_raw, str):
+            try:
+                document_ids_raw = _json_loads(document_ids_raw)
+            except Exception:
+                document_ids_raw = {}
+
+        if plan_data:
+            # Has plan data — can resume
+            completed = get_completed_phases(job_id)
+            logger.info(
+                f"RESUME: Orphaned job {job_id} has plan_data and "
+                f"{len(completed)} completed phases — scheduling resume"
+            )
+
+            # Reset status to pending (execution thread will set to running)
+            execute(
+                """UPDATE executor_jobs
+                   SET status = 'pending',
+                       error = NULL,
+                       completed_at = NULL
+                   WHERE job_id = %s""",
+                (job_id,),
+            )
+            clear_cancellation(job_id)
+
+            # Spawn resume thread (import here to avoid circular)
+            from src.executor.workflow_runner import start_resume_thread
+            start_resume_thread(
+                job_id=job_id,
+                plan_data=plan_data,
+                document_ids=document_ids_raw or {},
+            )
+
+            resumed += 1
+            logger.warning(
+                f"Recovered orphaned job {job_id} (was {job['status']}) → resuming"
+            )
+        else:
+            # No plan data — can't resume, mark as failed
+            execute(
+                """UPDATE executor_jobs
+                   SET status = 'failed',
+                       completed_at = %s,
+                       error = %s
+                   WHERE job_id = %s AND status IN ('running', 'pending')""",
+                (
+                    now,
+                    "Process terminated unexpectedly (instance recycled). "
+                    "No plan_data stored — cannot resume. Please retry the analysis.",
+                    job_id,
+                ),
+            )
+            clear_cancellation(job_id)
+            failed += 1
+            logger.warning(
+                f"Recovered orphaned job {job_id} (was {job['status']}) → failed (no plan_data)"
+            )
+
+    logger.info(
+        f"Startup recovery: {resumed} job(s) resumed, {failed} job(s) failed"
+    )
+    return (resumed, failed)
 
 
 MAX_JOB_RUNTIME_SECONDS = 3 * 60 * 60  # 3 hours — no single job should run this long

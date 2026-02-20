@@ -18,6 +18,7 @@ import threading
 import uuid
 from typing import Optional
 
+from src.executor.db import execute, _json_dumps
 from src.executor.document_store import store_document
 from src.executor.job_manager import (
     create_job,
@@ -164,8 +165,9 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
             f"{len(plan.phases)} phases, {plan.estimated_llm_calls} estimated calls"
         )
 
-        # Update job with plan_id now that we have it
+        # Update job with plan_id and plan_data for resume support
         update_job_plan_id(job_id, plan.plan_id)
+        _store_plan_and_docs(job_id, plan, document_ids)
 
         # ── Stage 3: Execute plan ──
         # This calls execute_plan() directly (we're already in a background thread).
@@ -182,6 +184,7 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
             job_id=job_id,
             plan_id=plan.plan_id,
             document_ids=document_ids,
+            plan_object=plan,
         )
 
         # execute_plan() sets final status (completed/failed/cancelled)
@@ -227,6 +230,25 @@ def _upload_documents(request: AnalyzeRequest) -> dict[str, str]:
         )
 
     return document_ids
+
+
+def _store_plan_and_docs(job_id: str, plan, document_ids: dict[str, str]) -> None:
+    """Store plan_data and document_ids in the job record for resume support.
+
+    After plan generation, we persist the full plan + doc mapping into the
+    executor_jobs row so that if the instance recycles, recover_orphaned_jobs()
+    can resume from where we left off.
+    """
+    try:
+        execute(
+            """UPDATE executor_jobs
+               SET plan_data = %s, document_ids = %s
+               WHERE job_id = %s""",
+            (_json_dumps(plan.model_dump()), _json_dumps(document_ids), job_id),
+        )
+        logger.info(f"[Pipeline {job_id}] Stored plan_data + document_ids for resume support")
+    except Exception as e:
+        logger.error(f"[Pipeline {job_id}] Failed to store plan_data: {e}")
 
 
 def _build_plan_request(request: AnalyzeRequest) -> OrchestratorPlanRequest:

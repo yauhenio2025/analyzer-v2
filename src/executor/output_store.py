@@ -173,6 +173,83 @@ def count_outputs(job_id: str) -> int:
     return row["cnt"] if row else 0
 
 
+def get_completed_passes(job_id: str) -> set[tuple]:
+    """Get the set of (phase_number, engine_key, pass_number, work_key) already saved.
+
+    Used by the resume system: before running an engine pass, check if it's
+    already in phase_outputs. If yes, skip it and load the saved content.
+    """
+    rows = execute(
+        """SELECT DISTINCT phase_number, engine_key, pass_number, work_key
+           FROM phase_outputs WHERE job_id = %s""",
+        (job_id,),
+        fetch="all",
+    )
+    return {
+        (r["phase_number"], r["engine_key"], r["pass_number"], r["work_key"] or "")
+        for r in rows
+    }
+
+
+def get_completed_phases(job_id: str) -> set[float]:
+    """Get phase numbers that have at least one output saved.
+
+    Used by the resume system to identify phases that have partial
+    or complete work.
+    """
+    rows = execute(
+        """SELECT DISTINCT phase_number FROM phase_outputs WHERE job_id = %s""",
+        (job_id,),
+        fetch="all",
+    )
+    return {r["phase_number"] for r in rows}
+
+
+def load_pass_content(
+    job_id: str,
+    phase_number: float,
+    engine_key: str,
+    pass_number: int,
+    work_key: str = "",
+) -> Optional[str]:
+    """Load the saved content for a specific pass.
+
+    Used by the resume system to restore context threading for
+    already-completed passes.
+    """
+    row = execute(
+        """SELECT content FROM phase_outputs
+           WHERE job_id = %s AND phase_number = %s AND engine_key = %s
+                 AND pass_number = %s AND work_key = %s
+           LIMIT 1""",
+        (job_id, phase_number, engine_key, pass_number, work_key),
+        fetch="one",
+    )
+    return row["content"] if row else None
+
+
+def load_engine_last_pass_content(
+    job_id: str,
+    phase_number: float,
+    engine_key: str,
+    work_key: str = "",
+) -> Optional[str]:
+    """Load the last pass output for an engine (for chain context threading).
+
+    When resuming a chain, we need the last pass output of the previous
+    engine to provide as context to the next engine.
+    """
+    row = execute(
+        """SELECT content FROM phase_outputs
+           WHERE job_id = %s AND phase_number = %s AND engine_key = %s
+                 AND work_key = %s
+           ORDER BY pass_number DESC LIMIT 1""",
+        (job_id, phase_number, engine_key, work_key),
+        fetch="one",
+    )
+    return row["content"] if row else None
+
+
 def delete_job_outputs(job_id: str) -> int:
     """Delete all outputs for a job. Returns count deleted."""
     row = execute(

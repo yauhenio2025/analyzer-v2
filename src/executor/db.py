@@ -138,12 +138,29 @@ def init_db():
 
     if _is_postgres():
         _init_postgres()
+        _migrate_postgres()
     else:
         _init_sqlite()
 
     _initialized = True
     backend = "PostgreSQL" if _is_postgres() else f"SQLite ({SQLITE_PATH})"
     logger.info(f"Executor database initialized: {backend}")
+
+
+def _migrate_postgres():
+    """Add columns that may be missing from existing tables."""
+    migrations = [
+        "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS plan_data JSONB",
+        "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS document_ids JSONB DEFAULT '{}'",
+    ]
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        for sql in migrations:
+            try:
+                cursor.execute(sql)
+            except Exception as e:
+                logger.debug(f"Migration skipped (already applied?): {e}")
+        conn.commit()
 
 
 def _init_postgres():
@@ -159,6 +176,8 @@ def _init_postgres():
         total_llm_calls INTEGER DEFAULT 0,
         total_input_tokens INTEGER DEFAULT 0,
         total_output_tokens INTEGER DEFAULT 0,
+        plan_data JSONB,
+        document_ids JSONB DEFAULT '{}',
         created_at TIMESTAMP DEFAULT NOW(),
         started_at TIMESTAMP,
         completed_at TIMESTAMP
@@ -238,6 +257,8 @@ def _init_sqlite():
         total_llm_calls INTEGER DEFAULT 0,
         total_input_tokens INTEGER DEFAULT 0,
         total_output_tokens INTEGER DEFAULT 0,
+        plan_data TEXT,
+        document_ids TEXT DEFAULT '{}',
         created_at TEXT,
         started_at TEXT,
         completed_at TEXT

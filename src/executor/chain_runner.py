@@ -27,7 +27,12 @@ from src.executor.context_broker import (
     assemble_inner_pass_context,
 )
 from src.executor.engine_runner import run_engine_call, run_engine_call_auto
-from src.executor.output_store import save_output
+from src.executor.output_store import (
+    get_completed_passes,
+    load_engine_last_pass_content,
+    load_pass_content,
+    save_output,
+)
 from src.executor.schemas import EngineCallResult
 from src.stages.capability_composer import (
     compose_all_pass_prompts,
@@ -90,6 +95,14 @@ def run_chain(
     previous_engine_output: Optional[str] = None
     total_tokens = 0
 
+    # Check for already-completed passes (resume support)
+    completed_passes = get_completed_passes(job_id)
+    if completed_passes:
+        logger.info(
+            f"RESUME: Found {len(completed_passes)} completed passes for job {job_id} "
+            f"in phase {phase_number}"
+        )
+
     for engine_idx, engine_key in enumerate(chain.engine_keys):
         if cancellation_check and cancellation_check():
             raise InterruptedError(f"Chain '{chain_key}' cancelled before engine {engine_key}")
@@ -98,6 +111,25 @@ def run_chain(
             progress_callback(
                 f"Engine {engine_idx + 1}/{len(chain.engine_keys)}: {engine_key}"
             )
+
+        # RESUME: Check if this engine's work is already complete
+        engine_completed = any(
+            p[1] == engine_key and p[0] == phase_number and p[3] == (work_key or "")
+            for p in completed_passes
+        )
+        if engine_completed:
+            # Load the last pass output for chain context threading
+            saved_output = load_engine_last_pass_content(
+                job_id, phase_number, engine_key, work_key=work_key,
+            )
+            if saved_output:
+                previous_engine_output = saved_output
+                logger.info(
+                    f"RESUME: Skipping engine {engine_key} (already complete), "
+                    f"loaded {len(saved_output):,} chars for context"
+                )
+                continue
+            # If we can't load the saved output, fall through and re-run
 
         # Resolve per-engine overrides from the plan
         engine_depth = depth
@@ -218,11 +250,42 @@ def _run_engine_passes(
     prior_pass_outputs: dict[int, str] = {}
     pass_stances: dict[int, str] = {}
 
+    # Check for already-completed passes (resume support)
+    completed_passes = get_completed_passes(job_id)
+
     for pass_prompt in pass_prompts:
         if cancellation_check and cancellation_check():
             raise InterruptedError(
                 f"Cancelled during {cap_def.engine_key} pass {pass_prompt.pass_number}"
             )
+
+        # RESUME: Check if this specific pass is already complete
+        pass_key = (phase_number, cap_def.engine_key, pass_prompt.pass_number, work_key or "")
+        if pass_key in completed_passes:
+            saved_content = load_pass_content(
+                job_id, phase_number, cap_def.engine_key,
+                pass_prompt.pass_number, work_key=work_key,
+            )
+            if saved_content:
+                prior_pass_outputs[pass_prompt.pass_number] = saved_content
+                pass_stances[pass_prompt.pass_number] = pass_prompt.stance_key
+                results.append(EngineCallResult(
+                    engine_key=cap_def.engine_key,
+                    pass_number=pass_prompt.pass_number,
+                    stance_key=pass_prompt.stance_key,
+                    content=saved_content,
+                    model_used="(resumed)",
+                    input_tokens=0,
+                    output_tokens=0,
+                    thinking_tokens=0,
+                    duration_ms=0,
+                    retries=0,
+                ))
+                logger.info(
+                    f"  RESUME: Pass {pass_prompt.pass_number}/{len(pass_prompts)} "
+                    f"({pass_prompt.pass_label}): loaded {len(saved_content):,} chars from DB"
+                )
+                continue
 
         # Build inner-pass context from consumed passes
         inner_context = assemble_inner_pass_context(

@@ -96,9 +96,14 @@ async def start_job(request: StartJobRequest):
                 "message": "Execution already started (duplicate request detected).",
             }
 
-    # Create job
+    # Create job with plan_data for resume support
     job = ExecutorJob(plan_id=request.plan_id)
-    create_job(job.job_id, request.plan_id)
+    create_job(
+        job.job_id,
+        request.plan_id,
+        plan_data=plan.model_dump(),
+        document_ids=request.document_ids,
+    )
 
     # Spawn execution thread
     start_execution_thread(

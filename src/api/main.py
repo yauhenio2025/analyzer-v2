@@ -108,19 +108,19 @@ async def lifespan(app: FastAPI):
     logger.info("Executor database initialized")
 
     # Recover orphaned jobs from previous instance crashes
+    # Now resumes jobs with plan_data stored, fails jobs without
     from src.executor.job_manager import recover_orphaned_jobs
-    orphaned = recover_orphaned_jobs()
-    if orphaned:
-        logger.warning(f"Recovered {orphaned} orphaned job(s) from previous instance")
+    resumed, failed = recover_orphaned_jobs()
+    if resumed or failed:
+        logger.warning(f"Recovered {resumed} resumed + {failed} failed orphaned job(s) from previous instance")
 
     # Register SIGTERM handler for graceful shutdown
-    # Render sends SIGTERM before killing the process — mark running jobs as failed
+    # Render sends SIGTERM before killing the process — mark running jobs as stoppable
+    # We do NOT call recover_orphaned_jobs here because it would try to RESUME
+    # jobs on a dying instance. Instead, we just let jobs stay in "running" state.
+    # The NEXT instance startup will pick them up and resume properly.
     def _sigterm_handler(signum, frame):
-        logger.warning("SIGTERM received — marking running jobs as failed")
-        try:
-            recover_orphaned_jobs()
-        except Exception as e:
-            logger.error(f"SIGTERM handler failed: {e}")
+        logger.warning("SIGTERM received — instance shutting down. Running jobs will resume on next startup.")
         # Re-raise to let uvicorn handle shutdown
         raise SystemExit(0)
 
@@ -129,12 +129,8 @@ async def lifespan(app: FastAPI):
 
     logger.info("Analyzer v2 API ready")
     yield
-    # Shutdown — also recover orphaned jobs as a fallback
-    logger.info("Shutting down Analyzer v2 API")
-    try:
-        recover_orphaned_jobs()
-    except Exception as e:
-        logger.error(f"Shutdown job recovery failed: {e}")
+    # Shutdown — let jobs stay in "running" state for next instance to resume
+    logger.info("Shutting down Analyzer v2 API — jobs will resume on next startup")
 
 
 # Create FastAPI app
