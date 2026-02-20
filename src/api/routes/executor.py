@@ -70,11 +70,40 @@ async def start_job(request: StartJobRequest):
     This guards against Render's reverse proxy retrying POST requests.
     """
     from src.orchestrator.planner import load_plan
+    from src.orchestrator.schemas import WorkflowExecutionPlan
 
-    # Validate plan exists
+    # Validate plan exists — try file first, then DB plan_data from a previous job
     plan = load_plan(request.plan_id)
+    plan_from_db = False
+    if plan is None:
+        # Plan file lost (instance recycled). Look for plan_data in a previous job
+        # with the same plan_id — stored in executor_jobs.plan_data JSONB column.
+        prev_jobs = list_jobs(status=None, limit=20)
+        for pj in prev_jobs:
+            if pj.get("plan_id") == request.plan_id:
+                full_job = get_job(pj["job_id"])
+                if full_job and full_job.get("plan_data"):
+                    try:
+                        plan = WorkflowExecutionPlan(**full_job["plan_data"])
+                        plan_from_db = True
+                        logger.info(
+                            f"Recovered plan {request.plan_id} from job "
+                            f"{pj['job_id']} plan_data (file was lost)"
+                        )
+                        break
+                    except Exception as e:
+                        logger.warning(f"Failed to parse plan_data from job {pj['job_id']}: {e}")
     if plan is None:
         raise HTTPException(status_code=404, detail=f"Plan not found: {request.plan_id}")
+
+    # If plan was recovered from DB, re-save the file so future requests work
+    if plan_from_db:
+        from src.orchestrator.planner import _save_plan
+        try:
+            _save_plan(plan)
+            logger.info(f"Re-saved plan {request.plan_id} to file from DB recovery")
+        except Exception as e:
+            logger.warning(f"Failed to re-save plan file (non-fatal): {e}")
 
     # Idempotency guard: check for recently created job with same plan_id
     # Render's reverse proxy retries requests after ~3s, creating duplicates
