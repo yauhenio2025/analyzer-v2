@@ -123,10 +123,12 @@ def run_engine_call(
     config = resolve_model_config(phase_number, model_hint, depth, requires_full_documents)
     label = label or f"Phase {phase_number}"
 
+    total_input_chars = len(system_prompt) + len(user_message)
     logger.info(
         f"[{label}] Starting LLM call: model={config['model']}, "
         f"effort={config.get('effort', 'none')}, "
         f"1M={'yes' if config['use_1m_context'] else 'no'}, "
+        f"total_chars={total_input_chars:,} (~{total_input_chars//4:,} tokens), "
         f"system_len={len(system_prompt):,}, user_len={len(user_message):,}"
     )
 
@@ -230,12 +232,6 @@ def _execute_streaming_call(
         "messages": [{"role": "user", "content": user_message}],
     }
 
-    # Adaptive thinking (GA on Sonnet 4.6 / Opus 4.6 — no beta header needed)
-    # Uses output_config.effort instead of deprecated budget_tokens
-    if config.get("effort"):
-        kwargs["thinking"] = {"type": "adaptive"}
-        kwargs["output_config"] = {"effort": config["effort"]}
-
     # 1M context window — also auto-enable if prompt is very large
     total_chars = len(system_prompt) + len(user_message)
     use_beta = config.get("use_1m_context", False)
@@ -243,6 +239,34 @@ def _execute_streaming_call(
         # ~150K tokens at 4 chars/token — approaching 200K limit, use 1M
         logger.info(f"[{label}] Auto-enabling 1M context: {total_chars:,} chars in prompt")
         use_beta = True
+
+    # Dynamic effort scaling based on input size.
+    # Extended thinking on very large inputs (>100K tokens) is extremely slow
+    # regardless of effort level — 2-3 chars/sec thinking rate, 0 text output
+    # for 20+ minutes. The raw document text provides sufficient signal for
+    # extraction tasks; thinking adds minimal value at massive latency cost.
+    configured_effort = config.get("effort")
+    if configured_effort and total_chars > 400_000:
+        # >100K tokens: disable thinking entirely — extraction from large text
+        logger.info(
+            f"[{label}] Disabling thinking: {total_chars:,} chars (~{total_chars//4:,} tokens) "
+            f"too large for efficient thinking"
+        )
+        configured_effort = None
+    elif configured_effort and total_chars > 200_000:
+        # 50-100K tokens: downgrade to low effort
+        if configured_effort != "low":
+            logger.info(
+                f"[{label}] Downgrading effort to 'low': {total_chars:,} chars "
+                f"(~{total_chars//4:,} tokens) is large input"
+            )
+            configured_effort = "low"
+
+    # Adaptive thinking (GA on Sonnet 4.6 / Opus 4.6 — no beta header needed)
+    # Uses output_config.effort instead of deprecated budget_tokens
+    if configured_effort:
+        kwargs["thinking"] = {"type": "adaptive"}
+        kwargs["output_config"] = {"effort": configured_effort}
 
     # Accumulate response INCREMENTALLY from stream deltas
     # This is critical: if the connection drops after hours of streaming,
