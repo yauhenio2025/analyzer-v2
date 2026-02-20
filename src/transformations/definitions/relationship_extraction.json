@@ -1,0 +1,40 @@
+{
+  "template_key": "relationship_extraction",
+  "template_name": "Relationship Classification Extraction",
+  "description": "Extracts structured relationship data from per-item prose output of the genealogy_relationship_classification engine. Produces typed relationship cards with evidence, influence channels, and vocabulary contributions for the card_grid renderer.",
+  "version": 1,
+  "transformation_type": "llm_extract",
+  "llm_extraction_schema": {
+    "work_title": "string (title of the prior work being classified)",
+    "work_year": "number (publication year)",
+    "relationship_type": "enum: direct_precursor|methodological_ancestor|counter_position|indirect_contextualizer|stylistic_influence|conceptual_sibling",
+    "secondary_relationship_type": "enum or null",
+    "relationship_strength": "enum: strong|moderate|weak",
+    "summary": "string (2-3 sentence summary of the relationship)",
+    "influence_channels": [
+      {
+        "channel": "enum: vocabulary|methodology|causal_mechanism|audience_preparation|authority|framework|periodization|evidence_strategy",
+        "description": "string (1 sentence)"
+      }
+    ],
+    "key_evidence": [
+      {
+        "evidence_type": "string (e.g. explicit_self_citation, vocabulary_transfer, methodological_template)",
+        "description": "string (1-2 sentences)",
+        "quote": "string (short illustrative quote if available, else empty)"
+      }
+    ],
+    "vocabulary_contributed": ["string (terms/concepts that flow from this prior work to the current work)"],
+    "centrality_assessment": "string (1-2 sentences on how central this work is to the current argument)",
+    "what_would_be_lost": "string (1-2 sentences: what the current argument loses without this prior work)"
+  },
+  "llm_prompt_template": "You are a precise data extraction assistant. Extract structured JSON from an analytical prose text that classifies the relationship between a prior work and a current work in an intellectual genealogy.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"work_title\": \"<title of the prior work being analyzed>\",\n  \"work_year\": <publication year as number>,\n  \"relationship_type\": \"<one of: direct_precursor, methodological_ancestor, counter_position, indirect_contextualizer, stylistic_influence, conceptual_sibling>\",\n  \"secondary_relationship_type\": \"<same enum or null if no secondary>\",\n  \"relationship_strength\": \"<one of: strong, moderate, weak>\",\n  \"summary\": \"<2-3 sentence summary of how this prior work relates to the current work>\",\n  \"influence_channels\": [\n    {\n      \"channel\": \"<one of: vocabulary, methodology, causal_mechanism, audience_preparation, authority, framework, periodization, evidence_strategy>\",\n      \"description\": \"<1 sentence describing this influence channel>\"\n    }\n  ],\n  \"key_evidence\": [\n    {\n      \"evidence_type\": \"<type of evidence, e.g. explicit_self_citation, vocabulary_transfer, methodological_template, conceptual_import, causal_chain_dependency>\",\n      \"description\": \"<1-2 sentence description of this evidence>\",\n      \"quote\": \"<short illustrative quote if available, else empty string>\"\n    }\n  ],\n  \"vocabulary_contributed\": [\"<terms or concepts that flow from this prior work to the current work>\"],\n  \"centrality_assessment\": \"<1-2 sentences assessing how central this prior work is to the current argument>\",\n  \"what_would_be_lost\": \"<1-2 sentences: what the current argument would lose without this prior work>\"\n}\n\nRULES:\n1. Return ONLY JSON — no markdown fences, no commentary\n2. relationship_type MUST be one of the 6 listed values (use closest match)\n3. Capture 3-6 influence channels\n4. Capture 3-8 key evidence items, ordered by significance\n5. vocabulary_contributed should list specific terms/concepts, not generic descriptions\n6. The summary should capture the essential nature of the intellectual relationship\n7. Preserve analytical depth — don't oversimplify the relationship classification",
+  "applicable_renderer_types": ["card_grid", "card", "table"],
+  "applicable_engines": ["genealogy_relationship_classification"],
+  "tags": ["genealogy", "relationships", "extraction", "prose-to-structured", "per-item"],
+  "status": "active",
+  "model": "claude-haiku-4-5-20251001",
+  "model_fallback": "claude-sonnet-4-5-20250929",
+  "max_tokens": 4000,
+  "source": "Created for v2 pipeline visualization — per-item relationship cards"
+}
