@@ -347,6 +347,60 @@ def recover_orphaned_jobs() -> int:
     return count
 
 
+MAX_JOB_RUNTIME_SECONDS = 3 * 60 * 60  # 3 hours — no single job should run this long
+
+
+def check_stale_job(job: dict) -> Optional[dict]:
+    """Check if a running job is stale and mark it as failed.
+
+    A job is considered stale if it has been running for more than
+    MAX_JOB_RUNTIME_SECONDS without completing. This catches:
+    - Daemon threads that died due to unhandled exceptions
+    - Orphaned jobs on instances that didn't run startup recovery
+    - Jobs stuck in infinite loops
+
+    Called from the polling endpoint — belt-and-suspenders alongside
+    startup recovery.
+
+    Returns the updated job dict if stale (or None if not stale).
+    """
+    if job["status"] not in ("running", "pending"):
+        return None
+
+    started = job.get("started_at") or job.get("created_at")
+    if not started:
+        return None
+
+    # Parse the timestamp
+    if isinstance(started, str):
+        try:
+            started_dt = datetime.fromisoformat(started)
+        except (ValueError, TypeError):
+            return None
+    elif isinstance(started, datetime):
+        started_dt = started
+    else:
+        return None
+
+    elapsed = (datetime.utcnow() - started_dt).total_seconds()
+    if elapsed < MAX_JOB_RUNTIME_SECONDS:
+        return None
+
+    # Job is stale — mark as failed
+    job_id = job["job_id"]
+    hours = elapsed / 3600
+    error_msg = (
+        f"Job exceeded maximum runtime ({hours:.1f}h > {MAX_JOB_RUNTIME_SECONDS/3600:.0f}h). "
+        f"The execution thread likely crashed. Please retry the analysis."
+    )
+    update_job_status(job_id, "failed", error=error_msg)
+    clear_cancellation(job_id)
+    logger.warning(f"Marked stale job {job_id} as failed ({hours:.1f}h elapsed)")
+
+    # Re-read to return updated job
+    return get_job(job_id)
+
+
 def delete_job(job_id: str) -> bool:
     """Delete a job and all its outputs.
 

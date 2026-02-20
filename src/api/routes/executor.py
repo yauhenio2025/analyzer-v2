@@ -28,6 +28,7 @@ from src.executor.document_store import (
     store_document,
 )
 from src.executor.job_manager import (
+    check_stale_job,
     create_job,
     delete_job,
     get_job,
@@ -108,6 +109,11 @@ async def get_job_status(job_id: str):
     job = get_job(job_id)
     if job is None:
         raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+
+    # Belt-and-suspenders: detect stale jobs on read
+    stale_update = check_stale_job(job)
+    if stale_update:
+        job = stale_update
 
     return JobStatusResponse(
         job_id=job["job_id"],
