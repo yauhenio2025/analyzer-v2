@@ -113,6 +113,7 @@ def run_engine_call(
     requires_full_documents: bool = False,
     cancellation_check: Optional[Callable[[], bool]] = None,
     label: str = "",
+    force_no_thinking: bool = False,
 ) -> dict:
     """Execute a single LLM call with streaming, retry, and model selection.
 
@@ -125,12 +126,16 @@ def run_engine_call(
         requires_full_documents: Whether to use 1M context window
         cancellation_check: Callable that returns True to cancel
         label: Human-readable label for logging
+        force_no_thinking: If True, disable thinking regardless of model config.
+            Used for chunk extraction calls where thinking adds latency without value.
 
     Returns:
         dict with keys: content, model_used, input_tokens, output_tokens,
         thinking_tokens, duration_ms, retries
     """
     config = resolve_model_config(phase_number, model_hint, depth, requires_full_documents)
+    if force_no_thinking:
+        config["effort"] = None
     label = label or f"Phase {phase_number}"
 
     total_input_chars = len(system_prompt) + len(user_message)
@@ -576,7 +581,10 @@ def _run_chunked(
             f"[END OF SECTION {i+1}]"
         )
 
-        # Each chunk uses standard context (NOT 1M beta) — chunks are small enough
+        # Each chunk uses standard context (NOT 1M beta) — chunks are small enough.
+        # force_no_thinking=True because chunk extraction is a read-and-extract task,
+        # not a reasoning task. Thinking at medium effort on 47K token chunks causes
+        # 0.55 tokens/s output — 80x slower than without thinking.
         result = run_engine_call(
             system_prompt=system_prompt,
             user_message=framed_chunk,
@@ -586,6 +594,7 @@ def _run_chunked(
             requires_full_documents=False,  # Chunks fit in standard 200K context
             cancellation_check=cancellation_check,
             label=chunk_label,
+            force_no_thinking=True,
         )
 
         chunk_results.append(result)
