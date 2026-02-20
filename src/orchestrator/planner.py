@@ -289,28 +289,27 @@ def generate_plan(request: OrchestratorPlanRequest) -> WorkflowExecutionPlan:
         f"{len(request.prior_works)} prior works"
     )
 
-    # Call Claude Sonnet 4.6 with streaming for extended thinking support
+    # Call Claude Sonnet 4.6 — sync API for speed on Render (no thinking needed
+    # for structured JSON output; thinking adds latency without improving plans).
     model = "claude-sonnet-4-6"
 
-    # Use streaming to handle extended thinking / long contexts
     raw_text = ""
     total_input = 0
     total_output = 0
 
     try:
-        with client.messages.stream(
+        import httpx
+        sync_client = Anthropic(
+            timeout=httpx.Timeout(connect=60.0, read=300.0, write=60.0, pool=60.0),
+        )
+        response = sync_client.messages.create(
             model=model,
             max_tokens=16000,
-            thinking={"type": "adaptive"},
-            output_config={"effort": "medium"},
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": user_prompt}],
-        ) as stream:
-            for event in stream:
-                pass  # iterate to completion
-            response = stream.get_final_message()
+        )
 
-        # Extract text from response (skip thinking blocks)
+        # Extract text from response
         for block in response.content:
             if hasattr(block, "text"):
                 raw_text = block.text
@@ -452,17 +451,16 @@ Return ONLY the JSON — no markdown fences, no explanation outside the JSON."""
     model = "claude-sonnet-4-6"
 
     try:
-        with client.messages.stream(
+        import httpx
+        sync_client = Anthropic(
+            timeout=httpx.Timeout(connect=60.0, read=300.0, write=60.0, pool=60.0),
+        )
+        response = sync_client.messages.create(
             model=model,
             max_tokens=16000,
-            thinking={"type": "adaptive"},
-            output_config={"effort": "medium"},
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": refinement_prompt}],
-        ) as stream:
-            for event in stream:
-                pass
-            response = stream.get_final_message()
+        )
 
         raw_text = ""
         for block in response.content:
