@@ -5,6 +5,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+- **Document chunking for large inputs** — Transformer attention scales O(n²) with input length: at 183K tokens (725K chars), output speed drops to ~0.5 tokens/s (vs ~43 tokens/s at 50K tokens). This made Phase 1.0 engine calls take 2-3 hours each instead of minutes. Fix: `run_engine_call_auto()` transparently splits documents >200K chars into ~180K char chunks, runs extraction per chunk using the fast standard endpoint, then synthesizes chunk results into one coherent output. Empirical speedup: 72x faster for a 725K char document. Phase 1.0 estimated: ~1.5 hours (was ~30+ hours). Each chunk call completes in <3 min (safe against Render instance recycling). ([`src/executor/engine_runner.py`](src/executor/engine_runner.py), [`src/executor/chain_runner.py`](src/executor/chain_runner.py))
+
 ### Fixed
 - **Stale job detection on poll** — If a daemon thread dies while the instance stays alive, jobs stay "running" forever. Now the `GET /v1/executor/jobs/{job_id}` endpoint checks elapsed time and auto-marks jobs running >3h as failed with a helpful retry message. Belt-and-suspenders alongside startup recovery. ([`src/executor/job_manager.py`](src/executor/job_manager.py), [`src/api/routes/executor.py`](src/api/routes/executor.py))
 

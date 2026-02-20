@@ -1,7 +1,8 @@
 """Single LLM call execution with retry, streaming, and model selection.
 
 This is the atomic unit of execution. Every analytical LLM call in the
-executor flows through `run_engine_call()`.
+executor flows through `run_engine_call()` (or `run_engine_call_auto()`
+which handles document chunking for large inputs).
 
 Key features:
 - Plan-driven model selection (not hardcoded dicts)
@@ -10,6 +11,8 @@ Key features:
 - Exponential backoff retry (5 attempts)
 - Heartbeat monitoring for long calls (60s timeout per chunk)
 - Cancellation checks between retries
+- **Document chunking** for large inputs (>200K chars) to avoid O(n²)
+  attention slowdown. Splits document → extracts per chunk → synthesizes.
 
 Ported from The Critic's `_call_claude_raw()` with plan-driven model selection.
 """
@@ -61,6 +64,13 @@ PHASE_MODEL_DEFAULTS = {
 MAX_RETRIES = 5
 RETRY_DELAYS = [30, 60, 90, 120, 180]  # seconds
 HEARTBEAT_TIMEOUT = 120  # seconds without a chunk before considering stalled
+
+# Document chunking thresholds
+# At 200K chars (~50K tokens), generation speed is ~43 tokens/s (fast).
+# At 735K chars (~183K tokens), generation speed drops to ~0.5 tokens/s (O(n²) attention).
+# Chunking keeps each call fast by limiting input size.
+CHUNK_THRESHOLD = 200_000  # chars — above this, use chunking
+MAX_CHUNK_CHARS = 180_000  # Target chunk size (with headroom for system prompt)
 
 
 def resolve_model_config(
@@ -461,3 +471,267 @@ def _execute_streaming_call(
         )
 
     return result
+
+
+# ============================================================
+# Document Chunking for Large Inputs
+# ============================================================
+#
+# Transformer attention scales O(n²) with input length. Empirical data:
+#   30K tokens input → 43 tokens/s output (fast)
+#   183K tokens input → 0.5 tokens/s output (140x slower)
+#
+# Solution: split large documents into chunks, extract per chunk,
+# then synthesize results. Each chunk stays under ~50K tokens where
+# generation is fast.
+
+
+def run_engine_call_auto(
+    system_prompt: str,
+    user_message: str,
+    *,
+    phase_number: float = 1.0,
+    model_hint: Optional[str] = None,
+    depth: str = "standard",
+    requires_full_documents: bool = False,
+    cancellation_check: Optional[Callable[[], bool]] = None,
+    label: str = "",
+) -> dict:
+    """Auto-routing wrapper: uses chunking for large inputs, direct call for small.
+
+    This is the primary entry point for engine calls in the chain runner.
+    Same signature and return format as run_engine_call().
+
+    When user_message exceeds CHUNK_THRESHOLD:
+    1. Splits into chunks at paragraph boundaries
+    2. Runs extraction on each chunk (fast, ~50K tokens each)
+    3. Synthesizes chunk results into one coherent output
+    """
+    if len(user_message) > CHUNK_THRESHOLD:
+        return _run_chunked(
+            system_prompt=system_prompt,
+            user_message=user_message,
+            phase_number=phase_number,
+            model_hint=model_hint,
+            depth=depth,
+            requires_full_documents=requires_full_documents,
+            cancellation_check=cancellation_check,
+            label=label,
+        )
+    else:
+        return run_engine_call(
+            system_prompt=system_prompt,
+            user_message=user_message,
+            phase_number=phase_number,
+            model_hint=model_hint,
+            depth=depth,
+            requires_full_documents=requires_full_documents,
+            cancellation_check=cancellation_check,
+            label=label,
+        )
+
+
+def _run_chunked(
+    system_prompt: str,
+    user_message: str,
+    *,
+    phase_number: float,
+    model_hint: Optional[str],
+    depth: str,
+    requires_full_documents: bool,
+    cancellation_check: Optional[Callable[[], bool]],
+    label: str,
+) -> dict:
+    """Run with document chunking: split → extract per chunk → synthesize.
+
+    Each chunk call uses the STANDARD context window (not 1M beta) since
+    chunks are designed to be ~50K tokens. This gives ~43 tokens/s output
+    instead of the ~0.5 tokens/s we'd get with the full document.
+    """
+    chunks = _split_text_at_paragraphs(user_message, MAX_CHUNK_CHARS)
+
+    logger.info(
+        f"[{label}] CHUNKING: {len(user_message):,} chars → "
+        f"{len(chunks)} chunks of ~{MAX_CHUNK_CHARS:,} chars each"
+    )
+
+    chunk_results = []
+    total_input_tokens = 0
+    total_output_tokens = 0
+    total_thinking_tokens = 0
+    total_duration_ms = 0
+    total_retries = 0
+
+    for i, chunk in enumerate(chunks):
+        if cancellation_check and cancellation_check():
+            raise InterruptedError(f"[{label}] Cancelled during chunking at chunk {i+1}")
+
+        chunk_label = f"{label} [chunk {i+1}/{len(chunks)}]"
+
+        # Frame the chunk so the model knows it's a section
+        framed_chunk = (
+            f"[DOCUMENT SECTION {i+1} OF {len(chunks)}]\n"
+            f"[This is one section of a larger document. Analyze this section thoroughly.]\n\n"
+            f"{chunk}\n\n"
+            f"[END OF SECTION {i+1}]"
+        )
+
+        # Each chunk uses standard context (NOT 1M beta) — chunks are small enough
+        result = run_engine_call(
+            system_prompt=system_prompt,
+            user_message=framed_chunk,
+            phase_number=phase_number,
+            model_hint=model_hint,
+            depth=depth,
+            requires_full_documents=False,  # Chunks fit in standard 200K context
+            cancellation_check=cancellation_check,
+            label=chunk_label,
+        )
+
+        chunk_results.append(result)
+        total_input_tokens += result["input_tokens"]
+        total_output_tokens += result["output_tokens"]
+        total_thinking_tokens += result["thinking_tokens"]
+        total_duration_ms += result["duration_ms"]
+        total_retries += result.get("retries", 0)
+
+        logger.info(
+            f"[{label}] Chunk {i+1}/{len(chunks)} complete: "
+            f"{result['input_tokens']}+{result['output_tokens']} tokens, "
+            f"{result['duration_ms']}ms, {len(result['content']):,} chars output"
+        )
+
+    # --- Synthesis pass: merge chunk results into one coherent output ---
+    if cancellation_check and cancellation_check():
+        raise InterruptedError(f"[{label}] Cancelled before synthesis")
+
+    synthesis_parts = []
+    for i, r in enumerate(chunk_results):
+        synthesis_parts.append(
+            f"## Analysis of Document Section {i+1}/{len(chunks)}\n\n"
+            f"{r['content']}"
+        )
+    synthesis_input = "\n\n---\n\n".join(synthesis_parts)
+
+    synthesis_system = (
+        f"You are synthesizing analyses from {len(chunks)} sections of a large document. "
+        f"The document was too large to analyze in one pass, so it was split into "
+        f"{len(chunks)} overlapping sections and each was analyzed separately using "
+        f"the same analytical framework.\n\n"
+        f"Your task: merge these section analyses into a SINGLE, coherent, comprehensive "
+        f"analysis. Combine overlapping findings, resolve any contradictions between "
+        f"sections, eliminate redundancy, and produce output that reads as if the entire "
+        f"document was analyzed at once.\n\n"
+        f"IMPORTANT:\n"
+        f"- Maintain the analytical depth and structure expected by the original prompt\n"
+        f"- If sections found the same concept/theme, consolidate into one entry\n"
+        f"- If sections found contradictory evidence, note both perspectives\n"
+        f"- Preserve specific textual evidence and citations from the sections\n"
+        f"- The final output should be comprehensive but not repetitive\n\n"
+        f"Here is the original analysis prompt for context:\n\n"
+        f"---\n{system_prompt[:8000]}\n---\n\n"  # Truncate long system prompts
+        f"Now synthesize the {len(chunks)} section analyses below into one unified output."
+    )
+
+    synthesis_label = f"{label} [synthesis of {len(chunks)} chunks]"
+
+    logger.info(
+        f"[{label}] Starting synthesis of {len(chunks)} chunk results "
+        f"({len(synthesis_input):,} chars input)"
+    )
+
+    synthesis_result = run_engine_call(
+        system_prompt=synthesis_system,
+        user_message=synthesis_input,
+        phase_number=phase_number,
+        model_hint=model_hint,
+        depth=depth,
+        requires_full_documents=False,  # Synthesis input is manageable
+        cancellation_check=cancellation_check,
+        label=synthesis_label,
+    )
+
+    total_calls = len(chunks) + 1  # chunks + synthesis
+
+    logger.info(
+        f"[{label}] CHUNKING COMPLETE: {len(chunks)} chunks + 1 synthesis = "
+        f"{total_calls} calls, {total_input_tokens + synthesis_result['input_tokens']:,} "
+        f"total input tokens, {total_duration_ms + synthesis_result['duration_ms']:,}ms total, "
+        f"{len(synthesis_result['content']):,} chars final output"
+    )
+
+    return {
+        "content": synthesis_result["content"],
+        "model_used": synthesis_result["model_used"],
+        "input_tokens": total_input_tokens + synthesis_result["input_tokens"],
+        "output_tokens": total_output_tokens + synthesis_result["output_tokens"],
+        "thinking_tokens": total_thinking_tokens + synthesis_result["thinking_tokens"],
+        "duration_ms": total_duration_ms + synthesis_result["duration_ms"],
+        "retries": total_retries + synthesis_result.get("retries", 0),
+        "chunked": True,
+        "num_chunks": len(chunks),
+    }
+
+
+def _split_text_at_paragraphs(text: str, max_chars: int) -> list[str]:
+    """Split text into chunks at paragraph boundaries.
+
+    Tries to split at double-newlines (paragraph breaks) to maintain
+    coherent units of text. Falls back to sentence boundaries for
+    oversized paragraphs.
+
+    Returns at least 1 chunk.
+    """
+    if len(text) <= max_chars:
+        return [text]
+
+    chunks = []
+    paragraphs = text.split("\n\n")
+    current_chunk = ""
+
+    for para in paragraphs:
+        # Would adding this paragraph exceed the limit?
+        if len(current_chunk) + len(para) + 2 > max_chars and current_chunk:
+            chunks.append(current_chunk.strip())
+            current_chunk = para
+        else:
+            if current_chunk:
+                current_chunk += "\n\n" + para
+            else:
+                current_chunk = para
+
+    if current_chunk.strip():
+        chunks.append(current_chunk.strip())
+
+    # Handle edge case: single paragraph exceeding max_chars
+    final_chunks = []
+    for chunk in chunks:
+        if len(chunk) > max_chars * 1.5:
+            # Hard split at sentence boundaries
+            sub_chunks = _split_at_sentences(chunk, max_chars)
+            final_chunks.extend(sub_chunks)
+        else:
+            final_chunks.append(chunk)
+
+    return final_chunks if final_chunks else [text]
+
+
+def _split_at_sentences(text: str, max_chars: int) -> list[str]:
+    """Split text at sentence boundaries when paragraph splitting isn't enough."""
+    import re
+    # Split on sentence-ending punctuation followed by space
+    sentences = re.split(r'(?<=[.!?])\s+', text)
+
+    chunks = []
+    current = ""
+    for sent in sentences:
+        if len(current) + len(sent) + 1 > max_chars and current:
+            chunks.append(current.strip())
+            current = sent
+        else:
+            current = current + " " + sent if current else sent
+
+    if current.strip():
+        chunks.append(current.strip())
+
+    return chunks if chunks else [text]

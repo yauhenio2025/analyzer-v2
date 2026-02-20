@@ -26,7 +26,7 @@ from src.executor.context_broker import (
     assemble_chain_context,
     assemble_inner_pass_context,
 )
-from src.executor.engine_runner import run_engine_call
+from src.executor.engine_runner import run_engine_call, run_engine_call_auto
 from src.executor.output_store import save_output
 from src.executor.schemas import EngineCallResult
 from src.stages.capability_composer import (
@@ -285,8 +285,8 @@ def _run_engine_passes(
         if work_key:
             label += f" | {work_key}"
 
-        # Execute the LLM call
-        result = run_engine_call(
+        # Execute the LLM call (auto-chunks if user_message exceeds threshold)
+        result = run_engine_call_auto(
             system_prompt=system_prompt,
             user_message=user_message,
             phase_number=phase_number,
@@ -389,7 +389,7 @@ def _run_single_engine_call(
     if work_key:
         label += f" | {work_key}"
 
-    result = run_engine_call(
+    result = run_engine_call_auto(
         system_prompt=cap_prompt.prompt,
         user_message=document_text,
         phase_number=phase_number,
