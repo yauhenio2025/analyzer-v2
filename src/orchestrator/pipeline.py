@@ -100,7 +100,7 @@ def _run_autonomous_mode(request: AnalyzeRequest) -> AnalyzeResponse:
     job_id = f"job-{uuid.uuid4().hex[:12]}"
 
     # Create job entry immediately so the client can start polling
-    create_job(job_id, plan_id="(generating)")
+    job_record = create_job(job_id, plan_id="(generating)")
 
     # Set initial progress: pipeline is starting
     update_job_progress(
@@ -124,6 +124,7 @@ def _run_autonomous_mode(request: AnalyzeRequest) -> AnalyzeResponse:
         job_id=job_id,
         plan_id=None,  # Not known yet — will be set by background thread
         document_ids={},  # Not known yet
+        cancel_token=job_record.get("cancel_token"),
         status="executing",
         message=(
             f"Pipeline accepted. Poll GET /v1/executor/jobs/{job_id} for progress. "

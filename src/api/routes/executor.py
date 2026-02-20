@@ -19,6 +19,7 @@ import logging
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 
 from src.executor.db import init_db
 from src.executor.document_store import (
@@ -127,7 +128,7 @@ async def start_job(request: StartJobRequest):
 
     # Create job with plan_data for resume support
     job = ExecutorJob(plan_id=request.plan_id)
-    create_job(
+    job_record = create_job(
         job.job_id,
         request.plan_id,
         plan_data=plan.model_dump(),
@@ -147,6 +148,7 @@ async def start_job(request: StartJobRequest):
         "job_id": job.job_id,
         "plan_id": request.plan_id,
         "status": "pending",
+        "cancel_token": job_record.get("cancel_token"),
         "message": "Execution started. Poll GET /v1/executor/jobs/{job_id} for progress.",
     }
 
@@ -188,18 +190,25 @@ async def get_job_status(job_id: str):
     )
 
 
+class CancelRequest(BaseModel):
+    cancel_token: str
+
+
 @router.post("/jobs/{job_id}/cancel")
-async def cancel_job(job_id: str):
-    """Cancel a running job."""
-    success = request_cancellation(job_id)
+async def cancel_job(job_id: str, body: Optional[CancelRequest] = None):
+    """Cancel a running job.
+
+    Requires a cancel_token that was returned when the job was created.
+    This prevents unauthorized cancellation of jobs.
+    """
+    token = body.cancel_token if body else None
+    success, message = request_cancellation(job_id, cancel_token=token)
     if not success:
         job = get_job(job_id)
         if job is None:
             raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
-        raise HTTPException(
-            status_code=400,
-            detail=f"Cannot cancel job in status: {job['status']}",
-        )
+        status_code = 403 if "Invalid cancel_token" in message else 400
+        raise HTTPException(status_code=status_code, detail=message)
     return {"job_id": job_id, "status": "cancelled", "message": "Cancellation requested"}
 
 

@@ -15,6 +15,7 @@ Ported from The Critic's job management with DB-first design.
 
 import logging
 import threading
+import uuid
 from datetime import datetime
 from typing import Optional
 
@@ -40,9 +41,10 @@ def create_job(
         plan_data: Full serialized plan (for resume after instance recycle).
         document_ids: Mapping of work titles to document IDs.
 
-    Returns the job record as a dict.
+    Returns the job record as a dict (includes cancel_token).
     """
     now = datetime.utcnow().isoformat()
+    cancel_token = uuid.uuid4().hex
     progress = _json_dumps({
         "current_phase": 0,
         "total_phases": 5,
@@ -56,11 +58,11 @@ def create_job(
         """INSERT INTO executor_jobs
            (job_id, plan_id, status, progress, phase_results, error,
             total_llm_calls, total_input_tokens, total_output_tokens,
-            plan_data, document_ids, created_at)
-           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+            plan_data, document_ids, cancel_token, created_at)
+           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
         (job_id, plan_id, "pending", progress, "{}", None, 0, 0, 0,
          _json_dumps(plan_data) if plan_data else None,
-         _json_dumps(document_ids or {}), now),
+         _json_dumps(document_ids or {}), cancel_token, now),
     )
 
     logger.info(f"Created job {job_id} for plan {plan_id}")
@@ -69,6 +71,7 @@ def create_job(
         "job_id": job_id,
         "plan_id": plan_id,
         "status": "pending",
+        "cancel_token": cancel_token,
         "created_at": now,
     }
 
@@ -256,23 +259,32 @@ def list_jobs(
 
 # --- Cancellation ---
 
-def request_cancellation(job_id: str) -> bool:
+def request_cancellation(job_id: str, cancel_token: Optional[str] = None) -> tuple[bool, str]:
     """Request cancellation of a running job.
 
     Sets both the in-memory flag (for fast checking during streaming)
     and the DB status.
 
-    Returns True if the job was running and is now being cancelled.
+    Args:
+        cancel_token: Required. Must match the token issued at job creation.
+
+    Returns (success: bool, message: str).
     """
     job = get_job(job_id)
     if job is None:
-        return False
+        return (False, "Job not found")
 
     if job["status"] not in ("pending", "running"):
+        return (False, f"Cannot cancel job in status: {job['status']}")
+
+    # Verify cancel token
+    stored_token = job.get("cancel_token")
+    if stored_token and cancel_token != stored_token:
         logger.warning(
-            f"Cannot cancel job {job_id}: status is {job['status']}"
+            f"Cancel REJECTED for job {job_id}: invalid token "
+            f"(got {cancel_token!r}, expected {stored_token!r})"
         )
-        return False
+        return (False, "Invalid cancel_token. Only the session that created this job can cancel it.")
 
     # Set in-memory flag
     with _flags_lock:
@@ -280,8 +292,8 @@ def request_cancellation(job_id: str) -> bool:
 
     # Update DB status
     update_job_status(job_id, "cancelled")
-    logger.info(f"Cancellation requested for job {job_id}")
-    return True
+    logger.info(f"Cancellation requested for job {job_id} (token verified)")
+    return (True, "Cancelled")
 
 
 def is_cancelled(job_id: str) -> bool:

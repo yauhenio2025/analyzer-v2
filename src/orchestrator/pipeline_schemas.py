@@ -77,6 +77,10 @@ class AnalyzeResponse(BaseModel):
         description="Mapping of role/title -> document ID. "
         "Keys: 'target' for target work, prior work titles for prior works.",
     )
+    cancel_token: Optional[str] = Field(
+        default=None,
+        description="Token required to cancel this job. Only returned on job creation.",
+    )
     status: str = Field(
         description="'executing' if autonomous, 'plan_generated' if checkpoint mode",
     )

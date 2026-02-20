@@ -152,6 +152,7 @@ def _migrate_postgres():
     migrations = [
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS plan_data JSONB",
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS document_ids JSONB DEFAULT '{}'",
+        "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS cancel_token VARCHAR(64)",
     ]
     with get_connection() as conn:
         cursor = conn.cursor()
@@ -178,6 +179,7 @@ def _init_postgres():
         total_output_tokens INTEGER DEFAULT 0,
         plan_data JSONB,
         document_ids JSONB DEFAULT '{}',
+        cancel_token VARCHAR(64),
         created_at TIMESTAMP DEFAULT NOW(),
         started_at TIMESTAMP,
         completed_at TIMESTAMP
@@ -259,6 +261,7 @@ def _init_sqlite():
         total_output_tokens INTEGER DEFAULT 0,
         plan_data TEXT,
         document_ids TEXT DEFAULT '{}',
+        cancel_token TEXT,
         created_at TEXT,
         started_at TEXT,
         completed_at TEXT
