@@ -38,39 +38,74 @@ from .store import load_view_refinement
 logger = logging.getLogger(__name__)
 
 
+async def async_prepare_presentation(
+    job_id: str,
+    view_keys: Optional[list[str]] = None,
+) -> PresentationBridgeResult:
+    """Async version — safe to call from FastAPI async routes.
+
+    Awaits the async TransformationExecutor.execute() directly.
+    """
+    tasks, skipped, recommended = _build_transformation_tasks(job_id, view_keys)
+    results, cached_count, completed_count, failed_count = await _execute_tasks_async(job_id, tasks)
+
+    return PresentationBridgeResult(
+        job_id=job_id,
+        tasks_planned=len(tasks),
+        tasks_completed=completed_count,
+        tasks_failed=failed_count,
+        tasks_skipped=skipped,
+        cached_results=cached_count,
+        details=results,
+    )
+
+
 def prepare_presentation(
     job_id: str,
     view_keys: Optional[list[str]] = None,
 ) -> PresentationBridgeResult:
-    """Run transformations for recommended views and populate presentation_cache.
+    """Sync version — safe to call from background threads (workflow_runner).
 
-    Args:
-        job_id: The completed job to prepare presentation for.
-        view_keys: Specific views to prepare. None = all recommended views.
+    Creates its own event loop to run the async executor.
+    Do NOT call from async context (use async_prepare_presentation instead).
+    """
+    tasks, skipped, recommended = _build_transformation_tasks(job_id, view_keys)
+    results, cached_count, completed_count, failed_count = _execute_tasks_sync(job_id, tasks)
+
+    return PresentationBridgeResult(
+        job_id=job_id,
+        tasks_planned=len(tasks),
+        tasks_completed=completed_count,
+        tasks_failed=failed_count,
+        tasks_skipped=skipped,
+        cached_results=cached_count,
+        details=results,
+    )
+
+
+def _build_transformation_tasks(
+    job_id: str,
+    view_keys: Optional[list[str]] = None,
+) -> tuple[list[TransformationTask], int, list[dict]]:
+    """Build the list of transformation tasks for a job.
 
     Returns:
-        PresentationBridgeResult with per-task status.
+        (tasks, skipped_count, recommended_views)
     """
-    # Validate job
     job = get_job(job_id)
     if job is None:
         raise ValueError(f"Job not found: {job_id}")
 
-    # Load recommended views (refined if available, else plan originals)
     recommended = _get_recommended_views(job_id, job["plan_id"])
 
-    # Filter to requested view_keys
     if view_keys:
         recommended = [v for v in recommended if v["view_key"] in view_keys]
 
-    # Filter out hidden views
     recommended = [v for v in recommended if v.get("priority") != "hidden"]
 
-    # Load registries
     view_registry = get_view_registry()
     transform_registry = get_transformation_registry()
 
-    # Build transformation tasks
     tasks = []
     skipped = 0
 
@@ -80,7 +115,6 @@ def prepare_presentation(
             logger.warning(f"View definition not found: {rec['view_key']}")
             continue
 
-        # Find the engine_key to match against transformation templates
         engine_key = view_def.data_source.engine_key
         chain_key = view_def.data_source.chain_key
         phase_number = view_def.data_source.phase_number
@@ -91,26 +125,22 @@ def prepare_presentation(
             skipped += 1
             continue
 
-        # Check if the view's inline transformation is 'none'
+        # Find applicable template
         if view_def.transformation.type == "none":
-            # No inline transformation — check if a library template applies
             applicable_templates = []
             if engine_key:
                 applicable_templates = [
                     t for t in transform_registry.for_engine(engine_key)
                     if renderer_type in t.applicable_renderer_types
                 ]
-
             if not applicable_templates:
                 logger.debug(
                     f"View {rec['view_key']}: no transformation needed (type=none, no applicable templates)"
                 )
                 skipped += 1
                 continue
-
-            template = applicable_templates[0]  # Use first matching template
+            template = applicable_templates[0]
         else:
-            # View has an inline transformation — but we use library templates preferentially
             applicable_templates = []
             if engine_key:
                 applicable_templates = [
@@ -120,7 +150,6 @@ def prepare_presentation(
             if applicable_templates:
                 template = applicable_templates[0]
             else:
-                # Fall back to inline spec — skip since it's handled at render time
                 logger.debug(f"View {rec['view_key']}: inline transformation, no library template")
                 skipped += 1
                 continue
@@ -129,13 +158,11 @@ def prepare_presentation(
         scope = view_def.data_source.scope
 
         if scope == "per_item":
-            # Per-item views: find all outputs for this phase with distinct work_keys
             outputs = load_phase_outputs(
                 job_id=job_id,
                 phase_number=phase_number,
                 engine_key=engine_key,
             )
-            # Group by work_key, take the last pass for each
             work_outputs = _group_latest_by_work_key(outputs)
             for work_key, output in work_outputs.items():
                 section = f"{template.template_key}:{work_key}" if work_key else template.template_key
@@ -148,28 +175,22 @@ def prepare_presentation(
                     section=section,
                 ))
         else:
-            # Aggregated view: find the latest output for this phase/engine
             outputs = load_phase_outputs(
                 job_id=job_id,
                 phase_number=phase_number,
                 engine_key=engine_key,
             )
-            if not outputs:
-                # Try loading by chain — get the last engine output in the chain
-                if chain_key:
-                    outputs = load_phase_outputs(
-                        job_id=job_id,
-                        phase_number=phase_number,
-                    )
-
+            if not outputs and chain_key:
+                outputs = load_phase_outputs(
+                    job_id=job_id,
+                    phase_number=phase_number,
+                )
             if not outputs:
                 logger.warning(
                     f"No outputs found for view {rec['view_key']} "
                     f"(phase={phase_number}, engine={engine_key})"
                 )
                 continue
-
-            # Take the latest output (highest pass_number)
             latest = max(outputs, key=lambda o: o.get("pass_number", 0))
             tasks.append(TransformationTask(
                 view_key=rec["view_key"],
@@ -180,7 +201,112 @@ def prepare_presentation(
                 section=template.template_key,
             ))
 
-    # Execute tasks
+    return tasks, skipped, recommended
+
+
+def _run_single_task(
+    job_id: str,
+    task: TransformationTask,
+    transform_executor,
+    transform_registry_obj,
+) -> tuple[TransformationTaskResult, str]:
+    """Execute a single transformation task synchronously.
+
+    Returns:
+        (result, status) where status is 'completed', 'cached', or 'failed'
+    """
+    output_row = _load_output_by_id(job_id, task.output_id)
+    if output_row is None:
+        return TransformationTaskResult(
+            view_key=task.view_key,
+            output_id=task.output_id,
+            template_key=task.template_key,
+            section=task.section,
+            success=False,
+            error="Output not found",
+        ), "failed"
+
+    content = output_row["content"]
+
+    # Check cache
+    cached = load_presentation_cache(
+        output_id=task.output_id,
+        section=task.section,
+        source_content=content,
+    )
+    if cached is not None:
+        return TransformationTaskResult(
+            view_key=task.view_key,
+            output_id=task.output_id,
+            template_key=task.template_key,
+            section=task.section,
+            success=True,
+            cached=True,
+        ), "cached"
+
+    template = transform_registry_obj.get(task.template_key)
+    if template is None:
+        return TransformationTaskResult(
+            view_key=task.view_key,
+            output_id=task.output_id,
+            template_key=task.template_key,
+            section=task.section,
+            success=False,
+            error=f"Template not found: {task.template_key}",
+        ), "failed"
+
+    return None, template  # Signal that we need to run the actual transformation
+
+
+def _save_and_report(
+    task: TransformationTask,
+    transform_result,
+    content: str,
+) -> tuple[TransformationTaskResult, str]:
+    """Save transformation result and return task result."""
+    if transform_result.success:
+        save_presentation_cache(
+            output_id=task.output_id,
+            section=task.section,
+            structured_data=transform_result.data if isinstance(transform_result.data, dict) else {"data": transform_result.data},
+            source_content=content,
+            model_used=transform_result.model_used or "",
+        )
+        logger.info(
+            f"Transformed {task.view_key}/{task.section}: "
+            f"{transform_result.execution_time_ms}ms, "
+            f"model={transform_result.model_used}"
+        )
+        return TransformationTaskResult(
+            view_key=task.view_key,
+            output_id=task.output_id,
+            template_key=task.template_key,
+            section=task.section,
+            success=True,
+            model_used=transform_result.model_used,
+            execution_time_ms=transform_result.execution_time_ms,
+        ), "completed"
+    else:
+        logger.warning(
+            f"Transformation failed for {task.view_key}/{task.section}: "
+            f"{transform_result.error}"
+        )
+        return TransformationTaskResult(
+            view_key=task.view_key,
+            output_id=task.output_id,
+            template_key=task.template_key,
+            section=task.section,
+            success=False,
+            error=transform_result.error,
+            execution_time_ms=transform_result.execution_time_ms,
+        ), "failed"
+
+
+async def _execute_tasks_async(
+    job_id: str,
+    tasks: list[TransformationTask],
+) -> tuple[list[TransformationTaskResult], int, int, int]:
+    """Execute transformation tasks using async await (for FastAPI context)."""
     results = []
     cached_count = 0
     completed_count = 0
@@ -190,7 +316,7 @@ def prepare_presentation(
     transform_registry_obj = get_transformation_registry()
 
     for task in tasks:
-        # Check cache first
+        # Check output + cache
         output_row = _load_output_by_id(job_id, task.output_id)
         if output_row is None:
             results.append(TransformationTaskResult(
@@ -206,7 +332,6 @@ def prepare_presentation(
 
         content = output_row["content"]
 
-        # Check presentation_cache
         cached = load_presentation_cache(
             output_id=task.output_id,
             section=task.section,
@@ -225,7 +350,6 @@ def prepare_presentation(
             completed_count += 1
             continue
 
-        # Run transformation
         template = transform_registry_obj.get(task.template_key)
         if template is None:
             results.append(TransformationTaskResult(
@@ -239,8 +363,93 @@ def prepare_presentation(
             failed_count += 1
             continue
 
+        # Await the async executor
+        transform_result = await transform_executor.execute(
+            data=content,
+            transformation_type=template.transformation_type,
+            field_mapping=template.field_mapping,
+            llm_extraction_schema=template.llm_extraction_schema,
+            llm_prompt_template=template.llm_prompt_template,
+            stance_key=template.stance_key,
+            model=template.model or "claude-haiku-4-5-20251001",
+            model_fallback=template.model_fallback or "claude-sonnet-4-6",
+            max_tokens=template.max_tokens or 8000,
+        )
+
+        task_result, status = _save_and_report(task, transform_result, content)
+        results.append(task_result)
+        if status == "completed":
+            completed_count += 1
+        else:
+            failed_count += 1
+
+    return results, cached_count, completed_count, failed_count
+
+
+def _execute_tasks_sync(
+    job_id: str,
+    tasks: list[TransformationTask],
+) -> tuple[list[TransformationTaskResult], int, int, int]:
+    """Execute transformation tasks synchronously (for background threads)."""
+    results = []
+    cached_count = 0
+    completed_count = 0
+    failed_count = 0
+
+    transform_executor = get_transformation_executor()
+    transform_registry_obj = get_transformation_registry()
+
+    for task in tasks:
+        output_row = _load_output_by_id(job_id, task.output_id)
+        if output_row is None:
+            results.append(TransformationTaskResult(
+                view_key=task.view_key,
+                output_id=task.output_id,
+                template_key=task.template_key,
+                section=task.section,
+                success=False,
+                error="Output not found",
+            ))
+            failed_count += 1
+            continue
+
+        content = output_row["content"]
+
+        cached = load_presentation_cache(
+            output_id=task.output_id,
+            section=task.section,
+            source_content=content,
+        )
+        if cached is not None:
+            results.append(TransformationTaskResult(
+                view_key=task.view_key,
+                output_id=task.output_id,
+                template_key=task.template_key,
+                section=task.section,
+                success=True,
+                cached=True,
+            ))
+            cached_count += 1
+            completed_count += 1
+            continue
+
+        template = transform_registry_obj.get(task.template_key)
+        if template is None:
+            results.append(TransformationTaskResult(
+                view_key=task.view_key,
+                output_id=task.output_id,
+                template_key=task.template_key,
+                section=task.section,
+                success=False,
+                error=f"Template not found: {task.template_key}",
+            ))
+            failed_count += 1
+            continue
+
+        # Sync: create a new event loop (safe from background threads)
+        loop = asyncio.new_event_loop()
         try:
-            transform_result = asyncio.get_event_loop().run_until_complete(
+            transform_result = loop.run_until_complete(
                 transform_executor.execute(
                     data=content,
                     transformation_type=template.transformation_type,
@@ -253,75 +462,17 @@ def prepare_presentation(
                     max_tokens=template.max_tokens or 8000,
                 )
             )
-        except RuntimeError:
-            # No event loop — create one
-            loop = asyncio.new_event_loop()
-            try:
-                transform_result = loop.run_until_complete(
-                    transform_executor.execute(
-                        data=content,
-                        transformation_type=template.transformation_type,
-                        field_mapping=template.field_mapping,
-                        llm_extraction_schema=template.llm_extraction_schema,
-                        llm_prompt_template=template.llm_prompt_template,
-                        stance_key=template.stance_key,
-                        model=template.model or "claude-haiku-4-5-20251001",
-                        model_fallback=template.model_fallback or "claude-sonnet-4-6",
-                        max_tokens=template.max_tokens or 8000,
-                    )
-                )
-            finally:
-                loop.close()
+        finally:
+            loop.close()
 
-        if transform_result.success:
-            # Persist to presentation_cache
-            save_presentation_cache(
-                output_id=task.output_id,
-                section=task.section,
-                structured_data=transform_result.data if isinstance(transform_result.data, dict) else {"data": transform_result.data},
-                source_content=content,
-                model_used=transform_result.model_used or "",
-            )
-            results.append(TransformationTaskResult(
-                view_key=task.view_key,
-                output_id=task.output_id,
-                template_key=task.template_key,
-                section=task.section,
-                success=True,
-                model_used=transform_result.model_used,
-                execution_time_ms=transform_result.execution_time_ms,
-            ))
+        task_result, status = _save_and_report(task, transform_result, content)
+        results.append(task_result)
+        if status == "completed":
             completed_count += 1
-            logger.info(
-                f"Transformed {task.view_key}/{task.section}: "
-                f"{transform_result.execution_time_ms}ms, "
-                f"model={transform_result.model_used}"
-            )
         else:
-            results.append(TransformationTaskResult(
-                view_key=task.view_key,
-                output_id=task.output_id,
-                template_key=task.template_key,
-                section=task.section,
-                success=False,
-                error=transform_result.error,
-                execution_time_ms=transform_result.execution_time_ms,
-            ))
             failed_count += 1
-            logger.warning(
-                f"Transformation failed for {task.view_key}/{task.section}: "
-                f"{transform_result.error}"
-            )
 
-    return PresentationBridgeResult(
-        job_id=job_id,
-        tasks_planned=len(tasks),
-        tasks_completed=completed_count,
-        tasks_failed=failed_count,
-        tasks_skipped=skipped,
-        cached_results=cached_count,
-        details=results,
-    )
+    return results, cached_count, completed_count, failed_count
 
 
 def _get_recommended_views(job_id: str, plan_id: str) -> list[dict]:

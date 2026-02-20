@@ -54,10 +54,10 @@ async def prepare_presentation(request: PrepareRequest):
     For each recommended view with an applicable transformation template,
     extracts structured data from the stored prose and caches it.
     """
-    from src.presenter.presentation_bridge import prepare_presentation as do_prepare
+    from src.presenter.presentation_bridge import async_prepare_presentation
 
     try:
-        result = do_prepare(
+        result = await async_prepare_presentation(
             job_id=request.job_id,
             view_keys=request.view_keys,
         )
@@ -142,7 +142,7 @@ async def compose_presentation(request: ComposeRequest):
     Returns the complete PagePresentation.
     """
     from src.presenter.presentation_api import assemble_page
-    from src.presenter.presentation_bridge import prepare_presentation
+    from src.presenter.presentation_bridge import async_prepare_presentation
     from src.presenter.view_refiner import refine_views
 
     try:
@@ -160,9 +160,9 @@ async def compose_presentation(request: ComposeRequest):
             except Exception as e:
                 logger.warning(f"View refinement failed (continuing): {e}")
 
-        # Step 2: Prepare transformations
+        # Step 2: Prepare transformations (async — safe in FastAPI context)
         try:
-            bridge_result = prepare_presentation(job_id=request.job_id)
+            bridge_result = await async_prepare_presentation(job_id=request.job_id)
             logger.info(
                 f"Presentation prep complete: {bridge_result.tasks_completed} transformed, "
                 f"{bridge_result.cached_results} cached, {bridge_result.tasks_skipped} skipped"
