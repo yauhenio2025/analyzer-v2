@@ -232,13 +232,41 @@ def _execute_streaming_call(
         "messages": [{"role": "user", "content": user_message}],
     }
 
-    # 1M context window — also auto-enable if prompt is very large
+    # 1M context window decision.
+    #
+    # CRITICAL THROUGHPUT INSIGHT: The 1M beta endpoint appears to have severely
+    # reduced throughput (~2 chars/sec) compared to the standard endpoint (~50+ chars/sec)
+    # for the same input. We should AVOID the 1M beta whenever possible by reducing
+    # max_tokens to fit within the standard 200K context window.
+    #
+    # Standard context window: input_tokens + max_tokens <= 200K tokens
+    # If we can reduce max_tokens (typical extractions need 8-16K output, not 64K),
+    # we can often fit large inputs without the 1M beta.
     total_chars = len(system_prompt) + len(user_message)
-    use_beta = config.get("use_1m_context", False)
-    if not use_beta and total_chars > 600_000:
-        # ~150K tokens at 4 chars/token — approaching 200K limit, use 1M
-        logger.info(f"[{label}] Auto-enabling 1M context: {total_chars:,} chars in prompt")
-        use_beta = True
+    estimated_input_tokens = total_chars // 4
+    use_beta = config.get("use_1m_context", False) or (total_chars > 780_000)
+
+    STANDARD_CONTEXT_LIMIT = 200_000  # tokens
+    MIN_OUTPUT_TOKENS = 8_000  # minimum usable output for extractions
+
+    if use_beta:
+        # Check if we can avoid 1M beta by reducing max_tokens
+        max_safe_output = STANDARD_CONTEXT_LIMIT - estimated_input_tokens - 2_000  # 2K safety margin
+        if max_safe_output >= MIN_OUTPUT_TOKENS:
+            # We can fit in standard context with reduced output!
+            reduced_max = min(config["max_tokens"], max(max_safe_output, MIN_OUTPUT_TOKENS))
+            logger.info(
+                f"[{label}] Avoiding 1M beta for throughput: ~{estimated_input_tokens:,} input tokens, "
+                f"max_tokens {config['max_tokens']} → {reduced_max} to fit standard 200K context"
+            )
+            kwargs["max_tokens"] = reduced_max
+            use_beta = False
+        else:
+            # Input truly needs 1M context (>190K input tokens)
+            logger.info(
+                f"[{label}] Using 1M beta: ~{estimated_input_tokens:,} input tokens "
+                f"exceeds standard context even with min output ({max_safe_output:,} available)"
+            )
 
     # Dynamic effort scaling based on input size.
     # Extended thinking on very large inputs (>100K tokens) is extremely slow
@@ -281,99 +309,134 @@ def _execute_streaming_call(
     HEARTBEAT_LOG_INTERVAL = 30  # Log every 30s to confirm call is alive
     MIN_SALVAGEABLE_CHARS = 5000  # Minimum text chars to salvage on connection error
 
-    if use_beta:
-        # Use beta endpoint for 1M context window
-        stream_cm = client.beta.messages.stream(
-            **kwargs,
-            betas=["context-1m-2025-08-07"],
-        )
-    else:
-        stream_cm = client.messages.stream(**kwargs)
-
+    # Track whether we optimistically downgraded from 1M beta (for fallback)
+    downgraded_from_1m = config.get("use_1m_context", False) and not use_beta
     connection_error = None
 
-    try:
-        with stream_cm as stream:
-            for event in stream:
-                chunk_count += 1
+    # Streaming loop: runs once normally, or twice if we need to fall back to 1M beta
+    # after the standard endpoint rejects the input as too long.
+    for stream_attempt in range(2):
+        if stream_attempt == 1:
+            # Second attempt: 1M beta fallback (only reached on context_length error)
+            raw_text = ""
+            thinking_text = ""
+            chunk_count = 0
+            last_chunk_time = time.time()
+            last_heartbeat_log = time.time()
 
-                # --- Accumulate text from stream deltas ---
-                if hasattr(event, "type") and event.type == "content_block_delta":
-                    delta = event.delta
-                    if hasattr(delta, "type"):
-                        if delta.type == "text_delta" and hasattr(delta, "text"):
-                            raw_text += delta.text
-                        elif delta.type == "thinking_delta" and hasattr(delta, "thinking"):
-                            thinking_text += delta.thinking
-
-                # Track output tokens from message_delta events
-                if hasattr(event, "type") and event.type == "message_delta":
-                    if hasattr(event, "usage") and hasattr(event.usage, "output_tokens"):
-                        output_tokens = event.usage.output_tokens
-
-                # Heartbeat check
-                now = time.time()
-                if now - last_chunk_time > HEARTBEAT_TIMEOUT:
-                    raise TimeoutError(
-                        f"[{label}] No data received for {HEARTBEAT_TIMEOUT}s — connection stalled"
-                    )
-                last_chunk_time = now
-
-                # Periodic heartbeat logging (now includes accumulated text size)
-                if now - last_heartbeat_log > HEARTBEAT_LOG_INTERVAL:
-                    elapsed = int(now - start_time)
-                    logger.info(
-                        f"[{label}] Still streaming: {chunk_count} chunks, {elapsed}s elapsed, "
-                        f"{len(raw_text):,} text chars, {len(thinking_text):,} thinking chars"
-                    )
-                    last_heartbeat_log = now
-
-                # Cancellation check during streaming
-                if cancellation_check and cancellation_check():
-                    raise InterruptedError(f"[{label}] Cancelled during streaming")
-
-            # Stream completed normally — get final message for accurate counts
-            response = stream.get_final_message()
-
-            # Use final message content (most accurate, includes all blocks)
-            final_text = ""
-            final_thinking = ""
-            for block in response.content:
-                if hasattr(block, "thinking"):
-                    final_thinking += block.thinking
-                elif hasattr(block, "text"):
-                    final_text += block.text
-
-            # Prefer final message content if available (belt-and-suspenders)
-            if len(final_text) >= len(raw_text):
-                raw_text = final_text
-            if len(final_thinking) >= len(thinking_text):
-                thinking_text = final_thinking
-
-            input_tokens = response.usage.input_tokens
-            output_tokens = response.usage.output_tokens
-
-    except InterruptedError:
-        raise  # Don't salvage on explicit cancellation
-
-    except Exception as e:
-        # Check if we accumulated enough text to salvage
-        if len(raw_text.strip()) >= MIN_SALVAGEABLE_CHARS:
-            duration_ms = int((time.time() - start_time) * 1000)
-            logger.warning(
-                f"[{label}] Connection lost after {chunk_count} chunks ({duration_ms}ms), "
-                f"salvaging {len(raw_text):,} text chars + {len(thinking_text):,} thinking chars. "
-                f"Error: {e}"
+        if use_beta:
+            stream_cm = client.beta.messages.stream(
+                **kwargs,
+                betas=["context-1m-2025-08-07"],
             )
-            # Estimate tokens if we don't have accurate counts
-            if input_tokens == 0:
-                input_tokens = total_chars // 4
-            if output_tokens == 0:
-                output_tokens = len(raw_text) // 4
-            connection_error = str(e)
-            # Fall through to return partial result
         else:
-            raise  # Not enough output to salvage — let retry logic handle it
+            stream_cm = client.messages.stream(**kwargs)
+
+        try:
+            with stream_cm as stream:
+                for event in stream:
+                    chunk_count += 1
+
+                    # --- Accumulate text from stream deltas ---
+                    if hasattr(event, "type") and event.type == "content_block_delta":
+                        delta = event.delta
+                        if hasattr(delta, "type"):
+                            if delta.type == "text_delta" and hasattr(delta, "text"):
+                                raw_text += delta.text
+                            elif delta.type == "thinking_delta" and hasattr(delta, "thinking"):
+                                thinking_text += delta.thinking
+
+                    # Track output tokens from message_delta events
+                    if hasattr(event, "type") and event.type == "message_delta":
+                        if hasattr(event, "usage") and hasattr(event.usage, "output_tokens"):
+                            output_tokens = event.usage.output_tokens
+
+                    # Heartbeat check
+                    now = time.time()
+                    if now - last_chunk_time > HEARTBEAT_TIMEOUT:
+                        raise TimeoutError(
+                            f"[{label}] No data received for {HEARTBEAT_TIMEOUT}s — connection stalled"
+                        )
+                    last_chunk_time = now
+
+                    # Periodic heartbeat logging
+                    if now - last_heartbeat_log > HEARTBEAT_LOG_INTERVAL:
+                        elapsed = int(now - start_time)
+                        beta_tag = " [1M]" if use_beta else " [std]"
+                        logger.info(
+                            f"[{label}]{beta_tag} Still streaming: {chunk_count} chunks, "
+                            f"{elapsed}s elapsed, {len(raw_text):,} text chars, "
+                            f"{len(thinking_text):,} thinking chars"
+                        )
+                        last_heartbeat_log = now
+
+                    # Cancellation check during streaming
+                    if cancellation_check and cancellation_check():
+                        raise InterruptedError(f"[{label}] Cancelled during streaming")
+
+                # Stream completed normally — get final message for accurate counts
+                response = stream.get_final_message()
+
+                # Use final message content (most accurate, includes all blocks)
+                final_text = ""
+                final_thinking = ""
+                for block in response.content:
+                    if hasattr(block, "thinking"):
+                        final_thinking += block.thinking
+                    elif hasattr(block, "text"):
+                        final_text += block.text
+
+                # Prefer final message content if available (belt-and-suspenders)
+                if len(final_text) >= len(raw_text):
+                    raw_text = final_text
+                if len(final_thinking) >= len(thinking_text):
+                    thinking_text = final_thinking
+
+                input_tokens = response.usage.input_tokens
+                output_tokens = response.usage.output_tokens
+
+            break  # Success — exit the stream_attempt loop
+
+        except InterruptedError:
+            raise  # Don't salvage on explicit cancellation
+
+        except Exception as e:
+            error_str = str(e).lower()
+            is_context_error = (
+                "prompt is too long" in error_str
+                or "context_length_exceeded" in error_str
+                or "too many tokens" in error_str
+                or ("max_tokens" in error_str and "maximum allowed" in error_str)
+            )
+
+            # If standard endpoint rejected input, fall back to 1M beta
+            if is_context_error and downgraded_from_1m and not use_beta and stream_attempt == 0:
+                logger.warning(
+                    f"[{label}] Standard endpoint rejected input "
+                    f"({total_chars:,} chars, ~{estimated_input_tokens:,} est tokens). "
+                    f"Falling back to 1M beta with original max_tokens={config['max_tokens']}"
+                )
+                use_beta = True
+                downgraded_from_1m = False
+                kwargs["max_tokens"] = config["max_tokens"]
+                continue  # Retry with 1M beta
+
+            # Check if we accumulated enough text to salvage
+            if len(raw_text.strip()) >= MIN_SALVAGEABLE_CHARS:
+                duration_ms = int((time.time() - start_time) * 1000)
+                logger.warning(
+                    f"[{label}] Connection lost after {chunk_count} chunks ({duration_ms}ms), "
+                    f"salvaging {len(raw_text):,} text chars + {len(thinking_text):,} thinking chars. "
+                    f"Error: {e}"
+                )
+                if input_tokens == 0:
+                    input_tokens = total_chars // 4
+                if output_tokens == 0:
+                    output_tokens = len(raw_text) // 4
+                connection_error = str(e)
+                break  # Fall through to return partial result
+            else:
+                raise  # Not enough output to salvage — let retry logic handle it
 
     duration_ms = int((time.time() - start_time) * 1000)
 
