@@ -84,12 +84,12 @@ MAX_RETRIES = 5
 RETRY_DELAYS = [30, 60, 90, 120, 180]  # seconds
 HEARTBEAT_TIMEOUT = 120  # seconds without a chunk before considering stalled
 
-# Document chunking thresholds
-# At 200K chars (~50K tokens), generation speed is ~43 tokens/s (fast).
-# At 735K chars (~183K tokens), generation speed drops to ~0.5 tokens/s (O(n²) attention).
-# Chunking keeps each call fast by limiting input size.
-CHUNK_THRESHOLD = 200_000  # chars — above this, use chunking
-MAX_CHUNK_CHARS = 180_000  # Target chunk size (with headroom for system prompt)
+# Document chunking — DISABLED
+# The whole book goes as one file. The 1M context window handles up to ~4M chars.
+# The O(n²) attention slowdown (0.5 tokens/s at 183K tokens) was observed with
+# STREAMING — sync API generates server-side at full speed regardless of input size.
+CHUNK_THRESHOLD = 999_999_999  # effectively disabled — send whole book
+MAX_CHUNK_CHARS = 180_000  # unused but kept for reference
 
 
 def resolve_model_config(
@@ -264,22 +264,33 @@ def _execute_sync_call(
     )
     start_time = time.time()
 
-    # Smart max_tokens: reduce if needed to fit standard 200K context window
-    # and avoid the slow 1M beta endpoint.
     total_chars = len(system_prompt) + len(user_message)
     estimated_input_tokens = total_chars // 4
     max_tokens = config["max_tokens"]
 
+    # Decide: standard 200K context or 1M beta?
+    # Use 1M beta when input is too large to fit in standard context.
     STANDARD_CONTEXT_LIMIT = 200_000  # tokens
     MIN_OUTPUT_TOKENS = 8_000
 
-    headroom = STANDARD_CONTEXT_LIMIT - estimated_input_tokens - 2_000
-    if headroom < max_tokens and headroom >= MIN_OUTPUT_TOKENS:
-        logger.info(
-            f"[{label}] Reducing max_tokens {max_tokens} → {headroom} "
-            f"to fit standard 200K context (~{estimated_input_tokens:,} input tokens)"
-        )
-        max_tokens = headroom
+    use_beta = config.get("use_1m_context", False) or (estimated_input_tokens > 180_000)
+
+    if not use_beta:
+        # Try to fit in standard 200K context by reducing max_tokens if needed
+        headroom = STANDARD_CONTEXT_LIMIT - estimated_input_tokens - 2_000
+        if headroom < max_tokens and headroom >= MIN_OUTPUT_TOKENS:
+            logger.info(
+                f"[{label}] Reducing max_tokens {max_tokens} → {headroom} "
+                f"to fit standard 200K context (~{estimated_input_tokens:,} input tokens)"
+            )
+            max_tokens = headroom
+        elif headroom < MIN_OUTPUT_TOKENS:
+            # Input too large for standard context even with minimal output
+            use_beta = True
+            logger.info(
+                f"[{label}] Input too large for standard context "
+                f"(~{estimated_input_tokens:,} tokens), switching to 1M beta"
+            )
 
     kwargs: dict[str, Any] = {
         "model": config["model"],
@@ -288,12 +299,19 @@ def _execute_sync_call(
         "messages": [{"role": "user", "content": user_message}],
     }
 
+    beta_tag = "[1M]" if use_beta else "[std]"
     logger.info(
-        f"[{label}] Sync call starting: ~{estimated_input_tokens:,} input tokens, "
+        f"[{label}] Sync call {beta_tag}: ~{estimated_input_tokens:,} input tokens, "
         f"max_tokens={max_tokens}"
     )
 
-    response = client.messages.create(**kwargs)
+    if use_beta:
+        response = client.beta.messages.create(
+            **kwargs,
+            betas=["context-1m-2025-08-07"],
+        )
+    else:
+        response = client.messages.create(**kwargs)
 
     duration_ms = int((time.time() - start_time) * 1000)
 
