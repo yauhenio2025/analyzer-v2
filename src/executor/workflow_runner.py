@@ -40,6 +40,12 @@ logger = logging.getLogger(__name__)
 # Max concurrent phases (for parallel execution of independent phases)
 MAX_PHASE_CONCURRENCY = 2
 
+# Thread-safe guard against double-execution of the same job.
+# If execute_plan() is somehow called twice for the same job_id
+# (observed in production — cause TBD), the second call exits immediately.
+_active_jobs: set[str] = set()
+_active_jobs_lock = threading.Lock()
+
 
 def execute_plan(
     job_id: str,
@@ -54,6 +60,16 @@ def execute_plan(
     3. Runs phases in dependency order
     4. Updates job status on completion/failure
     """
+    # Guard against double-execution
+    with _active_jobs_lock:
+        if job_id in _active_jobs:
+            logger.warning(
+                f"DUPLICATE EXECUTION BLOCKED: job {job_id} is already running. "
+                f"Exiting this thread."
+            )
+            return
+        _active_jobs.add(job_id)
+
     try:
         update_job_status(job_id, "running")
 
@@ -217,6 +233,8 @@ def execute_plan(
 
     finally:
         clear_cancellation(job_id)
+        with _active_jobs_lock:
+            _active_jobs.discard(job_id)
 
 
 def _run_parallel_phases(
