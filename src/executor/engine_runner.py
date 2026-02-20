@@ -19,10 +19,29 @@ Ported from The Critic's `_call_claude_raw()` with plan-driven model selection.
 
 import json
 import logging
+import os
 import time
 from typing import Any, Callable, Optional
 
 logger = logging.getLogger(__name__)
+
+# --- Sync vs Streaming strategy ---
+#
+# On Render (and similar PaaS), streaming SSE throughput is ~100x slower
+# than sync API calls (0.5 vs 42+ tokens/s). This is due to reverse proxy
+# buffering of SSE events.
+#
+# Sync API: Full response generated server-side, returned in one HTTP response.
+#   - Pro: Full speed (~42 tokens/s), simpler, more reliable
+#   - Con: No extended thinking (thinking requires streaming), no partial output
+#
+# Streaming API: Response streamed as SSE events.
+#   - Pro: Extended thinking, partial output salvage, progress visibility
+#   - Con: 100x slower on Render, complex heartbeat/timeout logic
+#
+# Default: SYNC for all calls (massive speed improvement on Render).
+# Set ENABLE_STREAMING=true to use streaming with thinking (for local dev).
+PREFER_SYNC = os.environ.get("ENABLE_STREAMING", "").lower() not in ("1", "true", "yes")
 
 # --- Model configurations ---
 
@@ -138,9 +157,16 @@ def run_engine_call(
         config["effort"] = None
     label = label or f"Phase {phase_number}"
 
+    # Decide: sync or streaming?
+    # Sync is the default on Render (100x faster). Streaming only when explicitly enabled.
+    use_sync = PREFER_SYNC or force_no_thinking
+    if use_sync:
+        config["effort"] = None  # Thinking requires streaming — disable for sync
+
     total_input_chars = len(system_prompt) + len(user_message)
     logger.info(
         f"[{label}] Starting LLM call: model={config['model']}, "
+        f"mode={'sync' if use_sync else 'streaming'}, "
         f"effort={config.get('effort', 'none')}, "
         f"1M={'yes' if config['use_1m_context'] else 'no'}, "
         f"total_chars={total_input_chars:,} (~{total_input_chars//4:,} tokens), "
@@ -162,8 +188,7 @@ def run_engine_call(
             time.sleep(delay)
 
         try:
-            # Use sync call for no-thinking extractions (bypasses Render streaming bottleneck)
-            if force_no_thinking:
+            if use_sync:
                 result = _execute_sync_call(
                     system_prompt=system_prompt,
                     user_message=user_message,
@@ -216,15 +241,15 @@ def _execute_sync_call(
 ) -> dict:
     """Execute a synchronous (non-streaming) LLM call.
 
-    Used for chunk extraction calls where thinking is disabled. Synchronous
-    calls bypass the streaming throughput bottleneck on Render free tier
-    (streaming on Render delivers events at ~0.5/s vs ~38 tokens/s locally,
-    a 100x degradation). Synchronous calls generate the full response
-    server-side and return it in one HTTP response.
+    Bypasses the streaming throughput bottleneck on Render (streaming SSE
+    events arrive at ~0.5/s vs ~42 tokens/s for sync). The full response
+    is generated server-side and returned in one HTTP response.
 
     Requirements:
-    - No thinking (thinking requires streaming)
-    - Response time < 5 minutes (the timeout)
+    - No extended thinking (thinking requires streaming)
+
+    Timeout: 20 min read timeout handles up to ~50K output tokens at 42 tok/s.
+    Typical outputs: 8-16K tokens (extraction), 16-32K tokens (synthesis).
     """
     import httpx
     from anthropic import Anthropic
@@ -232,22 +257,41 @@ def _execute_sync_call(
     client = Anthropic(
         timeout=httpx.Timeout(
             connect=60.0,
-            read=600.0,     # 10 min — generous for large inputs
+            read=1200.0,    # 20 min — handles large synthesis outputs
             write=120.0,    # 2 min — large prompts take time to send
             pool=60.0,
         ),
     )
     start_time = time.time()
 
+    # Smart max_tokens: reduce if needed to fit standard 200K context window
+    # and avoid the slow 1M beta endpoint.
+    total_chars = len(system_prompt) + len(user_message)
+    estimated_input_tokens = total_chars // 4
+    max_tokens = config["max_tokens"]
+
+    STANDARD_CONTEXT_LIMIT = 200_000  # tokens
+    MIN_OUTPUT_TOKENS = 8_000
+
+    headroom = STANDARD_CONTEXT_LIMIT - estimated_input_tokens - 2_000
+    if headroom < max_tokens and headroom >= MIN_OUTPUT_TOKENS:
+        logger.info(
+            f"[{label}] Reducing max_tokens {max_tokens} → {headroom} "
+            f"to fit standard 200K context (~{estimated_input_tokens:,} input tokens)"
+        )
+        max_tokens = headroom
+
     kwargs: dict[str, Any] = {
         "model": config["model"],
-        "max_tokens": config["max_tokens"],
+        "max_tokens": max_tokens,
         "system": system_prompt,
         "messages": [{"role": "user", "content": user_message}],
     }
 
-    # No thinking, no beta — simple synchronous call
-    logger.info(f"[{label}] Sync call starting (no streaming)")
+    logger.info(
+        f"[{label}] Sync call starting: ~{estimated_input_tokens:,} input tokens, "
+        f"max_tokens={max_tokens}"
+    )
 
     response = client.messages.create(**kwargs)
 
