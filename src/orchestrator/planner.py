@@ -301,10 +301,8 @@ def generate_plan(request: OrchestratorPlanRequest) -> WorkflowExecutionPlan:
         with client.messages.stream(
             model=model,
             max_tokens=16000,
-            thinking={
-                "type": "enabled",
-                "budget_tokens": 10000,
-            },
+            thinking={"type": "adaptive"},
+            output_config={"effort": "medium"},
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": user_prompt}],
         ) as stream:
@@ -457,7 +455,8 @@ Return ONLY the JSON — no markdown fences, no explanation outside the JSON."""
         with client.messages.stream(
             model=model,
             max_tokens=16000,
-            thinking={"type": "enabled", "budget_tokens": 8000},
+            thinking={"type": "adaptive"},
+            output_config={"effort": "medium"},
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": refinement_prompt}],
         ) as stream:

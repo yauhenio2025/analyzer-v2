@@ -28,20 +28,17 @@ MODEL_CONFIGS = {
         # Sonnet 4.6 replaces Opus 4.5 — faster, 1M context, 64K output
         "model": "claude-sonnet-4-6",
         "max_tokens": 64000,
-        "thinking_budget": 10000,
-        "use_thinking": True,
+        "effort": "high",  # adaptive thinking with high effort for deep analysis
     },
     "sonnet": {
         "model": "claude-sonnet-4-6",
         "max_tokens": 64000,
-        "thinking_budget": 5000,
-        "use_thinking": True,
+        "effort": "medium",  # adaptive thinking with medium effort (recommended default)
     },
     "haiku": {
         "model": "claude-haiku-4-5-20251001",
         "max_tokens": 16000,
-        "thinking_budget": 0,
-        "use_thinking": False,
+        "effort": None,  # no thinking for Haiku
     },
 }
 
@@ -88,9 +85,9 @@ def resolve_model_config(
     config = dict(MODEL_CONFIGS[model_key])
     config["use_1m_context"] = requires_full_documents
 
-    # Deep depth gets higher thinking budget
-    if depth == "deep" and config["use_thinking"]:
-        config["thinking_budget"] = max(config["thinking_budget"], 10000)
+    # Deep depth upgrades effort to high
+    if depth == "deep" and config.get("effort"):
+        config["effort"] = "high"
 
     return config
 
@@ -127,7 +124,7 @@ def run_engine_call(
 
     logger.info(
         f"[{label}] Starting LLM call: model={config['model']}, "
-        f"thinking={'enabled' if config['use_thinking'] else 'disabled'}, "
+        f"effort={config.get('effort', 'none')}, "
         f"1M={'yes' if config['use_1m_context'] else 'no'}, "
         f"system_len={len(system_prompt):,}, user_len={len(user_message):,}"
     )
@@ -232,12 +229,11 @@ def _execute_streaming_call(
         "messages": [{"role": "user", "content": user_message}],
     }
 
-    # Extended thinking
-    if config["use_thinking"] and config["thinking_budget"] > 0:
-        kwargs["thinking"] = {
-            "type": "enabled",
-            "budget_tokens": config["thinking_budget"],
-        }
+    # Adaptive thinking (GA on Sonnet 4.6 / Opus 4.6 — no beta header needed)
+    # Uses output_config.effort instead of deprecated budget_tokens
+    if config.get("effort"):
+        kwargs["thinking"] = {"type": "adaptive"}
+        kwargs["output_config"] = {"effort": config["effort"]}
 
     # 1M context window — also auto-enable if prompt is very large
     total_chars = len(system_prompt) + len(user_message)
