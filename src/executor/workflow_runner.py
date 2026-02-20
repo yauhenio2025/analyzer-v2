@@ -27,7 +27,6 @@ from src.executor.job_manager import (
     save_phase_result,
     update_job_progress,
     update_job_status,
-    update_job_tokens,
 )
 from src.executor.phase_runner import run_phase
 from src.executor.schemas import PhaseResult, PhaseStatus
@@ -390,31 +389,9 @@ def _record_phase_result(
         },
     )
 
-    # Update token counts
-    if result.total_tokens > 0:
-        # Count LLM calls from engine results
-        llm_calls = 0
-        if result.engine_results:
-            llm_calls = sum(len(passes) for passes in result.engine_results.values())
-        if result.work_results:
-            for work_engines in result.work_results.values():
-                llm_calls += sum(len(passes) for passes in work_engines.values())
-
-        input_tokens = 0
-        output_tokens = 0
-        if result.engine_results:
-            for passes in result.engine_results.values():
-                for p in passes:
-                    input_tokens += p.input_tokens
-                    output_tokens += p.output_tokens
-        if result.work_results:
-            for work_engines in result.work_results.values():
-                for passes in work_engines.values():
-                    for p in passes:
-                        input_tokens += p.input_tokens
-                        output_tokens += p.output_tokens
-
-        update_job_tokens(job_id, llm_calls, input_tokens, output_tokens)
+    # Token counts are now updated INCREMENTALLY in chain_runner after each
+    # LLM call (update_job_tokens per pass). No phase-level update needed —
+    # doing so would double-count.
 
     logger.info(
         f"Phase {pn} ({plan_phase.phase_name}): {result.status.value}, "

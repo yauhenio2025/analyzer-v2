@@ -27,6 +27,7 @@ from src.executor.context_broker import (
     assemble_inner_pass_context,
 )
 from src.executor.engine_runner import run_engine_call, run_engine_call_auto
+from src.executor.job_manager import update_job_tokens
 from src.executor.output_store import (
     get_completed_passes,
     load_engine_last_pass_content,
@@ -395,6 +396,16 @@ def _run_engine_passes(
             parent_id=None,  # TODO: lineage tracking
         )
 
+        # Update job-level token counters INCREMENTALLY after each LLM call.
+        # Previously only updated after full phase completion — counter stayed
+        # at 0 for 30+ min during multi-engine phases.
+        update_job_tokens(
+            job_id,
+            llm_calls=1,
+            input_tokens=result["input_tokens"],
+            output_tokens=result["output_tokens"],
+        )
+
         logger.info(
             f"  Pass {pass_prompt.pass_number}/{len(pass_prompts)} "
             f"({pass_prompt.pass_label}): "
@@ -486,6 +497,14 @@ def _run_single_engine_call(
         work_key=work_key,
         role="extraction",
         model_used=result["model_used"],
+        input_tokens=result["input_tokens"],
+        output_tokens=result["output_tokens"],
+    )
+
+    # Incremental token counter update
+    update_job_tokens(
+        job_id,
+        llm_calls=1,
         input_tokens=result["input_tokens"],
         output_tokens=result["output_tokens"],
     )
