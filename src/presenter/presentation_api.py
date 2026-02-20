@@ -385,10 +385,13 @@ def _load_aggregated_data(
     for ek in search_engine_keys:
         templates = transform_registry.for_engine(ek)
         for t in templates:
+            # For chain-backed views, skip freshness check: the bridge caches
+            # using the single engine output, but raw_prose here is the
+            # concatenation of ALL chain outputs — hash will never match.
             cached = load_presentation_cache(
                 output_id=latest["id"],
                 section=t.template_key,
-                source_content=raw_prose,
+                source_content=None if (chain_key and not engine_key) else raw_prose,
             )
             if cached is not None:
                 structured_data = cached
@@ -482,10 +485,13 @@ def _load_per_item_data(
             templates = transform_registry.for_engine(ek)
             for t in templates:
                 section = f"{t.template_key}:{work_key}"
+                # Skip freshness check for chain-backed per-item views:
+                # bridge caches with single engine output hash, but content
+                # here is combined from all chain engines — hash won't match.
                 cached = load_presentation_cache(
                     output_id=output["id"],
                     section=section,
-                    source_content=content,
+                    source_content=None if (chain_key and not engine_key) else content,
                 )
                 if cached is not None:
                     structured = cached
