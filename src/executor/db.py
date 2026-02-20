@@ -153,6 +153,7 @@ def _migrate_postgres():
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS plan_data JSONB",
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS document_ids JSONB DEFAULT '{}'",
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS cancel_token VARCHAR(64)",
+        "ALTER TABLE presentation_cache ALTER COLUMN section TYPE VARCHAR(200)",
     ]
     with get_connection() as conn:
         cursor = conn.cursor()
@@ -211,7 +212,7 @@ def _init_postgres():
     CREATE TABLE IF NOT EXISTS presentation_cache (
         id SERIAL PRIMARY KEY,
         output_id VARCHAR(100) NOT NULL,
-        section VARCHAR(50) NOT NULL,
+        section VARCHAR(200) NOT NULL,
         source_hash VARCHAR(64) NOT NULL,
         structured_data JSONB NOT NULL,
         model_used VARCHAR(100),
