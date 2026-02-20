@@ -41,12 +41,12 @@
   - `src/executor/__init__.py:1-20` - Module architecture docstring
   - `src/executor/schemas.py:1-170` - JobStatus, PhaseStatus, EngineCallResult, PhaseResult, JobProgress, ExecutorJob, StartJobRequest, JobStatusResponse, PhaseOutputSummary, DocumentUpload, DocumentRecord
   - `src/executor/db.py:1-283` - Dual-backend DB abstraction (Postgres via psycopg2 + SQLite), init_db(), execute(), 4 tables
-  - `src/executor/engine_runner.py:1-274` - Atomic LLM call: MODEL_CONFIGS (opus/sonnet/haiku), PHASE_MODEL_DEFAULTS, streaming with extended thinking, 1M context beta, heartbeat monitoring, exponential backoff retry (5 attempts)
+  - `src/executor/engine_runner.py:1-464` - Atomic LLM call: MODEL_CONFIGS (opus/sonnet/haiku), PHASE_MODEL_DEFAULTS, streaming with adaptive thinking, smart 1M context avoidance (prefer standard 200K by reducing max_tokens), auto-fallback to 1M beta, dynamic effort scaling for large inputs, partial output salvage on connection drop, heartbeat monitoring with [std]/[1M] tags, exponential backoff retry (5 attempts)
   - `src/executor/context_broker.py:1-200` - Cross-phase context assembly with emphasis injection, inner-pass context threading, chain context forwarding, phase_max_chars_override (M5)
   - `src/executor/chain_runner.py:1-494` - Sequential chain execution using capability_composer, multi-pass operationalization support, run_chain() + run_single_engine()
   - `src/executor/phase_runner.py:1-610` - Phase resolution (chain_key/engine_key), per-work iteration with ThreadPoolExecutor, plan override application, supplementary chain execution (M5), _combine_with_distilled_analysis (M5)
   - `src/executor/workflow_runner.py:1-481` - Top-level DAG execution, dependency-aware parallel phases, progress tracking, context_char_overrides threading (M5), execute_plan() + start_execution_thread()
-  - `src/executor/job_manager.py:1-240` - Job lifecycle (create/update/cancel/delete), progress updates, in-memory cancellation flags, DB persistence
+  - `src/executor/job_manager.py:1-420` - Job lifecycle (create/update/cancel/delete), progress updates, in-memory cancellation flags, DB persistence, recover_orphaned_jobs() for startup cleanup, check_stale_job() for on-read detection (>3h running → failed)
   - `src/executor/output_store.py:1-256` - Incremental prose output persistence with lineage, presentation cache with source_hash freshness
   - `src/executor/document_store.py:1-97` - Store/retrieve uploaded document texts
   - `src/api/routes/executor.py:1-200` - 11 REST endpoints for jobs, documents
