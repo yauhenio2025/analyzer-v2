@@ -162,13 +162,22 @@ def run_engine_call(
             time.sleep(delay)
 
         try:
-            result = _execute_streaming_call(
-                system_prompt=system_prompt,
-                user_message=user_message,
-                config=config,
-                label=label,
-                cancellation_check=cancellation_check,
-            )
+            # Use sync call for no-thinking extractions (bypasses Render streaming bottleneck)
+            if force_no_thinking:
+                result = _execute_sync_call(
+                    system_prompt=system_prompt,
+                    user_message=user_message,
+                    config=config,
+                    label=label,
+                )
+            else:
+                result = _execute_streaming_call(
+                    system_prompt=system_prompt,
+                    user_message=user_message,
+                    config=config,
+                    label=label,
+                    cancellation_check=cancellation_check,
+                )
             result["retries"] = attempt
             logger.info(
                 f"[{label}] Completed: {result['input_tokens']}+{result['output_tokens']} tokens, "
@@ -197,6 +206,75 @@ def run_engine_call(
     raise RuntimeError(
         f"[{label}] Failed after {MAX_RETRIES} attempts. Last error: {last_error}"
     )
+
+
+def _execute_sync_call(
+    system_prompt: str,
+    user_message: str,
+    config: dict,
+    label: str,
+) -> dict:
+    """Execute a synchronous (non-streaming) LLM call.
+
+    Used for chunk extraction calls where thinking is disabled. Synchronous
+    calls bypass the streaming throughput bottleneck on Render free tier
+    (streaming on Render delivers events at ~0.5/s vs ~38 tokens/s locally,
+    a 100x degradation). Synchronous calls generate the full response
+    server-side and return it in one HTTP response.
+
+    Requirements:
+    - No thinking (thinking requires streaming)
+    - Response time < 5 minutes (the timeout)
+    """
+    import httpx
+    from anthropic import Anthropic
+
+    client = Anthropic(
+        timeout=httpx.Timeout(
+            connect=60.0,
+            read=600.0,     # 10 min — generous for large inputs
+            write=120.0,    # 2 min — large prompts take time to send
+            pool=60.0,
+        ),
+    )
+    start_time = time.time()
+
+    kwargs: dict[str, Any] = {
+        "model": config["model"],
+        "max_tokens": config["max_tokens"],
+        "system": system_prompt,
+        "messages": [{"role": "user", "content": user_message}],
+    }
+
+    # No thinking, no beta — simple synchronous call
+    logger.info(f"[{label}] Sync call starting (no streaming)")
+
+    response = client.messages.create(**kwargs)
+
+    duration_ms = int((time.time() - start_time) * 1000)
+
+    raw_text = ""
+    for block in response.content:
+        if hasattr(block, "text"):
+            raw_text += block.text
+
+    if not raw_text.strip():
+        raise RuntimeError(f"[{label}] Empty response from {config['model']}")
+
+    logger.info(
+        f"[{label}] Sync call completed: {response.usage.input_tokens}+"
+        f"{response.usage.output_tokens} tokens, {duration_ms}ms, "
+        f"{len(raw_text):,} chars"
+    )
+
+    return {
+        "content": raw_text.strip(),
+        "model_used": config["model"],
+        "input_tokens": response.usage.input_tokens,
+        "output_tokens": response.usage.output_tokens,
+        "thinking_tokens": 0,
+        "duration_ms": duration_ms,
+    }
 
 
 def _execute_streaming_call(
