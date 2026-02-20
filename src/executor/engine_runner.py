@@ -25,15 +25,16 @@ logger = logging.getLogger(__name__)
 
 MODEL_CONFIGS = {
     "opus": {
-        # Sonnet 4.6 replaces Opus 4.5 — faster, 1M context, 64K output
+        # Sonnet 4.6 — medium effort is Anthropic's recommended default.
+        # "high" effort causes 15+ min thinking phases on 180K token inputs.
         "model": "claude-sonnet-4-6",
-        "max_tokens": 64000,
-        "effort": "high",  # adaptive thinking with high effort for deep analysis
+        "max_tokens": 16000,
+        "effort": "medium",
     },
     "sonnet": {
         "model": "claude-sonnet-4-6",
-        "max_tokens": 64000,
-        "effort": "medium",  # adaptive thinking with medium effort (recommended default)
+        "max_tokens": 16000,
+        "effort": "medium",
     },
     "haiku": {
         "model": "claude-haiku-4-5-20251001",
@@ -85,9 +86,9 @@ def resolve_model_config(
     config = dict(MODEL_CONFIGS[model_key])
     config["use_1m_context"] = requires_full_documents
 
-    # Deep depth upgrades effort to high
-    if depth == "deep" and config.get("effort"):
-        config["effort"] = "high"
+    # Note: We no longer upgrade effort to "high" for deep depth.
+    # "high" effort on large inputs (180K+ tokens) causes 15+ min thinking phases.
+    # "medium" is Anthropic's recommended default for Sonnet 4.6.
 
     return config
 
