@@ -138,6 +138,12 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
 
     Updates job progress at each stage so the client can see what's happening.
     On failure at any stage, marks the job as failed with the error.
+
+    Recovery support:
+    - After doc upload, stores a "request snapshot" to plan_data so that
+      if the instance dies during plan generation, the new instance can
+      regenerate the plan from the snapshot.
+    - After plan generation, overwrites plan_data with the full plan.
     """
     try:
         # ── Stage 1: Upload documents ──
@@ -151,6 +157,12 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
         document_ids = _upload_documents(request)
         logger.info(f"[Pipeline {job_id}] Uploaded {len(document_ids)} documents")
 
+        # ── Stage 1.5: Store request snapshot for recovery ──
+        # If the instance dies during plan generation (~2 min), the new
+        # instance can regenerate the plan from this snapshot.
+        plan_request = _build_plan_request(request)
+        _store_request_snapshot(job_id, plan_request, document_ids)
+
         # ── Stage 2: Generate plan ──
         update_job_progress(
             job_id,
@@ -159,14 +171,13 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
             detail="Claude Opus analyzing thinker context and generating execution plan...",
         )
 
-        plan_request = _build_plan_request(request)
         plan = generate_plan(plan_request)
         logger.info(
             f"[Pipeline {job_id}] Generated plan {plan.plan_id} — "
             f"{len(plan.phases)} phases, {plan.estimated_llm_calls} estimated calls"
         )
 
-        # Update job with plan_id and plan_data for resume support
+        # Update job with plan_id and full plan_data (overwrites snapshot)
         update_job_plan_id(job_id, plan.plan_id)
         _store_plan_and_docs(job_id, plan, document_ids)
 
@@ -231,6 +242,36 @@ def _upload_documents(request: AnalyzeRequest) -> dict[str, str]:
         )
 
     return document_ids
+
+
+def _store_request_snapshot(
+    job_id: str,
+    plan_request,
+    document_ids: dict[str, str],
+) -> None:
+    """Store a request snapshot to the job record BEFORE plan generation.
+
+    This allows recovery if the instance dies during plan generation (~2 min).
+    The snapshot contains the plan request params + document_ids mapping.
+    Recovery detects the _type marker and regenerates the plan.
+    """
+    snapshot = {
+        "_type": "request_snapshot",
+        "plan_request": plan_request.model_dump(),
+    }
+    try:
+        execute(
+            """UPDATE executor_jobs
+               SET plan_data = %s, document_ids = %s
+               WHERE job_id = %s""",
+            (_json_dumps(snapshot), _json_dumps(document_ids), job_id),
+        )
+        logger.info(
+            f"[Pipeline {job_id}] Stored request snapshot + document_ids "
+            f"for recovery support"
+        )
+    except Exception as e:
+        logger.error(f"[Pipeline {job_id}] Failed to store request snapshot: {e}")
 
 
 def _store_plan_and_docs(job_id: str, plan, document_ids: dict[str, str]) -> None:

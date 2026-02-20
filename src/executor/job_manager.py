@@ -322,7 +322,10 @@ def clear_cancellation(job_id: str) -> None:
         _cancellation_flags.pop(job_id, None)
 
 
-def recover_orphaned_jobs() -> tuple[int, int]:
+RECOVERY_GRACE_PERIOD_SECONDS = 300  # 5 minutes — plan generation takes ~2 min
+
+
+def recover_orphaned_jobs() -> tuple[int, int, int]:
     """Resume orphaned running jobs or mark them as failed on startup.
 
     When Render recycles an instance, daemon execution threads die silently.
@@ -330,26 +333,31 @@ def recover_orphaned_jobs() -> tuple[int, int]:
 
     This function:
     1. Finds orphaned running/pending jobs
-    2. For jobs WITH plan_data stored: resume them (spawn new execution thread)
-    3. For jobs WITHOUT plan_data: mark as failed (can't resume without the plan)
+    2. For jobs WITH full plan_data: resume them (spawn new execution thread)
+    3. For jobs WITH request_snapshot: regenerate plan + resume (spawn thread)
+    4. For jobs WITHOUT plan_data:
+       - If created < 5 min ago: skip (grace period — old instance may still be running)
+       - If older: mark as failed
 
-    Returns (resumed_count, failed_count).
+    Returns (resumed_count, failed_count, skipped_count).
     """
     from src.executor.output_store import get_completed_phases
 
     # Find orphaned running jobs
     running_jobs = execute(
-        """SELECT job_id, plan_id, status, started_at, plan_data, document_ids
+        """SELECT job_id, plan_id, status, started_at, created_at,
+                  plan_data, document_ids
            FROM executor_jobs
            WHERE status IN ('running', 'pending')""",
         fetch="all",
     )
 
     if not running_jobs:
-        return (0, 0)
+        return (0, 0, 0)
 
     resumed = 0
     failed = 0
+    skipped = 0
     now = datetime.utcnow().isoformat()
 
     for job in running_jobs:
@@ -369,8 +377,43 @@ def recover_orphaned_jobs() -> tuple[int, int]:
             except Exception:
                 document_ids_raw = {}
 
-        if plan_data:
-            # Has plan data — can resume
+        # Empty dict is falsy for our purposes — treat as no plan_data
+        if isinstance(plan_data, dict) and not plan_data:
+            plan_data = None
+
+        if plan_data and plan_data.get("_type") == "request_snapshot":
+            # Has request snapshot — regenerate plan and resume
+            logger.info(
+                f"REGENERATE: Orphaned job {job_id} has request snapshot — "
+                f"spawning plan regeneration + execution thread"
+            )
+
+            # Reset status to pending
+            execute(
+                """UPDATE executor_jobs
+                   SET status = 'pending',
+                       error = NULL,
+                       completed_at = NULL
+                   WHERE job_id = %s""",
+                (job_id,),
+            )
+            clear_cancellation(job_id)
+
+            # Spawn regeneration + execution thread
+            _spawn_regeneration_thread(
+                job_id=job_id,
+                snapshot=plan_data,
+                document_ids=document_ids_raw or {},
+            )
+
+            resumed += 1
+            logger.warning(
+                f"Recovered orphaned job {job_id} (was {job['status']}) → "
+                f"regenerating plan from snapshot"
+            )
+
+        elif plan_data:
+            # Has full plan data — can resume directly
             completed = get_completed_phases(job_id)
             logger.info(
                 f"RESUME: Orphaned job {job_id} has plan_data and "
@@ -401,30 +444,115 @@ def recover_orphaned_jobs() -> tuple[int, int]:
                 f"Recovered orphaned job {job_id} (was {job['status']}) → resuming"
             )
         else:
-            # No plan data — can't resume, mark as failed
-            execute(
-                """UPDATE executor_jobs
-                   SET status = 'failed',
-                       completed_at = %s,
-                       error = %s
-                   WHERE job_id = %s AND status IN ('running', 'pending')""",
-                (
-                    now,
-                    "Process terminated unexpectedly (instance recycled). "
-                    "No plan_data stored — cannot resume. Please retry the analysis.",
-                    job_id,
-                ),
-            )
-            clear_cancellation(job_id)
-            failed += 1
-            logger.warning(
-                f"Recovered orphaned job {job_id} (was {job['status']}) → failed (no plan_data)"
-            )
+            # No plan data — check grace period before failing
+            created_at = job.get("created_at")
+            age_seconds = _get_job_age_seconds(created_at)
+
+            if age_seconds is not None and age_seconds < RECOVERY_GRACE_PERIOD_SECONDS:
+                # Job is too new — old instance may still be generating the plan
+                skipped += 1
+                logger.warning(
+                    f"SKIP: Orphaned job {job_id} created {age_seconds:.0f}s ago "
+                    f"(within {RECOVERY_GRACE_PERIOD_SECONDS}s grace period) — "
+                    f"old instance may still be running. Will be caught by stale check."
+                )
+            else:
+                # Old job with no plan data — can't resume, mark as failed
+                execute(
+                    """UPDATE executor_jobs
+                       SET status = 'failed',
+                           completed_at = %s,
+                           error = %s
+                       WHERE job_id = %s AND status IN ('running', 'pending')""",
+                    (
+                        now,
+                        "Process terminated unexpectedly (instance recycled). "
+                        "No plan_data stored — cannot resume. Please retry the analysis.",
+                        job_id,
+                    ),
+                )
+                clear_cancellation(job_id)
+                failed += 1
+                logger.warning(
+                    f"Recovered orphaned job {job_id} (was {job['status']}) → "
+                    f"failed (no plan_data, age={age_seconds:.0f}s)"
+                )
 
     logger.info(
-        f"Startup recovery: {resumed} job(s) resumed, {failed} job(s) failed"
+        f"Startup recovery: {resumed} resumed, {failed} failed, {skipped} skipped (grace period)"
     )
-    return (resumed, failed)
+    return (resumed, failed, skipped)
+
+
+def _get_job_age_seconds(created_at) -> Optional[float]:
+    """Get the age of a job in seconds from its created_at timestamp."""
+    if created_at is None:
+        return None
+    if isinstance(created_at, str):
+        try:
+            created_dt = datetime.fromisoformat(created_at)
+        except (ValueError, TypeError):
+            return None
+    elif isinstance(created_at, datetime):
+        created_dt = created_at
+    else:
+        return None
+    return (datetime.utcnow() - created_dt).total_seconds()
+
+
+def _spawn_regeneration_thread(
+    job_id: str,
+    snapshot: dict,
+    document_ids: dict[str, str],
+) -> None:
+    """Spawn a background thread to regenerate a plan from a request snapshot and execute.
+
+    Called during recovery when we have the plan request params but not the
+    completed plan (instance died during plan generation).
+    """
+    def _regen_and_execute():
+        try:
+            from src.orchestrator.planner import generate_plan
+            from src.orchestrator.schemas import OrchestratorPlanRequest
+            from src.executor.workflow_runner import execute_plan
+
+            plan_request = OrchestratorPlanRequest(**snapshot["plan_request"])
+            logger.info(f"REGEN: Regenerating plan for job {job_id}...")
+
+            plan = generate_plan(plan_request)
+            logger.info(
+                f"REGEN: Plan {plan.plan_id} regenerated for job {job_id} — "
+                f"{len(plan.phases)} phases, {plan.estimated_llm_calls} calls"
+            )
+
+            # Store the full plan + update plan_id
+            from src.executor.db import _json_dumps as jdumps
+            execute(
+                """UPDATE executor_jobs
+                   SET plan_data = %s, plan_id = %s
+                   WHERE job_id = %s""",
+                (jdumps(plan.model_dump()), plan.plan_id, job_id),
+            )
+
+            # Execute the plan (we're already in a background thread)
+            execute_plan(
+                job_id=job_id,
+                plan_id=plan.plan_id,
+                document_ids=document_ids,
+                plan_object=plan,
+            )
+
+        except Exception as e:
+            logger.error(f"REGEN: Failed for job {job_id}: {e}", exc_info=True)
+            update_job_status(job_id, "failed", error=f"Plan regeneration failed: {e}")
+
+    thread = threading.Thread(
+        target=_regen_and_execute,
+        name=f"regen-{job_id}",
+        daemon=True,
+    )
+    thread.start()
+    logger.info(f"REGEN: Spawned regeneration thread for job {job_id}")
 
 
 MAX_JOB_RUNTIME_SECONDS = 3 * 60 * 60  # 3 hours — no single job should run this long

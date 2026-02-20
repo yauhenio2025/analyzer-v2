@@ -110,9 +110,12 @@ async def lifespan(app: FastAPI):
     # Recover orphaned jobs from previous instance crashes
     # Now resumes jobs with plan_data stored, fails jobs without
     from src.executor.job_manager import recover_orphaned_jobs
-    resumed, failed = recover_orphaned_jobs()
-    if resumed or failed:
-        logger.warning(f"Recovered {resumed} resumed + {failed} failed orphaned job(s) from previous instance")
+    resumed, failed, skipped = recover_orphaned_jobs()
+    if resumed or failed or skipped:
+        logger.warning(
+            f"Startup recovery: {resumed} resumed, {failed} failed, "
+            f"{skipped} skipped (grace period) orphaned job(s)"
+        )
 
     # Register SIGTERM handler for graceful shutdown
     # Render sends SIGTERM before killing the process — mark running jobs as stoppable
