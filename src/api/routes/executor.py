@@ -64,6 +64,10 @@ async def start_job(request: StartJobRequest):
 
     Creates a new job, spawns a background thread for execution,
     and returns the job ID for polling.
+
+    Idempotency: If a job for the same plan_id was created in the last 30
+    seconds, returns the existing job instead of creating a duplicate.
+    This guards against Render's reverse proxy retrying POST requests.
     """
     from src.orchestrator.planner import load_plan
 
@@ -71,6 +75,26 @@ async def start_job(request: StartJobRequest):
     plan = load_plan(request.plan_id)
     if plan is None:
         raise HTTPException(status_code=404, detail=f"Plan not found: {request.plan_id}")
+
+    # Idempotency guard: check for recently created job with same plan_id
+    # Render's reverse proxy retries requests after ~3s, creating duplicates
+    existing_jobs = list_jobs(status=None, limit=5)
+    for ej in existing_jobs:
+        if (
+            ej.get("plan_id") == request.plan_id
+            and ej.get("status") in ("pending", "running")
+        ):
+            existing_id = ej.get("job_id")
+            logger.warning(
+                f"IDEMPOTENCY: Returning existing job {existing_id} "
+                f"for plan {request.plan_id} (duplicate POST detected)"
+            )
+            return {
+                "job_id": existing_id,
+                "plan_id": request.plan_id,
+                "status": ej.get("status", "pending"),
+                "message": "Execution already started (duplicate request detected).",
+            }
 
     # Create job
     job = ExecutorJob(plan_id=request.plan_id)
