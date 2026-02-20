@@ -29,6 +29,8 @@
   "tab_count_field": null,
   "visibility": "if_data_exists",
   "audience_overrides": {},
+  "planner_hint": "Essential. Always include as primary view. The main narrative synthesis of the genealogical analysis.",
+  "planner_eligible": true,
   "status": "active",
   "tags": ["genealogy", "portrait", "synthesis", "final"],
   "source_project": "critic"

@@ -179,10 +179,12 @@ def assemble_workflow_catalog() -> list[dict[str, Any]]:
 
 
 def assemble_view_catalog() -> list[dict[str, Any]]:
-    """Assemble genealogy view definitions."""
+    """Assemble genealogy view definitions with planner metadata."""
     from src.views.registry import get_view_registry
+    from src.transformations.registry import get_transformation_registry
 
     registry = get_view_registry()
+    transform_registry = get_transformation_registry()
     views = registry.list_summaries(app="the-critic", page="genealogy")
 
     entries = []
@@ -190,9 +192,27 @@ def assemble_view_catalog() -> list[dict[str, Any]]:
         view = registry.get(view_summary.view_key)
         if view is None:
             continue
+
+        # Check if this view has applicable transformation templates
+        has_template = False
+        engine_key = view.data_source.engine_key if view.data_source else None
+        chain_key = view.data_source.chain_key if view.data_source else None
+        if engine_key:
+            has_template = len(transform_registry.for_engine(engine_key)) > 0
+        elif chain_key:
+            from src.chains.registry import get_chain_registry
+            chain_reg = get_chain_registry()
+            chain = chain_reg.get(chain_key)
+            if chain:
+                for ek in chain.engine_keys:
+                    if len(transform_registry.for_engine(ek)) > 0:
+                        has_template = True
+                        break
+
         entry = {
             "view_key": view.view_key,
             "view_name": view.view_name,
+            "description": view.description,
             "renderer_type": view.renderer_type,
             "presentation_stance": view.presentation_stance,
             "data_source": {
@@ -204,6 +224,9 @@ def assemble_view_catalog() -> list[dict[str, Any]]:
             "visibility": view.visibility if hasattr(view, "visibility") else "always",
             "position": view.position if hasattr(view, "position") else 0,
             "parent_view_key": view.parent_view_key if hasattr(view, "parent_view_key") else None,
+            "planner_hint": getattr(view, "planner_hint", ""),
+            "planner_eligible": getattr(view, "planner_eligible", True),
+            "has_transformation_template": has_template,
         }
         entries.append(entry)
 
@@ -374,7 +397,25 @@ def catalog_to_text(catalog: dict[str, Any]) -> str:
         ds = view.get("data_source", {}) or {}
         source = ds.get("chain_key") or ds.get("engine_key") or "N/A"
         phase = ds.get("phase_number", "?")
-        lines.append(f"- `{view['view_key']}` — {view['view_name']} | renderer: {view.get('renderer_type', '?')} | phase {phase} | source: {source} | stance: {view.get('presentation_stance', 'N/A')}")
-    lines.append("")
+        eligible = view.get("planner_eligible", True)
+        has_template = view.get("has_transformation_template", False)
+        template_tag = "HAS_TEMPLATE" if has_template else "NO_TEMPLATE"
+        visibility = view.get("visibility", "if_data_exists")
+        planner_hint = view.get("planner_hint", "")
+
+        if not eligible:
+            lines.append(f"### `{view['view_key']}` — {view['view_name']} [NOT ELIGIBLE]")
+            lines.append(f"- Debug/utility view, not recommended for plans")
+            lines.append("")
+            continue
+
+        lines.append(f"### `{view['view_key']}` — {view['view_name']}")
+        lines.append(f"- Renderer: {view.get('renderer_type', '?')} | Phase {phase} | Source: `{source}` | [{template_tag}]")
+        lines.append(f"- Stance: {view.get('presentation_stance', 'N/A')} | Visibility: {visibility}")
+        if view.get("parent_view_key"):
+            lines.append(f"- Parent: `{view['parent_view_key']}` (auto-included as child)")
+        if planner_hint:
+            lines.append(f"- **Planner guidance**: {planner_hint}")
+        lines.append("")
 
     return "\n".join(lines)

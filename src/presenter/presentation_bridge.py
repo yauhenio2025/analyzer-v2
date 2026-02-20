@@ -125,14 +125,31 @@ def _build_transformation_tasks(
             skipped += 1
             continue
 
-        # Find applicable template
+        # Resolve engine keys to search for templates
+        # For chain-backed views, search templates for ALL engines in the chain
+        search_engine_keys = []
+        if engine_key:
+            search_engine_keys = [engine_key]
+        elif chain_key:
+            from src.chains.registry import get_chain_registry
+            chain_registry = get_chain_registry()
+            chain = chain_registry.get(chain_key)
+            if chain:
+                search_engine_keys = list(chain.engine_keys)
+            else:
+                logger.warning(f"Chain not found for view {rec['view_key']}: {chain_key}")
+
+        # Find applicable template (searching across all engine keys)
+        applicable_templates = []
+        for ek in search_engine_keys:
+            applicable_templates = [
+                t for t in transform_registry.for_engine(ek)
+                if renderer_type in t.applicable_renderer_types
+            ]
+            if applicable_templates:
+                break
+
         if view_def.transformation.type == "none":
-            applicable_templates = []
-            if engine_key:
-                applicable_templates = [
-                    t for t in transform_registry.for_engine(engine_key)
-                    if renderer_type in t.applicable_renderer_types
-                ]
             if not applicable_templates:
                 logger.debug(
                     f"View {rec['view_key']}: no transformation needed (type=none, no applicable templates)"
@@ -141,12 +158,6 @@ def _build_transformation_tasks(
                 continue
             template = applicable_templates[0]
         else:
-            applicable_templates = []
-            if engine_key:
-                applicable_templates = [
-                    t for t in transform_registry.for_engine(engine_key)
-                    if renderer_type in t.applicable_renderer_types
-                ]
             if applicable_templates:
                 template = applicable_templates[0]
             else:
@@ -163,6 +174,12 @@ def _build_transformation_tasks(
                 phase_number=phase_number,
                 engine_key=engine_key,
             )
+            # For chain-backed per_item views, get all outputs for the phase
+            if not outputs and chain_key and not engine_key:
+                outputs = load_phase_outputs(
+                    job_id=job_id,
+                    phase_number=phase_number,
+                )
             work_outputs = _group_latest_by_work_key(outputs)
             for work_key, output in work_outputs.items():
                 section = f"{template.template_key}:{work_key}" if work_key else template.template_key
@@ -170,7 +187,7 @@ def _build_transformation_tasks(
                     view_key=rec["view_key"],
                     output_id=output["id"],
                     template_key=template.template_key,
-                    engine_key=engine_key or "",
+                    engine_key=engine_key or chain_key or "",
                     renderer_type=renderer_type,
                     section=section,
                 ))
@@ -196,7 +213,7 @@ def _build_transformation_tasks(
                 view_key=rec["view_key"],
                 output_id=latest["id"],
                 template_key=template.template_key,
-                engine_key=engine_key or "",
+                engine_key=engine_key or chain_key or "",
                 renderer_type=renderer_type,
                 section=template.template_key,
             ))

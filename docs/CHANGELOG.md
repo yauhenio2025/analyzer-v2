@@ -6,6 +6,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Chain-backed view resolution** — Presentation pipeline now resolves views with `chain_key` but no `engine_key`. `_load_aggregated_data()` and `_load_per_item_data()` resolve chain engine keys via ChainRegistry and search transformation templates for ALL engines in the chain. Concatenates all engine outputs per work_key for per_item scope. Unblocks Target Work Profile and Per-Work Scan Detail views. ([`src/presenter/presentation_api.py`](src/presenter/presentation_api.py), [`src/presenter/presentation_bridge.py`](src/presenter/presentation_bridge.py))
+
+- **Transformation templates for missing views** — Two new extraction templates: (1) `target_profile_extraction.json` for Target Work Profile accordion (concept_evolution engine, extracts conceptual_framework/semantic_constellation/inferential_commitments); (2) `per_work_scan_extraction.json` for Per-Work Scan Detail cards (concept_appropriation_tracker engine, extracts vocabulary/methodology/metaphor/framing subsections). Total templates now 13. ([`src/transformations/definitions/target_profile_extraction.json`](src/transformations/definitions/target_profile_extraction.json), [`src/transformations/definitions/per_work_scan_extraction.json`](src/transformations/definitions/per_work_scan_extraction.json))
+
+- **PDF export** — WeasyPrint-based HTML-to-PDF generation for completed jobs. Cover page with thinker name and strategy summary, table of contents, per-phase sections with rendered markdown prose, execution stats appendix. Uses Crimson Pro + Inter fonts, A4 pages, page numbers. Endpoint: `GET /v1/executor/jobs/{job_id}/export/pdf`. ([`src/executor/pdf_export.py`](src/executor/pdf_export.py), [`src/api/routes/executor.py`](src/api/routes/executor.py))
+
+- **Data-driven planner view selection** — ViewDefinition now has `planner_hint` (free-text LLM guidance) and `planner_eligible` (boolean). All 10 view JSONs annotated. Enriched capability catalog includes `has_transformation_template`, planner hints, `[HAS_TEMPLATE]`/`[NO_TEMPLATE]` tags, `[NOT ELIGIBLE]` markers. Planner system prompt replaced hardcoded view recommendations with data-driven rules. ([`src/views/schemas.py`](src/views/schemas.py), `src/views/definitions/*.json`, [`src/orchestrator/catalog.py`](src/orchestrator/catalog.py), [`src/orchestrator/planner.py`](src/orchestrator/planner.py))
+
+### Changed
+- **requirements.txt** — Added `weasyprint>=60.0` and `markdown>=3.5` for PDF export.
+
 - **Pipeline visualization endpoint** — New `GET /v1/orchestrator/plans/{plan_id}/pipeline-visualization` endpoint that assembles a complete hierarchical tree of the execution pipeline from in-memory registries (no DB/LLM calls). Returns plan → phases → chains → engines → passes → stances → dimensions with full metadata. Powers the Critic's dynamic pipeline visualization component. ([`src/orchestrator/visualization.py`](src/orchestrator/visualization.py), [`src/api/routes/orchestrator.py`](src/api/routes/orchestrator.py))
 
 - **Structured progress detail** — `update_job_progress()` now accepts optional `structured_detail` dict with `engine_key`, `pass_number`, `stance_key` fields parsed from detail strings. Enables reliable engine/pass highlighting in the pipeline visualization. ([`src/executor/job_manager.py`](src/executor/job_manager.py), [`src/executor/workflow_runner.py`](src/executor/workflow_runner.py))

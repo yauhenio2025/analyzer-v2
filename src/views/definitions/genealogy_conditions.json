@@ -34,6 +34,8 @@
   "tab_count_field": null,
   "visibility": "if_data_exists",
   "audience_overrides": {},
+  "planner_hint": "Primary for Foucauldian/contextual analysis. Rich enabling/constraining conditions, path dependencies, and counterfactuals.",
+  "planner_eligible": true,
   "status": "active",
   "tags": ["genealogy", "conditions", "foucauldian"],
   "source_project": "critic"

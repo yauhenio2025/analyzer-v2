@@ -33,6 +33,8 @@
   "tab_count_field": "pass5_tactics.tactics_detected",
   "visibility": "if_data_exists",
   "audience_overrides": {},
+  "planner_hint": "Primary for thinkers known for strategy shifts, self-revision, or intellectual reinvention. Shows 10+ tactic types with evidence.",
+  "planner_eligible": true,
   "status": "active",
   "tags": ["genealogy", "tactics", "evidence"],
   "source_project": "critic"

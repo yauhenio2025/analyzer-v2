@@ -174,6 +174,16 @@ class ViewDefinition(BaseModel):
         description="Per-audience config overrides keyed by audience_key",
     )
 
+    # PLANNER
+    planner_hint: str = Field(
+        default="",
+        description="Free-text guidance for the LLM planner about when/how to recommend this view",
+    )
+    planner_eligible: bool = Field(
+        default=True,
+        description="Whether the planner should consider this view for recommendations",
+    )
+
     # METADATA
     status: str = Field(
         default="active",

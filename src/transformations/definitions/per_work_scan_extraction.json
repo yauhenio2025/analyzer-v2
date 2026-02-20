@@ -1,0 +1,73 @@
+{
+  "template_key": "per_work_scan_extraction",
+  "template_name": "Per-Work Scan Detail Extraction",
+  "description": "Extracts structured per-work scanning data from the chain output of genealogy_prior_work_scanning (2-engine chain: concept_evolution + concept_appropriation_tracker). Produces 4 subsections: vocabulary, methodology, metaphor, framing — each with shared/novel/abandoned items. Matches genealogy_per_work_scan view's renderer_config.",
+  "version": 1,
+  "transformation_type": "llm_extract",
+  "llm_extraction_schema": {
+    "work_title": "string (title of the prior work being scanned)",
+    "work_year": "number or null (publication year if identifiable)",
+    "vocabulary": {
+      "shared": [
+        {
+          "term": "string",
+          "meaning_in_prior": "string (how this term is used in the prior work)",
+          "meaning_in_target": "string (how it is used in the target work)",
+          "drift_type": "enum: stable|narrowed|expanded|inverted|metaphorized"
+        }
+      ],
+      "novel_in_target": ["string (terms in target not found in prior)"],
+      "abandoned": ["string (terms in prior not carried to target)"],
+      "summary": "string (1-2 sentences on vocabulary relationship)"
+    },
+    "methodology": {
+      "shared": [
+        {
+          "term": "string (method/approach name)",
+          "meaning_in_prior": "string",
+          "meaning_in_target": "string",
+          "drift_type": "enum: stable|narrowed|expanded|inverted|metaphorized"
+        }
+      ],
+      "novel_in_target": ["string"],
+      "abandoned": ["string"],
+      "summary": "string"
+    },
+    "metaphor": {
+      "shared": [
+        {
+          "term": "string (metaphor or image)",
+          "meaning_in_prior": "string",
+          "meaning_in_target": "string",
+          "drift_type": "enum: stable|narrowed|expanded|inverted|metaphorized"
+        }
+      ],
+      "novel_in_target": ["string"],
+      "abandoned": ["string"],
+      "summary": "string"
+    },
+    "framing": {
+      "shared": [
+        {
+          "term": "string (framing device or narrative strategy)",
+          "meaning_in_prior": "string",
+          "meaning_in_target": "string",
+          "drift_type": "enum: stable|narrowed|expanded|inverted|metaphorized"
+        }
+      ],
+      "novel_in_target": ["string"],
+      "abandoned": ["string"],
+      "summary": "string"
+    },
+    "overall_assessment": "string (2-3 sentences on the intellectual relationship revealed by this scan)"
+  },
+  "llm_prompt_template": "You are a precise data extraction assistant. Extract structured JSON from analytical prose that compares a prior work against a target work in an intellectual genealogy.\n\nThe input contains output from concept evolution analysis and concept appropriation tracking, comparing how ideas, vocabulary, methodology, metaphors, and framing migrate between a prior work and a target work.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"work_title\": \"<title of the prior work>\",\n  \"work_year\": <year as number or null>,\n  \"vocabulary\": {\n    \"shared\": [\n      {\n        \"term\": \"<shared vocabulary term>\",\n        \"meaning_in_prior\": \"<how used in prior work>\",\n        \"meaning_in_target\": \"<how used in target work>\",\n        \"drift_type\": \"<stable|narrowed|expanded|inverted|metaphorized>\"\n      }\n    ],\n    \"novel_in_target\": [\"<terms in target not in prior>\"],\n    \"abandoned\": [\"<terms in prior not in target>\"],\n    \"summary\": \"<1-2 sentence summary of vocabulary relationship>\"\n  },\n  \"methodology\": { <same structure as vocabulary> },\n  \"metaphor\": { <same structure as vocabulary> },\n  \"framing\": { <same structure as vocabulary> },\n  \"overall_assessment\": \"<2-3 sentences on what this scan reveals about the intellectual relationship>\"\n}\n\nRULES:\n1. Return ONLY JSON — no markdown fences, no commentary\n2. Extract 3-8 shared items per dimension, prioritized by significance\n3. drift_type should reflect the ACTUAL semantic drift observed\n4. novel_in_target and abandoned lists should capture 2-5 items each\n5. Summaries should capture the key insight about how this dimension connects the works\n6. overall_assessment should synthesize across all four dimensions\n7. If a dimension has no clear content in the source, use empty arrays but still provide a summary",
+  "applicable_renderer_types": ["card", "card_grid"],
+  "applicable_engines": ["concept_appropriation_tracker"],
+  "tags": ["genealogy", "per-work", "scanning", "extraction", "prose-to-structured", "per-item"],
+  "status": "active",
+  "model": "claude-haiku-4-5-20251001",
+  "model_fallback": "claude-sonnet-4-5-20250929",
+  "max_tokens": 6000,
+  "source": "Created for genealogy_per_work_scan view — chain-backed per-item cards"
+}

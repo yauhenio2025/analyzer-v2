@@ -28,6 +28,8 @@
   "tab_count_field": null,
   "visibility": "on_demand",
   "audience_overrides": {},
+  "planner_hint": "",
+  "planner_eligible": false,
   "status": "active",
   "tags": ["genealogy", "debug", "raw"],
   "source_project": "critic"

@@ -31,6 +31,8 @@
   "tab_count_field": null,
   "visibility": "if_data_exists",
   "audience_overrides": {},
+  "planner_hint": "Primary when 3+ prior works are being analyzed. Shows relationship types and strength for each prior work.",
+  "planner_eligible": true,
   "status": "active",
   "tags": ["genealogy", "relationships", "classification"],
   "source_project": "critic"

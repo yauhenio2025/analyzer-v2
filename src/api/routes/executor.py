@@ -296,6 +296,59 @@ async def remove_job(job_id: str):
     return {"job_id": job_id, "deleted": True}
 
 
+# --- PDF Export ---
+
+
+@router.get("/jobs/{job_id}/export/pdf")
+async def export_job_pdf(job_id: str, phase: Optional[float] = None):
+    """Export job prose output as a professional PDF document.
+
+    Args:
+        job_id: The job to export.
+        phase: Optional phase number to export (None = all phases).
+
+    Returns:
+        StreamingResponse with application/pdf content type.
+    """
+    from fastapi.responses import StreamingResponse
+    import io
+
+    try:
+        from src.executor.pdf_export import generate_analysis_pdf
+    except ImportError as e:
+        raise HTTPException(
+            status_code=501,
+            detail=f"PDF export unavailable: {str(e)}",
+        )
+
+    try:
+        pdf_bytes = generate_analysis_pdf(job_id=job_id, phase=phase)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except ImportError as e:
+        raise HTTPException(status_code=501, detail=str(e))
+    except Exception as e:
+        logger.error(f"PDF generation failed for job {job_id}: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"PDF generation failed: {str(e)}",
+        )
+
+    # Build filename
+    filename = f"genealogy-{job_id[:8]}"
+    if phase is not None:
+        filename += f"-phase-{phase}"
+    filename += ".pdf"
+
+    return StreamingResponse(
+        io.BytesIO(pdf_bytes),
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename}"',
+        },
+    )
+
+
 # --- Document endpoints ---
 
 

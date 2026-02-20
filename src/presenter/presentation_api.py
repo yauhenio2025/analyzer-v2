@@ -278,7 +278,7 @@ def _build_view_payload(
     has_structured = False
 
     if scope == "per_item":
-        items = _load_per_item_data(job_id, phase_number, engine_key)
+        items = _load_per_item_data(job_id, phase_number, engine_key, chain_key=chain_key)
     else:
         structured_data, raw_prose = _load_aggregated_data(
             job_id, phase_number, engine_key, chain_key
@@ -310,6 +310,17 @@ def _build_view_payload(
     )
 
 
+def _resolve_chain_engine_keys(chain_key: str) -> list[str]:
+    """Resolve a chain_key to the list of engine keys in that chain."""
+    from src.chains.registry import get_chain_registry
+    chain_registry = get_chain_registry()
+    chain = chain_registry.get(chain_key)
+    if chain is None:
+        logger.warning(f"Chain not found: {chain_key}")
+        return []
+    return list(chain.engine_keys)
+
+
 def _load_aggregated_data(
     job_id: str,
     phase_number: Optional[float],
@@ -317,6 +328,10 @@ def _load_aggregated_data(
     chain_key: Optional[str],
 ) -> tuple[Optional[dict], Optional[str]]:
     """Load structured data and/or raw prose for an aggregated view.
+
+    For chain-backed views (chain_key set, engine_key None), resolves the
+    chain's engine keys and searches templates for ALL engines in the chain.
+    Also concatenates ALL engine outputs for the phase into raw_prose.
 
     Returns (structured_data, raw_prose).
     """
@@ -336,17 +351,39 @@ def _load_aggregated_data(
     if not outputs:
         return None, None
 
-    # Get latest output (highest pass_number)
+    # Build raw_prose: for chain-backed views, concatenate ALL engine outputs
+    if chain_key and not engine_key:
+        # Sort by pass_number to get chronological order within the chain
+        sorted_outputs = sorted(outputs, key=lambda o: o.get("pass_number", 0))
+        prose_parts = []
+        for o in sorted_outputs:
+            content = o.get("content", "")
+            if content:
+                eng = o.get("engine_key", "unknown")
+                prose_parts.append(f"## [{eng}]\n\n{content}")
+        raw_prose = "\n\n---\n\n".join(prose_parts) if prose_parts else ""
+    else:
+        # Single engine: use latest output
+        latest = max(outputs, key=lambda o: o.get("pass_number", 0))
+        raw_prose = latest.get("content", "")
+
+    # Get latest output for structured data lookup
     latest = max(outputs, key=lambda o: o.get("pass_number", 0))
-    raw_prose = latest.get("content", "")
 
     # Check presentation_cache for structured data
     structured_data = None
     from src.transformations.registry import get_transformation_registry
     transform_registry = get_transformation_registry()
 
+    # Determine which engine keys to search templates for
+    search_engine_keys = []
     if engine_key:
-        templates = transform_registry.for_engine(engine_key)
+        search_engine_keys = [engine_key]
+    elif chain_key:
+        search_engine_keys = _resolve_chain_engine_keys(chain_key)
+
+    for ek in search_engine_keys:
+        templates = transform_registry.for_engine(ek)
         for t in templates:
             cached = load_presentation_cache(
                 output_id=latest["id"],
@@ -356,6 +393,8 @@ def _load_aggregated_data(
             if cached is not None:
                 structured_data = cached
                 break
+        if structured_data is not None:
+            break
 
     return structured_data, raw_prose
 
@@ -364,8 +403,13 @@ def _load_per_item_data(
     job_id: str,
     phase_number: Optional[float],
     engine_key: Optional[str],
+    chain_key: Optional[str] = None,
 ) -> list[dict]:
     """Load per-item data (one entry per prior work).
+
+    For chain-backed per-item views, loads ALL phase outputs, groups by
+    work_key, concatenates all engine outputs per work_key, and searches
+    templates using chain engine keys.
 
     Returns a list of {work_key, structured_data, raw_prose} dicts.
     """
@@ -378,27 +422,64 @@ def _load_per_item_data(
         engine_key=engine_key,
     )
 
-    # Group by work_key, keep latest pass
-    by_work: dict[str, dict] = {}
-    for o in outputs:
-        work_key = o.get("work_key", "")
-        if not work_key:
-            continue
-        existing = by_work.get(work_key)
-        if existing is None or o.get("pass_number", 0) > existing.get("pass_number", 0):
-            by_work[work_key] = o
+    # For chain-backed views with no engine_key, get all outputs for the phase
+    if not outputs and chain_key and not engine_key:
+        outputs = load_phase_outputs(job_id=job_id, phase_number=phase_number)
+
+    # Group by work_key
+    if chain_key and not engine_key:
+        # Chain-backed: collect ALL outputs per work_key, concatenate content
+        by_work_all: dict[str, list[dict]] = {}
+        for o in outputs:
+            work_key = o.get("work_key", "")
+            if not work_key:
+                continue
+            by_work_all.setdefault(work_key, []).append(o)
+
+        by_work: dict[str, dict] = {}
+        for work_key, work_outputs in by_work_all.items():
+            sorted_wo = sorted(work_outputs, key=lambda o: o.get("pass_number", 0))
+            # Use the last output as the "primary" (for output_id, cache lookup)
+            latest = sorted_wo[-1]
+            # Concatenate all engine outputs for this work
+            prose_parts = []
+            for wo in sorted_wo:
+                content = wo.get("content", "")
+                if content:
+                    eng = wo.get("engine_key", "unknown")
+                    prose_parts.append(f"## [{eng}]\n\n{content}")
+            combined_content = "\n\n---\n\n".join(prose_parts) if prose_parts else ""
+            # Store combined content in a synthetic entry
+            by_work[work_key] = {**latest, "_combined_content": combined_content}
+    else:
+        # Single engine: keep latest pass per work_key
+        by_work = {}
+        for o in outputs:
+            work_key = o.get("work_key", "")
+            if not work_key:
+                continue
+            existing = by_work.get(work_key)
+            if existing is None or o.get("pass_number", 0) > existing.get("pass_number", 0):
+                by_work[work_key] = o
 
     items = []
     from src.transformations.registry import get_transformation_registry
     transform_registry = get_transformation_registry()
 
+    # Determine which engine keys to search templates for
+    search_engine_keys = []
+    if engine_key:
+        search_engine_keys = [engine_key]
+    elif chain_key:
+        search_engine_keys = _resolve_chain_engine_keys(chain_key)
+
     for work_key, output in sorted(by_work.items()):
-        content = output.get("content", "")
+        content = output.get("_combined_content", output.get("content", ""))
 
         # Check for structured data
         structured = None
-        if engine_key:
-            templates = transform_registry.for_engine(engine_key)
+        for ek in search_engine_keys:
+            templates = transform_registry.for_engine(ek)
             for t in templates:
                 section = f"{t.template_key}:{work_key}"
                 cached = load_presentation_cache(
@@ -409,6 +490,8 @@ def _load_per_item_data(
                 if cached is not None:
                     structured = cached
                     break
+            if structured is not None:
+                break
 
         items.append({
             "work_key": work_key,

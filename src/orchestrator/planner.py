@@ -62,11 +62,12 @@ Produce a WorkflowExecutionPlan (JSON) that configures:
 - For a historian like Slobodian, prioritize: conditions_of_possibility, intellectual context, path dependencies
 
 ### View Recommendations
-- Every analysis should have: genealogy_portrait (primary), genealogy_idea_evolution (primary)
-- For thinkers with many prior works: genealogy_relationship_landscape (primary)
-- For thinkers known for tactics: genealogy_tactics (primary)
-- For Foucauldian analysis: genealogy_conditions (primary)
-- Debug views are always optional
+The VIEWS section of the catalog includes per-view planner guidance with `Planner guidance:` annotations. Follow those hints when selecting views. General rules:
+- Only recommend views with `planner_eligible: true` (views marked [NOT ELIGIBLE] are debug/utility views)
+- Prioritize views with [HAS_TEMPLATE] — these produce structured data for rich rendering
+- Views with `visibility: on_demand` should NOT be primary recommendations
+- Child views (those with a `Parent:` field) are auto-included when their parent is recommended — no need to recommend them separately
+- Read each view's planner guidance carefully and match it to the thinker's profile
 
 ### Phase Skipping
 - You CAN recommend skipping phases, but this should be rare

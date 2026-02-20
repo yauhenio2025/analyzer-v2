@@ -32,6 +32,8 @@
   "tab_count_field": null,
   "visibility": "if_data_exists",
   "audience_overrides": {},
+  "planner_hint": "Secondary. Deep structural profile of target work showing frameworks, concepts, and commitments. Valuable for dense philosophical texts.",
+  "planner_eligible": true,
   "status": "active",
   "tags": ["genealogy", "profiling", "target", "nested"],
   "source_project": "critic"

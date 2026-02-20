@@ -44,6 +44,8 @@
   "tab_count_field": "pass1_ideas.ideas",
   "visibility": "if_data_exists",
   "audience_overrides": {},
+  "planner_hint": "Essential. Always include as primary view. The core genealogical product tracing ideas across works.",
+  "planner_eligible": true,
   "status": "active",
   "tags": ["genealogy", "evolution", "ideas", "core"],
   "source_project": "critic"

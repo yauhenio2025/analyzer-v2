@@ -38,6 +38,8 @@
   "tab_count_field": "length",
   "visibility": "if_data_exists",
   "audience_overrides": {},
+  "planner_hint": "Secondary. Per-work comparison details across vocabulary, methodology, metaphor, and framing. Most useful when prior works are closely related.",
+  "planner_eligible": true,
   "status": "active",
   "tags": ["genealogy", "per-work", "scanning", "nested"],
   "source_project": "critic"

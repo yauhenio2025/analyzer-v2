@@ -20,7 +20,7 @@
   - `PhaseExecutionSpec` — phase_number, depth, skip, engine_overrides (dict of EngineExecutionSpec), context_emphasis, rationale, model_hint, requires_full_documents, per_work_overrides, supplementary_chains, max_context_chars_override
   - `EngineExecutionSpec` — engine_key, depth, focus_dimensions, focus_capabilities, rationale
   - `ViewRecommendation` — view_key, priority (primary/secondary/optional), rationale
-- **Capability Catalog**: Assembled from 11 capability engines, 23 chains, 13 stances, 7 workflows, 10 views, 11 operationalizations. Available as raw JSON or LLM-readable markdown.
+- **Capability Catalog**: Assembled from 11 capability engines, 23 chains, 13 stances, 7 workflows, 10 views, 11 operationalizations. Available as raw JSON or LLM-readable markdown. Views section enriched with planner_hint, planner_eligible, has_transformation_template, `[HAS_TEMPLATE]`/`[NO_TEMPLATE]` tags. Planner system prompt is data-driven from view annotations.
 - **API Endpoints**:
   - `GET /v1/orchestrator/capability-catalog` - Full capability catalog (?format=text for markdown)
   - `POST /v1/orchestrator/plan` - Generate new plan (Claude Opus, ~20s)
@@ -65,6 +65,7 @@
   - `src/api/main.py:16` - Router registration and DB init in lifespan
 - **Database**: Render Postgres (4 tables: executor_jobs, phase_outputs, presentation_cache, executor_documents). Dual-backend: Postgres for production, SQLite for local dev.
 - **Model Selection**: Plan-driven via model_hint → PHASE_MODEL_DEFAULTS → depth heuristic. Opus for profiling/synthesis, Sonnet for scanning/classification, Haiku disabled by default.
+- **PDF Export**: `GET /v1/executor/jobs/{job_id}/export/pdf` returns professional A4 PDF with cover page, TOC, per-phase prose sections, and execution stats appendix. WeasyPrint + markdown libraries. ([`src/executor/pdf_export.py`](src/executor/pdf_export.py))
 - **Resumable Jobs**: Jobs persist `plan_data` (full WorkflowExecutionPlan JSONB) and `document_ids` to Postgres. On instance restart, `recover_orphaned_jobs()` resumes jobs with plan_data via `start_resume_thread()`. Three-level resume: phase-level (skip completed phases), engine-level (skip completed engines), pass-level (skip completed passes). Pre-resume jobs fail cleanly.
 - **Sync API Default**: `PREFER_SYNC=true` by default (100x faster on Render). Disables extended thinking but avoids SSE buffering bottleneck. Set `ENABLE_STREAMING=true` for local dev with thinking.
 - **Document Chunking**: Re-enabled (`CHUNK_THRESHOLD=200K chars`). O(n²) attention is model-side — at 183K tokens, generation drops to 0.5 tok/s. Documents >200K chars are split into ~180K char chunks, extracted per-chunk, then synthesized.
@@ -99,7 +100,7 @@
 
 ### Presentation Bridge (3B)
 - **Status**: Active (Milestone 3 complete)
-- **Description**: Automated transformation pipeline connecting executor prose outputs → transformation templates → presentation_cache. For each recommended view: resolves data_source → finds phase_outputs → checks cache → finds applicable template (by engine_key + renderer_type) → runs TransformationExecutor → persists to presentation_cache. Handles both per_item (one per prior work) and aggregated scopes.
+- **Description**: Automated transformation pipeline connecting executor prose outputs → transformation templates → presentation_cache. For each recommended view: resolves data_source → finds phase_outputs → checks cache → finds applicable template (by engine_key + renderer_type) → runs TransformationExecutor → persists to presentation_cache. Handles both per_item (one per prior work) and aggregated scopes. Now chain-aware: resolves chain_key → engine_keys for template lookup.
 - **Entry Points**:
   - `src/presenter/presentation_bridge.py:1-375` - prepare_presentation(), _get_recommended_views(), _group_latest_by_work_key(), _load_output_by_id()
   - `src/presenter/schemas.py:60-120` - TransformationTask, TransformationTaskResult, PresentationBridgeResult, PrepareRequest
@@ -108,7 +109,7 @@
 
 ### Presentation API (3C)
 - **Status**: Active (Milestone 3 complete)
-- **Description**: Consumer-facing presentation assembly. Combines view definitions, structured data (from presentation_cache), and raw prose (from phase_outputs) into a single PagePresentation that The Critic can render directly. Builds parent-child view tree with nested children sorted by position.
+- **Description**: Consumer-facing presentation assembly. Combines view definitions, structured data (from presentation_cache), and raw prose (from phase_outputs) into a single PagePresentation that The Critic can render directly. Builds parent-child view tree with nested children sorted by position. Now chain-aware: resolves chain_key → engine_keys for data loading and template search, concatenates all engine outputs per work_key for chain-backed per_item views.
 - **Entry Points**:
   - `src/presenter/presentation_api.py:1-467` - assemble_page(), assemble_single_view(), get_presentation_status(), _build_view_payload(), _load_aggregated_data(), _load_per_item_data(), _build_view_tree()
   - `src/presenter/schemas.py:120-175` - ViewPayload, PagePresentation, ComposeRequest
@@ -154,6 +155,8 @@
   - `ViewDefinition` — Identity (view_key, view_name, version), WHERE (target_app, target_page, target_section), WHAT component (renderer_type, renderer_config), WHAT data (data_source, secondary_sources), HOW to transform (transformation, presentation_stance), LAYOUT (position, parent_view_key, tab_count_field), VISIBILITY, AUDIENCE overrides, METADATA
   - `DataSourceRef` — workflow_key, phase_number, engine_key, chain_key, result_path (JSONPath), scope (aggregated/per_item)
   - `TransformationSpec` — type (none/schema_map/llm_extract/llm_summarize/aggregate), field_mapping, llm_extraction_schema, llm_prompt_template, stance_key override
+  - `planner_hint` — Free-text guidance for the LLM planner about when/how to recommend this view
+  - `planner_eligible` — Boolean flag (default true) controlling whether the planner considers this view
 - **Genealogy Views** (10 total):
   - **Top-level tabs**:
     - `genealogy_relationship_landscape` (matrix, diagnostic) — Pass 1.5 relationship classifications
