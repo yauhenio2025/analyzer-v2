@@ -19,6 +19,7 @@ from src.orchestrator.schemas import (
     PlanRefinementRequest,
     WorkflowExecutionPlan,
 )
+from src.orchestrator.visualization import assemble_pipeline_visualization
 
 logger = logging.getLogger(__name__)
 
@@ -106,6 +107,31 @@ async def get_plan(plan_id: str):
             detail=f"Plan '{plan_id}' not found",
         )
     return plan
+
+
+# ── Pipeline Visualization ─────────────────────────────────
+
+
+@router.get("/plans/{plan_id}/pipeline-visualization")
+async def get_pipeline_visualization(plan_id: str):
+    """Get the full pipeline tree for a plan, suitable for rendering a visualization.
+
+    Assembles data from multiple registries (workflow, chains, engines,
+    operationalizations, stances) into a hierarchical tree showing
+    phases → chains → engines → passes → stances → dimensions.
+
+    No LLM calls — reads only from in-memory registries loaded from JSON/YAML.
+    """
+    try:
+        return assemble_pipeline_visualization(plan_id)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.error(f"Pipeline visualization failed for {plan_id}: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Pipeline visualization assembly failed: {e}",
+        )
 
 
 # ── Plan Update (manual edits) ──────────────────────────────

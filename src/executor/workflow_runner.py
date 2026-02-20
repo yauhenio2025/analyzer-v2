@@ -40,6 +40,29 @@ logger = logging.getLogger(__name__)
 # Max concurrent phases (for parallel execution of independent phases)
 MAX_PHASE_CONCURRENCY = 2
 
+# Regex for parsing engine/pass info from progress detail strings
+import re
+_ENGINE_RE = re.compile(r'Engine\s+(?:\d+/\d+:\s*)?(\S+)', re.IGNORECASE)
+_PASS_RE = re.compile(r'pass\s+(\d+)', re.IGNORECASE)
+_STANCE_RE = re.compile(r'stance[:\s]+(\S+)', re.IGNORECASE)
+
+
+def _parse_structured_detail(detail: str) -> dict | None:
+    """Extract engine_key, pass_number, stance_key from progress detail string."""
+    if not detail:
+        return None
+    info: dict = {}
+    m = _ENGINE_RE.search(detail)
+    if m:
+        info["engine_key"] = m.group(1)
+    m = _PASS_RE.search(detail)
+    if m:
+        info["pass_number"] = int(m.group(1))
+    m = _STANCE_RE.search(detail)
+    if m:
+        info["stance_key"] = m.group(1)
+    return info if info else None
+
 # Thread-safe guard against double-execution of the same job.
 # If execute_plan() is somehow called twice for the same job_id
 # (observed in production — cause TBD), the second call exits immediately.
@@ -220,6 +243,7 @@ def execute_plan(
                         completed_phases=completed_phases,
                         phase_statuses=phase_statuses,
                         total_phases=total_phases,
+                        structured_detail=_parse_structured_detail(detail),
                     ),
                     context_char_overrides=context_char_overrides or None,
                 )

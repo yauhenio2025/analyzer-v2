@@ -29,8 +29,20 @@
   - `PUT /v1/orchestrator/plans/{plan_id}` - Manual edit (no LLM)
   - `POST /v1/orchestrator/plans/{plan_id}/refine` - LLM-assisted refinement
   - `PATCH /v1/orchestrator/plans/{plan_id}/status` - Update plan status
+  - `GET /v1/orchestrator/plans/{plan_id}/pipeline-visualization` - Full pipeline tree for visualization
 - **Tested**: Varoufakis plan generated with 5 phases (deep profiling, standard classification, deep scanning, deep synthesis, deep final), 42 estimated LLM calls, 10 view recommendations (4 primary, 4 secondary, 2 optional), engine-specific focus dimensions
 - **Added**: 2026-02-19
+
+### Pipeline Visualization Endpoint
+- **Status**: Active
+- **Description**: Assembles a complete hierarchical tree of the execution pipeline from in-memory registries (plan → phases → chains → engines → passes → stances → dimensions). No LLM/DB calls. Powers the Critic's dynamic pipeline visualization component.
+- **Entry Points**:
+  - `src/orchestrator/visualization.py:1-280` - assemble_pipeline_visualization() + helpers for phase/chain/engine/pass viz
+  - `src/api/routes/orchestrator.py:113-131` - GET endpoint registration
+- **API Endpoints**:
+  - `GET /v1/orchestrator/plans/{plan_id}/pipeline-visualization` - Full pipeline tree
+- **Data Sources**: WorkflowRegistry, ChainRegistry, EngineRegistry (capability defs), OperationalizationRegistry, StanceRegistry
+- **Added**: 2026-02-20
 
 ## Execution Engine (Milestone 2)
 

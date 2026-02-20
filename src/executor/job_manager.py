@@ -160,6 +160,7 @@ def update_job_progress(
     completed_phases: Optional[list[str]] = None,
     phase_statuses: Optional[dict[str, str]] = None,
     total_phases: int = 5,
+    structured_detail: Optional[dict] = None,
 ) -> None:
     """Update job progress for frontend polling."""
     progress = {
@@ -170,6 +171,8 @@ def update_job_progress(
         "completed_phases": completed_phases or [],
         "phase_statuses": phase_statuses or {},
     }
+    if structured_detail:
+        progress["structured_detail"] = structured_detail
 
     execute(
         """UPDATE executor_jobs
