@@ -26,14 +26,14 @@ logger = logging.getLogger(__name__)
 MODEL_CONFIGS = {
     "opus": {
         # Sonnet 4.6 — medium effort is Anthropic's recommended default.
-        # "high" effort causes 15+ min thinking phases on 180K token inputs.
+        # "high" effort causes 20+ min thinking phases on 180K token inputs.
         "model": "claude-sonnet-4-6",
-        "max_tokens": 16000,
+        "max_tokens": 64000,
         "effort": "medium",
     },
     "sonnet": {
         "model": "claude-sonnet-4-6",
-        "max_tokens": 16000,
+        "max_tokens": 64000,
         "effort": "medium",
     },
     "haiku": {
