@@ -299,6 +299,7 @@ def generate_plan(request: OrchestratorPlanRequest) -> WorkflowExecutionPlan:
 
     try:
         import httpx
+        from anthropic import Anthropic
         sync_client = Anthropic(
             timeout=httpx.Timeout(connect=60.0, read=300.0, write=60.0, pool=60.0),
         )
@@ -452,6 +453,7 @@ Return ONLY the JSON — no markdown fences, no explanation outside the JSON."""
 
     try:
         import httpx
+        from anthropic import Anthropic
         sync_client = Anthropic(
             timeout=httpx.Timeout(connect=60.0, read=300.0, write=60.0, pool=60.0),
         )
