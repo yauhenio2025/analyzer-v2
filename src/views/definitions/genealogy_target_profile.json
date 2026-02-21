@@ -2,22 +2,60 @@
   "view_key": "genealogy_target_profile",
   "view_name": "Target Work Profile",
   "description": "Deep profiling of the target work from Pass 1's 3-engine chain: conceptual framework extraction, semantic constellation mapping, and inferential commitment mapping. Currently invisible intermediate product that reveals the analytical foundation.",
-  "version": 1,
+  "version": 2,
   "target_app": "the-critic",
   "target_page": "genealogy",
   "target_section": "results",
   "renderer_type": "accordion",
   "renderer_config": {
     "sections": [
-      {"key": "conceptual_framework", "title": "Conceptual Framework"},
-      {"key": "semantic_constellation", "title": "Semantic Constellation"},
-      {"key": "inferential_commitments", "title": "Inferential Commitments"}
+      { "key": "conceptual_framework", "title": "Conceptual Framework" },
+      { "key": "semantic_constellation", "title": "Semantic Constellation" },
+      { "key": "inferential_commitments", "title": "Inferential Commitments" }
     ],
-    "expand_first": true
+    "expand_first": true,
+    "section_renderers": {
+      "conceptual_framework": {
+        "renderer_type": "nested_sections",
+        "sub_renderers": {
+          "frameworks": { "renderer_type": "mini_card_list", "config": { "title_field": "framework_name", "subtitle_field": "type", "badge_field": "component_count" } },
+          "vocabulary_map": { "renderer_type": "key_value_table", "config": { "key_field": "term", "value_field": "meaning" } },
+          "methodological_signatures": { "renderer_type": "mini_card_list", "config": { "title_field": "signature", "subtitle_field": "method" } },
+          "metaphor_inventory": { "renderer_type": "chip_grid", "config": { "label_field": "metaphor" } },
+          "cross_domain_transfers": { "renderer_type": "mini_card_list", "config": { "title_field": "transfer_name", "subtitle_field": "source_domain" } },
+          "framework_relationships": { "renderer_type": "comparison_panel", "config": { "left_field": "framework_a", "right_field": "framework_b" } },
+          "architectural_summary": { "renderer_type": "prose_block", "config": {} }
+        }
+      },
+      "semantic_constellation": {
+        "renderer_type": "nested_sections",
+        "sub_renderers": {
+          "core_concepts": { "renderer_type": "mini_card_list", "config": { "title_field": "term", "subtitle_field": "role", "badge_field": "centrality" } },
+          "concept_clusters": { "renderer_type": "chip_grid", "config": { "label_field": "cluster_name", "count_field": "member_count" } },
+          "load_bearing_terms": { "renderer_type": "key_value_table", "config": { "key_field": "term", "value_field": "why_load_bearing" } },
+          "boundary_tensions": { "renderer_type": "comparison_panel", "config": { "left_field": "pole_a", "right_field": "pole_b" } },
+          "semantic_architecture": { "renderer_type": "prose_block", "config": {} },
+          "vocabulary_signature": { "renderer_type": "chip_grid", "config": { "label_field": "term" } }
+        }
+      },
+      "inferential_commitments": {
+        "renderer_type": "nested_sections",
+        "sub_renderers": {
+          "key_ideas": { "renderer_type": "chip_grid", "config": { "label_field": "idea" } },
+          "commitments": { "renderer_type": "mini_card_list", "config": { "title_field": "commitment", "subtitle_field": "type", "badge_field": "strength" } },
+          "backings": { "renderer_type": "mini_card_list", "config": { "title_field": "backing", "subtitle_field": "source" } },
+          "either_or_choices": { "renderer_type": "comparison_panel", "config": { "left_field": "option_a", "right_field": "option_b" } },
+          "hidden_premises": { "renderer_type": "mini_card_list", "config": { "title_field": "premise", "subtitle_field": "why_hidden" } },
+          "practical_implications": { "renderer_type": "mini_card_list", "config": { "title_field": "implication", "subtitle_field": "domain" } },
+          "argumentative_structure": { "renderer_type": "prose_block", "config": {} }
+        }
+      }
+    }
   },
   "data_source": {
     "workflow_key": "intellectual_genealogy",
     "phase_number": 1.0,
+    "engine_key": null,
     "chain_key": "genealogy_target_profiling",
     "result_path": "",
     "scope": "aggregated"
