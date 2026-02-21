@@ -148,7 +148,7 @@
 - **Entry Points**:
   - `src/views/schemas.py:1-195` - Pydantic models: ViewDefinition, DataSourceRef, TransformationSpec, ViewSummary, ComposedView, ComposedPageResponse
   - `src/views/registry.py:1-195` - ViewRegistry: load, get, list_summaries (with app/page filters), compose_tree, for_workflow, save, delete, reload
-  - `src/views/definitions/*.json` - 10 view definition JSON files
+  - `src/views/definitions/*.json` - 14 view definition JSON files
   - `src/api/routes/views.py:1-165` - Full REST API with compose endpoint
   - `src/api/main.py:16` - Router registration and lifespan loading
 - **Schema**:
@@ -157,7 +157,7 @@
   - `TransformationSpec` — type (none/schema_map/llm_extract/llm_summarize/aggregate), field_mapping, llm_extraction_schema, llm_prompt_template, stance_key override
   - `planner_hint` — Free-text guidance for the LLM planner about when/how to recommend this view
   - `planner_eligible` — Boolean flag (default true) controlling whether the planner considers this view
-- **Genealogy Views** (10 total):
+- **Genealogy Views** (14 total):
   - **Top-level tabs**:
     - `genealogy_relationship_landscape` (matrix, diagnostic) — Pass 1.5 relationship classifications
     - `genealogy_idea_evolution` (tab, comparison) — Pass 1+2+3 idea evolution traces
@@ -165,9 +165,14 @@
     - `genealogy_conditions` (accordion, narrative) — Pass 3 conditions of possibility
     - `genealogy_portrait` (prose, narrative) — Pass 4 final synthesis
   - **Nested children**:
-    - `genealogy_target_profile` (accordion, diagnostic) — nested under idea_evolution, Pass 1 chain results
+    - `genealogy_target_profile` (tab/sub_tabs, diagnostic) — nested under idea_evolution, container for 4 per-engine views
     - `genealogy_per_work_scan` (card, comparison) — nested under idea_evolution, Pass 2 per-work results
     - `genealogy_author_profile` (stat_summary, summary) — nested under portrait, Pass 4 extracted
+  - **Grandchild views** (per-engine Target Work Profile):
+    - `genealogy_tp_conceptual_framework` (accordion, 7 sections) — frameworks, vocabulary maps, metaphors, cross-domain transfers
+    - `genealogy_tp_semantic_constellation` (accordion, 6 sections) — core concepts, clusters, load-bearing terms, tensions
+    - `genealogy_tp_inferential_commitments` (accordion, 7 sections) — ideas, commitments, backings, hidden premises
+    - `genealogy_tp_concept_evolution` (accordion, 6 sections) — concepts, trajectories, definitional variations, Koselleck
   - **On-demand debug**:
     - `genealogy_raw_output` (raw_json, diagnostic) — raw engine JSON, visibility=on_demand
     - `genealogy_chain_log` (table, diagnostic) — execution metadata, visibility=on_demand
@@ -182,6 +187,37 @@
   - `POST /v1/views/reload` - Force reload from disk
 - **Consumer Usage Pattern**: `GET /v1/views/compose/the-critic/genealogy` returns tree → app renders tabs from top-level views → dispatches to component by renderer_type → nests children → uses presentation_stance for LLM transforms
 - **Added**: 2026-02-18
+
+## Renderer Definitions (Rendering Layer)
+
+### Renderer Catalog
+- **Status**: Active
+- **Description**: First-class renderer definitions cataloging rendering strategies with capabilities, stance affinities, ideal data shapes, and configuration schemas. Consumer apps use these to select appropriate renderers. The view refiner uses the catalog to recommend renderer configurations.
+- **Entry Points**:
+  - `src/renderers/schemas.py:1-103` - Pydantic models: RendererDefinition, RendererSummary, SectionRendererHint
+  - `src/renderers/registry.py:1-180` - RendererRegistry: load, get, list_all, list_summaries, for_stance, for_data_shape, for_app, save, delete, reload
+  - `src/renderers/definitions/*.json` - 8 renderer definition JSON files
+  - `src/api/routes/renderers.py:1-170` - Full REST API with stance/app query endpoints
+  - `src/api/main.py` - Router registration and lifespan loading
+- **Renderers** (8):
+  - `accordion` (container) — expandable sections, hosts sub-renderers
+  - `card_grid` (list) — responsive grid of cards
+  - `prose` (narrative) — formatted long-form with section anchors
+  - `table` (list) — sortable data table
+  - `stat_summary` (diagnostic) — stat cards with metrics
+  - `timeline` (narrative) — chronological visualization
+  - `tab` (container) — tabbed organization
+  - `raw_json` (diagnostic) — developer JSON inspector
+- **Section Sub-Renderers** (7, for accordion): chip_grid, mini_card_list, key_value_table, prose_block, stat_row, comparison_panel, timeline_strip
+- **API Endpoints**:
+  - `GET /v1/renderers` - List all (summary)
+  - `GET /v1/renderers/{key}` - Full definition with config schema
+  - `GET /v1/renderers/for-stance/{stance}` - By stance affinity (sorted)
+  - `GET /v1/renderers/for-app/{app}` - By consumer app support
+  - `POST /v1/renderers` - Create
+  - `PUT /v1/renderers/{key}` - Update
+  - `DELETE /v1/renderers/{key}` - Delete
+- **Added**: 2026-02-21
 
 ## Analytical & Presentation Stances (Operations)
 
@@ -319,12 +355,17 @@
   - `src/api/routes/transformations.py:1-335` - Full REST API: CRUD + execute + for-engine + for-renderer + reload
   - `src/api/main.py:18` - Router registration and lifespan loading
   - `src/llm/client.py:1-100` - Shared LLM utilities: get_anthropic_client, parse_llm_json_response, call_extraction_model
-- **Seed Templates** (5 total):
+- **Templates** (17 total, 1 deprecated):
   - `conditions_extraction` (llm_extract) - Extract structured conditions from genealogy prose
   - `tactics_extraction` (llm_extract) - Extract evolution tactics from genealogy prose
   - `functional_extraction` (llm_extract) - Extract functional analysis from genealogy prose
   - `synthesis_extraction` (llm_extract) - Extract synthesis structure from genealogy prose
   - `chain_log_field_map` (schema_map) - Rename chain execution log fields for display
+  - `target_profile_extraction` (llm_extract, **DEPRECATED**) - Old monolithic target profile extraction
+  - `tp_conceptual_framework_extraction` (llm_extract, 20k tokens) - Rich frameworks, vocabulary maps, metaphors
+  - `tp_semantic_constellation_extraction` (llm_extract, 18k tokens) - Core concepts, clusters, load-bearing terms
+  - `tp_inferential_commitments_extraction` (llm_extract, 20k tokens) - Commitments, hidden premises, argumentative structure
+  - `tp_concept_evolution_extraction` (llm_extract, 16k tokens) - Evolution trajectories, Koselleckian analysis
 - **API Endpoints**:
   - `GET /v1/transformations` - List summaries (?type=&tag=)
   - `GET /v1/transformations/{template_key}` - Full template

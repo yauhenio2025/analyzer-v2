@@ -1,0 +1,40 @@
+{
+  "renderer_key": "tab",
+  "renderer_name": "Tab Container",
+  "description": "Tabbed container for organizing related views. Each tab shows a different child view or data perspective. Good for grouping multiple related analyses without overwhelming the page.",
+  "category": "container",
+  "ideal_data_shapes": ["nested_sections", "object_array"],
+  "stance_affinities": {
+    "interactive": 0.9,
+    "summary": 0.6,
+    "comparison": 0.5,
+    "evidence": 0.4,
+    "narrative": 0.3,
+    "diagnostic": 0.4
+  },
+  "available_section_renderers": [],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "tab_style": {
+        "type": "string",
+        "enum": ["pills", "underline", "boxed"],
+        "default": "pills",
+        "description": "Tab visual style"
+      },
+      "default_tab": {
+        "type": "integer",
+        "default": 0,
+        "description": "Index of initially selected tab"
+      },
+      "show_count_badges": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show item count badges on tabs"
+      }
+    }
+  },
+  "supported_apps": ["the-critic"],
+  "status": "active",
+  "tags": ["container", "tabs", "organization"]
+}

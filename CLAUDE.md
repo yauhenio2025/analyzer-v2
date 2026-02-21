@@ -53,6 +53,11 @@ analyzer-v2/
 │   │   ├── registry.py    # ViewRegistry (CRUD + compose_tree)
 │   │   └── definitions/   # 10 JSON files (genealogy views)
 │   │
+│   ├── renderers/         # Renderer definitions (first-class catalog)
+│   │   ├── schemas.py     # RendererDefinition, RendererSummary, SectionRendererHint
+│   │   ├── registry.py    # RendererRegistry (CRUD + for_stance/for_data_shape/for_app)
+│   │   └── definitions/   # 8 JSON files (accordion, card_grid, prose, table, etc.)
+│   │
 │   ├── orchestrator/      # LLM-powered plan generation (Milestone 1)
 │   │   ├── schemas.py     # WorkflowExecutionPlan, PhaseExecutionSpec
 │   │   ├── catalog.py     # Capability catalog assembly
@@ -124,8 +129,17 @@ POST /v1/views                         # Create view
 PUT  /v1/views/{key}                   # Update view
 DELETE /v1/views/{key}                 # Delete view
 
+GET  /v1/renderers                       # List all renderers (summary)
+GET  /v1/renderers/{key}                 # Full renderer definition
+GET  /v1/renderers/for-stance/{stance}   # Renderers by stance affinity
+GET  /v1/renderers/for-app/{app}         # Renderers supported by app
+POST /v1/renderers                       # Create renderer
+PUT  /v1/renderers/{key}                 # Update renderer
+DELETE /v1/renderers/{key}               # Delete renderer
+
 GET  /v1/operations/stances            # List stances (with ?type=analytical|presentation)
 GET  /v1/operations/stances/{key}      # Get stance
+GET  /v1/operations/stances/{key}/renderers  # Preferred renderers for a stance
 
 GET  /v1/llm/status                  # Check LLM availability
 POST /v1/llm/profile-generate        # Generate profile with AI

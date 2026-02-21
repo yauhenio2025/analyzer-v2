@@ -257,6 +257,13 @@ stances:
     typical_position: any
     pairs_well_with: [narrative, diagnostic]
     ui_pattern: "stat cards, bullet lists, executive briefs"
+    preferred_renderers:
+      - renderer_key: stat_summary
+        affinity: 0.9
+      - renderer_key: card_grid
+        affinity: 0.7
+      - renderer_key: accordion
+        affinity: 0.5
     stance: |
       Distill the analytical output to its essence. Extract the 3-7
       most important findings, each as a single clear statement with
@@ -280,6 +287,13 @@ stances:
     typical_position: any
     pairs_well_with: [comparison, diagnostic]
     ui_pattern: "quote cards with attribution, citation trails, evidence chains"
+    preferred_renderers:
+      - renderer_key: accordion
+        affinity: 0.9
+      - renderer_key: table
+        affinity: 0.6
+      - renderer_key: prose
+        affinity: 0.5
     stance: |
       Foreground the evidence. Every claim should trace back to a
       specific source: a direct quote, a paraphrase with page
@@ -303,6 +317,13 @@ stances:
     typical_position: any
     pairs_well_with: [evidence, diagnostic]
     ui_pattern: "split panels, diff views, parallel timelines"
+    preferred_renderers:
+      - renderer_key: table
+        affinity: 0.9
+      - renderer_key: timeline
+        affinity: 0.7
+      - renderer_key: accordion
+        affinity: 0.5
     stance: |
       Structure for side-by-side comparison. Whatever is being
       compared — works, ideas, time periods, methodological
@@ -326,6 +347,13 @@ stances:
     typical_position: any
     pairs_well_with: [summary, evidence]
     ui_pattern: "formatted long-form with section anchors, reading time estimate"
+    preferred_renderers:
+      - renderer_key: prose
+        affinity: 0.95
+      - renderer_key: accordion
+        affinity: 0.4
+      - renderer_key: timeline
+        affinity: 0.5
     stance: |
       Present as flowing, connected prose organized by section
       anchors. This is the mode for when the analysis is best
@@ -351,6 +379,13 @@ stances:
     typical_position: any
     pairs_well_with: [summary, diagnostic]
     ui_pattern: "expandable cards, nested tabs, filter controls"
+    preferred_renderers:
+      - renderer_key: accordion
+        affinity: 0.9
+      - renderer_key: tab
+        affinity: 0.8
+      - renderer_key: card_grid
+        affinity: 0.6
     stance: |
       Structure for interactive exploration. Present a compact
       overview that invites drill-down: each item or finding
@@ -376,6 +411,13 @@ stances:
     typical_position: any
     pairs_well_with: [evidence, comparison]
     ui_pattern: "confidence meters, coverage matrices, debug panels"
+    preferred_renderers:
+      - renderer_key: raw_json
+        affinity: 0.95
+      - renderer_key: stat_summary
+        affinity: 0.7
+      - renderer_key: table
+        affinity: 0.6
     stance: |
       Expose the analytical machinery. Show not just what was
       found but how confident the analysis is, what methodology

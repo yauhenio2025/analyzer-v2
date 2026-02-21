@@ -5,7 +5,7 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException, Query
 
 from src.operations.registry import StanceRegistry
-from src.operations.schemas import AnalyticalStance, StanceSummary
+from src.operations.schemas import AnalyticalStance, RendererAffinity, StanceSummary
 
 router = APIRouter(prefix="/v1/operations", tags=["operations"])
 
@@ -75,6 +75,24 @@ async def get_stance_text(key: str):
 
 
 # ── Filter endpoints ─────────────────────────────────────
+
+
+@router.get("/stances/{key}/renderers", response_model=list[RendererAffinity])
+async def get_stance_renderers(key: str):
+    """Get preferred renderers for a presentation stance.
+
+    Returns the renderer affinities defined on the stance, sorted by
+    affinity score (highest first). Only meaningful for presentation stances.
+    """
+    reg = _get_registry()
+    stance = reg.get(key)
+    if not stance:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Stance '{key}' not found. Available: {[s.key for s in reg.list_all()]}",
+        )
+    # Sort by affinity descending
+    return sorted(stance.preferred_renderers, key=lambda r: r.affinity, reverse=True)
 
 
 @router.get("/stances/position/{position}", response_model=list[StanceSummary])

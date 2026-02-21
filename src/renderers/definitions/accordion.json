@@ -1,0 +1,59 @@
+{
+  "renderer_key": "accordion",
+  "renderer_name": "Accordion with Expandable Sections",
+  "description": "Container renderer with collapsible sections. Ideal for structured analytical output with multiple named sections. Each section can use a different sub-renderer for its content.",
+  "category": "container",
+  "ideal_data_shapes": ["nested_sections", "object_array", "key_value_pairs"],
+  "stance_affinities": {
+    "interactive": 0.9,
+    "evidence": 0.7,
+    "diagnostic": 0.6,
+    "narrative": 0.4,
+    "summary": 0.3,
+    "comparison": 0.5
+  },
+  "available_section_renderers": [
+    "chip_grid",
+    "mini_card_list",
+    "key_value_table",
+    "prose_block",
+    "stat_row",
+    "comparison_panel",
+    "timeline_strip"
+  ],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "sections": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "key": {"type": "string"},
+            "title": {"type": "string"}
+          }
+        },
+        "description": "Ordered list of sections to display"
+      },
+      "expand_first": {
+        "type": "boolean",
+        "default": true,
+        "description": "Auto-expand the first section"
+      },
+      "section_renderers": {
+        "type": "object",
+        "description": "Per-section renderer hints keyed by section_key",
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "renderer_type": {"type": "string"},
+            "config": {"type": "object"}
+          }
+        }
+      }
+    }
+  },
+  "supported_apps": ["the-critic"],
+  "status": "active",
+  "tags": ["container", "expandable", "sections", "primary"]
+}

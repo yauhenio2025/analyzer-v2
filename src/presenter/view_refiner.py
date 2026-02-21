@@ -53,6 +53,17 @@ Your job: REFINE the view recommendations based on what the analysis actually pr
 - If analysis reveals many quantifiable findings → use 'evidence' stance
 - If analysis reveals comparative patterns → use 'comparison' stance
 
+### Renderer Recommendations
+- Based on the data shape of each view's output, recommend renderer_config_overrides
+- For accordion views with structured sections, recommend section_renderers:
+  {"section_renderers": {"section_key": {"renderer_type": "chip_grid", "config": {...}}}}
+- Match presentation stance to renderer affinities from the catalog
+- Available section renderer types: chip_grid, mini_card_list, key_value_table, prose_block, stat_row, comparison_panel, timeline_strip
+- Example: a view with stance "evidence" and array-of-objects data → accordion + mini_card_list sections
+- Example: a view with stance "comparison" → table or comparison_panel sections
+- Example: a view with arrays of strings/tags → chip_grid sections
+- Example: a view with key→value mappings → key_value_table sections
+
 ## Output Format
 
 Return ONLY valid JSON (no markdown fences):
@@ -64,7 +75,12 @@ Return ONLY valid JSON (no markdown fences):
       "priority": "primary",
       "presentation_stance_override": null,
       "rationale": "Why this priority based on actual results",
-      "renderer_config_overrides": null,
+      "renderer_config_overrides": {
+        "section_renderers": {
+          "core_concepts": {"renderer_type": "mini_card_list", "config": {"title_field": "term", "subtitle_field": "role"}},
+          "concept_clusters": {"renderer_type": "chip_grid", "config": {"label_field": "cluster_name"}}
+        }
+      },
       "data_quality_assessment": "rich"
     }
   ],
@@ -73,6 +89,7 @@ Return ONLY valid JSON (no markdown fences):
 
 Include ALL views from the original plan, plus any additional views worth showing.
 The refined_views list should be complete — not a diff.
+Set renderer_config_overrides to null for views that don't need section-level adjustments.
 """
 
 
@@ -262,11 +279,32 @@ def _build_refinement_context(plan, job: dict, job_id: str) -> str:
             f"scope={ds.scope}, visibility={view_def.visibility}"
         )
 
+    # 6. Renderer catalog
+    sections.append("\n## Available Renderers\n")
+    from src.renderers.registry import get_renderer_registry
+    renderer_registry = get_renderer_registry()
+    for rdef in renderer_registry.list_all():
+        affinities = ", ".join(
+            f"{k}:{v}" for k, v in sorted(
+                rdef.stance_affinities.items(), key=lambda x: -x[1]
+            )
+        )
+        sections.append(
+            f"- **{rdef.renderer_key}** ({rdef.category}): {rdef.renderer_name} "
+            f"— shapes: {', '.join(rdef.ideal_data_shapes)}, "
+            f"affinities: [{affinities}]"
+        )
+        if rdef.available_section_renderers:
+            sections.append(
+                f"  Sub-renderers: {', '.join(rdef.available_section_renderers)}"
+            )
+
     sections.append("\n## Instructions\n")
     sections.append(
         "Based on the execution results above, refine the recommended views. "
-        "Adjust priorities, stances, and data quality assessments based on "
-        "what each phase actually produced."
+        "Adjust priorities, stances, data quality assessments, and "
+        "renderer_config_overrides (especially section_renderers for accordion views) "
+        "based on what each phase actually produced."
     )
 
     return "\n".join(sections)

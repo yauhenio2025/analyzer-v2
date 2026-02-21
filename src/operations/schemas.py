@@ -19,6 +19,16 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
+class RendererAffinity(BaseModel):
+    """A renderer preference for a presentation stance."""
+
+    renderer_key: str
+    affinity: float = Field(
+        default=0.5,
+        description="Affinity score 0.0-1.0. Higher = better fit.",
+    )
+
+
 class AnalyticalStance(BaseModel):
     """A cognitive posture for an analytical or presentation pass.
 
@@ -67,6 +77,10 @@ class AnalyticalStance(BaseModel):
         default=None,
         description="For presentation stances: the typical UI pattern "
         "(e.g. 'stat cards, bullet lists', 'split panels, diff views')",
+    )
+    preferred_renderers: list[RendererAffinity] = Field(
+        default_factory=list,
+        description="For presentation stances: preferred renderers with affinity scores",
     )
 
 

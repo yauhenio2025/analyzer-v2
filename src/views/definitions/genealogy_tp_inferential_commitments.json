@@ -1,0 +1,53 @@
+{
+  "view_key": "genealogy_tp_inferential_commitments",
+  "view_name": "Inferential Commitments",
+  "description": "Rich extraction from inferential_commitment_mapper engine output (~23k words, 4 passes). Surfaces key ideas, commitments with cross-references, backings, either-or choices, hidden premises, practical implications, and argumentative structure.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "genealogy",
+  "target_section": "results",
+  "renderer_type": "accordion",
+  "renderer_config": {
+    "sections": [
+      {"key": "key_ideas", "title": "Key Ideas"},
+      {"key": "commitments", "title": "Inferential Commitments"},
+      {"key": "backings", "title": "Backings & Warrants"},
+      {"key": "either_or_choices", "title": "Either/Or Choices"},
+      {"key": "hidden_premises", "title": "Hidden Premises"},
+      {"key": "practical_implications", "title": "Practical Implications"},
+      {"key": "argumentative_structure", "title": "Argumentative Structure"}
+    ],
+    "expand_first": true,
+    "section_renderers": {
+      "key_ideas": {"renderer_type": "chip_grid", "config": {"label_field": "idea"}},
+      "commitments": {"renderer_type": "mini_card_list", "config": {"title_field": "commitment", "subtitle_field": "type", "badge_field": "strength"}},
+      "backings": {"renderer_type": "mini_card_list", "config": {"title_field": "backing", "subtitle_field": "warrant_type"}},
+      "either_or_choices": {"renderer_type": "comparison_panel", "config": {"left_field": "option_a", "right_field": "option_b"}},
+      "hidden_premises": {"renderer_type": "mini_card_list", "config": {"title_field": "premise", "subtitle_field": "why_hidden"}},
+      "practical_implications": {"renderer_type": "mini_card_list", "config": {"title_field": "implication", "subtitle_field": "domain"}},
+      "argumentative_structure": {"renderer_type": "prose_block", "config": {}}
+    }
+  },
+  "data_source": {
+    "workflow_key": "intellectual_genealogy",
+    "phase_number": 1.0,
+    "engine_key": "inferential_commitment_mapper",
+    "result_path": "",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "diagnostic",
+  "position": 1.3,
+  "parent_view_key": "genealogy_target_profile",
+  "tab_count_field": null,
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "planner_hint": "Sub-view of Target Work Profile. Maps inferential commitments, hidden premises, and argumentative structure from the target work.",
+  "planner_eligible": false,
+  "status": "active",
+  "tags": ["genealogy", "profiling", "target", "commitments", "nested"],
+  "source_project": "critic"
+}

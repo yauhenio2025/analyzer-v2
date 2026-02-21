@@ -1,0 +1,42 @@
+{
+  "renderer_key": "stat_summary",
+  "renderer_name": "Statistics Summary",
+  "description": "Compact overview with stat cards showing key metrics, counts, and confidence levels. Best for executive-summary views where numbers and headlines dominate.",
+  "category": "diagnostic",
+  "ideal_data_shapes": ["key_value_pairs", "flat_list"],
+  "stance_affinities": {
+    "summary": 0.9,
+    "diagnostic": 0.8,
+    "evidence": 0.4,
+    "comparison": 0.5,
+    "interactive": 0.3,
+    "narrative": 0.1
+  },
+  "available_section_renderers": [],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "stats": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "label": {"type": "string"},
+            "value_field": {"type": "string"},
+            "trend_field": {"type": "string"},
+            "format": {"type": "string", "enum": ["number", "percentage", "text"]}
+          }
+        },
+        "description": "Stat card definitions"
+      },
+      "columns": {
+        "type": "integer",
+        "default": 4,
+        "description": "Number of stat cards per row"
+      }
+    }
+  },
+  "supported_apps": ["the-critic"],
+  "status": "active",
+  "tags": ["stats", "metrics", "summary", "executive"]
+}

@@ -1,0 +1,39 @@
+{
+  "renderer_key": "prose",
+  "renderer_name": "Formatted Prose",
+  "description": "Long-form narrative renderer with section anchors and formatting. Best for connected analytical prose that reads as a continuous argument. Supports markdown-style headings, emphasis, and citations.",
+  "category": "narrative",
+  "ideal_data_shapes": ["prose_text", "nested_sections"],
+  "stance_affinities": {
+    "narrative": 0.95,
+    "evidence": 0.6,
+    "summary": 0.4,
+    "comparison": 0.3,
+    "interactive": 0.2,
+    "diagnostic": 0.2
+  },
+  "available_section_renderers": [],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "show_reading_time": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show estimated reading time"
+      },
+      "show_section_nav": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show section navigation anchors"
+      },
+      "max_preview_lines": {
+        "type": "integer",
+        "default": 20,
+        "description": "Lines to show before expand"
+      }
+    }
+  },
+  "supported_apps": ["the-critic"],
+  "status": "active",
+  "tags": ["narrative", "long-form", "prose"]
+}

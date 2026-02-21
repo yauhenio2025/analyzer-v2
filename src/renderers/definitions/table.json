@@ -1,0 +1,47 @@
+{
+  "renderer_key": "table",
+  "renderer_name": "Data Table",
+  "description": "Structured table with sortable columns. Ideal for comparison across multiple items with consistent dimensions. Supports column configuration, sorting, and row grouping.",
+  "category": "list",
+  "ideal_data_shapes": ["object_array", "key_value_pairs", "comparison_pairs"],
+  "stance_affinities": {
+    "comparison": 0.9,
+    "diagnostic": 0.7,
+    "evidence": 0.6,
+    "summary": 0.5,
+    "interactive": 0.5,
+    "narrative": 0.1
+  },
+  "available_section_renderers": [],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "columns": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "key": {"type": "string"},
+            "label": {"type": "string"},
+            "width": {"type": "string"},
+            "sortable": {"type": "boolean"}
+          }
+        },
+        "description": "Column definitions"
+      },
+      "sortable": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable column sorting"
+      },
+      "compact": {
+        "type": "boolean",
+        "default": false,
+        "description": "Use compact row spacing"
+      }
+    }
+  },
+  "supported_apps": ["the-critic"],
+  "status": "active",
+  "tags": ["table", "comparison", "sortable"]
+}

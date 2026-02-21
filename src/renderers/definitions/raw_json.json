@@ -1,0 +1,39 @@
+{
+  "renderer_key": "raw_json",
+  "renderer_name": "Raw JSON Inspector",
+  "description": "Developer/diagnostic renderer that shows the raw structured data as formatted JSON. Useful for debugging transformation output or inspecting data shapes before designing a proper renderer.",
+  "category": "diagnostic",
+  "ideal_data_shapes": ["object_array", "nested_sections", "key_value_pairs", "flat_list", "prose_text", "timeline_data", "comparison_pairs"],
+  "stance_affinities": {
+    "diagnostic": 0.95,
+    "evidence": 0.3,
+    "summary": 0.1,
+    "comparison": 0.1,
+    "narrative": 0.05,
+    "interactive": 0.2
+  },
+  "available_section_renderers": [],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "collapsed": {
+        "type": "boolean",
+        "default": true,
+        "description": "Start with JSON collapsed"
+      },
+      "max_depth": {
+        "type": "integer",
+        "default": 5,
+        "description": "Max nesting depth to expand by default"
+      },
+      "syntax_highlight": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable syntax highlighting"
+      }
+    }
+  },
+  "supported_apps": ["the-critic"],
+  "status": "active",
+  "tags": ["debug", "diagnostic", "developer", "raw"]
+}

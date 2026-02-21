@@ -1,0 +1,42 @@
+{
+  "renderer_key": "timeline",
+  "renderer_name": "Timeline",
+  "description": "Chronological or sequential visualization showing evolution, progression, or stages. Works well for tracing how concepts, ideas, or arguments develop over time or across phases.",
+  "category": "narrative",
+  "ideal_data_shapes": ["timeline_data", "object_array"],
+  "stance_affinities": {
+    "narrative": 0.7,
+    "comparison": 0.8,
+    "evidence": 0.5,
+    "summary": 0.4,
+    "interactive": 0.6,
+    "diagnostic": 0.3
+  },
+  "available_section_renderers": [],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "label_field": {
+        "type": "string",
+        "description": "Field for timeline node labels"
+      },
+      "date_field": {
+        "type": "string",
+        "description": "Field for chronological ordering"
+      },
+      "description_field": {
+        "type": "string",
+        "description": "Field for node descriptions"
+      },
+      "orientation": {
+        "type": "string",
+        "enum": ["horizontal", "vertical"],
+        "default": "horizontal",
+        "description": "Timeline layout direction"
+      }
+    }
+  },
+  "supported_apps": ["the-critic"],
+  "status": "active",
+  "tags": ["timeline", "chronological", "evolution"]
+}

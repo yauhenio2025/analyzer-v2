@@ -1,0 +1,53 @@
+{
+  "view_key": "genealogy_tp_conceptual_framework",
+  "view_name": "Conceptual Framework",
+  "description": "Rich extraction from conceptual_framework_extraction engine output (~16k words, 3 passes). Surfaces frameworks, vocabulary maps, methodological signatures, metaphor inventories, cross-domain transfers, and architectural summaries.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "genealogy",
+  "target_section": "results",
+  "renderer_type": "accordion",
+  "renderer_config": {
+    "sections": [
+      {"key": "frameworks", "title": "Conceptual Frameworks"},
+      {"key": "vocabulary_map", "title": "Vocabulary Map"},
+      {"key": "methodological_signatures", "title": "Methodological Signatures"},
+      {"key": "metaphor_inventory", "title": "Metaphor Inventory"},
+      {"key": "cross_domain_transfers", "title": "Cross-Domain Transfers"},
+      {"key": "framework_relationships", "title": "Framework Relationships"},
+      {"key": "architectural_summary", "title": "Architectural Summary"}
+    ],
+    "expand_first": true,
+    "section_renderers": {
+      "frameworks": {"renderer_type": "mini_card_list", "config": {"title_field": "framework_name", "subtitle_field": "type", "badge_field": "component_count"}},
+      "vocabulary_map": {"renderer_type": "key_value_table", "config": {"key_field": "term", "value_field": "meaning"}},
+      "methodological_signatures": {"renderer_type": "mini_card_list", "config": {"title_field": "method_name", "subtitle_field": "tradition"}},
+      "metaphor_inventory": {"renderer_type": "chip_grid", "config": {"label_field": "metaphor"}},
+      "cross_domain_transfers": {"renderer_type": "mini_card_list", "config": {"title_field": "transfer_name", "subtitle_field": "source_domain"}},
+      "framework_relationships": {"renderer_type": "comparison_panel", "config": {"left_field": "framework_a", "right_field": "framework_b"}},
+      "architectural_summary": {"renderer_type": "prose_block", "config": {}}
+    }
+  },
+  "data_source": {
+    "workflow_key": "intellectual_genealogy",
+    "phase_number": 1.0,
+    "engine_key": "conceptual_framework_extraction",
+    "result_path": "",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "diagnostic",
+  "position": 1.1,
+  "parent_view_key": "genealogy_target_profile",
+  "tab_count_field": null,
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "planner_hint": "Sub-view of Target Work Profile. Extracts conceptual frameworks, vocabulary maps, and methodological signatures from the target work.",
+  "planner_eligible": false,
+  "status": "active",
+  "tags": ["genealogy", "profiling", "target", "frameworks", "nested"],
+  "source_project": "critic"
+}

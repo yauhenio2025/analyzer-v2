@@ -1,0 +1,45 @@
+{
+  "renderer_key": "card_grid",
+  "renderer_name": "Card Grid",
+  "description": "Responsive grid of cards, each representing an analytical finding or entity. Good for collections of distinct items with title, description, and metadata.",
+  "category": "list",
+  "ideal_data_shapes": ["object_array", "flat_list"],
+  "stance_affinities": {
+    "summary": 0.8,
+    "interactive": 0.7,
+    "evidence": 0.5,
+    "narrative": 0.3,
+    "comparison": 0.4,
+    "diagnostic": 0.4
+  },
+  "available_section_renderers": [],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "title_field": {
+        "type": "string",
+        "description": "Field name for card title"
+      },
+      "subtitle_field": {
+        "type": "string",
+        "description": "Field name for card subtitle"
+      },
+      "description_field": {
+        "type": "string",
+        "description": "Field name for card body text"
+      },
+      "badge_field": {
+        "type": "string",
+        "description": "Field name for badge/tag on card"
+      },
+      "columns": {
+        "type": "integer",
+        "default": 3,
+        "description": "Number of grid columns (1-4)"
+      }
+    }
+  },
+  "supported_apps": ["the-critic"],
+  "status": "active",
+  "tags": ["grid", "cards", "collection"]
+}
