@@ -5,6 +5,15 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+- **Renderer stance affinity recalibration** — card_grid evidence affinity 0.5→0.8 (cards are natural evidence presenters), timeline evidence 0.5→0.65 + narrative 0.7→0.8, tab evidence 0.4→0.55 + comparison 0.5→0.6. Fixes incorrect recommendation of prose over card_grid for evidence-stance views with structured data. ([`src/renderers/definitions/card_grid.json`](src/renderers/definitions/card_grid.json), [`timeline.json`](src/renderers/definitions/timeline.json), [`tab.json`](src/renderers/definitions/tab.json))
+
+- **Adaptive deterministic scoring weights** — Structured renderers (list/diagnostic category: card_grid, table, stat_summary, raw_json) now weight data shape at 0.40 (up from 0.30) and stance at 0.25 (down from 0.35). Prevents stance affinity from overriding clear data shape matches. ([`analyzer-mgmt/frontend/src/pages/views/[key].tsx`])
+
+- **ViewSummary structural hints** — `sections_count`, `has_sub_renderers`, and `config_hints[]` computed from `renderer_config` and included in list endpoint. Config hints surface internal structure: "4 sections", "cell: tactic_card", "grouped by relationship_type", "6 columns, sortable", etc. ([`src/views/schemas.py`](src/views/schemas.py), [`src/views/registry.py`](src/views/registry.py))
+
+- **Views list page redesign** — Tree hierarchy with recursive nesting, clean file-tree style connectors (2px zinc-400 lines with 6px endpoint dots), compact child rows (slim navigation style, no description), parent cards with color pips instead of thick border-l-4, parent+children form unified card, position-ordered interleaving (all views by position, not trees-first/standalone-last). ([`analyzer-mgmt/frontend/src/pages/views/index.tsx`])
+
 ### Added
 - **Intelligent Renderer Selector** — Two-layer renderer recommendation system for the Views editor. (1) Deterministic scoring on the frontend: ranks all 8 renderers by stance affinity (0.35), data shape match (0.30), container fit (0.20), and app support (0.15) with green/yellow/red visual indicators. Data shape inferred from `result_path` heuristics. (2) LLM-powered recommendation via `POST /v1/renderers/recommend`: Claude Sonnet analyzes full view context + renderer catalog and returns top 5 ranked recommendations with reasoning, stance/shape analysis, and optional config migration hints. Frontend RendererTab redesigned from dumb `<select>` to interactive scored list with clickable renderer cards and AI panel with [Apply] buttons. Includes **Wiring Explainer** panel that narrates in plain English how the view's data source → data shape → stance → renderer need chain together, with stance mode descriptions (e.g. "diagnostic = meta-analytical — expose methodology, confidence, gaps") and structure analysis (child count, container need). ([`src/renderers/schemas.py`](src/renderers/schemas.py), [`src/api/routes/renderers.py`](src/api/routes/renderers.py), [`analyzer-mgmt/frontend/src/pages/views/[key].tsx`], [`analyzer-mgmt/frontend/src/lib/api.ts`], [`analyzer-mgmt/frontend/src/types/index.ts`])
 
