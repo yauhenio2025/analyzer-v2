@@ -214,10 +214,22 @@
   - `GET /v1/renderers/{key}` - Full definition with config schema
   - `GET /v1/renderers/for-stance/{stance}` - By stance affinity (sorted)
   - `GET /v1/renderers/for-app/{app}` - By consumer app support
+  - `POST /v1/renderers/recommend` - LLM-powered renderer recommendation (Claude Sonnet)
   - `POST /v1/renderers` - Create
   - `PUT /v1/renderers/{key}` - Update
   - `DELETE /v1/renderers/{key}` - Delete
-- **Added**: 2026-02-21
+- **Added**: 2026-02-21 | **Modified**: 2026-02-22
+
+### Intelligent Renderer Selector
+- **Status**: Active
+- **Description**: Two-layer intelligence for selecting renderers in the Views editor. Layer 1: deterministic frontend scoring ranks all renderers by stance affinity (0.35), data shape match (0.30), container fit (0.20), app support (0.15). Layer 2: LLM recommendation via Claude Sonnet analyzes full view context and returns top 5 with reasoning and config migration hints. Includes a **Wiring Explainer** panel that narrates in plain English how data source → data shape → stance → renderer need chain together.
+- **Entry Points**:
+  - `src/renderers/schemas.py:137-185` - Request/response schemas: RendererRecommendRequest, RendererRecommendation, ConfigMigrationHint, RendererRecommendResponse
+  - `src/api/routes/renderers.py:197-310` - POST /v1/renderers/recommend endpoint with catalog assembly and LLM call
+  - `analyzer-mgmt/frontend/src/pages/views/[key].tsx` - WiringExplainer component + redesigned RendererTab: scored list + AI panel with [Apply] buttons
+  - `analyzer-mgmt/frontend/src/lib/api.ts` - renderers.recommend() API client method
+  - `analyzer-mgmt/frontend/src/types/index.ts` - RendererRecommendRequest/Response types
+- **Added**: 2026-02-22
 
 ## Analytical & Presentation Stances (Operations)
 

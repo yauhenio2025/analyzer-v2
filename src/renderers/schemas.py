@@ -131,3 +131,59 @@ class RendererSummary(BaseModel):
     stance_affinities: dict[str, float] = Field(default_factory=dict)
     supported_apps: list[str] = Field(default_factory=list)
     status: str = "active"
+
+
+# -- Renderer Recommendation Schemas --
+
+
+class RendererRecommendRequest(BaseModel):
+    """Context for LLM-powered renderer recommendation."""
+
+    view_key: str = ""
+    view_name: str = ""
+    description: str = ""
+    presentation_stance: Optional[str] = None
+    renderer_type: Optional[str] = None  # current selection
+    renderer_config: dict[str, Any] = Field(default_factory=dict)
+    data_source: dict[str, Any] = Field(default_factory=dict)
+    has_children: bool = False
+    child_count: int = 0
+    parent_view_key: Optional[str] = None
+    target_app: str = "generic"
+    include_config_migration: bool = False
+    migrate_from: Optional[str] = None
+
+
+class RendererRecommendation(BaseModel):
+    """A single scored renderer recommendation."""
+
+    renderer_key: str
+    renderer_name: str
+    category: str
+    score: float
+    rank: int
+    reasoning: str
+    stance_fit: str
+    data_shape_fit: str
+    config_suggestions: Optional[dict[str, Any]] = None
+    warnings: list[str] = Field(default_factory=list)
+
+
+class ConfigMigrationHint(BaseModel):
+    """Guidance for migrating config between renderers."""
+
+    from_renderer: str
+    to_renderer: str
+    fields_to_add: list[str] = Field(default_factory=list)
+    fields_to_remove: list[str] = Field(default_factory=list)
+    fields_to_transform: dict[str, str] = Field(default_factory=dict)
+    explanation: str
+
+
+class RendererRecommendResponse(BaseModel):
+    """Full recommendation response with ranked options."""
+
+    recommendations: list[RendererRecommendation]
+    best_match: str
+    config_migration: Optional[ConfigMigrationHint] = None
+    analysis_summary: str

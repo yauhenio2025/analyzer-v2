@@ -5,13 +5,19 @@ Consumer apps fetch the catalog to discover available renderers,
 their capabilities, and configuration schemas.
 """
 
+import json
 import logging
 
 from fastapi import APIRouter, HTTPException
 
 from src.api.routes.meta import mark_definitions_modified
 from src.renderers.registry import get_renderer_registry
-from src.renderers.schemas import RendererDefinition, RendererSummary
+from src.renderers.schemas import (
+    RendererDefinition,
+    RendererRecommendRequest,
+    RendererRecommendResponse,
+    RendererSummary,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -188,6 +194,187 @@ async def delete_renderer(renderer_key: str):
     mark_definitions_modified()
     logger.info(f"Deleted renderer: {renderer_key}")
     return {"deleted": renderer_key}
+
+
+# -- LLM Recommendation --
+
+
+def _build_renderer_catalog_block() -> str:
+    """Build a text block describing all renderers for the LLM prompt."""
+    registry = get_renderer_registry()
+    lines = []
+    for r in registry.list_all():
+        lines.append(f"## {r.renderer_key} — {r.renderer_name}")
+        lines.append(f"Category: {r.category}")
+        lines.append(f"Description: {r.description}")
+        if r.ideal_data_shapes:
+            lines.append(f"Ideal data shapes: {', '.join(r.ideal_data_shapes)}")
+        if r.stance_affinities:
+            affinities = ", ".join(
+                f"{k}: {v}" for k, v in sorted(
+                    r.stance_affinities.items(), key=lambda x: -x[1]
+                )
+            )
+            lines.append(f"Stance affinities: {affinities}")
+        if r.available_section_renderers:
+            lines.append(
+                f"Section sub-renderers: {', '.join(r.available_section_renderers)}"
+            )
+        if r.config_schema:
+            schema_keys = list(r.config_schema.get("properties", {}).keys())
+            if schema_keys:
+                lines.append(f"Config keys: {', '.join(schema_keys)}")
+        if r.variants:
+            lines.append(f"Variants: {', '.join(r.variants.keys())}")
+        if r.supported_apps:
+            lines.append(f"Supported apps: {', '.join(r.supported_apps)}")
+        lines.append("")
+    return "\n".join(lines)
+
+
+@router.post("/recommend", response_model=RendererRecommendResponse)
+async def recommend_renderer(req: RendererRecommendRequest):
+    """LLM-powered renderer recommendation for a view context.
+
+    Analyzes the view's data shape, stance, children, and target app
+    to recommend the best-fit renderers with reasoning and optional
+    config migration hints.
+    """
+    from src.llm.client import (
+        GENERATION_MODEL,
+        get_anthropic_client,
+        parse_llm_json_response,
+    )
+
+    client = get_anthropic_client()
+    if client is None:
+        raise HTTPException(
+            status_code=503,
+            detail="LLM service unavailable. Set ANTHROPIC_API_KEY.",
+        )
+
+    catalog_block = _build_renderer_catalog_block()
+
+    # Build view context section
+    view_context_parts = []
+    if req.view_name:
+        view_context_parts.append(f"View name: {req.view_name}")
+    if req.description:
+        view_context_parts.append(f"Description: {req.description}")
+    if req.presentation_stance:
+        view_context_parts.append(f"Presentation stance: {req.presentation_stance}")
+    if req.renderer_type:
+        view_context_parts.append(f"Current renderer: {req.renderer_type}")
+    if req.data_source:
+        ds = req.data_source
+        if ds.get("engine_key"):
+            view_context_parts.append(f"Engine: {ds['engine_key']}")
+        if ds.get("chain_key"):
+            view_context_parts.append(f"Chain: {ds['chain_key']}")
+        if ds.get("result_path"):
+            view_context_parts.append(f"Result path: {ds['result_path']}")
+        if ds.get("scope"):
+            view_context_parts.append(f"Scope: {ds['scope']}")
+    view_context_parts.append(
+        f"Has children: {req.has_children} (count: {req.child_count})"
+    )
+    if req.parent_view_key:
+        view_context_parts.append(f"Parent view: {req.parent_view_key}")
+    view_context_parts.append(f"Target app: {req.target_app}")
+    if req.renderer_config:
+        view_context_parts.append(
+            f"Current config keys: {list(req.renderer_config.keys())}"
+        )
+    view_context = "\n".join(view_context_parts)
+
+    # Build migration section
+    migration_section = ""
+    if req.include_config_migration and req.migrate_from:
+        migration_section = f"""
+
+## Config Migration Request
+The user is considering switching FROM "{req.migrate_from}" TO a new renderer.
+Include a "config_migration" object in your response with:
+- from_renderer: "{req.migrate_from}"
+- to_renderer: your top recommendation
+- fields_to_add: config keys the new renderer needs
+- fields_to_remove: config keys from the old renderer that are irrelevant
+- fields_to_transform: mapping of old keys to new keys/descriptions
+- explanation: natural-language migration guide
+"""
+
+    prompt = f"""You are a renderer selection expert for an analytical visualization system.
+Given a view's context and a catalog of available renderers, recommend the best renderers ranked by fit.
+
+# View Context
+{view_context}
+
+# Renderer Catalog
+{catalog_block}
+
+# Container Logic
+- If the view has children (has_children=true), it NEEDS a container renderer (category: "container")
+- Container renderers: accordion, tab
+- Non-container renderers should be penalized when the view has children
+- If the view has NO children and is a leaf node, container renderers are less ideal
+{migration_section}
+# Instructions
+1. Score each renderer 0.0–1.0 based on: stance fit, data shape fit, container need, app support
+2. Return the top 5 renderers, ranked by score
+3. For each, provide concise reasoning, stance_fit description, and data_shape_fit description
+4. Provide an analysis_summary (2-3 sentences) explaining the overall recommendation
+
+Return ONLY valid JSON (no markdown fences) matching this schema:
+{{
+  "recommendations": [
+    {{
+      "renderer_key": "string",
+      "renderer_name": "string",
+      "category": "string",
+      "score": 0.0,
+      "rank": 1,
+      "reasoning": "string",
+      "stance_fit": "string",
+      "data_shape_fit": "string",
+      "config_suggestions": {{}},
+      "warnings": []
+    }}
+  ],
+  "best_match": "renderer_key",
+  "config_migration": null,
+  "analysis_summary": "string"
+}}"""
+
+    try:
+        response = client.messages.create(
+            model=GENERATION_MODEL,
+            max_tokens=4096,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        raw_text = response.content[0].text
+        parsed = parse_llm_json_response(raw_text)
+
+        result = RendererRecommendResponse.model_validate(parsed)
+
+        logger.info(
+            f"Renderer recommendation for view='{req.view_name}': "
+            f"best_match={result.best_match}, "
+            f"tokens={response.usage.input_tokens + response.usage.output_tokens}"
+        )
+        return result
+
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse LLM response as JSON: {e}")
+        raise HTTPException(
+            status_code=502,
+            detail=f"LLM returned invalid JSON: {e}",
+        )
+    except Exception as e:
+        logger.error(f"Renderer recommendation failed: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Recommendation failed: {e}",
+        )
 
 
 # -- Reload --
