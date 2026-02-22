@@ -19,7 +19,8 @@
     "prose_block",
     "stat_row",
     "comparison_panel",
-    "timeline_strip"
+    "timeline_strip",
+    "evidence_trail"
   ],
   "config_schema": {
     "type": "object",

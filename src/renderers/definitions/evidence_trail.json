@@ -1,0 +1,154 @@
+{
+  "renderer_key": "evidence_trail",
+  "renderer_name": "Evidence Trail",
+  "description": "Vertical chain of evidence steps with dot markers, gradient connectors, and quoted content. Shows a narrative progression from sources through analysis to conclusions. Each step can contain multiple items (titles, quotes, citations) or a single text block. Usable as a standalone renderer or as a sub-renderer within accordion sections.",
+  "category": "narrative",
+  "ideal_data_shapes": ["nested_sections", "object_array"],
+  "stance_affinities": {
+    "evidence": 0.95,
+    "diagnostic": 0.7,
+    "narrative": 0.6,
+    "interactive": 0.3,
+    "summary": 0.2,
+    "comparison": 0.3
+  },
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "steps": {
+        "type": "array",
+        "description": "Ordered list of evidence steps to render. Each step maps a data field to a visual chain element.",
+        "items": {
+          "type": "object",
+          "required": ["label", "field", "variant"],
+          "properties": {
+            "label": {
+              "type": "string",
+              "description": "Display label for this step (e.g., 'Prior work', 'Current evidence', 'Assessment')"
+            },
+            "field": {
+              "type": "string",
+              "description": "Data field to read from the source object"
+            },
+            "variant": {
+              "type": "string",
+              "enum": ["prior", "current", "assessment"],
+              "description": "Visual variant controlling dot style and connector appearance"
+            },
+            "item_title_field": {
+              "type": "string",
+              "description": "Within each array item, the field containing the title text"
+            },
+            "item_quote_field": {
+              "type": "string",
+              "description": "Within each array item, the field containing the quoted text"
+            },
+            "item_cite_field": {
+              "type": "string",
+              "description": "Within each array item, the field containing the citation/source location"
+            },
+            "is_text": {
+              "type": "boolean",
+              "default": false,
+              "description": "If true, treat the field value as a single text block rather than an array of items"
+            }
+          }
+        }
+      },
+      "accent_color": {
+        "type": "string",
+        "description": "CSS color for connector gradients and current-step dots. Defaults to neutral gray."
+      },
+      "border_color": {
+        "type": "string",
+        "description": "CSS color for quote borders and muted connectors. Defaults to light gray."
+      }
+    }
+  },
+  "input_data_schema": {
+    "type": "object",
+    "description": "Object with fields referenced by each step config. Fields can be arrays of items (for multi-item steps) or strings (for text steps).",
+    "additionalProperties": true
+  },
+  "variants": {
+    "tactic_evidence": {
+      "description": "Three-step chain for intellectual genealogy tactics: prior work references, current work evidence, assessment",
+      "config": {
+        "steps": [
+          {
+            "label": "Prior work",
+            "field": "prior_work_references",
+            "variant": "prior",
+            "item_title_field": "work_title",
+            "item_quote_field": "relevant_quote"
+          },
+          {
+            "label": "Current work",
+            "field": "current_work_evidence",
+            "variant": "current",
+            "item_quote_field": "quote",
+            "item_cite_field": "location"
+          },
+          {
+            "label": "Assessment",
+            "field": "assessment",
+            "variant": "assessment",
+            "is_text": true
+          }
+        ]
+      },
+      "example_use": "Tactics & Strategies analysis in intellectual genealogy"
+    },
+    "argument_chain": {
+      "description": "Three-step chain for argument analysis: premises, reasoning, conclusion",
+      "config": {
+        "steps": [
+          {
+            "label": "Premises",
+            "field": "premises",
+            "variant": "prior",
+            "item_quote_field": "text",
+            "item_cite_field": "source"
+          },
+          {
+            "label": "Reasoning",
+            "field": "reasoning_steps",
+            "variant": "current",
+            "item_quote_field": "step"
+          },
+          {
+            "label": "Conclusion",
+            "field": "conclusion",
+            "variant": "assessment",
+            "is_text": true
+          }
+        ]
+      },
+      "example_use": "Argument architecture and logical chain analysis"
+    },
+    "source_critique": {
+      "description": "Two-step chain for source evaluation: original text and critical assessment",
+      "config": {
+        "steps": [
+          {
+            "label": "Source material",
+            "field": "source_quotes",
+            "variant": "prior",
+            "item_quote_field": "text",
+            "item_cite_field": "page"
+          },
+          {
+            "label": "Critical assessment",
+            "field": "critique",
+            "variant": "assessment",
+            "is_text": true
+          }
+        ]
+      },
+      "example_use": "Evidence evaluation and source critique"
+    }
+  },
+  "supported_apps": ["the-critic"],
+  "status": "active",
+  "tags": ["evidence", "chain", "quotes", "narrative", "sub-renderer", "composable"]
+}
