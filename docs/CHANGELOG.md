@@ -5,6 +5,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+- **Editorial-quality Tactics card redesign** (the-critic) — TacticCardCell rewritten with evidence trail as narrative chain (Prior work → gradient connector → Current work → Assessment), severity-scaled visual weight (major: thicker border + tinted bg + bold badge, minor: subdued), cross-reference idea chips with indigo accent, section labels as uppercase markers. Group headers now show typological descriptions ("Repurposing earlier concepts under new theoretical guises") and major tactic counts. Items sorted by severity within groups. Added `TACTIC_DESCRIPTIONS` to genealogyStyles.ts. ([`the-critic/webapp/src/components/renderers/cells/TacticCardCell.tsx`], [`the-critic/webapp/src/components/renderers/CardGridRenderer.tsx`], [`the-critic/webapp/src/constants/genealogyStyles.ts`], [`the-critic/webapp/src/pages/GenealogyPage.css`])
+
+- **Structured renderer config editors** (analyzer-mgmt) — Replaced generic expand_first toggle with renderer-type-aware form editors: card_grid (cell_renderer picker, columns slider 1-4, group_by, group_style_map, items_path, prose_endpoint, expandable toggle), accordion/tab (expand_first, tab_style, default_tab, count badges, prose_endpoint), prose (show_reading_time, show_section_nav, max_preview_lines), timeline (orientation, variant picker, label/date/description fields, group_by), table (sortable, filterable). Unknown renderer types fall back to raw JSON. ([`analyzer-mgmt/frontend/src/pages/views/[key].tsx`])
+
 ### Changed
 - **Renderer stance affinity recalibration** — card_grid evidence affinity 0.5→0.8 (cards are natural evidence presenters), timeline evidence 0.5→0.65 + narrative 0.7→0.8, tab evidence 0.4→0.55 + comparison 0.5→0.6. Fixes incorrect recommendation of prose over card_grid for evidence-stance views with structured data. ([`src/renderers/definitions/card_grid.json`](src/renderers/definitions/card_grid.json), [`timeline.json`](src/renderers/definitions/timeline.json), [`tab.json`](src/renderers/definitions/tab.json))
 
