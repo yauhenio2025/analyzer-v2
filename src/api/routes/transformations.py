@@ -168,6 +168,31 @@ async def templates_for_renderer(renderer_type: str):
     ]
 
 
+@router.get(
+    "/for-primitive/{primitive_key}",
+    response_model=list[TransformationTemplateSummary],
+)
+async def templates_for_primitive(primitive_key: str):
+    """Get transformations that serve a given analytical primitive.
+
+    Enables planner discovery: primitive -> renderer -> transformation.
+    """
+    registry = get_transformation_registry()
+    templates = registry.for_primitive(primitive_key)
+    return [
+        TransformationTemplateSummary(
+            template_key=t.template_key,
+            template_name=t.template_name,
+            description=t.description,
+            transformation_type=t.transformation_type,
+            applicable_renderer_types=t.applicable_renderer_types,
+            tags=t.tags,
+            status=t.status,
+        )
+        for t in templates
+    ]
+
+
 # ── Detail endpoint ──────────────────────────────────────
 
 

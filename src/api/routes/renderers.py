@@ -86,6 +86,28 @@ async def renderers_for_app(app: str):
     ]
 
 
+@router.get("/for-primitive/{primitive_key}", response_model=list[RendererSummary])
+async def renderers_for_primitive(primitive_key: str):
+    """Get renderers suited for a given analytical primitive.
+
+    Enables planner discovery: primitive -> renderer -> transformation.
+    """
+    registry = get_renderer_registry()
+    renderers = registry.for_primitive(primitive_key)
+    return [
+        RendererSummary(
+            renderer_key=r.renderer_key,
+            renderer_name=r.renderer_name,
+            description=r.description,
+            category=r.category,
+            stance_affinities=r.stance_affinities,
+            supported_apps=r.supported_apps,
+            status=r.status,
+        )
+        for r in renderers
+    ]
+
+
 # -- Detail endpoint --
 
 

@@ -109,11 +109,12 @@ class TransformationRegistry:
         return len(self._templates)
 
     def for_engine(self, engine_key: str) -> list[TransformationTemplate]:
-        """Get templates applicable to a specific engine."""
+        """Get active templates applicable to a specific engine (excludes deprecated)."""
         self.load()
         return [
             t for t in self._templates.values()
             if engine_key in t.applicable_engines
+            and t.status != "deprecated"
         ]
 
     def for_renderer(self, renderer_type: str) -> list[TransformationTemplate]:
@@ -122,6 +123,18 @@ class TransformationRegistry:
         return [
             t for t in self._templates.values()
             if renderer_type in t.applicable_renderer_types
+        ]
+
+    def for_primitive(self, primitive_key: str) -> list[TransformationTemplate]:
+        """Get templates that serve a given analytical primitive.
+
+        Enables planner discovery: primitive -> renderer -> transformation.
+        """
+        self.load()
+        return [
+            t for t in self._templates.values()
+            if primitive_key in t.primitive_affinities
+            and t.status != "deprecated"
         ]
 
     def save(self, template_key: str, template: TransformationTemplate) -> bool:

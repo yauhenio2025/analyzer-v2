@@ -126,6 +126,18 @@ class RendererRegistry:
             if app in r.supported_apps and r.status == "active"
         ]
 
+    def for_primitive(self, primitive_key: str) -> list[RendererDefinition]:
+        """Get renderers suited for a given analytical primitive.
+
+        Enables planner discovery: primitive -> renderer -> transformation.
+        """
+        self.load()
+        return [
+            r
+            for r in self._renderers.values()
+            if primitive_key in r.primitive_affinities and r.status == "active"
+        ]
+
     def save(self, renderer_key: str, renderer: RendererDefinition) -> bool:
         """Save a renderer definition to JSON file."""
         self.load()

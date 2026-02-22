@@ -5,7 +5,7 @@ stance affinities, and configuration schemas. Consumer apps use these
 to select and configure appropriate renderers for analytical output.
 """
 
-from typing import Any
+from typing import Any, Optional
 
 from pydantic import BaseModel, Field
 
@@ -57,6 +57,30 @@ class RendererDefinition(BaseModel):
         description="Data shapes this renderer handles well: "
         "'object_array', 'nested_sections', 'key_value_pairs', "
         "'flat_list', 'prose_text', 'timeline_data', 'comparison_pairs'",
+    )
+
+    # Formal JSON Schema for the data this renderer expects as input
+    input_data_schema: Optional[dict[str, Any]] = Field(
+        default=None,
+        description="JSON Schema describing the structured data shape "
+        "this renderer consumes. Used by the planner to match "
+        "transformation outputs to renderer inputs.",
+    )
+
+    # Which analytical primitives this renderer is suited for
+    primitive_affinities: list[str] = Field(
+        default_factory=list,
+        description="Analytical primitive keys this renderer can visualize "
+        "(e.g. 'temporal_evolution', 'dialectical_tension'). "
+        "Enables planner discovery: primitive -> renderer -> transformation.",
+    )
+
+    # Named configuration presets for common use-cases
+    variants: dict[str, dict[str, Any]] = Field(
+        default_factory=dict,
+        description="Named config presets keyed by variant name. "
+        "Each value has 'description', optional 'config' overrides, "
+        "and 'example_use'.",
     )
 
     # Stance affinities — which presentation stances this renderer suits

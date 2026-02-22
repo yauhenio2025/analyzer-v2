@@ -4,6 +4,79 @@
   "description": "Chronological or sequential visualization showing evolution, progression, or stages. Works well for tracing how concepts, ideas, or arguments develop over time or across phases.",
   "category": "narrative",
   "ideal_data_shapes": ["timeline_data", "object_array"],
+  "input_data_schema": {
+    "type": "array",
+    "description": "Array of chronologically-ordered entries. Each entry represents a point on the timeline.",
+    "items": {
+      "type": "object",
+      "required": ["label", "date"],
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Display label for this timeline node (phase name, event title, etc.)"
+        },
+        "date": {
+          "type": ["string", "number"],
+          "description": "Chronological position — year as number or ISO date string"
+        },
+        "description": {
+          "type": "string",
+          "description": "Body text for this timeline entry"
+        },
+        "category": {
+          "type": "string",
+          "description": "Categorical grouping (e.g. idea form type, phase type) — used for color-coding"
+        },
+        "badges": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Short chip labels (e.g. vocabulary terms, tags)"
+        },
+        "group": {
+          "type": "string",
+          "description": "Grouping key when multiple timelines are shown (e.g. per-idea grouping)"
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Arbitrary extra fields the consumer renderer may use"
+        }
+      }
+    }
+  },
+  "primitive_affinities": ["temporal_evolution", "branching_foreclosure"],
+  "variants": {
+    "vertical_evolution": {
+      "description": "Vertical per-idea evolution timeline with vocabulary chips and phase labels. Gradient connector from past (gray) to present (crimson).",
+      "config": {
+        "orientation": "vertical",
+        "label_field": "phase_label",
+        "date_field": "year",
+        "description_field": "key_change",
+        "group_by": "idea_name"
+      },
+      "example_use": "Idea evolution across works in genealogy analysis"
+    },
+    "horizontal_bifurcation": {
+      "description": "Horizontal timeline marking key turning points with year pips. Minimal, emphasizes temporal distance between events.",
+      "config": {
+        "orientation": "horizontal",
+        "label_field": "description",
+        "date_field": "year",
+        "description_field": "significance"
+      },
+      "example_use": "Intellectual bifurcation points, paradigm shifts"
+    },
+    "concept_drift": {
+      "description": "Vertical timeline tracking how a single concept's meaning shifts across contexts or periods.",
+      "config": {
+        "orientation": "vertical",
+        "label_field": "context",
+        "date_field": "period",
+        "description_field": "meaning_shift"
+      },
+      "example_use": "Semantic drift of a term across authors or periods"
+    }
+  },
   "stance_affinities": {
     "narrative": 0.7,
     "comparison": 0.8,
@@ -33,10 +106,18 @@
         "enum": ["horizontal", "vertical"],
         "default": "horizontal",
         "description": "Timeline layout direction"
+      },
+      "group_by": {
+        "type": "string",
+        "description": "Field to group entries by (produces multiple parallel timelines)"
+      },
+      "variant": {
+        "type": "string",
+        "description": "Named variant preset to apply (e.g. 'vertical_evolution')"
       }
     }
   },
   "supported_apps": ["the-critic"],
   "status": "active",
-  "tags": ["timeline", "chronological", "evolution"]
+  "tags": ["timeline", "chronological", "evolution", "temporal"]
 }

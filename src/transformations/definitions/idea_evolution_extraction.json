@@ -51,9 +51,20 @@
     }
   },
   "llm_prompt_template": "You are a precise data extraction assistant. Extract structured JSON from a concept synthesis analysis that traces the evolution of key ideas across multiple works.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"narrative_summary\": \"<2-3 paragraphs summarizing the overall intellectual evolution>\",\n  \"key_bifurcations\": [\n    {\n      \"description\": \"<what changed>\",\n      \"year\": <year>,\n      \"significance\": \"<why it matters>\"\n    }\n  ],\n  \"ideas\": [\n    {\n      \"idea_id\": \"<snake_case_id>\",\n      \"idea_name\": \"<display name>\",\n      \"description\": \"<1-2 sentences defining the idea>\",\n      \"form_in_current_work\": \"<one of: central_thesis, supporting_framework, background_assumption, contested_claim, rhetorical_device, methodological_tool>\",\n      \"evolution_pattern\": \"<one of: gradual_refinement, radical_transformation, strategic_repurposing, synthesis_of_influences, vocabulary_death_concept_survival, temporal_mutation>\",\n      \"evolution_narrative\": \"<2-3 paragraphs tracing the idea's journey across works>\",\n      \"evolution_timeline\": [\n        {\n          \"work_title\": \"<title>\",\n          \"year\": <year>,\n          \"phase_label\": \"<short phase name>\",\n          \"form\": \"<one of: constitutive, diagnostic, historical_precondition, background_assumption, absent, retired>\",\n          \"key_change\": \"<1 sentence: what changed at this stage>\",\n          \"vocabulary_used\": [\"<specific terms used>\"]\n        }\n      ],\n      \"what_was_gained\": \"<what the evolution achieved>\",\n      \"what_was_lost\": \"<what was lost or abandoned>\",\n      \"transition_drivers\": [\"<forces driving evolution>\"],\n      \"traces_in_prior_works\": [\n        {\n          \"work_title\": \"<title>\",\n          \"relationship\": \"<one of: origin, elaboration, peak_deployment, demotion, absence, retirement>\",\n          \"evidence\": \"<1-2 sentences>\"\n        }\n      ]\n    }\n  ],\n  \"cross_cutting_patterns\": {\n    \"dominant_evolution_pattern\": \"<the most common pattern across ideas>\",\n    \"audience_calibration\": \"<how ideas adapt to different audiences>\",\n    \"prescription_diagnosis_gap\": \"<any gap between prescriptions and diagnoses>\",\n    \"overall_trajectory\": \"<1-2 sentences characterizing the full arc>\"\n  }\n}\n\nRULES:\n1. Return ONLY JSON — no markdown fences, no commentary\n2. Extract ALL major ideas discussed (typically 4-8 ideas)\n3. Each idea's evolution_timeline should cover ALL works where it appears (ordered chronologically)\n4. The evolution_narrative should be rich and analytical, not just a summary\n5. Preserve the analytical depth of the original — include specific terms, quotes, and evidence\n6. key_bifurcations should identify 2-4 major turning points in the intellectual trajectory\n7. The narrative_summary should synthesize across all ideas, not just list them",
-  "applicable_renderer_types": ["tab", "card_grid", "prose"],
+  "applicable_renderer_types": ["timeline", "tab", "card_grid", "prose"],
   "applicable_engines": ["concept_synthesis"],
-  "tags": ["genealogy", "ideas", "evolution", "extraction", "prose-to-structured"],
+  "primitive_affinities": ["temporal_evolution"],
+  "renderer_config_presets": {
+    "timeline": {
+      "orientation": "vertical",
+      "label_field": "phase_label",
+      "date_field": "year",
+      "description_field": "key_change",
+      "group_by": "idea_name",
+      "variant": "vertical_evolution"
+    }
+  },
+  "tags": ["genealogy", "ideas", "evolution", "extraction", "prose-to-structured", "temporal"],
   "status": "active",
   "model": "claude-sonnet-4-5-20250929",
   "model_fallback": "claude-sonnet-4-5-20250929",

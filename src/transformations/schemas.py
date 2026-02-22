@@ -89,6 +89,21 @@ class TransformationTemplate(BaseModel):
         default_factory=list,
         description="Engines whose output this template can transform",
     )
+
+    # Primitive cross-references (for planner discovery)
+    primitive_affinities: list[str] = Field(
+        default_factory=list,
+        description="Analytical primitive keys this transformation serves "
+        "(e.g. 'temporal_evolution'). Enables planner discovery: "
+        "primitive -> renderer -> transformation.",
+    )
+    renderer_config_presets: Optional[dict[str, dict[str, Any]]] = Field(
+        default=None,
+        description="Per-renderer-type config presets. Keyed by renderer_key, "
+        "value is the renderer_config to use when pairing this "
+        "transformation with that renderer.",
+    )
+
     tags: list[str] = Field(
         default_factory=list, description="Categorization tags"
     )
