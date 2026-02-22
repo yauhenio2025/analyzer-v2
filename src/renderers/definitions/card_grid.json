@@ -5,12 +5,12 @@
   "category": "list",
   "ideal_data_shapes": ["object_array", "flat_list"],
   "stance_affinities": {
-    "summary": 0.8,
+    "summary": 0.7,
     "interactive": 0.7,
-    "evidence": 0.5,
+    "evidence": 0.8,
     "narrative": 0.3,
-    "comparison": 0.4,
-    "diagnostic": 0.4
+    "comparison": 0.5,
+    "diagnostic": 0.5
   },
   "available_section_renderers": [],
   "config_schema": {

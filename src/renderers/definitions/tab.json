@@ -7,8 +7,8 @@
   "stance_affinities": {
     "interactive": 0.9,
     "summary": 0.6,
-    "comparison": 0.5,
-    "evidence": 0.4,
+    "comparison": 0.6,
+    "evidence": 0.55,
     "narrative": 0.3,
     "diagnostic": 0.4
   },

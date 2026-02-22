@@ -78,9 +78,9 @@
     }
   },
   "stance_affinities": {
-    "narrative": 0.7,
+    "narrative": 0.8,
     "comparison": 0.8,
-    "evidence": 0.5,
+    "evidence": 0.65,
     "summary": 0.4,
     "interactive": 0.6,
     "diagnostic": 0.3
