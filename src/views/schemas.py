@@ -213,6 +213,10 @@ class ViewSummary(BaseModel):
     parent_view_key: Optional[str] = None
     visibility: str = "if_data_exists"
     status: str = "active"
+    # Structural hints computed from renderer_config
+    sections_count: int = 0
+    has_sub_renderers: bool = False
+    config_hints: list[str] = Field(default_factory=list)
 
 
 class ComposedView(BaseModel):

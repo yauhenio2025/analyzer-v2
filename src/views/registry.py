@@ -82,21 +82,73 @@ class ViewRegistry:
         if page:
             views = [v for v in views if v.target_page == page]
         return [
-            ViewSummary(
-                view_key=v.view_key,
-                view_name=v.view_name,
-                description=v.description,
-                target_app=v.target_app,
-                target_page=v.target_page,
-                renderer_type=v.renderer_type,
-                presentation_stance=v.presentation_stance,
-                position=v.position,
-                parent_view_key=v.parent_view_key,
-                visibility=v.visibility,
-                status=v.status,
-            )
+            self._build_summary(v)
             for v in sorted(views, key=lambda v: v.position)
         ]
+
+    @staticmethod
+    def _build_summary(v: ViewDefinition) -> ViewSummary:
+        """Build ViewSummary with structural hints from renderer_config."""
+        rc = v.renderer_config or {}
+
+        # Count sections
+        sections = rc.get("sections", [])
+        sections_count = len(sections) if isinstance(sections, list) else 0
+
+        # Detect sub-renderers
+        has_sub = bool(rc.get("section_renderers"))
+
+        # Build config hints — short descriptive tags
+        hints: list[str] = []
+        if sections_count > 0:
+            hints.append(f"{sections_count} sections")
+        if has_sub:
+            sr = rc.get("section_renderers", {})
+            sub_types = set()
+            for sr_val in sr.values():
+                if isinstance(sr_val, dict):
+                    if sr_val.get("renderer_type"):
+                        sub_types.add(sr_val["renderer_type"])
+                    for sub in (sr_val.get("sub_renderers") or {}).values():
+                        if isinstance(sub, dict) and sub.get("renderer_type"):
+                            sub_types.add(sub["renderer_type"])
+            if sub_types:
+                hints.append(f"sub: {', '.join(sorted(sub_types))}")
+        if rc.get("cell_renderer"):
+            hints.append(f"cell: {rc['cell_renderer']}")
+        if rc.get("columns") and isinstance(rc["columns"], (int, float)):
+            hints.append(f"{int(rc['columns'])} cols")
+        elif rc.get("columns") and isinstance(rc["columns"], list):
+            hints.append(f"{len(rc['columns'])} columns")
+        if rc.get("group_by"):
+            hints.append(f"grouped by {rc['group_by']}")
+        if rc.get("sortable"):
+            hints.append("sortable")
+        if rc.get("expandable"):
+            hints.append("expandable")
+        if rc.get("layout"):
+            hints.append(rc["layout"])
+        if rc.get("syntax_highlight"):
+            hints.append("syntax highlight")
+        if rc.get("pass_selector"):
+            hints.append("pass selector")
+
+        return ViewSummary(
+            view_key=v.view_key,
+            view_name=v.view_name,
+            description=v.description,
+            target_app=v.target_app,
+            target_page=v.target_page,
+            renderer_type=v.renderer_type,
+            presentation_stance=v.presentation_stance,
+            position=v.position,
+            parent_view_key=v.parent_view_key,
+            visibility=v.visibility,
+            status=v.status,
+            sections_count=sections_count,
+            has_sub_renderers=has_sub,
+            config_hints=hints,
+        )
 
     def list_keys(self) -> list[str]:
         """List all view keys."""
