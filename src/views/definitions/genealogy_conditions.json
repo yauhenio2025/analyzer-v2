@@ -2,7 +2,7 @@
   "view_key": "genealogy_conditions",
   "view_name": "Conditions of Possibility",
   "description": "Enabling/constraining conditions, path dependencies, and counterfactuals. Rich Foucauldian analysis of what made the author's intellectual trajectory possible and what alternatives were foreclosed.",
-  "version": 1,
+  "version": 2,
   "target_app": "the-critic",
   "target_page": "genealogy",
   "target_section": "results",
@@ -11,11 +11,33 @@
     "sections": [
       {"key": "enabling_conditions", "title": "Enabling Conditions"},
       {"key": "constraining_conditions", "title": "Constraining Conditions"},
-      {"key": "path_dependencies", "title": "Path Dependencies"},
-      {"key": "counterfactuals", "title": "Counterfactuals"}
+      {"key": "counterfactual_analysis", "title": "Counterfactual Analysis"},
+      {"key": "synthetic_judgment", "title": "Synthetic Judgment"}
     ],
     "expand_first": true,
-    "prose_endpoint": "conditions"
+    "prose_endpoint": "conditions",
+    "section_renderers": {
+      "enabling_conditions": {
+        "renderer_type": "enabling_conditions",
+        "config": {
+          "section_description": "How the author's prior work makes the current argument possible"
+        }
+      },
+      "constraining_conditions": {
+        "renderer_type": "constraining_conditions",
+        "config": {
+          "section_description": "How prior work limits or constrains the current argument"
+        }
+      },
+      "counterfactual_analysis": {
+        "renderer_type": "prose_block",
+        "config": {}
+      },
+      "synthetic_judgment": {
+        "renderer_type": "prose_block",
+        "config": {}
+      }
+    }
   },
   "data_source": {
     "workflow_key": "intellectual_genealogy",

@@ -20,7 +20,9 @@
     "stat_row",
     "comparison_panel",
     "timeline_strip",
-    "evidence_trail"
+    "evidence_trail",
+    "enabling_conditions",
+    "constraining_conditions"
   ],
   "config_schema": {
     "type": "object",
