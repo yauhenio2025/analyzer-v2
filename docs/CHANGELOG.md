@@ -6,6 +6,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Prose pipeline architecture memo** — Comprehensive documentation of the full data flow: Engine (prose) → Transformation Bridge (LLM extraction) → Presentation Cache → Views → Renderers. Covers schema-on-read principle, 5 engine→view relationship patterns, stances vs transformations comparison, abstraction path for preventing view/transformation proliferation. ([`docs/MEMO_2026-02-23_prose_pipeline_architecture.md`](docs/MEMO_2026-02-23_prose_pipeline_architecture.md))
+
+
 - **Sub-renderers as first-class entities** — New `src/sub_renderers/` module with schemas, registry, and 11 JSON definitions (chip_grid, mini_card_list, key_value_table, prose_block, stat_row, comparison_panel, timeline_strip, evidence_trail, enabling_conditions, constraining_conditions, nested_sections). Each has category, ideal_data_shapes, config_schema, stance_affinities, parent_renderer_types. API: `GET /v1/sub-renderers`, `GET /v1/sub-renderers/{key}`, `GET /v1/sub-renderers/for-parent/{type}`, CRUD, reload. ([`src/sub_renderers/`](src/sub_renderers/), [`src/api/routes/sub_renderers.py`](src/api/routes/sub_renderers.py))
 
 - **Consumer capabilities** — New `src/consumers/` module with schemas, registry, and 3 JSON definitions (the-critic, visualizer, analyzer-mgmt). Consumers declare supported_renderers and supported_sub_renderers, inverting the renderer→app coupling. Renderer `for_app()` now queries ConsumerRegistry first. API: `GET /v1/consumers`, `GET /v1/consumers/{key}`, `GET /v1/consumers/{key}/renderers`, CRUD. ([`src/consumers/`](src/consumers/), [`src/api/routes/consumers.py`](src/api/routes/consumers.py))
