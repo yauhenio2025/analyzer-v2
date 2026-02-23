@@ -69,7 +69,10 @@ class TransformationTask(BaseModel):
 
     view_key: str
     output_id: str
-    template_key: str
+    template_key: Optional[str] = Field(
+        default=None,
+        description="Curated template key. None when using dynamic extraction.",
+    )
     engine_key: str
     renderer_type: str
     section: str = Field(
@@ -81,6 +84,12 @@ class TransformationTask(BaseModel):
         description="When set, use this content for transformation instead of loading "
         "from the single output_id row. Used for multi-pass concatenated content.",
     )
+    dynamic_config: Optional[dict[str, Any]] = Field(
+        default=None,
+        description="Dynamic extraction config (system_prompt, model, etc.) "
+        "when no curated template exists. Composed at runtime from engine "
+        "metadata + renderer shape + stance.",
+    )
 
 
 class TransformationTaskResult(BaseModel):
@@ -88,13 +97,17 @@ class TransformationTaskResult(BaseModel):
 
     view_key: str
     output_id: str
-    template_key: str
+    template_key: Optional[str] = None
     section: str
     success: bool
     cached: bool = False
     error: Optional[str] = None
     model_used: Optional[str] = None
     execution_time_ms: int = 0
+    extraction_source: str = Field(
+        default="curated",
+        description="'curated' (from template) or 'dynamic' (from engine+renderer metadata)",
+    )
 
 
 class PresentationBridgeResult(BaseModel):
@@ -111,6 +124,10 @@ class PresentationBridgeResult(BaseModel):
     cached_results: int = Field(
         default=0,
         description="Already in presentation_cache (skipped re-extraction)",
+    )
+    dynamic_extractions: int = Field(
+        default=0,
+        description="Tasks that used dynamic extraction (no curated template)",
     )
     details: list[TransformationTaskResult] = Field(default_factory=list)
 

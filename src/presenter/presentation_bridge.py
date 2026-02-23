@@ -1,15 +1,21 @@
 """Presentation Bridge — automated transformation pipeline.
 
 Connects executor outputs (prose in phase_outputs) to consumer rendering
-by running applicable transformation templates and populating the
-presentation_cache with structured data.
+by running transformation templates (or dynamic extraction) and populating
+the presentation_cache with structured data.
 
 For each recommended view:
 1. Resolve data_source → find matching phase_outputs row(s)
 2. Check presentation_cache for existing entry
-3. If cache miss: find applicable transformation template
-4. Run transformation via TransformationExecutor
-5. Persist result in presentation_cache
+3. If cache miss: find curated transformation template
+4. If no template: compose dynamic extraction prompt from engine metadata
+   + renderer shape + presentation stance
+5. Run transformation via TransformationExecutor
+6. Persist result in presentation_cache
+
+Dynamic extraction means every engine is renderable in any renderer without
+hand-authoring a transformation template. Curated templates are optional
+quality overrides that produce better results when available.
 """
 
 import asyncio
@@ -26,6 +32,8 @@ from src.orchestrator.planner import load_plan
 from src.transformations.executor import get_transformation_executor
 from src.transformations.registry import get_transformation_registry
 from src.views.registry import get_view_registry
+
+from .dynamic_prompt import compose_dynamic_extraction_prompt
 
 from .schemas import (
     PresentationBridgeResult,
@@ -50,6 +58,7 @@ async def async_prepare_presentation(
     """
     tasks, skipped, recommended = _build_transformation_tasks(job_id, view_keys)
     results, cached_count, completed_count, failed_count = await _execute_tasks_async(job_id, tasks, force=force)
+    dynamic_count = sum(1 for r in results if r.extraction_source == "dynamic" and r.success)
 
     return PresentationBridgeResult(
         job_id=job_id,
@@ -58,6 +67,7 @@ async def async_prepare_presentation(
         tasks_failed=failed_count,
         tasks_skipped=skipped,
         cached_results=cached_count,
+        dynamic_extractions=dynamic_count,
         details=results,
     )
 
@@ -75,6 +85,7 @@ def prepare_presentation(
     """
     tasks, skipped, recommended = _build_transformation_tasks(job_id, view_keys)
     results, cached_count, completed_count, failed_count = _execute_tasks_sync(job_id, tasks, force=force)
+    dynamic_count = sum(1 for r in results if r.extraction_source == "dynamic" and r.success)
 
     return PresentationBridgeResult(
         job_id=job_id,
@@ -83,6 +94,7 @@ def prepare_presentation(
         tasks_failed=failed_count,
         tasks_skipped=skipped,
         cached_results=cached_count,
+        dynamic_extractions=dynamic_count,
         details=results,
     )
 
@@ -143,7 +155,7 @@ def _build_transformation_tasks(
             else:
                 logger.warning(f"Chain not found for view {rec['view_key']}: {chain_key}")
 
-        # Find applicable template (searching across all engine keys)
+        # Find applicable curated template (searching across all engine keys)
         applicable_templates = []
         for ek in search_engine_keys:
             applicable_templates = [
@@ -153,21 +165,38 @@ def _build_transformation_tasks(
             if applicable_templates:
                 break
 
-        if view_def.transformation.type == "none":
-            if not applicable_templates:
-                logger.debug(
-                    f"View {rec['view_key']}: no transformation needed (type=none, no applicable templates)"
-                )
-                skipped += 1
-                continue
-            template = applicable_templates[0]
-        else:
-            if applicable_templates:
-                template = applicable_templates[0]
-            else:
-                logger.debug(f"View {rec['view_key']}: inline transformation, no library template")
-                skipped += 1
-                continue
+        template = applicable_templates[0] if applicable_templates else None
+
+        # Determine extraction strategy: curated template or dynamic prompt
+        dynamic_config = None
+        if template is None and view_def.transformation.type == "none":
+            # View explicitly says "no transformation" AND no curated template → skip
+            logger.debug(
+                f"View {rec['view_key']}: no transformation needed (type=none, no template)"
+            )
+            skipped += 1
+            continue
+
+        if template is None:
+            # No curated template → compose dynamic extraction prompt
+            effective_engine_key = engine_key or (search_engine_keys[0] if search_engine_keys else "")
+            stance_key = view_def.presentation_stance or "interactive"
+            dynamic_config = compose_dynamic_extraction_prompt(
+                engine_key=effective_engine_key,
+                renderer_type=renderer_type,
+                stance_key=stance_key,
+            )
+            logger.info(
+                f"[dynamic-fallback] View {rec['view_key']}: no curated template for "
+                f"{effective_engine_key}+{renderer_type}, using dynamic extraction"
+            )
+
+        # Determine section key and template_key for task
+        task_template_key = template.template_key if template else None
+        task_section_base = (
+            template.template_key if template
+            else f"dyn:{engine_key or (search_engine_keys[0] if search_engine_keys else 'unknown')}:{renderer_type}"
+        )
 
         # Find matching phase_outputs
         scope = view_def.data_source.scope
@@ -186,14 +215,15 @@ def _build_transformation_tasks(
                 )
             work_outputs = _group_latest_by_work_key(outputs)
             for work_key, output in work_outputs.items():
-                section = f"{template.template_key}:{work_key}" if work_key else template.template_key
+                section = f"{task_section_base}:{work_key}" if work_key else task_section_base
                 tasks.append(TransformationTask(
                     view_key=rec["view_key"],
                     output_id=output["id"],
-                    template_key=template.template_key,
+                    template_key=task_template_key,
                     engine_key=engine_key or chain_key or "",
                     renderer_type=renderer_type,
                     section=section,
+                    dynamic_config=dynamic_config,
                 ))
         else:
             outputs = load_phase_outputs(
@@ -235,11 +265,12 @@ def _build_transformation_tasks(
             tasks.append(TransformationTask(
                 view_key=rec["view_key"],
                 output_id=latest["id"],
-                template_key=template.template_key,
+                template_key=task_template_key,
                 engine_key=engine_key or chain_key or "",
                 renderer_type=renderer_type,
-                section=template.template_key,
+                section=task_section_base,
                 content_override=content_override,
+                dynamic_config=dynamic_config,
             ))
 
     return tasks, skipped, recommended
@@ -303,6 +334,7 @@ def _save_and_report(
     task: TransformationTask,
     transform_result,
     content: str,
+    extraction_source: str = "curated",
 ) -> tuple[TransformationTaskResult, str]:
     """Save transformation result and return task result."""
     if transform_result.success:
@@ -313,8 +345,9 @@ def _save_and_report(
             source_content=content,
             model_used=transform_result.model_used or "",
         )
+        source_tag = f" [{extraction_source}]" if extraction_source == "dynamic" else ""
         logger.info(
-            f"Transformed {task.view_key}/{task.section}: "
+            f"Transformed{source_tag} {task.view_key}/{task.section}: "
             f"{transform_result.execution_time_ms}ms, "
             f"model={transform_result.model_used}"
         )
@@ -326,6 +359,7 @@ def _save_and_report(
             success=True,
             model_used=transform_result.model_used,
             execution_time_ms=transform_result.execution_time_ms,
+            extraction_source=extraction_source,
         ), "completed"
     else:
         logger.warning(
@@ -340,6 +374,7 @@ def _save_and_report(
             success=False,
             error=transform_result.error,
             execution_time_ms=transform_result.execution_time_ms,
+            extraction_source=extraction_source,
         ), "failed"
 
 
@@ -403,33 +438,60 @@ async def _execute_tasks_async(
         else:
             logger.info(f"Force mode: skipping cache for {task.view_key}/{task.section}")
 
-        template = transform_registry_obj.get(task.template_key)
-        if template is None:
+        # Resolve extraction parameters: curated template or dynamic config
+        if task.template_key:
+            template = transform_registry_obj.get(task.template_key)
+            if template is None:
+                results.append(TransformationTaskResult(
+                    view_key=task.view_key,
+                    output_id=task.output_id,
+                    template_key=task.template_key,
+                    section=task.section,
+                    success=False,
+                    error=f"Template not found: {task.template_key}",
+                ))
+                failed_count += 1
+                continue
+
+            # Curated template path
+            transform_result = await transform_executor.execute(
+                data=content,
+                transformation_type=template.transformation_type,
+                field_mapping=template.field_mapping,
+                llm_extraction_schema=template.llm_extraction_schema,
+                llm_prompt_template=template.llm_prompt_template,
+                stance_key=template.stance_key,
+                model=template.model or "claude-haiku-4-5-20251001",
+                model_fallback=template.model_fallback or "claude-sonnet-4-6",
+                max_tokens=template.max_tokens or 8000,
+            )
+            extraction_source = "curated"
+        elif task.dynamic_config:
+            # Dynamic extraction path — no curated template
+            dc = task.dynamic_config
+            transform_result = await transform_executor.execute(
+                data=content,
+                transformation_type=dc["transformation_type"],
+                llm_prompt_template=dc["system_prompt"],
+                stance_key=dc.get("stance_key"),
+                model=dc.get("model", "claude-haiku-4-5-20251001"),
+                model_fallback=dc.get("model_fallback", "claude-sonnet-4-6"),
+                max_tokens=dc.get("max_tokens", 8000),
+            )
+            extraction_source = "dynamic"
+        else:
             results.append(TransformationTaskResult(
                 view_key=task.view_key,
                 output_id=task.output_id,
                 template_key=task.template_key,
                 section=task.section,
                 success=False,
-                error=f"Template not found: {task.template_key}",
+                error="No template_key or dynamic_config on task",
             ))
             failed_count += 1
             continue
 
-        # Await the async executor
-        transform_result = await transform_executor.execute(
-            data=content,
-            transformation_type=template.transformation_type,
-            field_mapping=template.field_mapping,
-            llm_extraction_schema=template.llm_extraction_schema,
-            llm_prompt_template=template.llm_prompt_template,
-            stance_key=template.stance_key,
-            model=template.model or "claude-haiku-4-5-20251001",
-            model_fallback=template.model_fallback or "claude-sonnet-4-6",
-            max_tokens=template.max_tokens or 8000,
-        )
-
-        task_result, status = _save_and_report(task, transform_result, content)
+        task_result, status = _save_and_report(task, transform_result, content, extraction_source)
         results.append(task_result)
         if status == "completed":
             completed_count += 1
@@ -496,39 +558,74 @@ def _execute_tasks_sync(
         else:
             logger.info(f"Force mode: skipping cache for {task.view_key}/{task.section}")
 
-        template = transform_registry_obj.get(task.template_key)
-        if template is None:
+        # Resolve extraction parameters: curated template or dynamic config
+        if task.template_key:
+            template = transform_registry_obj.get(task.template_key)
+            if template is None:
+                results.append(TransformationTaskResult(
+                    view_key=task.view_key,
+                    output_id=task.output_id,
+                    template_key=task.template_key,
+                    section=task.section,
+                    success=False,
+                    error=f"Template not found: {task.template_key}",
+                ))
+                failed_count += 1
+                continue
+
+            # Curated template path
+            loop = asyncio.new_event_loop()
+            try:
+                transform_result = loop.run_until_complete(
+                    transform_executor.execute(
+                        data=content,
+                        transformation_type=template.transformation_type,
+                        field_mapping=template.field_mapping,
+                        llm_extraction_schema=template.llm_extraction_schema,
+                        llm_prompt_template=template.llm_prompt_template,
+                        stance_key=template.stance_key,
+                        model=template.model or "claude-haiku-4-5-20251001",
+                        model_fallback=template.model_fallback or "claude-sonnet-4-6",
+                        max_tokens=template.max_tokens or 8000,
+                    )
+                )
+            finally:
+                loop.close()
+            extraction_source = "curated"
+
+        elif task.dynamic_config:
+            # Dynamic extraction path — no curated template
+            dc = task.dynamic_config
+            loop = asyncio.new_event_loop()
+            try:
+                transform_result = loop.run_until_complete(
+                    transform_executor.execute(
+                        data=content,
+                        transformation_type=dc["transformation_type"],
+                        llm_prompt_template=dc["system_prompt"],
+                        stance_key=dc.get("stance_key"),
+                        model=dc.get("model", "claude-haiku-4-5-20251001"),
+                        model_fallback=dc.get("model_fallback", "claude-sonnet-4-6"),
+                        max_tokens=dc.get("max_tokens", 8000),
+                    )
+                )
+            finally:
+                loop.close()
+            extraction_source = "dynamic"
+
+        else:
             results.append(TransformationTaskResult(
                 view_key=task.view_key,
                 output_id=task.output_id,
                 template_key=task.template_key,
                 section=task.section,
                 success=False,
-                error=f"Template not found: {task.template_key}",
+                error="No template_key or dynamic_config on task",
             ))
             failed_count += 1
             continue
 
-        # Sync: create a new event loop (safe from background threads)
-        loop = asyncio.new_event_loop()
-        try:
-            transform_result = loop.run_until_complete(
-                transform_executor.execute(
-                    data=content,
-                    transformation_type=template.transformation_type,
-                    field_mapping=template.field_mapping,
-                    llm_extraction_schema=template.llm_extraction_schema,
-                    llm_prompt_template=template.llm_prompt_template,
-                    stance_key=template.stance_key,
-                    model=template.model or "claude-haiku-4-5-20251001",
-                    model_fallback=template.model_fallback or "claude-sonnet-4-6",
-                    max_tokens=template.max_tokens or 8000,
-                )
-            )
-        finally:
-            loop.close()
-
-        task_result, status = _save_and_report(task, transform_result, content)
+        task_result, status = _save_and_report(task, transform_result, content, extraction_source)
         results.append(task_result)
         if status == "completed":
             completed_count += 1

@@ -5,6 +5,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+- **Dynamic extraction fallback — templates are now optional** — The presentation bridge no longer requires curated transformation templates for every view. When no template exists for an engine+renderer combination, it composes an extraction prompt at runtime from engine metadata (canonical_schema, extraction_focus, stage_context), renderer shape (ideal_data_shapes, config_schema fields), and presentation stance prose. Haiku extracts structured JSON using the same pipeline — curated templates become optional quality overrides. Every engine is now renderable in any renderer without authoring a template. New `dynamic_extractions` counter in PresentationBridgeResult. New `extraction_source` field (`"curated"` / `"dynamic"`) on TransformationTaskResult. ([`src/presenter/dynamic_prompt.py`](src/presenter/dynamic_prompt.py), [`src/presenter/presentation_bridge.py`](src/presenter/presentation_bridge.py), [`src/presenter/schemas.py`](src/presenter/schemas.py))
+
 ### Added
 - **Dynamic transformation generation (v2 — rich metadata)** — Upgraded `POST /v1/transformations/generate` from shallow (engine name only) to rich context: canonical_schema, extraction_focus, key_fields, core_question, extraction_steps, key_relationships + renderer ideal_data_shapes, config_schema, input_data_schema + 3 best-matching existing templates as few-shot exemplars. Extracted into dedicated `src/transformations/generator.py` module. Generated templates auto-tagged with `generation_mode="generated"`, `status="draft"`. ([`src/transformations/generator.py`](src/transformations/generator.py), [`src/api/routes/transformations.py`](src/api/routes/transformations.py))
 

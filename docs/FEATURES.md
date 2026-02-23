@@ -100,12 +100,13 @@
 
 ### Presentation Bridge (3B)
 - **Status**: Active (Milestone 3 complete)
-- **Description**: Automated transformation pipeline connecting executor prose outputs → transformation templates → presentation_cache. For each recommended view: resolves data_source → finds phase_outputs → checks cache → finds applicable template (by engine_key + renderer_type) → runs TransformationExecutor → persists to presentation_cache. Handles both per_item (one per prior work) and aggregated scopes. Now chain-aware: resolves chain_key → engine_keys for template lookup.
+- **Description**: Automated transformation pipeline connecting executor prose outputs → presentation_cache. For each recommended view: resolves data_source → finds phase_outputs → checks cache → tries curated template (by engine_key + renderer_type) → if none, composes dynamic extraction prompt from engine metadata + renderer shape + stance → runs TransformationExecutor → persists to presentation_cache. Curated templates are optional quality overrides; dynamic extraction makes every engine renderable without hand-authored templates.
 - **Entry Points**:
-  - `src/presenter/presentation_bridge.py:1-375` - prepare_presentation(), _get_recommended_views(), _group_latest_by_work_key(), _load_output_by_id()
-  - `src/presenter/schemas.py:60-120` - TransformationTask, TransformationTaskResult, PresentationBridgeResult, PrepareRequest
+  - `src/presenter/presentation_bridge.py:1-686` - prepare_presentation(), _build_transformation_tasks() (curated + dynamic fallback), _execute_tasks_async/sync(), _save_and_report()
+  - `src/presenter/dynamic_prompt.py:1-260` - compose_dynamic_extraction_prompt(): composes extraction system prompt from engine canonical_schema + renderer config_schema + stance prose
+  - `src/presenter/schemas.py:67-116` - TransformationTask (template_key now Optional, new dynamic_config field), TransformationTaskResult (new extraction_source field), PresentationBridgeResult (new dynamic_extractions counter)
   - `src/api/routes/presenter.py:50-69` - POST /v1/presenter/prepare endpoint
-- **Added**: 2026-02-19
+- **Added**: 2026-02-19 | **Modified**: 2026-02-23
 
 ### Presentation API (3C)
 - **Status**: Active (Milestone 3 complete)
