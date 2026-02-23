@@ -53,7 +53,7 @@
   },
   "presentation_stance": "diagnostic",
   "position": 1.0,
-  "parent_view_key": "genealogy_idea_evolution",
+  "parent_view_key": null,
   "tab_count_field": null,
   "visibility": "if_data_exists",
   "audience_overrides": {},

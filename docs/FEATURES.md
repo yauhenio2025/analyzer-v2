@@ -1,6 +1,6 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-02-20
+> Auto-maintained by Claude Code. Last updated: 2026-02-23
 
 ## Context-Driven Orchestrator
 
@@ -148,7 +148,7 @@
 - **Entry Points**:
   - `src/views/schemas.py:1-195` - Pydantic models: ViewDefinition, DataSourceRef, TransformationSpec, ViewSummary, ComposedView, ComposedPageResponse
   - `src/views/registry.py:1-195` - ViewRegistry: load, get, list_summaries (with app/page filters), compose_tree, for_workflow, save, delete, reload
-  - `src/views/definitions/*.json` - 14 view definition JSON files
+  - `src/views/definitions/*.json` - 18 view definition JSON files
   - `src/api/routes/views.py:1-165` - Full REST API with compose endpoint
   - `src/api/main.py:16` - Router registration and lifespan loading
 - **Schema**:
@@ -157,22 +157,27 @@
   - `TransformationSpec` — type (none/schema_map/llm_extract/llm_summarize/aggregate), field_mapping, llm_extraction_schema, llm_prompt_template, stance_key override
   - `planner_hint` — Free-text guidance for the LLM planner about when/how to recommend this view
   - `planner_eligible` — Boolean flag (default true) controlling whether the planner considers this view
-- **Genealogy Views** (14 total):
-  - **Top-level tabs**:
-    - `genealogy_relationship_landscape` (matrix, diagnostic) — Pass 1.5 relationship classifications
+- **Genealogy Views** (18 total):
+  - **Top-level views**:
+    - `genealogy_relationship_landscape` (card_grid, diagnostic) — Pass 1.5 relationship classifications
+    - `genealogy_target_profile` (accordion, diagnostic) — Pass 1 target profiling chain, container for 4 per-engine views
     - `genealogy_idea_evolution` (tab, comparison) — Pass 1+2+3 idea evolution traces
     - `genealogy_tactics` (card_grid, evidence) — Pass 3 evolution tactics
-    - `genealogy_conditions` (accordion, narrative) — Pass 3 conditions of possibility
+    - `genealogy_conditions` (accordion, narrative) — Pass 3 conditions of possibility, container for 4 sub-component views
     - `genealogy_portrait` (prose, narrative) — Pass 4 final synthesis
-  - **Nested children**:
-    - `genealogy_target_profile` (tab/sub_tabs, diagnostic) — nested under idea_evolution, container for 4 per-engine views
-    - `genealogy_per_work_scan` (card, comparison) — nested under idea_evolution, Pass 2 per-work results
-    - `genealogy_author_profile` (stat_summary, summary) — nested under portrait, Pass 4 extracted
-  - **Grandchild views** (per-engine Target Work Profile):
+  - **Target Work Profile children** (4, per-engine):
     - `genealogy_tp_conceptual_framework` (accordion, 7 sections) — frameworks, vocabulary maps, metaphors, cross-domain transfers
     - `genealogy_tp_semantic_constellation` (accordion, 6 sections) — core concepts, clusters, load-bearing terms, tensions
     - `genealogy_tp_inferential_commitments` (accordion, 7 sections) — ideas, commitments, backings, hidden premises
     - `genealogy_tp_concept_evolution` (accordion, 6 sections) — concepts, trajectories, definitional variations, Koselleck
+  - **Conditions of Possibility children** (4, per-section):
+    - `genealogy_cop_enabling_conditions` (card_grid, evidence) — typed condition cards with essentiality and evidence
+    - `genealogy_cop_constraining_conditions` (card_grid, evidence) — constraint cards with binding force ratings
+    - `genealogy_cop_counterfactual` (prose, narrative) — counterfactual analysis of path-independence
+    - `genealogy_cop_synthesis` (prose, narrative) — evaluative judgment on path-dependence
+  - **Other nested children**:
+    - `genealogy_per_work_scan` (card, comparison) — nested under idea_evolution, Pass 2 per-work results
+    - `genealogy_author_profile` (stat_summary, summary) — nested under portrait, Pass 4 extracted
   - **On-demand debug**:
     - `genealogy_raw_output` (raw_json, diagnostic) — raw engine JSON, visibility=on_demand
     - `genealogy_chain_log` (table, diagnostic) — execution metadata, visibility=on_demand
@@ -208,7 +213,7 @@
   - `timeline` (narrative) — chronological visualization
   - `tab` (container) — tabbed organization
   - `raw_json` (diagnostic) — developer JSON inspector
-- **Section Sub-Renderers** (7, for accordion): chip_grid, mini_card_list, key_value_table, prose_block, stat_row, comparison_panel, timeline_strip
+- **Section Sub-Renderers** (10, for accordion): chip_grid, mini_card_list, key_value_table, prose_block, stat_row, comparison_panel, timeline_strip, evidence_trail, enabling_conditions, constraining_conditions
 - **API Endpoints**:
   - `GET /v1/renderers` - List all (summary)
   - `GET /v1/renderers/{key}` - Full definition with config schema
@@ -218,7 +223,7 @@
   - `POST /v1/renderers` - Create
   - `PUT /v1/renderers/{key}` - Update
   - `DELETE /v1/renderers/{key}` - Delete
-- **Added**: 2026-02-21 | **Modified**: 2026-02-22
+- **Added**: 2026-02-21 | **Modified**: 2026-02-23
 
 ### Intelligent Renderer Selector
 - **Status**: Active

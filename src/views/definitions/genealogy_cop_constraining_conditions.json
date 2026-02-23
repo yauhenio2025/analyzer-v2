@@ -1,0 +1,40 @@
+{
+  "view_key": "genealogy_cop_constraining_conditions",
+  "view_name": "Constraining Conditions",
+  "description": "Prior commitments, audience expectations, framework lock-ins, and reputational stakes that limit or constrain the author's current argument. Each constraint rated for binding force and shows how the author navigates it.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "genealogy",
+  "target_section": "results",
+  "renderer_type": "card_grid",
+  "renderer_config": {
+    "cell": "constraint_card",
+    "title_field": "description",
+    "badge_field": "constraint_type",
+    "binding_force_field": "binding_force",
+    "navigation_field": "how_navigated",
+    "grouped_by": "constraint_type"
+  },
+  "data_source": {
+    "workflow_key": "intellectual_genealogy",
+    "phase_number": 3.0,
+    "engine_key": "conditions_of_possibility_analyzer",
+    "result_path": "constraining_conditions",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "evidence",
+  "position": 4.2,
+  "parent_view_key": "genealogy_conditions",
+  "tab_count_field": null,
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "planner_hint": "Sub-view of Conditions of Possibility. Shows constraints limiting the author's argument — typed cards with binding force ratings.",
+  "planner_eligible": false,
+  "status": "active",
+  "tags": ["genealogy", "conditions", "constraining", "foucauldian", "nested"],
+  "source_project": "critic"
+}
