@@ -212,6 +212,61 @@ class PagePresentation(BaseModel):
     refinement_summary: str = ""
 
 
+# --- 3D: View Polishing ---
+
+
+class PolishRequest(BaseModel):
+    """Input for POST /v1/presenter/polish."""
+
+    job_id: str
+    view_key: str
+    style_school: Optional[str] = Field(
+        default=None,
+        description="Style school to use. Auto-resolved from engine affinities if not set.",
+    )
+    force: bool = Field(
+        default=False,
+        description="Force re-generation, ignoring polish_cache.",
+    )
+
+
+class StyleOverrides(BaseModel):
+    """CSS-like style overrides applied at defined injection points in renderers."""
+
+    section_header: Optional[dict[str, str]] = None
+    section_content: Optional[dict[str, str]] = None
+    card: Optional[dict[str, str]] = None
+    chip: Optional[dict[str, str]] = None
+    badge: Optional[dict[str, str]] = None
+    timeline_node: Optional[dict[str, str]] = None
+    prose: Optional[dict[str, str]] = None
+    accent_color: Optional[str] = None
+    view_wrapper: Optional[dict[str, str]] = None
+
+
+class PolishedViewPayload(BaseModel):
+    """Polished renderer config + style overrides for a view."""
+
+    original_view_key: str
+    polished_renderer_config: dict[str, Any]
+    style_overrides: StyleOverrides = Field(default_factory=StyleOverrides)
+    section_descriptions: dict[str, str] = Field(
+        default_factory=dict,
+        description="Enhanced section descriptions keyed by section key.",
+    )
+
+
+class PolishResult(BaseModel):
+    """Result of polishing a view."""
+
+    polished_payload: PolishedViewPayload
+    model_used: str = ""
+    tokens_used: int = 0
+    execution_time_ms: int = 0
+    style_school: str = ""
+    changes_summary: str = ""
+
+
 # --- Request schemas ---
 
 

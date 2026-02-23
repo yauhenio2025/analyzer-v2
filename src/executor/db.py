@@ -240,6 +240,19 @@ def _init_postgres():
         tokens_used INTEGER DEFAULT 0,
         created_at TIMESTAMP DEFAULT NOW()
     );
+
+    CREATE TABLE IF NOT EXISTS polish_cache (
+        id SERIAL PRIMARY KEY,
+        job_id VARCHAR(100) NOT NULL,
+        view_key VARCHAR(100) NOT NULL,
+        style_school VARCHAR(100) DEFAULT '',
+        config_hash VARCHAR(64) DEFAULT '',
+        polished_data JSONB NOT NULL,
+        model_used VARCHAR(100),
+        tokens_used INTEGER DEFAULT 0,
+        created_at TIMESTAMP DEFAULT NOW(),
+        UNIQUE(job_id, view_key, style_school)
+    );
     """
     with get_connection() as conn:
         cursor = conn.cursor()
@@ -321,6 +334,19 @@ def _init_sqlite():
         model_used TEXT,
         tokens_used INTEGER DEFAULT 0,
         created_at TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS polish_cache (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        job_id TEXT NOT NULL,
+        view_key TEXT NOT NULL,
+        style_school TEXT DEFAULT '',
+        config_hash TEXT DEFAULT '',
+        polished_data TEXT NOT NULL,
+        model_used TEXT,
+        tokens_used INTEGER DEFAULT 0,
+        created_at TEXT,
+        UNIQUE(job_id, view_key, style_school)
     );
     """
     with get_connection() as conn:

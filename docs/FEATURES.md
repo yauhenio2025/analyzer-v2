@@ -125,6 +125,22 @@
 - **Database**: view_refinements table (Postgres + SQLite) for persisting refined recommendations
 - **Added**: 2026-02-19
 
+### View Polishing (3D)
+- **Status**: Active
+- **Description**: LLM-powered visual enhancement of renderer configs. The "Present" button calls Sonnet 4.6 to polish a view's renderer_config and produce style_overrides — CSS-like dicts applied at defined injection points (section_header, card, chip, badge, prose, etc.). Uses the resolved style school's color palette, typography, and layout principles as design input. Results are cached per (job_id, view_key, style_school) in the polish_cache table.
+- **Entry Points**:
+  - `src/presenter/polisher.py:1-260` - polish_view() main entry, _resolve_style_school(), _gather_polish_context(), _compose_system_prompt(), _compose_user_message()
+  - `src/presenter/polish_store.py:1-90` - save_polish_cache(), load_polish_cache() — DB persistence
+  - `src/presenter/schemas.py:215-255` - PolishRequest, StyleOverrides, PolishedViewPayload, PolishResult
+  - `src/executor/db.py` - polish_cache table DDL (both Postgres + SQLite)
+  - `src/api/routes/presenter.py:189-260` - POST /v1/presenter/polish endpoint with cache check
+- **Frontend**:
+  - `the-critic/webapp/src/pages/GenealogyPage.tsx` - V2TabContent: Present/Reset buttons, polishResult state, ANALYZER_V2_URL fetch, config override
+  - `the-critic/webapp/src/components/renderers/AccordionRenderer.tsx` - Reads config._style_overrides, applies to section headers/content, threads down to sub-renderers
+  - `the-critic/webapp/src/components/renderers/ConditionCards.tsx` - Reads config._style_overrides, applies to cards, chips, badges, prose
+- **Style Override Injection Points**: section_header, section_content, card, chip, badge, timeline_node, prose, accent_color, view_wrapper
+- **Added**: 2026-02-23
+
 ### All-in-One Analysis Pipeline (Milestone 4A)
 - **Status**: Active (Milestone 4A complete)
 - **Description**: All-in-one orchestration endpoint that chains documents -> plan generation -> execution -> presentation into a single async job. Accepts inline document texts + thinker context, uploads documents, generates a WorkflowExecutionPlan, starts execution, and returns immediately with job_id for polling. Auto-presentation trigger in workflow_runner runs view refinement + transformation bridge when execution completes. Supports autonomous mode (default) and checkpoint mode (skip_plan_review=false returns plan_id for review).

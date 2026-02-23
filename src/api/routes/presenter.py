@@ -16,6 +16,7 @@ from fastapi import APIRouter, HTTPException
 from src.presenter.schemas import (
     ComposeRequest,
     PagePresentation,
+    PolishRequest,
     PrepareRequest,
     RefineViewsRequest,
 )
@@ -182,4 +183,80 @@ async def compose_presentation(request: ComposeRequest):
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         logger.error(f"Compose failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/polish")
+async def polish_view_endpoint(request: PolishRequest):
+    """Polish a view's visual presentation using an LLM.
+
+    Calls Sonnet 4.6 to enhance the view's renderer_config and produce
+    style_overrides using the resolved style school's palette and typography.
+    Results are cached per (job_id, view_key, style_school).
+    """
+    from src.presenter.polish_store import load_polish_cache, save_polish_cache
+    from src.presenter.polisher import compute_config_hash, polish_view
+    from src.presenter.presentation_api import assemble_single_view
+
+    try:
+        # Load the current view payload
+        payload = assemble_single_view(request.job_id, request.view_key)
+        if payload is None:
+            raise HTTPException(
+                status_code=404,
+                detail=f"View not found: {request.view_key}",
+            )
+
+        # Check cache (unless force=True)
+        style_school = request.style_school  # may be None → auto-resolved
+        if not request.force:
+            cached = load_polish_cache(
+                job_id=request.job_id,
+                view_key=request.view_key,
+                style_school=style_school,
+            )
+            if cached is not None:
+                logger.info(
+                    f"[polish] Cache hit for job={request.job_id} "
+                    f"view={request.view_key}"
+                )
+                return {
+                    "polished_payload": cached["polished_data"],
+                    "model_used": cached["model_used"],
+                    "tokens_used": cached["tokens_used"],
+                    "style_school": cached["style_school"],
+                    "changes_summary": "Loaded from cache",
+                    "execution_time_ms": 0,
+                    "cached": True,
+                }
+
+        # Run polish
+        result = polish_view(
+            payload=payload,
+            engine_key=payload.engine_key,
+            style_school=style_school,
+        )
+
+        # Cache the result
+        config_hash = compute_config_hash(payload.renderer_config)
+        save_polish_cache(
+            job_id=request.job_id,
+            view_key=request.view_key,
+            style_school=result.style_school,
+            polished_data=result.polished_payload.model_dump(),
+            config_hash=config_hash,
+            model_used=result.model_used,
+            tokens_used=result.tokens_used,
+        )
+
+        resp = result.model_dump()
+        resp["cached"] = False
+        return resp
+
+    except HTTPException:
+        raise
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.error(f"Polish failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
