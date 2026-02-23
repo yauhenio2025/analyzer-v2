@@ -1,0 +1,81 @@
+{
+  "template_key": "tp_semantic_constellation_extraction",
+  "template_name": "Target Profile: Semantic Constellation Extraction",
+  "description": "Extracts rich structured data from concept_semantic_constellation engine output (~20k words, 4 passes). Produces 6 accordion sections: core concepts with centrality/definition/role, concept clusters, load-bearing terms, boundary tensions with dialectical analysis, semantic architecture, and vocabulary signature.",
+  "version": 1,
+  "transformation_type": "llm_extract",
+  "llm_extraction_schema": {
+    "core_concepts": [
+      {
+        "term": "string (the concept/term)",
+        "centrality": "enum: high|medium|low",
+        "definition": "string (how the author defines or uses this term)",
+        "role_in_argument": "string (what role this concept plays in the overall argument)",
+        "semantic_field": "string (the broader semantic field this concept belongs to)",
+        "related_terms": [
+          "string (terms that cluster with this concept)"
+        ],
+        "contested": "boolean (whether the author contests or redefines this term)"
+      }
+    ],
+    "concept_clusters": [
+      {
+        "cluster_name": "string (descriptive name for the cluster)",
+        "terms": [
+          "string (terms in this cluster)"
+        ],
+        "binding_logic": "string (what holds this cluster together \u2014 shared assumption, common target, methodological affinity, etc.)",
+        "internal_tensions": "string (any tensions within the cluster, or null if cohesive)",
+        "function": "string (what analytical work this cluster does)"
+      }
+    ],
+    "load_bearing_terms": [
+      {
+        "term": "string (the load-bearing term)",
+        "weight_description": "string (why this term carries disproportionate analytical weight)",
+        "what_collapses_without_it": "string (what parts of the argument depend on this term)",
+        "definitional_stability": "enum: stable|shifting|ambiguous (whether the term's meaning stays fixed)"
+      }
+    ],
+    "boundary_tensions": [
+      {
+        "tension": "string (name/description of the tension)",
+        "pole_a": "string (one side of the tension)",
+        "pole_b": "string (other side of the tension)",
+        "how_managed": "string (how the author navigates or resolves this tension)",
+        "productive": "boolean (whether the tension is productive for the argument)",
+        "dialectical_analysis": "string (deeper analysis of the tension's role)"
+      }
+    ],
+    "semantic_architecture": "string (3-5 paragraphs: how the concept-space is organized \u2014 what's central, what's peripheral, what bridges exist between clusters, what gaps or blind spots appear)",
+    "vocabulary_signature": "string (2-3 paragraphs: what makes this author's vocabulary distinctive \u2014 neologisms, appropriated terms, systematic ambiguities, and what the vocabulary reveals about the author's intellectual commitments)"
+  },
+  "llm_prompt_template": "You are a precise data extraction assistant specializing in semantic and conceptual analysis. Extract structured JSON from analytical prose about a target work's concept-space.\n\nThe input contains output from the concept_semantic_constellation engine across multiple passes, mapping the target work's core concepts, clusters, load-bearing terms, and tensions.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"core_concepts\": [\n    {\n      \"term\": \"<concept>\",\n      \"centrality\": \"<high|medium|low>\",\n      \"definition\": \"<how the author uses this term>\",\n      \"role_in_argument\": \"<what role it plays>\",\n      \"semantic_field\": \"<broader field>\",\n      \"related_terms\": [\"<related terms>\"],\n      \"contested\": <true|false>\n    }\n  ],\n  \"concept_clusters\": [\n    {\n      \"cluster_name\": \"<name>\",\n      \"terms\": [\"<terms>\"],\n      \"binding_logic\": \"<what holds cluster together>\",\n      \"internal_tensions\": \"<tensions within, or null>\",\n      \"function\": \"<analytical work the cluster does>\"\n    }\n  ],\n  \"load_bearing_terms\": [\n    {\n      \"term\": \"<the term>\",\n      \"weight_description\": \"<why it carries disproportionate weight>\",\n      \"what_collapses_without_it\": \"<what depends on this term>\",\n      \"definitional_stability\": \"<stable|shifting|ambiguous>\"\n    }\n  ],\n  \"boundary_tensions\": [\n    {\n      \"tension\": \"<name of tension>\",\n      \"pole_a\": \"<one side>\",\n      \"pole_b\": \"<other side>\",\n      \"how_managed\": \"<how author navigates it>\",\n      \"productive\": <true|false>,\n      \"dialectical_analysis\": \"<deeper analysis>\"\n    }\n  ],\n  \"semantic_architecture\": \"<3-5 paragraphs on concept-space organization>\",\n  \"vocabulary_signature\": \"<2-3 paragraphs on what makes the vocabulary distinctive>\"\n}\n\nRULES:\n1. Return ONLY JSON \u2014 no markdown fences, no commentary\n2. Extract 20-40 core concepts (be thorough \u2014 the source has ~20k words across 4 passes)\n3. Identify 6-12 concept clusters that group related terms meaningfully\n4. Load-bearing terms: 5-10 terms that carry disproportionate analytical weight\n5. Boundary tensions: 4-8 tensions, each with genuine dialectical analysis\n6. semantic_architecture should be a genuine structural analysis, not a list\n7. vocabulary_signature should identify what's distinctive about this author specifically\n8. Preserve the original terminology faithfully\n9. Synthesize across ALL passes \u2014 don't privilege the last pass over earlier ones\n10. Mark concepts as contested=true when the author redefines or challenges standard usage",
+  "applicable_renderer_types": [
+    "accordion"
+  ],
+  "applicable_engines": [
+    "concept_semantic_constellation"
+  ],
+  "tags": [
+    "genealogy",
+    "profiling",
+    "target",
+    "concepts",
+    "semantic",
+    "extraction",
+    "prose-to-structured"
+  ],
+  "status": "active",
+  "model": "claude-sonnet-4-5-20250929",
+  "model_fallback": "claude-sonnet-4-6",
+  "max_tokens": 18000,
+  "source": "Created for genealogy_tp_semantic_constellation view \u2014 per-engine rich extraction",
+  "domain": "genealogy",
+  "pattern_type": "section_extraction",
+  "data_shape_out": "nested_sections",
+  "compatible_sub_renderers": [
+    "chip_grid",
+    "mini_card_list"
+  ]
+}

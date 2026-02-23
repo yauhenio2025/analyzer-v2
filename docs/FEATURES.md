@@ -10,8 +10,8 @@
 - **Entry Points**:
   - `src/orchestrator/__init__.py:1-11` - Module docstring
   - `src/orchestrator/schemas.py:1-246` - Pydantic models: TargetWork, PriorWork, EngineExecutionSpec, PhaseExecutionSpec (incl. supplementary_chains, max_context_chars_override), ViewRecommendation, OrchestratorPlanRequest, PlanRefinementRequest, WorkflowExecutionPlan
-  - `src/orchestrator/catalog.py:1-380` - Catalog assembly from all registries + catalog_to_text() for LLM consumption (incl. supplementary chains note)
-  - `src/orchestrator/planner.py:1-536` - LLM-powered plan generation (Claude Opus with streaming + extended thinking), plan refinement, file-based plan storage, supplementary chains + document strategy guidelines in system prompt
+  - `src/orchestrator/catalog.py:1-540` - Parameterized catalog assembly from all registries (app/page/workflow_key filters), includes sub-renderers and view patterns, dynamic catalog_to_text()
+  - `src/orchestrator/planner.py:1-560` - LLM-powered plan generation with templated system prompt (generic rules + workflow planner_strategy), plan refinement, file-based plan storage
   - `src/api/routes/orchestrator.py:1-155` - REST API: plan generation, CRUD, refinement, catalog
   - `src/api/main.py:16` - Router registration
   - `src/orchestrator/plans/` - File-based plan storage (JSON)
@@ -20,7 +20,7 @@
   - `PhaseExecutionSpec` — phase_number, depth, skip, engine_overrides (dict of EngineExecutionSpec), context_emphasis, rationale, model_hint, requires_full_documents, per_work_overrides, supplementary_chains, max_context_chars_override
   - `EngineExecutionSpec` — engine_key, depth, focus_dimensions, focus_capabilities, rationale
   - `ViewRecommendation` — view_key, priority (primary/secondary/optional), rationale
-- **Capability Catalog**: Assembled from 11 capability engines, 23 chains, 13 stances, 7 workflows, 10 views, 11 operationalizations. Available as raw JSON or LLM-readable markdown. Views section enriched with planner_hint, planner_eligible, has_transformation_template, `[HAS_TEMPLATE]`/`[NO_TEMPLATE]` tags. Planner system prompt is data-driven from view annotations.
+- **Capability Catalog**: Assembled from 11 capability engines, 23 chains, 13 stances, 7 workflows, 21 views, 11 sub-renderers, 6 view patterns, 11 operationalizations. Parameterized by app/page/workflow_key. System prompt composed from generic planning rules + workflow-specific planner_strategy field. Views section enriched with planner_hint, planner_eligible, has_transformation_template tags.
 - **API Endpoints**:
   - `GET /v1/orchestrator/capability-catalog` - Full capability catalog (?format=text for markdown)
   - `POST /v1/orchestrator/plan` - Generate new plan (Claude Opus, ~20s)
@@ -239,6 +239,63 @@
   - `analyzer-mgmt/frontend/src/types/index.ts` - RendererRecommendRequest/Response types
 - **Added**: 2026-02-22
 
+## Sub-Renderer Definitions (First-Class Entity)
+
+### Sub-Renderers
+- **Status**: Active
+- **Description**: 11 sub-renderer definitions as first-class entities. Previously scattered strings in accordion config, now browsable and queryable. Each defines a reusable atomic UI component within container renderers (accordion, tab). Includes category (atomic/composite/specialized/meta), ideal_data_shapes, config_schema (JSON Schema), stance_affinities, and parent_renderer_types.
+- **Entry Points**:
+  - `src/sub_renderers/schemas.py:1-50` - SubRendererDefinition and SubRendererSummary Pydantic models
+  - `src/sub_renderers/registry.py:1-150` - SubRendererRegistry with for_parent(), for_data_shape(), CRUD
+  - `src/sub_renderers/definitions/*.json` - 11 JSON files (chip_grid, mini_card_list, key_value_table, prose_block, stat_row, comparison_panel, timeline_strip, evidence_trail, enabling_conditions, constraining_conditions, nested_sections)
+  - `src/api/routes/sub_renderers.py:1-180` - REST API endpoints
+- **API Endpoints**:
+  - `GET /v1/sub-renderers` - List summaries
+  - `GET /v1/sub-renderers/{key}` - Full definition
+  - `GET /v1/sub-renderers/for-parent/{renderer_type}` - Compatible sub-renderers
+  - `GET /v1/sub-renderers/for-data-shape/{shape}` - By data shape
+  - `POST/PUT/DELETE /v1/sub-renderers/{key}` - CRUD
+  - `POST /v1/sub-renderers/reload` - Force reload
+- **Added**: 2026-02-23
+
+## Consumer Capabilities (First-Class Entity)
+
+### Consumer Definitions
+- **Status**: Active
+- **Description**: 3 consumer definitions (the-critic, visualizer, analyzer-mgmt) that declare supported_renderers and supported_sub_renderers. Inverts the renderer→app coupling — apps declare what they can render, not renderers declaring which apps they work in. Renderer `for_app()` now queries ConsumerRegistry first.
+- **Entry Points**:
+  - `src/consumers/schemas.py:1-60` - ConsumerDefinition, ConsumerPage, ConsumerSummary models
+  - `src/consumers/registry.py:1-150` - ConsumerRegistry with consumers_for_renderer(), renderers_for_consumer()
+  - `src/consumers/definitions/*.json` - 3 JSON files
+  - `src/api/routes/consumers.py:1-150` - REST API endpoints
+  - `src/renderers/registry.py:120-140` - for_app() queries ConsumerRegistry
+- **API Endpoints**:
+  - `GET /v1/consumers` - List summaries
+  - `GET /v1/consumers/{key}` - Full definition
+  - `GET /v1/consumers/{key}/renderers` - Supported renderer definitions
+  - `POST/PUT/DELETE /v1/consumers/{key}` - CRUD
+  - `POST /v1/consumers/reload` - Force reload
+- **Added**: 2026-02-23
+
+## View Patterns (Reusable Templates)
+
+### View Pattern Definitions
+- **Status**: Active
+- **Description**: 6 reusable view pattern templates extracted from existing concrete views. Each captures renderer + config + sub-renderer combinations with instantiation hints for LLM orchestrators. Patterns: accordion_sections, card_grid_grouped, tab_with_children, prose_narrative, card_grid_simple, timeline_sequential.
+- **Entry Points**:
+  - `src/views/pattern_schemas.py:1-60` - ViewPattern, ViewPatternSummary models
+  - `src/views/pattern_registry.py:1-150` - PatternRegistry with for_renderer(), for_data_shape()
+  - `src/views/patterns/*.json` - 6 JSON files
+  - `src/api/routes/view_patterns.py:1-180` - REST API endpoints
+- **API Endpoints**:
+  - `GET /v1/views/patterns` - List summaries
+  - `GET /v1/views/patterns/{key}` - Full definition
+  - `GET /v1/views/patterns/for-renderer/{type}` - By renderer type
+  - `GET /v1/views/patterns/for-data-shape/{shape}` - By data shape
+  - `POST/PUT/DELETE /v1/views/patterns/{key}` - CRUD
+  - `POST /v1/views/patterns/reload` - Force reload
+- **Added**: 2026-02-23
+
 ## Analytical & Presentation Stances (Operations)
 
 ### Stances Library
@@ -386,6 +443,7 @@
   - `tp_semantic_constellation_extraction` (llm_extract, 18k tokens) - Core concepts, clusters, load-bearing terms
   - `tp_inferential_commitments_extraction` (llm_extract, 20k tokens) - Commitments, hidden premises, argumentative structure
   - `tp_concept_evolution_extraction` (llm_extract, 16k tokens) - Evolution trajectories, Koselleckian analysis
+- **Domain Metadata**: All templates tagged with `domain` (genealogy/generic), `pattern_type` (section_extraction, table_extraction, etc.), `data_shape_out` (object_array, nested_sections, etc.), `compatible_sub_renderers` (sub-renderer keys)
 - **API Endpoints**:
   - `GET /v1/transformations` - List summaries (?type=&tag=)
   - `GET /v1/transformations/{template_key}` - Full template
@@ -395,6 +453,8 @@
   - `POST /v1/transformations/reload` - Reload from disk
   - `GET /v1/transformations/for-engine/{engine_key}` - By engine
   - `GET /v1/transformations/for-renderer/{renderer_type}` - By renderer
+  - `GET /v1/transformations/for-pattern?domain=&data_shape=&renderer_type=` - Cross-domain pattern query
+  - `POST /v1/transformations/generate` - LLM-powered template generation from engine + renderer specs
   - `POST /v1/transformations/execute` - Execute transformation (inline spec or template reference)
 - **Frontend** (analyzer-mgmt):
   - `frontend/src/pages/transformations/index.tsx` - List page with type-colored badges, search, type filter

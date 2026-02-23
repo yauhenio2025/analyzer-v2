@@ -1,0 +1,20 @@
+{
+  "sub_renderer_key": "comparison_panel",
+  "sub_renderer_name": "Comparison Panel",
+  "description": "Renders side-by-side or before/after comparisons. Shows two perspectives, approaches, or states with labeled left and right columns.",
+  "category": "atomic",
+  "ideal_data_shapes": ["comparison_pairs", "object_array"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "left_field": {"type": "string", "description": "Field for left/before column"},
+      "right_field": {"type": "string", "description": "Field for right/after column"}
+    }
+  },
+  "stance_affinities": {
+    "comparison": 0.95, "evidence": 0.6, "diagnostic": 0.5, "narrative": 0.3, "summary": 0.4, "interactive": 0.6
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["comparison", "dialectical", "side-by-side", "evolution"]
+}

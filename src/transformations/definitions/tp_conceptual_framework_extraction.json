@@ -1,0 +1,99 @@
+{
+  "template_key": "tp_conceptual_framework_extraction",
+  "template_name": "Target Profile: Conceptual Framework Extraction",
+  "description": "Extracts rich structured data from conceptual_framework_extraction engine output (~16k words, 3 passes). Produces 7 accordion sections: frameworks with components/vocabulary/methodological signatures, vocabulary map, metaphor inventory, cross-domain transfers, framework relationships, and architectural summary.",
+  "version": 1,
+  "transformation_type": "llm_extract",
+  "llm_extraction_schema": {
+    "frameworks": [
+      {
+        "name": "string (framework name)",
+        "type": "string (e.g. economic, philosophical, sociological, political, methodological, interdisciplinary)",
+        "description": "string (2-4 sentences describing the framework and its role)",
+        "components": [
+          "string (key components or building blocks)"
+        ],
+        "vocabulary": [
+          "string (distinctive terms introduced by this framework)"
+        ],
+        "methodological_signature": "string (how this framework shapes the method of inquiry)",
+        "relationship_to_argument": "string (how this framework serves the author's overall argument)"
+      }
+    ],
+    "vocabulary_map": [
+      {
+        "term": "string (the specific term)",
+        "framework_origin": "string (which framework introduces or owns this term)",
+        "definition": "string (how the author defines or uses this term)",
+        "semantic_weight": "enum: heavy|medium|light (how central this term is)",
+        "related_terms": [
+          "string (terms in the same semantic field)"
+        ]
+      }
+    ],
+    "methodological_signatures": [
+      {
+        "framework": "string (framework name)",
+        "method": "string (the specific method or approach)",
+        "distinguishing_features": "string (what makes this method distinctive)",
+        "evidence_types_privileged": [
+          "string (what counts as evidence for this method)"
+        ]
+      }
+    ],
+    "metaphor_inventory": [
+      {
+        "metaphor": "string (the metaphor or image)",
+        "source_domain": "string (where the metaphor comes from)",
+        "target_domain": "string (what it is applied to)",
+        "function": "string (what analytical work the metaphor does)",
+        "frequency": "enum: pervasive|recurring|occasional"
+      }
+    ],
+    "cross_domain_transfers": [
+      {
+        "from_domain": "string (source discipline/field)",
+        "to_domain": "string (target discipline/field)",
+        "concept_transferred": "string (what concept or method is transferred)",
+        "transformation": "string (how the concept changes in transfer)",
+        "success": "enum: productive|partial|strained"
+      }
+    ],
+    "framework_relationships": [
+      {
+        "framework_a": "string",
+        "framework_b": "string",
+        "relationship": "enum: complementary|tension|subordination|synthesis|competition",
+        "description": "string (how these frameworks interact)"
+      }
+    ],
+    "architectural_summary": "string (3-5 paragraphs synthesizing the overall conceptual architecture: how frameworks combine, where tensions emerge, what the architecture enables and constrains)"
+  },
+  "llm_prompt_template": "You are a precise data extraction assistant specializing in philosophical and intellectual analysis. Extract structured JSON from analytical prose about a target work's conceptual frameworks.\n\nThe input contains output from the conceptual_framework_extraction engine across multiple passes, analyzing the target work's frameworks, vocabulary, and methodology.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"frameworks\": [\n    {\n      \"name\": \"<framework name>\",\n      \"type\": \"<economic|philosophical|sociological|political|methodological|interdisciplinary>\",\n      \"description\": \"<2-4 sentences describing the framework>\",\n      \"components\": [\"<key components>\"],\n      \"vocabulary\": [\"<distinctive terms>\"],\n      \"methodological_signature\": \"<how this framework shapes inquiry>\",\n      \"relationship_to_argument\": \"<how it serves the overall argument>\"\n    }\n  ],\n  \"vocabulary_map\": [\n    {\n      \"term\": \"<the term>\",\n      \"framework_origin\": \"<which framework>\",\n      \"definition\": \"<how the author uses it>\",\n      \"semantic_weight\": \"<heavy|medium|light>\",\n      \"related_terms\": [\"<related terms>\"]\n    }\n  ],\n  \"methodological_signatures\": [\n    {\n      \"framework\": \"<framework name>\",\n      \"method\": \"<the method>\",\n      \"distinguishing_features\": \"<what makes it distinctive>\",\n      \"evidence_types_privileged\": [\"<evidence types>\"]\n    }\n  ],\n  \"metaphor_inventory\": [\n    {\n      \"metaphor\": \"<the metaphor>\",\n      \"source_domain\": \"<source>\",\n      \"target_domain\": \"<target>\",\n      \"function\": \"<analytical work it does>\",\n      \"frequency\": \"<pervasive|recurring|occasional>\"\n    }\n  ],\n  \"cross_domain_transfers\": [\n    {\n      \"from_domain\": \"<source field>\",\n      \"to_domain\": \"<target field>\",\n      \"concept_transferred\": \"<what transfers>\",\n      \"transformation\": \"<how it changes>\",\n      \"success\": \"<productive|partial|strained>\"\n    }\n  ],\n  \"framework_relationships\": [\n    {\n      \"framework_a\": \"<name>\",\n      \"framework_b\": \"<name>\",\n      \"relationship\": \"<complementary|tension|subordination|synthesis|competition>\",\n      \"description\": \"<how they interact>\"\n    }\n  ],\n  \"architectural_summary\": \"<3-5 paragraphs synthesizing the overall conceptual architecture>\"\n}\n\nRULES:\n1. Return ONLY JSON \u2014 no markdown fences, no commentary\n2. Extract 8-15 frameworks (be thorough \u2014 the source material is rich)\n3. Vocabulary map: 15-30 entries covering the most analytically significant terms\n4. Metaphor inventory: 5-15 metaphors, focusing on those that do real analytical work\n5. Cross-domain transfers: 3-10 entries where concepts move between disciplines\n6. Framework relationships: map tensions and complementarities between ALL major frameworks\n7. The architectural_summary should be a genuine synthesis, not a list \u2014 show how the pieces fit together\n8. Preserve the original terminology and phrasing faithfully\n9. Multiple passes of analysis are provided \u2014 synthesize across ALL passes, not just the last one",
+  "applicable_renderer_types": [
+    "accordion"
+  ],
+  "applicable_engines": [
+    "conceptual_framework_extraction"
+  ],
+  "tags": [
+    "genealogy",
+    "profiling",
+    "target",
+    "frameworks",
+    "extraction",
+    "prose-to-structured"
+  ],
+  "status": "active",
+  "model": "claude-sonnet-4-5-20250929",
+  "model_fallback": "claude-sonnet-4-6",
+  "max_tokens": 20000,
+  "source": "Created for genealogy_tp_conceptual_framework view \u2014 per-engine rich extraction",
+  "domain": "genealogy",
+  "pattern_type": "section_extraction",
+  "data_shape_out": "nested_sections",
+  "compatible_sub_renderers": [
+    "mini_card_list",
+    "chip_grid"
+  ]
+}

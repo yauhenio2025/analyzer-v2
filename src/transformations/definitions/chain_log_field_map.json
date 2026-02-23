@@ -12,12 +12,25 @@
     "output_tokens": "tokens_out",
     "completion_status": "status"
   },
-  "applicable_renderer_types": ["table"],
+  "applicable_renderer_types": [
+    "table"
+  ],
   "applicable_engines": [],
-  "tags": ["debug", "execution", "metadata", "schema-map"],
+  "tags": [
+    "debug",
+    "execution",
+    "metadata",
+    "schema-map"
+  ],
   "status": "active",
   "model": "claude-haiku-4-5-20251001",
   "model_fallback": "claude-sonnet-4-5-20250929",
   "max_tokens": 8000,
-  "source": "Extracted from analyzer-v2/src/views/definitions/genealogy_chain_log.json field_mapping"
+  "source": "Extracted from analyzer-v2/src/views/definitions/genealogy_chain_log.json field_mapping",
+  "domain": "generic",
+  "pattern_type": "table_extraction",
+  "data_shape_out": "object_array",
+  "compatible_sub_renderers": [
+    "key_value_table"
+  ]
 }

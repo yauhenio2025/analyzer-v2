@@ -11,26 +11,58 @@
         "tactic_type": "enum: conceptual_recycling|strategic_ambiguity|audience_bridging|vocabulary_migration|methodological_shift|position_reversal|scope_expansion|narrative_reframing|authority_leveraging|selective_citation",
         "tactic_name": "string",
         "description": "string (2-3 sentences)",
-        "idea_ids_involved": ["string"],
-        "prior_work_references": [{"work_title": "string", "relevant_quote": "string"}],
-        "current_work_evidence": [{"quote": "string", "location": "string"}],
+        "idea_ids_involved": [
+          "string"
+        ],
+        "prior_work_references": [
+          {
+            "work_title": "string",
+            "relevant_quote": "string"
+          }
+        ],
+        "current_work_evidence": [
+          {
+            "quote": "string",
+            "location": "string"
+          }
+        ],
         "severity": "enum: major|moderate|minor",
         "assessment": "string"
       }
     ],
     "tactic_patterns": {
       "most_frequent_tactic": "string",
-      "tactic_distribution": {"tactic_type": "count"},
+      "tactic_distribution": {
+        "tactic_type": "count"
+      },
       "pattern_narrative": "string (2-3 paragraphs)"
     }
   },
   "llm_prompt_template": "You are a precise data extraction assistant. Extract structured JSON from an analytical prose text about intellectual evolution tactics.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"tactics_detected\": [\n    {\n      \"tactic_id\": \"t_1\",\n      \"tactic_type\": \"<one of: conceptual_recycling, strategic_ambiguity, audience_bridging, vocabulary_migration, methodological_shift, position_reversal, scope_expansion, narrative_reframing, authority_leveraging, selective_citation>\",\n      \"tactic_name\": \"<descriptive name for this specific tactic instance>\",\n      \"description\": \"<2-3 sentence description of the tactic and how it manifests>\",\n      \"idea_ids_involved\": [\"<idea IDs if mentioned>\"],\n      \"prior_work_references\": [\n        {\"work_title\": \"<title>\", \"relevant_quote\": \"<quote if available>\"}\n      ],\n      \"current_work_evidence\": [\n        {\"quote\": \"<evidence from current work>\", \"location\": \"<chapter/section if mentioned>\"}\n      ],\n      \"severity\": \"<one of: major, moderate, minor>\",\n      \"assessment\": \"<brief analytical assessment of this tactic's significance>\"\n    }\n  ],\n  \"tactic_patterns\": {\n    \"most_frequent_tactic\": \"<tactic_type that appears most often>\",\n    \"tactic_distribution\": {\"<tactic_type>\": \"<count>\"},\n    \"pattern_narrative\": \"<2-3 paragraph narrative about the overall tactical patterns>\"\n  }\n}\n\nRULES:\n1. Return ONLY JSON \u2014 no markdown fences, no commentary\n2. Use sequential IDs: t_1, t_2, ...\n3. tactic_type MUST be one of the 10 listed values\n4. severity: major = fundamentally shapes the argument, moderate = notable pattern, minor = occasional occurrence\n5. Capture ALL tactics mentioned in the prose, not just the first few\n6. The pattern_narrative should synthesize what the tactic distribution reveals about the author",
-  "applicable_renderer_types": ["accordion", "card_grid", "table"],
-  "applicable_engines": ["evolution_tactics_detector"],
-  "tags": ["genealogy", "tactics", "extraction", "prose-to-structured"],
+  "applicable_renderer_types": [
+    "accordion",
+    "card_grid",
+    "table"
+  ],
+  "applicable_engines": [
+    "evolution_tactics_detector"
+  ],
+  "tags": [
+    "genealogy",
+    "tactics",
+    "extraction",
+    "prose-to-structured"
+  ],
   "status": "active",
   "model": "claude-haiku-4-5-20251001",
   "model_fallback": "claude-sonnet-4-5-20250929",
   "max_tokens": 8000,
-  "source": "Extracted from the-critic/analyzer/presentation.py _build_tactics_extraction_prompt()"
+  "source": "Extracted from the-critic/analyzer/presentation.py _build_tactics_extraction_prompt()",
+  "domain": "genealogy",
+  "pattern_type": "card_extraction",
+  "data_shape_out": "object_array",
+  "compatible_sub_renderers": [
+    "mini_card_list",
+    "chip_grid"
+  ]
 }

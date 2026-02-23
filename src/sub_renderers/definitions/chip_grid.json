@@ -1,0 +1,22 @@
+{
+  "sub_renderer_key": "chip_grid",
+  "sub_renderer_name": "Chip Grid",
+  "description": "Renders array of strings/objects as colored chips with inline expansion. Good for vocabularies, concept clusters, tags, and any collection where items are discrete units with optional details.",
+  "category": "atomic",
+  "ideal_data_shapes": ["flat_list", "object_array"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "label_field": {"type": "string", "description": "Field for chip label text"},
+      "subtitle_field": {"type": "string", "description": "Secondary field shown below label"},
+      "count_field": {"type": "string", "description": "Numeric badge displayed on chip"},
+      "description_field": {"type": "string", "description": "Expanded detail shown on click/hover"}
+    }
+  },
+  "stance_affinities": {
+    "diagnostic": 0.8, "summary": 0.7, "evidence": 0.5, "narrative": 0.2, "interactive": 0.9, "comparison": 0.4
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["chips", "tags", "collections", "vocabulary"]
+}

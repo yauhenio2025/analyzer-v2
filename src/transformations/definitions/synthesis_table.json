@@ -1,6 +1,6 @@
 {
   "template_key": "synthesis_table",
-  "template_name": "Genealogical Synthesis — Table Format",
+  "template_name": "Genealogical Synthesis \u2014 Table Format",
   "description": "Extracts the final genealogical synthesis into multiple tables covering key findings, idea genealogies, author profile, and methodological notes.",
   "version": 1,
   "transformation_type": "llm_extract",
@@ -9,19 +9,42 @@
       {
         "title": "string",
         "description": "string",
-        "columns": [{"key": "string", "label": "string"}],
-        "rows": [{}]
+        "columns": [
+          {
+            "key": "string",
+            "label": "string"
+          }
+        ],
+        "rows": [
+          {}
+        ]
       }
     ],
     "summary_note": "string"
   },
-  "llm_prompt_template": "You are an analytical data architect. Your task is to transform a genealogical SYNTHESIS (the final interpretive portrait of an author's intellectual development) into MULTIPLE MEANINGFUL TABLES.\n\nThe synthesis contains: executive summary, genealogical portrait, key findings, idea genealogies, author intellectual profile, and methodological notes.\n\nCreate 3-5 tables that illuminate different aspects:\n- Key Findings table: finding, significance, evidence strength\n- Idea Genealogies table: idea name, evolution pattern (gradual refinement / radical transformation / strategic repurposing), tactics involved, functional role\n- Author Intellectual Profile: dimension (evolution style, dominant tactics, honesty assessment), characterization, evidence\n- Cross-work Analysis: prior work, ideas contributed, how they evolved, current role\n- Methodological Notes: limitation, area requiring investigation, confidence level\n\nIMPORTANT RULES:\n1. Each table should have 3-6 columns. Values must be PLAIN TEXT (1-3 sentences max per cell)\n2. Column keys must be snake_case\n3. Keep cell values concise — tabular display, not prose\n4. Create 3-5 tables with clear titles and descriptions\n5. Every table must have at least 3 rows\n6. The summary_note should be 2-3 sentences summarizing the author's intellectual trajectory\n\nReturn a JSON object:\n{\n  \"tables\": [\n    {\n      \"title\": \"Table Title\",\n      \"description\": \"What this table shows\",\n      \"columns\": [{\"key\": \"col_key\", \"label\": \"Column Label\"}],\n      \"rows\": [{\"col_key\": \"cell value\"}]\n    }\n  ],\n  \"summary_note\": \"Overall summary...\"\n}\n\nReturn ONLY the JSON object — no markdown code fences, no commentary.",
-  "applicable_renderer_types": ["table"],
-  "applicable_engines": ["genealogy_final_synthesis"],
-  "tags": ["genealogy", "synthesis", "table", "multi-table", "extraction"],
+  "llm_prompt_template": "You are an analytical data architect. Your task is to transform a genealogical SYNTHESIS (the final interpretive portrait of an author's intellectual development) into MULTIPLE MEANINGFUL TABLES.\n\nThe synthesis contains: executive summary, genealogical portrait, key findings, idea genealogies, author intellectual profile, and methodological notes.\n\nCreate 3-5 tables that illuminate different aspects:\n- Key Findings table: finding, significance, evidence strength\n- Idea Genealogies table: idea name, evolution pattern (gradual refinement / radical transformation / strategic repurposing), tactics involved, functional role\n- Author Intellectual Profile: dimension (evolution style, dominant tactics, honesty assessment), characterization, evidence\n- Cross-work Analysis: prior work, ideas contributed, how they evolved, current role\n- Methodological Notes: limitation, area requiring investigation, confidence level\n\nIMPORTANT RULES:\n1. Each table should have 3-6 columns. Values must be PLAIN TEXT (1-3 sentences max per cell)\n2. Column keys must be snake_case\n3. Keep cell values concise \u2014 tabular display, not prose\n4. Create 3-5 tables with clear titles and descriptions\n5. Every table must have at least 3 rows\n6. The summary_note should be 2-3 sentences summarizing the author's intellectual trajectory\n\nReturn a JSON object:\n{\n  \"tables\": [\n    {\n      \"title\": \"Table Title\",\n      \"description\": \"What this table shows\",\n      \"columns\": [{\"key\": \"col_key\", \"label\": \"Column Label\"}],\n      \"rows\": [{\"col_key\": \"cell value\"}]\n    }\n  ],\n  \"summary_note\": \"Overall summary...\"\n}\n\nReturn ONLY the JSON object \u2014 no markdown code fences, no commentary.",
+  "applicable_renderer_types": [
+    "table"
+  ],
+  "applicable_engines": [
+    "genealogy_final_synthesis"
+  ],
+  "tags": [
+    "genealogy",
+    "synthesis",
+    "table",
+    "multi-table",
+    "extraction"
+  ],
   "status": "active",
   "model": "claude-haiku-4-5-20251001",
   "model_fallback": "claude-sonnet-4-5-20250929",
   "max_tokens": 12000,
-  "source": "Table presentation format for genealogical synthesis"
+  "source": "Table presentation format for genealogical synthesis",
+  "domain": "genealogy",
+  "pattern_type": "table_extraction",
+  "data_shape_out": "object_array",
+  "compatible_sub_renderers": [
+    "key_value_table"
+  ]
 }

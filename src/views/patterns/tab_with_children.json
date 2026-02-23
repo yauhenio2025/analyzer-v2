@@ -1,0 +1,23 @@
+{
+  "pattern_key": "tab_with_children",
+  "pattern_name": "Tab Container with Child Views",
+  "description": "Parent tab container that holds child views as individual tabs. Each child view can use a different renderer. Creates a tabbed navigation experience for multi-dimensional analysis results. Children are auto-included when the parent is selected.",
+  "renderer_type": "tab",
+  "default_renderer_config": {
+    "layout": "standard"
+  },
+  "recommended_sub_renderers": [],
+  "ideal_for": [
+    "multi-dimensional analysis with per-dimension views",
+    "evolution tracking across multiple categories",
+    "complex results requiring separate renderer per aspect",
+    "combining timeline, card, and prose views in one container"
+  ],
+  "data_shape_in": "nested_sections",
+  "instantiation_hints": "1. Create the parent view with renderer_type='tab' and minimal config. 2. Create child views with parent_view_key pointing to this view. 3. Each child can use any renderer_type independently. 4. Set child positions for tab ordering. 5. Children are auto-included by the compose endpoint — don't add them to plan recommendations separately.",
+  "example_views": [
+    "genealogy_idea_evolution"
+  ],
+  "tags": ["container", "tabs", "multi-view", "navigation"],
+  "status": "active"
+}

@@ -13,7 +13,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import audiences, chains, engines, executor, functions, llm, meta, operations, operationalizations, orchestrator, paradigms, presenter, renderers, styles, primitives, display, transformations, views, workflows
+from src.api.routes import audiences, chains, consumers, engines, executor, functions, llm, meta, operations, operationalizations, orchestrator, paradigms, presenter, renderers, styles, primitives, display, sub_renderers, transformations, view_patterns, views, workflows
 from src.audiences.registry import get_audience_registry
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
@@ -27,6 +27,9 @@ from src.paradigms.registry import get_paradigm_registry
 from src.styles.registry import get_style_registry
 from src.primitives.registry import get_primitives_registry
 from src.display.registry import DisplayRegistry
+from src.sub_renderers.registry import get_sub_renderer_registry
+from src.consumers.registry import get_consumer_registry
+from src.views.pattern_registry import get_pattern_registry
 from src.workflows.registry import get_workflow_registry
 
 # Configure logging
@@ -107,6 +110,18 @@ async def lifespan(app: FastAPI):
     transformation_registry = get_transformation_registry()
     logger.info(f"Loaded {transformation_registry.count()} transformation templates")
 
+    logger.info("Loading sub-renderer definitions...")
+    sub_renderer_registry = get_sub_renderer_registry()
+    logger.info(f"Loaded {sub_renderer_registry.count()} sub-renderer definitions")
+
+    logger.info("Loading consumer definitions...")
+    consumer_registry = get_consumer_registry()
+    logger.info(f"Loaded {consumer_registry.count()} consumer definitions")
+
+    logger.info("Loading view pattern definitions...")
+    pattern_registry = get_pattern_registry()
+    logger.info(f"Loaded {pattern_registry.count()} view pattern definitions")
+
     logger.info("Initializing executor database...")
     from src.executor.db import init_db
     init_db()
@@ -186,8 +201,11 @@ app.include_router(display.router, prefix="/v1")
 app.include_router(workflows.router, prefix="/v1")
 app.include_router(audiences.router, prefix="/v1")
 app.include_router(functions.router, prefix="/v1")
+app.include_router(view_patterns.router, prefix="/v1")  # Before views — must match /views/patterns before /{view_key}
 app.include_router(views.router, prefix="/v1")
 app.include_router(renderers.router, prefix="/v1")
+app.include_router(sub_renderers.router, prefix="/v1")
+app.include_router(consumers.router, prefix="/v1")
 app.include_router(transformations.router, prefix="/v1")
 app.include_router(operations.router)
 app.include_router(operationalizations.router, prefix="/v1")
@@ -217,7 +235,10 @@ async def root():
             "display": "/v1/display",
             "functions": "/v1/functions",
             "views": "/v1/views",
+            "view_patterns": "/v1/views/patterns",
             "renderers": "/v1/renderers",
+            "sub_renderers": "/v1/sub-renderers",
+            "consumers": "/v1/consumers",
             "transformations": "/v1/transformations",
             "operations": "/v1/operations",
             "operationalizations": "/v1/operationalizations",
@@ -245,6 +266,10 @@ async def health():
     renderer_registry = get_renderer_registry()
     transformation_registry = get_transformation_registry()
 
+    sub_renderer_registry = get_sub_renderer_registry()
+    consumer_registry = get_consumer_registry()
+    pattern_registry = get_pattern_registry()
+
     return {
         "status": "healthy",
         "engines_loaded": engine_registry.count(),
@@ -255,6 +280,9 @@ async def health():
         "functions_loaded": function_registry.count(),
         "views_loaded": view_registry.count(),
         "renderers_loaded": renderer_registry.count(),
+        "sub_renderers_loaded": sub_renderer_registry.count(),
+        "consumers_loaded": consumer_registry.count(),
+        "view_patterns_loaded": pattern_registry.count(),
         "transformations_loaded": transformation_registry.count(),
         "styles_loaded": style_stats["styles_loaded"],
         "style_affinities": style_stats["engine_affinities"],

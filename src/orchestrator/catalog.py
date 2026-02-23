@@ -147,17 +147,25 @@ def assemble_stance_catalog() -> list[dict[str, Any]]:
     return entries
 
 
-def assemble_workflow_catalog() -> list[dict[str, Any]]:
-    """Assemble workflow definitions — currently just intellectual_genealogy."""
+def assemble_workflow_catalog(workflow_key: str = None) -> list[dict[str, Any]]:
+    """Assemble workflow definitions.
+
+    If workflow_key is specified, returns only that workflow.
+    Otherwise returns all workflows.
+    """
     from src.workflows.registry import get_workflow_registry
 
     registry = get_workflow_registry()
-    workflow = registry.get("intellectual_genealogy")
-    if workflow is None:
-        return []
 
-    return [
-        {
+    if workflow_key:
+        workflows = [registry.get(workflow_key)]
+        workflows = [w for w in workflows if w is not None]
+    else:
+        workflows = registry.list_all()
+
+    entries = []
+    for workflow in workflows:
+        entries.append({
             "workflow_key": workflow.workflow_key,
             "workflow_name": workflow.workflow_name,
             "version": workflow.version,
@@ -174,24 +182,90 @@ def assemble_workflow_catalog() -> list[dict[str, Any]]:
                 }
                 for phase in workflow.phases
             ],
-        }
-    ]
+        })
+
+    return entries
 
 
-def assemble_view_catalog() -> list[dict[str, Any]]:
-    """Assemble genealogy view definitions with planner metadata."""
+def assemble_sub_renderer_catalog() -> list[dict[str, Any]]:
+    """Assemble sub-renderer definitions for the catalog.
+
+    Included so the LLM planner can recommend sub-renderers for views.
+    """
+    from src.sub_renderers.registry import get_sub_renderer_registry
+
+    registry = get_sub_renderer_registry()
+    entries = []
+    for sr in registry.list_all():
+        entries.append({
+            "sub_renderer_key": sr.sub_renderer_key,
+            "sub_renderer_name": sr.sub_renderer_name,
+            "description": sr.description,
+            "category": sr.category,
+            "ideal_data_shapes": sr.ideal_data_shapes,
+            "parent_renderer_types": sr.parent_renderer_types,
+            "stance_affinities": sr.stance_affinities,
+        })
+    return entries
+
+
+def assemble_view_pattern_catalog() -> list[dict[str, Any]]:
+    """Assemble view pattern definitions for the catalog.
+
+    Included so the LLM planner can instantiate patterns for new views.
+    """
+    from src.views.pattern_registry import get_pattern_registry
+
+    registry = get_pattern_registry()
+    entries = []
+    for p in registry.list_all():
+        entries.append({
+            "pattern_key": p.pattern_key,
+            "pattern_name": p.pattern_name,
+            "description": p.description,
+            "renderer_type": p.renderer_type,
+            "ideal_for": p.ideal_for,
+            "data_shape_in": p.data_shape_in,
+            "recommended_sub_renderers": p.recommended_sub_renderers,
+            "instantiation_hints": p.instantiation_hints,
+            "example_views": p.example_views,
+        })
+    return entries
+
+
+def assemble_view_catalog(
+    app: str = None,
+    page: str = None,
+    workflow_key: str = None,
+) -> list[dict[str, Any]]:
+    """Assemble view definitions with planner metadata.
+
+    Parameterized: filter by app, page, and/or workflow_key.
+    Defaults to all views if no filters specified.
+    """
     from src.views.registry import get_view_registry
     from src.transformations.registry import get_transformation_registry
 
     registry = get_view_registry()
     transform_registry = get_transformation_registry()
-    views = registry.list_summaries(app="the-critic", page="genealogy")
+
+    kwargs = {}
+    if app:
+        kwargs["app"] = app
+    if page:
+        kwargs["page"] = page
+    views = registry.list_summaries(**kwargs) if kwargs else registry.list_summaries()
 
     entries = []
     for view_summary in views:
         view = registry.get(view_summary.view_key)
         if view is None:
             continue
+
+        # Filter by workflow_key if specified
+        if workflow_key and view.data_source:
+            if view.data_source.workflow_key != workflow_key:
+                continue
 
         # Check if this view has applicable transformation templates
         has_template = False
@@ -253,17 +327,24 @@ def assemble_operationalization_summary() -> list[dict[str, Any]]:
     return entries
 
 
-def assemble_full_catalog() -> dict[str, Any]:
+def assemble_full_catalog(
+    app: str = None,
+    page: str = None,
+    workflow_key: str = None,
+) -> dict[str, Any]:
     """Assemble the complete capability catalog.
 
     This is what the LLM planner reads to make decisions.
+    Parameterized to support domain-independent planning.
     """
     catalog = {
         "capability_engines": assemble_engine_catalog(),
         "chains": assemble_chain_catalog(),
         "stances": assemble_stance_catalog(),
-        "workflow": assemble_workflow_catalog(),
-        "views": assemble_view_catalog(),
+        "workflow": assemble_workflow_catalog(workflow_key=workflow_key),
+        "views": assemble_view_catalog(app=app, page=page, workflow_key=workflow_key),
+        "sub_renderers": assemble_sub_renderer_catalog(),
+        "view_patterns": assemble_view_pattern_catalog(),
         "operationalizations": assemble_operationalization_summary(),
         "depth_levels_explanation": {
             "surface": "Quick overview, 1 pass per engine, ~15 LLM calls total. Good for initial scoping.",
@@ -278,20 +359,23 @@ def assemble_full_catalog() -> dict[str, Any]:
         "chains": len(catalog["chains"]),
         "stances": len(catalog["stances"]),
         "views": len(catalog["views"]),
+        "sub_renderers": len(catalog["sub_renderers"]),
+        "view_patterns": len(catalog["view_patterns"]),
         "operationalizations": len(catalog["operationalizations"]),
     }
 
     return catalog
 
 
-def catalog_to_text(catalog: dict[str, Any]) -> str:
+def catalog_to_text(catalog: dict[str, Any], workflow_name: str = None) -> str:
     """Convert the catalog to a text document suitable for LLM consumption.
 
     Produces a structured markdown document that the planner's system prompt
     references. Optimized for readability by the LLM, not humans.
     """
+    title = workflow_name or "Intellectual Genealogy Analysis"
     lines = []
-    lines.append("# CAPABILITY CATALOG: Intellectual Genealogy Analysis")
+    lines.append(f"# CAPABILITY CATALOG: {title}")
     lines.append("")
 
     # Depth levels
@@ -302,9 +386,10 @@ def catalog_to_text(catalog: dict[str, Any]) -> str:
     lines.append("")
 
     # Workflow
-    lines.append("## WORKFLOW: intellectual_genealogy (5 phases)")
-    lines.append("")
     for wf in catalog.get("workflow", []):
+        phase_count = len(wf.get("phases", []))
+        lines.append(f"## WORKFLOW: {wf.get('workflow_key', 'unknown')} ({phase_count} phases)")
+        lines.append("")
         for phase in wf.get("phases", []):
             engine_or_chain = phase.get("chain_key") or phase.get("engine_key") or "N/A"
             deps = ", ".join(str(d) for d in phase.get("depends_on_phases", [])) or "none"
@@ -391,7 +476,8 @@ def catalog_to_text(catalog: dict[str, Any]) -> str:
     lines.append("")
 
     # Views
-    lines.append("## VIEWS (genealogy page)")
+    view_count = len(catalog.get("views", []))
+    lines.append(f"## VIEWS ({view_count} total)")
     lines.append("")
     for view in catalog.get("views", []):
         ds = view.get("data_source", {}) or {}
@@ -417,5 +503,32 @@ def catalog_to_text(catalog: dict[str, Any]) -> str:
         if planner_hint:
             lines.append(f"- **Planner guidance**: {planner_hint}")
         lines.append("")
+
+    # Sub-renderers
+    sub_renderers = catalog.get("sub_renderers", [])
+    if sub_renderers:
+        lines.append(f"## SUB-RENDERERS ({len(sub_renderers)} total)")
+        lines.append("")
+        for sr in sub_renderers:
+            parents = ", ".join(sr.get("parent_renderer_types", []))
+            shapes = ", ".join(sr.get("ideal_data_shapes", []))
+            lines.append(f"### `{sr['sub_renderer_key']}` — {sr['sub_renderer_name']}")
+            lines.append(f"- {sr.get('description', '')[:200]}")
+            lines.append(f"- Category: {sr.get('category', '?')} | Parents: {parents} | Data shapes: {shapes}")
+            lines.append("")
+
+    # View patterns
+    patterns = catalog.get("view_patterns", [])
+    if patterns:
+        lines.append(f"## VIEW PATTERNS ({len(patterns)} total)")
+        lines.append("")
+        for p in patterns:
+            lines.append(f"### `{p['pattern_key']}` — {p['pattern_name']}")
+            lines.append(f"- {p.get('description', '')[:200]}")
+            lines.append(f"- Renderer: {p.get('renderer_type', '?')} | Data shape: {p.get('data_shape_in', '?')}")
+            lines.append(f"- Ideal for: {', '.join(p.get('ideal_for', []))}")
+            if p.get("instantiation_hints"):
+                lines.append(f"- **Hints**: {p['instantiation_hints'][:200]}")
+            lines.append("")
 
     return "\n".join(lines)

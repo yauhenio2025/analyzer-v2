@@ -1,0 +1,14 @@
+{
+  "sub_renderer_key": "stat_row",
+  "sub_renderer_name": "Stat Row",
+  "description": "Renders a horizontal row of key statistics or metrics. Each stat has a label and value. Compact display for numeric or categorical summaries.",
+  "category": "atomic",
+  "ideal_data_shapes": ["key_value_pairs", "flat_list"],
+  "config_schema": {"type": "object", "properties": {}},
+  "stance_affinities": {
+    "summary": 0.9, "diagnostic": 0.7, "evidence": 0.3, "comparison": 0.6, "narrative": 0.1, "interactive": 0.3
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["statistics", "metrics", "compact", "summary"]
+}

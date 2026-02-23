@@ -35,17 +35,25 @@ async def get_capability_catalog(
         None,
         description="Output format: 'raw' for structured JSON, 'text' for LLM-readable markdown. Default: raw",
     ),
+    app: Optional[str] = Query(None, description="Filter views by consumer app"),
+    page: Optional[str] = Query(None, description="Filter views by page"),
+    workflow_key: Optional[str] = Query(None, description="Filter by workflow key"),
 ):
     """Get the full capability catalog that the orchestrator uses for planning.
 
     This is the orchestrator's 'menu' — everything it can choose from:
-    engines, chains, stances, workflows, views, operationalizations.
+    engines, chains, stances, workflows, views, sub-renderers, view patterns,
+    and operationalizations.
 
+    Supports filtering by app, page, and workflow_key.
     Use format=text to get the LLM-readable markdown version.
     """
-    catalog = assemble_full_catalog()
+    catalog = assemble_full_catalog(app=app, page=page, workflow_key=workflow_key)
     if format == "text":
-        return {"format": "text", "content": catalog_to_text(catalog)}
+        workflow_name = None
+        if catalog.get("workflow"):
+            workflow_name = catalog["workflow"][0].get("workflow_name")
+        return {"format": "text", "content": catalog_to_text(catalog, workflow_name=workflow_name)}
     return catalog
 
 

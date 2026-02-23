@@ -1,0 +1,97 @@
+{
+  "template_key": "tp_inferential_commitments_extraction",
+  "template_name": "Target Profile: Inferential Commitments Extraction",
+  "description": "Extracts rich structured data from inferential_commitment_mapper engine output (~23k words, 4 passes). Produces 7 accordion sections: key ideas, commitments with cross-references, backings/warrants, either-or choices, hidden premises, practical implications, and argumentative structure.",
+  "version": 1,
+  "transformation_type": "llm_extract",
+  "llm_extraction_schema": {
+    "key_ideas": [
+      {
+        "idea": "string (the key idea or thesis)",
+        "type": "enum: thesis|sub-thesis|methodological_claim|normative_claim|empirical_claim",
+        "centrality": "enum: core|supporting|peripheral",
+        "description": "string (2-3 sentences elaborating the idea)",
+        "depends_on": [
+          "string (other key ideas this one depends on)"
+        ]
+      }
+    ],
+    "commitments": [
+      {
+        "commitment": "string (the inferential commitment)",
+        "type": "enum: ontological|methodological|normative|epistemic|causal|definitional",
+        "explicitness": "enum: explicit|implicit|hidden",
+        "evidence": "string (textual evidence for this commitment)",
+        "implications": "string (what follows from this commitment)",
+        "strength": "enum: strong|moderate|weak",
+        "cross_references": [
+          "string (other commitments or key ideas this connects to)"
+        ]
+      }
+    ],
+    "backings": [
+      {
+        "backing": "string (the backing or warrant)",
+        "supports": "string (which commitment or claim it supports)",
+        "type": "enum: empirical|theoretical|authoritative|analogical|definitional",
+        "strength": "enum: strong|moderate|weak",
+        "vulnerabilities": "string (where this backing could be challenged)"
+      }
+    ],
+    "either_or_choices": [
+      {
+        "choice": "string (the either/or framing)",
+        "option_a": "string (first option)",
+        "option_b": "string (second option)",
+        "author_chooses": "string (which option the author takes, or null if left open)",
+        "what_is_excluded": "string (what third options are foreclosed by this framing)",
+        "rhetorical_function": "string (what work this binary does in the argument)"
+      }
+    ],
+    "hidden_premises": [
+      {
+        "premise": "string (the unstated premise)",
+        "why_hidden": "string (why this premise goes unstated \u2014 too obvious, too controversial, etc.)",
+        "what_depends_on_it": "string (what parts of the argument require this premise)",
+        "if_denied": "string (what happens to the argument if this premise is rejected)"
+      }
+    ],
+    "practical_implications": [
+      {
+        "implication": "string (the practical consequence)",
+        "derived_from": "string (which commitments or arguments lead here)",
+        "domain": "string (policy, practice, research, ethics, etc.)",
+        "acknowledged_by_author": "boolean (whether the author explicitly draws this implication)"
+      }
+    ],
+    "argumentative_structure": "string (3-5 paragraphs: how the overall argument is built \u2014 the logical architecture, key inferential moves, where the argument is strongest and most vulnerable, and what kind of argument it ultimately is)"
+  },
+  "llm_prompt_template": "You are a precise data extraction assistant specializing in inferential and argumentative analysis. Extract structured JSON from analytical prose about a target work's inferential commitments.\n\nThe input contains output from the inferential_commitment_mapper engine across multiple passes, mapping the target work's commitments, warrants, hidden premises, and argumentative structure.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"key_ideas\": [\n    {\n      \"idea\": \"<the key idea>\",\n      \"type\": \"<thesis|sub-thesis|methodological_claim|normative_claim|empirical_claim>\",\n      \"centrality\": \"<core|supporting|peripheral>\",\n      \"description\": \"<2-3 sentences>\",\n      \"depends_on\": [\"<other key ideas>\"]\n    }\n  ],\n  \"commitments\": [\n    {\n      \"commitment\": \"<the commitment>\",\n      \"type\": \"<ontological|methodological|normative|epistemic|causal|definitional>\",\n      \"explicitness\": \"<explicit|implicit|hidden>\",\n      \"evidence\": \"<textual evidence>\",\n      \"implications\": \"<what follows>\",\n      \"strength\": \"<strong|moderate|weak>\",\n      \"cross_references\": [\"<connected items>\"]\n    }\n  ],\n  \"backings\": [\n    {\n      \"backing\": \"<the backing>\",\n      \"supports\": \"<what it supports>\",\n      \"type\": \"<empirical|theoretical|authoritative|analogical|definitional>\",\n      \"strength\": \"<strong|moderate|weak>\",\n      \"vulnerabilities\": \"<where it can be challenged>\"\n    }\n  ],\n  \"either_or_choices\": [\n    {\n      \"choice\": \"<the framing>\",\n      \"option_a\": \"<first option>\",\n      \"option_b\": \"<second option>\",\n      \"author_chooses\": \"<which chosen, or null>\",\n      \"what_is_excluded\": \"<third options foreclosed>\",\n      \"rhetorical_function\": \"<what work the binary does>\"\n    }\n  ],\n  \"hidden_premises\": [\n    {\n      \"premise\": \"<the unstated premise>\",\n      \"why_hidden\": \"<why unstated>\",\n      \"what_depends_on_it\": \"<what requires this premise>\",\n      \"if_denied\": \"<consequence of rejecting it>\"\n    }\n  ],\n  \"practical_implications\": [\n    {\n      \"implication\": \"<the consequence>\",\n      \"derived_from\": \"<which commitments>\",\n      \"domain\": \"<policy|practice|research|ethics|etc.>\",\n      \"acknowledged_by_author\": <true|false>\n    }\n  ],\n  \"argumentative_structure\": \"<3-5 paragraphs on the logical architecture of the argument>\"\n}\n\nRULES:\n1. Return ONLY JSON \u2014 no markdown fences, no commentary\n2. Extract 8-20 key ideas organized by centrality\n3. Extract 10-25 commitments \u2014 be thorough, this is the most analytically valuable section\n4. Backings: 5-15 entries, focusing on the most significant warrants\n5. Either/or choices: 3-8 entries, especially implicit binaries the author constructs\n6. Hidden premises: 5-12 entries \u2014 these are the MOST analytically valuable, be very thorough\n7. Practical implications: 4-10 entries, including both acknowledged and unacknowledged ones\n8. Cross-references between commitments should use the exact wording from other entries\n9. The argumentative_structure should map the logical flow, not just list components\n10. Synthesize across ALL passes \u2014 don't privilege the last pass over earlier ones",
+  "applicable_renderer_types": [
+    "accordion"
+  ],
+  "applicable_engines": [
+    "inferential_commitment_mapper"
+  ],
+  "tags": [
+    "genealogy",
+    "profiling",
+    "target",
+    "commitments",
+    "inferential",
+    "extraction",
+    "prose-to-structured"
+  ],
+  "status": "active",
+  "model": "claude-sonnet-4-5-20250929",
+  "model_fallback": "claude-sonnet-4-6",
+  "max_tokens": 20000,
+  "source": "Created for genealogy_tp_inferential_commitments view \u2014 per-engine rich extraction",
+  "domain": "genealogy",
+  "pattern_type": "section_extraction",
+  "data_shape_out": "nested_sections",
+  "compatible_sub_renderers": [
+    "mini_card_list",
+    "key_value_table"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "sub_renderer_key": "prose_block",
+  "sub_renderer_name": "Prose Block",
+  "description": "Renders long-form text as formatted prose paragraphs. No special config needed — just displays the text content of a section.",
+  "category": "atomic",
+  "ideal_data_shapes": ["prose_text"],
+  "config_schema": {"type": "object", "properties": {}},
+  "stance_affinities": {
+    "narrative": 0.95, "summary": 0.8, "evidence": 0.4, "diagnostic": 0.3, "comparison": 0.2, "interactive": 0.2
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["text", "narrative", "prose", "description"]
+}

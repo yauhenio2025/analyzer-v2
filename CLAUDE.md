@@ -51,17 +51,30 @@ analyzer-v2/
 │   ├── views/             # View definitions (rendering layer)
 │   │   ├── schemas.py     # ViewDefinition, DataSourceRef, TransformationSpec
 │   │   ├── registry.py    # ViewRegistry (CRUD + compose_tree)
-│   │   └── definitions/   # 10 JSON files (genealogy views)
+│   │   ├── pattern_schemas.py  # ViewPattern reusable templates
+│   │   ├── pattern_registry.py # PatternRegistry
+│   │   ├── definitions/   # 21 JSON files (genealogy views)
+│   │   └── patterns/      # 6 JSON files (reusable view patterns)
 │   │
 │   ├── renderers/         # Renderer definitions (first-class catalog)
 │   │   ├── schemas.py     # RendererDefinition, RendererSummary, SectionRendererHint
-│   │   ├── registry.py    # RendererRegistry (CRUD + for_stance/for_data_shape/for_app)
-│   │   └── definitions/   # 8 JSON files (accordion, card_grid, prose, table, etc.)
+│   │   ├── registry.py    # RendererRegistry (CRUD + for_stance/for_data_shape/for_app via ConsumerRegistry)
+│   │   └── definitions/   # 9 JSON files (accordion, card_grid, prose, table, etc.)
+│   │
+│   ├── sub_renderers/     # Sub-renderer definitions (atomic UI components)
+│   │   ├── schemas.py     # SubRendererDefinition model
+│   │   ├── registry.py    # SubRendererRegistry (for_parent/for_data_shape)
+│   │   └── definitions/   # 11 JSON files (chip_grid, mini_card_list, etc.)
+│   │
+│   ├── consumers/         # Consumer app capability declarations
+│   │   ├── schemas.py     # ConsumerDefinition model
+│   │   ├── registry.py    # ConsumerRegistry (renderers_for_consumer)
+│   │   └── definitions/   # 3 JSON files (the-critic, visualizer, analyzer-mgmt)
 │   │
 │   ├── orchestrator/      # LLM-powered plan generation (Milestone 1)
 │   │   ├── schemas.py     # WorkflowExecutionPlan, PhaseExecutionSpec
-│   │   ├── catalog.py     # Capability catalog assembly
-│   │   ├── planner.py     # Claude Opus plan generation
+│   │   ├── catalog.py     # Parameterized capability catalog assembly
+│   │   ├── planner.py     # Templated system prompt + Claude plan generation
 │   │   └── plans/         # File-based plan storage (JSON)
 │   │
 │   ├── executor/          # Plan-driven workflow execution (Milestone 2)
@@ -129,13 +142,27 @@ POST /v1/views                         # Create view
 PUT  /v1/views/{key}                   # Update view
 DELETE /v1/views/{key}                 # Delete view
 
+GET  /v1/views/patterns                  # List view pattern summaries
+GET  /v1/views/patterns/{key}            # Full view pattern
+GET  /v1/views/patterns/for-renderer/{type}  # Patterns by renderer
+GET  /v1/views/patterns/for-data-shape/{shape}  # Patterns by data shape
+
 GET  /v1/renderers                       # List all renderers (summary)
 GET  /v1/renderers/{key}                 # Full renderer definition
 GET  /v1/renderers/for-stance/{stance}   # Renderers by stance affinity
-GET  /v1/renderers/for-app/{app}         # Renderers supported by app
+GET  /v1/renderers/for-app/{app}         # Renderers supported by app (via ConsumerRegistry)
 POST /v1/renderers                       # Create renderer
 PUT  /v1/renderers/{key}                 # Update renderer
 DELETE /v1/renderers/{key}               # Delete renderer
+
+GET  /v1/sub-renderers                   # List sub-renderer summaries
+GET  /v1/sub-renderers/{key}             # Full sub-renderer definition
+GET  /v1/sub-renderers/for-parent/{type} # Sub-renderers for a parent renderer
+GET  /v1/sub-renderers/for-data-shape/{shape}  # Sub-renderers by data shape
+
+GET  /v1/consumers                       # List consumer summaries
+GET  /v1/consumers/{key}                 # Full consumer definition
+GET  /v1/consumers/{key}/renderers       # Supported renderer definitions
 
 GET  /v1/operations/stances            # List stances (with ?type=analytical|presentation)
 GET  /v1/operations/stances/{key}      # Get stance

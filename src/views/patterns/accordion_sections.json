@@ -1,0 +1,50 @@
+{
+  "pattern_key": "accordion_sections",
+  "pattern_name": "Accordion with Typed Sections",
+  "description": "Container with N collapsible sections, each rendered by a different sub-renderer. Ideal for multi-faceted analytical output where each facet has a different data shape. The most common pattern for complex analysis results.",
+  "renderer_type": "accordion",
+  "default_renderer_config": {
+    "sections": [
+      {"key": "section_1", "title": "Section 1"},
+      {"key": "section_2", "title": "Section 2"}
+    ],
+    "expand_first": true,
+    "section_renderers": {
+      "section_1": {
+        "renderer_type": "mini_card_list",
+        "config": {
+          "title_field": "name",
+          "description_field": "description"
+        }
+      },
+      "section_2": {
+        "renderer_type": "prose_block",
+        "config": {}
+      }
+    }
+  },
+  "recommended_sub_renderers": [
+    "mini_card_list",
+    "chip_grid",
+    "key_value_table",
+    "prose_block",
+    "comparison_panel",
+    "timeline_strip",
+    "enabling_conditions",
+    "constraining_conditions"
+  ],
+  "ideal_for": [
+    "multi-category output",
+    "nested analysis with heterogeneous sections",
+    "analytical results with both structured and narrative components",
+    "condition-based analysis (enabling/constraining)"
+  ],
+  "data_shape_in": "nested_sections",
+  "instantiation_hints": "1. Define sections array with domain-specific keys and titles. 2. Assign a sub-renderer to each section based on its data shape: use mini_card_list for arrays of objects, chip_grid for tag-like collections, prose_block for narrative text, key_value_table for metadata. 3. Configure each sub-renderer with the correct field names from the engine's output schema. 4. Set expand_first=true for the most important section.",
+  "example_views": [
+    "genealogy_conditions",
+    "genealogy_target_profile"
+  ],
+  "tags": ["container", "accordion", "multi-section", "heterogeneous"],
+  "status": "active"
+}

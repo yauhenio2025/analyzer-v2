@@ -1,0 +1,39 @@
+{
+  "consumer_key": "analyzer-mgmt",
+  "consumer_name": "Analyzer Management",
+  "description": "Management UI for browsing and editing analyzer-v2 definitions. Shows all entity types in a catalog browser.",
+  "consumer_type": "web_app",
+  "supported_renderers": [
+    "accordion",
+    "card_grid",
+    "prose",
+    "table",
+    "tab",
+    "timeline",
+    "evidence_trail",
+    "stat_summary",
+    "raw_json"
+  ],
+  "supported_sub_renderers": [
+    "chip_grid",
+    "mini_card_list",
+    "key_value_table",
+    "prose_block",
+    "stat_row",
+    "comparison_panel",
+    "timeline_strip",
+    "evidence_trail",
+    "enabling_conditions",
+    "constraining_conditions",
+    "nested_sections"
+  ],
+  "pages": [
+    {"page_key": "engines", "description": "Engine definition browser"},
+    {"page_key": "views", "description": "View definition editor"},
+    {"page_key": "renderers", "description": "Renderer catalog"},
+    {"page_key": "consumers", "description": "Consumer capabilities"}
+  ],
+  "api_endpoint": null,
+  "status": "active",
+  "tags": ["management", "admin", "catalog-browser"]
+}

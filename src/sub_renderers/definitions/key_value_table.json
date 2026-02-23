@@ -1,0 +1,20 @@
+{
+  "sub_renderer_key": "key_value_table",
+  "sub_renderer_name": "Key-Value Table",
+  "description": "Renders key-value pairs as a two-column table. Ideal for metadata, properties, summary statistics, and any data that naturally forms label-value pairs.",
+  "category": "atomic",
+  "ideal_data_shapes": ["key_value_pairs", "object_array"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "key_field": {"type": "string", "description": "Field for the key/label column"},
+      "value_field": {"type": "string", "description": "Field for the value column"}
+    }
+  },
+  "stance_affinities": {
+    "diagnostic": 0.9, "summary": 0.8, "evidence": 0.6, "comparison": 0.7, "narrative": 0.1, "interactive": 0.4
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["table", "metadata", "properties", "summary"]
+}

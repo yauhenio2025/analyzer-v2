@@ -26,73 +26,24 @@ logger = logging.getLogger(__name__)
 # Plan storage (file-based for now)
 PLANS_DIR = Path(__file__).parent / "plans"
 
-SYSTEM_PROMPT = """You are a research strategist planning an intellectual genealogy analysis.
+GENERIC_SYSTEM_PROMPT = """You are a research strategist planning an analytical workflow.
 
-You have access to a CAPABILITY CATALOG describing all available analytical engines, chains, stances, and views. Your job is to produce a WorkflowExecutionPlan that adapts the standard 5-phase genealogy workflow to a specific thinker and corpus.
+You have access to a CAPABILITY CATALOG describing all available analytical engines, chains, stances, views, sub-renderers, and view patterns. Your job is to produce a WorkflowExecutionPlan that adapts the workflow to a specific analysis context.
 
 ## Your Task
 
 Given:
 - A thinker's name and intellectual profile
 - A target work (the work being analyzed)
-- Prior works (earlier works to scan for genealogical traces)
+- Prior works (earlier works to scan)
 - An optional research question
 
 Produce a WorkflowExecutionPlan (JSON) that configures:
-1. **Depth per phase** — surface/standard/deep based on what the thinker's corpus demands
+1. **Depth per phase** — surface/standard/deep based on what the corpus demands
 2. **Engine overrides** — per-engine depth and focus dimensions within phases
 3. **Context emphasis** — what to emphasize when threading context between phases
 4. **View recommendations** — which views best present this analysis
 5. **Strategy rationale** — WHY each decision was made
-
-## Decision Guidelines
-
-### Depth Selection
-- Use **deep** for phases where the thinker's intellectual profile demands it:
-  - Deep target profiling when the author has complex conceptual vocabulary
-  - Deep evolution tactics detection when the author is known for reframing/appropriating ideas
-  - Deep conditions analysis when the author's intellectual context is rich
-- Use **standard** for most phases — it's the sweet spot of quality vs. cost
-- Use **surface** only for triage or when the corpus is small/simple
-
-### Engine Focus
-- Not all dimensions need equal attention for every thinker
-- For a Marxist economist like Varoufakis, prioritize: vocabulary_evolution, methodology_evolution, framing_evolution
-- For a philosopher like Benanav, prioritize: conceptual_framework, inferential_commitments, metaphor_evolution
-- For a historian like Slobodian, prioritize: conditions_of_possibility, intellectual context, path dependencies
-
-### View Recommendations
-The VIEWS section of the catalog includes per-view planner guidance with `Planner guidance:` annotations. Follow those hints when selecting views. General rules:
-- Only recommend views with `planner_eligible: true` (views marked [NOT ELIGIBLE] are debug/utility views)
-- Prioritize views with [HAS_TEMPLATE] — these produce structured data for rich rendering
-- Views with `visibility: on_demand` should NOT be primary recommendations
-- Child views (those with a `Parent:` field) are auto-included when their parent is recommended — no need to recommend them separately
-- Read each view's planner guidance carefully and match it to the thinker's profile
-
-### Phase Skipping
-- You CAN recommend skipping phases, but this should be rare
-- Only skip if the corpus clearly doesn't warrant it (e.g., single prior work → simplified scanning)
-
-### Expanded Target Analysis (Phase 1.0) — Supplementary Chains
-Phase 1.0 runs a core 4-engine chain (genealogy_target_profiling). You can ALSO select 1-3 supplementary chains from the catalog to run AFTER the core chain. Their outputs concatenate with the core analysis, creating a richer distilled target profile.
-
-**When to add supplementary chains**:
-- Thinker has a rich argumentative style → add `argument_analysis_chain` (argument_architecture + rhetorical_strategy)
-- Thinker has complex rhetorical patterns → add `rhetorical_analysis_chain`
-- Thinker draws from specific intellectual traditions → add `conceptual_deep_dive_chain`
-- Thinker is known for anomalous claims → add `anomaly_evidence_chain`
-- When in doubt, add 1-2 supplementary chains. The cost is moderate but the downstream benefit is significant.
-
-**When you add supplementary chains**, also set `max_context_chars_override: 150000` on Phase 1.0 so the expanded analysis passes through to downstream phases without being truncated at the default 50K limit.
-
-**Supplementary chains field**: `"supplementary_chains": ["argument_analysis_chain", "rhetorical_analysis_chain"]`
-
-### Document Strategy for Per-Work Phases (1.5, 2.0)
-Per-work phases (1.5 Relationship Classification, 2.0 Prior Work Scanning) now receive the DISTILLED target analysis from Phase 1.0 instead of the raw target text. This means:
-- `requires_full_documents` on Phases 1.5 and 2.0 should be `false` (the distilled analysis is ~100-150K chars, not 500K+)
-- Phase 1.0 should have `requires_full_documents: true` (it processes the raw target text)
-- The per-work phases depend on Phase 1.0 completing first (1.5 now has `depends_on_phases: [1.0]`)
-- Each per-work call sees: ~37K distilled analysis + ~200K prior work text = ~237K total (vs. ~370K before)
 
 ## Output Format
 
@@ -140,6 +91,26 @@ Return ONLY valid JSON matching this exact structure (no markdown fences, no exp
   "estimated_depth_profile": "deep profiling, standard classification, standard scanning, deep synthesis, deep final"
 }
 """
+
+
+def _build_system_prompt(workflow_key: str = None) -> str:
+    """Compose the system prompt from generic rules + workflow-specific planner_strategy.
+
+    If a workflow has a planner_strategy field, it's injected into the system prompt
+    as domain-specific decision guidelines. This allows different workflows to have
+    different planning heuristics without changing code.
+    """
+    parts = [GENERIC_SYSTEM_PROMPT.strip()]
+
+    # Load workflow-specific planner strategy if available
+    if workflow_key:
+        from src.workflows.registry import get_workflow_registry
+        workflow = get_workflow_registry().get(workflow_key)
+        if workflow and workflow.planner_strategy:
+            parts.append("")
+            parts.append(workflow.planner_strategy)
+
+    return "\n".join(parts)
 
 
 def _get_client():
@@ -277,11 +248,13 @@ def generate_plan(request: OrchestratorPlanRequest) -> WorkflowExecutionPlan:
             "LLM service unavailable. Set ANTHROPIC_API_KEY environment variable."
         )
 
-    # Assemble catalog
-    catalog = assemble_full_catalog()
-    catalog_text = catalog_to_text(catalog)
+    # Assemble catalog (parameterized for domain independence)
+    workflow_key = "intellectual_genealogy"  # default; future: from request
+    catalog = assemble_full_catalog(workflow_key=workflow_key)
+    catalog_text = catalog_to_text(catalog, workflow_name=catalog["workflow"][0]["workflow_name"] if catalog.get("workflow") else None)
 
-    # Build prompt
+    # Build prompts
+    system_prompt = _build_system_prompt(workflow_key=workflow_key)
     user_prompt = _build_user_prompt(request, catalog_text)
 
     logger.info(
@@ -307,7 +280,7 @@ def generate_plan(request: OrchestratorPlanRequest) -> WorkflowExecutionPlan:
         response = sync_client.messages.create(
             model=model,
             max_tokens=16000,
-            system=SYSTEM_PROMPT,
+            system=system_prompt,
             messages=[{"role": "user", "content": user_prompt}],
         )
 
@@ -434,6 +407,9 @@ def refine_plan(
                 plan_dict[key] = value
         plan = WorkflowExecutionPlan.model_validate(plan_dict)
 
+    # Build system prompt from workflow strategy
+    system_prompt = _build_system_prompt(workflow_key=plan.workflow_key)
+
     # Build refinement prompt
     refinement_prompt = f"""Here is the current WorkflowExecutionPlan:
 
@@ -461,7 +437,7 @@ Return ONLY the JSON — no markdown fences, no explanation outside the JSON."""
         response = sync_client.messages.create(
             model=model,
             max_tokens=16000,
-            system=SYSTEM_PROMPT,
+            system=system_prompt,
             messages=[{"role": "user", "content": refinement_prompt}],
         )
 

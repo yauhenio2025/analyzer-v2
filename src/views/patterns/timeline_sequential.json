@@ -1,0 +1,27 @@
+{
+  "pattern_key": "timeline_sequential",
+  "pattern_name": "Sequential Timeline",
+  "description": "Chronological or sequential stages rendered as a timeline. Each node shows a label, description, and optional counterfactual. Good for evolution tracking, path dependencies, and any data with inherent temporal ordering.",
+  "renderer_type": "timeline",
+  "default_renderer_config": {
+    "orientation": "vertical",
+    "label_field": "description",
+    "chain_field": "stages"
+  },
+  "recommended_sub_renderers": [
+    "timeline_strip"
+  ],
+  "ideal_for": [
+    "chronological data",
+    "path dependency chains",
+    "evolution stages",
+    "process flows with sequential steps"
+  ],
+  "data_shape_in": "timeline_data",
+  "instantiation_hints": "1. Set orientation to 'vertical' for detailed timelines or 'horizontal' for compact overview. 2. Set label_field to the field containing the node label. 3. Set chain_field to the array of sequential steps. 4. Add counterfactual_field if each node has a 'what if this didn't happen' analysis. 5. Add badge_field for status indicators on nodes.",
+  "example_views": [
+    "genealogy_cop_path_dependencies"
+  ],
+  "tags": ["timeline", "sequential", "chronological", "stages"],
+  "status": "active"
+}

@@ -166,6 +166,14 @@ class WorkflowDefinition(BaseModel):
         description="Schema for the final workflow output",
     )
 
+    # Planner configuration
+    planner_strategy: Optional[str] = Field(
+        default=None,
+        description="Domain-specific planning rules injected into the LLM planner's system prompt. "
+        "Contains decision guidelines, engine focus heuristics, depth selection rules, "
+        "and view recommendation logic specific to this workflow's domain.",
+    )
+
     # Metadata
     estimated_phases: Optional[int] = Field(
         default=None,

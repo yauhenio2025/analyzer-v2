@@ -1,0 +1,22 @@
+{
+  "sub_renderer_key": "mini_card_list",
+  "sub_renderer_name": "Mini Card List",
+  "description": "Renders array of objects as compact cards with title, subtitle, badge, and expandable description. The workhorse sub-renderer for structured lists with per-item detail.",
+  "category": "atomic",
+  "ideal_data_shapes": ["object_array"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "title_field": {"type": "string", "description": "Primary card title field"},
+      "subtitle_field": {"type": "string", "description": "Secondary text below title"},
+      "badge_field": {"type": "string", "description": "Status/category badge"},
+      "description_field": {"type": "string", "description": "Expandable detail content"}
+    }
+  },
+  "stance_affinities": {
+    "evidence": 0.9, "diagnostic": 0.8, "summary": 0.6, "narrative": 0.3, "interactive": 0.7, "comparison": 0.5
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["cards", "lists", "structured", "detail"]
+}

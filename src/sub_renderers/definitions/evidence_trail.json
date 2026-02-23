@@ -1,0 +1,21 @@
+{
+  "sub_renderer_key": "evidence_trail",
+  "sub_renderer_name": "Evidence Trail",
+  "description": "Renders a chain of evidence steps with visual connectors. Each step shows a claim, its source, and the reasoning chain.",
+  "category": "composite",
+  "ideal_data_shapes": ["object_array"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "steps": {"type": "array", "description": "Array of evidence step objects"},
+      "accent_color": {"type": "string", "description": "Color for connectors and highlights"},
+      "border_color": {"type": "string", "description": "Color for step borders"}
+    }
+  },
+  "stance_affinities": {
+    "evidence": 0.95, "diagnostic": 0.7, "narrative": 0.5, "summary": 0.2, "comparison": 0.3, "interactive": 0.6
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["evidence", "chain", "reasoning", "genealogy"]
+}

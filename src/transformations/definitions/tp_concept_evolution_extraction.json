@@ -1,0 +1,95 @@
+{
+  "template_key": "tp_concept_evolution_extraction",
+  "template_name": "Target Profile: Concept Evolution Extraction",
+  "description": "Extracts rich structured data from concept_evolution engine output (~13k words, 2 passes). Produces 6 accordion sections: core concepts, evolution trajectories with stages, definitional variations, semantic clusters, foundational patterns, and dimensional comparisons using Koselleckian conceptual history.",
+  "version": 1,
+  "transformation_type": "llm_extract",
+  "llm_extraction_schema": {
+    "concepts": [
+      {
+        "name": "string (the concept)",
+        "domain": "string (intellectual domain: economic, political, philosophical, etc.)",
+        "current_form": "string (how the concept appears in the target work)",
+        "historical_depth": "enum: deep|moderate|shallow (how far back the genealogy reaches)",
+        "stability": "enum: stable|evolving|contested|fragmented"
+      }
+    ],
+    "evolution_trajectories": [
+      {
+        "concept": "string (which concept this trajectory tracks)",
+        "trajectory_type": "enum: linear_development|punctuated_equilibrium|cyclical|dialectical|branching|convergent",
+        "stages": [
+          {
+            "period": "string (time period or intellectual movement)",
+            "form": "string (how the concept appeared in this stage)",
+            "key_transformation": "string (what changed from the previous stage)",
+            "driver": "string (what caused the change)"
+          }
+        ],
+        "overall_direction": "string (summary of where this concept has been heading)",
+        "what_persists": "string (what remains constant through all changes)",
+        "what_transforms": "string (what keeps changing)"
+      }
+    ],
+    "definitional_variations": [
+      {
+        "concept": "string (the concept)",
+        "variation_a": "string (one definition/usage)",
+        "variation_b": "string (alternative definition/usage)",
+        "context_a": "string (where variation_a appears)",
+        "context_b": "string (where variation_b appears)",
+        "tension_or_complementarity": "string (how these variations relate)"
+      }
+    ],
+    "semantic_clusters": [
+      {
+        "cluster_name": "string (descriptive name)",
+        "concepts": [
+          "string (concepts in this cluster)"
+        ],
+        "temporal_origin": "string (when this cluster formed)",
+        "binding_logic": "string (what holds these concepts together historically)",
+        "contemporary_form": "string (how this cluster appears in the target work)"
+      }
+    ],
+    "foundational_patterns": [
+      {
+        "pattern": "string (the foundational pattern)",
+        "description": "string (2-3 sentences explaining the pattern)",
+        "concepts_exhibiting": [
+          "string (which concepts show this pattern)"
+        ],
+        "significance": "string (why this pattern matters for understanding the work)"
+      }
+    ],
+    "dimensional_comparisons": "string (3-5 paragraphs: Koselleckian dimensional analysis \u2014 how concepts move along axes of temporalization, democratization, ideologization, and politicization; what the dimensional shifts reveal about the author's intellectual project)"
+  },
+  "llm_prompt_template": "You are a precise data extraction assistant specializing in conceptual history (Begriffsgeschichte) and intellectual genealogy. Extract structured JSON from analytical prose about a target work's concept evolution.\n\nThe input contains output from the concept_evolution engine across multiple passes, tracing how key concepts have evolved over time using Koselleckian conceptual history methods.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"concepts\": [\n    {\n      \"name\": \"<concept name>\",\n      \"domain\": \"<intellectual domain>\",\n      \"current_form\": \"<how it appears in the target work>\",\n      \"historical_depth\": \"<deep|moderate|shallow>\",\n      \"stability\": \"<stable|evolving|contested|fragmented>\"\n    }\n  ],\n  \"evolution_trajectories\": [\n    {\n      \"concept\": \"<concept name>\",\n      \"trajectory_type\": \"<linear_development|punctuated_equilibrium|cyclical|dialectical|branching|convergent>\",\n      \"stages\": [\n        {\n          \"period\": \"<time period or movement>\",\n          \"form\": \"<how the concept appeared>\",\n          \"key_transformation\": \"<what changed>\",\n          \"driver\": \"<what caused the change>\"\n        }\n      ],\n      \"overall_direction\": \"<where this concept is heading>\",\n      \"what_persists\": \"<what stays constant>\",\n      \"what_transforms\": \"<what keeps changing>\"\n    }\n  ],\n  \"definitional_variations\": [\n    {\n      \"concept\": \"<concept>\",\n      \"variation_a\": \"<first definition>\",\n      \"variation_b\": \"<second definition>\",\n      \"context_a\": \"<where variation_a appears>\",\n      \"context_b\": \"<where variation_b appears>\",\n      \"tension_or_complementarity\": \"<how they relate>\"\n    }\n  ],\n  \"semantic_clusters\": [\n    {\n      \"cluster_name\": \"<name>\",\n      \"concepts\": [\"<concepts>\"],\n      \"temporal_origin\": \"<when formed>\",\n      \"binding_logic\": \"<historical binding>\",\n      \"contemporary_form\": \"<current form>\"\n    }\n  ],\n  \"foundational_patterns\": [\n    {\n      \"pattern\": \"<pattern name>\",\n      \"description\": \"<2-3 sentences>\",\n      \"concepts_exhibiting\": [\"<concepts>\"],\n      \"significance\": \"<why it matters>\"\n    }\n  ],\n  \"dimensional_comparisons\": \"<3-5 paragraphs of Koselleckian dimensional analysis>\"\n}\n\nRULES:\n1. Return ONLY JSON \u2014 no markdown fences, no commentary\n2. Extract 10-25 concepts with their evolutionary profiles\n3. Evolution trajectories should have 3-6 stages each, chronologically ordered\n4. Definitional variations: 5-15 entries showing how concepts mean different things in different contexts\n5. Semantic clusters: 4-8 clusters showing how concepts group historically\n6. Foundational patterns: 3-8 deep structural patterns (e.g., 'secularization of theological concepts')\n7. Dimensional comparisons should use Koselleckian categories: temporalization, democratization, ideologization, politicization\n8. Preserve the original terminology and historical references faithfully\n9. Synthesize across ALL passes \u2014 don't privilege the last pass over earlier ones",
+  "applicable_renderer_types": [
+    "accordion"
+  ],
+  "applicable_engines": [
+    "concept_evolution"
+  ],
+  "tags": [
+    "genealogy",
+    "profiling",
+    "target",
+    "evolution",
+    "koselleck",
+    "extraction",
+    "prose-to-structured"
+  ],
+  "status": "active",
+  "model": "claude-sonnet-4-5-20250929",
+  "model_fallback": "claude-sonnet-4-6",
+  "max_tokens": 16000,
+  "source": "Created for genealogy_tp_concept_evolution view \u2014 per-engine rich extraction",
+  "domain": "genealogy",
+  "pattern_type": "timeline_extraction",
+  "data_shape_out": "object_array",
+  "compatible_sub_renderers": [
+    "timeline_strip",
+    "comparison_panel"
+  ]
+}

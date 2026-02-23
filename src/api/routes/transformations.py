@@ -193,6 +193,48 @@ async def templates_for_primitive(primitive_key: str):
     ]
 
 
+@router.get(
+    "/for-pattern",
+    response_model=list[TransformationTemplateSummary],
+)
+async def templates_for_pattern(
+    data_shape: Optional[str] = Query(
+        None, description="Output data shape: object_array, nested_sections, etc."
+    ),
+    renderer_type: Optional[str] = Query(
+        None, description="Target renderer type"
+    ),
+    domain: Optional[str] = Query(
+        None, description="Domain: generic, genealogy, rhetoric, policy"
+    ),
+):
+    """Find templates by output data shape and/or target renderer, across domains.
+
+    Enables cross-domain template discovery for the orchestrator.
+    """
+    registry = get_transformation_registry()
+    templates = registry.for_pattern(
+        data_shape=data_shape,
+        renderer_type=renderer_type,
+        domain=domain,
+    )
+    return [
+        TransformationTemplateSummary(
+            template_key=t.template_key,
+            template_name=t.template_name,
+            description=t.description,
+            transformation_type=t.transformation_type,
+            applicable_renderer_types=t.applicable_renderer_types,
+            domain=t.domain,
+            pattern_type=t.pattern_type,
+            data_shape_out=t.data_shape_out,
+            tags=t.tags,
+            status=t.status,
+        )
+        for t in templates
+    ]
+
+
 # ── Detail endpoint ──────────────────────────────────────
 
 
@@ -354,3 +396,162 @@ async def execute_transformation(
         cached=result.cached,
         execution_time_ms=result.execution_time_ms,
     )
+
+
+# ── Generate (LLM-powered template creation) ─────────────
+
+
+class TransformationGenerateRequest(BaseModel):
+    """Request to generate a new transformation template via LLM."""
+
+    engine_key: str = Field(
+        ..., description="Engine whose output to transform"
+    )
+    renderer_type: str = Field(
+        ..., description="Target renderer type for the output"
+    )
+    description: str = Field(
+        default="",
+        description="What the transformation should extract",
+    )
+    domain: str = Field(
+        default="generic",
+        description="Domain for the generated template",
+    )
+    save: bool = Field(
+        default=False,
+        description="Whether to save the generated template to disk",
+    )
+
+
+@router.post("/generate", response_model=TransformationTemplate)
+async def generate_transformation(request: TransformationGenerateRequest):
+    """LLM-powered transformation template generation.
+
+    Given an engine key and target renderer type, generates an extraction
+    prompt + schema that transforms the engine's prose output into
+    structured data suitable for the renderer.
+
+    Set save=true to persist the generated template.
+    """
+    from src.engines.registry import get_engine_registry
+    from src.renderers.registry import get_renderer_registry
+
+    # Validate engine and renderer exist
+    engine_registry = get_engine_registry()
+    engine = engine_registry.get(request.engine_key)
+    if engine is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Engine '{request.engine_key}' not found",
+        )
+
+    renderer_registry = get_renderer_registry()
+    renderer = renderer_registry.get(request.renderer_type)
+    if renderer is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Renderer '{request.renderer_type}' not found",
+        )
+
+    # Get LLM client
+    try:
+        from src.llm.client import get_anthropic_client, GENERATION_MODEL, parse_llm_json_response
+    except ImportError:
+        raise HTTPException(
+            status_code=503,
+            detail="LLM client not available",
+        )
+
+    client = get_anthropic_client()
+    if client is None:
+        raise HTTPException(
+            status_code=503,
+            detail="LLM service unavailable. Set ANTHROPIC_API_KEY.",
+        )
+
+    # Build prompt for template generation
+    engine_info = f"Engine: {engine.engine_key} — {engine.engine_name}"
+    if hasattr(engine, "description") and engine.description:
+        engine_info += f"\nDescription: {engine.description}"
+
+    renderer_info = (
+        f"Renderer: {renderer.renderer_key} — {renderer.renderer_name}\n"
+        f"Category: {renderer.category}\n"
+        f"Ideal data shapes: {', '.join(renderer.ideal_data_shapes)}"
+    )
+    if renderer.config_schema:
+        config_keys = list(renderer.config_schema.get("properties", {}).keys())
+        renderer_info += f"\nConfig keys: {', '.join(config_keys)}"
+
+    prompt = f"""You are a transformation template generator for an analytical visualization system.
+
+Given an engine and a target renderer, generate a TransformationTemplate that extracts
+structured data from the engine's prose output into a format the renderer can display.
+
+{engine_info}
+
+{renderer_info}
+
+Additional context: {request.description}
+Domain: {request.domain}
+
+Generate a complete TransformationTemplate JSON with:
+1. A descriptive template_key (snake_case, e.g. "{request.engine_key}_{request.renderer_type}_extraction")
+2. An extraction schema matching the renderer's expected data shape
+3. An llm_prompt_template that instructs an LLM to extract structured JSON from prose
+4. Appropriate metadata fields
+
+Return ONLY valid JSON (no markdown fences) matching this schema:
+{{
+  "template_key": "string",
+  "template_name": "string",
+  "description": "string",
+  "version": 1,
+  "transformation_type": "llm_extract",
+  "llm_extraction_schema": {{}},
+  "llm_prompt_template": "string",
+  "applicable_renderer_types": ["{request.renderer_type}"],
+  "applicable_engines": ["{request.engine_key}"],
+  "domain": "{request.domain}",
+  "pattern_type": "string (section_extraction|timeline_extraction|card_extraction|table_extraction|narrative_extraction)",
+  "data_shape_out": "string (object_array|nested_sections|timeline_data|key_value_pairs|prose_text)",
+  "compatible_sub_renderers": [],
+  "tags": [],
+  "status": "draft",
+  "model": "claude-haiku-4-5-20251001",
+  "model_fallback": "claude-sonnet-4-6",
+  "max_tokens": 8000
+}}"""
+
+    try:
+        response = client.messages.create(
+            model=GENERATION_MODEL,
+            max_tokens=8192,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        raw_text = response.content[0].text
+        parsed = parse_llm_json_response(raw_text)
+        template = TransformationTemplate.model_validate(parsed)
+
+        if request.save:
+            registry = get_transformation_registry()
+            success = registry.save(template.template_key, template)
+            if not success:
+                raise HTTPException(
+                    status_code=500,
+                    detail=f"Failed to save generated template '{template.template_key}'",
+                )
+            mark_definitions_modified()
+            logger.info(f"Generated and saved transformation template: {template.template_key}")
+        else:
+            logger.info(f"Generated transformation template (not saved): {template.template_key}")
+
+        return template
+
+    except Exception as e:
+        logger.error(f"Transformation generation failed: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Template generation failed: {e}",
+        )

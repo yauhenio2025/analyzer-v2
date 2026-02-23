@@ -92,6 +92,9 @@ class TransformationRegistry:
                 description=t.description,
                 transformation_type=t.transformation_type,
                 applicable_renderer_types=t.applicable_renderer_types,
+                domain=t.domain,
+                pattern_type=t.pattern_type,
+                data_shape_out=t.data_shape_out,
                 tags=t.tags,
                 status=t.status,
             )
@@ -124,6 +127,32 @@ class TransformationRegistry:
             t for t in self._templates.values()
             if renderer_type in t.applicable_renderer_types
         ]
+
+    def for_pattern(
+        self,
+        data_shape: str = None,
+        renderer_type: str = None,
+        domain: str = None,
+    ) -> list[TransformationTemplate]:
+        """Find templates by output data shape, target renderer, and/or domain.
+
+        Enables cross-domain template discovery: find templates that produce
+        a given data shape for a given renderer, regardless of domain.
+        """
+        self.load()
+        results = [t for t in self._templates.values() if t.status != "deprecated"]
+
+        if data_shape:
+            results = [t for t in results if t.data_shape_out == data_shape]
+        if renderer_type:
+            results = [
+                t for t in results
+                if renderer_type in t.applicable_renderer_types
+            ]
+        if domain:
+            results = [t for t in results if t.domain == domain]
+
+        return results
 
     def for_primitive(self, primitive_key: str) -> list[TransformationTemplate]:
         """Get templates that serve a given analytical primitive.

@@ -1,7 +1,7 @@
 {
   "template_key": "target_profile_extraction",
   "template_name": "Target Work Profile Extraction",
-  "description": "Extracts structured profile data from the chain output of genealogy_target_profiling (4-engine chain). Produces three accordion sections: conceptual_framework, semantic_constellation, and inferential_commitments — matching the genealogy_target_profile view's renderer_config.",
+  "description": "Extracts structured profile data from the chain output of genealogy_target_profiling (4-engine chain). Produces three accordion sections: conceptual_framework, semantic_constellation, and inferential_commitments \u2014 matching the genealogy_target_profile view's renderer_config.",
   "version": 1,
   "transformation_type": "llm_extract",
   "llm_extraction_schema": {
@@ -11,8 +11,12 @@
           "name": "string (framework name)",
           "type": "string (e.g. economic, philosophical, sociological, political)",
           "description": "string (2-3 sentences describing the framework)",
-          "components": ["string (key components or building blocks)"],
-          "vocabulary": ["string (distinctive terms introduced by this framework)"],
+          "components": [
+            "string (key components or building blocks)"
+          ],
+          "vocabulary": [
+            "string (distinctive terms introduced by this framework)"
+          ],
           "methodological_signature": "string (how this framework shapes the method of inquiry)"
         }
       ],
@@ -24,13 +28,17 @@
           "term": "string (the concept/term)",
           "centrality": "enum: high|medium|low",
           "definition": "string (how the author defines or uses this term)",
-          "related_terms": ["string (terms that cluster with this concept)"]
+          "related_terms": [
+            "string (terms that cluster with this concept)"
+          ]
         }
       ],
       "concept_clusters": [
         {
           "cluster_name": "string",
-          "terms": ["string"],
+          "terms": [
+            "string"
+          ],
           "binding_logic": "string (what holds this cluster together)"
         }
       ],
@@ -47,16 +55,36 @@
         }
       ],
       "argumentative_structure": "string (summary of how the argument is built)",
-      "hidden_premises": ["string (premises the author relies on but doesn't state)"]
+      "hidden_premises": [
+        "string (premises the author relies on but doesn't state)"
+      ]
     }
   },
-  "llm_prompt_template": "You are a precise data extraction assistant. Extract structured JSON from analytical prose about a target work's intellectual profile.\n\nThe input contains output from multiple engines that profile the target work: conceptual framework extraction, semantic constellation mapping, inferential commitment mapping, and concept evolution tracking.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"conceptual_framework\": {\n    \"frameworks\": [\n      {\n        \"name\": \"<framework name>\",\n        \"type\": \"<economic|philosophical|sociological|political|methodological|interdisciplinary>\",\n        \"description\": \"<2-3 sentences>\",\n        \"components\": [\"<key components>\"],\n        \"vocabulary\": [\"<distinctive terms>\"],\n        \"methodological_signature\": \"<how this framework shapes inquiry>\"\n      }\n    ],\n    \"summary\": \"<2-3 sentence overview of conceptual architecture>\"\n  },\n  \"semantic_constellation\": {\n    \"core_concepts\": [\n      {\n        \"term\": \"<concept>\",\n        \"centrality\": \"<high|medium|low>\",\n        \"definition\": \"<how the author uses this term>\",\n        \"related_terms\": [\"<related terms>\"]\n      }\n    ],\n    \"concept_clusters\": [\n      {\n        \"cluster_name\": \"<name>\",\n        \"terms\": [\"<terms>\"],\n        \"binding_logic\": \"<what holds cluster together>\"\n      }\n    ],\n    \"vocabulary_signature\": \"<what makes this vocabulary distinctive>\"\n  },\n  \"inferential_commitments\": {\n    \"commitments\": [\n      {\n        \"commitment\": \"<the inferential commitment>\",\n        \"type\": \"<ontological|methodological|normative|epistemic|causal>\",\n        \"explicitness\": \"<explicit|implicit|hidden>\",\n        \"evidence\": \"<textual evidence>\",\n        \"implications\": \"<what follows>\"\n      }\n    ],\n    \"argumentative_structure\": \"<how the argument is built>\",\n    \"hidden_premises\": [\"<unstated premises>\"]\n  }\n}\n\nRULES:\n1. Return ONLY JSON — no markdown fences, no commentary\n2. Extract 3-6 frameworks, 8-15 core concepts, 5-10 commitments\n3. Concept clusters should group related terms meaningfully\n4. Hidden premises are the most analytically valuable — be thorough\n5. Preserve analytical depth from the source prose\n6. Use the vocabulary and terminology from the source text faithfully",
-  "applicable_renderer_types": ["accordion"],
-  "applicable_engines": ["concept_evolution"],
-  "tags": ["genealogy", "profiling", "target", "extraction", "prose-to-structured"],
-  "status": "active",
+  "llm_prompt_template": "You are a precise data extraction assistant. Extract structured JSON from analytical prose about a target work's intellectual profile.\n\nThe input contains output from multiple engines that profile the target work: conceptual framework extraction, semantic constellation mapping, inferential commitment mapping, and concept evolution tracking.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"conceptual_framework\": {\n    \"frameworks\": [\n      {\n        \"name\": \"<framework name>\",\n        \"type\": \"<economic|philosophical|sociological|political|methodological|interdisciplinary>\",\n        \"description\": \"<2-3 sentences>\",\n        \"components\": [\"<key components>\"],\n        \"vocabulary\": [\"<distinctive terms>\"],\n        \"methodological_signature\": \"<how this framework shapes inquiry>\"\n      }\n    ],\n    \"summary\": \"<2-3 sentence overview of conceptual architecture>\"\n  },\n  \"semantic_constellation\": {\n    \"core_concepts\": [\n      {\n        \"term\": \"<concept>\",\n        \"centrality\": \"<high|medium|low>\",\n        \"definition\": \"<how the author uses this term>\",\n        \"related_terms\": [\"<related terms>\"]\n      }\n    ],\n    \"concept_clusters\": [\n      {\n        \"cluster_name\": \"<name>\",\n        \"terms\": [\"<terms>\"],\n        \"binding_logic\": \"<what holds cluster together>\"\n      }\n    ],\n    \"vocabulary_signature\": \"<what makes this vocabulary distinctive>\"\n  },\n  \"inferential_commitments\": {\n    \"commitments\": [\n      {\n        \"commitment\": \"<the inferential commitment>\",\n        \"type\": \"<ontological|methodological|normative|epistemic|causal>\",\n        \"explicitness\": \"<explicit|implicit|hidden>\",\n        \"evidence\": \"<textual evidence>\",\n        \"implications\": \"<what follows>\"\n      }\n    ],\n    \"argumentative_structure\": \"<how the argument is built>\",\n    \"hidden_premises\": [\"<unstated premises>\"]\n  }\n}\n\nRULES:\n1. Return ONLY JSON \u2014 no markdown fences, no commentary\n2. Extract 3-6 frameworks, 8-15 core concepts, 5-10 commitments\n3. Concept clusters should group related terms meaningfully\n4. Hidden premises are the most analytically valuable \u2014 be thorough\n5. Preserve analytical depth from the source prose\n6. Use the vocabulary and terminology from the source text faithfully",
+  "applicable_renderer_types": [
+    "accordion"
+  ],
+  "applicable_engines": [
+    "concept_evolution"
+  ],
+  "tags": [
+    "genealogy",
+    "profiling",
+    "target",
+    "extraction",
+    "prose-to-structured"
+  ],
+  "status": "deprecated",
   "model": "claude-sonnet-4-5-20250929",
   "model_fallback": "claude-sonnet-4-6",
   "max_tokens": 12000,
-  "source": "Created for genealogy_target_profile view — chain-backed accordion"
+  "source": "Created for genealogy_target_profile view \u2014 chain-backed accordion",
+  "domain": "genealogy",
+  "pattern_type": "section_extraction",
+  "data_shape_out": "nested_sections",
+  "compatible_sub_renderers": [
+    "mini_card_list",
+    "chip_grid",
+    "key_value_table"
+  ]
 }

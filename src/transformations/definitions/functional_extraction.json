@@ -24,12 +24,28 @@
     "overarching_pattern": "string (2-3 paragraphs)"
   },
   "llm_prompt_template": "You are a precise data extraction assistant. Extract structured JSON from an analytical prose text about how concepts serve argumentative functions.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"functional_analyses\": [\n    {\n      \"idea_id\": \"<idea identifier if mentioned>\",\n      \"idea_name\": \"<name of the concept/idea>\",\n      \"functions_served\": [\n        {\n          \"function_type\": \"<e.g.: foundational_premise, rhetorical_device, analytical_framework, bridging_concept, legitimation_strategy, polemical_weapon>\",\n          \"description\": \"<how this concept serves this function>\",\n          \"evidence\": \"<specific evidence from the analysis>\"\n        }\n      ],\n      \"conditions_of_possibility\": \"<what makes this functional deployment possible>\",\n      \"what_would_be_impossible_without\": \"<what arguments break down without this concept>\",\n      \"psychological_dimension\": \"<psychological/intellectual motivation for this deployment>\"\n    }\n  ],\n  \"overarching_pattern\": \"<2-3 paragraphs synthesizing the overall pattern of how concepts are deployed functionally>\"\n}\n\nRULES:\n1. Return ONLY JSON \u2014 no markdown fences, no commentary\n2. Capture ALL concepts discussed in the analysis\n3. Each concept may serve MULTIPLE functions \u2014 capture all of them\n4. The overarching_pattern should be rich analytical prose, not bullet points",
-  "applicable_renderer_types": ["accordion", "card_grid"],
-  "applicable_engines": ["concept_taxonomy_argumentative_function"],
-  "tags": ["genealogy", "functional", "extraction", "prose-to-structured"],
+  "applicable_renderer_types": [
+    "accordion",
+    "card_grid"
+  ],
+  "applicable_engines": [
+    "concept_taxonomy_argumentative_function"
+  ],
+  "tags": [
+    "genealogy",
+    "functional",
+    "extraction",
+    "prose-to-structured"
+  ],
   "status": "active",
   "model": "claude-haiku-4-5-20251001",
   "model_fallback": "claude-sonnet-4-5-20250929",
   "max_tokens": 8000,
-  "source": "Extracted from the-critic/analyzer/presentation.py _build_functional_extraction_prompt()"
+  "source": "Extracted from the-critic/analyzer/presentation.py _build_functional_extraction_prompt()",
+  "domain": "genealogy",
+  "pattern_type": "card_extraction",
+  "data_shape_out": "object_array",
+  "compatible_sub_renderers": [
+    "mini_card_list"
+  ]
 }

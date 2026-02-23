@@ -124,6 +124,30 @@ class TransformationTemplate(BaseModel):
         default=8000, description="Max tokens for LLM response"
     )
 
+    # Domain classification (for multi-domain independence)
+    domain: str = Field(
+        default="generic",
+        description="Domain this template belongs to: 'generic', 'genealogy', "
+        "'rhetoric', 'policy', 'economics'. Enables cross-domain template discovery.",
+    )
+    pattern_type: Optional[str] = Field(
+        default=None,
+        description="Structural pattern: 'section_extraction', 'timeline_extraction', "
+        "'card_extraction', 'table_extraction', 'narrative_extraction'. "
+        "Used to find templates by output structure regardless of domain.",
+    )
+    data_shape_out: Optional[str] = Field(
+        default=None,
+        description="Output data shape: 'object_array', 'nested_sections', "
+        "'timeline_data', 'key_value_pairs', 'prose_text'. "
+        "Enables matching template output to renderer input.",
+    )
+    compatible_sub_renderers: list[str] = Field(
+        default_factory=list,
+        description="Sub-renderer keys that can consume this template's output. "
+        "Enables orchestrator to chain: engine -> template -> sub-renderer.",
+    )
+
     # Provenance
     source: Optional[str] = Field(
         default=None,
@@ -139,5 +163,8 @@ class TransformationTemplateSummary(BaseModel):
     description: str = ""
     transformation_type: str
     applicable_renderer_types: list[str] = []
+    domain: str = "generic"
+    pattern_type: Optional[str] = None
+    data_shape_out: Optional[str] = None
     tags: list[str] = []
     status: str = "active"

@@ -1,0 +1,26 @@
+{
+  "pattern_key": "prose_narrative",
+  "pattern_name": "Prose Narrative",
+  "description": "Long-form narrative text with optional section anchors and table of contents. For synthesis, portraits, summaries, and any output that is fundamentally a written narrative. The simplest pattern — just renders the prose output directly.",
+  "renderer_type": "prose",
+  "default_renderer_config": {
+    "section_anchors": true,
+    "table_of_contents": true,
+    "highlight_key_findings": true
+  },
+  "recommended_sub_renderers": [],
+  "ideal_for": [
+    "synthesis narratives",
+    "executive summaries",
+    "final reports and portraits",
+    "any analytical output that is primarily prose"
+  ],
+  "data_shape_in": "prose_text",
+  "instantiation_hints": "1. Set presentation_stance to 'narrative' for storytelling or 'summary' for executive briefs. 2. Enable section_anchors and table_of_contents for long documents. 3. Enable highlight_key_findings for reports with key takeaways. 4. This pattern requires minimal configuration — the prose comes directly from the engine.",
+  "example_views": [
+    "genealogy_portrait",
+    "genealogy_cop_synthesis"
+  ],
+  "tags": ["prose", "narrative", "synthesis", "report"],
+  "status": "active"
+}

@@ -1,0 +1,22 @@
+{
+  "consumer_key": "visualizer",
+  "consumer_name": "Visualizer",
+  "description": "Document analysis and visualization tool. MCP server that provides analysis engine access to Claude Code and other LLM interfaces.",
+  "consumer_type": "mcp_server",
+  "supported_renderers": [
+    "prose",
+    "table",
+    "raw_json"
+  ],
+  "supported_sub_renderers": [
+    "prose_block",
+    "key_value_table"
+  ],
+  "pages": [
+    {"page_key": "analysis", "description": "Single-document analysis results"},
+    {"page_key": "collection", "description": "Multi-document collection analysis"}
+  ],
+  "api_endpoint": null,
+  "status": "active",
+  "tags": ["mcp", "document-analysis", "visualization"]
+}

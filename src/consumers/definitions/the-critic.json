@@ -1,0 +1,38 @@
+{
+  "consumer_key": "the-critic",
+  "consumer_name": "The Critic",
+  "description": "Intellectual analysis app with genealogy, influence, and paradigm pages. The primary consumer of analyzer-v2 definitions for deep intellectual genealogy analysis.",
+  "consumer_type": "web_app",
+  "supported_renderers": [
+    "accordion",
+    "card_grid",
+    "prose",
+    "table",
+    "tab",
+    "timeline",
+    "evidence_trail",
+    "stat_summary",
+    "raw_json"
+  ],
+  "supported_sub_renderers": [
+    "chip_grid",
+    "mini_card_list",
+    "key_value_table",
+    "prose_block",
+    "stat_row",
+    "comparison_panel",
+    "timeline_strip",
+    "evidence_trail",
+    "enabling_conditions",
+    "constraining_conditions",
+    "nested_sections"
+  ],
+  "pages": [
+    {"page_key": "genealogy", "description": "Intellectual genealogy analysis with multi-phase workflow results"},
+    {"page_key": "influence", "description": "Influence tracking and anxiety of influence analysis"},
+    {"page_key": "paradigm", "description": "Paradigm analysis through philosophical frameworks"}
+  ],
+  "api_endpoint": "https://the-critic.onrender.com",
+  "status": "active",
+  "tags": ["primary", "genealogy", "intellectual-analysis"]
+}

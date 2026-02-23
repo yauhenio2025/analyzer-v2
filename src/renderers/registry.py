@@ -118,8 +118,29 @@ class RendererRegistry:
         ]
 
     def for_app(self, app: str) -> list[RendererDefinition]:
-        """Get renderers supported by a consumer app."""
+        """Get renderers supported by a consumer app.
+
+        Queries the ConsumerRegistry for the app's supported_renderers list,
+        then returns matching renderer definitions. Falls back to the renderer's
+        own supported_apps field if no consumer definition exists.
+        """
         self.load()
+
+        # Try ConsumerRegistry first
+        try:
+            from src.consumers.registry import get_consumer_registry
+            consumer_registry = get_consumer_registry()
+            consumer = consumer_registry.get(app)
+            if consumer and consumer.supported_renderers:
+                return [
+                    r
+                    for r in self._renderers.values()
+                    if r.renderer_key in consumer.supported_renderers and r.status == "active"
+                ]
+        except Exception:
+            pass  # Fall back to legacy behavior
+
+        # Legacy fallback: check renderer's own supported_apps
         return [
             r
             for r in self._renderers.values()

@@ -1,0 +1,19 @@
+{
+  "sub_renderer_key": "nested_sections",
+  "sub_renderer_name": "Nested Sections",
+  "description": "Meta sub-renderer that contains other sub-renderers recursively. Creates a hierarchical section structure within a container.",
+  "category": "meta",
+  "ideal_data_shapes": ["nested_sections"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "sub_renderers": {"type": "array", "description": "Array of nested sub-renderer specs (recursive)"}
+    }
+  },
+  "stance_affinities": {
+    "diagnostic": 0.7, "evidence": 0.5, "narrative": 0.4, "summary": 0.5, "comparison": 0.3, "interactive": 0.8
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["nested", "recursive", "hierarchical", "meta"]
+}

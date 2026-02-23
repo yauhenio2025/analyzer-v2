@@ -1,0 +1,19 @@
+{
+  "sub_renderer_key": "enabling_conditions",
+  "sub_renderer_name": "Enabling Conditions",
+  "description": "Specialized renderer for conditions-of-possibility analysis. Displays factors that enabled an intellectual development with contextual detail and interconnections.",
+  "category": "specialized",
+  "ideal_data_shapes": ["object_array", "nested_sections"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "section_description": {"type": "string", "description": "Introductory text explaining the conditions"}
+    }
+  },
+  "stance_affinities": {
+    "evidence": 0.8, "diagnostic": 0.7, "narrative": 0.6, "summary": 0.4, "comparison": 0.3, "interactive": 0.5
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["conditions", "enabling", "context", "genealogy"]
+}

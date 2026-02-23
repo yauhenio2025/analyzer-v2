@@ -1,0 +1,27 @@
+{
+  "pattern_key": "card_grid_grouped",
+  "pattern_name": "Grouped Card Grid",
+  "description": "Cards grouped by a category field with per-group headers and expandable detail. Each card shows title, badge, and expandable description. Excellent for typed/categorized analytical items like tactics, strategies, or stakeholder positions.",
+  "renderer_type": "card_grid",
+  "default_renderer_config": {
+    "group_by": "category_field",
+    "columns": 2,
+    "expandable": true,
+    "items_path": "items"
+  },
+  "recommended_sub_renderers": [],
+  "ideal_for": [
+    "categorized items with per-item detail",
+    "typed analytical outputs (tactics, strategies, conditions)",
+    "evidence-backed findings grouped by theme",
+    "any array of objects with a grouping dimension"
+  ],
+  "data_shape_in": "object_array",
+  "instantiation_hints": "1. Set 'items_path' to the JSON path of the array in engine output. 2. Set 'group_by' to the field name used for categorization. 3. Set 'columns' to 1 for detailed cards, 2 for compact cards, 3 for overview. 4. Configure field mappings: title_field, badge_field, description_field. 5. Add 'group_style_map' if you want per-group color coding.",
+  "example_views": [
+    "genealogy_tactics",
+    "genealogy_cop_enabling_conditions"
+  ],
+  "tags": ["cards", "grouped", "categorized", "expandable"],
+  "status": "active"
+}

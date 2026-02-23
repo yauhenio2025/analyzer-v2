@@ -1,0 +1,21 @@
+{
+  "sub_renderer_key": "timeline_strip",
+  "sub_renderer_name": "Timeline Strip",
+  "description": "Renders sequential stages or chronological events as a horizontal or vertical timeline strip. Each node has a label and optional description.",
+  "category": "atomic",
+  "ideal_data_shapes": ["timeline_data", "object_array"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "label_field": {"type": "string", "description": "Field for timeline node label"},
+      "stages_field": {"type": "string", "description": "Array field containing stage objects"},
+      "section_description": {"type": "string", "description": "Introductory text for the timeline"}
+    }
+  },
+  "stance_affinities": {
+    "narrative": 0.8, "evidence": 0.6, "diagnostic": 0.4, "summary": 0.5, "comparison": 0.3, "interactive": 0.7
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["timeline", "chronological", "stages", "evolution"]
+}

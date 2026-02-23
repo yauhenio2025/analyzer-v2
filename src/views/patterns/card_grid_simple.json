@@ -1,0 +1,25 @@
+{
+  "pattern_key": "card_grid_simple",
+  "pattern_name": "Simple Card Grid",
+  "description": "Flat grid of cards without grouping. Each card shows structured data from an array item. Good for homogeneous collections where all items have the same shape and no natural grouping dimension.",
+  "renderer_type": "card_grid",
+  "default_renderer_config": {
+    "columns": 2,
+    "expandable": true,
+    "items_path": "items"
+  },
+  "recommended_sub_renderers": [],
+  "ideal_for": [
+    "homogeneous item collections",
+    "condition lists without natural grouping",
+    "stakeholder maps",
+    "simple evidence collections"
+  ],
+  "data_shape_in": "object_array",
+  "instantiation_hints": "1. Set 'items_path' to the JSON path of the array. 2. Configure field mappings: title_field for card header, badge_field for status/type indicator, description_field for expandable content. 3. Set columns based on card density needs. 4. Unlike card_grid_grouped, do NOT set group_by.",
+  "example_views": [
+    "genealogy_cop_enabling_conditions"
+  ],
+  "tags": ["cards", "flat", "simple", "collection"],
+  "status": "active"
+}
