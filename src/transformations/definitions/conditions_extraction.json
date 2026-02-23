@@ -1,8 +1,8 @@
 {
   "template_key": "conditions_extraction",
   "template_name": "Conditions of Possibility Extraction",
-  "description": "Extracts structured enabling/constraining conditions from prose output of the conditions_of_possibility_analyzer engine. Produces typed condition objects with evidence and counterfactual analysis.",
-  "version": 1,
+  "description": "Extracts structured enabling/constraining conditions, path dependencies, unacknowledged debts, alternative paths, counterfactual analysis, and synthetic judgment from prose output of the conditions_of_possibility_analyzer engine.",
+  "version": 2,
   "transformation_type": "llm_extract",
   "llm_extraction_schema": {
     "enabling_conditions": [
@@ -24,16 +24,43 @@
         "how_navigated": "string"
       }
     ],
+    "path_dependencies": [
+      {
+        "dependency_id": "string (pd_1, pd_2, ...)",
+        "description": "string — name/title of this path dependency chain",
+        "chain": ["string — each step in the causal chain, in chronological order"],
+        "if_absent": "string — what would be different if this dependency didn't exist",
+        "is_acknowledged": "boolean — whether the author acknowledges this dependency"
+      }
+    ],
+    "unacknowledged_debts": [
+      {
+        "debt_id": "string (ud_1, ud_2, ...)",
+        "creditor_work": "string — the work or tradition owed to",
+        "what_is_owed": "string — what the argument takes without acknowledgment",
+        "evidence": "string — textual or analytical evidence for the debt",
+        "possible_reasons": "string — why the author might not acknowledge this"
+      }
+    ],
+    "alternative_paths": [
+      {
+        "alternative_id": "string (ap_1, ap_2, ...)",
+        "branching_point": "string — where the intellectual path could have diverged",
+        "path_not_taken": "string — what the author could have argued instead",
+        "why_not_taken": "string — why this path was not taken",
+        "implications": "string — what would be different if this path were taken"
+      }
+    ],
     "counterfactual_analysis": "string (2-4 paragraphs)",
     "synthetic_judgment": "string (2-4 paragraphs)"
   },
-  "llm_prompt_template": "You are a precise data extraction assistant. Your task is to extract structured JSON from an analytical prose text about \"conditions of possibility\".\n\nExtract the following fields from the analysis text. Be thorough \u2014 capture ALL conditions mentioned, not just the first few.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"enabling_conditions\": [\n    {\n      \"condition_id\": \"ec_1\",\n      \"condition_type\": \"<one of: conceptual_foundation, audience_preparation, authority_establishment, framework_provision, problem_definition, methodological_precedent, intellectual_toolkit, cross_domain_transfer>\",\n      \"description\": \"<1-2 sentence description of this enabling condition>\",\n      \"prior_works_involved\": [\"<title or short reference of works that create this condition>\"],\n      \"how_it_enables\": \"<how this condition makes the current argument possible>\",\n      \"how_managed\": \"<one of: explicitly_acknowledged, implicitly_leveraged, strategically_deployed, taken_for_granted>\",\n      \"evidence\": \"<specific textual or analytical evidence for this condition>\"\n    }\n  ],\n  \"constraining_conditions\": [\n    {\n      \"constraint_id\": \"cc_1\",\n      \"description\": \"<1-2 sentence description of this constraint>\",\n      \"type\": \"<one of: conceptual_commitment, audience_expectation, methodological_lock_in, rhetorical_position, institutional_role>\",\n      \"how_navigated\": \"<how the author deals with this constraint>\"\n    }\n  ],\n  \"counterfactual_analysis\": \"<What would the argument look like without the author's prior work? 2-4 paragraphs>\",\n  \"synthetic_judgment\": \"<Overall assessment of the conditions-of-possibility landscape. 2-4 paragraphs>\"\n}\n\nIMPORTANT RULES:\n1. Return ONLY the JSON object \u2014 no markdown code fences, no commentary\n2. Use sequential IDs: ec_1, ec_2, ... for enabling; cc_1, cc_2, ... for constraining\n3. The condition_type MUST be one of the listed values (use closest match)\n4. If the analysis mentions a condition but doesn't specify all fields, fill in what you can and leave others as brief summaries\n5. Aim for 6-12 enabling conditions and 3-8 constraining conditions\n6. The counterfactual_analysis and synthetic_judgment should be rich paragraphs, not bullet points\n7. Preserve the analytical depth of the original prose \u2014 don't oversimplify",
+  "llm_prompt_template": "You are a precise data extraction assistant. Your task is to extract structured JSON from an analytical prose text about \"conditions of possibility\". The text may span multiple analytical passes.\n\nExtract ALL of the following fields from the analysis text. Be thorough — capture ALL items mentioned, not just the first few. The prose likely contains two passes: Pass 1 covers enabling/constraining conditions, Pass 2 covers path dependencies, unacknowledged debts, and alternative paths.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"enabling_conditions\": [\n    {\n      \"condition_id\": \"ec_1\",\n      \"condition_type\": \"<one of: conceptual_foundation, audience_preparation, authority_establishment, framework_provision, problem_definition, methodological_precedent, intellectual_toolkit, cross_domain_transfer>\",\n      \"description\": \"<1-2 sentence description of this enabling condition>\",\n      \"prior_works_involved\": [\"<title or short reference of works that create this condition>\"],\n      \"how_it_enables\": \"<how this condition makes the current argument possible>\",\n      \"how_managed\": \"<one of: explicitly_acknowledged, implicitly_leveraged, strategically_deployed, taken_for_granted>\",\n      \"evidence\": \"<specific textual or analytical evidence for this condition>\"\n    }\n  ],\n  \"constraining_conditions\": [\n    {\n      \"constraint_id\": \"cc_1\",\n      \"description\": \"<1-2 sentence description of this constraint>\",\n      \"type\": \"<one of: conceptual_commitment, audience_expectation, methodological_lock_in, rhetorical_position, institutional_role>\",\n      \"how_navigated\": \"<how the author deals with this constraint>\"\n    }\n  ],\n  \"path_dependencies\": [\n    {\n      \"dependency_id\": \"pd_1\",\n      \"description\": \"<name/title of this path dependency chain>\",\n      \"chain\": [\"<step 1 in the causal chain>\", \"<step 2>\", \"<step 3>\"],\n      \"if_absent\": \"<what would be different if this dependency didn't exist>\",\n      \"is_acknowledged\": false\n    }\n  ],\n  \"unacknowledged_debts\": [\n    {\n      \"debt_id\": \"ud_1\",\n      \"creditor_work\": \"<the work or intellectual tradition owed to>\",\n      \"what_is_owed\": \"<what the argument takes without acknowledgment>\",\n      \"evidence\": \"<textual or analytical evidence for the debt>\",\n      \"possible_reasons\": \"<why the author might not acknowledge this>\"\n    }\n  ],\n  \"alternative_paths\": [\n    {\n      \"alternative_id\": \"ap_1\",\n      \"branching_point\": \"<where the intellectual path could have diverged>\",\n      \"path_not_taken\": \"<what the author could have argued instead>\",\n      \"why_not_taken\": \"<why this path was not taken>\",\n      \"implications\": \"<what would be different if this path were taken>\"\n    }\n  ],\n  \"counterfactual_analysis\": \"<What would the argument look like without the author's prior work? 2-4 paragraphs>\",\n  \"synthetic_judgment\": \"<Overall assessment of the conditions-of-possibility landscape. 2-4 paragraphs>\"\n}\n\nIMPORTANT RULES:\n1. Return ONLY the JSON object — no markdown code fences, no commentary\n2. Use sequential IDs: ec_1, ec_2, ... for enabling; cc_1, cc_2, ... for constraining; pd_1, pd_2, ... for path dependencies; ud_1, ud_2, ... for debts; ap_1, ap_2, ... for alternative paths\n3. The condition_type MUST be one of the listed enum values (use closest match)\n4. If the analysis mentions an item but doesn't specify all fields, fill in what you can and leave others as brief summaries\n5. Aim for 6-12 enabling conditions, 3-8 constraining conditions, 3-6 path dependencies, 2-5 unacknowledged debts, and 2-5 alternative paths\n6. The counterfactual_analysis and synthetic_judgment should be rich paragraphs, not bullet points\n7. Preserve the analytical depth of the original prose — don't oversimplify\n8. Path dependency chains should list steps in chronological order\n9. For is_acknowledged in path_dependencies, use true/false based on whether the author explicitly acknowledges the dependency",
   "applicable_renderer_types": ["accordion", "card_grid", "prose"],
   "applicable_engines": ["conditions_of_possibility_analyzer"],
   "tags": ["genealogy", "conditions", "extraction", "prose-to-structured"],
   "status": "active",
   "model": "claude-haiku-4-5-20251001",
   "model_fallback": "claude-sonnet-4-5-20250929",
-  "max_tokens": 8000,
-  "source": "Extracted from the-critic/analyzer/presentation.py _build_conditions_extraction_prompt()"
+  "max_tokens": 16000,
+  "source": "Extended from the-critic/analyzer/presentation.py to cover all 7 engine output dimensions"
 }

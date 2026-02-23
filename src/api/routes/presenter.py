@@ -60,6 +60,7 @@ async def prepare_presentation(request: PrepareRequest):
         result = await async_prepare_presentation(
             job_id=request.job_id,
             view_keys=request.view_keys,
+            force=request.force,
         )
         return result.model_dump()
     except ValueError as e:
@@ -162,7 +163,10 @@ async def compose_presentation(request: ComposeRequest):
 
         # Step 2: Prepare transformations (async — safe in FastAPI context)
         try:
-            bridge_result = await async_prepare_presentation(job_id=request.job_id)
+            bridge_result = await async_prepare_presentation(
+                job_id=request.job_id,
+                force=request.force,
+            )
             logger.info(
                 f"Presentation prep complete: {bridge_result.tasks_completed} transformed, "
                 f"{bridge_result.cached_results} cached, {bridge_result.tasks_skipped} skipped"

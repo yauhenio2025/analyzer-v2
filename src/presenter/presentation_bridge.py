@@ -41,13 +41,15 @@ logger = logging.getLogger(__name__)
 async def async_prepare_presentation(
     job_id: str,
     view_keys: Optional[list[str]] = None,
+    force: bool = False,
 ) -> PresentationBridgeResult:
     """Async version — safe to call from FastAPI async routes.
 
     Awaits the async TransformationExecutor.execute() directly.
+    When force=True, ignores presentation_cache and re-runs all transformations.
     """
     tasks, skipped, recommended = _build_transformation_tasks(job_id, view_keys)
-    results, cached_count, completed_count, failed_count = await _execute_tasks_async(job_id, tasks)
+    results, cached_count, completed_count, failed_count = await _execute_tasks_async(job_id, tasks, force=force)
 
     return PresentationBridgeResult(
         job_id=job_id,
@@ -63,14 +65,16 @@ async def async_prepare_presentation(
 def prepare_presentation(
     job_id: str,
     view_keys: Optional[list[str]] = None,
+    force: bool = False,
 ) -> PresentationBridgeResult:
     """Sync version — safe to call from background threads (workflow_runner).
 
     Creates its own event loop to run the async executor.
     Do NOT call from async context (use async_prepare_presentation instead).
+    When force=True, ignores presentation_cache and re-runs all transformations.
     """
     tasks, skipped, recommended = _build_transformation_tasks(job_id, view_keys)
-    results, cached_count, completed_count, failed_count = _execute_tasks_sync(job_id, tasks)
+    results, cached_count, completed_count, failed_count = _execute_tasks_sync(job_id, tasks, force=force)
 
     return PresentationBridgeResult(
         job_id=job_id,
@@ -209,6 +213,25 @@ def _build_transformation_tasks(
                 )
                 continue
             latest = max(outputs, key=lambda o: o.get("pass_number", 0))
+
+            # For single-engine views with multiple passes, concatenate all
+            # passes into content_override so the LLM sees all the prose
+            content_override = None
+            if engine_key and not chain_key:
+                sorted_outputs = sorted(outputs, key=lambda o: o.get("pass_number", 0))
+                if len(sorted_outputs) > 1:
+                    prose_parts = []
+                    for o in sorted_outputs:
+                        content = o.get("content", "")
+                        if content:
+                            prose_parts.append(f"## [Pass {o.get('pass_number', 0)}]\n\n{content}")
+                    if prose_parts:
+                        content_override = "\n\n---\n\n".join(prose_parts)
+                        logger.info(
+                            f"View {rec['view_key']}: concatenated {len(sorted_outputs)} passes "
+                            f"({len(content_override)} chars) for {engine_key}"
+                        )
+
             tasks.append(TransformationTask(
                 view_key=rec["view_key"],
                 output_id=latest["id"],
@@ -216,6 +239,7 @@ def _build_transformation_tasks(
                 engine_key=engine_key or chain_key or "",
                 renderer_type=renderer_type,
                 section=template.template_key,
+                content_override=content_override,
             ))
 
     return tasks, skipped, recommended
@@ -322,8 +346,12 @@ def _save_and_report(
 async def _execute_tasks_async(
     job_id: str,
     tasks: list[TransformationTask],
+    force: bool = False,
 ) -> tuple[list[TransformationTaskResult], int, int, int]:
-    """Execute transformation tasks using async await (for FastAPI context)."""
+    """Execute transformation tasks using async await (for FastAPI context).
+
+    When force=True, skips presentation_cache and re-runs all transformations.
+    """
     results = []
     cached_count = 0
     completed_count = 0
@@ -347,25 +375,33 @@ async def _execute_tasks_async(
             failed_count += 1
             continue
 
-        content = output_row["content"]
+        # Use content_override (multi-pass concatenation) if available,
+        # otherwise fall back to single output row content
+        content = task.content_override if task.content_override else output_row["content"]
 
-        cached = load_presentation_cache(
-            output_id=task.output_id,
-            section=task.section,
-            source_content=content,
-        )
-        if cached is not None:
-            results.append(TransformationTaskResult(
-                view_key=task.view_key,
+        # Check cache (skip when force=True)
+        if not force:
+            # For cache check: skip freshness check when using content_override
+            # (hash won't match single-row content)
+            cached = load_presentation_cache(
                 output_id=task.output_id,
-                template_key=task.template_key,
                 section=task.section,
-                success=True,
-                cached=True,
-            ))
-            cached_count += 1
-            completed_count += 1
-            continue
+                source_content=None if task.content_override else content,
+            )
+            if cached is not None:
+                results.append(TransformationTaskResult(
+                    view_key=task.view_key,
+                    output_id=task.output_id,
+                    template_key=task.template_key,
+                    section=task.section,
+                    success=True,
+                    cached=True,
+                ))
+                cached_count += 1
+                completed_count += 1
+                continue
+        else:
+            logger.info(f"Force mode: skipping cache for {task.view_key}/{task.section}")
 
         template = transform_registry_obj.get(task.template_key)
         if template is None:
@@ -406,8 +442,12 @@ async def _execute_tasks_async(
 def _execute_tasks_sync(
     job_id: str,
     tasks: list[TransformationTask],
+    force: bool = False,
 ) -> tuple[list[TransformationTaskResult], int, int, int]:
-    """Execute transformation tasks synchronously (for background threads)."""
+    """Execute transformation tasks synchronously (for background threads).
+
+    When force=True, skips presentation_cache and re-runs all transformations.
+    """
     results = []
     cached_count = 0
     completed_count = 0
@@ -430,25 +470,31 @@ def _execute_tasks_sync(
             failed_count += 1
             continue
 
-        content = output_row["content"]
+        # Use content_override (multi-pass concatenation) if available
+        content = task.content_override if task.content_override else output_row["content"]
 
-        cached = load_presentation_cache(
-            output_id=task.output_id,
-            section=task.section,
-            source_content=content,
-        )
-        if cached is not None:
-            results.append(TransformationTaskResult(
-                view_key=task.view_key,
+        # Check cache (skip when force=True)
+        if not force:
+            # Skip freshness check when using content_override
+            cached = load_presentation_cache(
                 output_id=task.output_id,
-                template_key=task.template_key,
                 section=task.section,
-                success=True,
-                cached=True,
-            ))
-            cached_count += 1
-            completed_count += 1
-            continue
+                source_content=None if task.content_override else content,
+            )
+            if cached is not None:
+                results.append(TransformationTaskResult(
+                    view_key=task.view_key,
+                    output_id=task.output_id,
+                    template_key=task.template_key,
+                    section=task.section,
+                    success=True,
+                    cached=True,
+                ))
+                cached_count += 1
+                completed_count += 1
+                continue
+        else:
+            logger.info(f"Force mode: skipping cache for {task.view_key}/{task.section}")
 
         template = transform_registry_obj.get(task.template_key)
         if template is None:

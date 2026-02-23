@@ -76,6 +76,11 @@ class TransformationTask(BaseModel):
         default="",
         description="Section label for presentation_cache",
     )
+    content_override: Optional[str] = Field(
+        default=None,
+        description="When set, use this content for transformation instead of loading "
+        "from the single output_id row. Used for multi-pass concatenated content.",
+    )
 
 
 class TransformationTaskResult(BaseModel):
@@ -208,6 +213,10 @@ class PrepareRequest(BaseModel):
         default=None,
         description="Specific views to prepare. None = all recommended views.",
     )
+    force: bool = Field(
+        default=False,
+        description="Force re-extraction, ignoring presentation_cache.",
+    )
 
 
 class ComposeRequest(BaseModel):
@@ -218,6 +227,10 @@ class ComposeRequest(BaseModel):
     skip_refinement: bool = Field(
         default=False,
         description="Skip LLM view refinement (use plan recommendations as-is)",
+    )
+    force: bool = Field(
+        default=False,
+        description="Force re-extraction, ignoring presentation_cache.",
     )
 
 
