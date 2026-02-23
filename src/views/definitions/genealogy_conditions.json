@@ -2,7 +2,7 @@
   "view_key": "genealogy_conditions",
   "view_name": "Conditions of Possibility",
   "description": "Enabling/constraining conditions, path dependencies, and counterfactuals. Rich Foucauldian analysis of what made the author's intellectual trajectory possible and what alternatives were foreclosed.",
-  "version": 2,
+  "version": 3,
   "target_app": "the-critic",
   "target_page": "genealogy",
   "target_section": "results",
@@ -11,6 +11,9 @@
     "sections": [
       {"key": "enabling_conditions", "title": "Enabling Conditions"},
       {"key": "constraining_conditions", "title": "Constraining Conditions"},
+      {"key": "path_dependencies", "title": "Path Dependencies"},
+      {"key": "unacknowledged_debts", "title": "Unacknowledged Debts"},
+      {"key": "alternative_paths", "title": "Alternative Paths"},
       {"key": "counterfactual_analysis", "title": "Counterfactual Analysis"},
       {"key": "synthetic_judgment", "title": "Synthetic Judgment"}
     ],
@@ -27,6 +30,32 @@
         "renderer_type": "constraining_conditions",
         "config": {
           "section_description": "How prior work limits or constrains the current argument"
+        }
+      },
+      "path_dependencies": {
+        "renderer_type": "timeline_strip",
+        "config": {
+          "label_field": "description",
+          "stages_field": "chain",
+          "section_description": "Causal chains of path-dependent reasoning — how positions from earlier works become premises for later arguments"
+        }
+      },
+      "unacknowledged_debts": {
+        "renderer_type": "mini_card_list",
+        "config": {
+          "title_field": "what_is_owed",
+          "subtitle_field": "creditor_work",
+          "description_field": "evidence",
+          "section_description": "Intellectual debts the author owes to prior works without acknowledgment"
+        }
+      },
+      "alternative_paths": {
+        "renderer_type": "mini_card_list",
+        "config": {
+          "title_field": "path_not_taken",
+          "subtitle_field": "branching_point",
+          "description_field": "implications",
+          "section_description": "Roads not taken — where the intellectual path could have diverged"
         }
       },
       "counterfactual_analysis": {
