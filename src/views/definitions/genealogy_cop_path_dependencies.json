@@ -1,0 +1,39 @@
+{
+  "view_key": "genealogy_cop_path_dependencies",
+  "view_name": "Path Dependencies",
+  "description": "Causal chains of path-dependent reasoning — how positions established in earlier works become premises for later arguments. Each dependency shows the chain sequence and what the argument would look like if that path hadn't been taken.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "genealogy",
+  "target_section": "results",
+  "renderer_type": "timeline",
+  "renderer_config": {
+    "orientation": "vertical",
+    "label_field": "description",
+    "chain_field": "chain",
+    "counterfactual_field": "if_absent",
+    "badge_field": "is_acknowledged"
+  },
+  "data_source": {
+    "workflow_key": "intellectual_genealogy",
+    "phase_number": 3.0,
+    "engine_key": "conditions_of_possibility_analyzer",
+    "result_path": "path_dependencies",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "narrative",
+  "position": 4.5,
+  "parent_view_key": "genealogy_conditions",
+  "tab_count_field": null,
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "planner_hint": "Sub-view of Conditions of Possibility. Shows causal chains of path-dependent reasoning with counterfactual what-ifs.",
+  "planner_eligible": false,
+  "status": "active",
+  "tags": ["genealogy", "conditions", "path-dependence", "foucauldian", "nested"],
+  "source_project": "critic"
+}

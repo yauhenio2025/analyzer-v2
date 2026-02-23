@@ -148,7 +148,7 @@
 - **Entry Points**:
   - `src/views/schemas.py:1-195` - Pydantic models: ViewDefinition, DataSourceRef, TransformationSpec, ViewSummary, ComposedView, ComposedPageResponse
   - `src/views/registry.py:1-195` - ViewRegistry: load, get, list_summaries (with app/page filters), compose_tree, for_workflow, save, delete, reload
-  - `src/views/definitions/*.json` - 18 view definition JSON files
+  - `src/views/definitions/*.json` - 21 view definition JSON files
   - `src/api/routes/views.py:1-165` - Full REST API with compose endpoint
   - `src/api/main.py:16` - Router registration and lifespan loading
 - **Schema**:
@@ -157,24 +157,27 @@
   - `TransformationSpec` — type (none/schema_map/llm_extract/llm_summarize/aggregate), field_mapping, llm_extraction_schema, llm_prompt_template, stance_key override
   - `planner_hint` — Free-text guidance for the LLM planner about when/how to recommend this view
   - `planner_eligible` — Boolean flag (default true) controlling whether the planner considers this view
-- **Genealogy Views** (18 total):
+- **Genealogy Views** (21 total):
   - **Top-level views**:
     - `genealogy_relationship_landscape` (card_grid, diagnostic) — Pass 1.5 relationship classifications
     - `genealogy_target_profile` (accordion, diagnostic) — Pass 1 target profiling chain, container for 4 per-engine views
     - `genealogy_idea_evolution` (tab, comparison) — Pass 1+2+3 idea evolution traces
     - `genealogy_tactics` (card_grid, evidence) — Pass 3 evolution tactics
-    - `genealogy_conditions` (accordion, narrative) — Pass 3 conditions of possibility, container for 4 sub-component views
+    - `genealogy_conditions` (accordion, narrative) — Pass 3 conditions of possibility, container for 7 sub-component views
     - `genealogy_portrait` (prose, narrative) — Pass 4 final synthesis
   - **Target Work Profile children** (4, per-engine):
     - `genealogy_tp_conceptual_framework` (accordion, 7 sections) — frameworks, vocabulary maps, metaphors, cross-domain transfers
     - `genealogy_tp_semantic_constellation` (accordion, 6 sections) — core concepts, clusters, load-bearing terms, tensions
     - `genealogy_tp_inferential_commitments` (accordion, 7 sections) — ideas, commitments, backings, hidden premises
     - `genealogy_tp_concept_evolution` (accordion, 6 sections) — concepts, trajectories, definitional variations, Koselleck
-  - **Conditions of Possibility children** (4, per-section):
+  - **Conditions of Possibility children** (7, all engine output sections):
     - `genealogy_cop_enabling_conditions` (card_grid, evidence) — typed condition cards with essentiality and evidence
     - `genealogy_cop_constraining_conditions` (card_grid, evidence) — constraint cards with binding force ratings
     - `genealogy_cop_counterfactual` (prose, narrative) — counterfactual analysis of path-independence
     - `genealogy_cop_synthesis` (prose, narrative) — evaluative judgment on path-dependence
+    - `genealogy_cop_path_dependencies` (timeline, narrative) — causal chains of path-dependent reasoning
+    - `genealogy_cop_unacknowledged_debts` (card_grid, evidence) — intellectual debts not acknowledged by author
+    - `genealogy_cop_alternative_paths` (card_grid, narrative) — branching points and roads not taken
   - **Other nested children**:
     - `genealogy_per_work_scan` (card, comparison) — nested under idea_evolution, Pass 2 per-work results
     - `genealogy_author_profile` (stat_summary, summary) — nested under portrait, Pass 4 extracted
