@@ -242,6 +242,7 @@ class StyleOverrides(BaseModel):
     prose: Optional[dict[str, str]] = None
     accent_color: Optional[str] = None
     view_wrapper: Optional[dict[str, str]] = None
+    items_container: Optional[dict[str, str]] = None
 
 
 class PolishedViewPayload(BaseModel):
