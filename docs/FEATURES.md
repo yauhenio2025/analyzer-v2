@@ -139,7 +139,9 @@
   - `the-critic/webapp/src/components/renderers/AccordionRenderer.tsx` - Reads config._style_overrides, applies to section headers/content, threads down to sub-renderers
   - `the-critic/webapp/src/components/renderers/ConditionCards.tsx` - Reads config._style_overrides, applies to cards, chips, badges, prose
 - **Style Override Injection Points**: section_header, section_content, card, chip, badge, timeline_node, prose, accent_color, view_wrapper
-- **Added**: 2026-02-23
+- **Tested**: 2026-02-23 via Playwright. End-to-end on Conditions of Possibility (accordion renderer): BEFORE 19 styled elements (817 chars), AFTER 64 styled elements (17,218 chars) -- +45 elements, +16,401 chars of inline CSS from polish. Visual transformation confirmed: plain accordion headers become publication-quality layout with Georgia serif headings, Franklin Gothic body, red left border accents, colored category badges. Reset button cleanly reverts all polish styles. Caching verified (0ms execution on repeat). Style schools observed: explanatory_narrative, humanist_craft. CardGridRenderer/ProseRenderer/TabRenderer do NOT consume style_overrides (feature limited to AccordionRenderer + ConditionCards).
+- **Known Issues**: Render free tier causes 40-50s latency even for cached responses (0ms execution, all time is HTTP roundtrip + cold start). Accordion sections collapse on re-render after polish (user must re-expand). Style overrides only applied by 2 of 9 renderers.
+- **Added**: 2026-02-23 | **Modified**: 2026-02-23
 
 ### All-in-One Analysis Pipeline (Milestone 4A)
 - **Status**: Active (Milestone 4A complete)
