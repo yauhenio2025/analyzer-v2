@@ -363,9 +363,17 @@ def _load_aggregated_data(
                 prose_parts.append(f"## [{eng}]\n\n{content}")
         raw_prose = "\n\n---\n\n".join(prose_parts) if prose_parts else ""
     else:
-        # Single engine: use latest output
-        latest = max(outputs, key=lambda o: o.get("pass_number", 0))
-        raw_prose = latest.get("content", "")
+        # Single engine: concatenate ALL passes if multiple exist
+        sorted_outputs = sorted(outputs, key=lambda o: o.get("pass_number", 0))
+        if len(sorted_outputs) > 1:
+            prose_parts = []
+            for o in sorted_outputs:
+                content = o.get("content", "")
+                if content:
+                    prose_parts.append(f"## [Pass {o.get('pass_number', 0)}]\n\n{content}")
+            raw_prose = "\n\n---\n\n".join(prose_parts) if prose_parts else ""
+        else:
+            raw_prose = sorted_outputs[0].get("content", "") if sorted_outputs else ""
 
     # Get latest output for structured data lookup
     latest = max(outputs, key=lambda o: o.get("pass_number", 0))
@@ -382,16 +390,26 @@ def _load_aggregated_data(
     elif chain_key:
         search_engine_keys = _resolve_chain_engine_keys(chain_key)
 
+    # For multi-pass single-engine views, the bridge caches with
+    # content_override (concatenated passes) but skips freshness check.
+    # We must also skip freshness here since raw_prose is the concatenation
+    # but the cache was saved without a source hash.
+    is_multi_pass_single_engine = (
+        engine_key and not chain_key
+        and len(outputs) > 1
+    )
+
     for ek in search_engine_keys:
         templates = transform_registry.for_engine(ek)
         for t in templates:
-            # For chain-backed views, skip freshness check: the bridge caches
-            # using the single engine output, but raw_prose here is the
-            # concatenation of ALL chain outputs — hash will never match.
+            # Skip freshness check for chain-backed views and multi-pass
+            # single-engine views: the bridge caches using content_override
+            # with no source hash, so raw_prose hash will never match.
+            skip_freshness = (chain_key and not engine_key) or is_multi_pass_single_engine
             cached = load_presentation_cache(
                 output_id=latest["id"],
                 section=t.template_key,
-                source_content=None if (chain_key and not engine_key) else raw_prose,
+                source_content=None if skip_freshness else raw_prose,
             )
             if cached is not None:
                 structured_data = cached
