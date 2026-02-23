@@ -327,6 +327,32 @@ def assemble_operationalization_summary() -> list[dict[str, Any]]:
     return entries
 
 
+def assemble_transformation_catalog() -> list[dict[str, Any]]:
+    """Assemble transformation template summaries for planner awareness.
+
+    Lets the planner know which engines already have curated templates
+    vs which would need dynamic generation.
+    """
+    from src.transformations.registry import get_transformation_registry
+
+    registry = get_transformation_registry()
+    entries = []
+    for t in registry.list_all():
+        if t.status == "deprecated":
+            continue
+        entries.append({
+            "template_key": t.template_key,
+            "description": t.description[:150] if t.description else "",
+            "applicable_engines": t.applicable_engines,
+            "applicable_renderers": t.applicable_renderer_types,
+            "pattern_type": t.pattern_type,
+            "data_shape_out": t.data_shape_out,
+            "domain": t.domain,
+            "generation_mode": t.generation_mode,
+        })
+    return entries
+
+
 def assemble_full_catalog(
     app: str = None,
     page: str = None,
@@ -345,6 +371,7 @@ def assemble_full_catalog(
         "views": assemble_view_catalog(app=app, page=page, workflow_key=workflow_key),
         "sub_renderers": assemble_sub_renderer_catalog(),
         "view_patterns": assemble_view_pattern_catalog(),
+        "transformation_templates": assemble_transformation_catalog(),
         "operationalizations": assemble_operationalization_summary(),
         "depth_levels_explanation": {
             "surface": "Quick overview, 1 pass per engine, ~15 LLM calls total. Good for initial scoping.",
@@ -361,6 +388,7 @@ def assemble_full_catalog(
         "views": len(catalog["views"]),
         "sub_renderers": len(catalog["sub_renderers"]),
         "view_patterns": len(catalog["view_patterns"]),
+        "transformation_templates": len(catalog["transformation_templates"]),
         "operationalizations": len(catalog["operationalizations"]),
     }
 
@@ -516,6 +544,22 @@ def catalog_to_text(catalog: dict[str, Any], workflow_name: str = None) -> str:
             lines.append(f"- {sr.get('description', '')[:200]}")
             lines.append(f"- Category: {sr.get('category', '?')} | Parents: {parents} | Data shapes: {shapes}")
             lines.append("")
+
+    # Transformation templates
+    templates = catalog.get("transformation_templates", [])
+    if templates:
+        lines.append(f"## TRANSFORMATION TEMPLATES ({len(templates)} total)")
+        lines.append("")
+        lines.append("These templates extract structured JSON from engine prose output.")
+        lines.append("Engines without curated templates can use dynamic generation via")
+        lines.append("POST /v1/transformations/generate (engine_key + renderer_type).")
+        lines.append("")
+        for t in templates:
+            engines = ", ".join(t.get("applicable_engines", []))
+            renderers = ", ".join(t.get("applicable_renderers", []))
+            mode = t.get("generation_mode", "curated")
+            lines.append(f"- `{t['template_key']}` [{mode}]: engines={engines} | renderers={renderers} | shape={t.get('data_shape_out', '?')}")
+        lines.append("")
 
     # View patterns
     patterns = catalog.get("view_patterns", [])

@@ -97,6 +97,7 @@ class TransformationRegistry:
                 data_shape_out=t.data_shape_out,
                 tags=t.tags,
                 status=t.status,
+                generation_mode=t.generation_mode,
             )
             for t in sorted(templates, key=lambda t: t.template_key)
         ]

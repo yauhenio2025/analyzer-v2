@@ -87,6 +87,7 @@ Return ONLY valid JSON matching this exact structure (no markdown fences, no exp
       "rationale": "The synthesis narrative is essential for understanding..."
     }
   ],
+  "note_on_views": "Views and transformation templates can be generated dynamically for any engine/renderer combination via POST /v1/transformations/generate and POST /v1/views/generate. Don't limit recommendations to engines with existing templates — new templates can be generated at presentation time.",
   "estimated_llm_calls": 30,
   "estimated_depth_profile": "deep profiling, standard classification, standard scanning, deep synthesis, deep final"
 }

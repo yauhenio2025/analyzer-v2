@@ -20,7 +20,7 @@
   - `PhaseExecutionSpec` — phase_number, depth, skip, engine_overrides (dict of EngineExecutionSpec), context_emphasis, rationale, model_hint, requires_full_documents, per_work_overrides, supplementary_chains, max_context_chars_override
   - `EngineExecutionSpec` — engine_key, depth, focus_dimensions, focus_capabilities, rationale
   - `ViewRecommendation` — view_key, priority (primary/secondary/optional), rationale
-- **Capability Catalog**: Assembled from 11 capability engines, 23 chains, 13 stances, 7 workflows, 21 views, 11 sub-renderers, 6 view patterns, 11 operationalizations. Parameterized by app/page/workflow_key. System prompt composed from generic planning rules + workflow-specific planner_strategy field. Views section enriched with planner_hint, planner_eligible, has_transformation_template tags.
+- **Capability Catalog**: Assembled from 11 capability engines, 23 chains, 13 stances, 7 workflows, 21 views, 11 sub-renderers, 6 view patterns, 16+ transformation templates, 11 operationalizations. Parameterized by app/page/workflow_key. System prompt composed from generic planning rules + workflow-specific planner_strategy field. Views section enriched with planner_hint, planner_eligible, has_transformation_template tags. Transformation templates section shows template_key, applicable_engines, applicable_renderers, domain, generation_mode. Planner prompt notes dynamic generation capability.
 - **API Endpoints**:
   - `GET /v1/orchestrator/capability-catalog` - Full capability catalog (?format=text for markdown)
   - `POST /v1/orchestrator/plan` - Generate new plan (Claude Opus, ~20s)
@@ -144,12 +144,13 @@
 
 ### View Definitions
 - **Status**: Active
-- **Description**: Declarative specs for how analytical outputs become UI. A ViewDefinition declares: data source -> renderer type -> position in consumer app. Consumer apps fetch view trees for their pages and dispatch to their own component registries. No execution logic — just definitions. Supports nested views (subtabs within tabs), presentation stances for LLM transformation guidance, and audience overrides.
+- **Description**: Declarative specs for how analytical outputs become UI. A ViewDefinition declares: data source -> renderer type -> position in consumer app. Consumer apps fetch view trees for their pages and dispatch to their own component registries. No execution logic — just definitions. Supports nested views (subtabs within tabs), presentation stances for LLM transformation guidance, audience overrides, and `generation_mode` tracking ("curated"/"generated"/"hybrid").
 - **Entry Points**:
-  - `src/views/schemas.py:1-195` - Pydantic models: ViewDefinition, DataSourceRef, TransformationSpec, ViewSummary, ComposedView, ComposedPageResponse
+  - `src/views/schemas.py:1-220` - Pydantic models: ViewDefinition (incl. generation_mode), DataSourceRef, TransformationSpec, ViewSummary, ComposedView, ComposedPageResponse
   - `src/views/registry.py:1-195` - ViewRegistry: load, get, list_summaries (with app/page filters), compose_tree, for_workflow, save, delete, reload
+  - `src/views/generator.py:1-370` - LLM-powered view generation from patterns: ViewGenerateRequest/Response, engine/renderer/page context assembly, Claude Sonnet generation
   - `src/views/definitions/*.json` - 21 view definition JSON files
-  - `src/api/routes/views.py:1-165` - Full REST API with compose endpoint
+  - `src/api/routes/views.py:1-233` - Full REST API with compose + generate endpoints
   - `src/api/main.py:16` - Router registration and lifespan loading
 - **Schema**:
   - `ViewDefinition` — Identity (view_key, view_name, version), WHERE (target_app, target_page, target_section), WHAT component (renderer_type, renderer_config), WHAT data (data_source, secondary_sources), HOW to transform (transformation, presentation_stance), LAYOUT (position, parent_view_key, tab_count_field), VISIBILITY, AUDIENCE overrides, METADATA
@@ -193,8 +194,16 @@
   - `PUT /v1/views/{key}` - Update view
   - `DELETE /v1/views/{key}` - Delete view
   - `POST /v1/views/reload` - Force reload from disk
+  - `POST /v1/views/generate` - LLM-powered view generation from pattern + engine + workflow context
+- **Dynamic View Generation**:
+  - Takes pattern_key + engine_key + workflow/phase context → generates complete ViewDefinition
+  - Uses engine canonical_schema, renderer config_schema, existing page views for position context
+  - Supports wiring existing transformation templates via transformation_template_key
+  - View key collision handling: appends "_gen" suffix
+  - Parent view validation: warns if parent_view_key doesn't exist
+  - Generated views auto-tagged: `generation_mode="generated"`, `status="draft"`
 - **Consumer Usage Pattern**: `GET /v1/views/compose/the-critic/genealogy` returns tree → app renders tabs from top-level views → dispatches to component by renderer_type → nests children → uses presentation_stance for LLM transforms
-- **Added**: 2026-02-18
+- **Added**: 2026-02-18 | **Modified**: 2026-02-23
 
 ## Renderer Definitions (Rendering Layer)
 
@@ -423,13 +432,14 @@
 
 ### Transformation Template Entity
 - **Status**: Active
-- **Description**: Named, reusable transformation recipes for schema-on-read data transformation. 5 types: none (passthrough), schema_map (field renaming), llm_extract (structured extraction from prose via Claude Haiku), llm_summarize (summarization via Claude Haiku), aggregate (group-by/count/sort). Templates can be applied to view definitions as one-time copies. Includes in-memory TTL cache for LLM results.
+- **Description**: Named, reusable transformation recipes for schema-on-read data transformation. 5 types: none (passthrough), schema_map (field renaming), llm_extract (structured extraction from prose via Claude Haiku), llm_summarize (summarization via Claude Haiku), aggregate (group-by/count/sort). Templates can be applied to view definitions as one-time copies. Includes in-memory TTL cache for LLM results. Each template tagged with `generation_mode` ("curated" for hand-authored, "generated" for LLM-generated, "hybrid" for generated then refined).
 - **Entry Points**:
-  - `src/transformations/schemas.py:1-80` - Pydantic models: AggregateConfig, TransformationTemplate, TransformationTemplateSummary
+  - `src/transformations/schemas.py:1-80` - Pydantic models: AggregateConfig, TransformationTemplate, TransformationTemplateSummary (incl. generation_mode field)
   - `src/transformations/registry.py:1-150` - TransformationRegistry: load from JSON, singleton, CRUD, filter by type/tag/engine
   - `src/transformations/executor.py:1-200` - TransformationExecutor: executes all 5 types, TTL cache, Claude Haiku with Sonnet fallback
-  - `src/transformations/definitions/*.json` - 5 seed templates
-  - `src/api/routes/transformations.py:1-335` - Full REST API: CRUD + execute + for-engine + for-renderer + reload
+  - `src/transformations/generator.py:1-370` - LLM-powered template generation: exemplar selection, rich engine/renderer context building, Claude Sonnet generation
+  - `src/transformations/definitions/*.json` - 17 template files
+  - `src/api/routes/transformations.py:1-478` - Full REST API: CRUD + execute + generate + for-engine + for-renderer + for-pattern + reload
   - `src/api/main.py:18` - Router registration and lifespan loading
   - `src/llm/client.py:1-100` - Shared LLM utilities: get_anthropic_client, parse_llm_json_response, call_extraction_model
 - **Templates** (17 total, 1 deprecated):
@@ -454,15 +464,20 @@
   - `GET /v1/transformations/for-engine/{engine_key}` - By engine
   - `GET /v1/transformations/for-renderer/{renderer_type}` - By renderer
   - `GET /v1/transformations/for-pattern?domain=&data_shape=&renderer_type=` - Cross-domain pattern query
-  - `POST /v1/transformations/generate` - LLM-powered template generation from engine + renderer specs
+  - `POST /v1/transformations/generate` - LLM-powered template generation (v2: rich engine metadata + renderer specs + exemplars)
   - `POST /v1/transformations/execute` - Execute transformation (inline spec or template reference)
+- **Dynamic Generation** (v2):
+  - Exemplar selection: scores existing templates by renderer_type match (+3), data_shape match (+2), pattern_type (+1), llm_extract type (+1); top 3 used as few-shot context
+  - Engine context: canonical_schema (100% coverage), extraction_focus (82%), key_fields, core_question, extraction_steps, key_relationships, special_instructions
+  - Renderer context: ideal_data_shapes, config_schema.properties, input_data_schema, available_section_renderers
+  - Generated templates auto-tagged: `generation_mode="generated"`, `status="draft"`
 - **Frontend** (analyzer-mgmt):
   - `frontend/src/pages/transformations/index.tsx` - List page with type-colored badges, search, type filter
   - `frontend/src/pages/transformations/[key].tsx` - Detail page: 6 tabs (Identity, Specification, Applicability, Execution Config, Test, Preview)
   - `frontend/src/types/index.ts` - TypeScript types for transformation entities
   - `frontend/src/lib/api.ts` - API client methods (direct fetch to ANALYZER_V2_URL)
   - `frontend/src/components/Layout.tsx` - Navigation item
-- **Added**: 2026-02-18
+- **Added**: 2026-02-18 | **Modified**: 2026-02-23
 
 ## Schema-on-Read / Prose Pipeline (the-critic)
 

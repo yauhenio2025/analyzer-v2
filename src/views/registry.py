@@ -145,6 +145,7 @@ class ViewRegistry:
             parent_view_key=v.parent_view_key,
             visibility=v.visibility,
             status=v.status,
+            generation_mode=v.generation_mode,
             sections_count=sections_count,
             has_sub_renderers=has_sub,
             config_hints=hints,

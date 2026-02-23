@@ -153,6 +153,11 @@ class TransformationTemplate(BaseModel):
         default=None,
         description="Where this template was extracted from",
     )
+    generation_mode: str = Field(
+        default="curated",
+        description="How this template was created: 'curated' (hand-authored), "
+        "'generated' (LLM-generated), 'hybrid' (generated then manually refined)",
+    )
 
 
 class TransformationTemplateSummary(BaseModel):
@@ -168,3 +173,4 @@ class TransformationTemplateSummary(BaseModel):
     data_shape_out: Optional[str] = None
     tags: list[str] = []
     status: str = "active"
+    generation_mode: str = "curated"

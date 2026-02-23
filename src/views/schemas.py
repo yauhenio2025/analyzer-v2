@@ -197,6 +197,11 @@ class ViewDefinition(BaseModel):
         default=None,
         description="Which project this view was designed for",
     )
+    generation_mode: str = Field(
+        default="curated",
+        description="How this view was created: 'curated' (hand-authored), "
+        "'generated' (LLM-generated), 'hybrid' (generated then manually refined)",
+    )
 
 
 class ViewSummary(BaseModel):
@@ -213,6 +218,7 @@ class ViewSummary(BaseModel):
     parent_view_key: Optional[str] = None
     visibility: str = "if_data_exists"
     status: str = "active"
+    generation_mode: str = "curated"
     # Structural hints computed from renderer_config
     sections_count: int = 0
     has_sub_renderers: bool = False

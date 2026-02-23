@@ -190,3 +190,43 @@ async def reload_views():
     registry = get_view_registry()
     registry.reload()
     return {"reloaded": True, "count": registry.count()}
+
+
+# ── Generate (LLM-powered view generation from patterns) ──
+
+
+@router.post("/generate")
+async def generate_view_endpoint(request: dict):
+    """LLM-powered view definition generation from patterns.
+
+    Given a pattern_key + engine_key + workflow context, generates
+    a ViewDefinition that composes correctly into existing page trees.
+
+    Required fields: pattern_key, engine_key
+    Optional: workflow_key, phase_number, chain_key, scope, target_app,
+              target_page, parent_view_key, position, presentation_stance,
+              transformation_template_key, description, save
+    """
+    from src.views.generator import ViewGenerateRequest, ViewGenerateResponse, generate_view
+
+    try:
+        req = ViewGenerateRequest.model_validate(request)
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid request: {e}",
+        )
+
+    try:
+        result = await generate_view(req)
+        if req.save:
+            mark_definitions_modified()
+        return result.model_dump()
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.error(f"View generation failed: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"View generation failed: {e}",
+        )

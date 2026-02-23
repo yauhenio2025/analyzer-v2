@@ -141,11 +141,25 @@ GET  /v1/views/for-workflow/{wf_key}   # Views referencing a workflow
 POST /v1/views                         # Create view
 PUT  /v1/views/{key}                   # Update view
 DELETE /v1/views/{key}                 # Delete view
+POST /v1/views/generate                # LLM-powered view generation from pattern + engine
 
 GET  /v1/views/patterns                  # List view pattern summaries
 GET  /v1/views/patterns/{key}            # Full view pattern
 GET  /v1/views/patterns/for-renderer/{type}  # Patterns by renderer
 GET  /v1/views/patterns/for-data-shape/{shape}  # Patterns by data shape
+
+# Transformations
+GET  /v1/transformations                    # List templates (?type=&tag=)
+GET  /v1/transformations/{key}              # Full template
+GET  /v1/transformations/for-engine/{key}   # Templates for engine
+GET  /v1/transformations/for-renderer/{type}  # Templates for renderer
+GET  /v1/transformations/for-primitive/{key}  # Templates for primitive
+GET  /v1/transformations/for-pattern        # Cross-domain query (?domain=&data_shape=&renderer_type=)
+POST /v1/transformations                    # Create template
+PUT  /v1/transformations/{key}              # Update template
+DELETE /v1/transformations/{key}            # Delete template
+POST /v1/transformations/generate           # LLM-powered template generation (v2: rich metadata)
+POST /v1/transformations/execute            # Execute transformation on data
 
 GET  /v1/renderers                       # List all renderers (summary)
 GET  /v1/renderers/{key}                 # Full renderer definition
