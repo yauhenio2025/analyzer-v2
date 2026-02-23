@@ -6,6 +6,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Fixed
+- **Conditions extraction template only extracting 4 of 7 fields** — `conditions_extraction.json` v1 was written before the `conditions_of_possibility_analyzer` engine added Pass 2 (path dependencies, unacknowledged debts, alternative paths). Updated to v2 with all 7 field schemas and expanded LLM prompt. Increased max_tokens from 8000 to 16000. ([`src/transformations/definitions/conditions_extraction.json`](src/transformations/definitions/conditions_extraction.json))
+
+- **Multi-pass cache lookup failing in page assembly** — `presentation_api.py` computed `raw_prose` from only the latest single pass, but the bridge saved cache with hash of concatenated multi-pass content. Hash mismatch caused "Stale presentation cache" on every read. Fixed to concatenate ALL passes into raw_prose and skip freshness check for multi-pass single-engine views. ([`src/presenter/presentation_api.py`](src/presenter/presentation_api.py))
+
+### Added
+- **Force cache bypass on prepare/compose endpoints** — New `force: bool` parameter on `PrepareRequest` and `ComposeRequest` that skips `presentation_cache` check, forcing re-extraction from prose. Threaded through `presentation_bridge` → `_execute_tasks_async/sync`. Use when transformation templates are updated. ([`src/presenter/schemas.py`](src/presenter/schemas.py), [`src/presenter/presentation_bridge.py`](src/presenter/presentation_bridge.py), [`src/api/routes/presenter.py`](src/api/routes/presenter.py))
+
+- **Refresh v2 presentation endpoint** (the-critic) — `POST /api/genealogy/refresh-v2/{v2_job_id}` re-fetches PagePresentation from analyzer-v2's page API and updates both React state and the-critic's DB record. Picks up extraction fixes without re-running the full compose pipeline. Includes frontend "Refresh" button in V2 results header. Timeout set to 300s for large payloads. (`the-critic/api/server.py`, `the-critic/webapp/src/pages/GenealogyPage.tsx`)
+
+### Fixed
 - **Target Work Profile detached from Idea Evolution Map** — `genealogy_target_profile` had incorrect `parent_view_key: "genealogy_idea_evolution"` making it appear nested under Idea Evolution Map. These are separate concerns (Phase 1 target profiling vs Phase 3 concept synthesis). Now top-level with its 4 children (Conceptual Framework, Semantic Constellation, Inferential Commitments, Concept Evolution) properly hanging under it. ([`src/views/definitions/genealogy_target_profile.json`](src/views/definitions/genealogy_target_profile.json))
 
 ### Added
