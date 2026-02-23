@@ -335,6 +335,13 @@ def _compose_system_prompt(context: dict[str, Any]) -> str:
         "- For sections with few items (1-3): single column is fine, keep spacious",
         "- Chips and badges should be small and tight (padding: 2px 6px)",
         "- The goal is a DENSE, INFORMATION-RICH layout like a newspaper or academic journal",
+        "- CRITICAL: Do NOT increase padding, margins, or font sizes beyond the defaults.",
+        "  Your style_overrides should REDUCE vertical space, not add to it.",
+        "  Keep card padding <= 8px, prose line-height <= 1.5, section_content padding <= 16px.",
+        "  The total scroll height must not increase after polishing.",
+        "- For items_container grid, use 'minmax(0, 1fr)' instead of plain '1fr'",
+        "  to prevent content overflow in grid children. Example:",
+        '  {"display": "grid", "gridTemplateColumns": "minmax(0,1fr) minmax(0,1fr)", "gap": "0.5rem"}',
     ])
 
     return "\n".join(parts)
