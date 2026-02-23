@@ -129,11 +129,12 @@
 - **Status**: Active
 - **Description**: LLM-powered visual enhancement of renderer configs. The "Present" button calls Sonnet 4.6 to polish a view's renderer_config and produce style_overrides — CSS-like dicts applied at defined injection points (section_header, card, chip, badge, prose, etc.). Uses the resolved style school's color palette, typography, and layout principles as design input. Results are cached per (job_id, view_key, style_school) in the polish_cache table.
 - **Entry Points**:
-  - `src/presenter/polisher.py:1-260` - polish_view() main entry, _resolve_style_school(), _gather_polish_context(), _compose_system_prompt(), _compose_user_message()
-  - `src/presenter/polish_store.py:1-90` - save_polish_cache(), load_polish_cache() — DB persistence
-  - `src/presenter/schemas.py:215-255` - PolishRequest, StyleOverrides, PolishedViewPayload, PolishResult
+  - `src/presenter/polisher.py:1-130` - polish_view() main entry, _resolve_style_school(), _gather_polish_context(), _compose_system_prompt(), _compose_user_message()
+  - `src/presenter/polisher.py:131-230` - polish_section() for per-section polish with user feedback, _compose_section_system_prompt(), _compose_section_user_message()
+  - `src/presenter/polish_store.py:1-130` - save_polish_cache(), load_polish_cache() with section_key support
+  - `src/presenter/schemas.py:215-310` - PolishRequest, StyleOverrides, PolishedViewPayload, PolishResult, SectionPolishRequest, SectionPolishResult
   - `src/executor/db.py` - polish_cache table DDL (both Postgres + SQLite)
-  - `src/api/routes/presenter.py:189-260` - POST /v1/presenter/polish endpoint with cache check
+  - `src/api/routes/presenter.py:189-360` - POST /v1/presenter/polish + POST /v1/presenter/polish-section
 - **Frontend**:
   - `the-critic/webapp/src/pages/GenealogyPage.tsx` - V2TabContent: Present/Reset buttons, polishResult state, ANALYZER_V2_URL fetch, config override
   - `the-critic/webapp/src/components/renderers/AccordionRenderer.tsx` - Reads config._style_overrides, applies to section headers/content, threads down to sub-renderers

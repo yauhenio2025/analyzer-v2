@@ -23,7 +23,13 @@ from src.styles.registry import get_style_registry
 from src.styles.schemas import StyleSchool
 from src.sub_renderers.registry import get_sub_renderer_registry
 
-from .schemas import PolishResult, PolishedViewPayload, StyleOverrides, ViewPayload
+from .schemas import (
+    PolishResult,
+    PolishedViewPayload,
+    SectionPolishResult,
+    StyleOverrides,
+    ViewPayload,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -115,6 +121,133 @@ def polish_view(
     logger.info(
         f"[polish] Done view={payload.view_key} school={resolved_school} "
         f"tokens={total_tokens} time={elapsed_ms}ms"
+    )
+    return result
+
+
+def polish_section(
+    payload: ViewPayload,
+    section_key: str,
+    user_feedback: Optional[str] = None,
+    engine_key: Optional[str] = None,
+    style_school: Optional[str] = None,
+) -> SectionPolishResult:
+    """Polish a single section of an accordion view using an LLM.
+
+    Unlike polish_view() which polishes the entire view, this focuses on
+    one section only and incorporates user feedback.
+
+    Args:
+        payload: The current ViewPayload containing structured data.
+        section_key: Key of the section to polish (e.g. 'path_dependencies').
+        user_feedback: User's natural-language instructions for this section.
+        engine_key: Engine key for style school resolution.
+        style_school: Explicit style school override.
+
+    Returns:
+        SectionPolishResult with section-specific style overrides.
+    """
+    start_ms = int(time.time() * 1000)
+
+    # 1. Resolve style school
+    resolved_school = _resolve_style_school(
+        engine_key or payload.engine_key,
+        style_school,
+    )
+
+    # 2. Gather context (same as view-level, but narrowed to section's sub-renderer)
+    context = _gather_polish_context(payload, resolved_school)
+
+    # 3. Extract section data shape
+    section_data = None
+    if payload.structured_data and isinstance(payload.structured_data, dict):
+        section_data = payload.structured_data.get(section_key)
+
+    # 4. Find the section's sub-renderer config
+    section_renderers = payload.renderer_config.get("section_renderers", {})
+    section_hint = section_renderers.get(section_key, {})
+    section_renderer_type = section_hint.get("renderer_type", "")
+
+    # Narrow sub-renderer context to just this section
+    sub_registry = get_sub_renderer_registry()
+    section_sub_info = {}
+    if section_renderer_type:
+        sr_def = sub_registry.get(section_renderer_type)
+        if sr_def:
+            section_sub_info[section_renderer_type] = {
+                "name": sr_def.sub_renderer_name,
+                "description": sr_def.description,
+                "config_schema": sr_def.config_schema,
+            }
+    context["sub_renderers"] = section_sub_info
+
+    # 5. Compose section-specific prompts
+    system_prompt = _compose_section_system_prompt(context, section_key)
+    user_message = _compose_section_user_message(
+        payload, section_key, section_data, section_hint, user_feedback,
+    )
+
+    logger.info(
+        f"[polish-section] Composing for view={payload.view_key} "
+        f"section={section_key} school={resolved_school} "
+        f"feedback={'yes' if user_feedback else 'no'} "
+        f"system_len={len(system_prompt)} user_len={len(user_message)}"
+    )
+
+    # 6. Call LLM
+    client = get_anthropic_client()
+    if client is None:
+        raise RuntimeError(
+            "LLM service unavailable. Set ANTHROPIC_API_KEY environment variable."
+        )
+
+    model = GENERATION_MODEL
+    try:
+        response = client.messages.create(
+            model=model,
+            max_tokens=8000,
+            system=system_prompt,
+            messages=[{"role": "user", "content": user_message}],
+        )
+        raw_text = response.content[0].text
+        total_tokens = response.usage.input_tokens + response.usage.output_tokens
+    except Exception as e:
+        raise RuntimeError(f"Section polish LLM call failed: {e}") from e
+
+    # 7. Parse response
+    try:
+        parsed = parse_llm_json_response(raw_text)
+    except json.JSONDecodeError as e:
+        logger.error(
+            f"[polish-section] Failed to parse LLM JSON: {e}\n"
+            f"Raw: {raw_text[:500]}"
+        )
+        raise RuntimeError(f"Section polish LLM returned invalid JSON: {e}") from e
+
+    # 8. Build result
+    style_overrides = StyleOverrides(**parsed.get("style_overrides", {}))
+    config_patch = parsed.get("renderer_config_patch", {})
+    section_description = parsed.get("section_description", "")
+    changes_summary = parsed.get("changes_summary", "")
+
+    elapsed_ms = int(time.time() * 1000) - start_ms
+
+    result = SectionPolishResult(
+        section_key=section_key,
+        style_overrides=style_overrides,
+        renderer_config_patch=config_patch,
+        section_description=section_description,
+        changes_summary=changes_summary,
+        model_used=model,
+        tokens_used=total_tokens,
+        execution_time_ms=elapsed_ms,
+        style_school=resolved_school,
+        user_feedback_applied=user_feedback,
+    )
+
+    logger.info(
+        f"[polish-section] Done view={payload.view_key} section={section_key} "
+        f"school={resolved_school} tokens={total_tokens} time={elapsed_ms}ms"
     )
     return result
 
@@ -414,3 +547,137 @@ def _summarize_data_shape(data: Any, depth: int = 0) -> str:
         return f"array[{len(data)}]"
     else:
         return str(type(data).__name__)
+
+
+# --- Section-level prompt helpers ---
+
+
+def _compose_section_system_prompt(
+    context: dict[str, Any],
+    section_key: str,
+) -> str:
+    """Compose the system prompt for a single-section polish call."""
+    school = context.get("style_school", {})
+    palette = school.get("color_palette", {})
+    typography = school.get("typography", {})
+    layout = school.get("layout_principles", [])
+    display_rules = context.get("display_rules", {})
+
+    parts = [
+        "You are a UI presentation designer. Your job is to enhance the visual styling",
+        f"of a SINGLE accordion section ('{section_key}') by producing CSS-like style_overrides.",
+        "You may also suggest config changes for the section's sub-renderer.",
+        "",
+        "## Style School: " + school.get("name", "Unknown"),
+        school.get("philosophy", ""),
+        "",
+        "## Color Palette",
+        json.dumps(palette, indent=2) if palette else "(no palette)",
+        "",
+        "## Typography",
+        json.dumps(typography, indent=2) if typography else "(no typography)",
+        "",
+        "## Layout Principles",
+    ]
+    for lp in layout:
+        parts.append(f"- {lp}")
+
+    sub_renderers = context.get("sub_renderers", {})
+    if sub_renderers:
+        parts.extend(["", "## Sub-Renderer for This Section"])
+        for sr_key, sr_info in sub_renderers.items():
+            parts.append(f"### {sr_key}: {sr_info.get('name', '')}")
+            parts.append(sr_info.get("description", ""))
+            schema = sr_info.get("config_schema", {})
+            if schema:
+                parts.append(f"Config schema: {json.dumps(schema)}")
+
+    if display_rules:
+        parts.extend([
+            "",
+            "## Display Rules",
+            display_rules.get("label_formatting", ""),
+        ])
+
+    parts.extend([
+        "",
+        "## Your Output",
+        "Return a single JSON object with these keys:",
+        "",
+        "1. `style_overrides` — CSS-like style objects for injection points,",
+        "   applied ONLY to this section. Same injection points as view-level polish:",
+        "   section_header, section_content, card, chip, badge, timeline_node,",
+        "   prose, accent_color, view_wrapper, items_container.",
+        "   Use camelCase CSS property names (React style).",
+        "",
+        "2. `renderer_config_patch` — partial config to merge into this section's",
+        "   sub-renderer config (e.g. changing display mode, reordering fields).",
+        "   Only include keys you want to change.",
+        "",
+        "3. `section_description` — enhanced description for this section (1-2 sentences).",
+        "",
+        "4. `changes_summary` — brief human-readable summary of what you changed and why.",
+        "",
+        "## Constraints",
+        "- Use ONLY colors from the style school palette",
+        "- Use valid CSS values in camelCase (React style objects)",
+        "- Focus on making THIS section excellent — you cannot affect other sections",
+        "- Keep the design professional and readable",
+        "- Return ONLY the JSON object, no markdown fences or explanation",
+        "",
+        "## Layout Density Guidelines",
+        "- REDUCE SCROLLING. Use compact layouts for sections with many items.",
+        "- For 4+ items: use items_container with CSS grid (2 columns)",
+        '  e.g. {"display": "grid", "gridTemplateColumns": "minmax(0,1fr) minmax(0,1fr)", "gap": "0.5rem"}',
+        "- Reduce vertical padding: cards should be tight (8-10px)",
+        "- Use smaller font sizes (0.75-0.82rem for body, 0.68rem for labels)",
+        "- CRITICAL: Do NOT increase padding, margins, or font sizes beyond defaults.",
+    ])
+
+    return "\n".join(parts)
+
+
+def _compose_section_user_message(
+    payload: ViewPayload,
+    section_key: str,
+    section_data: Any,
+    section_hint: dict[str, Any],
+    user_feedback: Optional[str] = None,
+) -> str:
+    """Compose the user message for a single-section polish call."""
+    parts = [
+        f"## Section: {section_key}",
+        f"- view_key: {payload.view_key}",
+        f"- view_name: {payload.view_name}",
+        "",
+        "## Section Sub-Renderer Config",
+        json.dumps(section_hint, indent=2) if section_hint else "(no config)",
+        "",
+    ]
+
+    # Data shape for this section only
+    if section_data is not None:
+        shape = _summarize_data_shape(section_data)
+        parts.extend([
+            "## Section Data Shape",
+            shape,
+            "",
+        ])
+
+    # User feedback — the key differentiator
+    if user_feedback:
+        parts.extend([
+            "## User Instructions",
+            "The user has provided the following feedback for this section.",
+            "PRIORITIZE these instructions above general aesthetics:",
+            "",
+            user_feedback,
+            "",
+        ])
+
+    parts.append(
+        "Please produce the style_overrides, renderer_config_patch, "
+        "section_description, and changes_summary as a JSON object."
+    )
+
+    return "\n".join(parts)

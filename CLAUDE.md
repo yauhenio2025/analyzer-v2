@@ -207,6 +207,16 @@ POST /v1/executor/documents               # Upload document text
 GET  /v1/executor/documents               # List documents
 GET  /v1/executor/documents/{doc_id}      # Retrieve document
 DELETE /v1/executor/documents/{doc_id}    # Delete document
+
+# Presenter
+POST /v1/presenter/refine-views          # Refine view recommendations
+POST /v1/presenter/prepare               # Run transformations
+GET  /v1/presenter/page/{job_id}         # Complete page presentation
+GET  /v1/presenter/view/{job_id}/{view_key}  # Single view data
+GET  /v1/presenter/status/{job_id}       # Presentation readiness
+POST /v1/presenter/compose               # All-in-one pipeline
+POST /v1/presenter/polish                # View-level visual polish
+POST /v1/presenter/polish-section        # Per-section polish with user feedback
 ```
 
 ## Documentation

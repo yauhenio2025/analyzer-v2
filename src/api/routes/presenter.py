@@ -19,6 +19,7 @@ from src.presenter.schemas import (
     PolishRequest,
     PrepareRequest,
     RefineViewsRequest,
+    SectionPolishRequest,
 )
 
 logger = logging.getLogger(__name__)
@@ -259,4 +260,97 @@ async def polish_view_endpoint(request: PolishRequest):
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         logger.error(f"Polish failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/polish-section")
+async def polish_section_endpoint(request: SectionPolishRequest):
+    """Polish a single accordion section with optional user feedback.
+
+    Calls Sonnet 4.6 to enhance just one section's styling, incorporating
+    user's natural-language instructions. Results are cached per
+    (job_id, view_key, section_key, style_school).
+    """
+    from src.presenter.polish_store import load_polish_cache, save_polish_cache
+    from src.presenter.polisher import compute_config_hash, polish_section
+    from src.presenter.presentation_api import assemble_single_view
+
+    try:
+        # Load the current view payload
+        payload = assemble_single_view(request.job_id, request.view_key)
+        if payload is None:
+            raise HTTPException(
+                status_code=404,
+                detail=f"View not found: {request.view_key}",
+            )
+
+        # Verify section exists in structured data
+        if (
+            payload.structured_data
+            and isinstance(payload.structured_data, dict)
+            and request.section_key not in payload.structured_data
+        ):
+            available = list(payload.structured_data.keys())
+            raise HTTPException(
+                status_code=404,
+                detail=f"Section '{request.section_key}' not found. "
+                f"Available: {available}",
+            )
+
+        # Check cache (unless force=True or user_feedback is provided)
+        style_school = request.style_school
+        if not request.force and not request.user_feedback:
+            cached = load_polish_cache(
+                job_id=request.job_id,
+                view_key=request.view_key,
+                style_school=style_school,
+                section_key=request.section_key,
+            )
+            if cached is not None:
+                logger.info(
+                    f"[polish-section] Cache hit for job={request.job_id} "
+                    f"view={request.view_key} section={request.section_key}"
+                )
+                return {
+                    **cached["polished_data"],
+                    "model_used": cached["model_used"],
+                    "tokens_used": cached["tokens_used"],
+                    "style_school": cached["style_school"],
+                    "changes_summary": "Loaded from cache",
+                    "execution_time_ms": 0,
+                    "cached": True,
+                }
+
+        # Run section polish
+        result = polish_section(
+            payload=payload,
+            section_key=request.section_key,
+            user_feedback=request.user_feedback,
+            engine_key=payload.engine_key,
+            style_school=style_school,
+        )
+
+        # Cache the result
+        config_hash = compute_config_hash(payload.renderer_config)
+        save_polish_cache(
+            job_id=request.job_id,
+            view_key=request.view_key,
+            style_school=result.style_school,
+            polished_data=result.model_dump(),
+            config_hash=config_hash,
+            model_used=result.model_used,
+            tokens_used=result.tokens_used,
+            section_key=request.section_key,
+        )
+
+        resp = result.model_dump()
+        resp["cached"] = False
+        return resp
+
+    except HTTPException:
+        raise
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.error(f"Section polish failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))

@@ -268,6 +268,41 @@ class PolishResult(BaseModel):
     changes_summary: str = ""
 
 
+# --- 3E: Per-Section Polish ---
+
+
+class SectionPolishRequest(BaseModel):
+    """Input for POST /v1/presenter/polish-section."""
+
+    job_id: str
+    view_key: str
+    section_key: str
+    user_feedback: Optional[str] = Field(
+        default=None,
+        description="User's natural-language instructions for improving this section.",
+    )
+    style_school: Optional[str] = None
+    force: bool = False
+
+
+class SectionPolishResult(BaseModel):
+    """Result of polishing a single section."""
+
+    section_key: str
+    style_overrides: StyleOverrides = Field(default_factory=StyleOverrides)
+    renderer_config_patch: dict[str, Any] = Field(
+        default_factory=dict,
+        description="Partial config to merge into this section's renderer config.",
+    )
+    section_description: str = ""
+    changes_summary: str = ""
+    model_used: str = ""
+    tokens_used: int = 0
+    execution_time_ms: int = 0
+    style_school: str = ""
+    user_feedback_applied: Optional[str] = None
+
+
 # --- Request schemas ---
 
 
