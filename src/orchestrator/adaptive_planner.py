@@ -49,6 +49,7 @@ Your job: compose a WorkflowExecutionPlan that achieves the objective's goals us
 4. **Phases are flexible**: You can add, remove, reorder, or modify phases. Phase numbers can use decimals (1.0, 1.5, 2.0, 2.5, 3.0, etc.). Specify depends_on for dependency ordering.
 5. **Per-work iteration**: Set iteration_mode="per_work" for phases that need to run once per prior work. Use per_work_chain_map if different works need different chains.
 6. **Chain vs engine**: Prefer chains for multi-faceted analysis (they compose multiple engines). Use single engines for focused tasks.
+7. **Decision traceability**: Include a complete decision_trace. Every decision must cite evidence from book samples or objectives. For every engine considered, state whether selected or rejected and why. This is mandatory.
 
 ## Output Format
 
@@ -85,6 +86,24 @@ Return ONLY valid JSON (no markdown fences) matching this structure:
       "rationale": "WHY this view"
     }
   ],
+  "decision_trace": {
+    "sampling_insights": [
+      {"work_title": "...", "role": "target|prior_work", "key_observations": ["..."], "implications": ["..."], "affinity_rationale": "..."}
+    ],
+    "objective_alignment": [
+      {"goal": "exact goal text", "serving_engines": ["..."], "serving_chains": ["..."], "coverage_assessment": "fully covered|partially — reason"}
+    ],
+    "phase_decisions": [
+      {"phase_number": 1.0, "phase_name": "...", "chain_or_engine": "...", "selection_rationale": "...", "depth_rationale": "...", "iteration_mode_rationale": "...", "alternatives_considered": ["alt — reason"], "dependency_rationale": "..."}
+    ],
+    "per_work_decisions": [
+      {"phase_number": 2.0, "work_title": "...", "chain_key": "...", "rationale": "..."}
+    ],
+    "catalog_coverage": [
+      {"engine_key": "...", "status": "selected|rejected|available_unused", "reason": "...", "used_in_phases": [1.0]}
+    ],
+    "overall_strategy_rationale": "High-level narrative connecting corpus characteristics to pipeline design"
+  },
   "estimated_llm_calls": 30,
   "estimated_depth_profile": "description of depth across phases",
   "estimated_total_cost_usd": 15.0
@@ -300,7 +319,7 @@ def generate_adaptive_plan(
 
         response = client.messages.create(
             model=model,
-            max_tokens=32000,
+            max_tokens=48000,
             thinking={
                 "type": "enabled",
                 "budget_tokens": 16000,
@@ -411,6 +430,27 @@ def generate_adaptive_plan(
             rationale=view_data.get("rationale", ""),
         )
         plan.recommended_views.append(view)
+
+    # Parse decision trace
+    trace_data = plan_data.get("decision_trace")
+    if trace_data:
+        from .schemas import (
+            PlannerDecisionTrace, SamplingInsight, ObjectiveAlignmentEntry,
+            PhaseDecision, PerWorkDecision, CatalogCoverageEntry,
+        )
+        try:
+            plan.decision_trace = PlannerDecisionTrace(
+                sampling_insights=[SamplingInsight(**si) for si in trace_data.get("sampling_insights", [])],
+                objective_alignment=[ObjectiveAlignmentEntry(**oa) for oa in trace_data.get("objective_alignment", [])],
+                phase_decisions=[PhaseDecision(**pd) for pd in trace_data.get("phase_decisions", [])],
+                per_work_decisions=[PerWorkDecision(**pwd) for pwd in trace_data.get("per_work_decisions", [])],
+                catalog_coverage=[CatalogCoverageEntry(**cc) for cc in trace_data.get("catalog_coverage", [])],
+                overall_strategy_rationale=trace_data.get("overall_strategy_rationale", ""),
+            )
+            logger.info(f"Decision trace parsed: {len(plan.decision_trace.phase_decisions)} phase decisions, "
+                        f"{len(plan.decision_trace.catalog_coverage)} catalog entries")
+        except Exception as e:
+            logger.warning(f"Failed to parse decision_trace: {e}")
 
     # Save using the same mechanism as legacy planner
     from .planner import _save_plan

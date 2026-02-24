@@ -142,6 +142,28 @@ async def get_pipeline_visualization(plan_id: str):
         )
 
 
+# ── Decision Trace ─────────────────────────────────────────
+
+
+@router.get("/plans/{plan_id}/decision-trace")
+async def get_decision_trace(plan_id: str):
+    """Get the decision trace for an adaptive plan.
+
+    Returns the structured reasoning that drove pipeline composition:
+    sampling insights, objective alignment, phase decisions, and catalog coverage.
+    """
+    plan = load_plan(plan_id)
+    if plan is None:
+        raise HTTPException(status_code=404, detail=f"Plan '{plan_id}' not found")
+    if plan.decision_trace is None:
+        return {"plan_id": plan_id, "has_decision_trace": False, "decision_trace": None}
+    return {
+        "plan_id": plan_id,
+        "has_decision_trace": True,
+        "decision_trace": plan.decision_trace.model_dump(),
+    }
+
+
 # ── Plan Update (manual edits) ──────────────────────────────
 
 

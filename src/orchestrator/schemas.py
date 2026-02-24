@@ -180,6 +180,72 @@ class ViewRecommendation(BaseModel):
     )
 
 
+class SamplingInsight(BaseModel):
+    """What the adaptive planner observed from sampling a specific work."""
+
+    work_title: str
+    role: str  # "target" or "prior_work"
+    key_observations: list[str]
+    implications: list[str]
+    affinity_rationale: str = ""
+
+
+class ObjectiveAlignmentEntry(BaseModel):
+    """Maps a specific goal to the engines/chains serving it."""
+
+    goal: str
+    serving_engines: list[str] = Field(default_factory=list)
+    serving_chains: list[str] = Field(default_factory=list)
+    coverage_assessment: str = ""
+
+
+class PhaseDecision(BaseModel):
+    """Structured rationale for a single phase's configuration."""
+
+    phase_number: float
+    phase_name: str
+    chain_or_engine: str
+    selection_rationale: str
+    depth_rationale: str
+    iteration_mode_rationale: str = ""
+    alternatives_considered: list[str] = Field(default_factory=list)
+    dependency_rationale: str = ""
+
+
+class PerWorkDecision(BaseModel):
+    """Why a specific chain was chosen for a specific work."""
+
+    phase_number: float
+    work_title: str
+    chain_key: str
+    rationale: str
+
+
+class CatalogCoverageEntry(BaseModel):
+    """Status of a single engine in the catalog relative to this plan."""
+
+    engine_key: str
+    status: str  # "selected" | "rejected" | "available_unused"
+    reason: str = ""
+    used_in_phases: list[float] = Field(default_factory=list)
+
+
+class PlannerDecisionTrace(BaseModel):
+    """Complete decision trace from adaptive planner.
+
+    Externalizes the reasoning that drives pipeline composition:
+    what was observed, how goals map to engines, why each phase
+    was configured the way it was, and what was considered but rejected.
+    """
+
+    sampling_insights: list[SamplingInsight] = Field(default_factory=list)
+    objective_alignment: list[ObjectiveAlignmentEntry] = Field(default_factory=list)
+    phase_decisions: list[PhaseDecision] = Field(default_factory=list)
+    per_work_decisions: list[PerWorkDecision] = Field(default_factory=list)
+    catalog_coverage: list[CatalogCoverageEntry] = Field(default_factory=list)
+    overall_strategy_rationale: str = ""
+
+
 class OrchestratorPlanRequest(BaseModel):
     """Input for generating a new plan."""
 
@@ -294,4 +360,8 @@ class WorkflowExecutionPlan(BaseModel):
     estimated_total_cost_usd: float = Field(
         default=0.0,
         description="Estimated total cost for executing this plan.",
+    )
+    decision_trace: Optional['PlannerDecisionTrace'] = Field(
+        default=None,
+        description="Complete decision trace from adaptive planner. None for legacy plans.",
     )
