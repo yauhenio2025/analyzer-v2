@@ -215,7 +215,10 @@ def assemble_workflow_catalog(workflow_key: str = None) -> list[dict[str, Any]]:
         workflows = [registry.get(workflow_key)]
         workflows = [w for w in workflows if w is not None]
     else:
-        workflows = registry.list_all()
+        # list_all() returns WorkflowSummary (no .phases), so resolve full defs
+        summaries = registry.list_all()
+        workflows = [registry.get(s.workflow_key) for s in summaries]
+        workflows = [w for w in workflows if w is not None]
 
     entries = []
     for workflow in workflows:
