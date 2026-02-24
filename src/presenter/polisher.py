@@ -96,8 +96,20 @@ def polish_view(
         logger.error(f"[polish] Failed to parse LLM JSON: {e}\nRaw: {raw_text[:500]}")
         raise RuntimeError(f"Polish LLM returned invalid JSON: {e}") from e
 
-    # 6. Build result
-    style_overrides = StyleOverrides(**parsed.get("style_overrides", {}))
+    # 6. Build result — resilient to malformed LLM output
+    try:
+        raw_so = parsed.get("style_overrides", {})
+        sanitized_so = {}
+        for k, v in raw_so.items():
+            if isinstance(v, dict):
+                sanitized_so[k] = {sk: str(sv) for sk, sv in v.items()}
+            else:
+                sanitized_so[k] = v
+        style_overrides = StyleOverrides(**sanitized_so)
+    except Exception as e:
+        logger.warning(f"[polish] Failed to parse style_overrides, using defaults: {e}")
+        style_overrides = StyleOverrides()
+
     polished_config = parsed.get("polished_renderer_config", payload.renderer_config)
     section_descriptions = parsed.get("section_descriptions", {})
     changes_summary = parsed.get("changes_summary", "")
@@ -224,8 +236,23 @@ def polish_section(
         )
         raise RuntimeError(f"Section polish LLM returned invalid JSON: {e}") from e
 
-    # 8. Build result
-    style_overrides = StyleOverrides(**parsed.get("style_overrides", {}))
+    # 8. Build result — resilient to malformed LLM output
+    try:
+        raw_so = parsed.get("style_overrides", {})
+        # Coerce all values to strings in nested dicts (LLM sometimes returns ints)
+        sanitized_so = {}
+        for k, v in raw_so.items():
+            if isinstance(v, dict):
+                sanitized_so[k] = {sk: str(sv) for sk, sv in v.items()}
+            else:
+                sanitized_so[k] = v
+        style_overrides = StyleOverrides(**sanitized_so)
+    except Exception as e:
+        logger.warning(
+            f"[polish-section] Failed to parse style_overrides, using defaults: {e}"
+        )
+        style_overrides = StyleOverrides()
+
     config_patch = parsed.get("renderer_config_patch", {})
     section_description = parsed.get("section_description", "")
     changes_summary = parsed.get("changes_summary", "")
