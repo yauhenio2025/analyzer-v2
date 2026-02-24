@@ -225,6 +225,50 @@ class ViewSummary(BaseModel):
     config_hints: list[str] = Field(default_factory=list)
 
 
+class ChainViewInfo(BaseModel):
+    """Enriched view summary showing how a chain's output reaches the UI.
+
+    Returned by the /for-chain/{chain_key} endpoint to show the
+    chain → view → renderer → sub-renderer presentation pipeline.
+    """
+
+    view_key: str
+    view_name: str
+    description: str = ""
+    target_app: str = "generic"
+    target_page: str = ""
+    renderer_type: str = ""
+    presentation_stance: Optional[str] = None
+    position: float = 0
+    parent_view_key: Optional[str] = None
+    sections_count: int = 0
+    has_sub_renderers: bool = False
+    config_hints: list[str] = Field(default_factory=list)
+    # Data source details — the key addition over ViewSummary
+    source_chain_key: Optional[str] = Field(
+        default=None, description="Chain key in data_source (if view references chain directly)"
+    )
+    source_engine_key: Optional[str] = Field(
+        default=None, description="Engine key in data_source (if view references a specific engine)"
+    )
+    source_scope: str = Field(
+        default="aggregated", description="Data scope: aggregated or per_item"
+    )
+    source_type: str = Field(
+        default="primary",
+        description="'primary' if chain/engine is in data_source, 'secondary' if in secondary_sources",
+    )
+    # Sub-renderer breakdown
+    sub_renderers_used: list[str] = Field(
+        default_factory=list,
+        description="List of sub-renderer types used (e.g., ['mini_card_list', 'prose_block'])",
+    )
+    children: list["ChainViewInfo"] = Field(
+        default_factory=list,
+        description="Child views nested under this view",
+    )
+
+
 class ComposedView(BaseModel):
     """A view with its children resolved for tree composition."""
 

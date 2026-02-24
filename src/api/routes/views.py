@@ -10,8 +10,10 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException, Query
 
 from src.api.routes.meta import mark_definitions_modified
+from src.chains.registry import get_chain_registry
 from src.views.registry import get_view_registry
 from src.views.schemas import (
+    ChainViewInfo,
     ComposedPageResponse,
     ViewDefinition,
     ViewSummary,
@@ -98,6 +100,34 @@ async def views_for_workflow(workflow_key: str):
         )
         for v in sorted(views, key=lambda v: v.position)
     ]
+
+
+# ── Chain lookup ──────────────────────────────────────────
+
+
+@router.get(
+    "/for-chain/{chain_key}",
+    response_model=list[ChainViewInfo],
+)
+async def views_for_chain(chain_key: str):
+    """Get all views connected to a chain, showing the full presentation pipeline.
+
+    Returns views that reference this chain directly or reference engines
+    within the chain. Each result includes data source details, renderer type,
+    and sub-renderer breakdown — the complete chain → view → renderer → sub-renderer path.
+
+    Views are returned as a tree: child views nested under their parents.
+    """
+    chain_registry = get_chain_registry()
+    chain = chain_registry.get(chain_key)
+    if chain is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Chain '{chain_key}' not found",
+        )
+
+    view_registry = get_view_registry()
+    return view_registry.for_chain(chain_key, chain.engine_keys)
 
 
 # ── Detail endpoint ──────────────────────────────────────

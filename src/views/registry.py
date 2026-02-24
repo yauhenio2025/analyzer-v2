@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Optional
 
 from .schemas import (
+    ChainViewInfo,
     ComposedPageResponse,
     ComposedView,
     ViewDefinition,
@@ -169,6 +170,106 @@ class ViewRegistry:
             if v.data_source.workflow_key == workflow_key
             or any(s.workflow_key == workflow_key for s in v.secondary_sources)
         ]
+
+    def for_chain(self, chain_key: str, engine_keys: list[str]) -> list[ChainViewInfo]:
+        """Get all views connected to a chain, with presentation pipeline details.
+
+        Finds views where:
+        - data_source.chain_key matches the chain
+        - data_source.engine_key is one of the chain's engines
+        - secondary_sources reference the chain or its engines
+
+        Returns enriched ChainViewInfo objects with data source details,
+        sub-renderer breakdown, and nested children.
+        """
+        self.load()
+
+        chain_keys_set = {chain_key}
+        engine_keys_set = set(engine_keys)
+
+        # Collect all matching views with their source type
+        matches: list[tuple[ViewDefinition, str, str, str]] = []  # view, source_type, chain_or_engine, scope
+
+        for v in self._views.values():
+            ds = v.data_source
+            # Primary data source matches chain directly
+            if ds.chain_key in chain_keys_set:
+                matches.append((v, "primary", f"chain:{ds.chain_key}", ds.scope or "aggregated"))
+            # Primary data source matches an engine in the chain
+            elif ds.engine_key in engine_keys_set:
+                matches.append((v, "primary", f"engine:{ds.engine_key}", ds.scope or "aggregated"))
+            else:
+                # Check secondary sources
+                for sec in v.secondary_sources:
+                    if sec.chain_key in chain_keys_set:
+                        matches.append((v, "secondary", f"chain:{sec.chain_key}", sec.scope or "aggregated"))
+                        break
+                    elif sec.engine_key in engine_keys_set:
+                        matches.append((v, "secondary", f"engine:{sec.engine_key}", sec.scope or "aggregated"))
+                        break
+
+        # Build ChainViewInfo objects
+        info_map: dict[str, ChainViewInfo] = {}
+        for v, source_type, source_ref, scope in matches:
+            # Extract sub-renderer types
+            sub_types = self._extract_sub_renderer_types(v.renderer_config or {})
+
+            src_chain = v.data_source.chain_key
+            src_engine = v.data_source.engine_key
+
+            info = ChainViewInfo(
+                view_key=v.view_key,
+                view_name=v.view_name,
+                description=v.description,
+                target_app=v.target_app,
+                target_page=v.target_page,
+                renderer_type=v.renderer_type,
+                presentation_stance=v.presentation_stance,
+                position=v.position,
+                parent_view_key=v.parent_view_key,
+                sections_count=len((v.renderer_config or {}).get("sections", [])),
+                has_sub_renderers=bool(sub_types),
+                config_hints=self._build_summary(v).config_hints,
+                source_chain_key=src_chain,
+                source_engine_key=src_engine,
+                source_scope=scope,
+                source_type=source_type,
+                sub_renderers_used=sorted(sub_types),
+            )
+            info_map[v.view_key] = info
+
+        # Nest children under parents
+        roots: list[ChainViewInfo] = []
+        for info in info_map.values():
+            if info.parent_view_key and info.parent_view_key in info_map:
+                info_map[info.parent_view_key].children.append(info)
+            else:
+                roots.append(info)
+
+        # Sort by position
+        roots.sort(key=lambda v: v.position)
+        for info in info_map.values():
+            info.children.sort(key=lambda c: c.position)
+
+        return roots
+
+    @staticmethod
+    def _extract_sub_renderer_types(renderer_config: dict) -> set[str]:
+        """Extract all sub-renderer type names from renderer_config."""
+        sub_types: set[str] = set()
+        sr = renderer_config.get("section_renderers", {})
+        for sr_val in sr.values():
+            if isinstance(sr_val, dict):
+                if sr_val.get("renderer_type"):
+                    sub_types.add(sr_val["renderer_type"])
+                for sub in (sr_val.get("sub_renderers") or {}).values():
+                    if isinstance(sub, dict) and sub.get("renderer_type"):
+                        sub_types.add(sub["renderer_type"])
+        # Also check tab_renderers for tab views
+        for tab_r in renderer_config.get("tab_renderers", {}).values():
+            if isinstance(tab_r, dict) and tab_r.get("renderer_type"):
+                sub_types.add(tab_r["renderer_type"])
+        return sub_types
 
     def compose_tree(self, app: str, page: str) -> ComposedPageResponse:
         """Build a nested tree of views for a specific app/page.
