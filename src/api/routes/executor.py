@@ -212,6 +212,21 @@ async def cancel_job(job_id: str, body: Optional[CancelRequest] = None):
     return {"job_id": job_id, "status": "cancelled", "message": "Cancellation requested"}
 
 
+@router.post("/jobs/{job_id}/force-cancel")
+async def force_cancel_job(job_id: str):
+    """Force-cancel a running job without requiring a cancel_token.
+
+    Admin endpoint for emergencies when the cancel_token is not available.
+    """
+    success, message = request_cancellation(job_id, force=True)
+    if not success:
+        job = get_job(job_id)
+        if job is None:
+            raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+        raise HTTPException(status_code=400, detail=message)
+    return {"job_id": job_id, "status": "cancelled", "message": "Force-cancellation requested (token bypassed)"}
+
+
 @router.get("/jobs/{job_id}/results")
 async def get_job_results(job_id: str):
     """Get all phase outputs as summaries.

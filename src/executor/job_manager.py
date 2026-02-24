@@ -262,7 +262,7 @@ def list_jobs(
 
 # --- Cancellation ---
 
-def request_cancellation(job_id: str, cancel_token: Optional[str] = None) -> tuple[bool, str]:
+def request_cancellation(job_id: str, cancel_token: Optional[str] = None, force: bool = False) -> tuple[bool, str]:
     """Request cancellation of a running job.
 
     Sets both the in-memory flag (for fast checking during streaming)
@@ -270,6 +270,7 @@ def request_cancellation(job_id: str, cancel_token: Optional[str] = None) -> tup
 
     Args:
         cancel_token: Required. Must match the token issued at job creation.
+        force: If True, skip token verification (admin use only).
 
     Returns (success: bool, message: str).
     """
@@ -280,14 +281,17 @@ def request_cancellation(job_id: str, cancel_token: Optional[str] = None) -> tup
     if job["status"] not in ("pending", "running"):
         return (False, f"Cannot cancel job in status: {job['status']}")
 
-    # Verify cancel token
-    stored_token = job.get("cancel_token")
-    if stored_token and cancel_token != stored_token:
-        logger.warning(
-            f"Cancel REJECTED for job {job_id}: invalid token "
-            f"(got {cancel_token!r}, expected {stored_token!r})"
-        )
-        return (False, "Invalid cancel_token. Only the session that created this job can cancel it.")
+    # Verify cancel token (skip if force=True)
+    if not force:
+        stored_token = job.get("cancel_token")
+        if stored_token and cancel_token != stored_token:
+            logger.warning(
+                f"Cancel REJECTED for job {job_id}: invalid token "
+                f"(got {cancel_token!r}, expected {stored_token!r})"
+            )
+            return (False, "Invalid cancel_token. Only the session that created this job can cancel it.")
+    else:
+        logger.warning(f"Force-cancel invoked for job {job_id} (token check bypassed)")
 
     # Set in-memory flag
     with _flags_lock:
