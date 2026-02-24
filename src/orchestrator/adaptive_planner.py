@@ -247,14 +247,15 @@ def generate_adaptive_plan(
     request: OrchestratorPlanRequest,
     book_samples: list[BookSample],
     objective,  # AnalysisObjective
+    planning_model: Optional[str] = None,
 ) -> WorkflowExecutionPlan:
-    """Generate an adaptive analysis plan using Opus.
+    """Generate an adaptive analysis plan using an LLM.
 
     This is the core function. It:
     1. Assembles the full capability catalog
     2. Optionally loads the baseline workflow
     3. Builds a rich prompt with objective + samples + catalog
-    4. Calls Opus for strategic planning
+    4. Calls the planning model for strategic reasoning
     5. Parses and validates the plan
     6. Saves to disk
 
@@ -262,13 +263,15 @@ def generate_adaptive_plan(
         request: The analysis request (thinker context, works metadata)
         book_samples: Pre-computed book samples from the sampler
         objective: The analysis objective driving this plan
+        planning_model: Model ID for plan generation (default: claude-opus-4-6).
+                       Supports 'claude-opus-4-6', 'gemini-3.1-pro-preview', etc.
 
     Returns:
         A WorkflowExecutionPlan with adaptive fields populated
     """
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        raise RuntimeError("LLM service unavailable. Set ANTHROPIC_API_KEY.")
+    from src.llm.factory import get_backend
+
+    model = planning_model or "claude-opus-4-6"
 
     # Assemble catalog — no workflow_key filter so we see ALL engines
     catalog = assemble_full_catalog()
@@ -298,52 +301,33 @@ def generate_adaptive_plan(
 
     logger.info(
         f"Generating adaptive plan for {request.thinker_name} — "
+        f"model: {model}, "
         f"objective: {objective.objective_key}, "
         f"target: {request.target_work.title}, "
         f"{len(request.prior_works)} prior works, "
         f"{len(book_samples)} book samples"
     )
 
-    # Call Opus for adaptive planning (needs deep reasoning)
-    model = "claude-opus-4-6"
-    raw_text = ""
-    total_input = 0
-    total_output = 0
-
+    # Call planning model (needs deep reasoning)
+    backend = get_backend(model)
     try:
-        import httpx
-        from anthropic import Anthropic
-        client = Anthropic(
-            timeout=httpx.Timeout(connect=60.0, read=600.0, write=60.0, pool=60.0),
-        )
-
-        response = client.messages.create(
-            model=model,
+        result = backend.execute_sync(
+            system_prompt=system_prompt,
+            user_message=user_prompt,
             max_tokens=48000,
-            thinking={
-                "type": "enabled",
-                "budget_tokens": 16000,
-            },
-            system=system_prompt,
-            messages=[{"role": "user", "content": user_prompt}],
+            thinking_effort="high",
+            label="adaptive_planner",
         )
-
-        # Extract text from response (skip thinking blocks)
-        for block in response.content:
-            if hasattr(block, "text"):
-                raw_text = block.text
-                break
-
-        total_input = response.usage.input_tokens
-        total_output = response.usage.output_tokens
-
+        raw_text = result.content
+        total_input = result.input_tokens
+        total_output = result.output_tokens
     except Exception as e:
         logger.error(f"Adaptive plan generation failed: {e}")
         raise RuntimeError(f"Adaptive plan generation failed: {e}") from e
 
     logger.info(
         f"Adaptive plan generation complete — "
-        f"input: {total_input:,}, output: {total_output:,} tokens"
+        f"model: {model}, input: {total_input:,}, output: {total_output:,} tokens"
     )
 
     # Parse LLM response

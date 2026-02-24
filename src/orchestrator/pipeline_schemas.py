@@ -69,6 +69,18 @@ class AnalyzeRequest(BaseModel):
         "Valid keys: 'genealogical', 'logical', etc.",
     )
 
+    # Model selection
+    planning_model: Optional[str] = Field(
+        default=None,
+        description="Model for plan generation: 'claude-opus-4-6' or 'gemini-3.1-pro-preview'. "
+        "Default: claude-opus-4-6.",
+    )
+    execution_model: Optional[str] = Field(
+        default=None,
+        description="Default model for phase execution: 'claude-sonnet-4-6' or 'gemini-3.1-pro-preview'. "
+        "Default: per-phase model_hint from plan. Overrides plan defaults.",
+    )
+
 
 class AnalyzeResponse(BaseModel):
     """Response from the all-in-one analyze endpoint."""

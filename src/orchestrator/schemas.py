@@ -271,6 +271,18 @@ class OrchestratorPlanRequest(BaseModel):
         description="Optional hint about what to focus on (e.g., 'vocabulary evolution', 'Marxist origins')",
     )
 
+    # Model selection
+    planning_model: Optional[str] = Field(
+        default=None,
+        description="Model for plan generation: 'claude-opus-4-6', 'gemini-3.1-pro-preview', etc. "
+        "None = default (claude-opus-4-6).",
+    )
+    execution_model: Optional[str] = Field(
+        default=None,
+        description="Default model for phase execution: 'claude-sonnet-4-6', 'gemini-3.1-pro-preview', etc. "
+        "None = use plan's per-phase model_hint. Can be overridden per-phase.",
+    )
+
 
 class PlanRefinementRequest(BaseModel):
     """Input for refining an existing plan."""
@@ -345,6 +357,14 @@ class WorkflowExecutionPlan(BaseModel):
     generation_tokens: int = Field(
         default=0,
         description="Tokens used to generate this plan",
+    )
+
+    # Model selection
+    execution_model: Optional[str] = Field(
+        default=None,
+        description="Default execution model for all phases. "
+        "Per-phase model_hint takes priority if set. "
+        "E.g., 'claude-sonnet-4-6', 'gemini-3.1-pro-preview'.",
     )
 
     # Adaptive orchestrator fields

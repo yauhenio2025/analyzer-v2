@@ -86,6 +86,10 @@ def _run_checkpoint_mode(request: AnalyzeRequest) -> AnalyzeResponse:
         # Legacy mode: fixed pipeline
         plan = generate_plan(plan_request)
 
+    # Apply execution_model to plan if specified
+    if request.execution_model:
+        plan.execution_model = request.execution_model
+
     logger.info(
         f"Generated plan {plan.plan_id} — "
         f"{len(plan.phases)} phases, {plan.estimated_llm_calls} estimated calls"
@@ -175,11 +179,12 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
         _store_request_snapshot(job_id, plan_request, document_ids)
 
         # ── Stage 2: Generate plan ──
+        planning_model_name = request.planning_model or "claude-opus-4-6"
         update_job_progress(
             job_id,
             current_phase=0,
             phase_name="Generating Analysis Plan",
-            detail="Claude Opus analyzing thinker context and generating execution plan...",
+            detail=f"{planning_model_name} analyzing thinker context and generating execution plan...",
         )
 
         if request.objective_key:
@@ -188,6 +193,10 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
         else:
             # Legacy mode: fixed pipeline
             plan = generate_plan(plan_request)
+
+        # Apply execution_model to plan if specified
+        if request.execution_model:
+            plan.execution_model = request.execution_model
 
         logger.info(
             f"[Pipeline {job_id}] Generated plan {plan.plan_id} — "
@@ -348,6 +357,7 @@ def _generate_adaptive(
         request=plan_request,
         book_samples=book_samples,
         objective=objective,
+        planning_model=request.planning_model,
     )
 
     return plan

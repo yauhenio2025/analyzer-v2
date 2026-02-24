@@ -134,6 +134,21 @@ def execute_plan(
         # Build the phase lookup: phase_number -> WorkflowPhase
         workflow_phases = {p.phase_number: p for p in workflow.phases}
 
+        # Apply execution_model to phases without explicit model_hint.
+        # This allows the user to override the default model for all phases
+        # while still allowing per-phase model_hint overrides in the plan.
+        if plan.execution_model:
+            applied_count = 0
+            for pp in plan.phases:
+                if pp.model_hint is None:
+                    pp.model_hint = plan.execution_model
+                    applied_count += 1
+            if applied_count:
+                logger.info(
+                    f"Applied execution_model={plan.execution_model} to "
+                    f"{applied_count}/{len(plan.phases)} phases (without explicit model_hint)"
+                )
+
         # Build plan phases lookup
         plan_phases = {p.phase_number: p for p in plan.phases}
 
