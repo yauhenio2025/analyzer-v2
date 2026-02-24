@@ -108,20 +108,25 @@
     "gemini_network_graph"
   ],
   "paradigm_keys": [],
+  "function": "logic",
+  "apps": ["critic"],
   "source_file": "analyzer/src/engines/structural_pattern_detector.py",
   "stage_context": {
-    "framework_key": null,
-    "additional_frameworks": [],
+    "framework_key": "rhetorical_structure",
+    "additional_frameworks": ["narrative_theory", "genre_theory"],
     "extraction": {
       "analysis_type": "pattern",
       "analysis_type_plural": "patterns",
       "core_question": "What structural patterns organize this discourse?",
       "extraction_steps": [
-        "ARGUMENTATIVE STRUCTURES",
-        "NARRATIVE PATTERNS",
-        "RHETORICAL STRUCTURES",
-        "ORGANIZATIONAL PATTERNS",
-        "COMPOSITIONAL STRATEGIES"
+        "META-STRUCTURAL ANALYSIS: How does the text's physical organization (chapter divisions, section breaks, ordering of topics) serve its argumentative goals? Where does the structure ITSELF make an argument — e.g., placing the strongest evidence last for cumulative effect, or sandwiching a weak argument between strong ones?",
+        "SECTION-FUNCTION MAPPING: For each major section, identify its argumentative function: premise-setting, evidence-presentation, objection-anticipation, synthesis, conclusion-drawing, scene-setting, throat-clearing, or performative. Map the functional sequence — does the text follow a standard pattern (claim→evidence→discussion) or subvert it?",
+        "STRATEGIC PLACEMENT ANALYSIS: What is placed first (primacy), last (recency), or center (buried)? Where are the strongest arguments placed? Where are qualifications and concessions positioned — prominently or buried? Note strategic burial of counterevidence and strategic prominence of favorable evidence.",
+        "INFORMATION ARCHITECTURE: How does information flow through the text? What does the reader learn when? Where is information withheld for later revelation vs. front-loaded? Map the 'knowledge gradient' — the reader's evolving understanding as they progress through the text.",
+        "TRANSITION LOGIC: How do sections connect? Classify transitions as logical (therefore, however, nonetheless), temporal (then, subsequently), associative (similarly, relatedly), or unmarked (juxtaposition without connective). Where are transitions weakest — where does the argument leap rather than step?",
+        "REPETITION AND VARIATION PATTERNS: What themes, phrases, or arguments recur throughout the text? With what variations? Where does repetition serve legitimate emphasis vs. reveal circularity? Track the evolution of repeated elements — what changes between iterations?",
+        "RHETORICAL PACING AND DENSITY: Where is the text dense with argument vs. expansive with illustration? Where is it fast-moving (many claims per paragraph) vs. deliberate (extended development of single points)? Pacing shifts often signal what the author considers most important.",
+        "GENRE CONVENTION ANALYSIS: What genre conventions does the text follow (academic paper, dialectical treatise, manifesto, literature review, polemic, etc.)? Where does it violate conventions and to what argumentative effect? Genre choice is itself an argument about how the subject should be approached."
       ],
       "key_fields": {},
       "id_field": "structural_id",
@@ -153,16 +158,21 @@
       "special_instructions": null
     },
     "concretization": {
-      "id_examples": [],
-      "naming_guidance": "",
+      "id_examples": [
+        {"id": "STRUCT-CHRON-001", "description": "Chronological argument structure with cumulative evidence building"},
+        {"id": "STRUCT-DIAL-002", "description": "Dialectical structure: thesis chapter, antithesis chapter, synthesis chapter"},
+        {"id": "STRUCT-NEST-003", "description": "Nested argument with main claim containing recursive sub-claims"},
+        {"id": "STRUCT-SAND-004", "description": "Sandwich structure: strong point, weak concession, strong rebuttal"}
+      ],
+      "naming_guidance": "Use STRUCT-{TYPE}-{NNN} where TYPE indicates the structural pattern (CHRON=chronological, DIAL=dialectical, NEST=nested, SAND=sandwich, META=meta-structural, TRAN=transitional)",
       "recommended_table_types": [],
       "recommended_visual_patterns": []
     },
     "audience_vocabulary": {
-      "researcher": {},
-      "analyst": {},
-      "executive": {},
-      "activist": {}
+      "researcher": {"structural_analysis": "meta-structural analysis", "argument_flow": "argumentative architecture"},
+      "analyst": {"structural_analysis": "text organization analysis", "argument_flow": "information flow mapping"},
+      "executive": {"structural_analysis": "document structure review", "argument_flow": "narrative flow assessment"},
+      "activist": {"structural_analysis": "strategic framing analysis", "argument_flow": "persuasion structure mapping"}
     },
     "skip_concretization": false
   }

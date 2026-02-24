@@ -1,0 +1,35 @@
+{
+  "chain_key": "logical_architecture_analysis",
+  "chain_name": "Logical Architecture Analysis",
+  "description": "Comprehensive logical structure analysis integrating argument mapping, dialectical analysis, modal reasoning, comparative reasoning, epistemological method detection, theory construction analysis, and specialized reasoning classification. Uses LLM selection to pick the 3-4 most relevant engines based on the text's logical character.",
+  "base_description": "Comprehensive logical structure analysis integrating multiple reasoning analysis engines",
+  "version": 1,
+  "engine_keys": [
+    "argument_architecture",
+    "dialectical_structure",
+    "counterfactual_analyzer",
+    "structural_pattern_detector",
+    "concept_centrality_mapper",
+    "comparative_reasoning_analyzer",
+    "modal_reasoning_analyzer",
+    "epistemological_method_detector",
+    "theory_construction_analyzer",
+    "specialized_reasoning_classifier"
+  ],
+  "blend_mode": "llm_selection",
+  "selection_criteria": "Select 3-4 engines most relevant to the text's logical structure. Use argument_architecture for texts with complex argumentative structures (claims, warrants, rebuttals). Use dialectical_structure for texts with thesis-antithesis dynamics or Hegelian/Marxist framing. Use counterfactual_analyzer for texts heavy on causal/what-if reasoning. Use modal_reasoning_analyzer for texts making strong possibility/necessity claims. Use comparative_reasoning_analyzer for analogy-heavy or typology-driven texts. Use epistemological_method_detector for methodologically self-conscious texts. Use theory_construction_analyzer for texts explicitly building theoretical frameworks. Use specialized_reasoning_classifier for texts employing formal reasoning patterns (Bayesian, game-theoretic, normative). Use structural_pattern_detector for texts where the physical organization serves argumentative purposes. Use concept_centrality_mapper for extended works where argument hierarchy and long-distance connections matter.",
+  "max_engines": 4,
+  "merge_strategy": null,
+  "pass_context": true,
+  "category": "logic",
+  "context_parameter_schema": null,
+  "recommended_for": [
+    "philosophical arguments",
+    "academic papers and monographs",
+    "theoretical texts",
+    "policy analysis documents",
+    "scholarly debates and responses",
+    "logical structure assessment",
+    "book-length works requiring deep logical analysis"
+  ]
+}

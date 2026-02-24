@@ -1,0 +1,79 @@
+{
+  "engine_key": "comparative_reasoning_analyzer",
+  "engine_name": "Comparative Reasoning Analyzer",
+  "description": "Analyzes how texts use comparison, contrast, analogy, and relational reasoning to build arguments. Maps dichotomies (real vs. false), analogical transfers (source/target domain mapping), scalar arguments (continuum claims), typological reasoning (classification-based arguments), and synecdochic reasoning (part-for-whole).",
+  "version": 1,
+  "category": "argument",
+  "kind": "extraction",
+  "reasoning_domain": "comparative_reasoning",
+  "researcher_question": "How does the text use comparison, contrast, and analogy to build arguments, and how rigorous are these comparative moves?",
+  "stage_context": {
+    "framework_key": "lakoff_johnson",
+    "additional_frameworks": ["gentner_analogy", "perelman_argumentation"],
+    "extraction": {
+      "analysis_type": "comparative reasoning structure",
+      "analysis_type_plural": "comparative reasoning structures",
+      "core_question": "How does the text use comparison, contrast, and analogy to build arguments?",
+      "id_field": "comp_id",
+      "key_relationships": ["source_domain", "target_domain", "mapping_validity"],
+      "extraction_steps": [
+        "IDENTIFY DICHOTOMIES AND BINARY OPPOSITIONS: Where does the text set up either/or scenarios? For each: are the two options genuinely exhaustive (real dichotomy) or is there a suppressed middle (false dichotomy)? Is the binary doing analytical work or merely rhetorical work? Note where dichotomies structure entire chapters or arguments.",
+        "MAP ANALOGICAL TRANSFERS: Where does the text reason by analogy — transferring attributes, relations, or conclusions from one domain to another? For each: identify the source domain, the target domain, and the specific mappings. Critically assess: where does the analogy hold and where does it break down? What is hidden by the analogy?",
+        "DETECT SCALAR ARGUMENTS: Where does the text position concepts along continua rather than in categories ('more democratic', 'less efficient', 'increasingly unstable')? Identify the scale, what anchors its endpoints, and whether the scalar framing is justified or smuggles in a false continuum.",
+        "ANALYZE TYPOLOGICAL REASONING: Where does the text sort phenomena into types, ideal types, or classification schemes to make arguments? Assess: are the types jointly exhaustive and mutually exclusive? Where do borderline cases challenge the typology? Is the classification doing analytical work or just organizing?",
+        "IDENTIFY SYNECDOCHIC REASONING: Where does a part stand for the whole or the whole for a part in the argument? Where does a single example represent an entire class? Assess: is the part genuinely representative or is this a misleading generalization?",
+        "MAP EVALUATIVE COMPARISONS: Where does the text compare entities, approaches, or positions and rank them? On what criteria? Are the criteria explicit or smuggled in? Would different criteria reverse the ranking?",
+        "DETECT PROPORTIONAL REASONING: Where does the text argue about relationships between ratios or relationships ('as X is to Y, so A is to B')? Is the proportion valid or does it assume a similarity that doesn't hold?",
+        "ANALYZE CROSS-DOMAIN TRANSFER: Where does the text borrow concepts, methods, or frameworks from one discipline and apply them to another? Assess: what is gained and what is lost in translation? Are the conditions of application met?",
+        "IDENTIFY JUXTAPOSITION AS ARGUMENT: Where does the text place concepts, examples, or data side by side without explicit comparison, relying on the reader to draw implicit comparisons? What argument is being made by juxtaposition?",
+        "ASSESS COMPARISON QUALITY: For each major comparative move, rate: (a) Are the compared items genuinely comparable? (b) Are the dimensions of comparison appropriate? (c) Are disanalogies acknowledged? (d) Does the comparison illuminate or obscure?"
+      ],
+      "special_instructions": "Focus on comparison as a REASONING STRATEGY, not just a rhetorical device. The key question is always: does the comparison advance understanding or smuggle in unexamined assumptions?"
+    },
+    "curation": {
+      "item_type": "comparative reasoning instance",
+      "item_type_plural": "comparative reasoning instances",
+      "consolidation_rules": [
+        "Group by reasoning type (analogy, dichotomy, scalar, typological, synecdoche, evaluative)",
+        "Identify recurring analogical domains — which source domains does the author favor?",
+        "Map the network of comparisons — which concepts are repeatedly compared?",
+        "Flag overextended analogies that carry more argumentative weight than they can bear",
+        "Identify comparison chains where one comparison builds on another"
+      ],
+      "cross_doc_patterns": ["recurring analogies", "shared source domains", "competing typologies"],
+      "synthesis_outputs": ["comparison quality assessment", "analogical network map", "dichotomy inventory"]
+    },
+    "concretization": {
+      "id_examples": [
+        {"id": "COMP-ANAL-001", "description": "Economy-as-organism analogy mapping growth/decay/health onto economic systems"},
+        {"id": "COMP-DICH-002", "description": "Structure/agency dichotomy framing sociological explanation"},
+        {"id": "COMP-SCAL-003", "description": "Democracy continuum from authoritarian to fully participatory"},
+        {"id": "COMP-TYPE-004", "description": "Weber's ideal types of authority (traditional, charismatic, rational-legal)"},
+        {"id": "COMP-SYNE-005", "description": "Single case study standing for an entire class of phenomena"}
+      ],
+      "naming_guidance": "Use COMP-{TYPE}-{NNN} where TYPE is ANAL (analogy), DICH (dichotomy), SCAL (scalar), TYPE (typological), SYNE (synecdoche), EVAL (evaluative), PROP (proportional), JUXT (juxtaposition)",
+      "recommended_tables": ["Comparison type × quality assessment", "Source domain → target domain mapping table"],
+      "recommended_visuals": ["Analogical mapping diagram", "Typological grid", "Scale visualization"]
+    },
+    "audience_vocabulary": {
+      "researcher": {"comparative_analysis": "analogical and comparative reasoning analysis", "domain_mapping": "cross-domain inferential transfer"},
+      "analyst": {"comparative_analysis": "comparison and analogy assessment", "domain_mapping": "framework transfer analysis"},
+      "executive": {"comparative_analysis": "comparison-based argument review", "domain_mapping": "analogy quality check"},
+      "activist": {"comparative_analysis": "framing through comparison analysis", "domain_mapping": "metaphor and analogy mapping"}
+    },
+    "skip_concretization": false
+  },
+  "canonical_schema": {
+    "dichotomies": [{"binary": "string", "is_exhaustive": "boolean", "suppressed_middle": "string", "argumentative_function": "string"}],
+    "analogical_transfers": [{"source_domain": "string", "target_domain": "string", "mappings": ["string"], "where_breaks_down": "string", "argumentative_weight": "string"}],
+    "scalar_arguments": [{"scale": "string", "endpoints": ["string"], "position_claimed": "string", "justification_quality": "string"}],
+    "typological_reasoning": [{"typology": "string", "types": ["string"], "borderline_cases": ["string"], "analytical_value": "string"}],
+    "synecdochic_reasoning": [{"part": "string", "whole": "string", "representativeness": "string"}],
+    "evaluative_comparisons": [{"compared_items": ["string"], "criteria": ["string"], "ranking": "string", "criteria_justification": "string"}]
+  },
+  "extraction_focus": ["analogies", "dichotomies", "comparisons", "typologies", "scalar_claims"],
+  "primary_output_modes": ["smart_table", "integrated_report"],
+  "paradigm_keys": [],
+  "apps": ["critic"],
+  "function": "logic"
+}

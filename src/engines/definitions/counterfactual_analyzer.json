@@ -1,5 +1,7 @@
 {
   "engine_key": "counterfactual_analyzer",
+  "function": "logic",
+  "apps": ["critic"],
   "engine_name": "Counterfactual Analyzer",
   "description": "Deep analysis of counterfactual reasoning using Lewis-Stalnaker possible worlds semantics and historical counterfactual methodology. Reveals whether 'what if' claims follow the minimal rewrite principle, identifies closest possible worlds, traces causal chains through counterfactual scenarios, and evaluates historical plausibility using Lebow/Tetlock criteria. Exposes butterfly effects, cotenability violations, and counterfactual abuse where authors slide between backtracking and non-backtracking readings to suit their arguments.",
   "version": 1,
@@ -539,6 +541,12 @@
         }
       ]
     },
+    "modal_and_hypothetical": {
+      "modal_claims": [{"claim": "string", "modal_type": "string", "operator": "string", "modality_kind": "string"}],
+      "thought_experiments": [{"scenario": "string", "principle_tested": "string", "coherence_assessment": "string", "hidden_assumptions": ["string"]}],
+      "threshold_arguments": [{"boundary_claim": "string", "threshold_value": "string", "justification_quality": "string"}],
+      "branching_structures": [{"decision_point": "string", "explored_branches": ["string"], "ignored_branches": ["string"]}]
+    },
     "meta": {
       "total_counterfactuals": "number",
       "total_possible_worlds": "number",
@@ -594,7 +602,11 @@
         "STEP 13: CHECK FOR OVERDETERMINATION AND PREEMPTION - Was the actual outcome overdetermined (multiple sufficient causes)? Was there preemption (a backup cause would have produced the same effect)? These cases break simple counterfactual reasoning.",
         "STEP 14: IDENTIFY SECOND-ORDER COUNTERFACTUALS - Does the argument involve counterfactuals about counterfactuals? ('If we had believed that intervention would fail, we wouldn't have intervened, and then X'). These compound the uncertainty.",
         "STEP 15: CATALOG COUNTERFACTUAL ABUSES - Flag: cherry_picking_worlds (choosing convenient but distant worlds), backtracking_slide (switching readings mid-argument), butterfly_exploitation (tracing only favorable consequences), miracle_hiding (not acknowledging required violations), false_precision (claiming certainty about distant counterfactual outcomes).",
-        "STEP 16: SYNTHESIZE QUALITY ASSESSMENT - Using all previous analyses, rate the counterfactual's overall quality and provide specific improvement recommendations."
+        "STEP 16: SYNTHESIZE QUALITY ASSESSMENT - Using all previous analyses, rate the counterfactual's overall quality and provide specific improvement recommendations.",
+        "STEP 17: ANALYZE MODAL REASONING — Identify claims about what is possible, necessary, or contingent. Map modal operators: 'could' (epistemic possibility), 'would' (counterfactual), 'must' (necessity), 'might' (weak possibility). Detect modal fallacies: conflating possibility with probability, confusing epistemic possibility ('we don't know it's impossible') with metaphysical possibility ('it could actually happen'). Distinguish alethic modality (about reality), epistemic modality (about knowledge), and deontic modality (about obligation).",
+        "STEP 18: EVALUATE THOUGHT EXPERIMENTS — Where does the text use hypothetical scenarios to test principles or reveal implications? For each: Is the scenario internally coherent? Does it successfully isolate the variable it claims to test? Does it smuggle in hidden assumptions? How robust is the conclusion — does it survive variations in the scenario's parameters?",
+        "STEP 19: MAP THRESHOLD ARGUMENTS — Where does the text argue about tipping points, critical masses, or boundary conditions ('at what point does X become Y')? Identify sorites-susceptible arguments (heap paradox structure). Where are thresholds asserted without justification? Where are gradual transitions falsely presented as sharp boundaries?",
+        "STEP 20: CONSTRUCT BRANCHING POSSIBILITY STRUCTURES — At key decision points or causal junctures, map the branching tree of alternative outcomes. Which branches does the text explore vs. ignore? Are probability assignments justified or assumed? Where does the text's counterfactual imagination seem impoverished — unable to conceive of alternatives outside its theoretical framework?"
       ],
       "key_fields": {
         "cf_id": "Individual counterfactual claims",

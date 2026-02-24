@@ -110,6 +110,7 @@
     "smart_table"
   ],
   "paradigm_keys": [],
+  "function": "logic",
   "source_file": "analyzer/src/engines/concept_centrality_mapper.py",
   "stage_context": {
     "framework_key": null,
@@ -119,11 +120,13 @@
       "analysis_type_plural": "concepts",
       "core_question": "Which concepts are load-bearing and what depends on them?",
       "extraction_steps": [
-        "Read the document carefully to understand the context",
-        "Identify key items matching the analysis type",
-        "Extract relationships between items",
-        "Build the relationship graph",
-        "Verify completeness and accuracy"
+        "MAP HIERARCHICAL ARGUMENT STRUCTURE: Number arguments hierarchically using decimal notation (1.0 = thesis, 1.1 = first supporting argument, 1.1.1 = sub-argument, etc.). Build the full argument tree to maximum depth. Identify the deepest nesting levels — where arguments are most elaborately developed.",
+        "IDENTIFY LOAD-BEARING vs. PERIPHERAL CONCEPTS: Which concepts, if removed, would cause the most argumentative collapse? Rank by removal impact using Quinean web-of-belief analysis. Distinguish structural centrality (many connections) from frequency (many mentions) from indispensability (no substitute).",
+        "TRACK LONG-DISTANCE ARGUMENTS: Where does an argument started in one section get completed much later? Map setup-payoff distances. Identify 'argument loans' — premises introduced early that aren't cashed in until many pages later. Note: these are often the most important structural features of extended works.",
+        "DETECT DELAYED CONCLUSIONS: Where does the text build through intermediate steps, withholding its conclusion? Map the reveal structure. Where is the reader expected to draw their own conclusion from premises (implicature) vs. being told explicitly?",
+        "BUILD CONCEPT DEPENDENCY GRAPHS: For each concept, trace what it presupposes (what must be accepted first) and what depends on it (what falls if it falls). Build the full dependency DAG. Identify circular dependencies — where A requires B requires A.",
+        "MAP CONCEPTUAL HUBS AND BRIDGES: Which concepts connect the most other concepts (hubs)? Which concepts bridge otherwise-disconnected argument clusters (bridges)? Hub removal fragments the network; bridge removal isolates communities.",
+        "TRACE CONCEPT ROLE MIGRATION: Where does a concept change its argumentative role throughout the text — from peripheral to central, from defined to assumed, from contested to accepted, from descriptive to normative? These migrations reveal the text's real priorities."
       ],
       "key_fields": {},
       "id_field": "concept_id",
@@ -157,24 +160,20 @@
     },
     "concretization": {
       "id_examples": [
-        {
-          "from": "C1",
-          "to": "Algorithmic Fairness"
-        },
-        {
-          "from": "C2",
-          "to": "Statistical Parity"
-        }
+        {"id": "CENT-HUB-001", "description": "Hub concept connecting 5+ argument clusters"},
+        {"id": "CENT-BRIDGE-002", "description": "Bridge concept linking two otherwise disconnected argument communities"},
+        {"id": "CENT-LOAD-003", "description": "Load-bearing concept whose removal collapses 3+ dependent arguments"},
+        {"id": "CENT-MIGR-004", "description": "Concept that migrates from peripheral to central role across the text"}
       ],
-      "naming_guidance": "",
+      "naming_guidance": "Use CENT-{ROLE}-{NNN} where ROLE indicates the centrality role (HUB=hub concept, BRIDGE=bridge concept, LOAD=load-bearing, MIGR=migrating, PERI=peripheral, DELAY=delayed conclusion)",
       "recommended_table_types": [],
       "recommended_visual_patterns": []
     },
     "audience_vocabulary": {
-      "researcher": {},
-      "analyst": {},
-      "executive": {},
-      "activist": {}
+      "researcher": {"centrality_analysis": "conceptual centrality mapping", "argument_tracking": "inferential dependency tracking"},
+      "analyst": {"centrality_analysis": "key concept identification", "argument_tracking": "argument flow analysis"},
+      "executive": {"centrality_analysis": "core idea mapping", "argument_tracking": "argument structure overview"},
+      "activist": {"centrality_analysis": "strategic concept identification", "argument_tracking": "argument leverage point mapping"}
     },
     "skip_concretization": false
   },

@@ -1,0 +1,81 @@
+{
+  "engine_key": "specialized_reasoning_classifier",
+  "engine_name": "Specialized Reasoning Classifier",
+  "description": "Identifies and evaluates specialized forms of reasoning beyond standard deductive/inductive logic: Bayesian updating, game-theoretic reasoning, reflective equilibrium, pragmatic contradiction, transcendental arguments, and normative reasoning frameworks (rights-based, consequentialist, deontological, virtue ethics).",
+  "version": 1,
+  "category": "argument",
+  "kind": "extraction",
+  "reasoning_domain": "specialized_reasoning_forms",
+  "researcher_question": "What specialized forms of reasoning does the text employ beyond standard deductive/inductive logic, and how rigorously are they applied?",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": ["rawlsian_justice", "habermasian_discourse"],
+    "extraction": {
+      "analysis_type": "specialized reasoning form",
+      "analysis_type_plural": "specialized reasoning forms",
+      "core_question": "What specialized forms of reasoning does the text employ?",
+      "id_field": "spec_id",
+      "key_relationships": ["reasoning_form", "domain_of_application", "quality_assessment"],
+      "extraction_steps": [
+        "DETECT BAYESIAN REASONING: Where does the text update beliefs based on new evidence? Is prior probability acknowledged? Is the updating proportional to evidence strength? Where does the text fail to update (belief perseverance) or over-update (base rate neglect)?",
+        "IDENTIFY GAME-THEORETIC ARGUMENTS: Where does the text analyze strategic interactions between agents? Identify: prisoners' dilemmas, coordination games, chicken games, assurance games. Are payoff structures specified? Are equilibrium concepts used correctly?",
+        "MAP REFLECTIVE EQUILIBRIUM: Where does the text iterate between principles and particular judgments, adjusting each to fit the other (Rawls)? Is the equilibrium wide (considering background theories) or narrow? Where does it privilege intuitions over principles or vice versa?",
+        "DETECT PRAGMATIC CONTRADICTIONS: Where does the text's PERFORMANCE contradict its CONTENT (Habermas)? Where does the act of making a claim presuppose what the claim denies? E.g., arguing relativistically while implicitly claiming universal validity.",
+        "IDENTIFY TRANSCENDENTAL ARGUMENTS: Where does the text argue from 'X is the case' to 'Y must be the case for X to be possible'? These arguments about necessary preconditions are powerful but easy to overextend. Is the necessity genuine or merely conventional?",
+        "CLASSIFY NORMATIVE REASONING: Where the text makes evaluative or prescriptive claims, identify the framework: (a) Rights-based/deontological: appeals to inviolable entitlements or duties regardless of consequences; (b) Consequentialist: evaluates by outcomes; (c) Virtue ethics: evaluates by character; (d) Care ethics: evaluates by relationships and responsibilities. Where does the text shift between frameworks without acknowledging it?",
+        "DETECT INFERENCE TO BEST EXPLANATION (IBE/ABDUCTION): Where does the text argue 'the best explanation for the data is X'? What makes it 'best'? Are competing explanations considered? Is parsimony weighted appropriately against explanatory power?",
+        "IDENTIFY REFLECTIVE REASONING: Where does the text reason about its own reasoning process? Where does it use second-order principles to evaluate first-order claims? Where does meta-reasoning generate insights vs. infinite regress?",
+        "MAP ANALOGICAL REASONING IN SPECIALIZED DOMAINS: Where does the text transfer conclusions from well-understood domains (physics, biology, economics) to less-understood ones? Is the transfer warranted by structural similarity or merely suggestive?",
+        "DETECT EQUILIBRIUM REASONING: Beyond game theory, where does the text argue from equilibrium concepts — stable states, self-reinforcing dynamics, or self-undermining dynamics? Where does it assume equilibrium exists when the system might be in permanent disequilibrium?",
+        "IDENTIFY PUBLIC REASON ARGUMENTS: Where does the text appeal to principles that would be acceptable across diverse reasonable worldviews (Rawlsian public reason)? Where does it smuggle in sectarian premises under the guise of public reason?",
+        "ASSESS REASONING QUALITY: For each identified specialized reasoning form, rate: (a) Is the form correctly applied? (b) Are its assumptions met in this context? (c) Does the conclusion follow? (d) Are limitations acknowledged?"
+      ],
+      "special_instructions": "Many specialized reasoning forms operate implicitly in academic texts. Authors often use Bayesian-style updating, game-theoretic framing, or normative reasoning without naming these frameworks. Your job is to make the implicit explicit and evaluate whether the reasoning form is correctly applied."
+    },
+    "curation": {
+      "item_type": "specialized reasoning instance",
+      "item_type_plural": "specialized reasoning instances",
+      "consolidation_rules": [
+        "Group by reasoning form (Bayesian, game-theoretic, reflective equilibrium, etc.)",
+        "Identify the text's dominant reasoning mode — what forms appear most frequently?",
+        "Flag misapplied reasoning forms where assumptions aren't met",
+        "Note shifts between reasoning forms — where does the text switch frameworks?",
+        "Assess overall reasoning sophistication and diversity"
+      ],
+      "cross_doc_patterns": ["reasoning form evolution across texts", "framework shifting"],
+      "synthesis_outputs": ["reasoning form inventory", "quality assessment matrix", "framework coherence evaluation"]
+    },
+    "concretization": {
+      "id_examples": [
+        {"id": "SPEC-BAYES-001", "description": "Bayesian updating of political prediction based on new polling data"},
+        {"id": "SPEC-GAME-002", "description": "Prisoners' dilemma framing of collective action problem"},
+        {"id": "SPEC-REFLQ-003", "description": "Reflective equilibrium between justice intuitions and distributive principles"},
+        {"id": "SPEC-PRAGC-004", "description": "Pragmatic contradiction in relativistic argument claiming universal validity"},
+        {"id": "SPEC-TRANS-005", "description": "Transcendental argument about preconditions of democratic deliberation"}
+      ],
+      "naming_guidance": "Use SPEC-{FORM}-{NNN} where FORM is BAYES (Bayesian), GAME (game-theoretic), REFLQ (reflective equilibrium), PRAGC (pragmatic contradiction), TRANS (transcendental), NORM (normative), IBE (inference to best explanation), EQUIL (equilibrium)",
+      "recommended_tables": ["Reasoning form × frequency × quality", "Normative framework usage across arguments"],
+      "recommended_visuals": ["Reasoning form distribution chart", "Game-theoretic payoff matrices"]
+    },
+    "audience_vocabulary": {
+      "researcher": {"reasoning_forms": "specialized reasoning form classification", "normative_analysis": "normative framework identification and assessment"},
+      "analyst": {"reasoning_forms": "advanced argument pattern detection", "normative_analysis": "values and principles analysis"},
+      "executive": {"reasoning_forms": "reasoning approach identification", "normative_analysis": "underlying values assessment"},
+      "activist": {"reasoning_forms": "hidden reasoning pattern exposure", "normative_analysis": "ethical framework analysis"}
+    },
+    "skip_concretization": false
+  },
+  "canonical_schema": {
+    "bayesian_reasoning": [{"prior": "string", "evidence": "string", "posterior": "string", "updating_quality": "string"}],
+    "game_theoretic": [{"game_type": "string", "players": ["string"], "payoff_structure": "string", "equilibrium_concept": "string"}],
+    "reflective_equilibrium": [{"principles": ["string"], "judgments": ["string"], "adjustments_made": "string", "scope": "string"}],
+    "pragmatic_contradictions": [{"claim_content": "string", "performative_presupposition": "string", "contradiction": "string"}],
+    "transcendental_arguments": [{"what_is_the_case": "string", "what_must_be_true": "string", "necessity_type": "string"}],
+    "normative_reasoning": [{"claim": "string", "framework": "string", "justification": "string", "framework_shifts": "string"}]
+  },
+  "extraction_focus": ["bayesian_patterns", "game_theory", "normative_frameworks", "transcendental_arguments", "pragmatic_contradictions"],
+  "primary_output_modes": ["smart_table", "integrated_report"],
+  "paradigm_keys": [],
+  "apps": ["critic"],
+  "function": "logic"
+}

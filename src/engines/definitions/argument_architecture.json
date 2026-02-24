@@ -1,5 +1,7 @@
 {
   "engine_key": "argument_architecture",
+  "function": "logic",
+  "apps": ["critic"],
   "engine_name": "Argument Architecture Mapper",
   "description": "Deep analysis of how arguments are built and how they interact. Reveals the hidden structure of reasoning, the unstated assumptions that hold arguments together, the argumentation schemes that shape how we reason, and where arguments succeed or fail. Uses sophisticated methods from Toulmin, Walton, and pragma-dialectics but outputs in plain language anyone can understand.",
   "version": 1,
@@ -329,6 +331,13 @@
         "vulnerability_assessment": "string"
       }
     ],
+    "advanced_argument_forms": {
+      "enthymemes": [{"explicit_premise": "string", "suppressed_premise": "string", "conclusion": "string", "controversy_level": "string"}],
+      "a_fortiori_arguments": [{"weaker_case": "string", "stronger_case": "string", "comparison_dimension": "string", "direction": "string"}],
+      "dilemmatic_structures": [{"horns": ["string"], "shared_conclusion": "string", "is_exhaustive": "boolean"}],
+      "reductio_arguments": [{"assumed_position": "string", "derived_consequence": "string", "is_genuinely_absurd": "boolean"}],
+      "strategic_concessions": [{"conceded_point": "string", "retained_position": "string", "strategic_function": "string"}]
+    },
     "meta": {
       "total_arguments": "number",
       "total_claims": "number",
@@ -392,7 +401,13 @@
         "IDENTIFY PRESUMPTIONS: What is taken for granted? What would defeat these presumptions?",
         "FIND DIALECTICAL OBLIGATIONS: What must parties respond to? What obligations have they satisfied or failed?",
         "DETECT FALLACIES: What fallacies occur? How serious? What rule is violated?",
-        "ASSESS QUALITY: Relevance? Acceptability? Sufficiency? Overall strength?"
+        "ASSESS QUALITY: Relevance? Acceptability? Sufficiency? Overall strength?",
+        "IDENTIFY ENTHYMEMES: Where are conclusions drawn with suppressed premises? Reconstruct the full syllogistic form including the missing premise. The more controversial the suppressed premise, the more revealing the enthymeme. For each: state the explicit premise, the suppressed premise, and the conclusion.",
+        "DETECT A FORTIORI REASONING: Where does the text argue 'if this holds in the weaker case, it holds all the more in the stronger case'? Identify the comparison dimension and whether the scaling actually holds. Note: a fortiori can be from minor to major (kal va-chomer) or from major to minor.",
+        "MAP DILEMMATIC REASONING: Where does the text present exhaustive alternatives and argue each leads to the same conclusion? Are the horns genuinely exhaustive or is there an unconsidered third option? Distinguish constructive dilemmas (both horns positive) from destructive ones (both negative).",
+        "TRACK BURDEN-SHIFTING MOVES: Where does the text transfer the onus of proof to the opponent? Is the shift legitimate (e.g., after meeting initial evidential burden) or strategic (deflecting rather than proving)? Note where presumptions are invoked.",
+        "IDENTIFY REDUCTIO AD ABSURDUM: Where does the text assume the opponent's position and derive a contradiction or absurd consequence? Verify: is the derivation logically valid? Is the 'absurd' consequence genuinely absurd or merely uncomfortable? Distinguish logical reductio from rhetorical mockery.",
+        "MAP STRATEGIC CONCESSIONS: Where does the text concede a point to strengthen a larger argument? For each: what is conceded, what is retained, and how does the concession serve the overall position? Does the concession actually undermine the argument despite the author's intent?"
       ],
       "key_fields": {
         "argument_id": "Individual arguments with Toulmin structure",

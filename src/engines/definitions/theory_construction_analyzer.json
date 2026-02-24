@@ -1,0 +1,79 @@
+{
+  "engine_key": "theory_construction_analyzer",
+  "engine_name": "Theory Construction Analyzer",
+  "description": "Analyzes how academic texts construct theoretical frameworks: paradigmatic commitments, middle-range theory building, conceptual bootstrapping, boundary objects, theoretical parsimony/fecundity tradeoffs, and the relationship between theory and evidence. Detects the theory-building MOVES an author makes, not just the theory's content.",
+  "version": 1,
+  "category": "methodology",
+  "kind": "synthesis",
+  "reasoning_domain": "theory_building_methodology",
+  "researcher_question": "How does the text construct its theoretical framework, and what are the methodological commitments underlying its theory-building?",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": ["kuhnian_paradigms", "mertonian_middle_range"],
+    "extraction": {
+      "analysis_type": "theory construction move",
+      "analysis_type_plural": "theory construction moves",
+      "core_question": "How does the text build its theoretical framework?",
+      "id_field": "theory_id",
+      "key_relationships": ["paradigm", "theory_level", "construction_method"],
+      "extraction_steps": [
+        "IDENTIFY PARADIGMATIC FRAMEWORK: What overarching theoretical paradigm does the text operate within? (Kuhnian paradigm identification) Is it explicit or implicit? Where does the paradigm constrain what questions can be asked and what counts as an answer? Where does the text push against paradigm boundaries?",
+        "MAP MIDDLE-RANGE THEORY BUILDING: Where does the text construct theories between grand theory and empirical generalization (Merton)? Identify: the specific phenomenon to be explained, the mechanisms proposed, the scope conditions, and the testable implications. Where is the theory appropriately modest vs. overreaching?",
+        "DETECT CONCEPTUAL BOOTSTRAPPING: Where does the text pull concepts from one domain and repurpose them in another? Assess: what is preserved in the transfer (structure, content, connotations)? What is distorted? Is the bootstrapping acknowledged or silent?",
+        "IDENTIFY BOUNDARY OBJECTS: Where does the text use concepts that function across multiple communities of practice (Star/Griesemer)? These terms are flexible enough to be meaningful to different groups but robust enough to maintain identity. Where do boundary objects facilitate vs. obscure communication?",
+        "ASSESS LEVEL-OF-ANALYSIS CHOICES: Where does the text choose its analytical scale (micro/meso/macro, individual/institutional/systemic)? Is the choice justified? Where do cross-level inferences create ecological fallacies or atomistic fallacies?",
+        "ANALYZE THEORETICAL PARSIMONY vs. FECUNDITY: Where does the text sacrifice simplicity for explanatory power or vice versa? Is the tradeoff appropriate for the phenomenon? Where could the theory be simplified without loss? Where does oversimplification miss essential complexity?",
+        "MAP THEORETICAL CONJUNCTIONS: Where does the text bring multiple theories into relationship (complementary, competing, synthesizing)? Are the combined theories logically compatible? Where does the synthesis produce genuine insight vs. mere eclecticism?",
+        "DETECT CONCEPTUAL INNOVATION: Where does the text introduce new concepts or substantially redefine existing ones? Assess: does the new concept carve nature at its joints or merely relabel familiar phenomena? What work does it do that existing concepts cannot?",
+        "IDENTIFY OPERATIONALIZATION MOVES: Where does the text translate abstract concepts into observable indicators? Assess construct validity: does the measure capture what the concept means? Where does operationalization distort the concept?",
+        "ASSESS THEORY-EVIDENCE RELATIONSHIP: How does the text connect its theoretical claims to evidence? Is it theory-generating (evidence → theory), theory-testing (theory → evidence), or abductive (iterating between)? Where is the connection between theory and evidence weakest?"
+      ],
+      "special_instructions": "Focus on theory-building as a PRACTICE — the specific intellectual moves an author makes to construct and justify their theoretical framework. Every theory makes methodological commitments; your job is to make these visible."
+    },
+    "curation": {
+      "item_type": "theory construction move",
+      "item_type_plural": "theory construction moves",
+      "consolidation_rules": [
+        "Group by construction method (paradigm commitment, middle-range building, bootstrapping, synthesis)",
+        "Map the theory's architecture: which concepts are foundational, which derived?",
+        "Identify the weakest joints in the theoretical construction",
+        "Note where theory-building is self-aware vs. unreflective",
+        "Assess the theory's scope — what does it claim to explain and what does it exclude?"
+      ],
+      "cross_doc_patterns": ["theoretical evolution across texts", "paradigm shifts", "concept migration"],
+      "synthesis_outputs": ["theory architecture map", "construction method inventory", "scope and limitations assessment"]
+    },
+    "concretization": {
+      "id_examples": [
+        {"id": "THEORY-PARA-001", "description": "Implicit Marxist paradigmatic commitment framing economic analysis"},
+        {"id": "THEORY-MID-002", "description": "Middle-range theory of technological unemployment with scope conditions"},
+        {"id": "THEORY-BOOT-003", "description": "Bootstrapping 'metabolism' from biology into political economy"},
+        {"id": "THEORY-BOUND-004", "description": "'Efficiency' as boundary object between economics and engineering"},
+        {"id": "THEORY-INNOV-005", "description": "Novel concept 'platform capitalism' doing work that existing concepts cannot"}
+      ],
+      "naming_guidance": "Use THEORY-{TYPE}-{NNN} where TYPE is PARA (paradigm), MID (middle-range), BOOT (bootstrapping), BOUND (boundary object), CONJ (conjunction), INNOV (innovation), OPER (operationalization), LEVEL (level-of-analysis)",
+      "recommended_tables": ["Theory construction move × type × quality × self-awareness"],
+      "recommended_visuals": ["Theory architecture diagram", "Concept dependency map"]
+    },
+    "audience_vocabulary": {
+      "researcher": {"theory_analysis": "theory construction methodology analysis", "paradigm_detection": "paradigmatic commitment identification"},
+      "analyst": {"theory_analysis": "theoretical framework assessment", "paradigm_detection": "underlying framework identification"},
+      "executive": {"theory_analysis": "framework evaluation", "paradigm_detection": "perspective identification"},
+      "activist": {"theory_analysis": "theoretical assumptions exposure", "paradigm_detection": "ideological framework mapping"}
+    },
+    "skip_concretization": false
+  },
+  "canonical_schema": {
+    "paradigmatic_commitments": [{"paradigm": "string", "explicit_or_implicit": "string", "constraining_effects": ["string"]}],
+    "middle_range_theories": [{"phenomenon": "string", "mechanisms": ["string"], "scope_conditions": ["string"], "testable_implications": ["string"]}],
+    "conceptual_bootstrapping": [{"source_domain": "string", "target_domain": "string", "what_preserved": "string", "what_distorted": "string"}],
+    "boundary_objects": [{"concept": "string", "communities": ["string"], "facilitates_or_obscures": "string"}],
+    "theoretical_conjunctions": [{"theories_combined": ["string"], "compatible": "boolean", "synthesis_quality": "string"}],
+    "conceptual_innovations": [{"new_concept": "string", "what_it_replaces_or_adds": "string", "analytical_value": "string"}]
+  },
+  "extraction_focus": ["paradigm_commitments", "theory_building_moves", "conceptual_innovation", "operationalization", "theory_evidence_relationship"],
+  "primary_output_modes": ["smart_table", "integrated_report"],
+  "paradigm_keys": [],
+  "apps": ["critic"],
+  "function": "logic"
+}

@@ -1,5 +1,7 @@
 {
   "engine_key": "dialectical_structure",
+  "function": "logic",
+  "apps": ["critic"],
   "engine_name": "Dialectical Structure Mapper",
   "description": "Deep analysis of how ideas develop through contradiction and resolution. Reveals the hidden tensions that drive discourse, how opposites secretly depend on each other, and what gets preserved or destroyed when conflicts resolve. Uses sophisticated dialectical methods from Hegel, Marx, and critical theory but outputs in plain language anyone can understand.",
   "version": 1,
@@ -452,6 +454,13 @@
         "what_resolving_root_would_change": "string"
       }
     ],
+    "advanced_dialectical_forms": {
+      "hermeneutic_circles": [{"part_interpretation": "string", "whole_interpretation": "string", "productive_or_vicious": "string"}],
+      "immanent_critiques": [{"texts_own_principle": "string", "where_violated": "string", "severity": "string"}],
+      "negative_dialectic_moments": [{"contradiction": "string", "why_unresolvable": "string"}],
+      "recursive_arguments": [{"self_application": "string", "produces_insight_or_paradox": "string"}],
+      "deconstructive_readings": [{"binary_opposition": "string", "hidden_dependency": "string", "undecidability_point": "string"}]
+    },
     "meta": {
       "total_tensions": "number",
       "total_positions": "number",
@@ -522,7 +531,12 @@
         "FIND MEDIATIONS: What concepts, institutions, or practices connect opposed terms? How do they work?",
         "TRACE DIALECTICAL MOVEMENT: Is there progression? Regression? Circular repetition? Spiral development?",
         "IDENTIFY MASTER-SLAVE DYNAMICS: Who depends on whom? What does the dominant position need from what it dominates?",
-        "CRITIQUE TOTALITIES: What claims to be 'the whole picture'? What does it exclude?"
+        "CRITIQUE TOTALITIES: What claims to be 'the whole picture'? What does it exclude?",
+        "TRACE HERMENEUTIC CIRCLES: Where does the text's interpretation of parts depend on understanding the whole, and vice versa? Identify productive hermeneutic circles (where iteration deepens understanding) vs. vicious ones (where circularity blocks progress). Note when the text is self-aware about its circularity.",
+        "APPLY IMMANENT CRITIQUE: Where can the text be criticized using its OWN stated standards and principles? This is the most devastating form of critique — showing that the text fails by the very criteria it endorses. For each instance: state the text's own principle, then show where it violates it.",
+        "DETECT NEGATIVE DIALECTICS (Adorno): Where does the text resist premature synthesis or reconciliation? Where do contradictions refuse resolution into a higher unity? Identify the 'non-identical' — aspects of reality that resist being absorbed into the text's conceptual framework.",
+        "MAP RECURSIVE ARGUMENTATION: Where does the text apply its own categories to itself? Where does meta-level analysis produce new first-order insights? Where does recursion generate paradox or infinite regress? Self-referential arguments that succeed are among the most powerful; those that fail are among the most damaging.",
+        "IDENTIFY DECONSTRUCTIVE MOMENTS: Where do the text's binary oppositions harbor undecidability? Where does the privileged term depend on what it excludes? Where do metaphors exceed the concept they were supposed to illustrate? Look for supplements, traces, and différance — points where meaning resists fixation."
       ],
       "key_fields": {
         "tension_id": "The core unit - genuine contradictions, not mere disagreements",

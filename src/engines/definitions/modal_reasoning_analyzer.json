@@ -1,0 +1,77 @@
+{
+  "engine_key": "modal_reasoning_analyzer",
+  "engine_name": "Modal Reasoning Analyzer",
+  "description": "Analyzes claims about possibility, necessity, and contingency in academic texts. Maps modal operators, evaluates thought experiments, detects threshold arguments, and constructs branching possibility structures. Distinguishes alethic (about reality), epistemic (about knowledge), and deontic (about obligation) modality.",
+  "version": 1,
+  "category": "argument",
+  "kind": "extraction",
+  "reasoning_domain": "modal_logic_applied",
+  "researcher_question": "What claims does the text make about possibility, necessity, and contingency, and how rigorous is its modal reasoning?",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": ["kripke_possible_worlds", "lewisian_modal_realism"],
+    "extraction": {
+      "analysis_type": "modal reasoning",
+      "analysis_type_plural": "modal reasoning patterns",
+      "core_question": "What claims does the text make about what is possible, necessary, or contingent?",
+      "id_field": "modal_id",
+      "key_relationships": ["necessity_claim", "possibility_claim", "contingency_claim"],
+      "extraction_steps": [
+        "MAP MODAL OPERATORS: Identify all claims involving possibility ('could', 'might', 'is possible'), necessity ('must', 'necessarily', 'is required'), contingency ('happens to', 'as it turns out'), and impossibility ('cannot', 'is inconceivable'). Classify each by modality type: alethic (what reality allows), epistemic (what we can know), deontic (what we ought to do), or temporal (what was/will be possible).",
+        "ASSESS MODAL STRENGTH: For each modal claim, evaluate its justification. Is 'must' backed by logical necessity, physical law, practical constraint, or mere assertion? Is 'could' genuine possibility or mere logical consistency? Rate: well-justified, plausible, assumed without argument, or overreaching.",
+        "DETECT MODAL FALLACIES: Where does the text confuse possibility with probability ('it could happen' → 'it will likely happen')? Where does it confuse epistemic possibility ('we can't rule it out') with metaphysical possibility ('it could actually occur')? Where does it derive 'ought' from 'is' or 'must' from 'should'?",
+        "EVALUATE THOUGHT EXPERIMENTS: Where does the text use hypothetical scenarios to test principles? For each: Is the scenario internally coherent? Does it successfully isolate the variable it claims to test? What hidden assumptions does it smuggle in? How robust is the conclusion — does it survive parameter variations?",
+        "MAP THRESHOLD ARGUMENTS: Where does the text argue about tipping points, critical masses, or boundaries ('at what point does X become Y')? Identify sorites-susceptible arguments (heap paradox structure). Where are thresholds asserted without justification? Where are gradual transitions falsely presented as sharp boundaries?",
+        "CONSTRUCT BRANCHING POSSIBILITY STRUCTURES: At key decision points or causal junctures, map the branching tree of alternative outcomes. Which branches does the text explore vs. ignore? Are probability assignments justified? Where does the text's counterfactual imagination seem impoverished?",
+        "ANALYZE PROBABILISTIC REASONING: Where does the text make probabilistic claims? Are base rates considered? Is Bayesian reasoning applied correctly? Where are probabilities estimated without data? Where does 'unlikely' slide into 'impossible'?",
+        "IDENTIFY FALLIBILISTIC REASONING: Where does the text acknowledge its own potential for error? Where does it build in self-correction mechanisms? Where is certainty claimed where fallibilism would be more appropriate?",
+        "DETECT POSSIBILISTIC vs. PROBABILISTIC CONFUSION: Where does the text argue merely from the possibility of something ('it's possible that X') rather than its likelihood? Where does mere conceivability substitute for evidence?",
+        "MAP NECESSITY CLAIMS: Where does the text claim something is necessary — logically, physically, practically, or historically? For each: what kind of necessity? Is it truly necessary or merely very likely? Could the same outcome be achieved differently?"
+      ],
+      "special_instructions": "Modal reasoning is pervasive in academic texts but rarely made explicit. Authors constantly make claims about what 'must' be, what 'could' happen, what is 'impossible.' Your job is to make these modal commitments visible and evaluate their rigor."
+    },
+    "curation": {
+      "item_type": "modal reasoning instance",
+      "item_type_plural": "modal reasoning instances",
+      "consolidation_rules": [
+        "Group by modality type (alethic, epistemic, deontic, temporal)",
+        "Sort by modal strength (necessity → strong possibility → weak possibility → impossibility)",
+        "Flag modal fallacies and unjustified necessity/impossibility claims",
+        "Identify the text's implicit modal framework — is it deterministic, possibilistic, or probabilistic?",
+        "Map threshold arguments to identify boundary-drawing patterns"
+      ],
+      "cross_doc_patterns": ["shifting modal commitments across texts", "escalation from possibility to necessity"],
+      "synthesis_outputs": ["modal landscape map", "thought experiment assessment", "threshold argument inventory"]
+    },
+    "concretization": {
+      "id_examples": [
+        {"id": "MOD-NEC-001", "description": "Claim that capitalism necessarily produces inequality"},
+        {"id": "MOD-POS-002", "description": "Argument that alternative economic systems are possible"},
+        {"id": "MOD-THR-003", "description": "Threshold argument about when reform becomes revolution"},
+        {"id": "MOD-THT-004", "description": "Thought experiment testing market allocation principles"}
+      ],
+      "naming_guidance": "Use MOD-{TYPE}-{NNN} where TYPE is NEC (necessity), POS (possibility), IMP (impossibility), THR (threshold), THT (thought experiment), PROB (probabilistic), FALL (fallacy)",
+      "recommended_tables": ["Modal claim × modality type × justification quality", "Thought experiment assessment table"],
+      "recommended_visuals": ["Branching possibility tree", "Modal landscape chart"]
+    },
+    "audience_vocabulary": {
+      "researcher": {"modal_analysis": "modal reasoning and possible-worlds analysis", "necessity_claims": "necessity and contingency mapping"},
+      "analyst": {"modal_analysis": "possibility and necessity assessment", "necessity_claims": "constraint and requirement analysis"},
+      "executive": {"modal_analysis": "what's possible vs. what's necessary review", "necessity_claims": "requirement validation"},
+      "activist": {"modal_analysis": "alternative possibilities analysis", "necessity_claims": "challenging 'there is no alternative' claims"}
+    },
+    "skip_concretization": false
+  },
+  "canonical_schema": {
+    "modal_claims": [{"claim": "string", "modal_type": "string", "modality_kind": "string", "strength": "string", "justification": "string"}],
+    "thought_experiments": [{"scenario": "string", "principle_tested": "string", "coherence": "string", "hidden_assumptions": ["string"], "robustness": "string"}],
+    "threshold_arguments": [{"boundary_claim": "string", "where_threshold": "string", "justification_quality": "string", "sorites_susceptible": "boolean"}],
+    "branching_structures": [{"decision_point": "string", "explored_branches": ["string"], "ignored_branches": ["string"], "probability_justified": "boolean"}],
+    "modal_fallacies": [{"fallacy_type": "string", "instance": "string", "what_confused": "string"}]
+  },
+  "extraction_focus": ["possibility_claims", "necessity_claims", "thought_experiments", "threshold_arguments", "modal_operators"],
+  "primary_output_modes": ["smart_table", "integrated_report"],
+  "paradigm_keys": [],
+  "apps": ["critic"],
+  "function": "logic"
+}

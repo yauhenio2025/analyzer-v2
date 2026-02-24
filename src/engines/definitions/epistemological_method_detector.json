@@ -1,0 +1,77 @@
+{
+  "engine_key": "epistemological_method_detector",
+  "engine_name": "Epistemological Method Detector",
+  "description": "Identifies and evaluates the epistemological methods deployed in academic texts: phenomenological reductions, standpoint epistemology, situated knowledge claims, reflexive arguments, epistemic justice analysis, and meta-epistemological claims. Goes beyond tracking certainty markers to detect the deep methodological commitments that shape how knowledge is produced and validated.",
+  "version": 1,
+  "category": "epistemology",
+  "kind": "extraction",
+  "reasoning_domain": "epistemological_methodology",
+  "researcher_question": "What epistemological methods does the text deploy, and how self-aware is it about its own knowledge-production methods?",
+  "stage_context": {
+    "framework_key": null,
+    "additional_frameworks": ["standpoint_theory", "social_epistemology"],
+    "extraction": {
+      "analysis_type": "epistemological method",
+      "analysis_type_plural": "epistemological methods",
+      "core_question": "What epistemological methods does the text deploy?",
+      "id_field": "epist_id",
+      "key_relationships": ["method_type", "knowledge_claim", "self_awareness"],
+      "extraction_steps": [
+        "IDENTIFY PHENOMENOLOGICAL REDUCTIONS: Where does the text bracket assumptions to examine the essential structures of experience? Where does it practice epoché — suspending the natural attitude? Is the reduction rigorous or merely a gesture toward phenomenological vocabulary?",
+        "MAP STANDPOINT EPISTEMOLOGY: Where does the text argue that social position shapes knowledge? Whose standpoint is privileged and why? Does it apply Harding's strong objectivity (using marginal standpoints to identify dominant biases)? Where does it acknowledge its own standpoint?",
+        "DETECT SITUATED KNOWLEDGE CLAIMS: Where does the text acknowledge that all knowledge is produced from somewhere, by someone, for some purpose (Haraway)? Where does it claim a 'view from nowhere'? Map the tension between situatedness and generalizability.",
+        "ANALYZE REFLEXIVE ARGUMENTS: Where does the text apply its own analytical framework to itself? Where does it acknowledge that its method of investigation shapes what it can find? Where does reflexivity produce genuine insight vs. infinite regress vs. performative gesture?",
+        "IDENTIFY EPISTEMIC JUSTICE CLAIMS: Where does the text address testimonial injustice (whose testimony is credited?) or hermeneutical injustice (whose experiences lack interpretive frameworks)? (Fricker) Where does it reproduce the very epistemic injustices it analyzes?",
+        "MAP META-EPISTEMOLOGICAL CLAIMS: Where does the text argue about the nature of knowledge itself — what counts as knowledge, what validates it, what its limits are? Where does it make first-order claims while assuming contested epistemological positions?",
+        "DETECT NATURALIZED EPISTEMOLOGY: Where does the text treat knowledge-production as a natural process to be studied empirically rather than a normative enterprise to be philosophically justified? Where does it blur is/ought in epistemology?",
+        "IDENTIFY PRAGMATIST EPISTEMOLOGY: Where does the text evaluate knowledge claims by their practical consequences rather than their correspondence to reality? Where does it employ Deweyan inquiry, Peircean abduction, or Jamesian pragmatic truth?",
+        "MAP EPISTEMIC MODESTY vs. ARROGANCE: Where does the text acknowledge the limits of its knowledge vs. where does it claim more than its evidence supports? Where is uncertainty performed vs. genuinely inhabited?",
+        "ASSESS EPISTEMOLOGICAL COHERENCE: Does the text's epistemological method match its knowledge claims? Where does a text that claims situated knowledge still write as if from nowhere? Where does a text that claims fallibilism still assert with certainty?"
+      ],
+      "special_instructions": "Most academic texts have implicit epistemological commitments they never make explicit. Your job is to surface these: what does the text assume about how knowledge works, who can produce it, and what validates it?"
+    },
+    "curation": {
+      "item_type": "epistemological method",
+      "item_type_plural": "epistemological methods",
+      "consolidation_rules": [
+        "Group by method type (phenomenological, standpoint, situated, reflexive, pragmatist, naturalized)",
+        "Identify the text's dominant epistemological framework — even if unnamed",
+        "Flag epistemological inconsistencies where the method contradicts the claims",
+        "Note shifts between epistemological frameworks across sections",
+        "Assess overall epistemological sophistication and self-awareness"
+      ],
+      "cross_doc_patterns": ["epistemological evolution across texts", "method/content mismatches"],
+      "synthesis_outputs": ["epistemological method inventory", "coherence assessment", "self-awareness evaluation"]
+    },
+    "concretization": {
+      "id_examples": [
+        {"id": "EPIST-PHENOM-001", "description": "Phenomenological bracketing of market assumptions to reveal essential economic structures"},
+        {"id": "EPIST-STAND-002", "description": "Workers' standpoint privileged for understanding labor relations"},
+        {"id": "EPIST-REFLEX-003", "description": "Author acknowledging their institutional position shapes their analysis"},
+        {"id": "EPIST-JUSTICE-004", "description": "Argument that marginalized voices are systematically discredited in policy debates"}
+      ],
+      "naming_guidance": "Use EPIST-{METHOD}-{NNN} where METHOD is PHENOM (phenomenological), STAND (standpoint), SITUA (situated), REFLEX (reflexive), JUSTICE (epistemic justice), META (meta-epistemological), NATUR (naturalized), PRAGM (pragmatist)",
+      "recommended_tables": ["Method type × self-awareness level × coherence with claims"],
+      "recommended_visuals": ["Epistemological method map", "Self-awareness spectrum"]
+    },
+    "audience_vocabulary": {
+      "researcher": {"epistemological_analysis": "epistemological method detection and assessment", "knowledge_production": "knowledge-production methodology analysis"},
+      "analyst": {"epistemological_analysis": "knowledge method identification", "knowledge_production": "how conclusions are reached assessment"},
+      "executive": {"epistemological_analysis": "evidence methodology review", "knowledge_production": "knowledge basis assessment"},
+      "activist": {"epistemological_analysis": "whose knowledge counts analysis", "knowledge_production": "power in knowledge-production mapping"}
+    },
+    "skip_concretization": false
+  },
+  "canonical_schema": {
+    "epistemological_methods": [{"method_type": "string", "where_deployed": "string", "rigor": "string", "self_awareness": "string"}],
+    "standpoint_claims": [{"whose_standpoint": "string", "why_privileged": "string", "own_standpoint_acknowledged": "boolean"}],
+    "reflexive_moments": [{"self_application": "string", "produces": "string", "genuine_or_gestural": "string"}],
+    "epistemic_justice_issues": [{"injustice_type": "string", "who_affected": "string", "text_reproduces_or_addresses": "string"}],
+    "coherence_assessment": {"dominant_method": "string", "contradictions": ["string"], "overall_sophistication": "string"}
+  },
+  "extraction_focus": ["epistemological_methods", "standpoint_claims", "reflexivity", "epistemic_justice", "meta_epistemology"],
+  "primary_output_modes": ["smart_table", "integrated_report"],
+  "paradigm_keys": [],
+  "apps": ["critic"],
+  "function": "logic"
+}
