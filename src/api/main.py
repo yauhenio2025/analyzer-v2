@@ -13,7 +13,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import audiences, chains, consumers, engines, executor, functions, llm, meta, operations, operationalizations, orchestrator, paradigms, presenter, renderers, styles, primitives, display, sub_renderers, transformations, view_patterns, views, workflows
+from src.api.routes import audiences, chains, consumers, engines, executor, functions, llm, meta, objectives, operations, operationalizations, orchestrator, paradigms, presenter, renderers, styles, primitives, display, sub_renderers, transformations, view_patterns, views, workflows
 from src.audiences.registry import get_audience_registry
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
@@ -150,6 +150,11 @@ async def lifespan(app: FastAPI):
     signal.signal(signal.SIGTERM, _sigterm_handler)
     logger.info("SIGTERM handler registered for graceful job cleanup")
 
+    logger.info("Loading analysis objectives...")
+    from src.objectives.registry import list_objectives
+    objectives = list_objectives()
+    logger.info(f"Loaded {len(objectives)} analysis objectives")
+
     logger.info("Analyzer v2 API ready")
     yield
     # Shutdown — let jobs stay in "running" state for next instance to resume
@@ -211,6 +216,7 @@ app.include_router(operations.router)
 app.include_router(operationalizations.router, prefix="/v1")
 app.include_router(llm.router, prefix="/v1")
 app.include_router(meta.router, prefix="/v1")
+app.include_router(objectives.router, prefix="/v1")
 app.include_router(orchestrator.router, prefix="/v1")
 app.include_router(executor.router, prefix="/v1")
 app.include_router(presenter.router, prefix="/v1")
@@ -242,6 +248,7 @@ async def root():
             "transformations": "/v1/transformations",
             "operations": "/v1/operations",
             "operationalizations": "/v1/operationalizations",
+            "objectives": "/v1/objectives",
             "orchestrator": "/v1/orchestrator",
             "analyze": "/v1/orchestrator/analyze",
             "executor": "/v1/executor",
@@ -270,6 +277,8 @@ async def health():
     consumer_registry = get_consumer_registry()
     pattern_registry = get_pattern_registry()
 
+    from src.objectives.registry import list_objectives as list_obj
+
     return {
         "status": "healthy",
         "engines_loaded": engine_registry.count(),
@@ -287,6 +296,7 @@ async def health():
         "styles_loaded": style_stats["styles_loaded"],
         "style_affinities": style_stats["engine_affinities"],
         "operationalizations_loaded": op_registry.count(),
+        "objectives_loaded": len(list_obj()),
     }
 
 

@@ -210,10 +210,28 @@ def execute_plan(
                 plan_phase = remaining_group[0]
                 wf_phase = workflow_phases.get(plan_phase.phase_number)
                 if wf_phase is None:
-                    logger.error(
-                        f"Workflow phase {plan_phase.phase_number} not found, skipping"
-                    )
-                    continue
+                    # Adaptive phase: construct synthetic WorkflowPhase from plan
+                    if plan_phase.chain_key or plan_phase.engine_key:
+                        wf_phase = WorkflowPhase(
+                            phase_number=plan_phase.phase_number,
+                            phase_name=plan_phase.phase_name,
+                            chain_key=plan_phase.chain_key,
+                            engine_key=plan_phase.engine_key,
+                            depends_on_phases=plan_phase.depends_on or [],
+                            caches_result=True,
+                            iteration_mode=plan_phase.iteration_mode or "single",
+                        )
+                        logger.info(
+                            f"Constructed synthetic WorkflowPhase for adaptive phase "
+                            f"{plan_phase.phase_number}: chain={plan_phase.chain_key}, "
+                            f"engine={plan_phase.engine_key}"
+                        )
+                    else:
+                        logger.error(
+                            f"Phase {plan_phase.phase_number} not in template and "
+                            f"no chain/engine override in plan, skipping"
+                        )
+                        continue
 
                 # Update progress
                 for p in remaining_group:
@@ -339,10 +357,28 @@ def _run_parallel_phases(
         for plan_phase in group:
             wf_phase = workflow_phases.get(plan_phase.phase_number)
             if wf_phase is None:
-                logger.error(
-                    f"Workflow phase {plan_phase.phase_number} not found, skipping"
-                )
-                continue
+                # Adaptive phase: construct synthetic WorkflowPhase from plan
+                if plan_phase.chain_key or plan_phase.engine_key:
+                    wf_phase = WorkflowPhase(
+                        phase_number=plan_phase.phase_number,
+                        phase_name=plan_phase.phase_name,
+                        chain_key=plan_phase.chain_key,
+                        engine_key=plan_phase.engine_key,
+                        depends_on_phases=plan_phase.depends_on or [],
+                        caches_result=True,
+                        iteration_mode=plan_phase.iteration_mode or "single",
+                    )
+                    logger.info(
+                        f"Constructed synthetic WorkflowPhase for adaptive phase "
+                        f"{plan_phase.phase_number}: chain={plan_phase.chain_key}, "
+                        f"engine={plan_phase.engine_key}"
+                    )
+                else:
+                    logger.error(
+                        f"Phase {plan_phase.phase_number} not in template and "
+                        f"no chain/engine override in plan, skipping"
+                    )
+                    continue
 
             future = executor.submit(
                 run_phase,
@@ -445,14 +481,18 @@ def _build_execution_order(
     if not active_phases:
         return []
 
-    # Build dependency map from workflow definition
+    # Build dependency map: prefer plan-level depends_on (adaptive phases),
+    # fall back to workflow template
     deps: dict[float, set[float]] = {}
     for pp in active_phases:
-        wf = workflow_phases.get(pp.phase_number)
-        if wf:
-            deps[pp.phase_number] = set(wf.depends_on_phases)
+        if pp.depends_on is not None:
+            deps[pp.phase_number] = set(pp.depends_on)
         else:
-            deps[pp.phase_number] = set()
+            wf = workflow_phases.get(pp.phase_number)
+            if wf:
+                deps[pp.phase_number] = set(wf.depends_on_phases)
+            else:
+                deps[pp.phase_number] = set()
 
     # Topological sort into groups (Kahn's algorithm)
     phase_lookup = {p.phase_number: p for p in active_phases}

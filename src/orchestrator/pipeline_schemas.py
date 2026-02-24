@@ -60,6 +60,15 @@ class AnalyzeRequest(BaseModel):
         "False = generate plan only, return plan_id for review before execution.",
     )
 
+    # Adaptive orchestrator
+    objective_key: Optional[str] = Field(
+        default=None,
+        description="If set, enables adaptive mode with this objective. "
+        "The orchestrator will sample books, load the objective's goals, "
+        "and generate a bespoke pipeline. "
+        "Valid keys: 'genealogical', 'logical', etc.",
+    )
+
 
 class AnalyzeResponse(BaseModel):
     """Response from the all-in-one analyze endpoint."""

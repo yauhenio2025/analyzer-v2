@@ -342,3 +342,118 @@ async def get_analysis(job_id: str):
         result["presentation"] = None
 
     return result
+
+
+# ── Book Sampling ──────────────────────────────────────────
+
+
+@router.post("/sample")
+async def sample_books(request: AnalyzeRequest):
+    """Sample books to understand their nature before planning.
+
+    Returns BookSample profiles for the target work and all prior works,
+    with genre, domain, reasoning modes, and engine category affinities.
+
+    This is a diagnostic/preview endpoint — the full pipeline calls
+    sampling automatically when objective_key is set.
+    """
+    from src.orchestrator.sampler import sample_all_books
+
+    prior_works = [
+        {"title": pw.title, "text": pw.text}
+        for pw in request.prior_works
+    ]
+
+    samples = sample_all_books(
+        target_work_text=request.target_work_text,
+        target_work_title=request.target_work.title,
+        prior_works=prior_works,
+    )
+
+    return {
+        "samples": [s.model_dump() for s in samples],
+        "count": len(samples),
+    }
+
+
+# ── Adaptive Planning ─────────────────────────────────────
+
+
+@router.post("/plan/adaptive")
+async def create_adaptive_plan(request: AnalyzeRequest):
+    """Generate an adaptive plan from objective + book samples.
+
+    This endpoint:
+    1. Loads the analysis objective from objective_key
+    2. Samples all books (target + prior works)
+    3. Assembles the full capability catalog
+    4. Calls Opus to generate a bespoke pipeline
+
+    Requires objective_key to be set in the request.
+    Synchronous call — blocks for 30-60 seconds.
+    """
+    if not request.objective_key:
+        raise HTTPException(
+            status_code=400,
+            detail="objective_key is required for adaptive planning",
+        )
+
+    from src.objectives.registry import get_objective
+    from src.orchestrator.sampler import sample_all_books
+    from src.orchestrator.adaptive_planner import generate_adaptive_plan
+    from src.orchestrator.schemas import OrchestratorPlanRequest, PriorWork
+
+    objective = get_objective(request.objective_key)
+    if objective is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Unknown objective_key: '{request.objective_key}'",
+        )
+
+    # Sample books
+    prior_works_data = [
+        {"title": pw.title, "text": pw.text}
+        for pw in request.prior_works
+    ]
+    book_samples = sample_all_books(
+        target_work_text=request.target_work_text,
+        target_work_title=request.target_work.title,
+        prior_works=prior_works_data,
+    )
+
+    # Build plan request (metadata only, no texts)
+    prior_works_meta = [
+        PriorWork(
+            title=pw.title,
+            author=pw.author,
+            year=pw.year,
+            description=pw.description,
+            relationship_hint=pw.relationship_hint,
+        )
+        for pw in request.prior_works
+    ]
+    plan_request = OrchestratorPlanRequest(
+        thinker_name=request.thinker_name,
+        target_work=request.target_work,
+        prior_works=prior_works_meta,
+        research_question=request.research_question,
+        depth_preference=request.depth_preference,
+        focus_hint=request.focus_hint,
+    )
+
+    try:
+        plan = generate_adaptive_plan(
+            request=plan_request,
+            book_samples=book_samples,
+            objective=objective,
+        )
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e))
+    except Exception as e:
+        logger.error(f"Adaptive plan generation failed: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Adaptive plan generation failed: {e}",
+        )
+
+    return plan

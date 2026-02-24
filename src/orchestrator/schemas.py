@@ -125,6 +125,42 @@ class PhaseExecutionSpec(BaseModel):
         "rich analysis intended to replace raw document text.",
     )
 
+    # Adaptive planner fields
+    chain_key: Optional[str] = Field(
+        default=None,
+        description="Chain to execute (adaptive planner override). "
+        "Takes precedence over the workflow template's chain_key.",
+    )
+    engine_key: Optional[str] = Field(
+        default=None,
+        description="Engine to execute (adaptive planner override). "
+        "Takes precedence over the workflow template's engine_key.",
+    )
+    iteration_mode: Optional[str] = Field(
+        default=None,
+        description="How this phase iterates: 'single' (run once), "
+        "'per_work' (run once per prior work), 'per_work_filtered' (subset of works). "
+        "Overrides legacy hardcoded per-work detection.",
+    )
+    per_work_chain_map: Optional[dict[str, str]] = Field(
+        default=None,
+        description="Per-work chain differentiation. Maps work_title -> chain_key. "
+        "Allows the adaptive planner to use different chains for different works.",
+    )
+    depends_on: Optional[list[float]] = Field(
+        default=None,
+        description="Dependency declaration for adaptive phases not in the workflow template. "
+        "Phase numbers this phase depends on.",
+    )
+    estimated_tokens: int = Field(
+        default=0,
+        description="Estimated token usage for this phase.",
+    )
+    estimated_cost_usd: float = Field(
+        default=0.0,
+        description="Estimated cost in USD for this phase.",
+    )
+
 
 class ViewRecommendation(BaseModel):
     """A recommended view for presenting analysis results."""
@@ -243,4 +279,19 @@ class WorkflowExecutionPlan(BaseModel):
     generation_tokens: int = Field(
         default=0,
         description="Tokens used to generate this plan",
+    )
+
+    # Adaptive orchestrator fields
+    objective_key: Optional[str] = Field(
+        default=None,
+        description="Analysis objective that drove this plan (e.g., 'genealogical', 'logical'). "
+        "None for legacy fixed-pipeline plans.",
+    )
+    book_samples: list[dict] = Field(
+        default_factory=list,
+        description="Serialized BookSamples that informed adaptive planning decisions.",
+    )
+    estimated_total_cost_usd: float = Field(
+        default=0.0,
+        description="Estimated total cost for executing this plan.",
     )

@@ -1,0 +1,29 @@
+{
+  "objective_key": "logical",
+  "objective_name": "Logical Structure Analysis",
+  "primary_goals": [
+    "Map the argumentative architecture — claims, warrants, backing, rebuttals, schemes",
+    "Identify the reasoning modes used — deductive, dialectical, modal, comparative, game-theoretic",
+    "Detect suppressed premises, enthymemes, and unstated assumptions",
+    "Analyze the dialectical structure — how positions engage each other through challenge and response",
+    "Assess argumentative strength — where reasoning is robust and where it is vulnerable",
+    "Trace structural patterns — recursive arguments, load-bearing concepts, long-distance dependencies"
+  ],
+  "quality_criteria": [
+    "Every identified argument form must be grounded in recognized argumentation theory (Toulmin, Walton, etc.)",
+    "Suppressed premises must be reconstructed with explicit justification",
+    "Vulnerability assessments must distinguish between genuine weaknesses and acceptable defeasibility"
+  ],
+  "preferred_engine_functions": ["logic"],
+  "preferred_categories": ["argument", "epistemology", "methodology"],
+  "planner_strategy": "Select engines based on the text's dominant reasoning modes. If the book sample reveals game-theoretic reasoning, prioritize specialized_reasoning_classifier and comparative_reasoning_analyzer. For dialectical texts, emphasize dialectical_structure and argument_architecture. For epistemological works, include epistemological_method_detector. Always include argument_architecture as the backbone engine. Consider structural_pattern_detector for texts with recursive or self-referential arguments. The logical analysis should produce a comprehensive map of the text's argumentative machinery, not just a list of claims.",
+  "expected_deliverables": [
+    "Argument architecture map",
+    "Reasoning mode classification",
+    "Suppressed premise inventory",
+    "Dialectical engagement map",
+    "Vulnerability assessment"
+  ],
+  "baseline_workflow_key": null,
+  "preferred_views": []
+}

@@ -97,7 +97,7 @@ def run_phase(
             )
 
         # Determine if this is a per-work phase
-        is_per_work = _is_per_work_phase(phase_number, prior_work_titles)
+        is_per_work = _is_per_work_phase(phase_number, prior_work_titles, plan_phase)
 
         if is_per_work and prior_work_titles:
             # Per-work execution (Phase 1.5, 2.0)
@@ -142,14 +142,19 @@ def run_phase(
 def _is_per_work_phase(
     phase_number: float,
     prior_work_titles: Optional[list[str]],
+    plan_phase: Optional[PhaseExecutionSpec] = None,
 ) -> bool:
     """Determine if a phase should run per-work.
 
-    Phases 1.5 (relationship classification) and 2.0 (prior work scanning)
-    run once per prior work. Other phases run once overall.
+    Checks plan's iteration_mode first (adaptive mode),
+    falls back to legacy hardcoded check for phases 1.5/2.0.
     """
     if not prior_work_titles:
         return False
+    # Adaptive mode: check plan's iteration_mode
+    if plan_phase and plan_phase.iteration_mode:
+        return plan_phase.iteration_mode in ("per_work", "per_work_filtered")
+    # Legacy fallback
     return phase_number in (1.5, 2.0)
 
 
@@ -178,10 +183,14 @@ def _run_standard_phase(
             for k, v in plan_phase.engine_overrides.items()
         }
 
+    # Resolve chain/engine: plan phase overrides take precedence
+    effective_chain_key = plan_phase.chain_key or workflow_phase.chain_key
+    effective_engine_key = plan_phase.engine_key or workflow_phase.engine_key
+
     # Run chain or single engine
-    if workflow_phase.chain_key:
+    if effective_chain_key:
         result = run_chain(
-            chain_key=workflow_phase.chain_key,
+            chain_key=effective_chain_key,
             document_text=document_text,
             job_id=job_id,
             phase_number=phase_number,
@@ -194,17 +203,17 @@ def _run_standard_phase(
             cancellation_check=cancellation_check,
             progress_callback=progress_callback,
         )
-    elif workflow_phase.engine_key:
+    elif effective_engine_key:
         # Resolve per-engine override for the single engine
         focus_dims = None
         engine_depth = plan_phase.depth
-        if engine_overrides and workflow_phase.engine_key in engine_overrides:
-            ov = engine_overrides[workflow_phase.engine_key]
+        if engine_overrides and effective_engine_key in engine_overrides:
+            ov = engine_overrides[effective_engine_key]
             engine_depth = ov.get("depth", plan_phase.depth) if isinstance(ov, dict) else plan_phase.depth
             focus_dims = ov.get("focus_dimensions") if isinstance(ov, dict) else None
 
         result = run_single_engine(
-            engine_key=workflow_phase.engine_key,
+            engine_key=effective_engine_key,
             document_text=document_text,
             job_id=job_id,
             phase_number=phase_number,
@@ -408,9 +417,24 @@ def _run_per_work_phase(
 
         work_key = _sanitize_work_key(work_title)
 
-        if workflow_phase.chain_key:
+        # Adaptive mode: per-work chain/engine differentiation
+        effective_chain_key = workflow_phase.chain_key
+        effective_engine_key = workflow_phase.engine_key
+
+        # Plan-level overrides
+        if plan_phase.chain_key:
+            effective_chain_key = plan_phase.chain_key
+        if plan_phase.engine_key:
+            effective_engine_key = plan_phase.engine_key
+
+        # Per-work chain map (most specific override)
+        if plan_phase.per_work_chain_map and work_title in plan_phase.per_work_chain_map:
+            effective_chain_key = plan_phase.per_work_chain_map[work_title]
+            effective_engine_key = None  # chain takes precedence
+
+        if effective_chain_key:
             result = run_chain(
-                chain_key=workflow_phase.chain_key,
+                chain_key=effective_chain_key,
                 document_text=combined_text,
                 job_id=job_id,
                 phase_number=phase_number,
@@ -423,9 +447,9 @@ def _run_per_work_phase(
                 requires_full_documents=plan_phase.requires_full_documents,
                 cancellation_check=cancellation_check,
             )
-        elif workflow_phase.engine_key:
+        elif effective_engine_key:
             result = run_single_engine(
-                engine_key=workflow_phase.engine_key,
+                engine_key=effective_engine_key,
                 document_text=combined_text,
                 job_id=job_id,
                 phase_number=phase_number,

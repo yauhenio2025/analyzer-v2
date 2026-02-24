@@ -6,6 +6,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Adaptive Analysis Orchestrator** — Goals-driven adaptive pipeline that replaces the fixed 5-phase workflow with bespoke pipelines composed by an LLM planner. Three new concepts:
+  - **Analysis Objectives** (`src/objectives/`): High-level goal definitions (genealogical, logical) with primary goals, quality criteria, expected deliverables, and planner strategy. Registry auto-loads from JSON definitions. API: `GET /v1/objectives`, `GET /v1/objectives/{key}`.
+  - **Book Sampler** (`src/orchestrator/sampler.py`): Lightweight LLM-based profiling of each work (~$0.01/book) producing genre, domain, reasoning modes, and engine category affinities. API: `POST /v1/orchestrator/sample`.
+  - **Adaptive Planner** (`src/orchestrator/adaptive_planner.py`): Single Opus call that reads objectives + book samples + full engine catalog + optional baseline workflow to compose a bespoke pipeline. API: `POST /v1/orchestrator/plan/adaptive`.
+  - **Schema extensions**: `PhaseExecutionSpec` gains `chain_key`, `engine_key`, `iteration_mode`, `per_work_chain_map`, `depends_on`, `estimated_tokens`, `estimated_cost_usd`. `WorkflowExecutionPlan` gains `objective_key`, `book_samples`, `estimated_total_cost_usd`. `AnalyzeRequest` gains `objective_key`. `WorkflowPhase` gains `iteration_mode`.
+  - **Executor extensions**: `workflow_runner.py` constructs synthetic `WorkflowPhase` for adaptive phases not in the workflow template, reads `depends_on` from plan phases. `phase_runner.py` checks plan's `iteration_mode` before legacy hardcoded check, prefers plan phase `chain_key`/`engine_key` over workflow template, supports `per_work_chain_map`.
+  - **Pipeline integration**: `pipeline.py` branches on `objective_key` — adaptive mode (sample → plan with objectives) vs legacy (fixed pipeline).
+  - **Catalog enhancements**: `catalog.py` adds `function` field per engine, `assemble_category_summaries()`, dynamic engine count in text output.
+  - **analyzer-mgmt Objectives page**: List + detail pages at `/objectives` with goals, quality criteria, deliverables, preferred views, planner strategy. Navigation sidebar updated.
+
 - **Chain-to-view presentation pipeline endpoint** — New `GET /v1/views/for-chain/{chain_key}` returns the full presentation pipeline for a chain: which views consume its output (directly via `data_source.chain_key` or via individual engine keys), renderer types, sub-renderer breakdown, and nested child views. New `ChainViewInfo` response model enriches `ViewSummary` with `source_chain_key`, `source_engine_key`, `source_scope`, `source_type`, `sub_renderers_used`, and recursive `children`. New `ViewRegistry.for_chain()` method + `_extract_sub_renderer_types()` helper. ([`src/views/schemas.py`](src/views/schemas.py), [`src/views/registry.py`](src/views/registry.py), [`src/api/routes/views.py`](src/api/routes/views.py))
 
 - **Chains management page in analyzer-mgmt** — New sidebar entry "Chains" with list page (23 chains grouped by category, blend mode/category filters) and detail page (engine pipeline, blend mode explanation, presentation pipeline showing connected views → renderers → sub-renderers, recommended-for tags, context parameter schema). All links cross-navigable to engines, views, renderers, sub-renderers.

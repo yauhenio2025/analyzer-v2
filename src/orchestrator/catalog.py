@@ -34,6 +34,19 @@ def _get_concept_name(concept) -> str:
     return getattr(concept, "name", str(concept))
 
 
+def _category_to_function(category: str) -> str:
+    """Map engine category to function tag for adaptive planner filtering."""
+    mapping = {
+        "genealogy": "genealogy",
+        "argument": "logic",
+        "concepts": "logic",
+        "epistemology": "logic",
+        "temporal": "genealogy",
+        "methodology": "logic",
+    }
+    return mapping.get(category, category)
+
+
 def assemble_engine_catalog() -> list[dict[str, Any]]:
     """Assemble capability engine summaries from the engine registry.
 
@@ -57,6 +70,9 @@ def assemble_engine_catalog() -> list[dict[str, Any]]:
             "engine_key": cap_def.engine_key,
             "engine_name": cap_def.engine_name,
             "category": cap_def.category.value if hasattr(cap_def.category, "value") else str(cap_def.category),
+            "function": _category_to_function(
+                cap_def.category.value if hasattr(cap_def.category, "value") else str(cap_def.category)
+            ),
             "problematique": cap_def.problematique,
             "intellectual_lineage": {
                 "primary_thinker": _get_thinker_name(lineage.primary),
@@ -96,6 +112,44 @@ def assemble_engine_catalog() -> list[dict[str, Any]]:
         entries.append(entry)
 
     return entries
+
+
+def assemble_category_summaries() -> dict[str, dict]:
+    """Assemble category-level summaries for the adaptive planner.
+
+    Groups engines by category and provides:
+    - count of engines per category
+    - representative engine names
+    - brief category description
+    """
+    from src.engines.registry import get_engine_registry
+
+    registry = get_engine_registry()
+    cap_defs = registry.list_capability_definitions()
+
+    categories: dict[str, list[dict]] = {}
+    for cap_def in cap_defs:
+        cat = cap_def.category.value if hasattr(cap_def.category, "value") else str(cap_def.category)
+        if cat not in categories:
+            categories[cat] = []
+        categories[cat].append({
+            "engine_key": cap_def.engine_key,
+            "engine_name": cap_def.engine_name,
+            "problematique_excerpt": cap_def.problematique[:150] if cap_def.problematique else "",
+        })
+
+    summaries = {}
+    for cat, engines in categories.items():
+        summaries[cat] = {
+            "category": cat,
+            "function": _category_to_function(cat),
+            "engine_count": len(engines),
+            "engines": [e["engine_name"] for e in engines],
+            "engine_keys": [e["engine_key"] for e in engines],
+            "description": "; ".join(e["problematique_excerpt"] for e in engines[:3]),
+        }
+
+    return summaries
 
 
 def assemble_chain_catalog() -> list[dict[str, Any]]:
@@ -365,6 +419,7 @@ def assemble_full_catalog(
     """
     catalog = {
         "capability_engines": assemble_engine_catalog(),
+        "category_summaries": assemble_category_summaries(),
         "chains": assemble_chain_catalog(),
         "stances": assemble_stance_catalog(),
         "workflow": assemble_workflow_catalog(workflow_key=workflow_key),
@@ -383,6 +438,7 @@ def assemble_full_catalog(
     # Add stats
     catalog["stats"] = {
         "capability_engines": len(catalog["capability_engines"]),
+        "category_summaries": len(catalog["category_summaries"]),
         "chains": len(catalog["chains"]),
         "stances": len(catalog["stances"]),
         "views": len(catalog["views"]),
@@ -450,7 +506,8 @@ def catalog_to_text(catalog: dict[str, Any], workflow_name: str = None) -> str:
     lines.append("")
 
     # Capability Engines
-    lines.append("## CAPABILITY ENGINES (11 total)")
+    engine_count = len(catalog.get("capability_engines", []))
+    lines.append(f"## CAPABILITY ENGINES ({engine_count} total)")
     lines.append("")
     for engine in catalog.get("capability_engines", []):
         lines.append(f"### `{engine['engine_key']}` — {engine['engine_name']}")

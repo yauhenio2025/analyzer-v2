@@ -82,6 +82,11 @@ class WorkflowPhase(BaseModel):
         default=None,
         description="Expected output schema for this phase",
     )
+    iteration_mode: str = Field(
+        default="single",
+        description="How this phase iterates: 'single' (run once) or 'per_work' (once per prior work). "
+        "Used by the executor to determine phase execution strategy.",
+    )
 
     @model_validator(mode="before")
     @classmethod

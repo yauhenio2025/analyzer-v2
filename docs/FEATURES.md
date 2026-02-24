@@ -1,6 +1,42 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-02-23
+> Auto-maintained by Claude Code. Last updated: 2026-02-24
+
+## Adaptive Analysis Orchestrator
+
+### Analysis Objectives
+- **Status**: Active
+- **Description**: High-level goal definitions that drive adaptive pipeline composition. Each objective specifies primary goals, quality criteria, expected deliverables, preferred engine functions/categories, planner strategy, and optional baseline workflow. Two objectives defined: genealogical (7 goals, based on intellectual_genealogy workflow) and logical (6 goals, no baseline workflow).
+- **Entry Points**:
+  - `src/objectives/schemas.py:1-65` - AnalysisObjective Pydantic model
+  - `src/objectives/registry.py:1-55` - JSON-based registry with lazy loading
+  - `src/objectives/definitions/genealogical.json` - Genealogical analysis objective
+  - `src/objectives/definitions/logical.json` - Logical structure analysis objective
+  - `src/api/routes/objectives.py:1-40` - REST API endpoints
+- **API Endpoints**:
+  - `GET /v1/objectives` - List all objectives
+  - `GET /v1/objectives/{key}` - Get specific objective
+- **Added**: 2026-02-24
+
+### Book Sampler
+- **Status**: Active
+- **Description**: Lightweight LLM-based profiling (~$0.01/book) that extracts genre, domain, argumentative style, reasoning modes, and engine category affinities from each work. Feeds into the adaptive planner's decisions.
+- **Entry Points**:
+  - `src/orchestrator/sampler_schemas.py:1-65` - BookSample Pydantic model
+  - `src/orchestrator/sampler.py:1-285` - Sampling logic with parallel execution
+- **API Endpoints**:
+  - `POST /v1/orchestrator/sample` - Sample all books in a request
+- **Added**: 2026-02-24
+
+### Adaptive Planner
+- **Status**: Active
+- **Description**: LLM-first planner that composes bespoke pipelines from objectives + book samples + full engine catalog. Uses Opus with extended thinking. Generates plans with adaptive fields (chain_key, engine_key, iteration_mode, depends_on per phase). Auto-discovers all engines/chains from registries.
+- **Entry Points**:
+  - `src/orchestrator/adaptive_planner.py:1-430` - Core planner with prompt construction and plan parsing
+- **API Endpoints**:
+  - `POST /v1/orchestrator/plan/adaptive` - Generate adaptive plan
+- **Dependencies**: Objectives registry, book sampler, capability catalog
+- **Added**: 2026-02-24
 
 ## Context-Driven Orchestrator
 

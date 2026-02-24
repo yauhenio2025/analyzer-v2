@@ -27,11 +27,15 @@ from src.executor.job_manager import (
     update_job_status,
 )
 from src.executor.workflow_runner import execute_plan
+from src.objectives.registry import get_objective
+from src.orchestrator.adaptive_planner import generate_adaptive_plan
 from src.orchestrator.planner import generate_plan
+from src.orchestrator.sampler import sample_all_books
 from src.orchestrator.schemas import (
     OrchestratorPlanRequest,
     PriorWork,
     TargetWork,
+    WorkflowExecutionPlan,
 )
 
 from .pipeline_schemas import AnalyzeRequest, AnalyzeResponse
@@ -74,7 +78,14 @@ def _run_checkpoint_mode(request: AnalyzeRequest) -> AnalyzeResponse:
     logger.info(f"Uploaded {len(document_ids)} documents: {list(document_ids.keys())}")
 
     plan_request = _build_plan_request(request)
-    plan = generate_plan(plan_request)
+
+    if request.objective_key:
+        # Adaptive mode: sample books → plan with objectives
+        plan = _generate_adaptive(request, plan_request)
+    else:
+        # Legacy mode: fixed pipeline
+        plan = generate_plan(plan_request)
+
     logger.info(
         f"Generated plan {plan.plan_id} — "
         f"{len(plan.phases)} phases, {plan.estimated_llm_calls} estimated calls"
@@ -171,7 +182,13 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
             detail="Claude Opus analyzing thinker context and generating execution plan...",
         )
 
-        plan = generate_plan(plan_request)
+        if request.objective_key:
+            # Adaptive mode: sample books → plan with objectives
+            plan = _generate_adaptive(request, plan_request)
+        else:
+            # Legacy mode: fixed pipeline
+            plan = generate_plan(plan_request)
+
         logger.info(
             f"[Pipeline {job_id}] Generated plan {plan.plan_id} — "
             f"{len(plan.phases)} phases, {plan.estimated_llm_calls} estimated calls"
@@ -291,6 +308,49 @@ def _store_plan_and_docs(job_id: str, plan, document_ids: dict[str, str]) -> Non
         logger.info(f"[Pipeline {job_id}] Stored plan_data + document_ids for resume support")
     except Exception as e:
         logger.error(f"[Pipeline {job_id}] Failed to store plan_data: {e}")
+
+
+def _generate_adaptive(
+    request: AnalyzeRequest,
+    plan_request: OrchestratorPlanRequest,
+) -> WorkflowExecutionPlan:
+    """Generate an adaptive plan: sample books → load objective → plan.
+
+    Returns a WorkflowExecutionPlan with adaptive fields populated.
+    """
+    objective = get_objective(request.objective_key)
+    if objective is None:
+        raise ValueError(
+            f"Unknown objective_key: '{request.objective_key}'. "
+            f"Valid keys: genealogical, logical"
+        )
+
+    logger.info(
+        f"Adaptive mode: sampling {1 + len(request.prior_works)} books "
+        f"for objective '{request.objective_key}'"
+    )
+
+    # Sample books
+    prior_works_for_sampling = [
+        {"title": pw.title, "text": pw.text}
+        for pw in request.prior_works
+    ]
+    book_samples = sample_all_books(
+        target_work_text=request.target_work_text,
+        target_work_title=request.target_work.title,
+        prior_works=prior_works_for_sampling,
+    )
+
+    logger.info(f"Sampled {len(book_samples)} books, generating adaptive plan...")
+
+    # Generate adaptive plan
+    plan = generate_adaptive_plan(
+        request=plan_request,
+        book_samples=book_samples,
+        objective=objective,
+    )
+
+    return plan
 
 
 def _build_plan_request(request: AnalyzeRequest) -> OrchestratorPlanRequest:

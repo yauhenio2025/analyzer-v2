@@ -1,0 +1,45 @@
+{
+  "objective_key": "genealogical",
+  "objective_name": "Genealogical Analysis",
+  "primary_goals": [
+    "Profile the target work's conceptual architecture, vocabulary, methodology, and argumentative structure",
+    "Classify each prior work's relationship to the target (precursor, contextualizer, counter-position, etc.)",
+    "Scan each prior work for genealogical traces \u2014 vocabulary evolution, methodological inheritance, metaphor migration",
+    "Synthesize cross-work evolution timelines showing how each idea developed",
+    "Identify intellectual tactics the author uses (silent revision, strategic escalation, conceptual recycling)",
+    "Map conditions of possibility \u2014 what enabled and constrained the current work",
+    "Compose a genealogical portrait with Foucauldian descent/emergence narratives"
+  ],
+  "quality_criteria": [
+    "Every traced evolution must cite specific textual evidence from both target and prior works",
+    "Relationship classifications must justify themselves with vocabulary/methodology/metaphor overlap analysis",
+    "Indirect contextualizers must be recognized \u2014 foundational patterns that enable without directly contributing ideas",
+    "Counter-positions must trace what was reversed/abandoned, not just what was continued"
+  ],
+  "preferred_engine_functions": [
+    "genealogy",
+    "logic"
+  ],
+  "preferred_categories": [
+    "concepts",
+    "argument",
+    "temporal",
+    "methodology"
+  ],
+  "planner_strategy": "## Decision Guidelines\n\n### Depth Selection\n- Use **deep** for phases where the thinker's intellectual profile demands it:\n  - Deep target profiling when the author has complex conceptual vocabulary\n  - Deep evolution tactics detection when the author is known for reframing/appropriating ideas\n  - Deep conditions analysis when the author's intellectual context is rich\n- Use **standard** for most phases \u2014 it's the sweet spot of quality vs. cost\n- Use **surface** only for triage or when the corpus is small/simple\n\n### Engine Focus\n- Not all dimensions need equal attention for every thinker\n- For a Marxist economist like Varoufakis, prioritize: vocabulary_evolution, methodology_evolution, framing_evolution\n- For a philosopher like Benanav, prioritize: conceptual_framework, inferential_commitments, metaphor_evolution\n- For a historian like Slobodian, prioritize: conditions_of_possibility, intellectual context, path dependencies\n\n### View Recommendations\nThe VIEWS section of the catalog includes per-view planner guidance with `Planner guidance:` annotations. Follow those hints when selecting views. General rules:\n- Only recommend views with `planner_eligible: true` (views marked [NOT ELIGIBLE] are debug/utility views)\n- Prioritize views with [HAS_TEMPLATE] \u2014 these produce structured data for rich rendering\n- Views with `visibility: on_demand` should NOT be primary recommendations\n- Child views (those with a `Parent:` field) are auto-included when their parent is recommended \u2014 no need to recommend them separately\n- Read each view's planner guidance carefully and match it to the thinker's profile\n\n### Phase Skipping\n- You CAN recommend skipping phases, but this should be rare\n- Only skip if the corpus clearly doesn't warrant it (e.g., single prior work \u2192 simplified scanning)\n\n### Expanded Target Analysis (Phase 1.0) \u2014 Supplementary Chains\nPhase 1.0 runs a core 4-engine chain (genealogy_target_profiling). You can ALSO select 1-3 supplementary chains from the catalog to run AFTER the core chain. Their outputs concatenate with the core analysis, creating a richer distilled target profile.\n\n**When to add supplementary chains**:\n- Thinker has a rich argumentative style \u2192 add `argument_analysis_chain` (argument_architecture + rhetorical_strategy)\n- Thinker has complex rhetorical patterns \u2192 add `rhetorical_analysis_chain`\n- Thinker draws from specific intellectual traditions \u2192 add `conceptual_deep_dive_chain`\n- Thinker is known for anomalous claims \u2192 add `anomaly_evidence_chain`\n- When in doubt, add 1-2 supplementary chains. The cost is moderate but the downstream benefit is significant.\n\n**When you add supplementary chains**, also set `max_context_chars_override: 150000` on Phase 1.0 so the expanded analysis passes through to downstream phases without being truncated at the default 50K limit.\n\n**Supplementary chains field**: `\"supplementary_chains\": [\"argument_analysis_chain\", \"rhetorical_analysis_chain\"]`\n\n### Document Strategy for Per-Work Phases (1.5, 2.0)\nPer-work phases (1.5 Relationship Classification, 2.0 Prior Work Scanning) now receive the DISTILLED target analysis from Phase 1.0 instead of the raw target text. This means:\n- `requires_full_documents` on Phases 1.5 and 2.0 should be `false` (the distilled analysis is ~100-150K chars, not 500K+)\n- Phase 1.0 should have `requires_full_documents: true` (it processes the raw target text)\n- The per-work phases depend on Phase 1.0 completing first (1.5 now has `depends_on_phases: [1.0]`)\n- Each per-work call sees: ~37K distilled analysis + ~200K prior work text = ~237K total (vs. ~370K before)",
+  "expected_deliverables": [
+    "Executive summary",
+    "Per-idea evolution timelines",
+    "Evolution tactics with evidence chains",
+    "Conditions of possibility analysis",
+    "Genealogical portrait (Foucauldian descent + emergence)",
+    "Author intellectual profile"
+  ],
+  "baseline_workflow_key": "intellectual_genealogy",
+  "preferred_views": [
+    "genealogy_portrait",
+    "genealogy_idea_evolution",
+    "genealogy_tactics",
+    "genealogy_conditions"
+  ]
+}
