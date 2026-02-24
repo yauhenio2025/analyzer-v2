@@ -6,6 +6,7 @@ plan for executing the genealogy workflow.
 """
 
 import logging
+import os
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Query
@@ -275,6 +276,23 @@ async def analyze(request: AnalyzeRequest):
     Set skip_plan_review=false to stop after step 2 (returns plan_id
     for review; manually start execution later with POST /v1/executor/jobs).
     """
+    # Fail-fast: validate model API keys are available before starting background work
+    for model_field, label in [
+        (request.planning_model, "planning"),
+        (request.execution_model, "execution"),
+    ]:
+        if model_field and model_field.startswith("gemini"):
+            if not os.environ.get("GEMINI_API_KEY"):
+                raise HTTPException(
+                    status_code=400,
+                    detail=(
+                        f"Gemini model '{model_field}' selected for {label} "
+                        f"but GEMINI_API_KEY is not configured on the server. "
+                        f"Please select a Claude model instead, or ask the admin "
+                        f"to set the GEMINI_API_KEY environment variable."
+                    ),
+                )
+
     try:
         result = run_analysis_pipeline(request)
     except RuntimeError as e:
