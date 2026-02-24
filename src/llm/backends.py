@@ -1,7 +1,7 @@
 """LLM backend abstraction for multi-model support.
 
 Provides a unified interface for calling different LLM providers
-(Anthropic Claude, Google Gemini) with consistent response format.
+(Anthropic Claude, Google Gemini, OpenRouter) with consistent response format.
 
 Each backend handles provider-specific concerns:
 - Client creation and timeout configuration
@@ -700,6 +700,250 @@ class GeminiBackend:
             input_tokens=input_tokens,
             output_tokens=output_tokens,
             thinking_tokens=len(thinking_text),
+            duration_ms=duration_ms,
+            partial=connection_error is not None,
+            connection_error=connection_error,
+        )
+
+
+class OpenRouterBackend:
+    """OpenRouter backend — OpenAI-compatible API for 200+ models.
+
+    Uses the openai SDK pointed at https://openrouter.ai/api/v1.
+    Model IDs: 'openrouter/provider/model' — the 'openrouter/' prefix is stripped
+    before calling the API.
+
+    Thinking/extended reasoning NOT supported — effort is always None.
+    Requires OPENROUTER_API_KEY environment variable.
+    """
+
+    def __init__(self, model_id: str):
+        # model_id comes in as 'openrouter/deepseek/deepseek-r1'
+        # Strip 'openrouter/' prefix to get OpenRouter's native model ID
+        if model_id.startswith("openrouter/"):
+            self._or_model = model_id[len("openrouter/"):]
+        else:
+            self._or_model = model_id
+        self._model_id = model_id  # Keep full ID for provenance
+
+    @property
+    def model_id(self) -> str:
+        return self._model_id
+
+    @property
+    def max_output_tokens(self) -> int:
+        return 32_768  # Safe default; most models support at least this
+
+    @property
+    def supports_thinking(self) -> bool:
+        return False  # OpenRouter doesn't expose extended thinking APIs
+
+    @property
+    def native_context_limit(self) -> int:
+        return 128_000  # Conservative default; many models support 128K+
+
+    def _get_client(self):
+        """Get an OpenAI client pointed at OpenRouter. Lazy import."""
+        try:
+            import openai
+        except ImportError:
+            raise RuntimeError(
+                "openai package not installed. "
+                "Install with: pip install openai"
+            )
+
+        api_key = os.environ.get("OPENROUTER_API_KEY")
+        if not api_key:
+            raise RuntimeError(
+                "OPENROUTER_API_KEY not set. "
+                "Set the environment variable to use OpenRouter models."
+            )
+        return openai.OpenAI(
+            base_url="https://openrouter.ai/api/v1",
+            api_key=api_key,
+        )
+
+    def execute_sync(
+        self,
+        system_prompt: str,
+        user_message: str,
+        *,
+        max_tokens: int,
+        thinking_effort: Optional[str] = None,
+        use_extended_context: bool = False,
+        label: str = "",
+    ) -> LLMCallResult:
+        """Execute a synchronous OpenRouter call via OpenAI-compatible API.
+
+        No thinking support — effort parameter is ignored.
+        No beta context extensions — relies on model's native context window.
+        """
+        client = self._get_client()
+        start_time = time.time()
+
+        total_chars = len(system_prompt) + len(user_message)
+        estimated_input_tokens = total_chars // 4
+
+        effective_max_tokens = min(max_tokens, self.max_output_tokens)
+
+        logger.info(
+            f"[{label}] OpenRouter sync: model={self._or_model}, "
+            f"~{estimated_input_tokens:,} input tokens, "
+            f"max_tokens={effective_max_tokens}"
+        )
+
+        response = client.chat.completions.create(
+            model=self._or_model,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message},
+            ],
+            max_tokens=effective_max_tokens,
+        )
+
+        duration_ms = int((time.time() - start_time) * 1000)
+
+        raw_text = response.choices[0].message.content or ""
+
+        if not raw_text.strip():
+            raise RuntimeError(f"[{label}] Empty response from {self._model_id}")
+
+        # Extract usage tokens
+        input_tokens = estimated_input_tokens
+        output_tokens = len(raw_text) // 4
+        if response.usage:
+            input_tokens = response.usage.prompt_tokens or input_tokens
+            output_tokens = response.usage.completion_tokens or output_tokens
+
+        logger.info(
+            f"[{label}] OpenRouter sync completed: {input_tokens}+"
+            f"{output_tokens} tokens, {duration_ms}ms, "
+            f"{len(raw_text):,} chars"
+        )
+
+        return LLMCallResult(
+            content=raw_text.strip(),
+            model_id=self._model_id,
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
+            thinking_tokens=0,
+            duration_ms=duration_ms,
+        )
+
+    def execute_streaming(
+        self,
+        system_prompt: str,
+        user_message: str,
+        *,
+        max_tokens: int,
+        thinking_effort: Optional[str] = None,
+        use_extended_context: bool = False,
+        label: str = "",
+        cancellation_check: Optional[Callable[[], bool]] = None,
+    ) -> LLMCallResult:
+        """Execute a streaming OpenRouter call with heartbeat monitoring.
+
+        Accumulates text incrementally for partial salvage on connection errors.
+        No thinking support.
+        """
+        client = self._get_client()
+        start_time = time.time()
+
+        total_chars = len(system_prompt) + len(user_message)
+        estimated_input_tokens = total_chars // 4
+        effective_max_tokens = min(max_tokens, self.max_output_tokens)
+
+        logger.info(
+            f"[{label}] OpenRouter streaming: model={self._or_model}, "
+            f"~{estimated_input_tokens:,} input tokens, "
+            f"max_tokens={effective_max_tokens}"
+        )
+
+        raw_text = ""
+        last_chunk_time = time.time()
+        last_heartbeat_log = time.time()
+        chunk_count = 0
+        connection_error = None
+        usage_data = None
+
+        try:
+            stream = client.chat.completions.create(
+                model=self._or_model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_message},
+                ],
+                max_tokens=effective_max_tokens,
+                stream=True,
+                stream_options={"include_usage": True},
+            )
+
+            for chunk in stream:
+                chunk_count += 1
+
+                # Extract content delta
+                if chunk.choices and chunk.choices[0].delta.content:
+                    raw_text += chunk.choices[0].delta.content
+
+                # Track usage from final chunk
+                if hasattr(chunk, "usage") and chunk.usage:
+                    usage_data = chunk.usage
+
+                now = time.time()
+                if now - last_chunk_time > HEARTBEAT_TIMEOUT:
+                    raise TimeoutError(
+                        f"[{label}] No data for {HEARTBEAT_TIMEOUT}s -- stalled"
+                    )
+                last_chunk_time = now
+
+                if now - last_heartbeat_log > HEARTBEAT_LOG_INTERVAL:
+                    elapsed = int(now - start_time)
+                    logger.info(
+                        f"[{label}] OpenRouter streaming: {chunk_count} chunks, "
+                        f"{elapsed}s, {len(raw_text):,} chars"
+                    )
+                    last_heartbeat_log = now
+
+                if cancellation_check and cancellation_check():
+                    raise InterruptedError(f"[{label}] Cancelled during streaming")
+
+        except InterruptedError:
+            raise
+
+        except Exception as e:
+            if len(raw_text.strip()) >= MIN_SALVAGEABLE_CHARS:
+                duration_ms = int((time.time() - start_time) * 1000)
+                logger.warning(
+                    f"[{label}] OpenRouter connection lost, salvaging "
+                    f"{len(raw_text):,} chars. Error: {e}"
+                )
+                connection_error = str(e)
+            else:
+                raise
+
+        duration_ms = int((time.time() - start_time) * 1000)
+
+        if not raw_text.strip():
+            raise RuntimeError(f"[{label}] Empty response from {self._model_id}")
+
+        # Token counting
+        input_tokens = estimated_input_tokens
+        output_tokens = len(raw_text) // 4
+        if usage_data:
+            input_tokens = getattr(usage_data, "prompt_tokens", input_tokens) or input_tokens
+            output_tokens = getattr(usage_data, "completion_tokens", output_tokens) or output_tokens
+
+        logger.info(
+            f"[{label}] OpenRouter streaming completed: {input_tokens}+{output_tokens} tokens, "
+            f"{duration_ms}ms, {len(raw_text):,} chars"
+        )
+
+        return LLMCallResult(
+            content=raw_text.strip(),
+            model_id=self._model_id,
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
+            thinking_tokens=0,
             duration_ms=duration_ms,
             partial=connection_error is not None,
             connection_error=connection_error,

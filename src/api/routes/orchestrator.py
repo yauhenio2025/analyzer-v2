@@ -292,6 +292,17 @@ async def analyze(request: AnalyzeRequest):
                         f"to set the GEMINI_API_KEY environment variable."
                     ),
                 )
+        if model_field and model_field.startswith("openrouter/"):
+            if not os.environ.get("OPENROUTER_API_KEY"):
+                raise HTTPException(
+                    status_code=400,
+                    detail=(
+                        f"OpenRouter model '{model_field}' selected for {label} "
+                        f"but OPENROUTER_API_KEY is not configured on the server. "
+                        f"Please select a Claude or Gemini model instead, or ask the admin "
+                        f"to set the OPENROUTER_API_KEY environment variable."
+                    ),
+                )
 
     try:
         result = run_analysis_pipeline(request)

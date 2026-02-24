@@ -114,8 +114,14 @@ def resolve_model_config(
     - A full model ID: 'claude-sonnet-4-6', 'gemini-3.1-pro-preview'
     """
     # If model_hint is a full model ID, build config from it
-    if model_hint and (model_hint.startswith("claude-") or model_hint.startswith("gemini-")):
-        if model_hint.startswith("gemini-"):
+    if model_hint and (model_hint.startswith("claude-") or model_hint.startswith("gemini-") or model_hint.startswith("openrouter/")):
+        if model_hint.startswith("openrouter/"):
+            config = {
+                "model": model_hint,
+                "max_tokens": 32768,
+                "effort": None,  # OpenRouter: no thinking support
+            }
+        elif model_hint.startswith("gemini-"):
             config = {
                 "model": model_hint,
                 "max_tokens": 65536,
@@ -186,11 +192,13 @@ def run_engine_call(
     # Sync is the default on Render (100x faster for Anthropic).
     # For Gemini, sync is also fine (thinking works in sync mode).
     is_gemini = config["model"].startswith("gemini-")
-    use_sync = PREFER_SYNC or force_no_thinking
+    is_openrouter = config["model"].startswith("openrouter/")
+    use_sync = PREFER_SYNC or force_no_thinking or is_openrouter  # Always sync for OpenRouter
 
     # For Anthropic sync, disable thinking (it works but we historically avoid it
     # to match production behavior). For Gemini sync, thinking works fine.
-    if use_sync and not is_gemini:
+    # For OpenRouter, thinking is never supported.
+    if use_sync and not is_gemini and not is_openrouter:
         config["effort"] = None
 
     # Dynamic effort scaling based on input size.
