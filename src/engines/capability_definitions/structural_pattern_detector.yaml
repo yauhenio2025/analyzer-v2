@@ -1,0 +1,662 @@
+engine_key: structural_pattern_detector
+engine_name: Structural Pattern Detector
+version: 1
+category: concepts
+kind: synthesis
+problematique: |-
+  Structure is argument. Before a single claim is evaluated, before evidence is weighed, the arrangement of a text has already done persuasive work. The decision to place a concession in the middle of a paragraph rather than at its end, to bury counterevidence in a footnote, to save the strongest argument for the final section — these are not stylistic preferences but rhetorical strategies. Most readers experience these effects without recognizing their causes. They feel persuaded or unconvinced, engaged or lost, but cannot articulate why. This engine makes the invisible architecture of discourse visible, revealing how the scaffolding of a text shapes the reception of its contents.
+
+  Authors themselves are often only partly aware of their structural choices. Some patterns are inherited from genre conventions — the IMRAD structure of scientific papers, the five-paragraph essay of academic training, the inverted pyramid of journalism. Others emerge from disciplinary habitus, the internalized sense of 'how arguments are supposed to go' that writers absorb through apprenticeship. Still others are strategic, deliberately designed to guide readers toward predetermined conclusions. The most sophisticated authors exploit the gap between structure and content, using organizational patterns that contradict or complicate their explicit arguments. This engine detects all these patterns: the conventional, the habitual, the strategic, and the subversive.
+
+  The intellectual foundation draws from classical rhetoric's dispositio (arrangement) through modern narratology and genre theory. Aristotle understood that the ordering of arguments — what to say first, what to save for last, where to address objections — was as important as the arguments themselves. The Russian Formalists, particularly Shklovsky and Tomashevsky, distinguished fabula (the chronological sequence of events) from syuzhet (the artistic arrangement of those events), revealing how narrative structure creates meaning beyond content. Genette's work on narrative discourse provided tools for analyzing temporal manipulation, focalization, and narrative levels. Genre theorists from Bakhtin to Swales showed how structural conventions carry ideological freight — choosing a genre means inheriting its assumptions about what counts as evidence, who speaks with authority, and how knowledge should be organized.
+
+  Within the logic suite, this engine provides the compositional layer that complements the more granular analyses of other engines. Where argument_architecture maps the logical relationships between claims, this engine reveals how those claims are sequenced and positioned for rhetorical effect. Where dialectical_structure identifies thesis-antithesis-synthesis movements, this engine shows how those movements are paced, emphasized, and embedded within larger organizational patterns. The engine synthesizes across documents in a corpus, identifying recurring structural signatures that reveal disciplinary conventions, authorial habits, or strategic patterns that persist across multiple works.
+
+  Commitment to structural analysis matters because form and content are not separable. The same argument, restructured, becomes a different argument. A defense of free speech that addresses counterarguments in its opening creates a different rhetorical situation than one that saves objections for the final section. A narrative that reveals its conclusion first and then traces how it was reached produces different understanding than one that unfolds chronologically toward surprise. To read critically without attending to structure is to miss half the persuasive apparatus. This engine trains attention on that apparatus, making readers aware of how they are being guided through texts and enabling them to resist or appreciate that guidance with full consciousness.
+researcher_question: What structural patterns organize this discourse?
+intellectual_lineage:
+  primary:
+    name: aristotle
+    description: Aristotle (384–322 BCE), whose Rhetoric established dispositio (arrangement)
+      as one of the five canons of rhetoric, coordinate with invention rather than
+      subordinate to it. His analysis of the parts of speech — proem, statement, argument,
+      epilogue — and his attention to where different types of arguments should be
+      placed (saving strong arguments for the end, addressing objections in the middle)
+      provides the foundational framework for understanding structure as a mode of
+      persuasion. His recognition that audiences are affected by order and position,
+      not just by logical validity, grounds this engine's core insight that arrangement
+      does argumentative work.
+  secondary:
+  - name: genette
+    description: Gérard Genette (1930–2018), French narratologist whose Narrative
+      Discourse provided the most rigorous vocabulary for analyzing how stories are
+      structured. His distinctions between order (chronology vs. presentation), duration
+      (how much text-time is devoted to story-time), and frequency (how often events
+      are narrated) enable precise analysis of temporal manipulation in any sequential
+      text. His concept of focalization — who sees vs. who speaks — extends structural
+      analysis beyond sequence to perspective.
+  - name: shklovsky
+    description: Viktor Shklovsky (1893–1984), Russian Formalist whose distinction
+      between fabula and syuzhet revealed that narrative structure is not neutral
+      container but active meaning-maker. His concept of defamiliarization (ostranenie)
+      showed how structural disruption — placing the familiar in unfamiliar arrangements
+      — forces attention and creates new perception. His analysis of how plots are
+      'made strange' through structural manipulation provides tools for detecting
+      when authors subvert conventional patterns.
+  - name: swales
+    description: John Swales (1938–), applied linguist whose Genre Analysis established
+      the move-step model for analyzing how texts in specific discourse communities
+      are structured. His analysis of research article introductions — the CARS (Create
+      a Research Space) model — demonstrated that genre structures encode disciplinary
+      values and epistemological assumptions. His work grounds the engine's attention
+      to how genre conventions shape and constrain structural choices.
+  - name: perelman
+    description: Chaïm Perelman (1912–1984), Belgian philosopher whose New Rhetoric
+      revived attention to the ordering of arguments as a persuasive technique. His
+      analysis of how arguments should be arranged differently for different audiences,
+      and his attention to 'the order of increasing importance' as a strategic choice,
+      provides theoretical grounding for the engine's analysis of strategic placement
+      and audience-awareness in structural decisions.
+  - name: white
+    description: Hayden White (1928–2018), historian and theorist whose Metahistory
+      analyzed how historical narratives are 'emplotted' according to different archetypal
+      patterns (romance, tragedy, comedy, satire). His insight that the choice of
+      plot structure carries ideological implications — that the same historical events
+      can be emplotted differently with different political effects — extends structural
+      analysis from rhetoric to ideology and from literature to any domain that tells
+      stories.
+  traditions:
+  - name: classical_rhetoric
+    description: The Greco-Roman rhetorical tradition from Aristotle through Cicero
+      and Quintilian, which treated arrangement as a teachable art with established
+      principles. This tradition developed specific guidance for structuring different
+      types of speeches (forensic, deliberative, epideictic) and established enduring
+      patterns like the six-part oration (exordium, narratio, divisio, confirmatio,
+      refutatio, peroratio) that continue to shape academic and legal writing.
+  - name: russian_formalism
+    description: The early 20th-century movement that treated literary structure as
+      an autonomous object of study, separable from content and psychology. Formalists
+      like Shklovsky, Tomashevsky, and Propp developed systematic methods for analyzing
+      how texts are constructed, treating structure not as transparent medium but
+      as productive force that creates meaning through its specific arrangements and
+      devices.
+  - name: french_narratology
+    description: The structuralist approach to narrative developed by Barthes, Todorov,
+      and Genette that provided rigorous taxonomies for analyzing narrative structure.
+      This tradition distinguished multiple levels of narrative (story, discourse,
+      narration), developed vocabularies for temporal manipulation, and revealed the
+      'grammar' underlying narrative patterns across diverse texts and genres.
+  - name: genre_theory
+    description: The tradition running from Bakhtin through contemporary scholars
+      like Miller and Bazerman that treats genres as social actions rather than formal
+      categories. Genre theorists revealed that structural conventions are not arbitrary
+      but encode community values, epistemological assumptions, and power relations.
+      Choosing a genre means inheriting its structural constraints and the worldview
+      embedded in them.
+  - name: composition_studies
+    description: The field of writing research that has empirically studied how texts
+      are composed and how different structures affect reader comprehension and persuasion.
+      Studies of 'given-new' information flow, paragraph coherence, and the effects
+      of different organizational patterns on reader understanding provide empirical
+      grounding for rhetorical theories of arrangement.
+  - name: discourse_analysis
+    description: The interdisciplinary field that analyzes language above the sentence
+      level, attending to how texts cohere through cohesive devices, thematic progression,
+      and information structure. Discourse analysts have developed systematic methods
+      for tracking how topics are introduced, developed, and connected, providing
+      tools for mapping the information architecture of any text.
+  key_concepts:
+  - name: dispositio
+    definition: The arrangement or organization of arguments and materials in discourse,
+      one of the five canons of classical rhetoric. Dispositio recognizes that the
+      order in which ideas are presented affects their reception and that strategic
+      arrangement is a mode of persuasion distinct from the quality of the arguments
+      themselves.
+  - name: fabula_syuzhet
+    definition: The Formalist distinction between the chronological sequence of events
+      as they would have occurred (fabula) and the artistic arrangement in which they
+      are presented to the reader (syuzhet). This distinction reveals that all narration
+      involves choices about order, selection, and emphasis that shape meaning.
+  - name: primacy_recency
+    definition: The psychological effects of position in a sequence, where items presented
+      first (primacy) and last (recency) tend to be better remembered and more persuasive
+      than items in the middle. Strategic placement exploits these effects by positioning
+      key arguments at the beginnings and ends of texts and sections.
+  - name: cohesion
+    definition: The linguistic ties that connect sentences and paragraphs into unified
+      text, including reference (pronouns pointing back), conjunction (logical connectives),
+      lexical cohesion (repetition and synonymy), and ellipsis. Cohesion analysis
+      reveals how tightly or loosely a text's parts are connected.
+  - name: information_structure
+    definition: The organization of information in terms of what is given (already
+      known or established) versus new (being introduced), and what is topic (being
+      talked about) versus comment (what is said about it). Information structure
+      theory reveals how texts guide readers through the strategic management of knowledge.
+  - name: move_analysis
+    definition: The identification of functional units in genre-specific texts, where
+      a 'move' is a rhetorical action that contributes to the overall purpose of the
+      text. Move analysis reveals that texts in specific genres follow predictable
+      sequences of functional steps, and that deviation from these sequences carries
+      meaning.
+  - name: emplotment
+    definition: Hayden White's term for the process by which a sequence of events
+      is given narrative structure through the imposition of an archetypal plot pattern.
+      Emplotment reveals that narrative structure is not discovered but imposed, and
+      that different emplotments of the same events carry different meanings and ideological
+      implications.
+  - name: rhetorical_pacing
+    definition: The variation in density and speed across a text, where some sections
+      are compressed (many claims per paragraph) while others are expanded (extended
+      development of single points). Pacing signals relative importance and guides
+      reader attention toward what the author considers most significant.
+analytical_dimensions:
+- key: argumentative_architecture
+  description: The overall logical structure of the argument across the entire text,
+    including the sequence of claims, the hierarchical relationships between main
+    arguments and supporting points, and the pathways through which the argument develops.
+    This dimension maps the text's argumentative skeleton, revealing whether it proceeds
+    linearly, branches into parallel tracks, converges from multiple starting points,
+    or oscillates dialectically.
+  probing_questions:
+  - 'What is the main structural pattern: linear progression, branching tree, convergent
+    network, or dialectical oscillation?'
+  - How many levels of argument hierarchy exist, and how are subordinate claims nested
+    within main claims?
+  - Where does the argument branch into parallel tracks, and how are these tracks
+    eventually integrated?
+  - What is the relationship between the argument's logical structure and its physical
+    organization into sections?
+  - Are there recursive structures where the same argumentative pattern repeats at
+    different scales?
+  depth_guidance:
+    surface: Identify the dominant structural pattern (linear, tree, network, dialectical)
+      and note major divisions.
+    standard: Map the complete argumentative hierarchy with attention to how sections
+      serve different functions and how branches reconnect.
+    deep: Analyze recursive patterns at multiple scales, detect structural arguments
+      (where organization itself makes a claim), and trace how structure guides reader
+      cognition through the argument.
+- key: narrative_patterning
+  description: 'The story-like structures that organize discourse even in non-narrative
+    texts, including problem-solution sequences, temporal progressions, causal chains,
+    and dramatic arcs. This dimension recognizes that humans naturally process information
+    in narrative terms and that even arguments often follow story patterns: a problem
+    is introduced, complications arise, resolution is achieved.'
+  probing_questions:
+  - 'What narrative pattern organizes the discourse: problem-solution, chronological,
+    quest, tragedy, comedy?'
+  - Is there a narrative arc with identifiable setup, complication, climax, and resolution?
+  - How does the text manage suspense, revelation, and reader anticipation?
+  - What is the relationship between the order of presentation (syuzhet) and any underlying
+    chronology (fabula)?
+  - Are there embedded narratives or stories-within-stories, and how do they relate
+    to the main argument?
+  depth_guidance:
+    surface: Identify the dominant narrative pattern and note any obvious temporal
+      or causal sequences.
+    standard: Map the complete narrative arc with attention to pacing, revelation
+      timing, and how narrative structure supports or complicates argument.
+    deep: Analyze the ideological implications of emplotment choices, detect competing
+      narrative frames, and trace how narrative structure guides emotional and cognitive
+      engagement.
+- key: rhetorical_positioning
+  description: The strategic placement of arguments, evidence, concessions, and counterarguments
+    within the text's structure, exploiting effects of position (primacy, recency,
+    burial) to enhance persuasive impact. This dimension reveals the author's strategic
+    awareness and their assumptions about reader psychology.
+  probing_questions:
+  - What is placed in the opening position, and how does this frame everything that
+    follows?
+  - What is saved for the final position, and does this suggest a cumulative strategy
+    or a climactic revelation?
+  - Where are concessions and counterarguments positioned — prominently engaged or
+    strategically buried?
+  - What appears in the middle sections, and is anything hidden there that the author
+    hopes will be overlooked?
+  - How does the positioning of weak versus strong arguments suggest awareness of
+    primacy and recency effects?
+  depth_guidance:
+    surface: Note what appears in opening and closing positions and whether major
+      concessions are prominent or buried.
+    standard: Map strategic placement throughout with attention to the positioning
+      of both strong arguments and potential weaknesses.
+    deep: Analyze the rhetorical sophistication of placement choices, detect attempts
+      to manipulate reader attention through positioning, and evaluate whether placement
+      serves legitimate emphasis or deceptive burial.
+- key: transitional_logic
+  description: The connective tissue that links sections and paragraphs, including
+    explicit transition words, implicit logical relationships, and unmarked juxtapositions.
+    This dimension reveals the quality and type of connections between parts, showing
+    where arguments flow smoothly and where they leap or stumble.
+  probing_questions:
+  - 'What types of transitions predominate: logical (therefore, however), temporal
+    (then, subsequently), associative (similarly), or unmarked?'
+  - Where are transitions weakest, suggesting logical gaps or forced connections?
+  - How do paragraph-level transitions differ from section-level transitions?
+  - Where does juxtaposition without explicit connection do rhetorical work?
+  - Are there false transitions that assert connection without demonstrating it?
+  depth_guidance:
+    surface: Classify dominant transition types and note any obviously weak or missing
+      connections.
+    standard: Map the transitional logic throughout with attention to how different
+      transition types serve different functions.
+    deep: Analyze what transition patterns reveal about the author's assumptions regarding
+      logical relationships, detect false transitions that mask argumentative gaps,
+      and evaluate how transition quality affects argument coherence.
+- key: genre_convention_adherence
+  description: The degree to which the text follows, modifies, or subverts the structural
+    conventions of its genre, and what argumentative work these choices perform. This
+    dimension recognizes that genre choice is never neutral and that adherence or
+    deviation from genre norms carries meaning.
+  probing_questions:
+  - What genre(s) does this text belong to, and what structural conventions does that
+    genre prescribe?
+  - Where does the text follow genre conventions, and what assumptions does this adherence
+    carry?
+  - Where does the text violate or subvert conventions, and what is the rhetorical
+    effect?
+  - Does the text hybridize multiple genres, and how does this affect its structural
+    logic?
+  - What does the genre choice itself argue about how the subject matter should be
+    approached?
+  depth_guidance:
+    surface: Identify the primary genre and note major adherences to or deviations
+      from its conventions.
+    standard: Map systematic convention use with attention to how genre structure
+      shapes possible arguments.
+    deep: Analyze the ideological implications of genre choice, detect genre hybridization
+      and its effects, and evaluate how convention adherence or subversion serves
+      the text's persuasive goals.
+- key: information_architecture
+  description: The management of reader knowledge throughout the text, including what
+    information is introduced when, what is withheld for later revelation, what is
+    front-loaded as given, and how the reader's understanding evolves through the
+    reading process. This dimension maps the 'knowledge gradient' — the changing state
+    of what the reader knows at each point.
+  probing_questions:
+  - What does the reader learn when, and how does this sequence affect understanding?
+  - Where is information withheld that could have been revealed earlier, and what
+    effect does this delay create?
+  - What is treated as given (assumed known) versus new (being introduced), and are
+    these assumptions warranted?
+  - How does the text manage the balance between providing context and advancing argument?
+  - Where might a different information sequence have produced a different understanding
+    or response?
+  depth_guidance:
+    surface: Note major revelations and their timing, and identify what is assumed
+      as given.
+    standard: Map the knowledge gradient showing how reader understanding evolves
+      through the text.
+    deep: Analyze how information architecture guides interpretation, detect strategic
+      information management, and evaluate how alternative sequences would affect
+      reader response.
+capabilities:
+- key: argumentative_structure_detection
+  description: Identifies and classifies the overall argumentative architecture of
+    texts, distinguishing linear, tree, network, dialectical, and convergent structures.
+  extended_description: |-
+    This capability maps the skeletal structure of argumentation — the logical armature that holds a text's claims together. It recognizes that arguments can proceed in fundamentally different ways: linearly (premise to premise to conclusion), hierarchically (main claims supported by nested sub-claims), dialectically (thesis-antithesis-synthesis), convergently (multiple independent lines converging on one conclusion), or as complex networks with multiple pathways.
+
+    The theoretical grounding comes from informal logic and argumentation theory, particularly Toulmin's model of argument and its extensions. But this capability goes beyond identifying individual arguments to mapping how arguments are assembled into larger structures. A text might contain dozens of individual arguments; the question is how they relate to each other and to the text's overall purpose.
+
+    The capability attends to both explicit structure (sections titled 'Objections and Replies') and implicit structure (the logical relationships that hold even without section breaks). It detects recursive patterns where the same structural logic repeats at different scales — a dialectical pattern within a chapter that mirrors a dialectical pattern across the book.
+  intellectual_grounding:
+    thinker: Toulmin
+    concept: argument structure
+    method: Extends Toulmin's analysis of individual arguments to the architectonics
+      of complete texts, mapping how claims, warrants, and backing are distributed
+      and organized across discourse.
+  indicators:
+  - Section headings and their logical relationships
+  - Transition phrases signaling argumentative moves (therefore, however, building
+    on this)
+  - Repetition of claims at different levels of the hierarchy
+  - Explicit acknowledgment of structure (I will argue in three stages)
+  - Patterns of evidence clustering around specific claims
+  depth_scaling:
+    surface: Identify the dominant structural pattern and major argumentative divisions
+    standard: Map complete argumentative architecture with attention to hierarchy
+      and branch relationships
+    deep: Analyze recursive structures, detect structural arguments, trace how architecture
+      guides cognition
+  requires_dimensions: []
+  produces_dimensions:
+  - argumentative_architecture
+  - transitional_logic
+- key: narrative_pattern_recognition
+  description: Detects narrative patterns organizing discourse, including problem-solution,
+    chronological, causal, quest, and archetypal plot structures.
+  extended_description: |-
+    Even non-narrative texts often follow narrative logic. Academic papers tell a story: there was a gap in knowledge, a question was posed, methods were employed, results emerged, conclusions were drawn. Philosophical arguments can follow tragic, comic, or romantic emplotments. This capability detects these narrative patterns, recognizing that narrative structure is a fundamental mode of human sense-making that shapes reception even when readers are unaware of its operation.
+
+    The theoretical foundation draws from narratology (Genette, Bal, Prince) and Hayden White's analysis of emplotment. White showed that the same historical events can be emplotted according to different archetypal patterns — as romance (hero overcomes obstacles), tragedy (fall from greatness), comedy (reconciliation after confusion), or satire (exposure of folly) — and that these emplotment choices carry ideological implications. This capability applies the same analysis to any discourse that unfolds in sequence.
+
+    The capability attends to narrative arc (setup, complication, climax, resolution), to the management of suspense and revelation, and to the relationship between the order of presentation and any underlying chronology. It detects embedded narratives and analyzes how stories-within-stories function rhetorically.
+  intellectual_grounding:
+    thinker: White
+    concept: emplotment
+    method: Applies White's analysis of how historical narratives are given form through
+      archetypal plot patterns to all sequential discourse, revealing narrative structure
+      as productive rather than merely descriptive.
+  indicators:
+  - Temporal markers (then, subsequently, before, after)
+  - Problem-solution sequences (the challenge was... the response was...)
+  - Character-like agents (the theory, the tradition, the opposition)
+  - Rising and falling action patterns in argument intensity
+  - Resolution markers (thus, in conclusion, the upshot)
+  depth_scaling:
+    surface: Identify dominant narrative pattern and basic arc structure
+    standard: Map complete narrative structure with attention to pacing and revelation
+      management
+    deep: Analyze ideological implications of emplotment, detect competing narrative
+      frames, evaluate narrative manipulation
+  requires_dimensions: []
+  produces_dimensions:
+  - narrative_patterning
+  - information_architecture
+- key: strategic_placement_analysis
+  description: Analyzes the strategic positioning of arguments, evidence, and concessions,
+    detecting exploitation of primacy, recency, and burial effects.
+  extended_description: |-
+    Position matters. The same concession placed at the beginning of a paragraph versus buried in its middle produces different effects. The decision to save the strongest argument for last versus leading with it reflects strategic calculation about how readers will process and remember the discourse. This capability makes these positional strategies visible, revealing the author's assumptions about reader psychology and their degree of rhetorical sophistication.
+
+    The theoretical grounding draws from classical rhetoric's dispositio and modern research in cognitive psychology on serial position effects. Primacy effects mean that what comes first frames everything following; recency effects mean that what comes last lingers in memory. The 'buried' middle position is where skilled authors place material they must include but wish to minimize. Perelman's New Rhetoric provides additional grounding in how arguments should be ordered differently for different audiences and purposes.
+
+    The capability distinguishes legitimate emphasis (placing strong arguments prominently) from manipulative burial (hiding counterevidence in the middle). It attends to the positioning of different types of material — claims, evidence, concessions, qualifications — and asks what the pattern of placement reveals about authorial strategy and assumptions.
+  intellectual_grounding:
+    thinker: Perelman
+    concept: argument ordering
+    method: Applies Perelman's analysis of how argument arrangement affects persuasion
+      to detect strategic placement choices and evaluate their legitimacy.
+  indicators:
+  - Opening position occupied by framing claims or thesis statements
+  - Closing position occupied by strongest arguments or calls to action
+  - Concessions and qualifications in middle sections
+  - Counterevidence mentioned briefly and then moved past quickly
+  - Repetition of key claims in both opening and closing positions
+  depth_scaling:
+    surface: Note opening and closing content, locate major concessions
+    standard: Map strategic placement throughout with attention to positioning patterns
+    deep: Evaluate legitimacy of placement choices, detect manipulative burial, analyze
+      sophistication of positional strategy
+  requires_dimensions:
+  - argumentative_architecture
+  produces_dimensions:
+  - rhetorical_positioning
+- key: transition_logic_mapping
+  description: Maps the connective tissue between sections and paragraphs, classifying
+    transition types and detecting logical gaps or forced connections.
+  extended_description: |-
+    Transitions reveal the author's understanding of how their ideas connect. A 'therefore' claims logical consequence; a 'however' signals opposition; an unmarked juxtaposition leaves the reader to infer the relationship. This capability classifies transitions and evaluates their legitimacy, distinguishing smooth logical flow from forced connections and recognizing where apparent continuity masks actual gaps.
+
+    The theoretical foundation comes from discourse analysis and cohesion theory (Halliday and Hasan). Cohesive devices — reference, conjunction, lexical chains — create textual unity, but cohesion is not coherence. A text can be cohesively tight (many connective words) while lacking genuine logical coherence (the connections don't hold). This capability distinguishes the appearance of connection from its reality.
+
+    The capability attends to patterns in transition use. Do transitions tend to be logical or temporal or associative? Where are transitions weakest or absent? Are there false transitions — explicit connective words that assert connection without demonstrating it? The pattern of transitions reveals how the author conceptualizes the relationships among their ideas and where their argumentative confidence is strongest and weakest.
+  intellectual_grounding:
+    thinker: Halliday
+    concept: cohesion
+    method: Applies Halliday's analysis of textual cohesion to evaluate whether cohesive
+      devices create genuine connection or merely its appearance.
+  indicators:
+  - Explicit logical connectives (therefore, thus, hence, consequently)
+  - Contrastive markers (however, but, nevertheless, on the other hand)
+  - Additive connectors (moreover, furthermore, additionally)
+  - Unmarked paragraph breaks requiring reader inference
+  - Meta-commentary about structure (this brings us to, having established X we now
+    turn to Y)
+  depth_scaling:
+    surface: Classify dominant transition types, note obvious gaps
+    standard: Map transition patterns throughout with attention to varying quality
+    deep: Evaluate legitimacy of claimed connections, detect false transitions, analyze
+      what transition patterns reveal about argumentative confidence
+  requires_dimensions:
+  - argumentative_architecture
+  produces_dimensions:
+  - transitional_logic
+- key: genre_structure_analysis
+  description: Analyzes adherence to and deviation from genre structural conventions,
+    revealing how genre choice shapes possible arguments.
+  extended_description: |-
+    Genres are not merely formal containers but social actions that carry expectations, constraints, and implicit arguments about how knowledge should be organized. Choosing to write a research article rather than an essay, a manifesto rather than a treatise, a literature review rather than an original argument — these are not neutral choices but commitments to particular ways of knowing and communicating. This capability detects genre conventions and analyzes what work adherence or deviation performs.
+
+    The theoretical grounding draws from rhetorical genre theory (Miller, Bazerman, Swales), which treats genres as typified responses to recurring social situations. Swales's move analysis provides tools for identifying the functional units that constitute genre-specific texts. The CARS model for research article introductions, for instance, shows that introductions establish territory, establish a niche, and occupy the niche — a predictable sequence of moves that structures what can be said and how.
+
+    The capability detects genre hybridization, where texts combine conventions from multiple genres, and analyzes the rhetorical effects of such mixing. It also attends to genre violation — moments where a text breaks with convention — asking whether violation serves a purpose or merely reflects lack of genre awareness.
+  intellectual_grounding:
+    thinker: Swales
+    concept: genre moves
+    method: Applies Swales's move analysis to detect genre-specific structural patterns
+      and evaluate the rhetorical work performed by convention adherence or violation.
+  indicators:
+  - Section headings matching genre conventions (Introduction, Methods, Results, Discussion)
+  - Predictable move sequences (establishing territory → establishing niche → occupying
+    niche)
+  - Genre-specific rhetorical features (hedging in academic prose, directness in manifestos)
+  - Explicit genre markers (in this paper, this essay argues, dear reader)
+  - Violations of expected patterns or hybridization of multiple genre conventions
+  depth_scaling:
+    surface: Identify primary genre and note major convention adherences or violations
+    standard: Map systematic convention use with attention to how genre structures
+      argument
+    deep: Analyze ideological implications of genre choice, evaluate hybridization
+      effects, assess sophistication of convention manipulation
+  requires_dimensions: []
+  produces_dimensions:
+  - genre_convention_adherence
+- key: information_flow_tracking
+  description: Tracks how information is managed through the text, mapping revelation
+    timing, given-new relationships, and the evolving knowledge gradient.
+  extended_description: |-
+    Texts manage reader knowledge. They decide what to reveal when, what to assume as already known, what to withhold for later revelation. The sequence in which information is presented shapes understanding — the same facts, differently sequenced, produce different interpretations. This capability tracks information flow, mapping the 'knowledge gradient' that shows how reader understanding evolves through the reading process.
+
+    The theoretical grounding comes from information structure theory (Halliday, Prince, Lambrecht), which analyzes how languages organize information in terms of given versus new and topic versus focus. Given information (assumed known) provides context; new information (being introduced) provides content. The balance and sequencing of given and new affects comprehension — too much new information overwhelms; too much given bores.
+
+    The capability attends to revelation timing: when does the reader learn key facts, and what would change if they learned them earlier or later? It detects strategic information management — withholding information for dramatic effect, front-loading context to frame interpretation, burying inconvenient facts in technically accurate but easy-to-miss formulations. It asks whether information flow serves reader comprehension or author strategy.
+  intellectual_grounding:
+    thinker: Lambrecht
+    concept: information structure
+    method: Applies information structure theory to track how given-new sequencing
+      and revelation timing shape reader understanding and interpretation.
+  indicators:
+  - Contextualizing moves before introducing new claims
+  - Delayed revelation (the twist was...)
+  - Front-loading of key definitions or assumptions
+  - Repetition of established information when introducing new claims
+  - Explicit management of reader knowledge (as we saw earlier, we will soon see that)
+  depth_scaling:
+    surface: Note major revelations and their timing, identify front-loaded context
+    standard: Map knowledge gradient showing reader understanding evolution
+    deep: Analyze strategic information management, evaluate alternative sequences,
+      detect manipulation of reader understanding
+  requires_dimensions:
+  - narrative_patterning
+  produces_dimensions:
+  - information_architecture
+composability:
+  shares_with:
+    argumentative_architecture: argument_architecture uses this dimension to connect
+      logical structure with compositional arrangement, revealing how abstract argument
+      forms are realized in textual organization
+    transitional_logic: dialectical_structure uses this dimension to trace how dialectical
+      movements are signaled and connected across texts
+    rhetorical_positioning: epistemological_method_detector uses this dimension to
+      understand how methodological claims are positioned for maximum credibility
+    genre_convention_adherence: theory_construction_analyzer uses this dimension to
+      understand how theoretical arguments follow or subvert disciplinary genre expectations
+    narrative_patterning: comparative_reasoning_analyzer uses this dimension to understand
+      how comparative arguments are emplotted as narratives of similarity and difference
+  consumes_from:
+    claim_hierarchy: from argument_architecture — provides the logical structure that
+      this engine maps onto compositional patterns
+    thesis_antithesis_synthesis: from dialectical_structure — identifies dialectical
+      movements that this engine traces in organizational patterns
+    semantic_relationships: from concept_semantic_constellation — reveals conceptual
+      connections that should correspond to structural connections
+    framework_architecture: from conceptual_framework_extraction — provides the conceptual
+      vocabulary whose deployment this engine tracks positionally
+  synergy_engines:
+  - argument_architecture
+  - dialectical_structure
+  - epistemological_method_detector
+  - theory_construction_analyzer
+  - inferential_commitment_mapper
+depth_levels:
+- key: surface
+  description: Rapid structural survey identifying dominant patterns, major divisions,
+    and obvious organizational features without detailed mapping of relationships
+    or strategic analysis.
+  typical_passes: 1
+  suitable_for: Quick orientation to unfamiliar texts, initial screening for structural
+    features of interest, corpus-level pattern identification across many documents.
+  passes:
+  - pass_number: 1
+    label: Structural Survey
+    stance: discovery
+    focus_dimensions:
+    - argumentative_architecture
+    - narrative_patterning
+    - genre_convention_adherence
+    focus_capabilities:
+    - argumentative_structure_detection
+    - narrative_pattern_recognition
+    - genre_structure_analysis
+    consumes_from: []
+    description: Surveys the text for dominant structural patterns, identifying the
+      primary argumentative architecture (linear, tree, network, dialectical), the
+      organizing narrative pattern (problem-solution, chronological, etc.), and the
+      genre conventions being followed. Produces an initial structural profile that
+      characterizes the text's compositional strategy without detailed mapping of
+      all elements.
+- key: standard
+  description: Systematic structural mapping that traces argumentative architecture,
+    narrative patterns, strategic placement, and transitional logic across the complete
+    text with attention to relationships and patterns.
+  typical_passes: 2
+  suitable_for: Comprehensive analysis of important texts, preparation for detailed
+    critique, understanding of how structure serves argument.
+  passes:
+  - pass_number: 1
+    label: Architectural Mapping
+    stance: discovery
+    focus_dimensions:
+    - argumentative_architecture
+    - genre_convention_adherence
+    - transitional_logic
+    focus_capabilities:
+    - argumentative_structure_detection
+    - genre_structure_analysis
+    - transition_logic_mapping
+    consumes_from: []
+    description: Maps the complete argumentative architecture of the text, identifying
+      how claims are hierarchically organized, how sections function, and how the
+      argument proceeds through its major movements. Classifies genre conventions
+      and maps transition patterns throughout. Produces a structural skeleton that
+      can be analyzed for strategic implications in the second pass.
+  - pass_number: 2
+    label: Strategic Analysis
+    stance: inference
+    focus_dimensions:
+    - rhetorical_positioning
+    - narrative_patterning
+    - information_architecture
+    focus_capabilities:
+    - strategic_placement_analysis
+    - narrative_pattern_recognition
+    - information_flow_tracking
+    consumes_from:
+    - 1
+    description: 'Building on the structural map from pass one, analyzes the strategic
+      dimensions of organization: how arguments, evidence, and concessions are positioned;
+      how narrative patterns create rhetorical effects; how information is managed
+      to guide reader understanding. Evaluates the sophistication and legitimacy of
+      structural choices, detecting both skillful arrangement and manipulative placement.'
+- key: deep
+  description: Exhaustive structural analysis that maps all organizational patterns,
+    evaluates their rhetorical sophistication and legitimacy, detects structural arguments
+    and manipulation, and synthesizes findings into a comprehensive assessment of
+    compositional strategy.
+  typical_passes: 4
+  suitable_for: Authoritative structural criticism, detection of sophisticated rhetorical
+    manipulation, understanding of master-level compositional technique.
+  passes:
+  - pass_number: 1
+    label: Complete Structural Inventory
+    stance: discovery
+    focus_dimensions:
+    - argumentative_architecture
+    - genre_convention_adherence
+    - transitional_logic
+    focus_capabilities:
+    - argumentative_structure_detection
+    - genre_structure_analysis
+    - transition_logic_mapping
+    consumes_from: []
+    description: 'Exhaustive inventory of all structural features: complete argumentative
+      architecture with every level of hierarchy mapped, all genre conventions identified
+      with notes on adherence and violation, all transitions classified with quality
+      assessments. This pass aims for completeness, capturing every structural element
+      that will be analyzed in subsequent passes.'
+  - pass_number: 2
+    label: Strategic Pattern Analysis
+    stance: inference
+    focus_dimensions:
+    - rhetorical_positioning
+    - narrative_patterning
+    - information_architecture
+    focus_capabilities:
+    - strategic_placement_analysis
+    - narrative_pattern_recognition
+    - information_flow_tracking
+    consumes_from:
+    - 1
+    description: 'Detailed analysis of strategic dimensions: how every significant
+      argument and concession is positioned, the complete narrative arc with all its
+      embedded patterns, the full knowledge gradient showing reader understanding
+      at each point. This pass moves from inventory to interpretation, asking what
+      each structural choice accomplishes rhetorically.'
+  - pass_number: 3
+    label: Critical Evaluation
+    stance: confrontation
+    focus_dimensions:
+    - rhetorical_positioning
+    - transitional_logic
+    - information_architecture
+    focus_capabilities:
+    - strategic_placement_analysis
+    - transition_logic_mapping
+    - information_flow_tracking
+    consumes_from:
+    - 1
+    - 2
+    description: 'Critical evaluation of structural choices: are transitions legitimate
+      or do they mask gaps? Is strategic placement serving emphasis or manipulation?
+      Does information management serve reader understanding or author agenda? This
+      pass applies pressure to the structural analysis, testing whether the patterns
+      detected serve legitimate rhetorical purposes or constitute structural deception.'
+  - pass_number: 4
+    label: Synthetic Assessment
+    stance: integration
+    focus_dimensions:
+    - argumentative_architecture
+    - genre_convention_adherence
+    - rhetorical_positioning
+    - narrative_patterning
+    focus_capabilities:
+    - argumentative_structure_detection
+    - genre_structure_analysis
+    - strategic_placement_analysis
+    - narrative_pattern_recognition
+    consumes_from:
+    - 1
+    - 2
+    - 3
+    description: Synthesis of all structural findings into a comprehensive assessment
+      of compositional strategy. Characterizes the overall structural approach, evaluates
+      its sophistication and effectiveness, assesses its relationship to genre conventions,
+      and produces final judgments about how structure serves or subverts the text's
+      explicit arguments. Identifies structural signatures that might persist across
+      an author's corpus.
+apps:
+- critic
+function: logic
+paradigm_keys: []

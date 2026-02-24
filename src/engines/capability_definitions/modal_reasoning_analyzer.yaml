@@ -1,0 +1,634 @@
+engine_key: modal_reasoning_analyzer
+engine_name: Modal Reasoning Analyzer
+version: 1
+category: argument
+kind: extraction
+problematique: |-
+  Every substantive intellectual claim carries modal weight. When an author asserts that capitalism 'must' produce inequality, that democracy 'could' devolve into tyranny, or that certain social arrangements are 'impossible' without coercion, they are not merely describing what is — they are making claims about the space of what could be, what has to be, and what cannot be. These modal claims — about possibility, necessity, contingency, and impossibility — constitute the deep architecture of any theoretical position. They determine what alternatives are conceivable, what outcomes are inevitable, what interventions are futile. Yet modal reasoning is the dark matter of academic discourse: omnipresent, structurally essential, and largely invisible. Authors constantly traffic in necessity and possibility without marking these claims as the contestable philosophical commitments they are.
+
+  Most readers — and many authors — fail to notice the modal infrastructure of arguments. When a text claims that 'there is no alternative' to a particular policy, this is a modal claim (impossibility) masquerading as empirical description. When a philosopher argues that consciousness 'could not' arise from purely physical processes, this is a claim about metaphysical impossibility that requires justification far beyond ordinary empirical evidence. The slippage between different types of modality compounds the problem: epistemic possibility (we cannot currently rule it out) gets confused with metaphysical possibility (it could actually obtain); practical necessity (we have no better option) gets inflated to logical necessity (no alternative is even conceivable). Thought experiments that purport to establish necessity often smuggle in hidden assumptions. Threshold arguments that claim to identify precise boundaries (when does a collection become a heap, when does reform become revolution) frequently dissolve under scrutiny into the sorites paradox. This engine makes the modal structure explicit, distinguishes between types of modality, evaluates the rigor of modal claims, and exposes the concealed modal commitments that shape what an argument can and cannot say.
+
+  The philosophical foundations of modal analysis run deep. Aristotle distinguished between what is actual, what is possible, and what is necessary — the founding categories of modal logic. Leibniz's notion of possible worlds as complete consistent descriptions of how reality might be different provided the metaphysical scaffolding for modern modal semantics. Saul Kripke formalized this intuition into possible worlds semantics, giving precise meaning to necessity (what holds in all possible worlds) and possibility (what holds in at least one). David Lewis pushed further with modal realism, treating possible worlds as concretely real as our own — a position that clarifies modal reasoning even for those who reject its ontology. Beyond alethic modality (concerning what reality allows), the tradition recognizes epistemic modality (concerning what we can know), deontic modality (concerning obligation and permission), and temporal modality (concerning what was or will be possible). Each type has its own logic, its own justification requirements, and its own characteristic fallacies.
+
+  Within the logic suite, this engine occupies a distinctive niche. Where argument_architecture maps the inferential skeleton of reasoning and dialectical_structure traces moves and countermoves, this engine asks: what are the modal commitments embedded in those arguments? Every counterfactual analysis (what would have happened if...) presupposes a modal framework of alternative possibilities. Every theoretical construction makes implicit claims about what is necessary for what. The modal_reasoning_analyzer thus provides a crucial diagnostic layer that reveals the often-unexamined modal foundations of theoretical work. It works synergistically with counterfactual_analyzer (which explores specific alternative scenarios) and inferential_commitment_mapper (which traces what follows from accepting modal claims). It also connects to epistemological_method_detector, since different epistemological stances carry different modal implications about what can be known.
+
+  Commitment to rigorous modal analysis matters because modal claims are where intellectual honesty is most easily compromised and most consequential when lacking. The assertion that something is 'necessary' forecloses alternatives; the claim that something is 'impossible' dismisses entire research programs. When these claims are asserted without justification — when 'must' means merely 'I strongly believe' and 'cannot' means merely 'I cannot imagine' — the result is impoverished thinking that mistakes the limits of one's imagination for the limits of reality. Conversely, when modal claims are properly grounded — when necessity is backed by valid deduction, when possibility is established by coherent construction, when impossibility is demonstrated by rigorous proof — the result is intellectual work that genuinely maps the space of what is thinkable. This engine serves researchers who want to know not just what an author claims, but what that author claims about the very boundaries of the possible.
+researcher_question: What claims does the text make about possibility, necessity,
+  and contingency, and how rigorous is its modal reasoning?
+intellectual_lineage:
+  primary:
+    name: kripke
+    description: Saul Kripke (1940–2022), American philosopher and logician whose
+      development of possible worlds semantics revolutionized modal logic and provided
+      the formal apparatus for analyzing necessity, possibility, and contingency.
+      His 1963 paper on semantical considerations established the accessibility relation
+      between possible worlds, allowing precise characterization of different modal
+      systems. His 1972 lectures 'Naming and Necessity' distinguished between epistemic
+      and metaphysical necessity, showing that some truths are necessary but only
+      knowable a posteriori (necessary a posteriori) while others are contingent but
+      knowable a priori. This distinction is foundational for this engine's capacity
+      to separate different types of modal claims and evaluate their distinct justification
+      requirements.
+  secondary:
+  - name: lewis
+    description: David Lewis (1941–2001), American philosopher whose modal realism
+      treated possible worlds as concrete entities rather than abstract constructs.
+      His 1986 work 'On the Plurality of Worlds' provided the most systematic defense
+      of taking modal talk literally, treating 'possibly P' as 'there exists a world
+      where P.' Even for those who reject his ontology, Lewis's framework clarifies
+      counterfactual reasoning, establishes criteria for world-similarity, and provides
+      tools for evaluating thought experiments. His analysis of counterfactual conditionals
+      grounds this engine's approach to branching possibility structures.
+  - name: williamson
+    description: Timothy Williamson (1955–), British philosopher whose work on modal
+      epistemology addresses how we can know modal truths. His 2007 'The Philosophy
+      of Philosophy' argues that modal knowledge derives from our capacity for counterfactual
+      reasoning rather than from special rational intuition. This grounds the engine's
+      attention to how modal claims are justified and whether purported modal knowledge
+      rests on legitimate counterfactual imagination or mere failure of imagination.
+  - name: kratzer
+    description: Angelika Kratzer (1945–), German-American linguist whose formal semantics
+      for modality in natural language distinguishes between different modal bases
+      (epistemic, deontic, circumstantial) and ordering sources. Her framework explains
+      why 'must' in 'You must be the new neighbor' (epistemic) differs from 'must'
+      in 'You must pay your taxes' (deontic). This informs the engine's classification
+      of modal claims by modality type.
+  - name: aristotle
+    description: Aristotle (384–322 BCE), whose modal syllogistic in the 'Prior Analytics'
+      was the first systematic treatment of modal reasoning. His distinction between
+      what is actual, what is possible, and what is necessary established the foundational
+      categories that persist in contemporary modal logic. His concept of potentiality
+      (dunamis) versus actuality (energeia) provides philosophical grounding for understanding
+      how possibilities relate to actualization.
+  traditions:
+  - name: possible_worlds_semantics
+    description: The formal tradition treating modal operators as quantifiers over
+      possible worlds. Necessity becomes universal quantification (true in all accessible
+      worlds), possibility becomes existential quantification (true in some accessible
+      world). Different accessibility relations yield different modal logics. This
+      provides the formal backbone for analyzing modal claims with precision and detecting
+      when modal operators are used inconsistently.
+  - name: analytic_modal_metaphysics
+    description: The philosophical tradition investigating the nature of modality
+      itself — whether modal facts are primitive or reducible, whether possible worlds
+      are abstract or concrete, how modal truths are grounded. Debates between actualists
+      (only the actual world exists) and possibilists (possible worlds exist too)
+      shape how we understand what modal claims are about. This tradition informs
+      the engine's sensitivity to different philosophical frameworks underlying modal
+      reasoning.
+  - name: thought_experiment_methodology
+    description: The philosophical practice of using imagined scenarios to test principles,
+      identify necessary conditions, or establish possibility. From Galileo's ship
+      to Rawls's veil of ignorance, thought experiments are central to philosophical
+      argument. Critical analysis of this methodology — what makes a thought experiment
+      probative, what assumptions it smuggles in, how robust its conclusions are —
+      is essential for evaluating modal claims based on conceivability.
+  - name: deontic_logic
+    description: The formal study of obligation, permission, and prohibition as modal
+      operators. Just as necessity and possibility govern what must be and what can
+      be, obligation and permission govern what ought to be and what may be. The analogies
+      and disanalogies between alethic and deontic modality — including the notorious
+      is-ought gap — are central to evaluating arguments that move between descriptive
+      and normative modal claims.
+  - name: epistemic_logic
+    description: The formal study of knowledge and belief as modal operators, where
+      'knowing that P' implies that P is true in all worlds compatible with what the
+      agent knows. This tradition distinguishes between what is epistemically possible
+      (consistent with our knowledge) and what is metaphysically possible (consistent
+      with reality). The conflation of these is a common modal fallacy that this engine
+      is designed to detect.
+  - name: counterfactual_reasoning
+    description: The study of conditionals concerning what would have happened if
+      things had been different. Lewis's similarity-based semantics, where counterfactuals
+      are evaluated by looking at the most similar worlds where the antecedent holds,
+      provides tools for assessing branching possibility structures. This tradition
+      grounds the engine's analysis of alternative scenarios and their probability
+      assignments.
+  key_concepts:
+  - name: alethic_modality
+    definition: Modality concerning what reality allows — what is metaphysically possible,
+      necessary, or contingent. A claim is alethically necessary if it holds in all
+      possible worlds (or all worlds with the same fundamental laws), possible if
+      it holds in at least one, contingent if it holds in some but not all. This is
+      the deepest modal layer, concerning the very structure of reality rather than
+      our knowledge or obligations.
+  - name: epistemic_modality
+    definition: 'Modality concerning what is consistent with what we know — what we
+      can rule out, what remains open. ''The culprit might be the butler'' expresses
+      epistemic possibility (we cannot eliminate this hypothesis), not metaphysical
+      possibility. Confusing epistemic with alethic modality is a pervasive error:
+      ''we cannot rule it out'' does not entail ''it could actually happen.'''
+  - name: deontic_modality
+    definition: Modality concerning obligation and permission — what ought to be,
+      what may be, what must not be. Deontic necessity (obligation) is structurally
+      analogous to alethic necessity but operates in the normative rather than descriptive
+      domain. The is-ought gap means deontic claims require distinct justification
+      from alethic claims; deriving 'must' (deontic) from 'is' (alethic) is a classic
+      fallacy.
+  - name: possible_worlds
+    definition: 'Complete consistent descriptions of how reality could be. A possible
+      world specifies a truth value for every proposition in a way that respects logical
+      constraints. Modal claims are analyzed as claims about which possible worlds
+      satisfy them: necessity means all worlds, possibility means at least one. Whether
+      possible worlds are abstract representations or concrete realities is contested,
+      but the framework is indispensable for rigorous modal analysis.'
+  - name: necessity_types
+    definition: 'Different strengths and sources of necessity: logical necessity (following
+      from the laws of logic alone), metaphysical necessity (following from the nature
+      of things), physical necessity (following from natural laws), and practical
+      necessity (following from circumstances and constraints). Conflating these types
+      — treating practical necessity as if it were logical necessity — is a common
+      source of modal overreach.'
+  - name: sorites_susceptibility
+    definition: 'Vulnerability to the sorites (heap) paradox: if removing one grain
+      from a heap still leaves a heap, then by repeated application no grains yield
+      a heap. Arguments drawing sharp boundaries on continuous dimensions are sorites-susceptible.
+      Claims that ''at point X, A becomes B'' (reform becomes revolution, collection
+      becomes heap) often mask arbitrary boundary-drawing with the appearance of necessity.'
+  - name: counterfactual_robustness
+    definition: The property of a conclusion that it survives across reasonable variations
+      in the thought experiment's setup. A robust modal conclusion holds not just
+      in the specific imagined scenario but across a range of similar scenarios. Lack
+      of robustness suggests the conclusion depends on arbitrary features of the example
+      rather than establishing genuine necessity or possibility.
+  - name: modal_fallacy
+    definition: 'An error in reasoning involving modal operators. Common forms include:
+      scope fallacy (confusing ''necessarily, if P then Q'' with ''if P then necessarily
+      Q''), type confusion (treating epistemic possibility as metaphysical possibility),
+      probabilistic confusion (treating possibility as likelihood), and necessity
+      inflation (claiming logical necessity where only practical necessity holds).'
+analytical_dimensions:
+- key: modal_claim_inventory
+  description: The comprehensive mapping of all modal claims in a text — what the
+    author asserts is possible, necessary, contingent, or impossible, classified by
+    modality type (alethic, epistemic, deontic, temporal). This inventory makes visible
+    the often-implicit modal commitments that structure the argument.
+  probing_questions:
+  - What does the text claim must be the case, and what kind of necessity is invoked?
+  - What does the text claim could be different, and how is this possibility established?
+  - What does the text treat as contingent — as actual but not necessary?
+  - What does the text claim is impossible, and by what reasoning?
+  - Are modal operators used consistently, or do they shift meaning across contexts?
+  depth_guidance:
+    surface: Identify explicit modal language ('must,' 'could,' 'impossible') and
+      classify by type.
+    standard: Map both explicit and implicit modal claims, evaluating justification
+      quality for each.
+    deep: Construct the complete modal landscape showing how necessity and possibility
+      claims interrelate, identifying the text's implicit modal metaphysics.
+- key: modal_justification_quality
+  description: 'The assessment of how well modal claims are supported. A claim that
+    something is ''necessary'' requires different justification than a claim that
+    something is ''actual.'' This dimension evaluates whether modal claims are backed
+    by appropriate warrant: logical argument for logical necessity, physical law for
+    physical necessity, normative argument for deontic necessity.'
+  probing_questions:
+  - Are necessity claims backed by deductive proof, or merely by strong assertion?
+  - Are possibility claims established by constructing a coherent scenario, or merely
+    by failure to see impossibility?
+  - Are impossibility claims demonstrated rigorously, or do they rest on failure of
+    imagination?
+  - Does the text distinguish between different grades of necessity and possibility?
+  - Where does the text assert modal claims without argument?
+  depth_guidance:
+    surface: Note whether modal claims are asserted or argued for.
+    standard: Evaluate justification quality for major modal claims, distinguishing
+      well-supported from assumed.
+    deep: Systematically assess each modal claim against appropriate justification
+      standards for its type, revealing patterns of modal overreach or underreach.
+- key: modality_type_confusion
+  description: The detection of slippage between different types of modality. Epistemic
+    possibility (we cannot rule it out) is weaker than metaphysical possibility (it
+    could actually obtain). Practical necessity (we have no better option) is weaker
+    than logical necessity (the alternative is contradictory). This dimension identifies
+    where the text confuses these different modal domains.
+  probing_questions:
+  - Does the text conflate epistemic possibility with metaphysical possibility?
+  - Does the text treat practical necessity as if it were logical necessity?
+  - Does the text derive deontic conclusions (what ought to be) from alethic premises
+    (what is)?
+  - Where does the text equivocate on the strength of modal claims?
+  - Does the text acknowledge when it is operating in different modal registers?
+  depth_guidance:
+    surface: Flag obvious cases where different modality types are conflated.
+    standard: Trace patterns of modality-type slippage and identify their argumentative
+      consequences.
+    deep: Map the text's implicit theory of how different modalities relate, revealing
+      systematic confusions or deliberate strategic equivocations.
+- key: thought_experiment_rigor
+  description: The evaluation of hypothetical scenarios used to test principles or
+    establish modal claims. Thought experiments purport to show that something is
+    possible (by constructing a scenario) or necessary (by showing alternatives lead
+    to unacceptable conclusions). This dimension assesses internal coherence, hidden
+    assumptions, variable isolation, and counterfactual robustness.
+  probing_questions:
+  - Is the imagined scenario internally coherent, or does it smuggle in contradictions?
+  - Does the thought experiment successfully isolate the variable it claims to test?
+  - What background assumptions does the scenario take for granted?
+  - Would the conclusion survive reasonable variations in the scenario's setup?
+  - Does conceivability in the thought experiment genuinely establish possibility?
+  depth_guidance:
+    surface: Identify thought experiments and their intended conclusions.
+    standard: Assess coherence and identify major hidden assumptions in each thought
+      experiment.
+    deep: Systematically test robustness by varying parameters, exposing which conclusions
+      depend on arbitrary features versus which survive across variations.
+- key: threshold_and_boundary_analysis
+  description: The examination of arguments about tipping points, critical masses,
+    and categorical boundaries. Where does the text claim that quantitative change
+    becomes qualitative? Where does it draw sharp lines on continuous spectra? This
+    dimension identifies sorites-susceptible arguments and evaluates whether threshold
+    claims are justified or arbitrary.
+  probing_questions:
+  - Where does the text assert a sharp boundary between categories?
+  - Are these boundaries justified, or do they involve arbitrary line-drawing?
+  - Is the argument vulnerable to sorites-style objections?
+  - Does the text acknowledge vagueness and gradual transitions, or does it impose
+    false precision?
+  - What work do threshold claims do in the overall argument?
+  depth_guidance:
+    surface: Identify explicit threshold or boundary claims.
+    standard: Assess whether boundaries are justified and flag sorites-susceptible
+      arguments.
+    deep: Analyze how boundary-drawing serves argumentative purposes, exploring what
+      would change if thresholds were placed differently.
+- key: branching_possibility_mapping
+  description: The construction of branching structures showing alternative possibilities
+    at decision points or causal junctures. Which counterfactual branches does the
+    text explore? Which does it ignore? How are probabilities assigned to different
+    branches? This dimension reveals the scope and limits of the text's counterfactual
+    imagination.
+  probing_questions:
+  - At key decision points, what alternatives does the text consider?
+  - What plausible branches are ignored or foreclosed without argument?
+  - How does the text justify probability assignments to different outcomes?
+  - Does the text exhibit counterfactual poverty — inability to imagine alternatives?
+  - How do branching structures relate to the text's modal claims about necessity
+    and possibility?
+  depth_guidance:
+    surface: Identify major branching points and the alternatives explicitly considered.
+    standard: Map explored and unexplored branches, assessing probability justifications.
+    deep: Construct complete branching structures revealing patterns of counterfactual
+      imagination and impoverishment across the text.
+capabilities:
+- key: modal_operator_mapping
+  description: Identifies and classifies all modal claims by operator type (possibility,
+    necessity, contingency, impossibility) and modality kind (alethic, epistemic,
+    deontic, temporal).
+  extended_description: |-
+    Modal operators pervade academic discourse but are rarely marked as the philosophical commitments they are. When an economist writes that markets 'must' clear, a political theorist that democracy 'could' degenerate, or a philosopher that consciousness 'cannot' be reduced to physical processes, each deploys modal operators carrying distinct logical properties and justification requirements. This capability makes the modal vocabulary explicit.
+
+    The classification follows the tradition of formal modal logic while remaining accessible. Alethic modality concerns what reality allows — the realm of metaphysical possibility and necessity studied from Aristotle through Kripke. Epistemic modality concerns what is consistent with knowledge — the domain of what we can and cannot rule out. Deontic modality concerns obligation and permission — what ought to be rather than what is. Temporal modality concerns what was, is, or will be possible. Each type has its own logic: epistemic possibility does not entail metaphysical possibility; deontic necessity does not reduce to alethic necessity.
+
+    The capability draws on Kratzer's linguistic work on modal bases, which explains how context determines which type of modality an utterance expresses. 'Must' in 'She must be home by now' (epistemic: given what we know) differs from 'must' in 'She must finish by Friday' (deontic: given the rules) differs from 'must' in 'Triangles must have three sides' (alethic: given the nature of triangles). Detecting these distinctions is essential for evaluating whether modal claims are properly justified.
+  intellectual_grounding:
+    thinker: kratzer
+    concept: modal_base_and_ordering_source
+    method: Classify modal expressions by identifying their modal base (the set of
+      relevant worlds) and ordering source (the ranking of those worlds), distinguishing
+      between epistemic, deontic, and circumstantial readings.
+  indicators:
+  - 'Explicit modal vocabulary: ''must,'' ''necessarily,'' ''could,'' ''possibly,''
+    ''might,'' ''cannot'''
+  - 'Implicit necessity claims: ''inevitably,'' ''is required,'' ''has to,'' ''there
+    is no alternative'''
+  - 'Implicit possibility claims: ''conceivably,'' ''it is open whether,'' ''one option
+    is'''
+  - 'Impossibility markers: ''inconceivable,'' ''rules out,'' ''precludes,'' ''cannot
+    be'''
+  - 'Contingency markers: ''happens to,'' ''as it turns out,'' ''actually but not
+    necessarily'''
+  depth_scaling:
+    surface: Identify explicit modal vocabulary and classify by obvious type.
+    standard: Map both explicit and implicit modal claims, distinguishing modality
+      kinds and noting ambiguous cases.
+    deep: Construct complete modal inventory with precise classification, tracking
+      how modal operators scope over claims and interact with each other.
+  requires_dimensions: []
+  produces_dimensions:
+  - modal_claim_inventory
+- key: modal_justification_assessment
+  description: Evaluates whether modal claims are backed by appropriate warrant —
+    logical argument for logical necessity, physical law for physical necessity, coherent
+    construction for possibility.
+  extended_description: |-
+    Modal claims carry justification burdens proportional to their strength. To claim that something is logically necessary requires demonstrating that its denial leads to contradiction. To claim that something is metaphysically necessary requires establishing that it holds across all possible worlds with the relevant features. To claim that something is possible requires constructing a coherent scenario where it obtains or showing that no proof of impossibility succeeds. Many modal claims in academic texts are asserted rather than argued for, treating modal weight as rhetoric rather than logic.
+
+    This capability applies the standards developed in analytic philosophy for modal justification. Kripke's distinction between epistemic and metaphysical necessity is crucial: something can be necessary but only knowable a posteriori (like 'water is H2O'), and something can be contingent but knowable a priori (like 'the standard meter is one meter long'). Justifying metaphysical necessity typically requires appeal to essential properties or constitutive relations; justifying physical necessity requires appeal to natural laws; justifying practical necessity requires appeal to constraints and circumstances.
+
+    Williamson's work on modal epistemology informs how we assess modal knowledge claims. Modal knowledge often derives from counterfactual reasoning: we know that P is possible if we can coherently imagine a scenario where P holds and trace its implications without contradiction. But imagination has limits — we might fail to see a hidden contradiction, or we might fail to imagine something that is nonetheless possible. The capability evaluates whether modal claims rest on adequate imaginative exploration or on mere failure of imagination.
+  intellectual_grounding:
+    thinker: williamson
+    concept: counterfactual_basis_of_modal_knowledge
+    method: Assess modal claims by examining whether they are grounded in careful
+      counterfactual reasoning that survives scrutiny, or whether they rest on imaginative
+      failure or mere assertion.
+  indicators:
+  - Presence or absence of supporting argument for modal claims
+  - Appeal to logical proof, physical laws, or practical constraints
+  - Degree of exploration before claiming impossibility
+  - Acknowledgment of justification requirements for modal claims
+  - Distinction between different strengths of necessity and possibility
+  depth_scaling:
+    surface: Note whether major modal claims are asserted or argued for.
+    standard: Evaluate justification quality for each significant modal claim, rating
+      as well-justified, plausible, assumed, or overreaching.
+    deep: Systematically assess modal claims against type-appropriate justification
+      standards, revealing the text's implicit modal epistemology.
+  requires_dimensions:
+  - modal_claim_inventory
+  produces_dimensions:
+  - modal_justification_quality
+- key: modal_fallacy_detection
+  description: Identifies errors in modal reasoning including type confusion, scope
+    fallacies, and illicit derivations between modality domains.
+  extended_description: |-
+    Modal reasoning is treacherous, and even sophisticated thinkers commit characteristic errors. The most common is type confusion: treating epistemic possibility ('we cannot rule it out') as evidence for metaphysical possibility ('it could actually happen'), or treating practical necessity ('we have no better option') as logical necessity ('there is no alternative'). These confusions matter because they inflate or deflate modal claims beyond what the evidence supports.
+
+    Scope fallacies involve mishandling how modal operators interact with other logical operations. 'Necessarily, if P then Q' does not entail 'If P then necessarily Q' — a confusion that underlies many spurious necessity claims. The move from 'It is possible that all Fs are G' to 'All Fs are possibly G' is similarly invalid. Detecting these fallacies requires tracking the precise scope of modal operators.
+
+    The is-ought gap, famously identified by Hume, represents a modal-type error: deriving deontic conclusions (what ought to be) from purely alethic premises (what is). Similarly, deriving 'must' (necessity) from 'should' (strong recommendation) involves crossing modal domains without license. The capability identifies these illicit moves and traces their argumentative consequences.
+  intellectual_grounding:
+    thinker: kripke
+    concept: de_dicto_vs_de_re_modality
+    method: Track whether modal claims are about propositions (de dicto) or about
+      objects (de re), detecting scope confusions that arise from conflating these.
+  indicators:
+  - Slippage between 'we cannot know' and 'it cannot be'
+  - Movement from 'there is no better option' to 'there is no alternative'
+  - Derivation of 'ought' from 'is' without normative bridge
+  - Confusion of 'unlikely' with 'impossible'
+  - Scope shifts where necessity or possibility operators change position
+  depth_scaling:
+    surface: Flag obvious confusions between modality types.
+    standard: Identify pattern of modal fallacies across the text, tracing their argumentative
+      effects.
+    deep: Map systematic modal confusions revealing the text's characteristic modal
+      errors and their sources in unstated assumptions.
+  requires_dimensions:
+  - modal_claim_inventory
+  - modality_type_confusion
+  produces_dimensions:
+  - modality_type_confusion
+- key: thought_experiment_evaluation
+  description: Assesses hypothetical scenarios for internal coherence, successful
+    variable isolation, hidden assumptions, and counterfactual robustness.
+  extended_description: |-
+    Thought experiments are workhorses of philosophical argument. Trolley problems test intuitions about moral permissibility; veil of ignorance scenarios test theories of justice; zombie arguments test theories of consciousness. These imagined scenarios purport to establish modal claims — that certain distinctions are possible, that certain principles are necessary, that certain theories lead to unacceptable conclusions. But thought experiments can mislead: scenarios may harbor hidden contradictions, background assumptions may do unacknowledged work, and conclusions may depend on arbitrary features of the example.
+
+    This capability applies criteria for thought experiment rigor developed in the philosophy of science and metaphysics. Internal coherence requires that the scenario not smuggle in contradictions — that the imagined world be genuinely possible rather than merely superficially conceivable. Variable isolation requires that the scenario successfully test what it claims to test, without confounding factors. Assumption transparency requires making explicit the background conditions that the scenario takes for granted.
+
+    Counterfactual robustness is perhaps the most important criterion. A robust thought experiment yields conclusions that survive variations in its setup. If changing an incidental feature of the scenario changes the conclusion, then the conclusion depends on that feature rather than on the principle being tested. The capability assesses robustness by exploring how conclusions fare under parameter variations.
+  intellectual_grounding:
+    thinker: lewis
+    concept: counterfactual_similarity_ordering
+    method: Evaluate thought experiments by considering how conclusions vary across
+      nearby possible worlds, assessing whether results depend on arbitrary features
+      or survive across the relevant similarity class.
+  indicators:
+  - Explicit hypothetical scenarios introduced to test claims
+  - Appeals to conceivability as evidence for possibility
+  - Reductio arguments showing alternatives lead to unacceptable consequences
+  - Analogical reasoning from imagined cases to real principles
+  - Claims that scenarios isolate particular variables for testing
+  depth_scaling:
+    surface: Identify thought experiments and state their intended conclusions.
+    standard: Assess coherence and major hidden assumptions for each thought experiment.
+    deep: Systematically test robustness through parameter variation, identifying
+      which conclusions depend on arbitrary features and which survive across relevant
+      possibility space.
+  requires_dimensions:
+  - modal_claim_inventory
+  produces_dimensions:
+  - thought_experiment_rigor
+- key: threshold_argument_analysis
+  description: Maps arguments about tipping points and boundaries, identifying sorites-susceptible
+    reasoning and evaluating justification for categorical distinctions.
+  extended_description: |-
+    Many arguments turn on threshold claims: at what point does a collection become a heap, a protest become a revolution, a regulation become a taking, a fetus become a person? These arguments purport to identify boundaries where quantitative change becomes qualitative — where crossing a threshold changes the modal status of a situation. But continuous spectra resist sharp boundaries, and the sorites paradox shows that many apparent thresholds dissolve under iterative pressure.
+
+    This capability identifies threshold arguments and assesses their logical structure. Some thresholds are genuine: phase transitions in physics, constitutional thresholds for legal validity, definitional boundaries that are stipulated rather than discovered. But many threshold claims in academic argument are arbitrary lines drawn to serve rhetorical purposes, presented as if they tracked necessary distinctions. The capability distinguishes justified boundaries from arbitrary ones.
+
+    Sorites susceptibility is a diagnostic tool. If an argument claims that X becomes Y at some threshold, we ask: could the threshold be moved slightly without affecting the argument? If so, what justifies placing it here rather than there? Arguments that cannot answer this question are sorites-susceptible — they draw sharp lines where only gradual transitions exist. The capability reveals these structures and their argumentative consequences.
+  intellectual_grounding:
+    thinker: williamson
+    concept: epistemicism_about_vagueness
+    method: Analyze threshold arguments by considering whether claimed boundaries
+      are epistemically inaccessible precise boundaries, arbitrary stipulations, or
+      illegitimate sharpenings of inherently vague concepts.
+  indicators:
+  - Claims about 'the point at which' something changes
+  - Quantitative to qualitative transition arguments
+  - Category boundary disputes
+  - Slippery slope arguments (which rely on threshold instability)
+  - Definitional maneuvers to fix boundaries
+  depth_scaling:
+    surface: Identify explicit threshold claims and boundary arguments.
+    standard: Assess whether thresholds are justified and flag sorites-susceptible
+      arguments.
+    deep: Map how boundary-drawing serves argumentative purposes, exploring sensitivity
+      of conclusions to threshold placement and revealing arbitrary versus principled
+      distinctions.
+  requires_dimensions:
+  - modal_claim_inventory
+  produces_dimensions:
+  - threshold_and_boundary_analysis
+- key: possibility_structure_construction
+  description: Constructs branching structures at decision points showing explored
+    and unexplored alternative outcomes, evaluating probability assignments and counterfactual
+    imagination scope.
+  extended_description: |-
+    Academic arguments often concern what could have happened, what might yet happen, or what alternatives exist to current arrangements. These counterfactual and possibilistic claims presuppose a branching structure of possibilities: at decision points, multiple branches extend into different futures (or different pasts, for historical counterfactuals). This capability makes these branching structures explicit, mapping which branches the text explores and which it ignores.
+
+    The Lewisian framework of possible worlds provides the analytical apparatus. Counterfactual claims ('If X had happened, Y would have followed') are evaluated by examining the nearest possible worlds where X holds. But determining 'nearness' requires criteria for world similarity, and different criteria yield different counterfactual verdicts. The capability tracks what similarity metrics the text implicitly employs and whether they are applied consistently.
+
+    Counterfactual poverty — the inability or unwillingness to imagine alternatives — is a diagnostic finding. Texts that explore only a narrow range of possibilities may reflect genuine constraint (there really are few alternatives) or impoverished imagination (alternatives exist but are not conceived). The capability distinguishes these by assessing whether unexplored branches are genuinely implausible or simply overlooked. It also evaluates probability assignments to different branches, detecting where likelihood claims lack justification.
+  intellectual_grounding:
+    thinker: lewis
+    concept: similarity_based_counterfactual_semantics
+    method: Construct branching possibility structures by identifying decision points
+      and tracing alternative outcomes, using similarity orderings to assess which
+      branches are relevant and evaluating probability assignments.
+  indicators:
+  - Counterfactual conditionals ('if X had happened, then Y')
+  - Alternative scenario exploration
+  - Probability assignments to different outcomes
+  - Decision point identification
+  - Claims about path dependency or historical contingency
+  depth_scaling:
+    surface: Identify major branching points and explicitly explored alternatives.
+    standard: Map explored and unexplored branches, assessing probability justifications
+      and noting counterfactual gaps.
+    deep: Construct complete branching structures revealing the text's counterfactual
+      imagination, its implicit similarity metrics, and systematic patterns of possibility
+      exploration and neglect.
+  requires_dimensions:
+  - modal_claim_inventory
+  - thought_experiment_rigor
+  produces_dimensions:
+  - branching_possibility_mapping
+composability:
+  shares_with:
+    modal_claim_inventory: The mapping of modal operators and their types can inform
+      any engine analyzing argument structure, since modal claims constrain what conclusions
+      can follow.
+    thought_experiment_rigor: Assessment of hypothetical scenarios is valuable for
+      counterfactual_analyzer and any engine evaluating conceivability-based arguments.
+    modality_type_confusion: Detection of slippage between modality types reveals
+      argument quality issues relevant to argument_architecture and epistemological_method_detector.
+    threshold_and_boundary_analysis: Identification of sorites-susceptible arguments
+      informs concept_centrality_mapper's analysis of category boundaries and inferential_commitment_mapper's
+      tracing of what categorical commitments entail.
+  consumes_from:
+    argument_structure: From argument_architecture — provides the inferential skeleton
+      into which modal claims can be mapped, showing where necessity and possibility
+      claims function in overall argument.
+    counterfactual_scenarios: From counterfactual_analyzer — provides specific alternative
+      scenarios that can be evaluated for modal rigor and branching structure.
+    conceptual_vocabulary: From conceptual_framework_extraction — provides the key
+      terms whose modal status (necessarily applying, possibly applying, contingently
+      instantiated) requires analysis.
+    epistemological_stance: From epistemological_method_detector — provides context
+      for evaluating epistemic modality claims, since different epistemologies license
+      different claims about what can be known.
+  synergy_engines:
+  - counterfactual_analyzer
+  - argument_architecture
+  - inferential_commitment_mapper
+  - epistemological_method_detector
+  - dialectical_structure
+depth_levels:
+- key: surface
+  description: Rapid identification of explicit modal vocabulary and major modal claims,
+    producing a preliminary inventory of necessity, possibility, and impossibility
+    assertions.
+  typical_passes: 1
+  suitable_for: Initial screening to assess modal density and identify texts warranting
+    deeper analysis.
+  passes:
+  - pass_number: 1
+    label: Modal Vocabulary Identification
+    stance: discovery
+    focus_dimensions:
+    - modal_claim_inventory
+    focus_capabilities:
+    - modal_operator_mapping
+    consumes_from: []
+    description: Scan the text for explicit modal vocabulary — 'must,' 'could,' 'necessarily,'
+      'possibly,' 'impossible,' 'contingent.' Classify each instance by apparent modality
+      type (alethic, epistemic, deontic, temporal). Identify the major modal claims
+      structuring the argument without yet assessing their justification or rigor.
+- key: standard
+  description: Comprehensive modal analysis mapping all modal claims, evaluating their
+    justification, detecting type confusions and fallacies, and assessing thought
+    experiments.
+  typical_passes: 2
+  suitable_for: Systematic analysis of academic texts to evaluate the rigor of modal
+    reasoning.
+  passes:
+  - pass_number: 1
+    label: Modal Landscape Mapping
+    stance: discovery
+    focus_dimensions:
+    - modal_claim_inventory
+    - modal_justification_quality
+    focus_capabilities:
+    - modal_operator_mapping
+    - modal_justification_assessment
+    consumes_from: []
+    description: 'Construct the complete modal inventory, including both explicit
+      and implicit modal claims. For each claim, identify its modal type and strength.
+      Begin assessing justification quality: is the claim argued for or merely asserted?
+      What kind of warrant does it invoke? Note preliminary concerns about modal overreach
+      or underreach.'
+  - pass_number: 2
+    label: Modal Rigor Assessment
+    stance: confrontation
+    focus_dimensions:
+    - modality_type_confusion
+    - thought_experiment_rigor
+    - threshold_and_boundary_analysis
+    focus_capabilities:
+    - modal_fallacy_detection
+    - thought_experiment_evaluation
+    - threshold_argument_analysis
+    consumes_from:
+    - 1
+    description: Working from the modal inventory, identify patterns of modal fallacy
+      — where types are confused, where scope shifts illicitly, where is-ought gaps
+      are crossed. Evaluate each thought experiment for coherence, variable isolation,
+      hidden assumptions, and robustness. Assess threshold arguments for sorites susceptibility
+      and justification of boundary placement.
+- key: deep
+  description: Exhaustive modal analysis constructing branching possibility structures,
+    testing counterfactual robustness through parameter variation, and revealing the
+    text's implicit modal metaphysics.
+  typical_passes: 4
+  suitable_for: In-depth philosophical analysis of texts making substantial modal
+    claims, preparing for rigorous critique.
+  passes:
+  - pass_number: 1
+    label: Comprehensive Modal Inventory
+    stance: discovery
+    focus_dimensions:
+    - modal_claim_inventory
+    focus_capabilities:
+    - modal_operator_mapping
+    consumes_from: []
+    description: Exhaustive mapping of all modal claims, including subtle and implicit
+      modality. Track how modal operators scope over complex claims and interact with
+      each other. Identify the text's characteristic modal vocabulary and any non-standard
+      uses of modal terms.
+  - pass_number: 2
+    label: Justification and Fallacy Analysis
+    stance: inference
+    focus_dimensions:
+    - modal_justification_quality
+    - modality_type_confusion
+    focus_capabilities:
+    - modal_justification_assessment
+    - modal_fallacy_detection
+    consumes_from:
+    - 1
+    description: Systematically assess justification for each modal claim against
+      type-appropriate standards. Map patterns of modal fallacy across the text. Identify
+      the text's implicit modal epistemology — what does it treat as adequate warrant
+      for modal claims? Trace how modal confusions propagate through the argument.
+  - pass_number: 3
+    label: Thought Experiment and Threshold Scrutiny
+    stance: confrontation
+    focus_dimensions:
+    - thought_experiment_rigor
+    - threshold_and_boundary_analysis
+    focus_capabilities:
+    - thought_experiment_evaluation
+    - threshold_argument_analysis
+    consumes_from:
+    - 1
+    - 2
+    description: 'Deep scrutiny of thought experiments through parameter variation:
+      what happens if we change incidental features? Do conclusions survive or do
+      they depend on arbitrary elements? Test threshold arguments for sensitivity
+      to boundary placement. Identify hidden assumptions that do unacknowledged work
+      in establishing modal conclusions.'
+  - pass_number: 4
+    label: Possibility Structure Construction
+    stance: architecture
+    focus_dimensions:
+    - branching_possibility_mapping
+    focus_capabilities:
+    - possibility_structure_construction
+    consumes_from:
+    - 1
+    - 2
+    - 3
+    description: Construct branching possibility structures at key decision points
+      and causal junctures. Map explored versus ignored branches. Assess probability
+      assignments and similarity metrics. Reveal patterns of counterfactual imagination
+      and impoverishment. Synthesize findings into an account of the text's implicit
+      modal metaphysics — what kind of possibility space does it inhabit, and what
+      are the constraints it recognizes on that space?
+apps:
+- critic
+function: logic
+paradigm_keys: []

@@ -1,0 +1,627 @@
+engine_key: argument_architecture
+engine_name: Argument Architecture Mapper
+version: 1
+category: argument
+kind: relational
+problematique: |-
+  Arguments are not merely assertions strung together. They are architectural structures—load-bearing edifices where some elements support others, where hidden connectors hold the visible parts in place, and where the strength of the whole depends on the weakest joint. Most reasoning presents itself as a seamless flow from evidence to conclusion, but beneath this surface lies a complex scaffolding of warrants, backing, qualifications, and rebuttals. The central problem this engine addresses is the invisibility of argumentative structure: how claims that appear self-evident actually rest on unstated principles, how evidence that seems decisive depends on suppressed premises, how the very patterns of reasoning—the argumentation schemes—shape what counts as good evidence in the first place.
+
+  What most readers miss is the architecture itself. They see the claim and perhaps the evidence, but they do not see the warrant—the often-unstated principle that licenses the move from evidence to conclusion. They do not see the backing that supports the warrant, or the qualifiers that hedge the claim, or the rebuttals that acknowledge exceptions. Most crucially, they do not see the argumentation schemes: the recurring patterns of reasoning (argument from authority, argument from analogy, argument from sign, argument from consequence) that structure how we move from premises to conclusions. Each scheme carries its own critical questions—the specific challenges that can defeat that type of argument. An argument from expert opinion, for instance, is vulnerable to questions about the expert's credentials, potential bias, and whether other experts disagree. Without recognizing the scheme, one cannot ask the right questions.
+
+  The philosophical foundations run deep. Stephen Toulmin's revolutionary model (1958) broke with formal logic's obsession with validity to ask how arguments actually work in practice—revealing the warrant-ground-backing-qualifier-rebuttal structure that organizes real reasoning. Douglas Walton's systematic taxonomy of argumentation schemes identified dozens of recurring reasoning patterns, each with characteristic critical questions. The pragma-dialectical school of van Eemeren and Grootendorst treated argumentation as a critical discussion governed by rules, where fallacies are violations of those rules. Informal logic, developed by Johnson and Blair, provided methods for evaluating arguments that formal logic cannot capture—questions of relevance, sufficiency, and acceptability that determine whether an argument actually works.
+
+  Within the logic suite, this engine provides the foundational structural analysis that other engines build upon. Where dialectical_structure_analyzer maps the exchange between positions, this engine first reveals what those positions actually argue and how. Where inferential_commitment_mapper traces what you are committed to when you accept a claim, this engine first identifies what claims are being made and how they are supported. Where counterfactual_analyzer examines conditional reasoning, this engine identifies when and how such reasoning appears in actual arguments. The argument architecture is the skeleton; other engines examine the muscles, nerves, and circulation.
+
+  Commitment to architectural analysis matters because bad arguments do not announce themselves. They hide their weakness in unstated warrants, in undefended backing, in qualifications quietly dropped, in rebuttals never considered. The arguer may not even know where the weakness lies—they inherit schemes and warrants from their intellectual tradition without examining them. Mapping the architecture is the first step toward genuine critical engagement: you cannot challenge what you cannot see, and you cannot see what you have not learned to look for. This engine teaches the eye to see the bones beneath the flesh of any argument.
+researcher_question: How are arguments structured, what schemes do they use, and where
+  are they strong or weak?
+intellectual_lineage:
+  primary:
+    name: toulmin
+    description: 'Stephen Toulmin (1922–2009), British philosopher whose The Uses
+      of Argument (1958) revolutionized argumentation theory by breaking with formal
+      logic''s exclusive focus on validity. Toulmin observed that real arguments in
+      law, science, and everyday life do not fit the syllogistic mold—they have warrants
+      (principles licensing inferences), backing (support for warrants), qualifiers
+      (hedges on certainty), and rebuttals (acknowledged exceptions). This field-dependent
+      model of argument provides the engine''s core structural vocabulary and its
+      fundamental insight: that the unstated warrant is often the most important and
+      vulnerable element of any argument.'
+  secondary:
+  - name: walton
+    description: Douglas Walton (1942–2020), Canadian philosopher who systematically
+      catalogued argumentation schemes—recurring patterns of reasoning like argument
+      from authority, analogy, sign, and consequence. Each scheme comes with characteristic
+      critical questions that probe its vulnerabilities. Walton's work provides this
+      engine's scheme identification capability and its method of generating targeted
+      challenges to specific argument types.
+  - name: van_eemeren
+    description: 'Frans van Eemeren (1946–), Dutch argumentation theorist who, with
+      Rob Grootendorst, developed pragma-dialectics: a framework treating argumentation
+      as rule-governed critical discussion aimed at resolving differences of opinion.
+      Fallacies become rule violations rather than mere bad patterns. This tradition
+      provides the engine''s understanding of dialectical obligations and its framework
+      for assessing when arguers have met or failed their burdens.'
+  - name: johnson
+    description: Ralph Johnson (1940–) and J. Anthony Blair (1936–2023), Canadian
+      philosophers who founded informal logic as a distinct field. Their work on the
+      criteria of relevance, sufficiency, and acceptability (the RSA triangle) provides
+      standards for evaluating arguments that formal validity cannot capture. This
+      engine inherits their practical focus on what makes arguments actually work.
+  - name: perelman
+    description: Chaïm Perelman (1912–1984), Belgian philosopher whose New Rhetoric
+      (with Lucie Olbrechts-Tyteca) revived the study of argumentation addressed to
+      particular audiences. His analysis of starting points, techniques of argumentation,
+      and the role of values in reasoning informs the engine's attention to what audiences
+      must accept for arguments to succeed.
+  - name: aristotle
+    description: Aristotle (384–322 BCE), whose Rhetoric and Topics catalogued the
+      topoi—common patterns of argument—and whose analysis of enthymemes (arguments
+      with suppressed premises) remains foundational. The engine's identification
+      of suppressed premises and reconstruction of full argumentative form traces
+      directly to Aristotelian method, as does attention to ethos, pathos, and logos
+      as modes of persuasion.
+  traditions:
+  - name: informal_logic
+    description: A movement emerging in the 1970s that rejected the adequacy of formal
+      logic for evaluating real arguments. Informal logicians developed criteria like
+      relevance, sufficiency, and acceptability, catalogued fallacies as argument
+      defects rather than mere invalid forms, and insisted on the importance of context
+      in argument evaluation. This tradition grounds the engine's practical evaluative
+      framework.
+  - name: pragma_dialectics
+    description: The Amsterdam school approach treating argumentation as a critical
+      discussion governed by rules designed to resolve differences of opinion. Ten
+      rules specify what discussants may and may not do; fallacies are rule violations.
+      This provides the engine's framework for dialectical obligations and its understanding
+      of burden of proof as a normative concept.
+  - name: rhetoric
+    description: The ancient tradition stretching from Aristotle through Cicero, Quintilian,
+      and into modern neo-Aristotelianism. Rhetoric studies how arguments are crafted
+      for particular audiences, attending to invention (finding arguments), arrangement
+      (structuring them), and style (expressing them). The engine inherits rhetoric's
+      attention to audience, occasion, and strategic construction.
+  - name: speech_act_theory
+    description: The philosophical analysis of language as action, from Austin's performatives
+      through Searle's taxonomy of speech acts. Arguing is itself a speech act with
+      felicity conditions; claims, challenges, and concessions are moves in a language
+      game. This tradition informs the engine's treatment of argumentative moves as
+      actions with normative consequences.
+  - name: legal_reasoning
+    description: The jurisprudential tradition of analyzing how legal arguments work—from
+      case-based reasoning to statutory interpretation, from burden of proof to standards
+      of evidence. Legal practice provides concrete models for many argumentation
+      concepts (burden, presumption, rebuttal, precedent) that the engine applies
+      more broadly. Toulmin himself drew heavily on legal models.
+  - name: fallacy_theory
+    description: The long tradition of cataloguing argument defects, from Aristotle's
+      Sophistical Refutations through medieval lists to modern taxonomies by Hamblin,
+      Walton, and others. Recent work treats fallacies not as simple errors but as
+      patterns that are sometimes legitimate, requiring contextual judgment. The engine
+      uses this tradition for its fallacy detection capability.
+  key_concepts:
+  - name: warrant
+    definition: 'The principle that licenses the inference from grounds to claim—the
+      often-unstated rule that explains why the evidence supports the conclusion.
+      Warrants are field-dependent: what counts as good reasoning in law differs from
+      science differs from ethics. The warrant is frequently the most vulnerable and
+      most invisible part of an argument.'
+  - name: argumentation_scheme
+    definition: A recurring pattern of reasoning with characteristic premises, conclusions,
+      and critical questions. Schemes like argument from expert opinion, argument
+      from analogy, and argument from sign are neither formally valid nor mere fallacies—they
+      are defeasible reasoning patterns that work under certain conditions and fail
+      under others. Identifying the scheme reveals which critical questions apply.
+  - name: burden_of_proof
+    definition: 'The obligation to provide sufficient support for a claim. Burden
+      allocation depends on context: the prosecution bears it in criminal trials,
+      the challenger bears it against established presumptions. Burden can shift during
+      argument. Understanding who must prove what is essential to evaluating whether
+      arguments succeed or fail.'
+  - name: enthymeme
+    definition: An argument with a suppressed premise—a conclusion drawn without explicitly
+      stating all the premises needed to reach it. Aristotle identified the enthymeme
+      as the heart of rhetorical reasoning. Reconstructing the suppressed premise
+      reveals assumptions the arguer takes for granted, often controversial ones hidden
+      by their absence.
+  - name: rebuttal
+    definition: Conditions or exceptions that defeat an otherwise successful argument.
+      Acknowledging rebuttals shows intellectual honesty; ignoring applicable rebuttals
+      is a weakness. Rebuttals may attack claims directly (rebutting defeaters) or
+      undermine the warrant's applicability (undercutting defeaters).
+  - name: critical_question
+    definition: 'A question that probes a potential weakness in a particular argumentation
+      scheme. Each scheme has characteristic critical questions: for argument from
+      authority, questions about expertise and bias; for argument from analogy, questions
+      about relevant similarity. Asking the right critical questions is the key to
+      responsible evaluation.'
+  - name: dialectical_obligation
+    definition: What a participant in argumentative exchange must do to maintain their
+      position responsibly. If challenged, one must defend or retract. If one makes
+      a claim, one is obligated to support it if asked. Tracking obligations reveals
+      where arguers have met or failed their responsibilities.
+  - name: defeasibility
+    definition: 'The property of conclusions that can be overturned by additional
+      information without logical contradiction. Most real arguments are defeasible:
+      they establish presumptive conclusions that hold unless and until contrary evidence
+      emerges. Recognizing defeasibility prevents both overclaiming certainty and
+      dismissing good-but-fallible reasoning.'
+analytical_dimensions:
+- key: structural_composition
+  description: 'How the argument is built from components—claims, grounds, warrants,
+    backing, qualifiers, and rebuttals. This dimension examines the architectural
+    relationship between elements: which grounds support which claims, what warrants
+    license which inferences, how backing supports warrants, and whether qualifiers
+    and rebuttals are appropriately acknowledged.'
+  probing_questions:
+  - What is the main claim, and what type of claim is it (empirical, normative, causal)?
+  - What grounds are offered, and how do they connect to the claim?
+  - What warrant licenses the inference from grounds to claim, and is it stated or
+    implicit?
+  - What backing supports the warrant, and how strong is it?
+  - What qualifiers hedge the claim, and what rebuttals acknowledge exceptions?
+  depth_guidance:
+    surface: Identify the main claim and the primary evidence offered for it.
+    standard: Map the full Toulmin structure including warrants, backing, qualifiers,
+      and rebuttals for major arguments.
+    deep: Trace nested arguments where conclusions become grounds for further claims,
+      identify implicit warrants and their backing, and assess where qualifiers and
+      rebuttals are missing but needed.
+- key: scheme_identification
+  description: What patterns of reasoning structure the argument—argument from authority,
+    analogy, sign, cause, consequence, and others. Each scheme has characteristic
+    form and characteristic vulnerabilities. Identifying the scheme is the prerequisite
+    for asking the right critical questions.
+  probing_questions:
+  - What argumentation schemes are employed (authority, analogy, sign, cause, etc.)?
+  - Is the scheme being used appropriately for the context?
+  - What are the critical questions specific to each scheme used?
+  - Have the critical questions been adequately addressed?
+  - Are multiple schemes combined, and if so, how do they interact?
+  depth_guidance:
+    surface: Identify the dominant argumentation scheme in the main argument.
+    standard: Catalog all significant schemes used, state their critical questions,
+      and assess whether those questions are addressed.
+    deep: Analyze scheme combinations and transitions, evaluate why particular schemes
+      were chosen (and what alternatives were available), and assess whether scheme
+      choice reveals unstated assumptions about what counts as good evidence.
+- key: attack_defense_dynamics
+  description: How arguments engage each other through attack and defense. Attacks
+    may target claims (rebutting), warrants (undercutting), or grounds (questioning
+    evidence). Defenses respond through distinction, counter-example, additional support,
+    or strategic concession. This dimension maps the adversarial structure of argumentation.
+  probing_questions:
+  - Where do arguments directly challenge other arguments?
+  - What type of attack is employed—rebutting claims, undercutting warrants, or questioning
+    grounds?
+  - How do attacked arguments respond, if at all?
+  - Are attacks successful in undermining their targets?
+  - What strategic concessions are made, and do they strengthen or weaken the overall
+    position?
+  depth_guidance:
+    surface: Identify obvious points of disagreement and the main attack on the central
+      claim.
+    standard: Map the attack-defense structure showing which arguments target which,
+      classify attack types, and assess defense adequacy.
+    deep: Trace multi-move exchanges (attack-defense-counter-defense), identify missed
+      attack opportunities, analyze strategic concessions for whether they actually
+      serve the arguer's goals, and assess the overall balance of the argumentative
+      exchange.
+- key: burden_presumption_structure
+  description: Who must prove what, what is taken for granted, and how burden shifts
+    through the argument. Presumptions establish default positions that hold unless
+    challenged; burden of proof determines who must provide sufficient support. This
+    dimension reveals the normative framework governing what counts as successful
+    argumentation.
+  probing_questions:
+  - Who bears the initial burden of proof, and is this appropriate?
+  - What presumptions are operative—what is taken for granted without argument?
+  - Does burden shift during the argument, and are such shifts legitimate?
+  - What standard of proof applies—preponderance, clear and convincing, beyond reasonable
+    doubt?
+  - Are presumptions properly invoked, or are they smuggled in without acknowledgment?
+  depth_guidance:
+    surface: Identify who is making claims that require support and what is assumed
+      without argument.
+    standard: Map burden allocation across the argument, identify significant presumptions
+      and their justification, track burden-shifting moves.
+    deep: Analyze whether burden allocation reflects appropriate dialectical norms
+      for the context, identify illegitimate burden-shifting (deflecting rather than
+      proving), and assess whether presumptions are genuinely shared or controversially
+      smuggled in.
+- key: suppressed_element_reconstruction
+  description: What is left unsaid but necessary—suppressed premises in enthymemes,
+    implicit warrants, unstated qualifications, unacknowledged exceptions. The most
+    revealing analysis often involves reconstructing what the argument requires but
+    does not state, exposing assumptions the arguer may not even recognize.
+  probing_questions:
+  - Where are conclusions drawn from incomplete explicit premises (enthymemes)?
+  - What suppressed premises are required to make the argument valid or strong?
+  - How controversial are the suppressed premises?
+  - What qualifications should be present but are omitted?
+  - What rebuttals should be acknowledged but are ignored?
+  depth_guidance:
+    surface: Identify one or two obvious enthymemes and state their suppressed premises.
+    standard: Systematically reconstruct suppressed premises, assess their acceptability,
+      and note significant omitted qualifications and rebuttals.
+    deep: Analyze why certain premises are suppressed (strategic concealment vs. genuine
+      assumption of shared belief), trace how suppressed premises connect to larger
+      ideological commitments, and identify the most consequential unstated assumptions.
+- key: argument_quality_assessment
+  description: Overall evaluation of argument strength using the criteria of relevance
+    (do the grounds bear on the claim?), acceptability (are premises true or reasonable?),
+    and sufficiency (is there enough support?). This dimension synthesizes structural
+    analysis into evaluative judgment about where arguments succeed and fail.
+  probing_questions:
+  - Are the grounds relevant to the claim—do they actually bear on it?
+  - Are the premises acceptable—true, reasonable, or at least arguable?
+  - Is the support sufficient—enough to warrant the strength claimed?
+  - What are the weakest points in the argument?
+  - What would make the argument stronger?
+  depth_guidance:
+    surface: Provide overall assessment of argument strength with key weaknesses noted.
+    standard: Evaluate relevance, acceptability, and sufficiency for major arguments;
+      identify the most vulnerable points.
+    deep: Conduct granular RSA assessment for all significant arguments, rank vulnerabilities
+      by severity, and provide constructive analysis of how arguments could be strengthened
+      or what would defeat them.
+capabilities:
+- key: toulmin_structure_mapping
+  description: 'Decomposes arguments into their Toulmin components: claim, grounds,
+    warrant, backing, qualifier, and rebuttal.'
+  extended_description: |-
+    Stephen Toulmin's model emerged from dissatisfaction with formal logic's inability to capture how arguments actually work in fields like law, science, and ethics. Where syllogistic logic asks only about validity—whether the conclusion follows necessarily from the premises—Toulmin's model asks what licenses the inference (warrant), what supports that license (backing), how certain the conclusion is (qualifier), and what would defeat it (rebuttal).
+
+    This capability systematically identifies each component, with particular attention to the warrant—the often-unstated principle that explains why the evidence supports the conclusion. Warrants are field-dependent: the warrant acceptable in legal reasoning differs from that acceptable in scientific reasoning differs from that acceptable in ethical reasoning. Exposing the warrant reveals what kind of inference is being made and what standards it should meet.
+
+    The analysis also attends to what is missing. Arguments lacking qualifiers claim more certainty than they can support. Arguments lacking rebuttals ignore exceptions that might defeat them. Arguments with weak or absent backing for their warrants rest on shaky foundations. The full Toulmin structure reveals not just what is argued but what the argument needs and lacks.
+  intellectual_grounding:
+    thinker: Toulmin
+    concept: Field-dependent argument structure
+    method: Decompose arguments into claim-grounds-warrant-backing-qualifier-rebuttal,
+      attending to field-specific standards and implicit elements.
+  indicators:
+  - Claims supported by evidence, examples, or testimony
+  - Inferential moves from data to conclusion
+  - Hedging language like 'probably,' 'generally,' or 'in most cases'
+  - Acknowledgment of exceptions or conditions
+  - Appeals to principles, rules, or generalizations
+  depth_scaling:
+    surface: Identify claim and grounds for the main argument.
+    standard: Full Toulmin mapping for all major arguments, including implicit warrants.
+    deep: Nested Toulmin analysis tracing arguments supporting arguments, with systematic
+      assessment of warrant backing and missing rebuttals.
+  requires_dimensions: []
+  produces_dimensions:
+  - structural_composition
+  - suppressed_element_reconstruction
+- key: argumentation_scheme_analysis
+  description: Identifies recurring patterns of reasoning and their characteristic
+    critical questions.
+  extended_description: |-
+    Douglas Walton's systematic cataloguing of argumentation schemes provides a powerful tool for argument analysis. Unlike formal logic, which treats all valid arguments alike, scheme analysis recognizes that different patterns of reasoning have different vulnerabilities. Argument from expert opinion is challenged by questions about credentials and bias; argument from analogy by questions about relevant similarity; argument from sign by questions about the reliability of the indicator.
+
+    This capability identifies which schemes are at work in an argument and generates the critical questions specific to those schemes. This is not mechanical: the same surface form may instantiate different schemes depending on context, and arguments often combine multiple schemes. The analysis must determine which scheme best characterizes the reasoning and whether its critical questions have been adequately addressed.
+
+    Scheme analysis also reveals choices. Why did the arguer reason from authority rather than from evidence directly? Why analogy rather than cause? These choices may reflect the available evidence, the audience's expectations, or strategic calculation. Understanding the scheme is understanding the argumentative strategy.
+  intellectual_grounding:
+    thinker: Walton
+    concept: Argumentation schemes and critical questions
+    method: Match argument patterns to scheme types, then systematically pose and
+      evaluate the corresponding critical questions.
+  indicators:
+  - Appeals to expert opinion or authority
+  - Comparisons suggesting analogical reasoning
+  - Causal claims linking events or conditions
+  - Arguments from signs, symptoms, or indicators
+  - Practical reasoning about actions and consequences
+  depth_scaling:
+    surface: Identify the dominant scheme and its most important critical question.
+    standard: Catalog all significant schemes, state their critical questions, assess
+      whether addressed.
+    deep: Analyze scheme selection strategy, evaluate scheme combinations, trace how
+      scheme choice shapes what counts as good evidence.
+  requires_dimensions:
+  - structural_composition
+  produces_dimensions:
+  - scheme_identification
+  - argument_quality_assessment
+- key: attack_defense_mapping
+  description: Maps how arguments target and respond to each other through various
+    attack and defense moves.
+  extended_description: |-
+    Argumentation is inherently dialogical. Even a monological text anticipates objections, responds to rival positions, and defends against potential attacks. This capability maps the adversarial structure: which arguments attack which, how targets respond, and where exchanges remain unresolved.
+
+    Attacks come in types. Rebutting defeaters directly challenge the claim: the conclusion is false. Undercutting defeaters challenge the inferential link: even if the premises are true, they don't support this conclusion. Attacks on grounds question whether the evidence is accurate or relevant. Each type requires different defensive responses.
+
+    Defenses also vary. Distinction narrows the claim to avoid the attack. Counter-example shows the attack doesn't apply. Additional support provides more grounds. Strategic concession yields a point to strengthen the overall position—or sometimes, unintentionally, to undermine it. The attack-defense map reveals the structure of controversy: what is contested, what is conceded, and what hangs in the balance.
+  intellectual_grounding:
+    thinker: van Eemeren and Grootendorst
+    concept: Critical discussion and dialectical moves
+    method: Identify arguments as moves in a dialectical exchange, classify attack
+      types, assess defense adequacy, track exchange resolution.
+  indicators:
+  - Explicit disagreement or opposition
+  - Phrases like 'however,' 'but,' 'despite,' 'against this'
+  - 'Defensive moves: ''this objection fails because'''
+  - 'Concessions: ''admittedly,'' ''while it is true that'''
+  - 'Distinction-making: ''this is different because'''
+  depth_scaling:
+    surface: Identify main points of disagreement and primary attacks.
+    standard: Map attack-defense structure with attack type classification and defense
+      adequacy assessment.
+    deep: Trace multi-move exchanges, identify missed opportunities, analyze strategic
+      concession effects, assess overall dialectical balance.
+  requires_dimensions:
+  - structural_composition
+  - scheme_identification
+  produces_dimensions:
+  - attack_defense_dynamics
+- key: burden_presumption_analysis
+  description: Identifies who must prove what, what is presumed without argument,
+    and how burden shifts.
+  extended_description: |-
+    The allocation of burden of proof is among the most consequential aspects of any argumentative exchange. Whoever bears the burden must provide sufficient support; whoever enjoys presumption wins if the burden is not met. Legal contexts make this explicit—the prosecution must prove guilt beyond reasonable doubt—but every argument involves implicit burden allocation.
+
+    This capability identifies initial burden allocation (usually falling on whoever challenges the status quo), tracks burden-shifting moves (legitimate or illegitimate), and exposes presumptions—what is taken for granted without argument. Presumptions are not mere assumptions; they are dialectically privileged starting points that stand unless and until defeated.
+
+    Burden-shifting can be legitimate—once the proponent has provided prima facie support, the opponent must respond—or strategic—deflecting by demanding proof from the other side rather than providing it oneself. Identifying illegitimate burden-shifting is a key diagnostic for argumentative bad faith.
+  intellectual_grounding:
+    thinker: Rescher and Walton
+    concept: Burden of proof and presumption
+    method: Identify burden allocation by context and claim type, track shifts through
+      the exchange, assess legitimacy of burden-shifting moves.
+  indicators:
+  - Challenges to established positions or consensus
+  - Invocation of precedent or status quo
+  - Demands for proof from the other side
+  - Claims of obviousness or self-evidence
+  - 'Standards of proof language: ''sufficient,'' ''reasonable,'' ''demonstrated'''
+  depth_scaling:
+    surface: Identify who is making claims requiring support and main presumptions.
+    standard: Map burden allocation, track significant shifts, evaluate whether presumptions
+      are justified.
+    deep: Analyze burden allocation against contextual norms, identify illegitimate
+      shifts, assess presumption smuggling, evaluate whether burdens have been met.
+  requires_dimensions:
+  - structural_composition
+  produces_dimensions:
+  - burden_presumption_structure
+- key: enthymeme_reconstruction
+  description: Identifies arguments with suppressed premises and reconstructs the
+    full logical form.
+  extended_description: |-
+    Aristotle recognized that rhetorical arguments typically omit premises that audiences will supply. The enthymeme—the 'rhetorical syllogism'—draws conclusions without stating all the premises needed to reach them. This is not a flaw but a feature: audiences are more persuaded when they participate in completing the inference.
+
+    But what is rhetorically effective can be analytically invisible. The suppressed premise is often the most controversial part of the argument—the part that would face the most resistance if stated openly. Reconstructing suppressed premises exposes what the argument takes for granted, often revealing assumptions the arguer themselves may not have explicitly considered.
+
+    The reconstruction must be charitable but accurate: supply the premise that makes the argument strongest while remaining faithful to what the arguer seems to intend. The resulting explicit argument can then be evaluated: is that suppressed premise actually acceptable? If not, the argument fails—not because of what it says, but because of what it needs but cannot defend.
+  intellectual_grounding:
+    thinker: Aristotle
+    concept: Enthymeme as rhetorical syllogism
+    method: Identify conclusions drawn from incomplete premises, reconstruct the suppressed
+      premise, assess its acceptability.
+  indicators:
+  - Conclusions not fully supported by explicit premises
+  - Inferential leaps from evidence to conclusion
+  - Appeals to common knowledge or shared values
+  - Truncated if-then reasoning
+  - Conclusions that seem obvious but rest on unstated grounds
+  depth_scaling:
+    surface: Identify major enthymemes and state their suppressed premises.
+    standard: Systematic enthymeme reconstruction with acceptability assessment of
+      suppressed premises.
+    deep: Analyze why premises are suppressed, trace suppressed premises to larger
+      ideological commitments, identify the most consequential unstated assumptions.
+  requires_dimensions:
+  - structural_composition
+  produces_dimensions:
+  - suppressed_element_reconstruction
+- key: fallacy_detection
+  description: Identifies argument defects that violate norms of good reasoning, with
+    attention to context and severity.
+  extended_description: |-
+    The fallacy tradition stretches from Aristotle's Sophistical Refutations through medieval lists to modern taxonomies. But contemporary fallacy theory recognizes that most 'fallacies' are not always fallacious—they are patterns that can go wrong under certain conditions but may be legitimate under others. Appeal to authority is fallacious when the authority lacks relevant expertise; it is not fallacious when the authority is genuinely expert and the matter is within their competence.
+
+    This capability identifies argument patterns that violate norms of good reasoning, but does so with attention to context. Is the ad hominem attack on the person's credibility relevant (the witness has a history of lying) or irrelevant (the scientist has unpopular political views)? Is the slippery slope argument evidence-based (there are genuine mechanisms linking A to Z) or merely alarmist?
+
+    The pragma-dialectical approach treats fallacies as violations of discussion rules: reasonable rules that participants in a critical discussion should follow if they aim to resolve differences of opinion rationally. This provides a principled basis for distinguishing legitimate from illegitimate moves.
+  intellectual_grounding:
+    thinker: Walton and van Eemeren
+    concept: Fallacies as contextual rule violations
+    method: Identify potentially fallacious patterns, assess whether the pattern violates
+      norms in this context, evaluate severity and impact.
+  indicators:
+  - Personal attacks substituting for engagement with arguments
+  - False dichotomies excluding relevant options
+  - Appeals to emotion displacing evidence
+  - Hasty generalization from limited cases
+  - Equivocation on key terms
+  depth_scaling:
+    surface: Identify obvious fallacies with brief explanation.
+    standard: Systematic fallacy identification with contextual assessment of whether
+      the pattern is actually fallacious.
+    deep: Detailed analysis of fallacy type, rule violated, severity, impact on argument
+      strength, and whether apparent fallacies are actually legitimate moves in context.
+  requires_dimensions:
+  - structural_composition
+  - scheme_identification
+  produces_dimensions:
+  - argument_quality_assessment
+composability:
+  shares_with:
+    structural_composition: Provides structural analysis consumable by dialectical_structure_analyzer
+      for mapping exchanges between positions
+    scheme_identification: Argumentation scheme identification informs specialized_reasoning_classifier's
+      categorization of reasoning types
+    suppressed_element_reconstruction: Enthymeme analysis feeds inferential_commitment_mapper's
+      identification of hidden commitments
+    burden_presumption_structure: Burden allocation analysis supports epistemological_method_detector's
+      assessment of justificatory practices
+    argument_quality_assessment: Quality evaluation provides grounding for theory_construction_analyzer's
+      assessment of theoretical soundness
+  consumes_from:
+    conceptual_vocabulary: From conceptual_framework_extraction — provides the key
+      terms whose argumentative deployment is analyzed
+    semantic_relationships: From concept_semantic_constellation — reveals which concepts
+      are semantically linked, informing how arguments about them connect
+    modal_structure: From modal_reasoning_analyzer — identifies possibility and necessity
+      claims that structure argument strength
+    inferential_chains: From inferential_commitment_mapper — traces commitment entailments
+      that reveal argument dependencies
+  synergy_engines:
+  - dialectical_structure_analyzer
+  - inferential_commitment_mapper
+  - counterfactual_analyzer
+  - specialized_reasoning_classifier
+  - epistemological_method_detector
+depth_levels:
+- key: surface
+  description: Quick structural read identifying main claims, primary evidence, dominant
+    argumentation scheme, and obvious weaknesses. Suitable for rapid assessment or
+    initial orientation to an argument's structure.
+  typical_passes: 1
+  suitable_for: Initial assessment, triage, or when time constraints prevent deeper
+    analysis
+  passes:
+  - pass_number: 1
+    label: Structural Overview
+    stance: discovery
+    focus_dimensions:
+    - structural_composition
+    - scheme_identification
+    focus_capabilities:
+    - toulmin_structure_mapping
+    - argumentation_scheme_analysis
+    consumes_from: []
+    description: Identify the main claim and its type. Locate the primary grounds
+      offered in support. Recognize the dominant argumentation scheme. Note the most
+      obvious strength and weakness. This pass produces a quick structural sketch
+      that reveals the argument's basic architecture without detailed analysis of
+      each component.
+- key: standard
+  description: Full architectural mapping with Toulmin analysis of major arguments,
+    scheme identification with critical questions, attack-defense structure, and quality
+    assessment. Appropriate for serious critical engagement.
+  typical_passes: 2
+  suitable_for: Academic analysis, editorial review, or any context requiring substantive
+    evaluation
+  passes:
+  - pass_number: 1
+    label: Component Mapping
+    stance: discovery
+    focus_dimensions:
+    - structural_composition
+    - scheme_identification
+    - suppressed_element_reconstruction
+    focus_capabilities:
+    - toulmin_structure_mapping
+    - argumentation_scheme_analysis
+    - enthymeme_reconstruction
+    consumes_from: []
+    description: 'Map the full Toulmin structure for all significant arguments: claims,
+      grounds, warrants (explicit and implicit), backing, qualifiers, and rebuttals.
+      Identify argumentation schemes and state their critical questions. Reconstruct
+      suppressed premises in major enthymemes. This pass builds the complete structural
+      inventory.'
+  - pass_number: 2
+    label: Evaluation and Dynamics
+    stance: confrontation
+    focus_dimensions:
+    - attack_defense_dynamics
+    - burden_presumption_structure
+    - argument_quality_assessment
+    focus_capabilities:
+    - attack_defense_mapping
+    - burden_presumption_analysis
+    - fallacy_detection
+    consumes_from:
+    - 1
+    description: Map how arguments attack and defend against each other. Identify
+      burden allocation and significant presumptions. Detect fallacies with contextual
+      assessment. Evaluate argument quality using relevance, acceptability, and sufficiency
+      criteria. This pass moves from structure to evaluation, assessing where arguments
+      succeed and fail.
+- key: deep
+  description: Exhaustive architectural analysis including nested argument chains,
+    strategic scheme selection, suppressed premise genealogy, dialectical obligation
+    tracking, and constructive assessment. For contexts demanding the fullest understanding
+    of argumentative structure.
+  typical_passes: 4
+  suitable_for: Scholarly critique, forensic analysis, or comprehensive argument reconstruction
+  passes:
+  - pass_number: 1
+    label: Exhaustive Mapping
+    stance: discovery
+    focus_dimensions:
+    - structural_composition
+    - scheme_identification
+    focus_capabilities:
+    - toulmin_structure_mapping
+    - argumentation_scheme_analysis
+    consumes_from: []
+    description: Complete Toulmin mapping for every identifiable argument, including
+      minor and supporting arguments. Full scheme identification across all reasoning
+      patterns. Trace argument chains showing how conclusions become grounds for further
+      arguments. Build the complete structural inventory from which all subsequent
+      analysis proceeds.
+  - pass_number: 2
+    label: Suppressed Element Analysis
+    stance: inference
+    focus_dimensions:
+    - suppressed_element_reconstruction
+    - burden_presumption_structure
+    focus_capabilities:
+    - enthymeme_reconstruction
+    - burden_presumption_analysis
+    consumes_from:
+    - 1
+    description: Systematic reconstruction of all suppressed premises with assessment
+      of their acceptability and their connection to larger ideological commitments.
+      Deep analysis of presumption structure including presumptions that may be controversially
+      smuggled in. Track burden allocation and all burden-shifting moves with legitimacy
+      assessment. This pass reveals the hidden architecture beneath the visible argument.
+  - pass_number: 3
+    label: Dialectical Dynamics
+    stance: confrontation
+    focus_dimensions:
+    - attack_defense_dynamics
+    - argument_quality_assessment
+    focus_capabilities:
+    - attack_defense_mapping
+    - fallacy_detection
+    consumes_from:
+    - 1
+    - 2
+    description: Map the complete attack-defense structure including multi-move exchanges.
+      Analyze strategic concessions for whether they serve or undermine the arguer's
+      position. Identify missed attack opportunities. Contextual fallacy assessment
+      distinguishing legitimate from illegitimate moves. Track dialectical obligations
+      and their satisfaction or violation. This pass reveals the adversarial structure
+      and evaluates performance.
+  - pass_number: 4
+    label: Synthetic Assessment
+    stance: integration
+    focus_dimensions:
+    - structural_composition
+    - scheme_identification
+    - argument_quality_assessment
+    focus_capabilities:
+    - toulmin_structure_mapping
+    - argumentation_scheme_analysis
+    - fallacy_detection
+    consumes_from:
+    - 1
+    - 2
+    - 3
+    description: 'Synthesize all prior analysis into comprehensive assessment. Rank
+      arguments by strength and vulnerability. Identify the lynchpin arguments whose
+      success or failure determines the whole. Analyze scheme selection strategy—why
+      these patterns of reasoning were chosen. Provide constructive assessment: what
+      would strengthen the arguments, what would defeat them, what is the strongest
+      form of the position. This pass produces the authoritative evaluation of the
+      argument''s architecture.'
+apps:
+- critic
+function: logic
+paradigm_keys: []

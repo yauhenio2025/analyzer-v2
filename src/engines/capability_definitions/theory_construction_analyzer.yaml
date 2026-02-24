@@ -1,0 +1,618 @@
+engine_key: theory_construction_analyzer
+engine_name: Theory Construction Analyzer
+version: 1
+category: methodology
+kind: synthesis
+problematique: |-
+  Theories do not arrive fully formed from the heavens. They are constructed — assembled piece by piece through specific intellectual moves, borrowings, translations, and justifications. Yet most readers encounter theories as finished products, evaluating whether they agree with the conclusions while remaining blind to how the theoretical edifice was built. This blindness matters because the construction process encodes commitments, constraints, and vulnerabilities that determine what the theory can and cannot do. A theory bootstrapped from biological metaphors carries hidden organicist assumptions. A theory synthesized from incompatible paradigms may contain fault lines invisible until stressed. A theory that sacrifices parsimony for explanatory power may collapse under its own complexity. Understanding how a theory was built is prerequisite to understanding what it really claims.
+
+  Most authors construct theories unreflectively, inheriting paradigmatic assumptions they never examine, borrowing concepts without acknowledging what distorts in translation, combining frameworks without testing their logical compatibility. Readers fare no better — they are trained to ask 'Is this theory true?' before asking 'Is this theory coherent?' or 'What methodological commitments does accepting it require?' This engine makes theory-building visible as a practice. It identifies the specific moves: Where does the author commit to a paradigm? Where do they construct middle-range explanations? Where do they bootstrap concepts across domains? Where do they synthesize competing frameworks? Where do they innovate new concepts? Each move carries implications and risks that remain invisible until explicitly surfaced.
+
+  The philosophical foundation draws on three traditions. Thomas Kuhn's analysis of paradigmatic science reveals how overarching frameworks constrain what questions can be asked and what counts as an answer — the paradigm is not just a theory but a way of seeing that makes some phenomena visible and others invisible. Robert Merton's sociology of knowledge articulates the distinctive character of middle-range theories that mediate between grand theory and empirical generalization — modest enough to be testable, general enough to be theoretically interesting. Susan Leigh Star and James Griesemer's concept of boundary objects illuminates how certain concepts function across multiple communities precisely because their flexibility allows different groups to use them while maintaining enough robustness to sustain identity. Together, these traditions provide the vocabulary for analyzing theory as constructed artifact rather than discovered truth.
+
+  Within the logic analysis suite, this engine occupies the methodological position — it examines not the content of arguments but the architecture of theoretical frameworks and the moves by which they are assembled. It shares conceptual territory with argument_architecture (which maps how arguments are constructed) and epistemological_method_detector (which identifies how claims are justified). It differs from both by focusing specifically on theory-building as a distinctive intellectual practice with its own norms, tradeoffs, and failure modes. The engine's outputs feed naturally into inferential_commitment_mapper, which can then trace the downstream implications of the paradigmatic commitments and conceptual borrowings this engine identifies.
+
+  Commitment to analyzing theory construction matters because theories shape what we can think. A theory is not merely a description of reality but a lens that determines what becomes visible, what questions become askable, what answers become conceivable. When we adopt a theory unreflectively, we inherit its constraints without awareness. When we construct theories unreflectively, we build in limitations we cannot see. The discipline of making theory-building explicit — of asking not just 'What does this theory claim?' but 'How was this theory built, and what does that construction commit us to?' — is prerequisite to genuine theoretical sophistication. Only by understanding theory as constructed can we become capable of constructing better theories.
+researcher_question: How does the text construct its theoretical framework, and what
+  are the methodological commitments underlying its theory-building?
+intellectual_lineage:
+  primary:
+    name: kuhn
+    description: Thomas Kuhn (1922–1996), American philosopher and historian of science
+      whose 'The Structure of Scientific Revolutions' (1962) transformed understanding
+      of how scientific knowledge develops. His concept of paradigms — overarching
+      frameworks that define legitimate problems, methods, and solutions within a
+      scientific community — provides this engine's foundation for understanding how
+      theoretical work operates within constraining assumptions that often remain
+      invisible to practitioners. Kuhn's insight that paradigm shifts involve not
+      just new theories but new ways of seeing makes visible the deep commitments
+      encoded in any theoretical framework.
+  secondary:
+  - name: merton
+    description: Robert K. Merton (1910–2003), American sociologist who articulated
+      the concept of 'theories of the middle range' — theoretical constructions that
+      mediate between grand unified theories and mere empirical generalizations. His
+      methodological writings provide the vocabulary for assessing when theories are
+      appropriately modest versus overreaching, and how scope conditions determine
+      a theory's proper domain of application.
+  - name: star
+    description: Susan Leigh Star (1954–2010), American sociologist and information
+      scientist who, with James Griesemer, developed the concept of 'boundary objects'
+      — concepts or artifacts flexible enough to be meaningful across different communities
+      of practice while robust enough to maintain identity. This concept illuminates
+      how certain theoretical terms function precisely because of their productive
+      ambiguity.
+  - name: lakatos
+    description: Imre Lakatos (1922–1974), Hungarian philosopher of science who developed
+      the methodology of scientific research programmes, distinguishing between a
+      theory's 'hard core' of unfalsifiable commitments and its 'protective belt'
+      of auxiliary hypotheses. His framework provides tools for mapping which elements
+      of a theoretical construction are foundational versus derivative.
+  - name: laudan
+    description: Larry Laudan (1941–2022), American philosopher of science whose work
+      on research traditions and problem-solving effectiveness provides criteria for
+      assessing theoretical progress beyond simple truth claims. His emphasis on theories
+      as problem-solving instruments grounds the evaluation of theoretical parsimony
+      and fecundity tradeoffs.
+  traditions:
+  - name: history_of_science
+    description: The historical study of scientific development reveals that theories
+      are not discovered but constructed through specific social and intellectual
+      processes. This tradition provides concrete examples of how paradigms constrain
+      inquiry, how concepts migrate across domains, and how theoretical innovations
+      emerge from crisis and creative recombination.
+  - name: sociology_of_knowledge
+    description: The sociological examination of how knowledge is produced, legitimated,
+      and transmitted within communities. This tradition emphasizes that theory-building
+      is a social practice embedded in institutional contexts, and that theoretical
+      concepts often serve boundary-spanning functions across different epistemic
+      communities.
+  - name: philosophy_of_science
+    description: 'The normative and descriptive analysis of scientific reasoning,
+      theory structure, and theory change. This tradition provides the conceptual
+      vocabulary for analyzing theoretical architecture: what makes a theory well-formed,
+      what distinguishes legitimate from illegitimate theoretical moves, how theories
+      relate to evidence.'
+  - name: pragmatist_epistemology
+    description: The philosophical tradition emphasizing that theories are instruments
+      for organizing experience and guiding action rather than mirrors of nature.
+      This orientation grounds the assessment of theoretical parsimony and fecundity
+      — theories are evaluated by what they enable us to do, not merely by correspondence
+      to an independent reality.
+  - name: conceptual_history
+    description: The study of how concepts emerge, transform, and migrate across intellectual
+      contexts. This tradition, associated with Reinhart Koselleck and Quentin Skinner,
+      provides methods for tracking conceptual bootstrapping — how terms carry hidden
+      freight from their domains of origin into new theoretical contexts.
+  key_concepts:
+  - name: paradigm
+    definition: An overarching framework of assumptions, methods, and exemplary solutions
+      that defines a scientific community's approach to inquiry. Paradigms constrain
+      what questions can be asked, what methods are legitimate, and what counts as
+      a satisfactory answer — often without practitioners' awareness of these constraints.
+  - name: middle_range_theory
+    definition: Theoretical constructions that occupy the space between grand unified
+      theories and empirical generalizations. Middle-range theories specify mechanisms
+      for delimited phenomena with explicit scope conditions, making them testable
+      while remaining theoretically substantive.
+  - name: boundary_object
+    definition: Concepts, methods, or artifacts that maintain enough stability to
+      be recognizable across different communities of practice while remaining flexible
+      enough to serve different purposes in different contexts. Boundary objects facilitate
+      communication across epistemic communities precisely through their productive
+      ambiguity.
+  - name: conceptual_bootstrapping
+    definition: The intellectual move of importing concepts from one domain and repurposing
+      them in another. Bootstrapping transfers not just the concept but often hidden
+      assumptions, connotations, and inferential connections from the source domain
+      — sometimes productively, sometimes distortingly.
+  - name: theoretical_parsimony
+    definition: The methodological value of explaining phenomena with the minimum
+      necessary theoretical apparatus. Parsimony trades against fecundity — the ability
+      of a theory to generate new insights, predictions, and research directions.
+      Appropriate balance depends on the phenomenon and stage of inquiry.
+  - name: operationalization
+    definition: The translation of abstract theoretical concepts into observable,
+      measurable indicators. Operationalization is necessary for empirical engagement
+      but always involves decisions that may distort what the concept originally meant,
+      creating gaps between theoretical and operational definitions.
+  - name: scope_conditions
+    definition: The explicit or implicit boundaries delimiting where a theory claims
+      to apply. Scope conditions specify the domain within which a theory's mechanisms
+      are expected to operate, distinguishing legitimate from illegitimate applications
+      and preventing overreach.
+  - name: hard_core
+    definition: In Lakatos's framework, the central commitments of a research programme
+      that are treated as unfalsifiable by methodological decision. The hard core
+      is protected by a belt of auxiliary hypotheses; anomalies are addressed by modifying
+      the belt rather than abandoning the core.
+analytical_dimensions:
+- key: paradigmatic_commitment
+  description: The overarching theoretical framework within which the text operates,
+    whether explicitly acknowledged or implicitly assumed. This dimension examines
+    how paradigmatic assumptions constrain inquiry, what questions become askable,
+    and where the text pushes against or transcends its paradigmatic boundaries.
+  probing_questions:
+  - What theoretical paradigm organizes the text's approach to its subject?
+  - Is the paradigmatic commitment explicit or must it be inferred?
+  - What questions does the paradigm make it impossible to ask?
+  - Where does the text strain against paradigmatic constraints?
+  - What would the analysis look like from an alternative paradigm?
+  depth_guidance:
+    surface: Identify the named theoretical tradition or school the text affiliates
+      with.
+    standard: Trace how paradigmatic assumptions shape problem selection, methodology,
+      and acceptable solutions, noting both explicit and implicit commitments.
+    deep: Analyze tensions between paradigmatic constraints and the phenomena the
+      text addresses, identifying where the paradigm enables insight and where it
+      produces blind spots, and assessing the text's self-awareness about its paradigmatic
+      location.
+- key: middle_range_construction
+  description: How the text builds theories of delimited scope that specify mechanisms
+    for particular phenomena with explicit conditions of application. This dimension
+    examines the balance between theoretical ambition and empirical tractability,
+    assessing whether the theory's scope is appropriately modest or overreaching.
+  probing_questions:
+  - What specific phenomenon does the theory claim to explain?
+  - What mechanisms are proposed to account for the phenomenon?
+  - What scope conditions delimit where the theory applies?
+  - Are the scope conditions explicit or must they be reconstructed?
+  - Does the theory overreach its evidence or remain appropriately modest?
+  depth_guidance:
+    surface: Identify the main phenomenon explained and the primary mechanism proposed.
+    standard: Map the complete explanatory structure including scope conditions, auxiliary
+      assumptions, and testable implications.
+    deep: Assess the theory's positioning in the space between grand theory and empirical
+      generalization, evaluating whether scope conditions are appropriate, whether
+      mechanisms are adequately specified, and where the theory's ambition exceeds
+      its evidential warrant.
+- key: conceptual_transfer
+  description: Where and how the text imports concepts from one domain and deploys
+    them in another. This dimension traces what is preserved in the transfer (structural
+    relationships, content, connotations) and what is distorted, assessing whether
+    the bootstrapping is acknowledged and whether it produces insight or confusion.
+  probing_questions:
+  - What concepts does the text borrow from other domains?
+  - What is the source domain and what connotations travel with the concept?
+  - What structural features are preserved versus distorted in transfer?
+  - Is the borrowing acknowledged or silent?
+  - Does the transfer produce genuine insight or merely relabeling?
+  depth_guidance:
+    surface: Note obvious metaphors and borrowed terminology with their source domains.
+    standard: Analyze what the transferred concepts carry from their origin — assumptions,
+      inferential connections, evaluative connotations — and how these affect the
+      new theoretical context.
+    deep: Assess whether conceptual transfers are productive (illuminating new aspects
+      of the target domain) or distorting (importing inappropriate assumptions), and
+      evaluate the text's reflexivity about its borrowings.
+- key: theoretical_synthesis
+  description: How the text brings multiple theoretical frameworks into relationship
+    — whether as complements, competitors, or elements to be synthesized. This dimension
+    examines the logical compatibility of combined frameworks, the quality of synthesis
+    achieved, and whether combinations produce genuine insight or mere eclecticism.
+  probing_questions:
+  - What distinct theoretical frameworks does the text combine?
+  - Are the combined frameworks logically compatible?
+  - Is the combination presented as complementary, competitive, or synthetic?
+  - Does the synthesis produce emergent insight unavailable from either framework
+    alone?
+  - Where do tensions between frameworks remain unresolved?
+  depth_guidance:
+    surface: Identify the distinct theoretical frameworks invoked and their basic
+      relationship.
+    standard: Analyze the logical compatibility of combined frameworks, identifying
+      where they reinforce each other, where they create tension, and how the text
+      manages conflicts.
+    deep: Assess synthesis quality — whether the combination produces genuine theoretical
+      innovation, whether incompatibilities are resolved or merely papered over, and
+      whether the result is coherent integration or unprincipled eclecticism.
+- key: conceptual_innovation
+  description: Where the text introduces new concepts or substantially redefines existing
+    ones. This dimension assesses whether innovations do genuine analytical work that
+    existing concepts cannot do, or whether they merely relabel familiar phenomena
+    without adding explanatory power.
+  probing_questions:
+  - What new concepts does the text introduce?
+  - What existing concepts, if any, does the innovation replace or supplement?
+  - What analytical work does the new concept enable?
+  - Does the concept carve nature at its joints or impose arbitrary distinctions?
+  - Is the innovation necessary or could existing vocabulary suffice?
+  depth_guidance:
+    surface: Identify novel terminology and basic definitions offered.
+    standard: Analyze what the new concept adds to existing vocabulary — what distinctions
+      it makes possible, what phenomena it makes visible, what it enables that prior
+      concepts could not.
+    deep: Assess whether the innovation is theoretically necessary (doing work no
+      existing concept could do) or merely terminological (relabeling without analytical
+      gain), and evaluate how the concept positions itself in relation to existing
+      conceptual infrastructure.
+- key: theory_evidence_articulation
+  description: How the text connects its theoretical claims to empirical evidence
+    — whether generating theory from evidence, testing theory against evidence, or
+    iterating abductively between them. This dimension examines the strength of theory-evidence
+    connections and where gaps or tensions exist.
+  probing_questions:
+  - 'What is the direction of inference: evidence to theory, theory to evidence, or
+    iterative?'
+  - How are abstract concepts operationalized into observable indicators?
+  - Does operationalization preserve or distort concept meaning?
+  - Where is the connection between theory and evidence strongest?
+  - Where are theory-evidence gaps most significant?
+  depth_guidance:
+    surface: Identify the basic pattern of theory-evidence relationship and key operationalizations.
+    standard: Analyze how theoretical constructs are translated into empirical indicators,
+      assessing construct validity and identifying where operationalization may distort
+      meaning.
+    deep: Assess the overall integrity of the theory-evidence relationship, identifying
+      where connections are robust, where they are strained, and where the text's
+      empirical claims exceed what its evidence can support.
+capabilities:
+- key: paradigm_identification
+  description: Identifies the overarching theoretical paradigm within which a text
+    operates and traces how paradigmatic commitments constrain inquiry.
+  extended_description: |-
+    Every theoretical work operates within a paradigm — a framework of assumptions, methods, and exemplary solutions that defines what questions can be asked and what counts as an answer. Most paradigmatic commitments remain invisible to authors and readers alike, functioning as the unexamined background against which explicit theorizing occurs. This capability makes paradigms visible.
+
+    Drawing on Kuhn's analysis of scientific revolutions, the capability distinguishes between the explicit theoretical claims a text makes and the deeper paradigmatic assumptions that make those claims possible. A Marxist analysis of inequality operates within assumptions about class, exploitation, and historical materialism that a Weberian analysis would not share — yet both may present themselves as simply 'analyzing inequality' without acknowledging their paradigmatic divergence.
+
+    The capability traces not only what paradigm the text inhabits but how that paradigm constrains inquiry: what questions cannot be asked, what methods are ruled out, what phenomena become invisible. It also identifies where texts strain against paradigmatic boundaries, potentially signaling paradigm crisis or innovation.
+  intellectual_grounding:
+    thinker: kuhn
+    concept: paradigm
+    method: Identifies the shared assumptions, methods, and exemplary solutions that
+      define a scientific community's approach, tracing how these constrain inquiry
+      while often remaining invisible to practitioners.
+  indicators:
+  - Named affiliation with theoretical schools or traditions
+  - Unargued assumptions about causation, agency, or method
+  - Systematic exclusion of certain questions or approaches
+  - Characteristic vocabulary associated with particular paradigms
+  - Treatment of paradigmatic commitments as obvious or natural
+  depth_scaling:
+    surface: Identify the named theoretical tradition or school.
+    standard: Trace how paradigmatic assumptions shape problem selection, methodology,
+      and solution criteria.
+    deep: Analyze the paradigm's enabling and constraining effects, assess the text's
+      reflexivity about its paradigmatic location, and identify where the paradigm
+      is strained.
+  requires_dimensions: []
+  produces_dimensions:
+  - paradigmatic_commitment
+- key: middle_range_mapping
+  description: Maps the structure of middle-range theories including phenomena, mechanisms,
+    scope conditions, and testable implications.
+  extended_description: |-
+    Robert Merton distinguished middle-range theories from both grand theoretical systems (too abstract to test) and empirical generalizations (too narrow to be theoretically interesting). Middle-range theories occupy the productive middle ground: they specify mechanisms for delimited phenomena with explicit scope conditions, making them both empirically tractable and theoretically substantive. This capability maps their architecture.
+
+    The capability identifies four components of middle-range construction: the phenomenon to be explained (what puzzle motivates the theory), the mechanisms proposed (how the explanation works), the scope conditions (where the theory claims to apply), and the testable implications (what the theory predicts that could be checked). A well-constructed middle-range theory makes all four explicit; many theories leave one or more implicit or unclear.
+
+    Assessing middle-range construction involves evaluating appropriateness of ambition. Some theories overreach, claiming to explain more than their mechanisms and evidence warrant. Others are too timid, failing to extract general lessons from specific cases. The capability identifies where theories fall on this spectrum and whether their scope conditions are appropriate to their explanatory apparatus.
+  intellectual_grounding:
+    thinker: merton
+    concept: middle-range theory
+    method: Reconstructs the complete explanatory structure of theoretical claims
+      — phenomenon, mechanism, scope conditions, implications — and assesses whether
+      scope matches evidential warrant.
+  indicators:
+  - Explicit specification of the phenomenon to be explained
+  - Proposed causal or constitutive mechanisms
+  - Stated or implied scope conditions and boundaries
+  - Derivation of testable predictions or implications
+  - Claims about where the theory does and does not apply
+  depth_scaling:
+    surface: Identify the main phenomenon and proposed explanation.
+    standard: Map complete explanatory structure including implicit scope conditions
+      and unstated auxiliary assumptions.
+    deep: Assess whether the theory is appropriately positioned between grand theory
+      and empirical generalization, evaluate scope condition adequacy, and identify
+      overreach or excessive timidity.
+  requires_dimensions:
+  - paradigmatic_commitment
+  produces_dimensions:
+  - middle_range_construction
+- key: bootstrapping_detection
+  description: Detects where concepts are imported from one domain and repurposed
+    in another, tracking what is preserved and distorted in transfer.
+  extended_description: |-
+    Theoretical innovation often proceeds by conceptual borrowing — importing terms, frameworks, or models from one domain into another. Evolution migrates from biology to economics, metabolism from physiology to urban studies, network from mathematics to sociology. These transfers are rarely neutral. Concepts carry freight from their origin: assumptions, connotations, inferential connections that travel with the term even when unacknowledged.
+
+    This capability traces conceptual bootstrapping with attention to what transfers. Structure may be preserved while content changes (mathematical models applied to social phenomena). Content may be preserved while connotations shift (efficiency in engineering versus economics). Hidden assumptions may transfer unnoticed (biological concepts importing teleological or competitive frameworks). The productive question is not whether bootstrapping occurs — it is ubiquitous — but whether it is acknowledged and whether it produces insight or distortion.
+
+    The capability assesses bootstrapping quality. Productive transfers illuminate new aspects of the target domain by importing analytical tools that reveal previously invisible patterns. Distorting transfers import inappropriate assumptions that mischaracterize the target domain. The difference often lies in the author's reflexivity about what is being borrowed and what may not translate.
+  intellectual_grounding:
+    thinker: star
+    concept: conceptual transfer
+    method: Traces the movement of concepts across domain boundaries, identifying
+      what structural features, content, and connotations travel with the transfer
+      and assessing whether the borrowing produces insight or distortion.
+  indicators:
+  - Explicit metaphors drawing on other domains
+  - Technical vocabulary imported from other fields
+  - Structural analogies between domains
+  - Unexamined assumptions traceable to source domains
+  - Acknowledgment or lack thereof of conceptual origins
+  depth_scaling:
+    surface: Note obvious metaphors and borrowed terminology.
+    standard: Analyze what assumptions and connotations travel with borrowed concepts.
+    deep: Assess whether transfers are productive or distorting, and evaluate the
+      text's reflexivity about its conceptual borrowings.
+  requires_dimensions:
+  - paradigmatic_commitment
+  produces_dimensions:
+  - conceptual_transfer
+- key: boundary_object_identification
+  description: Identifies concepts that function across multiple communities of practice
+    through productive flexibility.
+  extended_description: |-
+    Some concepts succeed precisely because they mean different things to different people. 'Sustainability' bridges environmental science, economics, and policy. 'Innovation' connects business, technology, and social reform. These are boundary objects — terms flexible enough to be meaningful across different communities while robust enough to maintain recognizable identity. Their ambiguity is not a bug but a feature.
+
+    Star and Griesemer developed this concept studying how different groups (scientists, administrators, amateurs) collaborated at a natural history museum despite having different goals and frameworks. Shared objects — specimens, classification systems, maps — allowed coordination without requiring consensus on meaning. Theoretical concepts can function similarly, enabling communication across epistemic communities precisely because different groups can use them for different purposes.
+
+    This capability identifies boundary objects and assesses their function. Sometimes productive flexibility facilitates genuine interdisciplinary work, allowing different communities to coordinate while maintaining their distinctive approaches. Sometimes ambiguity obscures fundamental disagreements, allowing apparent consensus that masks deep incompatibilities. The capability distinguishes these cases and identifies where boundary objects serve communication and where they impede it.
+  intellectual_grounding:
+    thinker: star
+    concept: boundary object
+    method: Identifies concepts that bridge multiple communities of practice and assesses
+      whether their flexibility facilitates genuine coordination or obscures fundamental
+      disagreement.
+  indicators:
+  - Terms used across disciplinary or community boundaries
+  - Concepts with different operational definitions in different contexts
+  - Vocabulary that enables interdisciplinary conversation
+  - Terms whose ambiguity is functional rather than accidental
+  - Appeals to shared concepts despite divergent underlying frameworks
+  depth_scaling:
+    surface: Identify terms that appear to bridge different communities or disciplines.
+    standard: Analyze how boundary objects function differently in different contexts
+      while maintaining identity.
+    deep: Assess whether boundary objects facilitate genuine interdisciplinary work
+      or obscure fundamental incompatibilities, and evaluate their role in the text's
+      theoretical architecture.
+  requires_dimensions:
+  - paradigmatic_commitment
+  - conceptual_transfer
+  produces_dimensions:
+  - theoretical_synthesis
+- key: parsimony_fecundity_assessment
+  description: Evaluates the tradeoff between theoretical simplicity and explanatory
+    richness.
+  extended_description: |-
+    Theories face an inherent tension between parsimony (explaining with minimal apparatus) and fecundity (generating rich implications and new directions). A parsimonious theory is easier to test, apply, and teach — but may miss essential complexity. A fecund theory captures more nuance and generates more research — but may become unwieldy or unfalsifiable. The appropriate balance depends on the phenomenon, the stage of inquiry, and the theory's purposes.
+
+    This capability assesses where theories fall on the parsimony-fecundity spectrum and whether their position is appropriate. Some phenomena demand complexity — social systems with multiple interacting causes cannot be captured by simple models without distortion. Others are better served by deliberate simplification — isolating key mechanisms even at cost of completeness. The question is not whether a theory is simple or complex but whether its complexity matches its task.
+
+    The assessment draws on Laudan's pragmatist philosophy of science, which evaluates theories as problem-solving instruments. A theory's value lies in what it enables: predictions, explanations, interventions, further inquiry. Parsimony and fecundity are instrumental virtues — each valuable for what it allows. The capability identifies where theories could be simplified without loss, where oversimplification misses essential complexity, and whether the theory's architecture is appropriate to its explanatory ambitions.
+  intellectual_grounding:
+    thinker: laudan
+    concept: problem-solving effectiveness
+    method: Evaluates theories as problem-solving instruments, assessing whether parsimony-fecundity
+      tradeoffs are appropriate to the phenomenon and the theory's purposes.
+  indicators:
+  - Number and complexity of theoretical primitives
+  - Scope of phenomena the theory claims to explain
+  - Specificity versus generality of predictions
+  - Richness of implications and research directions generated
+  - Explicit or implicit simplifying assumptions
+  depth_scaling:
+    surface: Note the theory's apparent complexity and scope.
+    standard: Analyze the tradeoff between parsimony and explanatory power, identifying
+      what is gained and lost.
+    deep: Assess whether the theory's complexity is appropriate to its subject matter
+      and purposes, identifying where simplification would improve and where it would
+      impoverish.
+  requires_dimensions:
+  - middle_range_construction
+  produces_dimensions:
+  - middle_range_construction
+  - conceptual_innovation
+- key: synthesis_quality_assessment
+  description: Evaluates the logical coherence and productivity of theoretical combinations.
+  extended_description: |-
+    Theoretical work often combines multiple frameworks — Marxist analysis with Foucauldian insights, rational choice theory with institutional analysis, cognitive science with phenomenology. Such combinations range from productive syntheses that generate genuine new understanding to unprincipled eclecticism that papers over fundamental incompatibilities. This capability assesses synthesis quality.
+
+    The first question is logical compatibility. Some frameworks share deep assumptions that make combination natural. Others rest on incompatible foundations — different views of agency, causation, or explanation that cannot be reconciled without transformation. Combining incompatible frameworks produces apparent richness that conceals incoherence. The capability identifies where combined frameworks share sufficient common ground for synthesis and where their differences run too deep.
+
+    The second question is synthetic productivity. Even compatible frameworks may combine without generating insight — mere addition rather than multiplication. Productive synthesis produces emergent understanding unavailable from either framework alone, new questions neither could ask independently, or resolution of problems each faced separately. The capability distinguishes genuine synthetic innovation from the mere juxtaposition of compatible ideas.
+  intellectual_grounding:
+    thinker: lakatos
+    concept: research programme compatibility
+    method: Assesses whether combined theoretical frameworks share sufficient foundational
+      commitments for coherent synthesis, and whether the combination produces emergent
+      insight or merely aggregates compatible ideas.
+  indicators:
+  - Explicit invocation of multiple theoretical frameworks
+  - Claims about complementarity or synthesis between approaches
+  - Tensions or contradictions between combined elements
+  - Novel claims emerging from framework combination
+  - Acknowledgment or avoidance of framework incompatibilities
+  depth_scaling:
+    surface: Identify the distinct frameworks being combined.
+    standard: Analyze logical compatibility and identify tensions between combined
+      frameworks.
+    deep: Assess whether synthesis is genuinely productive or merely eclectic, evaluate
+      how incompatibilities are handled, and identify emergent insights versus simple
+      aggregation.
+  requires_dimensions:
+  - paradigmatic_commitment
+  - conceptual_transfer
+  produces_dimensions:
+  - theoretical_synthesis
+composability:
+  shares_with:
+    paradigmatic_commitment: Shares identification of overarching theoretical frameworks
+      with epistemological_method_detector, which examines how such frameworks shape
+      evidence standards
+    conceptual_transfer: Shares tracking of concept migration with concept_semantic_constellation,
+      which maps the semantic fields concepts enter
+    theoretical_synthesis: Shares analysis of framework combination with dialectical_structure,
+      which examines how opposing positions are reconciled
+    middle_range_construction: Shares attention to explanatory mechanisms with argument_architecture,
+      which maps how causal claims are structured
+    conceptual_innovation: Shares assessment of novel concepts with conceptual_framework_extraction,
+      which inventories the conceptual vocabulary deployed
+  consumes_from:
+    conceptual_vocabulary: From conceptual_framework_extraction — the inventory of
+      concepts deployed provides the material for analyzing theory construction
+    semantic_relationships: From concept_semantic_constellation — how concepts relate
+      semantically reveals theoretical architecture
+    argument_structure: From argument_architecture — how arguments are organized reflects
+      underlying theoretical commitments
+    epistemic_methods: From epistemological_method_detector — how claims are justified
+      reveals paradigmatic assumptions
+  synergy_engines:
+  - argument_architecture
+  - epistemological_method_detector
+  - inferential_commitment_mapper
+  - conceptual_framework_extraction
+  - dialectical_structure
+depth_levels:
+- key: surface
+  description: Quick identification of the main theoretical framework, key borrowed
+    concepts, and basic theory-evidence relationship. Suitable for rapid assessment
+    of theoretical orientation.
+  typical_passes: 1
+  suitable_for: Initial assessment of theoretical approach, categorizing works by
+    theoretical tradition, identifying obvious conceptual borrowings
+  passes:
+  - pass_number: 1
+    label: framework_survey
+    stance: discovery
+    focus_dimensions:
+    - paradigmatic_commitment
+    - conceptual_transfer
+    focus_capabilities:
+    - paradigm_identification
+    - bootstrapping_detection
+    consumes_from: []
+    description: Survey the text to identify its basic theoretical orientation. Note
+      the named theoretical tradition or school, obvious metaphors and borrowed terminology,
+      and the general pattern of theory-evidence relationship. This pass establishes
+      the surface features of theory construction without deep analysis of how these
+      elements function or interact.
+- key: standard
+  description: Systematic analysis of theory construction including paradigmatic commitments,
+    middle-range building, conceptual borrowing, and synthesis quality. Maps the theory's
+    architecture and identifies key construction moves.
+  typical_passes: 2
+  suitable_for: Academic analysis, literature reviews, assessing theoretical contributions,
+    preparing substantive engagement with theoretical works
+  passes:
+  - pass_number: 1
+    label: construction_inventory
+    stance: discovery
+    focus_dimensions:
+    - paradigmatic_commitment
+    - middle_range_construction
+    - conceptual_transfer
+    focus_capabilities:
+    - paradigm_identification
+    - middle_range_mapping
+    - bootstrapping_detection
+    consumes_from: []
+    description: Map the basic architecture of theory construction. Identify the paradigmatic
+      framework (explicit or implicit), the middle-range theories being built (phenomena,
+      mechanisms, scope conditions), and the conceptual transfers being performed
+      (source domains, what transfers). This pass produces an inventory of theory
+      construction elements.
+  - pass_number: 2
+    label: architecture_assessment
+    stance: architecture
+    focus_dimensions:
+    - theoretical_synthesis
+    - conceptual_innovation
+    - theory_evidence_articulation
+    focus_capabilities:
+    - boundary_object_identification
+    - synthesis_quality_assessment
+    - parsimony_fecundity_assessment
+    consumes_from:
+    - 1
+    description: Using the inventory from pass 1, analyze the theory's overall architecture.
+      Assess how different elements fit together, whether theoretical combinations
+      are coherent, whether conceptual innovations do genuine work, and where the
+      theory-evidence relationship is strongest or weakest. This pass produces an
+      integrated assessment of theory construction quality.
+- key: deep
+  description: Comprehensive analysis of theory-building as practice, including reflexivity
+    assessment, vulnerability identification, and evaluation of the theory's methodological
+    commitments and their implications.
+  typical_passes: 4
+  suitable_for: Detailed theoretical critique, assessing major theoretical contributions,
+    preparing comprehensive engagement with important works, training in theoretical
+    analysis
+  passes:
+  - pass_number: 1
+    label: paradigm_excavation
+    stance: discovery
+    focus_dimensions:
+    - paradigmatic_commitment
+    focus_capabilities:
+    - paradigm_identification
+    consumes_from: []
+    description: 'Deep excavation of paradigmatic commitments. Identify not only the
+      named theoretical tradition but the implicit assumptions that shape inquiry:
+      what questions can be asked, what methods are legitimate, what counts as evidence,
+      what explanatory forms are acceptable. Trace where the paradigm enables insight
+      and where it creates blind spots. Assess the text''s reflexivity about its paradigmatic
+      location.'
+  - pass_number: 2
+    label: construction_archaeology
+    stance: inference
+    focus_dimensions:
+    - middle_range_construction
+    - conceptual_transfer
+    - conceptual_innovation
+    focus_capabilities:
+    - middle_range_mapping
+    - bootstrapping_detection
+    consumes_from:
+    - 1
+    description: Archaeological reconstruction of theory-building moves. Trace how
+      middle-range theories are assembled — which concepts are foundational, which
+      derived, how mechanisms are specified, how scope conditions are established.
+      Examine conceptual transfers in depth — what travels from source domains, what
+      distorts, whether borrowings are acknowledged. Identify conceptual innovations
+      and assess whether they do genuine analytical work.
+  - pass_number: 3
+    label: synthesis_evaluation
+    stance: confrontation
+    focus_dimensions:
+    - theoretical_synthesis
+    - theory_evidence_articulation
+    focus_capabilities:
+    - boundary_object_identification
+    - synthesis_quality_assessment
+    consumes_from:
+    - 1
+    - 2
+    description: Critical evaluation of theoretical combinations and theory-evidence
+      relationships. Test whether combined frameworks are logically compatible or
+      whether synthesis papers over fundamental tensions. Identify boundary objects
+      and assess whether they facilitate or obscure communication. Examine operationalization
+      moves and assess construct validity. Identify where the theory-evidence relationship
+      is weakest.
+  - pass_number: 4
+    label: vulnerability_mapping
+    stance: reflection
+    focus_dimensions:
+    - paradigmatic_commitment
+    - middle_range_construction
+    - theoretical_synthesis
+    focus_capabilities:
+    - parsimony_fecundity_assessment
+    - synthesis_quality_assessment
+    consumes_from:
+    - 1
+    - 2
+    - 3
+    description: Synthetic assessment of the theory's vulnerabilities and strengths.
+      Identify the weakest joints in the theoretical construction — where paradigmatic
+      assumptions are most questionable, where middle-range theories overreach, where
+      conceptual transfers distort, where synthesis is unprincipled, where theory-evidence
+      gaps are widest. Assess what accepting the theory commits one to and what alternatives
+      it forecloses. Produce a comprehensive map of the theory's methodological commitments
+      and their implications.
+apps:
+- critic
+function: logic
+paradigm_keys: []

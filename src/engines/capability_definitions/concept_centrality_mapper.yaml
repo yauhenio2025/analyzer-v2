@@ -1,0 +1,599 @@
+engine_key: concept_centrality_mapper
+engine_name: Concept Centrality Mapper
+version: 1
+category: concepts
+kind: synthesis
+problematique: |-
+  Not all concepts are created equal. In any intellectual system, some ideas sit at the center while others hover at the edges. Remove a peripheral concept and the system adjusts; remove a core concept and the entire edifice collapses. This asymmetry is not accidental but structural—it reflects the hidden architecture of conceptual commitment that underlies every argument, theory, and worldview. The question of which concepts are load-bearing and which are decorative is not merely academic; it determines what an author can revise without contradiction, what a critic can challenge with maximum effect, and what a reader must accept to follow the argument at all. This engine maps the topology of belief by identifying where concepts sit in the web—core or peripheral, hub or bridge, indispensable or expendable.
+
+  Most readers process arguments linearly, treating all concepts as roughly equivalent nodes in a chain of reasoning. They miss the three-dimensional structure: the fact that some concepts connect to dozens of others while some connect to few, that some serve as bridges between otherwise isolated clusters of thought while others are mere local phenomena, that some are explicitly defended while others are silently presupposed. Authors themselves often lack clarity about their own conceptual architecture. They may spend pages defending a peripheral claim while leaving their truly load-bearing assumptions entirely unexamined. The most powerful concepts in a text are often the ones never explicitly argued for—the background assumptions that make the explicit arguments possible. This engine reveals what the text takes for granted, what it treats as negotiable, and what it cannot abandon without ceasing to be itself.
+
+  The philosophical foundation is W.V.O. Quine's holistic epistemology, particularly his image of knowledge as a 'web of belief' where concepts vary in their distance from experience and their resistance to revision. Quine rejected the analytic-synthetic distinction, arguing that no statement is immune to revision and none faces the tribunal of experience alone. But he equally insisted that revision is not costless: changing core beliefs requires massive restructuring, while peripheral beliefs can be abandoned with minimal disruption. This engine operationalizes Quinean holism as a method of textual analysis, treating each work as its own web of belief and mapping the centrality, dependency, and revisability of its constituent concepts. The method is enriched by network theory's formal tools for analyzing hubs, bridges, and connectivity, and by the inferentialist insight that conceptual meaning is constituted by inferential relationships.
+
+  Within the logic suite, this engine occupies a unique position as the cartographer of conceptual topology. Where argument_architecture maps the logical structure of explicit reasoning and inferential_commitment_mapper traces what follows from what, this engine asks a different question: given the full network of concepts in play, which ones are structurally central? It synthesizes across documents to reveal patterns invisible at the single-text level—concepts that appear peripheral in one work but function as hidden cores, concepts that migrate from edge to center across an author's career, conceptual hubs that unify otherwise disparate arguments. The engine is essential for genealogical analysis: tracking how the same concept can shift from contested to assumed, from peripheral to load-bearing, across intellectual history.
+
+  Commitment to this mode of analysis matters because intellectual honesty requires knowing what you are really committed to. If you accept a theory's conclusions, you inherit its conceptual architecture—including the load-bearing assumptions you may never have examined. If you reject a single concept, you must reckon with the cascade: what else falls when that concept goes? The fantasy of piecemeal revision—accepting this conclusion while rejecting that premise—is often incoherent, because conceptual webs have their own structural logic. This engine provides the map that makes such reckoning possible, revealing the true cost of intellectual change and the hidden unity beneath surface diversity.
+researcher_question: Which concepts are load-bearing and what depends on them?
+intellectual_lineage:
+  primary:
+    name: quine
+    description: 'Willard Van Orman Quine (1908–2000), American philosopher whose
+      holistic epistemology revolutionized our understanding of conceptual structure.
+      His ''web of belief'' metaphor, developed most fully in ''Two Dogmas of Empiricism''
+      (1951) and ''Word and Object'' (1960), provides this engine''s foundational
+      image: knowledge as an interconnected network where concepts vary in centrality,
+      with those nearest experience most easily revised and those at the center most
+      resistant to change. Quine''s rejection of the analytic-synthetic distinction
+      implies that no concept is immune to revision in principle, but his insistence
+      on holistic evaluation means that revision costs vary dramatically based on
+      structural position.'
+  secondary:
+  - name: duhem
+    description: Pierre Duhem (1861–1916), French physicist and philosopher whose
+      thesis that hypotheses cannot be tested in isolation anticipated Quinean holism.
+      The Duhem-Quine thesis—that any observation can be reconciled with any theory
+      given sufficient adjustments elsewhere—grounds this engine's attention to how
+      conceptual webs absorb and redistribute evidential pressure rather than facing
+      point-by-point refutation.
+  - name: lakatos
+    description: Imre Lakatos (1922–1974), Hungarian philosopher of science who developed
+      the methodology of scientific research programmes. His distinction between the
+      'hard core' of a programme (protected from refutation) and its 'protective belt'
+      (adjustable auxiliary hypotheses) provides a model for analyzing which concepts
+      a discourse treats as non-negotiable and which it allows to flex under pressure.
+  - name: kuhn
+    description: Thomas Kuhn (1922–1996), American philosopher of science whose paradigm
+      theory illuminates how conceptual centrality functions during normal science
+      versus revolutionary periods. Core concepts define paradigms; their revision
+      constitutes revolution rather than mere adjustment. This engine maps the conditions
+      under which conceptual revision would constitute paradigm shift versus normal
+      refinement.
+  - name: sellars
+    description: Wilfrid Sellars (1912–1989), whose distinction between the 'manifest
+      image' and 'scientific image' and his concept of the 'space of reasons' inform
+      how this engine treats conceptual centrality as relative to frameworks. A concept
+      central to one image may be peripheral or absent in another; mapping centrality
+      requires specifying the web within which position is measured.
+  traditions:
+  - name: pragmatist_epistemology
+    description: The American pragmatist tradition from Peirce through James to Dewey
+      and Quine, which treats beliefs as tools for navigating experience rather than
+      mirrors of reality. This tradition's emphasis on the revisability of all beliefs
+      while acknowledging differential revision costs grounds the engine's approach
+      to mapping conceptual flexibility and rigidity.
+  - name: network_theory
+    description: Mathematical and computational approaches to analyzing network structure,
+      including centrality measures (degree, betweenness, eigenvector), hub and bridge
+      detection, and community structure analysis. These formal tools provide rigorous
+      methods for the topological analysis of conceptual webs that Quine described
+      metaphorically.
+  - name: inferentialism
+    description: 'The philosophical tradition, developed by Sellars and Brandom, holding
+      that conceptual content is constituted by inferential relationships rather than
+      reference or representation. This grounds the engine''s treatment of centrality
+      as a function of inferential connectivity: a concept is central because much
+      depends on it inferentially, not because it is frequently mentioned.'
+  - name: coherentist_epistemology
+    description: The epistemological tradition that treats justification as a matter
+      of coherence within a belief system rather than foundation in privileged beliefs.
+      This tradition's emphasis on mutual support relationships between beliefs informs
+      the engine's mapping of conceptual interdependence and its identification of
+      isolated versus well-integrated concepts.
+  - name: structural_linguistics
+    description: The tradition from Saussure through structuralism that treats meaning
+      as emerging from differential relationships within systems. This provides resources
+      for understanding how conceptual centrality is a systemic property—a concept's
+      position relative to the whole—rather than an intrinsic feature of individual
+      terms.
+  key_concepts:
+  - name: web_of_belief
+    definition: Quine's metaphor for the interconnected structure of knowledge, where
+      beliefs are not isolated atoms but nodes in a network facing experience collectively.
+      The web image captures how revision in one area propagates through connected
+      beliefs and how some positions are more protected than others by their distance
+      from the periphery where experience impinges.
+  - name: centrality
+    definition: A concept's structural position in the web of belief, measured by
+      its connectivity, distance from empirical revision, and the cost of abandoning
+      it. Centrality is not the same as importance (peripheral concepts can be crucial
+      for specific purposes) or frequency (central concepts are often assumed rather
+      than stated), but refers specifically to structural load-bearing capacity.
+  - name: revision_cost
+    definition: 'The systemic disruption caused by abandoning or modifying a concept,
+      ranging from trivial (isolated peripheral beliefs) to catastrophic (core organizing
+      concepts). Revision cost is determined by what depends on the concept: the more
+      inferential relationships terminate in a concept, the more expensive its revision.'
+  - name: conceptual_hub
+    definition: A concept with unusually high connectivity, linking many other concepts
+      through inferential, definitional, or presuppositional relationships. Hubs are
+      not necessarily the most discussed concepts but the ones through which conceptual
+      traffic flows; their removal fragments the network into disconnected communities.
+  - name: conceptual_bridge
+    definition: A concept that connects otherwise isolated clusters of thought, enabling
+      inferential movement between domains that would otherwise be disconnected. Bridge
+      concepts are often less central within any single cluster but structurally crucial
+      for the coherence of the broader system.
+  - name: dependency_chain
+    definition: 'A sequence of concepts linked by dependency relationships where each
+      concept presupposes or is defined by its predecessors. Dependency chains reveal
+      the layered structure of conceptual commitment: accepting a downstream concept
+      commits you to the entire upstream chain, often without explicit acknowledgment.'
+  - name: empirical_anchor
+    definition: A concept tied relatively directly to observational or experiential
+      content, positioned near the periphery of the web where experience exerts pressure.
+      Empirical anchors are more easily revised than abstract theoretical concepts
+      but their revision can propagate inward, forcing adjustment of more central
+      beliefs.
+  - name: protective_belt
+    definition: Lakatos's term for the revisable auxiliary concepts that surround
+      and protect a programme's hard core from direct refutation. This engine extends
+      the concept to any discourse, mapping which concepts function as protective
+      belt (absorbable into revision) versus hard core (revision constitutes abandonment
+      of the framework itself).
+analytical_dimensions:
+- key: structural_centrality
+  description: The position of concepts in the inferential network based on connection
+    patterns rather than frequency or explicit emphasis. Structural centrality measures
+    how many other concepts depend on, presuppose, or are defined in terms of a given
+    concept, revealing the load-bearing elements that often go undefended precisely
+    because they are too fundamental to question.
+  probing_questions:
+  - How many other concepts are defined in terms of this concept?
+  - What inferential chains pass through this concept?
+  - Would removing this concept fragment the argument into disconnected pieces?
+  - Is this concept explicitly defended or silently presupposed?
+  - What is the shortest path from this concept to empirical claims?
+  depth_guidance:
+    surface: Count direct connections and note which concepts appear in definitions
+      of others
+    standard: Map second-order connections and identify concepts that bridge argument
+      clusters
+    deep: Compute full network centrality metrics, distinguish betweenness from degree
+      centrality, identify structural holes
+- key: dependency_architecture
+  description: The directed structure of presupposition and entailment relationships
+    between concepts. Dependency architecture reveals which concepts must be accepted
+    before others become meaningful and which concepts would fall if their supports
+    were removed, mapping the layered structure of conceptual commitment.
+  probing_questions:
+  - What must be accepted before this concept becomes intelligible?
+  - What other concepts are entailed by accepting this one?
+  - Are there circular dependencies where concepts mutually presuppose each other?
+  - Which dependency relationships are acknowledged and which are tacit?
+  - Where are the longest dependency chains in the text?
+  depth_guidance:
+    surface: Identify explicit definitions and stated presuppositions
+    standard: Map implicit presuppositions and trace multi-step dependency chains
+    deep: Build complete dependency DAG, identify cycles, compute transitive closure
+      of commitments
+- key: revision_dynamics
+  description: The patterns of how conceptual change would propagate through the web
+    of belief if particular concepts were revised or abandoned. Revision dynamics
+    distinguishes concepts whose revision would be locally contained from those whose
+    revision would cascade catastrophically through the system.
+  probing_questions:
+  - What would happen to the argument if this concept were abandoned?
+  - Could this concept be revised without affecting core conclusions?
+  - What alternative concepts could substitute with minimal disruption?
+  - Which concepts form a mutually reinforcing cluster that must stand or fall together?
+  - Where are the fault lines along which the system would fracture under pressure?
+  depth_guidance:
+    surface: Identify obvious cascading effects of removing key concepts
+    standard: Simulate multiple removal scenarios and map propagation patterns
+    deep: Identify tipping points, phase transitions in belief structure, minimal
+      destabilizing sets
+- key: empirical_grounding
+  description: The relationship between concepts and observational or experiential
+    content that anchors the web of belief. Empirical grounding maps which concepts
+    are tied relatively directly to experience and which are insulated by layers of
+    theoretical mediation, determining where evidential pressure enters the system.
+  probing_questions:
+  - What observations or experiences would bear on this concept?
+  - How many inferential steps separate this concept from empirical claims?
+  - Could empirical findings directly challenge this concept or only its downstream
+    implications?
+  - Which concepts function as the interface between theory and evidence?
+  - Where are the empirical anchors that stabilize the conceptual network?
+  depth_guidance:
+    surface: Distinguish empirical claims from theoretical constructs
+    standard: Map distances from experience and identify evidential pathways
+    deep: Analyze how evidential pressure could propagate inward, identify underdetermined
+      regions
+- key: role_migration
+  description: The movement of concepts between structural positions across the development
+    of an argument or across multiple works. Role migration tracks how concepts shift
+    from peripheral to central, from contested to assumed, from defined to primitive,
+    revealing the dynamic architecture of intellectual commitment over time.
+  probing_questions:
+  - Does this concept's structural position change across the text?
+  - Is a concept that starts as peripheral later treated as central?
+  - Do concepts that are initially defended become later assumed without argument?
+  - Where do concepts shift from descriptive to normative or vice versa?
+  - How does the conceptual architecture differ between early and late sections?
+  depth_guidance:
+    surface: Note obvious shifts in how concepts are treated
+    standard: Track concept role changes systematically across document sections
+    deep: Map complete role trajectories across corpus, identify migration patterns
+      characteristic of the author
+- key: hub_bridge_topology
+  description: The identification of concepts that function as hubs (highly connected
+    within clusters) or bridges (linking otherwise disconnected clusters). Hub-bridge
+    analysis reveals the structural vulnerabilities and strengths of the conceptual
+    network, showing where fragmentation would occur under pressure.
+  probing_questions:
+  - Which concepts connect the most other concepts?
+  - Which concepts link otherwise isolated clusters of ideas?
+  - What would happen to network connectivity if this concept were removed?
+  - Are there concepts that appear unimportant but whose removal would isolate major
+    argument clusters?
+  - Where are the structural bottlenecks through which inferential traffic must pass?
+  depth_guidance:
+    surface: Identify obviously highly-connected concepts
+    standard: Distinguish hub function from bridge function, map cluster structure
+    deep: Compute betweenness centrality, identify articulation points, analyze community
+      structure
+capabilities:
+- key: centrality_scoring
+  description: Assigns precise centrality scores to concepts based on their structural
+    position in the web of belief.
+  extended_description: |-
+    Every concept in a text occupies a specific position in the inferential network—some at the dense center where many connections converge, others at the sparse periphery where few dependencies exist. This capability computes centrality scores that capture this structural reality, moving beyond intuitive impressions of importance to rigorous topological measurement. The scoring synthesizes multiple centrality metrics: degree centrality (raw connection count), betweenness centrality (position on paths between other concepts), and eigenvector centrality (connection to other central concepts).
+
+    The Quinean insight driving this capability is that centrality is not about frequency of mention or rhetorical emphasis but about structural load-bearing. A concept mentioned only once but presupposed by everything else is more central than a concept discussed extensively but connected to little. The scoring methodology distinguishes structural centrality from salience, revealing the often-unacknowledged concepts that do the real work of holding arguments together. Authors frequently spend their rhetorical energy on peripheral concepts while their truly central commitments go undefended.
+
+    The practical output is a ranked ordering of concepts by centrality tier (core, near-core, intermediate, peripheral, edge) with rationales explaining why each concept occupies its position. This enables readers to identify what they are really committing to when they accept an argument's conclusions and critics to identify the most effective points of leverage for challenging a position.
+  intellectual_grounding:
+    thinker: quine
+    concept: web of belief
+    method: Concepts are scored by their distance from the periphery where experience
+      impinges and by the systemic cost of their revision, operationalizing Quine's
+      image of the web where some beliefs are more central and more resistant to revision
+      than others.
+  indicators:
+  - Concepts that appear in definitions of many other concepts
+  - Concepts that are presupposed but rarely explicitly defended
+  - Concepts whose removal would require rewriting multiple argument chains
+  - Concepts that bridge multiple domains of discussion
+  - Concepts inherited from background assumptions rather than introduced explicitly
+  depth_scaling:
+    surface: Assign basic centrality tiers based on explicit connection patterns
+    standard: Compute multiple centrality metrics and synthesize into comprehensive
+      scores
+    deep: Full network analysis with sensitivity testing for scoring robustness
+  requires_dimensions:
+  - structural_centrality
+  - dependency_architecture
+  produces_dimensions:
+  - structural_centrality
+- key: dependency_chain_tracing
+  description: Maps the complete dependency structure showing what each concept presupposes
+    and what depends on it.
+  extended_description: |-
+    Concepts do not exist in isolation; each presupposes others and serves as the foundation for still others. This capability traces the full dependency architecture, building directed acyclic graphs (or identifying cycles where they exist) that show the layered structure of conceptual commitment. When you accept a concept, you implicitly accept its entire upstream dependency chain; when a concept fails, everything downstream is threatened.
+
+    The methodology distinguishes four types of dependency: definitional (A appears in the definition of B), inferential (B is derived from A), presuppositional (B requires A for its intelligibility), and evidential (A provides warrant for B). Each type has different implications for revision: definitional dependencies are tightest, while evidential dependencies allow more flexibility. The analysis reveals which concepts are foundational (depended upon by many, depending on few) versus derivative (depending on many, depended upon by few) versus intermediate (significant both ways).
+
+    The capability is essential for understanding the true extent of intellectual commitment. Accepting a conclusion means accepting its premises, which means accepting their premises, potentially extending back through long chains of commitment the reader never explicitly endorsed. Making these chains visible is the first step toward genuine intellectual responsibility about what one believes and why.
+  intellectual_grounding:
+    thinker: brandom
+    concept: inferential relationships
+    method: Dependency chains are mapped using the inferentialist principle that conceptual
+      content is constituted by what a concept follows from and what follows from
+      it, revealing the game of giving and asking for reasons implicit in any conceptual
+      commitment.
+  indicators:
+  - Explicit definitions establishing dependency relationships
+  - Phrases like 'given that,' 'assuming,' 'building on'
+  - Concepts introduced only after others have been established
+  - Arguments that would be unintelligible without prior conceptual setup
+  - Circular references where concepts mutually presuppose each other
+  depth_scaling:
+    surface: Trace explicit definitional and inferential dependencies
+    standard: Include implicit presuppositions and map multi-step chains
+    deep: Build complete dependency DAG, identify cycles, compute transitive dependencies
+  requires_dimensions:
+  - dependency_architecture
+  produces_dimensions:
+  - dependency_architecture
+  - revision_dynamics
+- key: removal_impact_analysis
+  description: Simulates the consequences of removing specific concepts to determine
+    their structural importance.
+  extended_description: |-
+    The true test of a concept's centrality is what happens when it is removed. This capability performs systematic removal impact analysis, asking for each concept: if this concept were abandoned, what else would fall? The analysis distinguishes direct effects (concepts immediately dependent on the removed concept) from cascading effects (concepts affected through chains of dependency) and identifies what would survive the removal intact.
+
+    This methodology operationalizes Quine's insight that beliefs face experience not individually but as a corporate body. When evidence challenges a concept, we have choices about where to make adjustments—but not all adjustments are equally disruptive. Removing a peripheral concept produces local ripples; removing a core concept produces systemic collapse. The capability maps these differential impacts, revealing the fault lines along which a belief system would fracture under various pressures.
+
+    The practical value is diagnostic: for authors, understanding which concepts are load-bearing helps focus argumentative effort where it matters most; for critics, understanding removal impact reveals the most effective points of attack; for readers, understanding cascade patterns reveals what they are really committed to defending when they accept conclusions. The analysis also identifies 'keystone concepts' whose removal would fragment the network into disconnected pieces, and 'redundant concepts' whose removal would be absorbed by the system without significant disruption.
+  intellectual_grounding:
+    thinker: lakatos
+    concept: hard core and protective belt
+    method: Removal impact analysis distinguishes Lakatosian hard core concepts (whose
+      removal destroys the research programme) from protective belt concepts (whose
+      removal is absorbed as normal adjustment), mapping the boundary between revision
+      and revolution.
+  indicators:
+  - Concepts appearing in multiple independent argument chains
+  - Concepts presupposed by the text's main conclusions
+  - Concepts whose removal would require finding substitutes
+  - Concepts that unify otherwise disparate parts of the argument
+  - Concepts the author defends most vigorously when challenged
+  depth_scaling:
+    surface: Identify obvious cascade effects for key concepts
+    standard: Systematic removal simulation for all significant concepts
+    deep: Full cascade modeling, identification of minimal destabilizing sets, phase
+      transition analysis
+  requires_dimensions:
+  - dependency_architecture
+  - revision_dynamics
+  produces_dimensions:
+  - revision_dynamics
+- key: hub_bridge_detection
+  description: Identifies concepts that function as network hubs (connecting many
+    concepts) or bridges (linking isolated clusters).
+  extended_description: |-
+    Network topology reveals two structurally distinct types of important concepts: hubs and bridges. Hubs are concepts with unusually high local connectivity—they link directly to many other concepts within their domain. Bridges are concepts that connect otherwise isolated clusters—they may have lower overall connectivity but occupy crucial positions linking separate communities of thought. This capability detects both types and maps their distinct structural roles.
+
+    The hub-bridge distinction has profound implications for understanding intellectual architecture. Hub removal degrades local connectivity but may leave the overall structure intact if alternative paths exist. Bridge removal is more dangerous: it can cleave a unified argument into disconnected fragments that no longer support each other. A text may have prominent hubs that attract attention but depend on less visible bridges for its coherence. Identifying bridges reveals the hidden infrastructure that makes complex arguments possible.
+
+    The capability is particularly valuable for analyzing synthetic works that draw on multiple traditions or address multiple domains. Such works require bridge concepts that translate between frameworks and enable conclusions drawing on diverse sources. These bridges are often the most original contributions of synthetic thinkers but can be the least explicitly defended—their function as bridges makes them seem obvious rather than remarkable, precisely because they successfully connect what was previously disconnected.
+  intellectual_grounding:
+    thinker: burt
+    concept: structural holes
+    method: Applying Ronald Burt's network theory of structural holes—gaps between
+      disconnected clusters that create opportunities for bridging—to conceptual networks,
+      identifying where concepts fill holes and how their removal would recreate fragmentation.
+  indicators:
+  - Concepts referenced from multiple distinct argument clusters
+  - Concepts that appear at transitions between topics
+  - Concepts that translate between different vocabularies or frameworks
+  - Concepts whose removal would partition the argument into isolated pieces
+  - Concepts with high betweenness but moderate degree centrality
+  depth_scaling:
+    surface: Identify obviously highly-connected concepts and major bridges
+    standard: Distinguish hub and bridge functions, map cluster structure
+    deep: Compute betweenness centrality, identify articulation points, full community
+      structure analysis
+  requires_dimensions:
+  - structural_centrality
+  - hub_bridge_topology
+  produces_dimensions:
+  - hub_bridge_topology
+- key: concept_role_tracking
+  description: Tracks how concepts migrate between structural positions across the
+    development of arguments or across multiple works.
+  extended_description: |-
+    Conceptual architecture is not static. As arguments develop, concepts shift position: what begins as a contested claim may become an unquestioned assumption; what starts at the periphery may migrate to the center as its implications unfold; what is initially defined may become a primitive that defines others. This capability tracks these role migrations, revealing the dynamic architecture of intellectual commitment and the strategies authors use—consciously or not—to restructure their conceptual webs.
+
+    Role migration analysis is essential for genealogical work. An author's career often shows characteristic patterns: concepts that start peripheral and become central, concepts that begin defended and end assumed, concepts that migrate from descriptive to normative. These migration patterns reveal intellectual development more reliably than surface-level changes in vocabulary or declared positions. A thinker may appear to change dramatically while maintaining the same deep structural commitments, or appear consistent while fundamentally restructuring their conceptual architecture.
+
+    The capability also reveals strategic ambiguity—cases where a concept's position is deliberately kept uncertain to preserve flexibility. Some concepts function differently depending on context, sometimes as core commitments and sometimes as negotiable positions. Identifying these shape-shifting concepts reveals where an author maintains strategic optionality and where they are firmly committed.
+  intellectual_grounding:
+    thinker: kuhn
+    concept: paradigm shift
+    method: Concept role migration is analyzed through the Kuhnian lens of how normal
+      science gradually shifts conceptual weights until accumulated changes precipitate
+      gestalt shifts where core and periphery exchange places—micro-migrations that
+      aggregate into revolutionary restructuring.
+  indicators:
+  - Concepts introduced with argument that are later used without argument
+  - Concepts that are peripheral in early sections but central to conclusions
+  - Concepts whose definitions shift across the text
+  - Concepts that change from descriptive to normative or vice versa
+  - Concepts treated differently in response to objections
+  depth_scaling:
+    surface: Note obvious shifts in how concepts are treated
+    standard: Systematic tracking of role changes across document structure
+    deep: Full migration trajectory mapping across corpus with pattern identification
+  requires_dimensions:
+  - role_migration
+  - structural_centrality
+  produces_dimensions:
+  - role_migration
+- key: load_bearing_structure_identification
+  description: Identifies coherent structures of mutually supporting concepts that
+    form the architectural framework of arguments.
+  extended_description: |-
+    Beyond individual concept centrality lies the question of structural coherence: which clusters of concepts form integrated load-bearing structures that support larger argumentative edifices? This capability identifies these structures—groups of concepts that mutually reinforce each other and collectively enable major theoretical or argumentative functions. A load-bearing structure is more than the sum of its parts; it is an architectural unit that provides stability through internal coherence.
+
+    The identification methodology looks for clusters of concepts with dense internal connectivity, shared dependency relationships, and collective indispensability. These structures often correspond to what Lakatos called the 'hard core' of a research programme—not a single concept but a constellation of mutually supporting commitments that are defended as a unit. Revision within the structure is absorbed as adjustment; revision of the structure itself constitutes abandonment of the framework.
+
+    Load-bearing structures are vulnerable in distinctive ways. Their internal coherence means they resist piecemeal revision—you cannot remove one member without destabilizing the others. But it also means they can collapse catastrophically if their coherence is disrupted. The capability maps both the strength (what the structure enables) and the vulnerability (what could destabilize it) of each identified structure, providing a comprehensive architectural analysis of the argumentative framework.
+  intellectual_grounding:
+    thinker: lakatos
+    concept: hard core
+    method: Load-bearing structures are identified using the Lakatosian insight that
+      theoretical frameworks have defended cores of interconnected commitments, analyzing
+      which concept clusters function as protected cores versus adjustable auxiliaries.
+  indicators:
+  - Clusters of concepts with dense cross-references
+  - Concepts that are always defended or revised together
+  - Structural units that appear across multiple arguments
+  - Concepts that share dependency patterns
+  - Defensive strategies that protect groups of concepts collectively
+  depth_scaling:
+    surface: Identify obvious conceptual clusters and their functions
+    standard: Map internal structure of clusters and their collective vulnerabilities
+    deep: Full structural analysis of load-bearing units with interdependency mapping
+  requires_dimensions:
+  - structural_centrality
+  - dependency_architecture
+  - hub_bridge_topology
+  produces_dimensions:
+  - hub_bridge_topology
+composability:
+  shares_with:
+    structural_centrality: Provides centrality measures that enrich argument architecture's
+      structural analysis with conceptual topology
+    dependency_architecture: Shares dependency mapping methodology with inferential
+      commitment mapper's commitment tracing
+    hub_bridge_topology: Provides network structure analysis that complements dialectical
+      structure's opposition mapping
+    revision_dynamics: Shares revision propagation analysis with counterfactual analyzer's
+      scenario modeling
+    role_migration: Provides concept trajectory analysis that enriches theory construction
+      analyzer's development tracking
+  consumes_from:
+    conceptual_inventory: from conceptual_framework_extraction — provides the complete
+      inventory of concepts to be analyzed for centrality
+    semantic_relationships: from concept_semantic_constellation — provides semantic
+      proximity and field relationships that inform structural analysis
+    inferential_structure: from inferential_commitment_mapper — provides commitment
+      chains that reveal dependency relationships
+    argument_tree: from argument_architecture — provides hierarchical argument structure
+      that contextualizes concept positions
+  synergy_engines:
+  - inferential_commitment_mapper
+  - conceptual_framework_extraction
+  - argument_architecture
+  - counterfactual_analyzer
+  - theory_construction_analyzer
+depth_levels:
+- key: surface
+  description: Rapid topological overview identifying the most obviously central concepts
+    and major dependency patterns
+  typical_passes: 1
+  suitable_for: Quick assessment of conceptual architecture, triage for deeper analysis,
+    orientation to unfamiliar texts
+  passes:
+  - pass_number: 1
+    label: Topological Survey
+    stance: discovery
+    focus_dimensions:
+    - structural_centrality
+    - hub_bridge_topology
+    focus_capabilities:
+    - centrality_scoring
+    - hub_bridge_detection
+    consumes_from: []
+    description: Initial survey of the conceptual landscape, identifying the most
+      visibly central concepts and obvious hubs and bridges. This pass relies on explicit
+      signals—definitional relationships, stated presuppositions, cross-references—to
+      build a first approximation of the conceptual topology. The output is a rough
+      centrality ranking and identification of the major structural features of the
+      web of belief.
+- key: standard
+  description: Comprehensive centrality analysis including dependency tracing, removal
+    impact simulation, and role migration tracking
+  typical_passes: 2
+  suitable_for: Academic analysis, critical evaluation, understanding argumentative
+    structure and conceptual commitments
+  passes:
+  - pass_number: 1
+    label: Structural Mapping
+    stance: architecture
+    focus_dimensions:
+    - structural_centrality
+    - dependency_architecture
+    - hub_bridge_topology
+    focus_capabilities:
+    - centrality_scoring
+    - dependency_chain_tracing
+    - hub_bridge_detection
+    consumes_from: []
+    description: Comprehensive mapping of the conceptual network structure, computing
+      centrality scores for all significant concepts, tracing dependency chains, and
+      identifying hub and bridge functions. This pass builds the complete topological
+      model of the web of belief, distinguishing structural centrality from frequency
+      and identifying the hidden load-bearing concepts that often escape explicit
+      attention.
+  - pass_number: 2
+    label: Dynamic Analysis
+    stance: inference
+    focus_dimensions:
+    - revision_dynamics
+    - role_migration
+    - empirical_grounding
+    focus_capabilities:
+    - removal_impact_analysis
+    - concept_role_tracking
+    - load_bearing_structure_identification
+    consumes_from:
+    - 1
+    description: 'Building on the structural map, this pass analyzes the dynamic properties
+      of the conceptual architecture: what happens when concepts are removed, how
+      concepts migrate between structural positions, where empirical anchors stabilize
+      the network, and which clusters form integrated load-bearing structures. The
+      output is a complete architectural analysis including vulnerability assessment
+      and stability mapping.'
+- key: deep
+  description: Exhaustive topological analysis with full network metrics, cascade
+    modeling, cross-document synthesis, and genealogical role tracking
+  typical_passes: 4
+  suitable_for: Scholarly research, comprehensive intellectual biography, genealogical
+    analysis of conceptual development
+  passes:
+  - pass_number: 1
+    label: Comprehensive Inventory
+    stance: discovery
+    focus_dimensions:
+    - structural_centrality
+    - dependency_architecture
+    focus_capabilities:
+    - centrality_scoring
+    - dependency_chain_tracing
+    consumes_from: []
+    description: Exhaustive identification of all concepts and their explicit relationships
+      across the corpus. This pass builds the complete node and edge inventory, preparing
+      for rigorous network analysis. Every concept is located and every stated dependency
+      relationship is catalogued, creating the raw material for topological computation.
+  - pass_number: 2
+    label: Network Computation
+    stance: architecture
+    focus_dimensions:
+    - structural_centrality
+    - hub_bridge_topology
+    - empirical_grounding
+    focus_capabilities:
+    - centrality_scoring
+    - hub_bridge_detection
+    consumes_from:
+    - 1
+    description: Rigorous computation of network metrics including degree, betweenness,
+      and eigenvector centrality; community structure detection; articulation point
+      identification; and empirical grounding mapping. This pass transforms the inventory
+      into a fully analyzed network with precise quantitative characterization of
+      each concept's structural position.
+  - pass_number: 3
+    label: Cascade Modeling
+    stance: inference
+    focus_dimensions:
+    - revision_dynamics
+    - dependency_architecture
+    focus_capabilities:
+    - removal_impact_analysis
+    - load_bearing_structure_identification
+    consumes_from:
+    - 1
+    - 2
+    description: Systematic simulation of removal scenarios for all significant concepts,
+      modeling cascade propagation and identifying minimal destabilizing sets—the
+      smallest groups of concepts whose removal would collapse the network. This pass
+      identifies phase transitions in belief structure, tipping points where small
+      changes produce large effects, and the fault lines along which the system would
+      fracture under pressure.
+  - pass_number: 4
+    label: Genealogical Synthesis
+    stance: integration
+    focus_dimensions:
+    - role_migration
+    - structural_centrality
+    - hub_bridge_topology
+    focus_capabilities:
+    - concept_role_tracking
+    - centrality_scoring
+    - hub_bridge_detection
+    consumes_from:
+    - 1
+    - 2
+    - 3
+    description: Cross-document synthesis tracking how conceptual centrality evolves
+      across the corpus, identifying characteristic migration patterns, stable core
+      commitments that persist beneath surface changes, and structural transformations
+      that mark genuine intellectual development. This pass produces the genealogical
+      dimension of the analysis, revealing the deep continuities and discontinuities
+      in conceptual architecture over time.
+apps:
+- critic
+function: logic
+paradigm_keys: []

@@ -1,0 +1,671 @@
+engine_key: counterfactual_analyzer
+engine_name: Counterfactual Analyzer
+version: 1
+category: methodology
+kind: synthesis
+problematique: |-
+  Every causal claim harbors a hidden counterfactual. When we say 'the assassination caused the war,' we implicitly assert 'had there been no assassination, there would have been no war.' This counterfactual backbone is the skeleton of causation itself—yet it remains largely invisible to both authors and readers. The problem is not merely academic: policy debates hinge on counterfactual claims ('sanctions would have worked'), historical judgments rest on them ('appeasement caused the war'), and moral responsibility depends on them ('you could have acted otherwise'). Yet these 'what if' claims are rarely subjected to the rigorous scrutiny they demand. They float free, untethered to any methodology, immune to criticism because their very structure remains unexamined.
+
+  What most arguments conceal is the precise possible world being invoked. When someone claims 'if Napoleon had won at Waterloo, Europe would have remained under French hegemony,' they are not merely speculating—they are implicitly claiming that the closest possible world where Napoleon wins is one where French hegemony persists. But is it? What other changes does Napoleon's victory require? What miracle must occur to get him that victory? Does the author hold fixed what should change, or change what should be held fixed? The minimal rewrite principle—the requirement that we change only what is necessary to make the antecedent true—is violated constantly, allowing authors to smuggle in convenient additional changes that stack the deck toward their preferred conclusions. Worse still, authors slide between backtracking readings (where we revise the past to get the antecedent) and non-backtracking readings (where we hold the past fixed until a miraculous intervention) whenever it suits their argument, a form of counterfactual abuse that renders their reasoning incoherent.
+
+  The philosophical foundations run deep. David Lewis's possible worlds semantics provides the formal architecture: counterfactuals are true when the consequent holds in the closest possible worlds where the antecedent is true, with 'closeness' determined by a similarity ordering that prioritizes avoiding large miracles, maximizing regions of perfect match with actuality, and then avoiding small miracles. Nelson Goodman's cotenability problem reveals the challenge of determining what can be held fixed alongside a counterfactual supposition. Max Weber's concept of objective possibility and adequate causation grounds historical counterfactuals in nomological regularity. Richard Lebow and Philip Tetlock have developed rigorous criteria for evaluating historical counterfactuals, distinguishing responsible thought experiments from mere speculation. This engine synthesizes these traditions into a unified methodology for dissecting 'what if' reasoning.
+
+  Within the logic suite, this engine occupies a distinctive position. Where argument_architecture maps the structure of actual claims and dialectical_structure traces how positions evolve through challenge, this engine examines the modal scaffolding that supports causal inference. It connects naturally to modal_reasoning_analyzer (counterfactuals are a species of modal claim), to inferential_commitment_mapper (counterfactual commitments entail further commitments), and to epistemological_method_detector (counterfactual methodology is a form of evidential reasoning about unobserved scenarios). The engine reveals that much apparently factual historical or causal reasoning is, at bottom, modal reasoning in disguise—claims about what would, could, or must have happened under conditions that did not obtain.
+
+  Commitment to counterfactual discipline matters because sloppy counterfactual reasoning is not merely an intellectual failing but a practical danger. Wars are justified by claims about what adversaries 'would have done'; policies are defended by assertions about what 'would have happened' without intervention; blame is assigned based on claims about what agents 'could have done otherwise.' When these counterfactuals are constructed carelessly—invoking distant possible worlds, violating minimal rewrite, exploiting butterfly effects in one direction while ignoring them in another—the resulting judgments are not just wrong but systematically biased in favor of whatever conclusion the reasoner desires. This engine provides the tools to detect and expose such abuse, transforming counterfactual reasoning from rhetorical weapon into disciplined methodology.
+researcher_question: What counterfactual claims are being made, do they follow sound
+  methodology, and what do they actually establish about causation?
+intellectual_lineage:
+  primary:
+    name: lewis
+    description: 'David Lewis (1941–2001), American philosopher whose possible worlds
+      semantics for counterfactuals revolutionized modal logic and the philosophy
+      of causation. His analysis holds that a counterfactual ''if A had been the case,
+      C would have been the case'' is true just in case C holds in all the closest
+      possible worlds where A holds, with closeness determined by a similarity ordering
+      that prioritizes avoiding large miracles, maximizing perfect match with actuality,
+      and avoiding small miracles. Lewis''s framework provides this engine''s foundational
+      architecture: the concepts of minimal rewrite, similarity ordering, miracle
+      requirements, and the distinction between backtracking and non-backtracking
+      readings that structure every counterfactual analysis.'
+  secondary:
+  - name: stalnaker
+    description: Robert Stalnaker (1940–), American philosopher who developed a parallel
+      possible worlds semantics for conditionals that emphasizes the selection function
+      picking out the single closest antecedent-world. His work on pragmatic presupposition
+      and context-dependence in counterfactual evaluation complements Lewis's approach,
+      highlighting how the same counterfactual sentence can express different propositions
+      depending on what is held fixed in the conversational context.
+  - name: goodman
+    description: 'Nelson Goodman (1906–1998), American philosopher whose work on counterfactuals
+      in ''Fact, Fiction, and Forecast'' identified the cotenability problem: we cannot
+      simply hold fixed everything compatible with the antecedent, because some truths
+      are only true because the antecedent is false. His analysis revealed the deep
+      difficulties in specifying what remains constant under counterfactual supposition,
+      a problem this engine addresses through explicit cotenability constraint analysis.'
+  - name: weber
+    description: Max Weber (1864–1920), German sociologist whose methodology of objective
+      possibility and adequate causation provided foundational tools for historical
+      counterfactual reasoning. Weber argued that causal attribution requires showing
+      both that the cause was nomologically capable of producing the effect and that,
+      according to rules of experience, it would have been likely to do so—criteria
+      this engine applies through its plausibility assessment framework.
+  - name: lebow
+    description: Richard Ned Lebow (1942–), American political scientist whose work
+      on historical counterfactuals established rigorous criteria for responsible
+      'what if' reasoning. His requirements that antecedents be clearly specified,
+      consistent with historical context, connected to defensible causal theories,
+      and capable of supporting plausible consequence projection form core components
+      of this engine's plausibility evaluation methodology.
+  - name: tetlock
+    description: Philip Tetlock (1954–), American psychologist whose research on expert
+      political judgment and counterfactual thought experiments identified the conditions
+      under which counterfactual reasoning can be disciplined rather than speculative.
+      His emphasis on well-specified antecedents, avoidance of runaway butterfly effects,
+      and the possibility of expert convergence provides this engine's criteria for
+      thought experiment quality.
+  traditions:
+  - name: possible_worlds_semantics
+    description: 'The tradition in modal logic and philosophy of language that analyzes
+      modal and counterfactual claims in terms of quantification over possible worlds—complete
+      ways things might have been. This framework provides the ontological basis for
+      counterfactual evaluation: asking what would have happened is asking what happens
+      in the closest worlds where the antecedent obtains.'
+  - name: causal_inference_tradition
+    description: The interdisciplinary tradition spanning philosophy, statistics,
+      and social science that grounds causal claims in counterfactual analysis. From
+      Hume's regularity theory through Lewis's counterfactual theory of causation
+      to Pearl's structural causal models, this tradition establishes that 'A caused
+      B' fundamentally means 'if A had not occurred, B would not have occurred.'
+  - name: historical_methodology
+    description: The tradition of methodological reflection on historical explanation,
+      from Weber through Carr, Fischer, and contemporary philosophers of history.
+      This tradition grapples with how historians can make justified causal claims
+      about unique events, developing criteria for responsible counterfactual reasoning
+      that avoids both excessive determinism and unbounded speculation.
+  - name: thought_experiment_methodology
+    description: The philosophical tradition examining how hypothetical scenarios
+      can generate genuine knowledge, from Galileo's falling bodies through Einstein's
+      elevators to contemporary philosophical puzzles. This tradition asks when and
+      how reasoning about non-actual situations can reveal truths about actual causal
+      and modal structures.
+  - name: modal_epistemology
+    description: The philosophical inquiry into how we can have knowledge of possibilities
+      and necessities—things that might have been otherwise or could not have been
+      otherwise. This tradition grounds the epistemic status of counterfactual judgments,
+      asking what warrants claims about unactualized scenarios.
+  - name: pragmatic_theories_of_explanation
+    description: The tradition holding that explanation is interest-relative and context-dependent,
+      from van Fraassen's pragmatic theory through contemporary contrastive approaches.
+      This framework reveals how the same event can be explained by different causes
+      depending on what contrast class is relevant, directly shaping which counterfactuals
+      are appropriate to evaluate.
+  key_concepts:
+  - name: minimal_rewrite_principle
+    definition: The requirement that the closest possible world where a counterfactual
+      antecedent holds should differ from the actual world only in what is necessary
+      to make the antecedent true plus its lawful consequences. Violations of this
+      principle—changing more than necessary—allow authors to smuggle in convenient
+      additional changes that bias their conclusions.
+  - name: similarity_ordering
+    definition: 'Lewis''s hierarchical criteria for ranking possible worlds by their
+      closeness to actuality: first avoid large miracles (widespread violations of
+      natural law), then maximize the spatiotemporal region of perfect match with
+      the actual world, then avoid small miracles, then approximate similarity of
+      particular facts. This ordering determines which possible world is relevant
+      for evaluating any given counterfactual.'
+  - name: backtracking_counterfactual
+    definition: A counterfactual reading that traces backward from the antecedent
+      to revise earlier history in order to make the antecedent true in a natural,
+      non-miraculous way. Contrasted with non-backtracking readings that hold the
+      past fixed and introduce a localized miracle at the antecedent time. The distinction
+      is crucial because the two readings yield different truth-values for the same
+      counterfactual sentence.
+  - name: cotenability
+    definition: Goodman's term for the property a proposition must have to be legitimately
+      held fixed alongside a counterfactual antecedent. The cotenability problem arises
+      because we cannot hold fixed everything true—some truths depend on the antecedent
+      being false. Determining the scope of legitimate ceteris paribus is a core challenge
+      in counterfactual evaluation.
+  - name: miracle
+    definition: 'Lewis''s term for a violation of natural law required to make a counterfactual
+      antecedent true. Miracles are ranked by size: a small miracle might be a single
+      neuron firing differently; a large miracle might require suspending laws of
+      physics across wide regions. The smallest miracle sufficient to produce the
+      antecedent yields the closest possible world.'
+  - name: overdetermination
+    definition: The situation where an effect has multiple independently sufficient
+      causes, breaking simple counterfactual dependence. If both assassin A and assassin
+      B fired, and either shot alone would have been fatal, then the victim's death
+      does not counterfactually depend on A's shot alone—complicating causal attribution.
+  - name: preemption
+    definition: The situation where an actual cause preempts a backup cause that would
+      have produced the same effect. The backup's presence means the effect does not
+      counterfactually depend on the actual cause (it would have happened anyway),
+      yet intuition attributes causation to the actual cause. Preemption cases reveal
+      limits of simple counterfactual theories of causation.
+  - name: butterfly_effect
+    definition: The phenomenon where small changes in initial conditions produce large,
+      unpredictable consequences over time due to sensitive dependence in complex
+      systems. In counterfactual reasoning, butterfly effects can either be exploited
+      (tracing only favorable consequence chains) or used to dismiss counterfactuals
+      as inherently speculative. Disciplined counterfactual methodology requires acknowledging
+      butterfly effects symmetrically.
+analytical_dimensions:
+- key: possible_world_specification
+  description: The precision and justification with which the counterfactual's target
+    possible world is characterized. This dimension examines whether the invoked world
+    is genuinely the closest one where the antecedent holds, or whether a conveniently
+    distant world has been cherry-picked to yield the desired conclusion.
+  probing_questions:
+  - What exactly is the possible world being invoked—what are its key features beyond
+    the antecedent?
+  - Is this genuinely the closest possible world where the antecedent holds, or has
+    a convenient but distant world been selected?
+  - What features of the actual world are preserved in this possible world, and what
+    features change?
+  - Does the author make the invoked world explicit, or must it be reconstructed from
+    context?
+  - Are alternative possible worlds considered, or is only one scenario entertained?
+  depth_guidance:
+    surface: Identify the basic scenario being imagined and note whether it is explicitly
+      described.
+    standard: Reconstruct the key features of the invoked possible world, assess whether
+      it is plausibly the closest world, and identify what changes beyond the antecedent.
+    deep: Map the full structure of the invoked world against Lewis's similarity criteria,
+      compare to alternative candidates for closest world, and evaluate whether world
+      selection is principled or strategic.
+- key: minimal_rewrite_compliance
+  description: The degree to which the counterfactual adheres to the requirement of
+    changing only what is necessary to make the antecedent true. This dimension detects
+    whether additional changes have been smuggled in that bias the analysis toward
+    preferred conclusions.
+  probing_questions:
+  - Does the counterfactual change only what is required to make the antecedent true?
+  - What additional changes beyond the antecedent are assumed, and are they necessary
+    consequences or smuggled additions?
+  - Does the scenario stack multiple changes that jointly favor a particular conclusion?
+  - Would the consequent still follow if we made the minimal change rather than the
+    author's expanded change?
+  - Is the author aware of how much they are changing, or do they treat a complex
+    rewrite as if it were simple?
+  depth_guidance:
+    surface: Note whether the counterfactual appears to involve changes beyond its
+      stated antecedent.
+    standard: Itemize all changes assumed in the counterfactual scenario, distinguish
+      necessary from smuggled changes, and assess impact on the consequent.
+    deep: Construct the true minimal rewrite, compare to the author's implicit rewrite,
+      trace how each non-minimal change affects the consequent, and evaluate whether
+      violations are innocent or strategic.
+- key: causal_chain_integrity
+  description: The quality of the inferential pathway from antecedent to consequent.
+    This dimension examines each link in the causal chain, assessing whether mechanisms
+    are specified, whether confidence is justified, and whether obvious obstacles
+    are assumed away.
+  probing_questions:
+  - What are the intermediate steps between antecedent and consequent?
+  - Is each causal link supported by mechanism specification or merely assumed?
+  - Are there obvious obstacles or alternative pathways the analysis ignores?
+  - Does the chain involve probabilistic links treated as certainties?
+  - At what point does the chain become speculative rather than grounded?
+  depth_guidance:
+    surface: Identify whether any causal pathway is articulated or whether the consequent
+      is simply asserted to follow.
+    standard: Map the explicit causal chain, assess confidence at each link, and identify
+      gaps or assumed-away obstacles.
+    deep: Reconstruct the full causal network including branching pathways, assign
+      probability estimates to each link, trace how uncertainty compounds through
+      the chain, and identify where the analysis assumes away the most plausible alternative
+      outcomes.
+- key: backtracking_coherence
+  description: The consistency with which the counterfactual maintains either a backtracking
+    or non-backtracking reading. This dimension detects the common abuse of sliding
+    between readings mid-argument to avoid inconvenient implications.
+  probing_questions:
+  - Is this a backtracking counterfactual (revising earlier history) or non-backtracking
+    (holding the past fixed until a miracle)?
+  - Does the argument maintain its chosen reading consistently, or does it shift between
+    readings?
+  - If backtracking, how far back does the revision extend, and what earlier changes
+    are required?
+  - If non-backtracking, what kind of miracle is required and how localized is it?
+  - Would the argument work if forced to maintain a single consistent reading throughout?
+  depth_guidance:
+    surface: Determine whether the counterfactual is backtracking or non-backtracking
+      based on surface features.
+    standard: Trace the reading through the entire argument, flag any shifts, and
+      assess whether shifts are acknowledged or hidden.
+    deep: Reconstruct the argument under strict backtracking and strict non-backtracking
+      readings separately, compare conclusions, and diagnose whether the author's
+      actual argument depends on illegitimate reading shifts.
+- key: historical_plausibility
+  description: The degree to which historical counterfactuals meet the criteria established
+    by Lebow, Tetlock, and Weber for responsible historical speculation. This dimension
+    assesses whether antecedents are well-specified, historically grounded, and capable
+    of supporting defensible consequence projection.
+  probing_questions:
+  - Is the antecedent clearly and precisely specified?
+  - Is the antecedent consistent with the historical context—actors' beliefs, available
+    options, technological constraints?
+  - Does the counterfactual connect to a defensible causal theory with empirical support?
+  - Can consequences be projected with reasonable confidence, or does butterfly-effect
+    sensitivity undermine projection?
+  - Would experts in the relevant domain converge on similar evaluations of this counterfactual?
+  depth_guidance:
+    surface: Assess whether the counterfactual passes basic plausibility checks for
+      historical or policy analysis.
+    standard: Apply Lebow's and Tetlock's criteria systematically, identifying specific
+      failures and their severity.
+    deep: Evaluate the counterfactual against Weber's objective possibility criteria,
+      assess nomological possibility and adequate causation, and determine whether
+      the counterfactual constitutes legitimate historical methodology or mere speculation.
+- key: counterfactual_abuse_detection
+  description: The identification of specific rhetorical and logical abuses in counterfactual
+    reasoning. This dimension catalogs patterns like cherry-picking worlds, butterfly
+    exploitation, miracle hiding, backtracking slides, and false precision claims.
+  probing_questions:
+  - Does the argument cherry-pick a convenient but distant possible world rather than
+    the closest one?
+  - Does the analysis trace butterfly effects in one direction (toward desired conclusions)
+    while ignoring them in other directions?
+  - Are the miracles required for the antecedent acknowledged or hidden?
+  - Does the argument slide between backtracking and non-backtracking readings?
+  - Does the argument claim false precision about inherently uncertain counterfactual
+    outcomes?
+  depth_guidance:
+    surface: Flag obvious instances of counterfactual abuse when they appear.
+    standard: Systematically check for each abuse pattern, document instances with
+      textual evidence, and assess severity.
+    deep: Diagnose the structural sources of abuse, determine whether abuse is strategic
+      or inadvertent, reconstruct what the argument would look like if abuse were
+      corrected, and assess whether any substantive conclusion survives correction.
+capabilities:
+- key: counterfactual_decomposition
+  description: Identifies counterfactual claims (explicit and implicit), decomposes
+    them into antecedents and consequents, and classifies their structural type.
+  extended_description: |-
+    Every causal argument contains counterfactual commitments, but these commitments often hide beneath surface formulations. The claim 'smoking causes cancer' commits its asserter to the counterfactual 'if this person had not smoked, they would not have developed cancer (or would have been less likely to).' This capability surfaces these hidden commitments, making them available for scrutiny.
+
+    The decomposition process separates the antecedent (what is supposed contrary to fact) from the consequent (what is claimed to follow). This separation is crucial because different antecedent types—event deletions, insertions, property changes, timing changes, actor substitutions, decision reversals—have different logical properties and require different evaluation methods. An event deletion ('if the assassination had not occurred') raises different issues than an actor substitution ('if Churchill rather than Chamberlain had been Prime Minister').
+
+    The capability also distinguishes explicit counterfactuals (those using conditional grammar) from implicit ones (causal claims that entail counterfactual commitments without stating them). This distinction matters because implicit counterfactuals often escape the scrutiny that explicit ones would receive, allowing authors to make strong causal claims without defending their counterfactual presuppositions.
+  intellectual_grounding:
+    thinker: Lewis
+    concept: Counterfactual conditional
+    method: Formal decomposition of 'if...then' claims into antecedent and consequent
+      components, with classification by the type of change the antecedent requires
+      relative to actuality.
+  indicators:
+  - Conditional constructions using 'if...had...would'
+  - Causal claims using 'caused,' 'led to,' 'resulted in,' 'prevented'
+  - 'Modal language suggesting alternatives: ''could have,'' ''might have,'' ''would
+    have'''
+  - Speculative scenarios introduced by 'suppose,' 'imagine,' 'consider what would
+    happen if'
+  - Blame or credit attributions that presuppose counterfactual alternatives
+  depth_scaling:
+    surface: Identify explicit counterfactuals and extract their basic antecedent-consequent
+      structure.
+    standard: Surface both explicit and implicit counterfactuals, classify antecedent
+      types, and note rhetorical function in argument.
+    deep: Exhaustively catalog all counterfactual commitments including those deeply
+      embedded in causal claims, construct formal representations, and trace how multiple
+      counterfactuals interrelate.
+  requires_dimensions: []
+  produces_dimensions:
+  - possible_world_specification
+  - minimal_rewrite_compliance
+- key: possible_world_evaluation
+  description: Identifies the possible world invoked by a counterfactual, applies
+    Lewis's similarity ordering, and assesses whether it is genuinely the closest
+    world where the antecedent holds.
+  extended_description: |-
+    The truth of a counterfactual depends entirely on what happens in the closest possible worlds where its antecedent is true. But authors rarely make explicit which possible world they are invoking—the world remains implicit, reconstructible only from the consequences they claim would follow. This capability makes the invoked world explicit and subjects the implicit world-selection to critical scrutiny.
+
+    Lewis's similarity ordering provides the evaluation criteria. The closest world is the one that: (1) avoids large-scale violations of natural law, (2) maximizes the spatiotemporal region of perfect match with actuality up to the divergence point, (3) avoids small-scale law violations where possible, and (4) approximates particular facts of the actual world. When an author's claimed consequences only follow in a world that ranks poorly on these criteria, they have not established their counterfactual—they have merely shown what would happen in a distant, relatively irrelevant world.
+
+    This capability also detects world cherry-picking: the selection of a convenient but distant world because it yields desired conclusions. The discipline of possible world evaluation forces authors to earn their counterfactual conclusions by defending their implicit world-selection rather than simply asserting that things would have turned out as they claim.
+  intellectual_grounding:
+    thinker: Lewis
+    concept: Similarity ordering on possible worlds
+    method: Application of Lewis's four-factor hierarchy for ranking worlds by closeness
+      to actuality, with critical assessment of whether the author's implicit world-selection
+      satisfies these criteria.
+  indicators:
+  - Claims about what 'would have' happened without specification of intervening mechanisms
+  - Confident assertions about counterfactual outcomes in complex scenarios
+  - Invocation of alternative histories without discussion of how those histories
+    arise
+  - Dismissal of alternative scenarios as implausible without argument
+  - Selective attention to some consequences while ignoring others
+  depth_scaling:
+    surface: Identify the basic scenario being invoked and note obvious departures
+      from minimal change.
+    standard: Reconstruct the invoked world's key features, apply Lewis's criteria,
+      and assess whether it is plausibly closest.
+    deep: Map the full similarity structure, identify alternative candidate closest
+      worlds, compare their ranking on Lewis's criteria, and diagnose whether the
+      author's selection is principled or strategic.
+  requires_dimensions:
+  - possible_world_specification
+  produces_dimensions:
+  - possible_world_specification
+  - minimal_rewrite_compliance
+- key: causal_chain_tracing
+  description: Maps the inferential pathway from counterfactual antecedent to consequent,
+    assessing each link's mechanism, confidence level, and vulnerability to alternative
+    pathways.
+  extended_description: |-
+    Between 'if the assassination had not occurred' and 'the war would not have happened' lies an enormous inferential gulf. The counterfactual's plausibility depends entirely on what fills that gulf—the causal chain connecting antecedent to consequent. This capability makes that chain explicit, link by link, exposing where mechanisms are specified, where they are merely assumed, and where the chain breaks down.
+
+    Each link in a causal chain has a confidence level that can range from near-certainty (governed by well-understood physical laws) to pure speculation (dependent on contingent human decisions in novel circumstances). Counterfactual reasoning is only as strong as its weakest link, and uncertainty compounds through the chain. A five-link chain where each link has 80% confidence yields only 33% confidence in the overall connection—yet authors routinely treat such chains as establishing their conclusions with certainty.
+
+    The capability also identifies assumed-away obstacles: the obvious alternative pathways or interfering factors that the analysis ignores. When an author claims that without event A, outcome B would not have occurred, they often implicitly assume that no other pathway to B existed and that nothing would have interfered with the A-to-B pathway. These assumptions frequently cannot survive scrutiny, revealing that the counterfactual's consequent is far less certain than presented.
+  intellectual_grounding:
+    thinker: Weber
+    concept: Adequate causation
+    method: Systematic tracing of causal pathways with assessment of whether each
+      link represents adequate causation—whether, according to rules of experience,
+      the cause would have been likely to produce the effect.
+  indicators:
+  - Causal claims that skip from antecedent to distant consequent without intermediate
+    steps
+  - Use of 'inevitably,' 'necessarily,' or 'certainly' in describing counterfactual
+    outcomes
+  - Failure to consider alternative pathways to the same outcome
+  - Assumption that historical actors would have behaved predictably in novel circumstances
+  - Treatment of probabilistic connections as deterministic
+  depth_scaling:
+    surface: Identify whether any causal pathway is articulated or whether the consequent
+      is simply asserted.
+    standard: Map the explicit chain, assess confidence at each link, identify obvious
+      gaps and ignored alternatives.
+    deep: Reconstruct the full causal network including branching pathways, assign
+      probability estimates, trace uncertainty propagation, and identify where the
+      analysis assumes away the most plausible alternatives.
+  requires_dimensions:
+  - possible_world_specification
+  - minimal_rewrite_compliance
+  produces_dimensions:
+  - causal_chain_integrity
+- key: backtracking_analysis
+  description: Determines whether counterfactuals receive backtracking or non-backtracking
+    readings and detects mid-argument slides between readings.
+  extended_description: |-
+    The same counterfactual sentence can express two very different propositions depending on whether it receives a backtracking or non-backtracking reading. Consider 'if Nixon had pressed the button, nuclear war would have occurred.' On a non-backtracking reading, we hold the past fixed up to the moment of decision, introduce a small miracle that makes Nixon press the button, and trace forward. On a backtracking reading, we ask what earlier changes would have led Nixon to press the button, revise the past accordingly, and trace forward from that revised history. The two readings can yield opposite truth-values.
+
+    Lewis's standard semantics prefers non-backtracking readings because backtracking threatens to revise history arbitrarily far back, eventually changing so much that the scenario becomes irrelevant to evaluating actual causal relationships. However, some contexts legitimately require backtracking—particularly when we ask what would have happened if an agent had had different character traits or beliefs, which themselves have historical causes.
+
+    The most serious abuse occurs when authors slide between readings mid-argument, using whichever reading yields the locally convenient conclusion. This capability detects such slides, forcing arguments to maintain reading consistency. It also assesses whether the chosen reading is appropriate to the counterfactual's purpose and context.
+  intellectual_grounding:
+    thinker: Lewis
+    concept: Backtracking vs. non-backtracking counterfactuals
+    method: Classification of readings based on whether the analysis revises history
+      prior to the antecedent time or holds it fixed until a localized miracle, with
+      detection of illegitimate mid-argument shifts.
+  indicators:
+  - Counterfactuals about agents' decisions or character traits
+  - Appeals to what earlier events 'would have had to' occur for the antecedent to
+    obtain
+  - Inconsistent treatment of historical fixity at different points in the argument
+  - Claims that combine forward-looking confidence with backward-looking revision
+  - Scenarios that require changes in an agent's entire developmental history
+  depth_scaling:
+    surface: Classify the counterfactual as backtracking or non-backtracking based
+      on surface features.
+    standard: Trace the reading through the argument, flag shifts, assess whether
+      shifts are acknowledged.
+    deep: Reconstruct the argument under strict backtracking and non-backtracking
+      readings separately, compare conclusions, diagnose whether the actual argument
+      depends on illegitimate shifts.
+  requires_dimensions:
+  - possible_world_specification
+  produces_dimensions:
+  - backtracking_coherence
+- key: plausibility_assessment
+  description: Evaluates counterfactuals against Lebow's, Tetlock's, and Weber's criteria
+    for historical and methodological plausibility.
+  extended_description: |-
+    Not all counterfactuals are created equal. Some represent disciplined thought experiments that can generate genuine insight into causal structures; others are mere speculation dressed in scholarly garb. The methodological literature has developed rigorous criteria for distinguishing responsible from irresponsible counterfactual reasoning, and this capability applies those criteria systematically.
+
+    Lebow's criteria require that counterfactual antecedents be clearly specified (not vague), consistent with the historical context (actors' beliefs, available technologies, institutional constraints), connected to defensible causal theories (not ad hoc mechanisms), and capable of supporting plausible consequence projection. Tetlock's criteria emphasize that well-formed counterfactuals should have antecedents that experts can evaluate, should avoid runaway butterfly effects that make projection impossible, and should be capable of supporting expert convergence rather than endless disagreement.
+
+    Weber's objective possibility standard asks whether the antecedent is nomologically possible (consistent with natural law) and whether the claimed consequent represents adequate causation—whether, according to general rules of experience, the antecedent would have been likely to produce the consequent. This capability synthesizes these frameworks into a unified plausibility evaluation that distinguishes serious counterfactual methodology from casual speculation.
+  intellectual_grounding:
+    thinker: Lebow
+    concept: Historical counterfactual methodology
+    method: 'Application of explicit criteria for responsible counterfactual reasoning:
+      specificity, historical consistency, theoretical grounding, and projective capacity.'
+  indicators:
+  - Vague antecedents ('if things had been different')
+  - Anachronistic assumptions about what historical actors could have known or done
+  - Claims disconnected from any theoretical framework about how causes operate
+  - Confident projection in situations of extreme complexity or sensitivity
+  - Counterfactuals that serious experts would evaluate very differently
+  depth_scaling:
+    surface: Assess whether the counterfactual passes basic plausibility requirements.
+    standard: Apply Lebow's and Tetlock's criteria systematically, documenting specific
+      failures.
+    deep: Evaluate against Weber's objective possibility, assess nomological status,
+      determine whether the counterfactual constitutes legitimate methodology or speculation.
+  requires_dimensions:
+  - possible_world_specification
+  - causal_chain_integrity
+  produces_dimensions:
+  - historical_plausibility
+- key: abuse_pattern_detection
+  description: Identifies and catalogs specific patterns of counterfactual abuse including
+    world cherry-picking, butterfly exploitation, miracle hiding, backtracking slides,
+    and false precision.
+  extended_description: |-
+    Counterfactual reasoning offers extraordinary rhetorical power: it allows authors to argue from scenarios that never occurred and can never be directly tested. This power invites abuse. Systematic patterns of counterfactual abuse have been identified, and this capability provides the diagnostic tools to detect them.
+
+    World cherry-picking occurs when authors invoke distant possible worlds because those worlds yield desired conclusions, ignoring closer worlds with different outcomes. Butterfly exploitation traces sensitive-dependence effects in one direction (toward desired conclusions) while ignoring equally valid butterfly effects in other directions. Miracle hiding fails to acknowledge the law violations required to make antecedents true, treating impossible scenarios as if they were merely improbable. Backtracking slides switch between readings to avoid inconvenient implications. False precision claims certainty about counterfactual outcomes that are inherently uncertain.
+
+    Diagnosing these abuses requires distinguishing strategic manipulation from innocent error. Sometimes authors violate counterfactual methodology inadvertently, unaware of the standards their reasoning should meet. Sometimes violations are strategic, serving rhetorical goals at the expense of intellectual honesty. This capability identifies not only that abuse has occurred but what kind, how severe, and whether it appears innocent or strategic.
+  intellectual_grounding:
+    thinker: Tetlock
+    concept: Thought experiment quality
+    method: Systematic cataloging of ways counterfactual reasoning can go wrong, with
+      diagnosis of whether violations are inadvertent or strategic and assessment
+      of how conclusions would change if abuse were corrected.
+  indicators:
+  - Conclusions that depend on a specific non-minimal rewrite
+  - Asymmetric treatment of uncertainty in different parts of the analysis
+  - Failure to acknowledge what must be assumed for the counterfactual to work
+  - Reading shifts at convenient points in the argument
+  - Claims of certainty in inherently uncertain scenarios
+  depth_scaling:
+    surface: Flag obvious instances of abuse when detected.
+    standard: Check systematically for each abuse pattern, document instances with
+      textual evidence, assess severity.
+    deep: Diagnose structural sources of abuse, determine whether strategic or inadvertent,
+      reconstruct what the argument would look like without abuse, assess whether
+      conclusions survive correction.
+  requires_dimensions:
+  - possible_world_specification
+  - minimal_rewrite_compliance
+  - backtracking_coherence
+  - causal_chain_integrity
+  produces_dimensions:
+  - counterfactual_abuse_detection
+composability:
+  shares_with:
+    possible_world_specification: Shares with modal_reasoning_analyzer which examines
+      necessity and possibility claims through possible worlds semantics.
+    causal_chain_integrity: Shares with argument_architecture which traces inferential
+      pathways and with theory_construction_analyzer which maps causal theories.
+    backtracking_coherence: Contributes to dialectical_structure by revealing how
+      counterfactual readings shift through argumentative exchange.
+    historical_plausibility: Shares with epistemological_method_detector which assesses
+      methodological rigor in knowledge claims.
+    counterfactual_abuse_detection: Contributes to inferential_commitment_mapper by
+      revealing hidden commitments authors make through counterfactual claims.
+  consumes_from:
+    argument_structure: From argument_architecture — the claim-premise structure within
+      which counterfactuals operate.
+    conceptual_framework: From conceptual_framework_extraction — the theoretical vocabulary
+      that shapes what counterfactuals can be imagined.
+    semantic_field_mapping: From concept_semantic_constellation — the conceptual relationships
+      that constrain counterfactual reasoning.
+    modal_claim_inventory: From modal_reasoning_analyzer — the broader modal context
+      in which counterfactuals appear.
+  synergy_engines:
+  - modal_reasoning_analyzer
+  - argument_architecture
+  - inferential_commitment_mapper
+  - epistemological_method_detector
+  - theory_construction_analyzer
+depth_levels:
+- key: surface
+  description: Quick identification of counterfactual claims and basic structural
+    decomposition. Suitable for rapid screening or when counterfactuals are peripheral
+    to the main analysis.
+  typical_passes: 1
+  suitable_for: Initial screening, texts where counterfactuals play a minor role,
+    rapid triage
+  passes:
+  - pass_number: 1
+    label: Counterfactual Identification
+    stance: discovery
+    focus_dimensions:
+    - possible_world_specification
+    - minimal_rewrite_compliance
+    focus_capabilities:
+    - counterfactual_decomposition
+    consumes_from: []
+    description: Scan the text for explicit counterfactual claims and obvious implicit
+      ones embedded in causal assertions. Extract basic antecedent-consequent structure,
+      classify antecedent types, and note the rhetorical function of each counterfactual
+      in the overall argument. Flag counterfactuals that warrant deeper analysis without
+      conducting that analysis yet.
+- key: standard
+  description: Systematic evaluation of counterfactual methodology including possible
+    world assessment, causal chain tracing, and basic plausibility checking. Appropriate
+    for most analytical contexts.
+  typical_passes: 2
+  suitable_for: Standard critical analysis, review of historical or policy arguments,
+    assessment of causal claims
+  passes:
+  - pass_number: 1
+    label: Structural Decomposition
+    stance: discovery
+    focus_dimensions:
+    - possible_world_specification
+    - minimal_rewrite_compliance
+    - causal_chain_integrity
+    focus_capabilities:
+    - counterfactual_decomposition
+    - possible_world_evaluation
+    - causal_chain_tracing
+    consumes_from: []
+    description: Identify all counterfactual claims including implicit ones, decompose
+      into antecedent-consequent structure, classify antecedent types, and identify
+      the possible world being invoked. Begin assessing minimal rewrite compliance
+      by noting changes beyond the stated antecedent. Map the basic causal chain from
+      antecedent to consequent, identifying major links and obvious gaps.
+  - pass_number: 2
+    label: Methodological Evaluation
+    stance: confrontation
+    focus_dimensions:
+    - backtracking_coherence
+    - historical_plausibility
+    - counterfactual_abuse_detection
+    focus_capabilities:
+    - backtracking_analysis
+    - plausibility_assessment
+    - abuse_pattern_detection
+    consumes_from:
+    - 1
+    description: Using the structural analysis from pass 1, conduct systematic methodological
+      evaluation. Determine backtracking vs. non-backtracking readings and flag any
+      shifts. Apply Lebow/Tetlock plausibility criteria. Check for standard abuse
+      patterns including world cherry-picking, butterfly exploitation, and false precision.
+      Synthesize findings into quality assessment with specific improvement recommendations.
+- key: deep
+  description: Exhaustive counterfactual analysis including full similarity ordering
+    construction, alternative world comparison, strict reading reconstruction, and
+    comprehensive abuse diagnosis. Reserved for texts where counterfactual reasoning
+    is central to the argument.
+  typical_passes: 4
+  suitable_for: Detailed critique of historical counterfactuals, evaluation of policy
+    alternatives, philosophical analysis of causal claims, scholarly assessment of
+    thought experiments
+  passes:
+  - pass_number: 1
+    label: Exhaustive Counterfactual Inventory
+    stance: discovery
+    focus_dimensions:
+    - possible_world_specification
+    - minimal_rewrite_compliance
+    focus_capabilities:
+    - counterfactual_decomposition
+    consumes_from: []
+    description: Conduct exhaustive identification of all counterfactual commitments,
+      including those deeply embedded in causal claims, modal assertions, and evaluative
+      judgments. Every causal claim commits to a counterfactual; every attribution
+      of blame or credit presupposes counterfactual alternatives. Build complete inventory
+      with formal antecedent-consequent decomposition, antecedent type classification,
+      and rhetorical function mapping.
+  - pass_number: 2
+    label: Possible World Construction
+    stance: architecture
+    focus_dimensions:
+    - possible_world_specification
+    - minimal_rewrite_compliance
+    - causal_chain_integrity
+    focus_capabilities:
+    - possible_world_evaluation
+    - causal_chain_tracing
+    consumes_from:
+    - 1
+    description: For each significant counterfactual, construct the possible world
+      it invokes in explicit detail. Apply Lewis's similarity ordering criteria to
+      assess closeness to actuality. Identify alternative candidate closest worlds
+      that the author ignores. Construct the true minimal rewrite and compare to the
+      author's implicit rewrite. Map full causal networks including branching pathways
+      and probability estimates at each link.
+  - pass_number: 3
+    label: Reading Reconstruction and Plausibility Analysis
+    stance: dialectical
+    focus_dimensions:
+    - backtracking_coherence
+    - historical_plausibility
+    focus_capabilities:
+    - backtracking_analysis
+    - plausibility_assessment
+    consumes_from:
+    - 1
+    - 2
+    description: Reconstruct each major counterfactual under strict backtracking and
+      strict non-backtracking readings separately. Compare conclusions under each
+      reading and identify where the author's actual argument depends on reading shifts.
+      Apply full Weber analysis including nomological possibility assessment and adequate
+      causation evaluation. Apply Lebow/Tetlock criteria with detailed documentation
+      of each criterion's satisfaction or violation.
+  - pass_number: 4
+    label: Comprehensive Abuse Diagnosis and Synthesis
+    stance: integration
+    focus_dimensions:
+    - counterfactual_abuse_detection
+    - causal_chain_integrity
+    - historical_plausibility
+    focus_capabilities:
+    - abuse_pattern_detection
+    - causal_chain_tracing
+    - plausibility_assessment
+    consumes_from:
+    - 1
+    - 2
+    - 3
+    description: Synthesize all previous analyses into comprehensive abuse diagnosis.
+      For each detected abuse pattern, determine whether strategic or inadvertent,
+      assess severity, and reconstruct what the argument would look like if abuse
+      were corrected. Determine whether any substantive conclusions survive correction.
+      Produce final quality assessment with specific methodological improvement recommendations.
+      Identify cross-counterfactual patterns where multiple counterfactuals share
+      the same abuse patterns or invoke the same problematic assumptions.
+apps:
+- critic
+function: logic
+paradigm_keys: []

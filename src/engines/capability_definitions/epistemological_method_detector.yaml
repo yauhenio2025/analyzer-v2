@@ -1,0 +1,636 @@
+engine_key: epistemological_method_detector
+engine_name: Epistemological Method Detector
+version: 1
+category: epistemology
+kind: extraction
+problematique: |-
+  Every text that makes knowledge claims carries within it a hidden philosophy of knowledge itself. Before an author can assert what is true, they must assume—consciously or not—what counts as knowledge, who can produce it, how it can be validated, and what its limits are. These epistemological methods are the invisible scaffolding upon which all other claims rest. A phenomenologist brackets the natural attitude to examine essential structures of experience. A standpoint theorist argues that social position shapes what can be known. A pragmatist evaluates truth by practical consequences rather than correspondence to reality. A naturalized epistemologist treats knowing as a natural process to be studied empirically. Each method doesn't just describe knowledge differently; it produces different knowledge, excludes different questions, and authorizes different knowers. The epistemological method is not neutral infrastructure but active architecture that shapes everything built upon it.
+
+  Most academic texts operate with epistemological commitments they never name. Authors write as if from nowhere while claiming that all knowledge is situated. They assert with certainty while professing fallibilism. They demand reflexivity from others while exempting themselves. They invoke epistemic justice while reproducing the very testimonial hierarchies they critique. This gap between explicit epistemological pronouncements and implicit epistemological practice is where the most revealing analysis occurs. The text's stated methodology is often a performance; its actual methodology is embedded in how it handles evidence, constructs authority, manages uncertainty, and positions itself relative to its objects of study. This engine surfaces the actual epistemological machinery at work, not merely the epistemological vocabulary on display.
+
+  The philosophical foundations here are multiple and sometimes tensioned. Husserl's phenomenological method, with its rigorous bracketing and attention to the structures of intentional consciousness, provides one pole. Feminist epistemology—particularly Hartsock's standpoint theory, Harding's strong objectivity, and Haraway's situated knowledges—provides another, insisting that the knower's social location shapes what can be known and that marginalized positions often afford epistemic advantage. Fricker's work on epistemic injustice reveals how knowledge-production is always also a domain of power, where some testimony is systematically discredited and some experiences lack the interpretive resources to be understood. Quine's naturalized epistemology and the pragmatist tradition from Peirce through Dewey to Rorty offer alternatives that dissolve traditional epistemological questions or translate them into empirical ones. This engine doesn't adjudicate between these traditions but detects their presence, often unacknowledged, in texts that draw on them selectively.
+
+  Within the logic analysis suite, this engine occupies a unique meta-position. While argument_architecture maps the inferential structure of claims and dialectical_structure tracks the movement of positions, this engine asks a prior question: what epistemological framework authorizes those claims and movements in the first place? It works in essential tandem with theory_construction_analyzer, which examines how theories are built, but focuses specifically on the epistemological foundations rather than the theoretical superstructure. It provides crucial input to inferential_commitment_mapper by revealing the epistemological commitments that cascade through any position—accept a standpoint epistemology and you inherit commitments about objectivity, evidence, and expertise that shape everything else. The engine also synergizes with concept_centrality_mapper to identify which epistemological concepts do the most work in a text, often revealing priorities the author hasn't explicitly articulated.
+
+  Commitment to this analysis matters because epistemological bad faith is perhaps the most common intellectual failure in contemporary scholarship. Texts invoke sophisticated epistemological vocabulary—situatedness, reflexivity, positionality—while practicing exactly the universalist, disembodied knowledge-production they nominally reject. They critique the view from nowhere while writing from nowhere. They demand that others acknowledge their standpoint while treating their own as transparent. This is not necessarily hypocrisy; it's often unconscious, the result of epistemological frameworks absorbed through disciplinary training rather than chosen through reflection. Making these methods visible is the first step toward genuine epistemological responsibility: knowing what you're doing when you produce knowledge, and doing it consistently.
+researcher_question: What epistemological methods does the text deploy, and how self-aware
+  is it about its own knowledge-production methods?
+intellectual_lineage:
+  primary:
+    name: haraway
+    description: Donna Haraway (1944–), feminist philosopher of science whose concept
+      of 'situated knowledges' provides this engine's central problematic. Against
+      both objectivism (the 'god trick' of seeing everything from nowhere) and relativism
+      (where all positions are equally valid), Haraway argues for partial, locatable,
+      critical knowledge that takes responsibility for its own position. Her insistence
+      that objectivity requires acknowledging the situatedness of the knower—that
+      only partial perspectives promise objective vision—grounds this engine's detection
+      of texts that claim universality while writing from particular positions, and
+      its assessment of whether situatedness is genuinely inhabited or merely invoked.
+  secondary:
+  - name: husserl
+    description: Edmund Husserl (1859–1938), founder of phenomenology, whose methodological
+      innovations—the epoché (bracketing of the natural attitude), the phenomenological
+      reduction, and eidetic variation—established the most rigorous tradition of
+      epistemological self-reflection in modern philosophy. This engine detects whether
+      texts genuinely practice phenomenological method or merely gesture toward phenomenological
+      vocabulary without the demanding discipline Husserl's approach requires.
+  - name: harding
+    description: Sandra Harding (1935–), feminist philosopher of science who developed
+      the concept of 'strong objectivity'—the argument that starting research from
+      the lives of marginalized groups produces less partial and distorted accounts
+      than starting from dominant positions. Her work grounds this engine's analysis
+      of whose standpoint is privileged in a text and whether that privileging is
+      argued for or simply assumed.
+  - name: fricker
+    description: Miranda Fricker (1966–), whose Epistemic Injustice (2007) identified
+      testimonial injustice (prejudicial credibility deficits) and hermeneutical injustice
+      (gaps in collective interpretive resources) as distinctly epistemic wrongs.
+      This engine uses Fricker's framework to detect where texts address or reproduce
+      epistemic injustices in their own knowledge-production practices.
+  - name: quine
+    description: W.V.O. Quine (1908–2000), whose 'Epistemology Naturalized' (1969)
+      argued for replacing traditional epistemology's normative questions with empirical
+      psychology of knowledge-acquisition. This engine detects naturalized epistemology's
+      presence, often unmarked, in texts that treat knowing as a natural process while
+      blurring the is/ought distinction that traditional epistemology maintained.
+  - name: dewey
+    description: John Dewey (1859–1952), whose pragmatist theory of inquiry rejected
+      the spectator theory of knowledge in favor of understanding knowing as active
+      problem-solving within a situation. This engine detects pragmatist epistemology's
+      influence in texts that evaluate knowledge claims by their practical consequences
+      rather than their correspondence to antecedent reality.
+  traditions:
+  - name: feminist_epistemology
+    description: The tradition emerging from 1980s feminist critiques of science that
+      challenged the ideal of value-free objectivity and developed alternative frameworks
+      including standpoint theory, situated knowledges, and epistemic justice analysis.
+      This tradition grounds the engine's attention to whose knowledge counts, how
+      social position shapes knowing, and how epistemic practices can reproduce or
+      challenge injustice.
+  - name: phenomenological_tradition
+    description: The philosophical tradition founded by Husserl and developed by Heidegger,
+      Merleau-Ponty, and others, characterized by attention to the structures of experience
+      and the methodological bracketing of assumptions about the external world. This
+      tradition provides the engine's framework for detecting rigorous versus gestural
+      phenomenological method in texts that invoke phenomenological vocabulary.
+  - name: social_epistemology
+    description: The field examining how social factors—testimony, trust, institutions,
+      group inquiry—shape knowledge production. Emerging from Goldman's reliabilist
+      social epistemology and diversifying through feminist and postcolonial contributions,
+      this tradition grounds the engine's attention to the social dimensions of knowing
+      that individualist epistemology overlooked.
+  - name: pragmatist_epistemology
+    description: The American philosophical tradition from Peirce through James and
+      Dewey, characterized by rejection of the correspondence theory of truth, emphasis
+      on the practical consequences of belief, and understanding inquiry as situated
+      problem-solving. This tradition provides the engine's framework for detecting
+      when texts evaluate knowledge by its fruits rather than its foundations.
+  - name: critical_theory_of_knowledge
+    description: The tradition from the Frankfurt School through Habermas examining
+      how knowledge-production serves or challenges existing power arrangements. This
+      tradition grounds the engine's attention to whose interests are served by particular
+      epistemological frameworks and how knowledge-claims function ideologically.
+  - name: postcolonial_epistemology
+    description: The tradition examining how colonial and imperial power shaped what
+      counts as knowledge, whose knowledge counts, and how epistemological frameworks
+      can perpetuate colonial relations. Thinkers like Spivak, Chakrabarty, and Santos
+      ground the engine's attention to the geopolitics of knowledge and the provincializing
+      of Eurocentric epistemological frameworks.
+  key_concepts:
+  - name: epoché
+    definition: Husserl's term for the suspension or bracketing of the 'natural attitude'—our
+      everyday assumption that the world exists independently of our experience of
+      it. The epoché is not denial of the world but methodological neutrality about
+      it, enabling attention to the structures of experience itself. This engine detects
+      whether texts genuinely practice epoché or merely invoke it rhetorically.
+  - name: standpoint
+    definition: In standpoint epistemology, the socially situated perspective from
+      which knowledge is produced, shaped by one's position in structures of power
+      and social relations. Standpoint is not mere perspective (everyone has that)
+      but an achieved understanding of how social position shapes what can be known,
+      typically requiring political consciousness and collective struggle to attain.
+  - name: situated_knowledge
+    definition: Haraway's term for knowledge that acknowledges its own location—the
+      particular body, position, and context from which it emerges—against the 'god
+      trick' of claiming to see everything from nowhere. Situated knowledge is not
+      relativism but a form of objectivity achieved through explicit partiality and
+      accountability for one's position.
+  - name: testimonial_injustice
+    definition: Fricker's term for the wrong done when a speaker receives a credibility
+      deficit due to prejudice in the hearer. When testimony is discounted because
+      of the speaker's race, gender, or other identity, epistemic harm is done both
+      to the individual (who is wronged as a knower) and to the collective (which
+      loses access to their knowledge).
+  - name: hermeneutical_injustice
+    definition: Fricker's term for the wrong done when someone's experiences cannot
+      be understood—even by themselves—because the collective interpretive resources
+      are inadequate. When the conceptual tools to make sense of an experience don't
+      exist (as with sexual harassment before the term existed), those with the experience
+      suffer a distinctly epistemic harm.
+  - name: strong_objectivity
+    definition: Harding's argument that starting research from the standpoint of marginalized
+      groups produces more objective knowledge than starting from dominant positions,
+      because it reveals the biases that dominant groups cannot see. Strong objectivity
+      strengthens rather than abandons objectivity by making the knower's social location
+      an explicit object of critical scrutiny.
+  - name: reflexivity
+    definition: The practice of applying one's analytical framework to one's own knowledge-production,
+      acknowledging how one's method shapes what one can find. Genuine reflexivity
+      produces insight into the conditions and limits of one's own knowing; performative
+      reflexivity merely gestures toward self-awareness without altering practice.
+  - name: naturalized_epistemology
+    definition: Quine's proposal to replace traditional epistemology's normative questions
+      (how ought we to arrive at beliefs?) with empirical investigation of how we
+      actually do. This move dissolves the traditional is/ought distinction in epistemology,
+      treating knowing as a natural phenomenon to be studied rather than a normative
+      enterprise to be philosophically justified.
+analytical_dimensions:
+- key: phenomenological_method_deployment
+  description: The extent to which a text practices phenomenological bracketing—suspending
+    assumptions about the world to examine the essential structures of experience.
+    This dimension assesses whether phenomenological method is rigorously applied,
+    superficially invoked, or entirely absent, and whether the text's use of phenomenological
+    vocabulary reflects genuine methodological commitment.
+  probing_questions:
+  - Where does the text bracket natural attitude assumptions to examine experiential
+    structures?
+  - Does the phenomenological vocabulary reflect genuine method or mere disciplinary
+    signaling?
+  - How rigorously is epoché practiced versus gestured toward?
+  - What would a Husserlian critique of the text's phenomenological practice reveal?
+  - Does the text confuse phenomenological description with empirical psychology?
+  depth_guidance:
+    surface: Note explicit phenomenological vocabulary and claimed bracketing operations
+    standard: Assess whether phenomenological claims are backed by rigorous method
+      and consistent practice
+    deep: Evaluate the text's phenomenological practice against Husserlian standards,
+      identifying where natural attitude assumptions persist despite phenomenological
+      framing
+- key: standpoint_positioning
+  description: How the text positions itself relative to standpoint epistemology—whether
+    it privileges particular social positions as epistemic resources, acknowledges
+    its own standpoint, and theorizes the relationship between social location and
+    knowledge. This dimension tracks both explicit standpoint claims and implicit
+    assumptions about whose knowledge counts.
+  probing_questions:
+  - Whose standpoint does the text privilege and on what grounds?
+  - Does the text acknowledge its own standpoint or write as if from nowhere?
+  - How does the text theorize the relationship between social position and epistemic
+    access?
+  - Does the text practice Harding's strong objectivity by using marginalized standpoints
+    to identify dominant biases?
+  - Where does standpoint epistemology become standpoint essentialism—assuming social
+    position automatically confers epistemic privilege?
+  depth_guidance:
+    surface: Identify explicit claims about whose knowledge matters and why
+    standard: Map the text's implicit standpoint hierarchy and assess whether it acknowledges
+      its own position
+    deep: Evaluate the text's standpoint epistemology against Harding's and Hartsock's
+      criteria, identifying where it reproduces the universalism it nominally rejects
+- key: situatedness_practice
+  description: The degree to which the text genuinely inhabits situated knowledge
+    versus merely invoking situatedness rhetorically while practicing view-from-nowhere
+    writing. This dimension assesses whether acknowledgments of partiality actually
+    shape the text's knowledge claims or function as inoculating gestures that license
+    continued universalism.
+  probing_questions:
+  - Does the text's acknowledgment of situatedness actually constrain its claims?
+  - Where does the text claim more than a situated knower could legitimately claim?
+  - How does the text manage the tension between situatedness and generalizability?
+  - Is situatedness a methodological commitment or a rhetorical gesture?
+  - Does the text hold others to standards of situatedness it exempts itself from?
+  depth_guidance:
+    surface: Note explicit acknowledgments of the author's position and claims about
+      partial knowledge
+    standard: Assess whether situatedness claims actually shape the text's rhetoric
+      and scope of claims
+    deep: Identify the gap between proclaimed situatedness and actual practice, mapping
+      where view-from-nowhere writing persists beneath situatedness vocabulary
+- key: reflexive_depth
+  description: The quality of the text's reflexive practice—whether it genuinely applies
+    its own framework to itself, producing insight into its conditions and limits,
+    or merely performs reflexivity as a ritual gesture. This dimension distinguishes
+    reflexivity that transforms practice from reflexivity that inoculates against
+    criticism.
+  probing_questions:
+  - Where does the text apply its own analytical categories to its own knowledge-production?
+  - Does reflexivity produce genuine insight or infinite regress or performative gesture?
+  - What would happen if the text's critique were applied to the text itself?
+  - Where does reflexivity function to immunize the text from the very critique it
+    levels at others?
+  - Is the text aware of the paradoxes of reflexivity and how does it navigate them?
+  depth_guidance:
+    surface: Note explicit reflexive moments where the author acknowledges their own
+      position or method
+    standard: Assess whether reflexivity produces genuine methodological insight or
+      functions as ritual protection
+    deep: Apply the text's own framework to the text itself, identifying what it reveals
+      and what the text's reflexive practice missed
+- key: epistemic_justice_awareness
+  description: How the text engages with questions of epistemic justice—testimonial
+    credibility, hermeneutical resources, and the power dynamics of knowledge-production.
+    This dimension assesses both the text's explicit analysis of epistemic injustice
+    and whether its own practices reproduce the injustices it may critique.
+  probing_questions:
+  - Does the text address whose testimony is credited and whose is dismissed?
+  - Does it identify hermeneutical gaps where experiences lack interpretive frameworks?
+  - Does the text reproduce the epistemic injustices it analyzes?
+  - How does the text position itself relative to the epistemic hierarchies it describes?
+  - Whose voices are amplified and whose are silenced in the text's own practice?
+  depth_guidance:
+    surface: Note explicit discussions of epistemic justice, credibility, and whose
+      knowledge counts
+    standard: Assess whether the text's analysis of epistemic injustice is consistent
+      with its own epistemic practices
+    deep: Identify where the text reproduces the epistemic injustices it critiques,
+      tracing the gap between its politics of knowledge and its practice of knowledge
+- key: epistemological_coherence
+  description: The degree to which the text's epistemological methods match its knowledge
+    claims—whether a text proclaiming fallibilism asserts with certainty, whether
+    a text claiming situatedness writes from nowhere, whether epistemological commitments
+    are consistent across the text or shift opportunistically.
+  probing_questions:
+  - Does the text's epistemological framework match its actual practice of making
+    claims?
+  - Where does certainty of tone contradict professed fallibilism?
+  - Where do different epistemological frameworks operate in different sections?
+  - Does the text hold itself to the same epistemological standards it applies to
+    others?
+  - What epistemological framework would be required to consistently support the text's
+    claims?
+  depth_guidance:
+    surface: Note obvious contradictions between stated epistemological position and
+      rhetorical practice
+    standard: Map shifts between epistemological frameworks across sections and assess
+      overall consistency
+    deep: Reconstruct the epistemological framework the text actually requires versus
+      the one it claims, identifying the full scope of incoherence
+capabilities:
+- key: phenomenological_reduction_detection
+  description: Identifies where texts practice or claim phenomenological bracketing
+    of assumptions to examine essential structures of experience.
+  extended_description: |-
+    Phenomenological method, as developed by Husserl and extended by his successors, requires rigorous suspension of the natural attitude—our everyday assumption that the world exists independently of our experience. This suspension (epoché) is not skepticism about the world but methodological neutrality that enables attention to the essential structures of intentional consciousness. Many texts invoke phenomenological vocabulary without practicing phenomenological method: they claim to bracket assumptions while remaining entirely within the natural attitude, or they confuse phenomenological description with empirical psychology.
+
+    This capability detects the difference between rigorous phenomenological practice and phenomenological gesture. It identifies where texts genuinely suspend natural attitude assumptions versus where they merely announce such suspension while continuing to make claims that presuppose it. It assesses whether phenomenological vocabulary (lifeworld, intentionality, horizon, noema) reflects genuine methodological commitment or disciplinary credential-signaling.
+
+    The detection extends to variations within the phenomenological tradition: Husserlian transcendental phenomenology, Heideggerian existential phenomenology, Merleau-Ponty's phenomenology of embodiment, and various applied phenomenologies. Each carries distinct methodological commitments that this capability tracks, assessing whether the text's phenomenological claims are consistent with the specific variant it invokes.
+  intellectual_grounding:
+    thinker: Husserl
+    concept: epoché and phenomenological reduction
+    method: Assesses texts against Husserl's rigorous standards for suspending the
+      natural attitude and attending to the essential structures of intentional experience
+  indicators:
+  - Explicit claims to bracket or suspend assumptions
+  - 'Phenomenological vocabulary: lifeworld, intentionality, essence, horizon, noema,
+    noesis'
+  - Attention to structures of experience rather than objects experienced
+  - Claims about essential or invariant features of experience
+  - Tension between phenomenological framing and empirical or naturalist content
+  depth_scaling:
+    surface: Note phenomenological vocabulary and explicit bracketing claims
+    standard: Assess whether phenomenological claims are backed by consistent method
+    deep: Evaluate against Husserlian standards, identifying where natural attitude
+      persists beneath phenomenological rhetoric
+  requires_dimensions: []
+  produces_dimensions:
+  - phenomenological_method_deployment
+- key: standpoint_epistemology_mapping
+  description: Maps how texts position social location as epistemically significant,
+    whose standpoint is privileged, and whether the text acknowledges its own standpoint.
+  extended_description: |-
+    Standpoint epistemology, developed by feminist theorists including Hartsock, Harding, and Collins, argues that social position shapes what can be known. Not mere perspectivalism (everyone has a perspective), standpoint theory makes the stronger claim that some social positions—particularly those of marginalized groups—afford epistemic advantages: access to knowledge that dominant positions systematically obscure. This is because those in dominant positions have interests in not seeing certain realities, while those in subordinate positions must understand both their own experience and the dominant frameworks imposed on them.
+
+    This capability maps how texts engage with standpoint epistemology—whether explicitly or through implicit assumptions about whose knowledge matters. It identifies which standpoints are privileged and on what grounds, whether the text practices Harding's 'strong objectivity' (using marginalized standpoints to identify dominant biases), and crucially, whether the text acknowledges its own standpoint or writes as if from nowhere while requiring standpoint acknowledgment from others.
+
+    The mapping extends to detecting standpoint essentialism—the problematic assumption that social position automatically confers epistemic privilege without the political consciousness and collective struggle that standpoint theorists argue is necessary. It also tracks how texts navigate the tension between standpoint claims and their own authority claims.
+  intellectual_grounding:
+    thinker: Harding
+    concept: strong objectivity and standpoint epistemology
+    method: Maps how texts position social location relative to knowledge-production
+      and whether they apply standpoint criteria to themselves
+  indicators:
+  - Claims that marginalized positions afford epistemic privilege
+  - Arguments that social position shapes what can be known
+  - Acknowledgment or denial of the author's own social position
+  - Appeals to experiential authority based on identity
+  - Tension between universalist rhetoric and standpoint claims
+  depth_scaling:
+    surface: Identify explicit claims about whose knowledge matters and acknowledgments
+      of author position
+    standard: Map the implicit standpoint hierarchy and assess consistency of standpoint
+      application
+    deep: Evaluate against Harding's and Hartsock's criteria, identifying standpoint
+      essentialism and the text's own unacknowledged standpoint
+  requires_dimensions: []
+  produces_dimensions:
+  - standpoint_positioning
+  - situatedness_practice
+- key: epistemic_justice_analysis
+  description: Detects where texts address or reproduce testimonial injustice (credibility
+    deficits) and hermeneutical injustice (interpretive gaps).
+  extended_description: |-
+    Miranda Fricker's identification of distinctly epistemic forms of injustice—wrongs done to persons specifically as knowers—provides a framework for analyzing how knowledge-production intersects with power. Testimonial injustice occurs when a speaker receives a credibility deficit due to prejudice: their testimony is discounted not because of its content but because of who they are. Hermeneutical injustice occurs when collective interpretive resources are inadequate to make sense of significant experiences, particularly those of marginalized groups—as when sexual harassment existed but the concept did not.
+
+    This capability detects where texts engage with epistemic justice: whose testimony they credit and why, which experiences they have interpretive resources for, how they position themselves relative to epistemic hierarchies. But it goes further to identify where texts reproduce the very epistemic injustices they may analyze—discounting certain voices while amplifying others, assuming interpretive frameworks as universal when they are parochial, demanding epistemic recognition while denying it to others.
+
+    The analysis includes institutional dimensions: how academic credentialing, publication hierarchies, citation practices, and disciplinary boundaries function as sites of epistemic injustice. It asks not just what a text says about epistemic justice but how its own practice instantiates or challenges epistemic hierarchies.
+  intellectual_grounding:
+    thinker: Fricker
+    concept: testimonial and hermeneutical injustice
+    method: Analyzes both the text's explicit engagement with epistemic justice and
+      whether its own practices reproduce the injustices it critiques
+  indicators:
+  - Claims about whose testimony is systematically discredited
+  - Identification of experiences lacking interpretive frameworks
+  - Appeals to epistemic authority based on experience or identity
+  - Patterns in whose voices are cited, amplified, or dismissed
+  - Tension between epistemic justice claims and citation/crediting practices
+  depth_scaling:
+    surface: Note explicit discussions of credibility, testimony, and whose knowledge
+      counts
+    standard: Assess consistency between epistemic justice analysis and the text's
+      own crediting practices
+    deep: Map the full epistemic economy of the text—who is credited, who is discounted,
+      and whether this reproduces the injustices analyzed
+  requires_dimensions:
+  - standpoint_positioning
+  produces_dimensions:
+  - epistemic_justice_awareness
+- key: reflexivity_assessment
+  description: Evaluates whether texts genuinely apply their own frameworks to themselves
+    or merely perform reflexivity as ritual.
+  extended_description: |-
+    Reflexivity—the practice of applying one's analytical framework to one's own knowledge-production—has become a near-universal requirement in interpretive social science and humanities. But there is a vast difference between reflexivity that transforms practice and reflexivity that functions as inoculation against criticism. Performative reflexivity announces its own position and limitations, then proceeds exactly as if it had not—the acknowledgment functioning to license continued practice rather than constrain it.
+
+    This capability assesses the quality of reflexive practice in texts. Does the text's reflexivity produce genuine insight into the conditions and limits of its own knowing? Does it change what the text claims or how it claims it? Or does reflexivity appear as a ritual gesture—a paragraph acknowledging the author's position that has no effect on the text's rhetoric, scope, or confidence? The assessment also identifies the paradoxes of reflexivity: if a text's critique of knowledge-claims applies to itself, what authorizes its own claims? How do texts navigate this without either infinite regress or self-exemption?
+
+    Genuine reflexivity is rare and difficult. It requires applying one's own critical tools to one's own practice and being genuinely changed by what one finds. Most reflexivity in academic texts is gestural—a performance that protects the text from criticism rather than a practice that shapes it.
+  intellectual_grounding:
+    thinker: Haraway
+    concept: situated knowledges and accountability
+    method: Assesses whether reflexive gestures produce genuine accountability for
+      one's position or function as rhetorical inoculation
+  indicators:
+  - Explicit acknowledgments of the author's position, interests, or limitations
+  - Moments where the text applies its own critique to itself
+  - Tension between reflexive acknowledgments and the text's actual rhetoric
+  - Claims that exempts the author from the critique applied to others
+  - Navigation of the paradox that reflexive critique undermines its own authority
+  depth_scaling:
+    surface: Note explicit reflexive moments and acknowledgments of limitation
+    standard: Assess whether reflexivity actually constrains claims or functions as
+      ritual gesture
+    deep: Apply the text's own framework to itself, identifying what genuine reflexivity
+      would require that the text does not provide
+  requires_dimensions:
+  - situatedness_practice
+  produces_dimensions:
+  - reflexive_depth
+  - epistemological_coherence
+- key: meta_epistemological_claim_detection
+  description: Identifies where texts make claims about the nature of knowledge itself—what
+    counts as knowledge, what validates it, what its limits are.
+  extended_description: |-
+    Most texts make first-order knowledge claims while assuming second-order epistemological positions they never argue for. A text might claim that certain social practices are exploitative, assuming without argument that exploitation is an objective feature detectable by properly positioned observers. Or it might argue that knowledge is always socially constructed, while assuming that this meta-claim itself is somehow exempt from construction. Meta-epistemological claims—claims about what knowledge is, how it works, who can have it, and what validates it—are the deepest layer of a text's commitments.
+
+    This capability detects where texts make such meta-claims, whether explicitly or through assumptions embedded in their practice. It identifies the epistemological framework the text presupposes: empiricist, rationalist, pragmatist, constructivist, naturalized, phenomenological. It tracks where these frameworks conflict—often within the same text—and where first-order claims require epistemological positions the text officially rejects.
+
+    The detection extends to claims about epistemic limits: where does the text assert the boundaries of what can be known? These limit-claims are themselves knowledge claims, raising questions about their own status. A text that claims we cannot know things-in-themselves is claiming to know something about the limits of knowledge—a claim that requires epistemological justification it rarely receives.
+  intellectual_grounding:
+    thinker: Quine
+    concept: naturalized epistemology and meta-epistemological critique
+    method: Identifies the epistemological frameworks texts assume and whether their
+      meta-claims are consistent with their first-order practice
+  indicators:
+  - Explicit claims about what counts as knowledge or evidence
+  - Claims about epistemic limits—what cannot be known
+  - Tensions between constructivist meta-claims and realist first-order claims
+  - Appeals to particular epistemological traditions or frameworks
+  - Self-exemption from epistemological critiques applied to others
+  depth_scaling:
+    surface: Note explicit claims about knowledge, evidence, and epistemic limits
+    standard: Identify the assumed epistemological framework and assess its consistency
+      with first-order claims
+    deep: Reconstruct the meta-epistemology the text requires versus claims, mapping
+      the full scope of assumption and inconsistency
+  requires_dimensions:
+  - phenomenological_method_deployment
+  - standpoint_positioning
+  produces_dimensions:
+  - epistemological_coherence
+- key: epistemological_coherence_assessment
+  description: Evaluates whether a text's epistemological methods match its knowledge
+    claims and whether its epistemological commitments are internally consistent.
+  extended_description: |-
+    The most revealing analysis of a text's epistemology often emerges from the gap between its stated methodology and its actual practice. A text may proclaim fallibilism while asserting with absolute certainty. It may claim that all knowledge is situated while writing as if from nowhere. It may demand reflexivity from others while exempting itself. It may invoke constructivism about its objects of study while assuming realism about its own claims. These contradictions are not necessarily failures of logic; they often reflect the difficulty of consistently inhabiting any epistemological position. But they are analytically significant because they reveal what the text actually assumes about knowledge, beneath its official epistemological pronouncements.
+
+    This capability assesses overall epistemological coherence. It tracks whether epistemological commitments are consistent across the text or shift opportunistically—whether different frameworks operate in different sections, whether the text holds itself to the same standards it applies to others, whether there are systematic patterns in where coherence breaks down.
+
+    The assessment is not simply fault-finding. Perfect epistemological coherence may be impossible, and the points of breakdown are often the most intellectually interesting moments in a text—where the demands of consistent method conflict with the requirements of saying something substantive. The goal is to make the epistemological architecture visible, including its fractures.
+  intellectual_grounding:
+    thinker: Haraway
+    concept: accountability and the critique of the god trick
+    method: Assesses whether texts practice what they preach epistemologically, identifying
+      gaps between proclaimed method and actual practice
+  indicators:
+  - Mismatch between stated fallibilism and assertoric rhetoric
+  - Tension between situatedness claims and view-from-nowhere writing
+  - Different epistemological frameworks in different sections
+  - Standards applied to others but not to oneself
+  - Shift between constructivist and realist frames without acknowledgment
+  depth_scaling:
+    surface: Note obvious contradictions between stated and practiced epistemology
+    standard: Map epistemological shifts across the text and assess overall consistency
+    deep: Reconstruct the full epistemological architecture the text requires versus
+      claims, identifying systematic patterns in incoherence
+  requires_dimensions:
+  - phenomenological_method_deployment
+  - standpoint_positioning
+  - situatedness_practice
+  - reflexive_depth
+  produces_dimensions:
+  - epistemological_coherence
+composability:
+  shares_with:
+    epistemological_coherence: Assessment of whether a text's epistemological framework
+      is internally consistent—shared with theory_construction_analyzer for evaluating
+      theoretical foundations
+    standpoint_positioning: Mapping of how social position relates to knowledge claims—shared
+      with conceptual_framework_extraction for understanding whose framework is being
+      extracted
+    reflexive_depth: Assessment of whether texts apply their own frameworks to themselves—shared
+      with inferential_commitment_mapper for detecting self-exempting commitments
+    meta_epistemological_claims: Detection of claims about the nature of knowledge—shared
+      with argument_architecture for understanding the foundational premises
+    epistemic_justice_awareness: Analysis of testimonial and hermeneutical dimensions—shared
+      with dialectical_structure for understanding whose positions get voice
+  consumes_from:
+    theoretical_commitments: From theory_construction_analyzer — what theoretical
+      claims require what epistemological foundations
+    inferential_structure: From argument_architecture — how epistemological assumptions
+      function as premises in arguments
+    conceptual_vocabulary: From conceptual_framework_extraction — which epistemological
+      concepts are deployed and how
+    semantic_relationships: From concept_semantic_constellation — how epistemological
+      concepts relate to each other in the text's semantic field
+  synergy_engines:
+  - theory_construction_analyzer
+  - inferential_commitment_mapper
+  - argument_architecture
+  - dialectical_structure
+  - conceptual_framework_extraction
+depth_levels:
+- key: surface
+  description: Identifies explicit epistemological vocabulary, stated methods, and
+    acknowledged positions without deep assessment of consistency or genuine practice.
+  typical_passes: 1
+  suitable_for: Quick assessment of a text's epistemological self-presentation, identifying
+    what framework it claims without evaluating whether it consistently inhabits that
+    framework.
+  passes:
+  - pass_number: 1
+    label: Epistemological Vocabulary Survey
+    stance: discovery
+    focus_dimensions:
+    - phenomenological_method_deployment
+    - standpoint_positioning
+    - situatedness_practice
+    focus_capabilities:
+    - phenomenological_reduction_detection
+    - standpoint_epistemology_mapping
+    consumes_from: []
+    description: Maps the explicit epistemological vocabulary and stated methodological
+      commitments of the text. Identifies where the text claims phenomenological method,
+      acknowledges standpoints, invokes situated knowledge, or makes claims about
+      epistemic justice. Notes explicit reflexive moments and meta-epistemological
+      claims. Does not yet assess whether these claims are consistently practiced.
+- key: standard
+  description: Assesses consistency between stated epistemological commitments and
+    actual practice, identifying gaps between what the text claims and how it operates.
+  typical_passes: 2
+  suitable_for: Standard academic analysis requiring assessment of whether a text's
+    epistemological claims are genuine methodological commitments or rhetorical gestures.
+  passes:
+  - pass_number: 1
+    label: Epistemological Mapping
+    stance: discovery
+    focus_dimensions:
+    - phenomenological_method_deployment
+    - standpoint_positioning
+    - epistemic_justice_awareness
+    focus_capabilities:
+    - phenomenological_reduction_detection
+    - standpoint_epistemology_mapping
+    - epistemic_justice_analysis
+    consumes_from: []
+    description: 'Comprehensive mapping of the text''s explicit epistemological apparatus:
+      what methods it claims, whose standpoint it privileges, what epistemic justice
+      issues it addresses, how it positions itself as a knower. Creates an inventory
+      of epistemological claims and commitments for subsequent coherence analysis.'
+  - pass_number: 2
+    label: Coherence Assessment
+    stance: confrontation
+    focus_dimensions:
+    - reflexive_depth
+    - situatedness_practice
+    - epistemological_coherence
+    focus_capabilities:
+    - reflexivity_assessment
+    - meta_epistemological_claim_detection
+    - epistemological_coherence_assessment
+    consumes_from:
+    - 1
+    description: Tests the epistemological claims mapped in Pass 1 against the text's
+      actual practice. Identifies where reflexivity is gestural rather than genuine,
+      where situatedness is invoked but not inhabited, where the text exempts itself
+      from standards it applies to others. Produces overall coherence assessment identifying
+      the gap between epistemological self-presentation and epistemological practice.
+- key: deep
+  description: Full epistemological reconstruction including what the text requires
+    but doesn't claim, systematic patterns of incoherence, and application of the
+    text's own framework to itself.
+  typical_passes: 4
+  suitable_for: Comprehensive epistemological critique requiring reconstruction of
+    the text's actual epistemological architecture beneath its stated position.
+  passes:
+  - pass_number: 1
+    label: Comprehensive Epistemological Inventory
+    stance: discovery
+    focus_dimensions:
+    - phenomenological_method_deployment
+    - standpoint_positioning
+    - epistemic_justice_awareness
+    focus_capabilities:
+    - phenomenological_reduction_detection
+    - standpoint_epistemology_mapping
+    - epistemic_justice_analysis
+    consumes_from: []
+    description: Exhaustive mapping of every epistemological claim, method, and position
+      in the text—both explicit statements and implicit assumptions. Tracks variations
+      across sections, noting where different epistemological frameworks seem to operate.
+      Creates complete inventory for subsequent analysis.
+  - pass_number: 2
+    label: Reflexive Self-Application
+    stance: confrontation
+    focus_dimensions:
+    - reflexive_depth
+    - situatedness_practice
+    focus_capabilities:
+    - reflexivity_assessment
+    consumes_from:
+    - 1
+    description: Applies the text's own analytical framework to the text itself. What
+      would its critique of universalism reveal about its own universalizing gestures?
+      What would its standpoint analysis show about its own unacknowledged standpoint?
+      What epistemic injustices might its own practice reproduce? This pass produces
+      what genuine reflexivity would have revealed.
+  - pass_number: 3
+    label: Epistemological Reconstruction
+    stance: architecture
+    focus_dimensions:
+    - epistemological_coherence
+    focus_capabilities:
+    - meta_epistemological_claim_detection
+    - epistemological_coherence_assessment
+    consumes_from:
+    - 1
+    - 2
+    description: Reconstructs the epistemological framework the text actually requires
+      to support its claims—which may differ significantly from the framework it officially
+      endorses. Identifies the meta-epistemological positions embedded in the text's
+      practice, mapping the full architecture of assumption beneath the surface of
+      stated method.
+  - pass_number: 4
+    label: Diagnostic Synthesis
+    stance: integration
+    focus_dimensions:
+    - phenomenological_method_deployment
+    - standpoint_positioning
+    - situatedness_practice
+    - reflexive_depth
+    - epistemic_justice_awareness
+    - epistemological_coherence
+    focus_capabilities:
+    - phenomenological_reduction_detection
+    - standpoint_epistemology_mapping
+    - epistemic_justice_analysis
+    - reflexivity_assessment
+    - meta_epistemological_claim_detection
+    - epistemological_coherence_assessment
+    consumes_from:
+    - 1
+    - 2
+    - 3
+    description: Synthesizes all epistemological analysis into comprehensive assessment.
+      Maps the relationship between stated method and actual practice, between required
+      framework and endorsed framework, between epistemological claims about others
+      and epistemological practice regarding oneself. Produces full portrait of the
+      text's epistemological architecture including systematic patterns of coherence
+      and incoherence, and assessment of overall epistemological sophistication and
+      self-awareness.
+apps:
+- critic
+function: logic
+paradigm_keys: []

@@ -1,0 +1,658 @@
+engine_key: specialized_reasoning_classifier
+engine_name: Specialized Reasoning Classifier
+version: 1
+category: argument
+kind: extraction
+problematique: |-
+  Beyond the familiar territory of deductive syllogisms and inductive generalizations lies a vast landscape of specialized reasoning forms that do much of the real cognitive work in sophisticated intellectual discourse. Bayesian updating governs how rational agents should revise beliefs in light of evidence. Game-theoretic reasoning maps the strategic logic of interdependent decision-making. Transcendental arguments establish necessary preconditions for the possibility of experience or knowledge. Reflective equilibrium iterates between principles and particular judgments until coherence emerges. Pragmatic contradiction analysis reveals where the act of asserting something undermines what is asserted. These are not exotic curiosities but the actual engines of inference driving arguments in philosophy, economics, political theory, and the sciences. Yet they operate largely beneath the surface, unnamed and unexamined, their assumptions unchecked and their conclusions accepted without scrutiny of the reasoning form that produced them.
+
+  Most readers—and many authors—fail to recognize when these specialized forms are in play. An economist may frame a social problem as a prisoners' dilemma without justifying why that particular game structure applies rather than an assurance game or coordination problem. A political theorist may invoke reflective equilibrium without acknowledging whether intuitions or principles are being privileged in the balancing. A philosopher may deploy transcendental arguments while treating conventional necessities as logical ones. The consequence is that arguments appear to succeed when their underlying reasoning form has been misapplied, its assumptions violated, or its scope overextended. The reader who cannot identify 'this is Bayesian updating' or 'this is inference to best explanation' cannot evaluate whether the updating is proportional to evidence strength or whether competing explanations have been fairly considered.
+
+  The philosophical foundations here are multiple and rich. Bayesian epistemology, developed through the work of Thomas Bayes, Pierre-Simon Laplace, and contemporary figures like Richard Jeffrey and James Joyce, provides the normative framework for belief revision under uncertainty. Game theory, formalized by John von Neumann and Oskar Morgenstern and extended by John Nash and Thomas Schelling, maps the logic of strategic interaction. Rawls's method of reflective equilibrium offers a coherentist approach to moral reasoning. Habermas's analysis of pragmatic contradictions—the performative self-refutation where an assertion's content contradicts the presuppositions of the act of asserting—derives from speech act theory and discourse ethics. Transcendental argumentation traces to Kant's critical philosophy and its contemporary elaborations by figures like Barry Stroud and Robert Stern. Each tradition brings its own standards of rigor, its own assumptions that must be met, its own characteristic failure modes.
+
+  Within the logic suite, this engine occupies a distinctive niche. Where argument_architecture maps the overall structure of support relations and dialectical_structure tracks thesis-antithesis-synthesis dynamics, this engine zooms in on the specific inferential technologies deployed within arguments. It complements modal_reasoning_analyzer by attending to non-modal specialized forms, and it provides essential input for inferential_commitment_mapper by identifying what reasoning commitments an author incurs by employing a particular framework. When a text uses consequentialist reasoning in one passage and rights-based reasoning in another without acknowledging the shift, this engine detects the framework migration that other engines might miss.
+
+  The stakes of this analysis extend beyond academic classification. Reasoning forms carry normative force: to accept Bayesian updating is to commit to certain standards of evidence-responsiveness; to frame a situation game-theoretically is to accept that agents are strategic maximizers; to invoke reflective equilibrium is to grant some authority to considered moral judgments. These commitments often remain invisible to both author and reader, smuggled in with the reasoning form itself. Making them explicit is not pedantry but intellectual hygiene—the prerequisite for knowing what one has actually argued and what one has actually accepted.
+researcher_question: What specialized forms of reasoning does the text employ beyond
+  standard deductive/inductive logic, and how rigorously are they applied?
+intellectual_lineage:
+  primary:
+    name: rawls
+    description: John Rawls (1921–2002), American political philosopher whose method
+      of reflective equilibrium—the iterative adjustment of principles and particular
+      judgments until they cohere—provides a paradigm for one of the most influential
+      specialized reasoning forms in normative theory. His distinction between narrow
+      reflective equilibrium (balancing principles and judgments) and wide reflective
+      equilibrium (incorporating background theories and philosophical considerations)
+      offers a framework for evaluating the depth and rigor of coherentist moral reasoning.
+      Rawls's work also exemplifies the careful deployment of multiple reasoning forms,
+      including his use of the original position as a heuristic device combining game-theoretic
+      and contractualist elements.
+  secondary:
+  - name: bayes
+    description: Thomas Bayes (1701–1761), English statistician and Presbyterian minister
+      whose posthumously published theorem provides the mathematical foundation for
+      rational belief revision under uncertainty. Bayesian epistemology, developed
+      from his work, treats probability as degree of belief and specifies how evidence
+      should update prior probabilities—a reasoning form now ubiquitous in philosophy
+      of science, decision theory, and artificial intelligence.
+  - name: habermas
+    description: Jürgen Habermas (1929–), German philosopher whose theory of communicative
+      action identifies pragmatic contradictions as a distinctive form of self-refutation
+      where the performative dimension of speech acts contradicts their propositional
+      content. His analysis of how certain positions undermine themselves in the very
+      act of being asserted provides tools for detecting a subtle but devastating
+      form of argumentative failure.
+  - name: kant
+    description: Immanuel Kant (1724–1804), whose transcendental arguments in the
+      Critique of Pure Reason established a distinctive form of reasoning from the
+      actuality of experience to its necessary preconditions. This powerful argumentative
+      strategy—showing that X must be the case for Y (which is actual) to be possible—continues
+      to be deployed and debated in contemporary philosophy, though its scope and
+      limits remain contested.
+  - name: nash
+    description: John Nash (1928–2015), American mathematician whose equilibrium concept
+      revolutionized game theory by providing a general solution concept for non-cooperative
+      games. Nash equilibrium—where no player can improve their outcome by unilaterally
+      changing strategy—has become the default framework for analyzing strategic interaction,
+      though its behavioral assumptions and uniqueness problems require careful attention.
+  - name: peirce
+    description: Charles Sanders Peirce (1839–1914), American philosopher who identified
+      abduction (inference to the best explanation) as a distinct form of reasoning
+      alongside deduction and induction. His analysis of how explanatory hypotheses
+      are generated and evaluated provides the foundation for understanding IBE as
+      a specialized reasoning form with its own logic and characteristic vulnerabilities.
+  traditions:
+  - name: bayesian_epistemology
+    description: The tradition treating rational belief as probabilistic and specifying
+      how evidence should update credences through conditionalization. Key debates
+      concern the source of prior probabilities, the problem of old evidence, and
+      whether Bayesian norms are descriptively adequate or merely normatively ideal.
+      This tradition provides the standards against which Bayesian reasoning in texts
+      can be evaluated.
+  - name: game_theory
+    description: The mathematical study of strategic interaction, originating with
+      von Neumann and Morgenstern and extended through Nash, Selten, and Harsanyi.
+      Game-theoretic reasoning classifies situations by their strategic structure
+      (prisoners' dilemmas, coordination games, etc.) and identifies equilibrium outcomes.
+      The tradition provides both powerful analytical tools and cautionary lessons
+      about the assumptions required for their application.
+  - name: discourse_ethics
+    description: The tradition, developed by Habermas and Karl-Otto Apel, grounding
+      moral norms in the presuppositions of rational discourse. Central to this tradition
+      is the analysis of pragmatic contradictions—positions that cannot be consistently
+      maintained because asserting them violates the conditions that make assertion
+      possible. This provides a distinctive form of immanent critique.
+  - name: transcendental_philosophy
+    description: The Kantian tradition of arguing from the actuality of experience
+      or knowledge to its necessary preconditions. Contemporary debates, following
+      Stroud and Stern, concern whether transcendental arguments can establish substantive
+      metaphysical conclusions or merely reveal conceptual dependencies. The tradition
+      provides both a powerful argumentative template and sophisticated awareness
+      of its limitations.
+  - name: normative_ethics
+    description: The philosophical study of moral evaluation, encompassing consequentialist,
+      deontological, virtue-theoretic, and care-ethical frameworks. Each framework
+      employs distinctive reasoning patterns—aggregating outcomes, applying universal
+      principles, assessing character, or attending to relationships. Recognition
+      of framework differences is essential for detecting when texts shift between
+      normative logics.
+  - name: philosophy_of_science
+    description: The tradition examining scientific reasoning, including inference
+      to best explanation, theory choice, and the structure of confirmation. Key figures
+      include Peirce, Popper, Kuhn, and Lipton. This tradition provides resources
+      for evaluating abductive reasoning—what makes an explanation 'best,' how competing
+      explanations should be weighed, and when parsimony should yield to explanatory
+      power.
+  key_concepts:
+  - name: bayesian_updating
+    definition: The process of revising probability assignments in light of new evidence
+      according to Bayes' theorem, where posterior probability is proportional to
+      prior probability multiplied by likelihood. Proper updating requires acknowledging
+      priors, assessing evidence strength, and avoiding pathologies like base rate
+      neglect or belief perseverance.
+  - name: nash_equilibrium
+    definition: A strategy profile in which no player can improve their payoff by
+      unilaterally deviating from their current strategy. While powerful as a solution
+      concept, its application requires that players be rational, have common knowledge
+      of the game structure, and that equilibrium selection problems be addressed
+      when multiple equilibria exist.
+  - name: reflective_equilibrium
+    definition: Rawls's method of achieving coherence between general principles and
+      particular judgments through mutual adjustment, where neither has absolute priority.
+      Wide reflective equilibrium incorporates background theories; narrow equilibrium
+      balances only principles and judgments. The method's rigor depends on which
+      elements are treated as revisable.
+  - name: pragmatic_contradiction
+    definition: A self-refutation occurring when the act of asserting a claim presupposes
+      what the claim denies—the performative dimension contradicts the propositional
+      content. Classic examples include the relativist claiming universal validity
+      for relativism or the skeptic presupposing the reliability of reasoning to argue
+      against it.
+  - name: transcendental_necessity
+    definition: The modal status of preconditions established by transcendental arguments—what
+      must be the case for something actual to be possible. Debates concern whether
+      this necessity is logical, metaphysical, or merely conceptual, with implications
+      for how much transcendental arguments can establish.
+  - name: inference_to_best_explanation
+    definition: Abductive reasoning that concludes to a hypothesis because it would,
+      if true, best explain the available evidence. 'Best' typically involves criteria
+      like explanatory power, parsimony, coherence with background knowledge, and
+      predictive fertility. The reasoning form requires fair consideration of competing
+      explanations.
+  - name: normative_framework
+    definition: A systematic approach to moral evaluation specifying what makes actions,
+      outcomes, or character traits good or right. Major frameworks include consequentialism
+      (evaluating by outcomes), deontology (evaluating by conformity to principles
+      or duties), virtue ethics (evaluating by character), and care ethics (evaluating
+      by relationships and responsibilities).
+  - name: public_reason
+    definition: Rawls's concept of justification appealing only to principles acceptable
+      across diverse reasonable comprehensive doctrines. Public reason arguments avoid
+      sectarian premises, instead grounding claims in shared political values. The
+      concept provides criteria for evaluating whether apparently neutral arguments
+      smuggle in controversial assumptions.
+analytical_dimensions:
+- key: probabilistic_reasoning_quality
+  description: Evaluates how well the text handles uncertainty, evidence, and belief
+    revision. This includes explicit Bayesian reasoning but also implicit probabilistic
+    thinking—how evidence is weighted, whether priors are acknowledged, and whether
+    updating is proportional to evidence strength.
+  probing_questions:
+  - Does the text acknowledge prior probabilities or treat all hypotheses as equally
+    likely before evidence?
+  - Is evidence weighted according to its diagnostic value or treated uniformly?
+  - Does the text exhibit base rate neglect, confirmation bias, or belief perseverance?
+  - Are degrees of confidence calibrated to evidence strength?
+  - Does the text distinguish between absence of evidence and evidence of absence?
+  depth_guidance:
+    surface: Identify explicit probability claims and evidence-belief relationships
+    standard: Evaluate whether updating is proportional to evidence strength and whether
+      priors are reasonable
+    deep: Assess the full Bayesian structure including implicit priors, likelihood
+      ratios, and systematic biases in updating
+- key: strategic_interaction_analysis
+  description: Assesses how the text models situations involving multiple agents with
+    interdependent outcomes. This includes explicit game-theoretic framing and implicit
+    strategic reasoning—assumptions about agent rationality, payoff structures, and
+    equilibrium concepts.
+  probing_questions:
+  - What game structure does the text assume—prisoners' dilemma, coordination game,
+    chicken, assurance game?
+  - Are payoff structures explicitly specified or merely implied?
+  - Does the text assume rational utility-maximizing agents?
+  - Is the equilibrium concept appropriate—does Nash equilibrium apply, or are refinements
+    needed?
+  - Are repeated game dynamics, reputation effects, or communication possibilities
+    considered?
+  depth_guidance:
+    surface: Identify strategic framing and named game types
+    standard: Evaluate whether the game structure matches the situation being analyzed
+      and whether equilibrium concepts are correctly applied
+    deep: Assess hidden assumptions about rationality, information, and payoffs; consider
+      alternative game structures that might better fit the situation
+- key: coherentist_reasoning_structure
+  description: Examines how the text achieves consistency between general principles
+    and particular judgments. This includes explicit reflective equilibrium methodology
+    and implicit coherentist reasoning—where principles are adjusted to fit cases
+    or cases reinterpreted to fit principles.
+  probing_questions:
+  - Does the text iterate between principles and judgments, adjusting both?
+  - Which has priority when conflicts arise—principles or particular judgments?
+  - Is the equilibrium narrow (principles and judgments only) or wide (including background
+    theories)?
+  - Are some judgments or principles treated as fixed points immune to revision?
+  - How robust is the equilibrium—would small changes cascade through the system?
+  depth_guidance:
+    surface: Identify principle-judgment relationships and explicit appeals to coherence
+    standard: Map the adjustment process and evaluate whether principles and judgments
+      are given appropriate weight
+    deep: Assess the stability of the equilibrium, identify fixed points and their
+      justification, and evaluate whether the equilibrium is genuinely reflective
+      or merely accommodating
+- key: performative_consistency
+  description: Analyzes whether the act of making claims is consistent with their
+    content. This dimension detects pragmatic contradictions where the presuppositions
+    of assertion conflict with what is asserted, revealing self-undermining positions.
+  probing_questions:
+  - What does the act of asserting this claim presuppose?
+  - Do these presuppositions conflict with the claim's content?
+  - Does the text implicitly claim validity while explicitly denying the possibility
+    of valid claims?
+  - Does the argument rely on capacities or standards it simultaneously undermines?
+  - Can the position be consistently maintained through its own performance?
+  depth_guidance:
+    surface: Identify obvious performative contradictions like self-refuting skepticism
+    standard: Analyze the presuppositions of key claims and check for consistency
+      with content
+    deep: Examine subtle performative tensions, implicit validity claims, and whether
+      positions can survive reflective self-application
+- key: precondition_reasoning_rigor
+  description: Evaluates arguments proceeding from actualities to their necessary
+    preconditions. This includes assessing whether the necessity claimed is genuine
+    (logical, metaphysical) or merely conventional, and whether the argument overextends
+    beyond what transcendental reasoning can establish.
+  probing_questions:
+  - What is claimed to be actual, and what is argued to be its necessary precondition?
+  - Is the necessity logical, metaphysical, or merely conventional?
+  - Could the actuality exist without the alleged precondition?
+  - Does the argument conflate conditions for conceiving X with conditions for X's
+    existence?
+  - Are alternative preconditions considered?
+  depth_guidance:
+    surface: Identify claims about necessary preconditions and their actuality bases
+    standard: Evaluate the modal strength of the necessity claim and whether alternatives
+      are possible
+    deep: Assess the full transcendental structure, distinguish types of necessity,
+      and evaluate scope limitations following Stroud's critique
+- key: normative_framework_coherence
+  description: Tracks the normative reasoning frameworks employed and evaluates their
+    consistent application. This includes detecting unacknowledged shifts between
+    consequentialist, deontological, virtue-theoretic, and care-ethical reasoning.
+  probing_questions:
+  - What normative framework(s) does the text employ—consequentialist, deontological,
+    virtue-based, care-ethical?
+  - Is the framework consistently applied or does the text shift between frameworks?
+  - Are framework shifts acknowledged and justified?
+  - Does the text invoke rights-based reasoning for some issues and consequentialist
+    reasoning for others?
+  - What would the argument look like if a different normative framework were applied?
+  depth_guidance:
+    surface: Identify the dominant normative framework and major evaluative claims
+    standard: Map all normative frameworks employed and flag unacknowledged shifts
+    deep: Analyze why particular frameworks are invoked for particular issues, assess
+      whether shifts are principled, and evaluate framework coherence across the work
+capabilities:
+- key: bayesian_reasoning_detection
+  description: Identifies and evaluates belief revision in response to evidence, whether
+    explicitly Bayesian or implicitly probabilistic.
+  extended_description: |-
+    This capability detects the inferential pattern where beliefs are updated in light of new evidence—the core of Bayesian epistemology. The engine identifies not only explicit probability calculations but also implicit Bayesian structures: where authors treat some evidence as more diagnostic than other evidence, where prior commitments shape interpretation, where belief perseverance occurs despite disconfirming evidence.
+
+    The intellectual grounding in Bayesian epistemology provides normative standards for evaluation. Proper updating should be proportional to the evidence's likelihood ratio—how much more probable the evidence is given one hypothesis versus another. Base rate neglect, overweighting of vivid evidence, and failure to update on disconfirming information are systematic pathologies this capability detects. The engine also identifies where authors should be doing Bayesian reasoning but aren't—where uncertainty is treated as binary rather than gradational, where evidence accumulates without updating beliefs.
+
+    Beyond detection, this capability assesses quality: Are priors reasonable? Is the evidence correctly weighted? Does the posterior appropriately balance prior and evidence? The Bayesian framework provides specific standards—not merely that beliefs should respond to evidence, but how much they should respond given the evidence's strength.
+  intellectual_grounding:
+    thinker: bayes_jeffrey
+    concept: conditionalization_as_rationality_constraint
+    method: Evaluate belief revision against the normative standard of Bayesian conditionalization,
+      identifying departures as potential reasoning failures requiring justification.
+  indicators:
+  - Language of probability, likelihood, or credence
+  - Evidence-belief relationships where evidence is cited as raising or lowering confidence
+  - Prior commitments explicitly acknowledged or implicitly operative
+  - Updating patterns where beliefs change (or resist change) in response to new information
+  - Comparative evidence claims about what would be expected under competing hypotheses
+  depth_scaling:
+    surface: Identify explicit probability claims and evidence-response patterns
+    standard: Evaluate whether updating is proportional to evidence strength; detect
+      base rate neglect and belief perseverance
+    deep: Reconstruct the full Bayesian structure including implicit priors; assess
+      whether the author's credences are calibrated to evidence across the work
+  requires_dimensions:
+  - probabilistic_reasoning_quality
+  produces_dimensions:
+  - probabilistic_reasoning_quality
+- key: game_theoretic_analysis
+  description: Identifies game-theoretic framing of situations and evaluates whether
+    the game structure and equilibrium concepts are correctly applied.
+  extended_description: |-
+    This capability detects when authors model situations as strategic interactions between rational agents—whether using explicit game-theoretic vocabulary or implicitly treating outcomes as determined by interdependent choices. The engine classifies game types (prisoners' dilemma, coordination games, chicken, assurance games, etc.) and assesses whether the classification is warranted by the situation's actual structure.
+
+    Game-theoretic reasoning is powerful but demanding. It requires that agents be rational utility-maximizers, that payoff structures be correctly specified, that the appropriate equilibrium concept be applied. A prisoners' dilemma framing implies that mutual cooperation is unstable without enforcement; an assurance game framing implies that cooperation is stable once achieved. Misclassifying game structure leads to mistaken conclusions about what outcomes are possible and what interventions are needed.
+
+    The capability also evaluates equilibrium reasoning—whether Nash equilibrium is appropriate or whether refinements (subgame perfection, trembling-hand perfection) are needed, whether multiple equilibria create selection problems, whether dynamic considerations change the analysis. The goal is not merely to identify game-theoretic reasoning but to assess whether the strategic structure matches the situation and whether conclusions follow from the analysis.
+  intellectual_grounding:
+    thinker: nash_schelling
+    concept: equilibrium_as_solution_concept
+    method: Evaluate strategic framing against the formal requirements of game-theoretic
+      models; assess whether assumptions about rationality, information, and payoffs
+      are met in the context analyzed.
+  indicators:
+  - Strategic framing where outcomes depend on multiple agents' choices
+  - Named game types (prisoners' dilemma, coordination, chicken)
+  - Payoff language—what agents gain or lose from different outcome combinations
+  - Equilibrium reasoning about stable states no agent wants to deviate from
+  - Assumptions about agent rationality, information, or strategic sophistication
+  depth_scaling:
+    surface: Identify game-theoretic framing and named game structures
+    standard: Evaluate whether the game classification fits the situation; assess
+      equilibrium concept application
+    deep: Reconstruct implicit payoff matrices; consider alternative game structures;
+      evaluate whether refinements are needed; assess robustness to assumption violations
+  requires_dimensions:
+  - strategic_interaction_analysis
+  produces_dimensions:
+  - strategic_interaction_analysis
+- key: reflective_equilibrium_mapping
+  description: Traces the iterative adjustment between principles and particular judgments,
+    evaluating the scope and stability of achieved equilibria.
+  extended_description: |-
+    This capability detects Rawlsian reflective equilibrium methodology—the process of achieving coherence between general principles and particular judgments through mutual adjustment. The engine identifies where principles are modified to accommodate recalcitrant judgments and where judgments are revised to fit principles, mapping the dialectic between abstract theory and concrete intuition.
+
+    Crucially, the capability distinguishes narrow and wide reflective equilibrium. Narrow equilibrium balances only principles and judgments; wide equilibrium incorporates background theories, philosophical considerations, and methodological commitments. The distinction matters because wide equilibrium provides more resources for justified revision but also more degrees of freedom for rationalization.
+
+    The engine also evaluates equilibrium quality: Which elements are treated as fixed points? Is the prioritization justified? How stable is the equilibrium—would small changes cascade through the system? Where does the text privilege intuitions that may reflect bias rather than moral insight? Where does it privilege principles that lack intuitive support? The goal is to make explicit the coherentist reasoning structure that often operates beneath the surface of normative argumentation.
+  intellectual_grounding:
+    thinker: rawls
+    concept: coherence_through_mutual_adjustment
+    method: Map the principle-judgment relationship; identify fixed points; assess
+      whether the equilibrium is genuinely reflective or merely accommodating by evaluating
+      the justification for treating certain elements as revisable.
+  indicators:
+  - Tension acknowledged between general principles and particular cases
+  - Principles modified to accommodate counterexamples or hard cases
+  - Intuitions dismissed as unreliable or biased when conflicting with theory
+  - Background theories invoked to adjudicate principle-judgment conflicts
+  - Explicit appeals to coherence, consistency, or 'considered judgments'
+  depth_scaling:
+    surface: Identify principle-judgment relationships and explicit coherentist methodology
+    standard: Map the adjustment process; distinguish narrow and wide equilibrium;
+      identify fixed points
+    deep: Evaluate equilibrium stability; assess justification for privileging certain
+      elements; compare to alternative equilibria achievable with different fixed
+      points
+  requires_dimensions:
+  - coherentist_reasoning_structure
+  produces_dimensions:
+  - coherentist_reasoning_structure
+- key: pragmatic_contradiction_detection
+  description: Identifies positions whose performative dimension contradicts their
+    propositional content, revealing self-undermining arguments.
+  extended_description: |-
+    This capability detects Habermasian pragmatic contradictions—cases where the act of asserting a claim presupposes what the claim denies. The classic case is the relativist who claims universal validity for relativism: the content denies universal validity while the performance of asserting presupposes it. The skeptic who argues that all reasoning is unreliable uses reasoning to make the argument, presupposing its reliability.
+
+    Pragmatic contradictions are devastating because they show that a position cannot be consistently maintained. Unlike logical contradictions (which might be avoided by precision), pragmatic contradictions are inherent in holding the position at all. They reveal that certain claims are not merely false but self-undermining—they cannot survive their own performance.
+
+    The capability requires distinguishing performative presuppositions from propositional content. Every assertion presupposes certain things: that the speaker means what they say, that they have grounds for the claim, that the claim has determinable truth conditions. When content undermines these presuppositions, the position collapses. The engine identifies not only blatant pragmatic contradictions but also subtle tensions where positions partially undermine their own conditions of assertability.
+  intellectual_grounding:
+    thinker: habermas
+    concept: performative_presupposition_analysis
+    method: Distinguish the propositional content of claims from the presuppositions
+      of asserting them; check for consistency between what is said and what saying
+      it requires.
+  indicators:
+  - Universal claims about the impossibility of universal claims
+  - Arguments against the reliability of argument
+  - Relativistic positions asserted as holding across perspectives
+  - Appeals to truth while denying the concept of truth
+  - Self-referential positions that must apply to themselves
+  depth_scaling:
+    surface: Identify obvious pragmatic contradictions (self-refuting skepticism,
+      relativism)
+    standard: Analyze presuppositions of major claims and check for contradiction
+      with content
+    deep: Examine subtle pragmatic tensions; assess whether positions can survive
+      reflective self-application; consider whether apparent contradictions can be
+      avoided through reinterpretation
+  requires_dimensions:
+  - performative_consistency
+  produces_dimensions:
+  - performative_consistency
+- key: transcendental_argument_assessment
+  description: Evaluates arguments from actualities to their necessary preconditions,
+    assessing the type and strength of necessity claimed.
+  extended_description: |-
+    This capability detects transcendental arguments—reasoning from 'X is the case' to 'Y must be the case for X to be possible.' These arguments, originating with Kant, attempt to establish necessary preconditions for experience, knowledge, or some other actuality. They are powerful because they appear to demonstrate substantive conclusions from minimal premises: if experience is actual, its conditions are necessarily actual.
+
+    The critical question, following Stroud's influential critique, is what type of necessity transcendental arguments establish. Logical necessity? Metaphysical necessity? Or merely conceptual or conventional necessity? If the argument shows only that we must believe Y for X to be possible, not that Y is actually the case, its force is diminished. The capability assesses whether the necessity claimed is commensurate with the conclusion sought.
+
+    The engine also detects overextension—transcendental arguments that claim more than they can establish. A legitimate transcendental argument might show that some concepts are required for experience; an illegitimate one might claim to prove the existence of external objects or other minds. The scope of transcendental argumentation remains philosophically contested, and this capability identifies where authors assume resolved debates about its power.
+  intellectual_grounding:
+    thinker: kant_stroud
+    concept: conditions_of_possibility_analysis
+    method: Identify the actuality claimed and the precondition inferred; assess the
+      modal strength of the necessity; evaluate whether alternatives to the precondition
+      are possible.
+  indicators:
+  - Language of preconditions, necessary conditions, or requirements for possibility
+  - Arguments structured as 'X is possible/actual, therefore Y must be the case'
+  - Appeals to what experience, knowledge, or judgment presuppose
+  - Claims about conditions of intelligibility or conceivability
+  - Modal vocabulary about what 'must' be the case rather than merely 'is'
+  depth_scaling:
+    surface: Identify transcendental argument structure and the preconditions claimed
+    standard: Evaluate the type of necessity—logical, metaphysical, conceptual; assess
+      whether alternatives to the precondition are possible
+    deep: Apply Stroud's critique to assess whether the argument establishes actual
+      conditions or merely conditions for belief; evaluate the argument's scope and
+      limitations
+  requires_dimensions:
+  - precondition_reasoning_rigor
+  produces_dimensions:
+  - precondition_reasoning_rigor
+- key: normative_framework_classification
+  description: Classifies normative reasoning by framework (consequentialist, deontological,
+    virtue-theoretic, care-ethical) and tracks framework shifts.
+  extended_description: |-
+    This capability identifies the normative reasoning frameworks operative in evaluative and prescriptive claims. Consequentialist reasoning evaluates actions by their outcomes; deontological reasoning by conformity to principles or duties regardless of consequences; virtue ethics by character traits manifested; care ethics by relationships and responsibilities honored. Each framework employs distinctive reasoning patterns and generates different conclusions from the same situations.
+
+    Critically, the engine detects unacknowledged framework shifts—where authors invoke consequentialist reasoning for some issues and deontological reasoning for others without acknowledging the transition. Such shifts may be principled (different frameworks appropriate to different domains) or opportunistic (choosing whichever framework supports the desired conclusion). The capability tracks framework consistency across a work, identifying where the author's normative methodology is unified versus eclectic.
+
+    The engine also assesses framework coherence with the text's other commitments. A consequentialist framework fits uneasily with strong individual rights; a deontological framework sits awkwardly with aggregative policy analysis. These tensions may be creative or confused, and identifying them reveals the normative architecture underlying surface-level arguments.
+  intellectual_grounding:
+    thinker: sidgwick_rawls_macintyre
+    concept: normative_framework_as_reasoning_structure
+    method: Classify evaluative claims by the reasoning pattern employed; track framework
+      deployment across the text; assess consistency and coherence with other commitments.
+  indicators:
+  - Evaluation by outcomes, welfare, or utility (consequentialist)
+  - Appeal to rights, duties, or principles regardless of consequences (deontological)
+  - Evaluation by character traits, virtues, or excellences (virtue ethics)
+  - Appeal to relationships, care, or responsibility to particular others (care ethics)
+  - Framework shifts signaled by changes in evaluative vocabulary or criteria
+  depth_scaling:
+    surface: Identify the dominant normative framework and classify major evaluative
+      claims
+    standard: Map all frameworks employed; detect unacknowledged shifts; assess whether
+      shifts are justified
+    deep: Analyze why particular frameworks are invoked for particular issues; evaluate
+      overall normative architecture; assess coherence with the text's other theoretical
+      commitments
+  requires_dimensions:
+  - normative_framework_coherence
+  produces_dimensions:
+  - normative_framework_coherence
+composability:
+  shares_with:
+    probabilistic_reasoning_quality: Shared with epistemological_method_detector for
+      assessing evidence-responsiveness
+    strategic_interaction_analysis: Shared with dialectical_structure for analyzing
+      multi-agent argumentation dynamics
+    normative_framework_coherence: Shared with inferential_commitment_mapper for tracking
+      what normative commitments follow from framework choices
+    performative_consistency: Shared with argument_architecture for detecting self-undermining
+      argument structures
+    coherentist_reasoning_structure: Shared with theory_construction_analyzer for
+      assessing principle-case relationships
+  consumes_from:
+    argument_structure: From argument_architecture—the overall structure of claims
+      and support relations into which specialized reasoning forms are embedded
+    modal_claims_inventory: From modal_reasoning_analyzer—necessity and possibility
+      claims that may involve transcendental or other specialized reasoning
+    conceptual_framework: From conceptual_framework_extraction—the key concepts whose
+      relationships may involve game-theoretic, Bayesian, or other specialized structures
+    dialectical_moments: From dialectical_structure—thesis-antithesis-synthesis dynamics
+      that may employ reflective equilibrium or other coherentist methods
+  synergy_engines:
+  - argument_architecture
+  - modal_reasoning_analyzer
+  - inferential_commitment_mapper
+  - dialectical_structure
+  - theory_construction_analyzer
+depth_levels:
+- key: surface
+  description: Identifies explicitly named specialized reasoning forms and obvious
+    instances. Suitable for initial reconnaissance of a text's reasoning toolkit—what
+    forms are present at all, which are dominant.
+  typical_passes: 1
+  suitable_for: Quick assessment of reasoning diversity; identifying dominant reasoning
+    forms; flagging texts for deeper analysis
+  passes:
+  - pass_number: 1
+    label: reasoning_form_inventory
+    stance: discovery
+    focus_dimensions:
+    - probabilistic_reasoning_quality
+    - strategic_interaction_analysis
+    - normative_framework_coherence
+    focus_capabilities:
+    - bayesian_reasoning_detection
+    - game_theoretic_analysis
+    - normative_framework_classification
+    consumes_from: []
+    description: Survey the text for specialized reasoning forms, identifying explicit
+      uses of Bayesian language, game-theoretic framing, reflective equilibrium methodology,
+      transcendental arguments, and normative frameworks. Catalog which forms appear
+      and note their distribution across the text. Flag obviously misapplied forms
+      for later evaluation.
+- key: standard
+  description: Identifies both explicit and implicit specialized reasoning, evaluates
+    application quality, and detects framework shifts. Suitable for academic reading
+    where reasoning rigor matters.
+  typical_passes: 2
+  suitable_for: Scholarly analysis; peer review; assessing argument quality; understanding
+    how conclusions are actually reached
+  passes:
+  - pass_number: 1
+    label: comprehensive_reasoning_detection
+    stance: discovery
+    focus_dimensions:
+    - probabilistic_reasoning_quality
+    - strategic_interaction_analysis
+    - coherentist_reasoning_structure
+    - precondition_reasoning_rigor
+    - normative_framework_coherence
+    focus_capabilities:
+    - bayesian_reasoning_detection
+    - game_theoretic_analysis
+    - reflective_equilibrium_mapping
+    - transcendental_argument_assessment
+    - normative_framework_classification
+    consumes_from: []
+    description: Conduct thorough inventory of specialized reasoning forms, including
+      implicit instances where the form is employed without being named. Identify
+      Bayesian updating even when not labeled as such, game-theoretic framing even
+      without formal apparatus, reflective equilibrium even without Rawlsian vocabulary.
+      Map which forms appear where and how they relate to the argument's key moves.
+  - pass_number: 2
+    label: quality_assessment
+    stance: confrontation
+    focus_dimensions:
+    - probabilistic_reasoning_quality
+    - strategic_interaction_analysis
+    - performative_consistency
+    - precondition_reasoning_rigor
+    focus_capabilities:
+    - bayesian_reasoning_detection
+    - game_theoretic_analysis
+    - pragmatic_contradiction_detection
+    - transcendental_argument_assessment
+    consumes_from:
+    - 1
+    description: Evaluate each identified reasoning form against its own standards.
+      Is Bayesian updating proportional to evidence strength? Is the game structure
+      correctly specified? Is the necessity in transcendental arguments genuine? Detect
+      pragmatic contradictions where positions undermine themselves. Identify framework
+      shifts and assess whether they are principled. Flag misapplied reasoning forms
+      where assumptions aren't met.
+- key: deep
+  description: Full analysis including implicit forms, systematic evaluation, framework
+    interaction assessment, and consideration of alternative reasoning approaches.
+    Suitable for comprehensive scholarly critique.
+  typical_passes: 4
+  suitable_for: Deep scholarly critique; dissertation-level analysis; understanding
+    the full reasoning architecture of a major work
+  passes:
+  - pass_number: 1
+    label: exhaustive_detection
+    stance: discovery
+    focus_dimensions:
+    - probabilistic_reasoning_quality
+    - strategic_interaction_analysis
+    - coherentist_reasoning_structure
+    - performative_consistency
+    - precondition_reasoning_rigor
+    - normative_framework_coherence
+    focus_capabilities:
+    - bayesian_reasoning_detection
+    - game_theoretic_analysis
+    - reflective_equilibrium_mapping
+    - pragmatic_contradiction_detection
+    - transcendental_argument_assessment
+    - normative_framework_classification
+    consumes_from: []
+    description: Conduct exhaustive survey of all specialized reasoning forms, explicit
+      and implicit. Trace Bayesian structures through the text's treatment of evidence
+      and belief. Map all strategic framings and their assumptions. Identify every
+      instance of reflective equilibrium reasoning. Catalog transcendental and quasi-transcendental
+      arguments. Track all normative frameworks and their deployment patterns.
+  - pass_number: 2
+    label: rigorous_evaluation
+    stance: confrontation
+    focus_dimensions:
+    - probabilistic_reasoning_quality
+    - strategic_interaction_analysis
+    - precondition_reasoning_rigor
+    - performative_consistency
+    focus_capabilities:
+    - bayesian_reasoning_detection
+    - game_theoretic_analysis
+    - transcendental_argument_assessment
+    - pragmatic_contradiction_detection
+    consumes_from:
+    - 1
+    description: 'Subject each reasoning form to rigorous evaluation against its own
+      tradition''s standards. Reconstruct implicit Bayesian priors and assess reasonableness.
+      Evaluate game-theoretic framings against formal requirements—are rationality
+      assumptions met? Apply Stroud''s critique to transcendental arguments. Test
+      all self-referential positions for pragmatic contradiction. Rate each instance:
+      correctly applied, partially applied, misapplied.'
+  - pass_number: 3
+    label: framework_interaction_analysis
+    stance: architecture
+    focus_dimensions:
+    - coherentist_reasoning_structure
+    - normative_framework_coherence
+    focus_capabilities:
+    - reflective_equilibrium_mapping
+    - normative_framework_classification
+    consumes_from:
+    - 1
+    - 2
+    description: Analyze how different reasoning forms interact within the text. Does
+      game-theoretic framing conflict with normative framework commitments? Does reflective
+      equilibrium methodology sit coherently with Bayesian epistemology? Map the architecture
+      of reasoning forms—which are foundational, which parasitic, which in tension.
+      Identify the text's dominant reasoning mode and how other forms orbit it.
+  - pass_number: 4
+    label: synthetic_assessment
+    stance: integration
+    focus_dimensions:
+    - probabilistic_reasoning_quality
+    - strategic_interaction_analysis
+    - coherentist_reasoning_structure
+    - performative_consistency
+    - precondition_reasoning_rigor
+    - normative_framework_coherence
+    focus_capabilities:
+    - bayesian_reasoning_detection
+    - game_theoretic_analysis
+    - reflective_equilibrium_mapping
+    - pragmatic_contradiction_detection
+    - transcendental_argument_assessment
+    - normative_framework_classification
+    consumes_from:
+    - 1
+    - 2
+    - 3
+    description: Synthesize findings into an overall assessment of the text's reasoning
+      sophistication. What is the reasoning form inventory? Which forms are well-applied,
+      which problematic? Where do framework shifts create tension or opportunity?
+      How does the text's reasoning profile compare to alternatives? Produce a quality
+      assessment matrix rating each form and a framework coherence evaluation assessing
+      the overall integration of specialized reasoning.
+apps:
+- critic
+function: logic
+paradigm_keys: []
