@@ -675,4 +675,5 @@ legacy_engine_key: conceptual_framework_extraction
 apps:
 - critic
 - visualizer
+function: genealogy
 paradigm_keys: []

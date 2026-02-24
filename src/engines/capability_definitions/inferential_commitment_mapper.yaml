@@ -672,5 +672,6 @@ legacy_engine_key: inferential_commitment_mapper
 apps:
 - critic
 - visualizer
+function: genealogy
 paradigm_keys:
 - brandomian

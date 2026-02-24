@@ -163,6 +163,13 @@ class EngineDefinition(BaseModel):
         examples=[["critic"], ["critic", "visualizer"]],
     )
 
+    # Function/role categorization
+    function: Optional[str] = Field(
+        default=None,
+        description="Primary function/role of this engine (e.g., 'genealogy', 'logic', 'rhetoric')",
+        examples=["genealogy", "logic", "rhetoric"],
+    )
+
     class Config:
         json_schema_extra = {
             "example": {
@@ -210,6 +217,7 @@ class EngineSummary(BaseModel):
     paradigm_keys: list[str] = Field(default_factory=list)
     has_profile: bool = Field(default=False, description="Whether this engine has a rich profile")
     apps: list[str] = Field(default_factory=list, description="Apps that use this engine")
+    function: Optional[str] = Field(default=None, description="Primary function/role of this engine")
 
 
 class EnginePromptResponse(BaseModel):

@@ -2,6 +2,14 @@
   "engine_key": "concept_semantic_constellation",
   "entries": [
     {
+      "timestamp": "2026-02-24T07:07:30.489432+00:00",
+      "version": 3,
+      "definition_hash": "c257ff58be3d351b7e0cd3d27ab6a5eabbfed50dcab2f65067d2efd93811fb39",
+      "changes": [],
+      "summary": "No changes detected",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-17T15:13:52.117930+00:00",
       "version": 2,
       "definition_hash": "50ae36e3d0f74f53048f3fe5c55f6c63d754286aa8354bc07660bbf8f6b4a384",

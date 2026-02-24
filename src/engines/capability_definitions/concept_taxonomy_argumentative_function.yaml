@@ -632,5 +632,6 @@ depth_levels:
 legacy_engine_key: concept_taxonomy_argumentative_function
 apps:
 - critic
+function: genealogy
 paradigm_keys:
 - genealogical

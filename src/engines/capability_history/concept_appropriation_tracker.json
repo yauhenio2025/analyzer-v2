@@ -2,6 +2,14 @@
   "engine_key": "concept_appropriation_tracker",
   "entries": [
     {
+      "timestamp": "2026-02-24T07:07:30.436955+00:00",
+      "version": 4,
+      "definition_hash": "60e8df67dc04d8f1bd4f27b027dadf26e2a2591f1847e588c44a3076aed6d4f4",
+      "changes": [],
+      "summary": "No changes detected",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-18T03:19:14.719422+00:00",
       "version": 3,
       "definition_hash": "abc3cc6a6f44870931093e0fa1d53dabcc67007e60d7083788f369ba19fd0ab9",

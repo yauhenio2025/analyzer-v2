@@ -347,6 +347,10 @@ class CapabilityEngineDefinition(BaseModel):
         default_factory=list,
         description="Apps that use this engine (e.g., 'critic', 'visualizer')",
     )
+    function: Optional[str] = Field(
+        default=None,
+        description="Primary function/role of this engine (e.g., 'genealogy', 'logic', 'rhetoric')",
+    )
     paradigm_keys: list[str] = Field(
         default_factory=list,
         description="Associated paradigm keys",
@@ -366,3 +370,4 @@ class CapabilityEngineSummary(BaseModel):
     depth_levels: list[str] = Field(default_factory=list)
     synergy_engines: list[str] = Field(default_factory=list)
     apps: list[str] = Field(default_factory=list)
+    function: Optional[str] = Field(default=None, description="Primary function/role")

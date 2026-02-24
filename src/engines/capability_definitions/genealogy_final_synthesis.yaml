@@ -685,5 +685,6 @@ legacy_engine_key: genealogy_pass7_final_synthesis
 apps:
 - critic
 - visualizer
+function: genealogy
 paradigm_keys:
 - genealogical

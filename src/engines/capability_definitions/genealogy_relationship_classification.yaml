@@ -536,5 +536,6 @@ legacy_engine_key: genealogy_pass1b_relationship_classification
 apps:
 - critic
 - visualizer
+function: genealogy
 paradigm_keys:
 - genealogical

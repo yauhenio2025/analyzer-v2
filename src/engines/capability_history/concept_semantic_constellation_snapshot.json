@@ -407,6 +407,7 @@
   ],
   "engine_key": "concept_semantic_constellation",
   "engine_name": "Concept Semantic Constellation",
+  "function": "genealogy",
   "intellectual_lineage": {
     "key_concepts": [
       {

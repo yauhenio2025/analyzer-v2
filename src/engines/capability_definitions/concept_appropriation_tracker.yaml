@@ -646,5 +646,6 @@ legacy_engine_key: concept_appropriation_tracker
 apps:
 - critic
 - visualizer
+function: genealogy
 paradigm_keys:
 - genealogical

@@ -2,6 +2,14 @@
   "engine_key": "concept_taxonomy_argumentative_function",
   "entries": [
     {
+      "timestamp": "2026-02-24T07:07:30.541700+00:00",
+      "version": 3,
+      "definition_hash": "dac6a9eb9ac7172b7dfcc2f014a335ffd3d81f3ba1828d260879f0a5e49e7fcf",
+      "changes": [],
+      "summary": "No changes detected",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-17T15:13:52.168990+00:00",
       "version": 2,
       "definition_hash": "ff769455d530bb50f209e0c316bbdcd891a9975c46a10d27a5b8ae275f94c498",

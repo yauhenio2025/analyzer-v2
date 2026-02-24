@@ -2,6 +2,14 @@
   "engine_key": "evolution_tactics_detector",
   "entries": [
     {
+      "timestamp": "2026-02-24T07:07:30.615033+00:00",
+      "version": 3,
+      "definition_hash": "c08ba63743506e7e4716d33834df9c1166946586964d7acefe95b8a72b5eb4c6",
+      "changes": [],
+      "summary": "No changes detected",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-17T15:13:52.093078+00:00",
       "version": 2,
       "definition_hash": "ff7fde8f937a3a0928992074d8742c9dbbbdd3c7816cf4f46a542712620446a4",

@@ -424,6 +424,7 @@
   ],
   "engine_key": "concept_evolution",
   "engine_name": "Concept Evolution Tracker",
+  "function": "genealogy",
   "intellectual_lineage": {
     "key_concepts": [
       {

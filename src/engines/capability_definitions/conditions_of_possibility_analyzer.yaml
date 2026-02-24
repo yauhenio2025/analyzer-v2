@@ -678,5 +678,6 @@ legacy_engine_key: conditions_of_possibility_analyzer
 apps:
 - critic
 - visualizer
+function: genealogy
 paradigm_keys:
 - genealogical

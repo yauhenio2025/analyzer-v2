@@ -435,6 +435,7 @@
   ],
   "engine_key": "conceptual_framework_extraction",
   "engine_name": "Conceptual Framework Extractor",
+  "function": "genealogy",
   "intellectual_lineage": {
     "key_concepts": [
       {

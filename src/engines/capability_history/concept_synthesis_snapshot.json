@@ -456,6 +456,7 @@
   ],
   "engine_key": "concept_synthesis",
   "engine_name": "Concept Synthesis",
+  "function": "genealogy",
   "intellectual_lineage": {
     "key_concepts": [
       {

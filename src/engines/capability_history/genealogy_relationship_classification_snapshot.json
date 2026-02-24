@@ -342,6 +342,7 @@
   ],
   "engine_key": "genealogy_relationship_classification",
   "engine_name": "Genealogy Relationship Classification",
+  "function": "genealogy",
   "intellectual_lineage": {
     "key_concepts": [
       {

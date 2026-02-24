@@ -716,6 +716,7 @@ depth_levels:
 legacy_engine_key: concept_semantic_constellation
 apps:
 - critic
+function: genealogy
 paradigm_keys:
 - marxist
 - brandomian

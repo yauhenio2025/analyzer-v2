@@ -370,6 +370,7 @@
   ],
   "engine_key": "evolution_tactics_detector",
   "engine_name": "Evolution Tactics Detector",
+  "function": "genealogy",
   "intellectual_lineage": {
     "key_concepts": [
       {

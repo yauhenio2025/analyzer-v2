@@ -514,6 +514,7 @@
   ],
   "engine_key": "conditions_of_possibility_analyzer",
   "engine_name": "Conditions of Possibility Analyzer",
+  "function": "genealogy",
   "intellectual_lineage": {
     "key_concepts": [
       {

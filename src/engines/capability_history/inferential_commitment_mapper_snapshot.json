@@ -407,6 +407,7 @@
   ],
   "engine_key": "inferential_commitment_mapper",
   "engine_name": "Inferential Commitment Mapper",
+  "function": "genealogy",
   "intellectual_lineage": {
     "key_concepts": [
       {

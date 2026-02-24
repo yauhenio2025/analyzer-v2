@@ -2,6 +2,14 @@
   "engine_key": "genealogy_final_synthesis",
   "entries": [
     {
+      "timestamp": "2026-02-24T07:07:30.640663+00:00",
+      "version": 4,
+      "definition_hash": "bf740ebdd24f2d85e3f1fdfc1ecdd07f10179891c0d3d8bc2e34cf6d64f3eb54",
+      "changes": [],
+      "summary": "No changes detected",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-18T03:19:14.746544+00:00",
       "version": 3,
       "definition_hash": "569c25556e9ba86280c0d4c87f82a91a9666b8b075a1b7d9595e0f53597effb8",

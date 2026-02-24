@@ -396,6 +396,7 @@
   ],
   "engine_key": "genealogy_final_synthesis",
   "engine_name": "Genealogy Final Synthesis",
+  "function": "genealogy",
   "intellectual_lineage": {
     "key_concepts": [
       {

@@ -398,6 +398,7 @@
   ],
   "engine_key": "concept_taxonomy_argumentative_function",
   "engine_name": "Concept Taxonomy: Argumentative Function",
+  "function": "genealogy",
   "intellectual_lineage": {
     "key_concepts": [
       {

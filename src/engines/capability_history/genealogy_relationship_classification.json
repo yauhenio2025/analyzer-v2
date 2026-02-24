@@ -2,6 +2,14 @@
   "engine_key": "genealogy_relationship_classification",
   "entries": [
     {
+      "timestamp": "2026-02-24T07:07:30.660785+00:00",
+      "version": 4,
+      "definition_hash": "0294409d2f663e0617901df44d4493a1efe349f692f3523be1375d5f6f97ce1d",
+      "changes": [],
+      "summary": "No changes detected",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-18T03:19:14.796070+00:00",
       "version": 3,
       "definition_hash": "8da0f1fc589eb243c2be86a4d0f103485e086d57b66e9ee07a53a1a5eb94031d",

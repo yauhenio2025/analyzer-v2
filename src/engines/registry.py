@@ -281,6 +281,7 @@ class EngineRegistry:
                 depth_levels=[d.key for d in e.depth_levels],
                 synergy_engines=e.composability.synergy_engines,
                 apps=e.apps,
+                function=e.function,
             )
             for e in self._capability_engines.values()
         ]

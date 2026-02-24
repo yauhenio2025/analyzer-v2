@@ -424,6 +424,7 @@
   ],
   "engine_key": "concept_appropriation_tracker",
   "engine_name": "Concept Appropriation Tracker",
+  "function": "genealogy",
   "intellectual_lineage": {
     "key_concepts": [
       {

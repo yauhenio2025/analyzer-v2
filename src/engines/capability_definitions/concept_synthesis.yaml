@@ -765,5 +765,6 @@ legacy_engine_key: concept_synthesis
 apps:
 - critic
 - visualizer
+function: genealogy
 paradigm_keys:
 - genealogical

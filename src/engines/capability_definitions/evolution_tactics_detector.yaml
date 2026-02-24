@@ -570,5 +570,6 @@ legacy_engine_key: evolution_tactics_detector
 apps:
 - critic
 - visualizer
+function: genealogy
 paradigm_keys:
 - genealogical

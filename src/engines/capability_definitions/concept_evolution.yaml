@@ -675,6 +675,7 @@ legacy_engine_key: concept_evolution
 apps:
 - critic
 - visualizer
+function: genealogy
 paradigm_keys:
 - brandomian
 - hegelian_critical

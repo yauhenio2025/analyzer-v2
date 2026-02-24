@@ -2,6 +2,14 @@
   "engine_key": "conceptual_framework_extraction",
   "entries": [
     {
+      "timestamp": "2026-02-24T07:07:30.566866+00:00",
+      "version": 3,
+      "definition_hash": "2090b7d41ce83198446fa6e6bbf5fe1760061791bdb49e189a4bdb4ce564f39f",
+      "changes": [],
+      "summary": "No changes detected",
+      "is_baseline": false
+    },
+    {
       "timestamp": "2026-02-17T15:13:51.976694+00:00",
       "version": 2,
       "definition_hash": "0178e482be17f8e54e6c26154aed5396743b2c8481d12ee61b5b75c7b55fb911",

@@ -62,6 +62,9 @@ async def list_engines(
     app: Optional[str] = Query(
         None, description="Filter by app that uses the engine (e.g., 'critic')"
     ),
+    function: Optional[str] = Query(
+        None, description="Filter by function (e.g., 'genealogy', 'logic')"
+    ),
     search: Optional[str] = Query(
         None, description="Search in name and description"
     ),
@@ -82,6 +85,21 @@ async def list_engines(
     if app:
         engines = [e for e in engines if app in e.apps]
 
+    # Build function lookup from capability definitions (YAML) since function
+    # is primarily defined there, not in JSON engine definitions
+    cap_function_map: dict[str, str] = {}
+    for cap_def in registry.list_capability_definitions():
+        if cap_def.function:
+            cap_function_map[cap_def.engine_key] = cap_def.function
+
+    def resolve_function(e: EngineDefinition) -> Optional[str]:
+        """Get function from engine itself or its capability definition."""
+        return e.function or cap_function_map.get(e.engine_key)
+
+    # Apply function filter if specified
+    if function:
+        engines = [e for e in engines if resolve_function(e) == function]
+
     return [
         EngineSummary(
             engine_key=e.engine_key,
@@ -93,6 +111,7 @@ async def list_engines(
             paradigm_keys=e.paradigm_keys,
             has_profile=e.engine_profile is not None,
             apps=e.apps,
+            function=resolve_function(e),
         )
         for e in engines
     ]
@@ -122,6 +141,22 @@ async def list_apps() -> list[str]:
     return sorted(apps)
 
 
+@router.get("/functions", response_model=list[str])
+async def list_functions() -> list[str]:
+    """List all unique function tags used across engines."""
+    registry = get_engine_registry()
+    functions = set()
+    # Check JSON engines
+    for engine in registry.list_all():
+        if engine.function:
+            functions.add(engine.function)
+    # Check capability engines (YAML) - function is primarily defined here
+    for cap_engine in registry.list_capability_definitions():
+        if cap_engine.function:
+            functions.add(cap_engine.function)
+    return sorted(functions)
+
+
 @router.get("/categories")
 async def list_categories() -> dict[str, dict[str, int]]:
     """Get engine counts by category."""
@@ -140,6 +175,13 @@ async def list_engines_by_category(
     """List engines in a specific category."""
     registry = get_engine_registry()
     engines = registry.list_by_category(category)
+
+    # Build function lookup from capability definitions
+    cap_function_map: dict[str, str] = {}
+    for cap_def in registry.list_capability_definitions():
+        if cap_def.function:
+            cap_function_map[cap_def.engine_key] = cap_def.function
+
     return [
         EngineSummary(
             engine_key=e.engine_key,
@@ -151,6 +193,7 @@ async def list_engines_by_category(
             paradigm_keys=e.paradigm_keys,
             has_profile=e.engine_profile is not None,
             apps=e.apps,
+            function=e.function or cap_function_map.get(e.engine_key),
         )
         for e in engines
     ]
