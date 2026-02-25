@@ -21,6 +21,7 @@ from typing import Optional
 from .catalog import assemble_full_catalog, catalog_to_text
 from .sampler_schemas import BookSample
 from .schemas import (
+    ChapterTarget,
     EngineExecutionSpec,
     OrchestratorPlanRequest,
     PhaseExecutionSpec,
@@ -49,7 +50,8 @@ Your job: compose a WorkflowExecutionPlan that achieves the objective's goals us
 4. **Phases are flexible**: You can add, remove, reorder, or modify phases. Phase numbers can use decimals (1.0, 1.5, 2.0, 2.5, 3.0, etc.). Specify depends_on for dependency ordering.
 5. **Per-work iteration**: Set iteration_mode="per_work" for phases that need to run once per prior work. Use per_work_chain_map if different works need different chains.
 6. **Chain vs engine**: Prefer chains for multi-faceted analysis (they compose multiple engines). Use single engines for focused tasks.
-7. **Decision traceability**: Include a complete decision_trace. Every decision must cite evidence from book samples or objectives. For every engine considered, state whether selected or rejected and why. This is mandatory.
+7. **Chapter-level analysis**: For book-length works, you can target specific chapters by setting document_scope="chapter" and providing chapter_targets. Use this when specific chapters are disproportionately important or when chapter-level granularity would improve analysis. The book samples include chapter_structure showing detected chapters.
+8. **Decision traceability**: Include a complete decision_trace. Every decision must cite evidence from book samples or objectives. For every engine considered, state whether selected or rejected and why. This is mandatory.
 
 ## Output Format
 
@@ -74,6 +76,8 @@ Return ONLY valid JSON (no markdown fences) matching this structure:
       "supplementary_chains": [],
       "max_context_chars_override": null,
       "per_work_chain_map": null,
+      "document_scope": "whole",
+      "chapter_targets": null,
       "estimated_tokens": 50000,
       "estimated_cost_usd": 0.75,
       "rationale": "WHY this phase configuration"
@@ -402,6 +406,11 @@ def generate_adaptive_plan(
             depends_on=phase_data.get("depends_on"),
             estimated_tokens=phase_data.get("estimated_tokens", 0),
             estimated_cost_usd=phase_data.get("estimated_cost_usd", 0.0),
+            # Chapter-level targeting
+            document_scope=phase_data.get("document_scope", "whole"),
+            chapter_targets=[
+                ChapterTarget(**ct) for ct in phase_data["chapter_targets"]
+            ] if phase_data.get("chapter_targets") else None,
         )
         plan.phases.append(phase)
 
