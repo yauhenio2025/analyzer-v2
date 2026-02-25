@@ -1,0 +1,473 @@
+engine_key: deep_summarization
+engine_name: Deep Summarization Engine
+version: 1
+category: outline
+kind: extraction
+problematique: |
+  What does a text actually argue, and how does it construct its argument?
+  Surface summaries capture what a text says; deep summarization captures what
+  a text DOES — the architectural logic, rhetorical strategies, conceptual
+  moves, what's foregrounded and suppressed. A 300-word summary tells you the
+  topic; a deep summarization tells you the thesis architecture, chapter-by-chapter
+  argument map, evidence patterns, rhetorical deployment, vocabulary structure,
+  and where the argument's load-bearing walls are.
+
+  This distinction matters because downstream analytical engines — concept
+  extraction, semantic constellation mapping, inferential commitment analysis,
+  evolution tracking — all require understanding not just WHAT claims are made
+  but HOW the argument is constructed. A concept that appears in a foundational
+  chapter carries different analytical weight than one that appears in an excursus.
+  An evidence pattern that dominates one section but disappears in another reveals
+  something about the argument's internal tensions. The vocabulary an author
+  borrows, modifies, or invents tells us about their intellectual debts and
+  innovations.
+
+  Deep summarization is the foundation upon which all other analytical operations
+  build. Without it, engines operate on texts they don't understand — producing
+  technically sophisticated analyses of arguments whose basic architecture they
+  haven't grasped. It serves both target works (where the full 8-dimension
+  analysis is essential) and prior/background works (where vocabulary and thesis
+  architecture feed directly into genealogical scanning).
+
+researcher_question: What does this text actually argue, how does it construct its argument, and what does it foreground or suppress?
+
+intellectual_lineage:
+  primary:
+    name: toulmin
+    description: Stephen Toulmin (1922-2009), British philosopher whose model of practical argument — claims, grounds, warrants, backing, qualifiers, rebuttals — provides the foundation for analyzing how arguments are actually constructed rather than how formal logic says they should be. His insight that arguments are practical instruments, not logical derivations, grounds this engine's attention to the functional architecture of texts rather than their formal structure.
+  secondary:
+    - name: perelman
+      description: Chaïm Perelman (1912-1984), Belgian philosopher of law whose New Rhetoric revived the study of practical argumentation and audience-directed persuasion, emphasizing that argument structure adapts to its audience and purpose — essential for understanding why academic texts organize their arguments the way they do.
+    - name: foucault
+      description: Michel Foucault (1926-1984), whose analysis of discursive formations reveals how texts systematically include and exclude, foreground and suppress — the pattern of what's said and unsaid being as analytically significant as the explicit argument.
+    - name: koselleck
+      description: Reinhart Koselleck (1923-2006), German historian whose Begriffsgeschichte (conceptual history) methodology provides tools for mapping how conceptual vocabulary functions within texts — not just what terms mean but what intellectual work they perform.
+    - name: peirce
+      description: Charles Sanders Peirce (1839-1914), American pragmatist whose semiotics and theory of abductive inference inform this engine's attention to how evidence patterns function as sign systems within arguments — what counts as evidence, how it's deployed, and what it signifies about the argument's commitments.
+  traditions:
+    - name: rhetoric
+      description: The classical and modern rhetorical tradition from Aristotle through Perelman and Burke, providing analytical tools for understanding how texts persuade, organize, and deploy evidence for strategic purposes.
+    - name: discourse_analysis
+      description: The Foucauldian tradition of analyzing what discursive formations include and exclude, what subject positions they construct, and how they produce the objects they claim merely to describe.
+    - name: conceptual_history
+      description: The Koselleckian tradition of tracking how concepts function within texts, how vocabulary structures argument, and how terminological choices reveal intellectual commitments and debts.
+    - name: pragmatist_epistemology
+      description: The Peircean tradition of understanding knowledge claims as embedded in practices of inquiry, where evidence patterns and inferential structures reveal an author's epistemic commitments.
+  key_concepts:
+    - name: thesis_architecture
+      definition: The structural organization of a text's central and supporting claims, their logical dependencies, and the unstated premises that hold the argument together — the load-bearing structure beneath the surface content.
+    - name: argumentative_weight
+      definition: The differential importance of different parts of a text to the overall argument — some sections are load-bearing (the argument collapses without them), others are supporting (they enrich but aren't essential).
+    - name: foregrounding_and_suppression
+      definition: The pattern of what a text emphasizes and what it minimizes or omits, following Foucault's insight that what's absent from a discourse is often as analytically significant as what's present.
+    - name: conceptual_vocabulary
+      definition: The network of key terms, their definitions (given vs. operational), semantic fields, borrowed terminology, and terminological innovations that structure a text's intellectual framework.
+    - name: downstream_utility
+      definition: The analytical value of a summarization for subsequent engines — what entry points, complexities, and productive questions the summary enables for deeper analysis.
+
+analytical_dimensions:
+  - key: thesis_architecture
+    description: The structural organization of the text's central and supporting claims, their dependencies, and unstated premises.
+    probing_questions:
+      - What is the central thesis, and what type of claim is it (empirical, normative, interpretive)?
+      - What supporting theses hold up the central claim?
+      - What are the logical dependencies between theses?
+      - What premises does the argument require but leave unstated?
+      - What is the scope and what are the self-imposed limitations?
+    depth_guidance:
+      surface: Identify the central thesis and 2-3 main supporting claims.
+      standard: Map the full thesis architecture including dependencies and unstated premises.
+      deep: Trace thesis dependencies across chapters, identify all unstated premises, assess which thesis relationships are strongest and weakest.
+
+  - key: chapter_argument_map
+    description: The function of each chapter or major section in the overall argument — what it contributes, what moves it makes, how it connects to adjacent chapters.
+    probing_questions:
+      - What is each chapter's primary function (establishing premises, advancing claims, handling objections)?
+      - What are the key conceptual or rhetorical moves within each chapter?
+      - How does argument flow between chapters — what does each receive and hand off?
+    depth_guidance:
+      surface: Identify the primary function of each chapter in one sentence.
+      standard: Map chapter functions, key moves, and inter-chapter transitions.
+      deep: Full chapter-by-chapter analysis including internal argumentative structure, transition quality, and identification of the most analytically productive chapters.
+
+  - key: conceptual_moves
+    description: The significant conceptual operations the text performs — definitions, redefinitions, distinctions, syntheses, inversions, analogies.
+    probing_questions:
+      - What conceptual operations does the author perform (defining, redefining, distinguishing, synthesizing)?
+      - Where are the most consequential conceptual moves?
+      - What strategic function does each move serve?
+    depth_guidance:
+      surface: Identify the 3-5 most significant conceptual moves.
+      standard: Catalog all significant moves with their strategic functions.
+      deep: Full catalog with assessment of how moves relate to each other and to the thesis architecture.
+
+  - key: evidence_patterns
+    description: What types of evidence the text deploys, how evidence quality varies, and where systematic gaps or asymmetries exist.
+    probing_questions:
+      - What types of evidence does the author favor (statistical, case study, theoretical, historical)?
+      - Where is evidence strong vs. weak or absent?
+      - Are there systematic evidence asymmetries across the argument?
+    depth_guidance:
+      surface: Identify the dominant evidence type and any obvious gaps.
+      standard: Map evidence types, frequencies, and gaps across the argument.
+      deep: Full evidence audit including asymmetries, quality variation, and assessment of which claims rest on the strongest/weakest evidence.
+
+  - key: rhetorical_strategies
+    description: How the text persuades beyond pure logic — appeals, concessions, preemptive objections, narrative techniques.
+    probing_questions:
+      - What rhetorical strategies does the author deploy?
+      - Who is the implied audience for each strategy?
+      - Where do rhetorical strategies compensate for argumentative weakness?
+    depth_guidance:
+      surface: Identify the 2-3 dominant rhetorical strategies.
+      standard: Catalog strategies with their targets and effectiveness.
+      deep: Full analysis of the rhetorical layer including where rhetoric compensates for argumentative gaps.
+
+  - key: foregrounding_suppression
+    description: What the text emphasizes and what it minimizes or omits, and what the pattern reveals about the argument's commitments and blind spots.
+    probing_questions:
+      - What themes, perspectives, or evidence types are consistently foregrounded?
+      - What is minimized, omitted, or relegated to footnotes?
+      - What does the pattern of inclusion/exclusion reveal?
+    depth_guidance:
+      surface: Identify the most obvious foregrounded and suppressed elements.
+      standard: Map the full foregrounding/suppression pattern with analytical implications.
+      deep: Detailed analysis of how foregrounding/suppression operates at multiple levels (thematic, evidential, perspectival) and what it reveals about the argument's unacknowledged commitments.
+
+  - key: conceptual_vocabulary
+    description: The network of key terms, their definitions, semantic fields, borrowed terminology, innovations, and gaps.
+    probing_questions:
+      - What are the text's key terms and how are they defined (or left undefined)?
+      - Where does the author borrow terminology and how is it modified?
+      - What concepts does the argument need but lack vocabulary for?
+    depth_guidance:
+      surface: List the 10-15 most important terms with brief characterizations.
+      standard: Map key terms with definitions, operational meanings, sources, and modifications.
+      deep: Full vocabulary map including semantic fields, borrowing patterns, innovations, and gaps — with assessment of how vocabulary choices structure the argument.
+
+  - key: downstream_utility
+    description: Assessment of what this analysis enables for subsequent analytical engines — entry points, complexities, and productive questions.
+    probing_questions:
+      - What are the most productive starting points for deeper analysis?
+      - What aspects will require special analytical attention?
+      - What questions does this text raise that downstream engines should investigate?
+    depth_guidance:
+      surface: Identify 2-3 key entry points for further analysis.
+      standard: Map entry points, complexities, and recommended analytical focus areas.
+      deep: Comprehensive downstream utility assessment with specific recommendations for which engines and dimensions would be most productive.
+
+capabilities:
+  - key: extract_thesis_architecture
+    description: Decomposes a text's argument into its thesis structure — central claim, supporting theses, dependencies, and unstated premises.
+    extended_description: Reconstructs the logical skeleton of the argument, revealing what holds it together and where the hidden assumptions lie.
+    intellectual_grounding:
+      thinker: Toulmin
+      concept: Practical argument structure
+      method: Decompose the argument into claims, grounds, warrants, and backing to reveal the functional architecture.
+    indicators:
+      - Central claims stated or implied
+      - Supporting arguments and evidence chains
+      - Logical dependencies between sections
+      - Scope limitations and exclusions
+    depth_scaling:
+      surface: Identify the central thesis and main supporting claims.
+      standard: Full thesis architecture with dependencies and unstated premises.
+      deep: Complete architecture including thesis-thesis relationships, premise hierarchy, and scope analysis.
+    requires_dimensions: []
+    produces_dimensions:
+      - thesis_architecture
+
+  - key: map_chapter_functions
+    description: Determines the functional role of each chapter or major section in the overall argument.
+    extended_description: Maps each chapter's contribution to the thesis architecture — whether it establishes premises, advances claims, handles objections, provides evidence, or synthesizes threads.
+    intellectual_grounding:
+      thinker: Perelman
+      concept: Rhetorical arrangement
+      method: Analyze the strategic ordering and function of argumentative units.
+    indicators:
+      - Chapter openings that signal function (introduction of evidence, engagement with objections)
+      - Transitions between chapters
+      - Argumentative weight distribution
+    depth_scaling:
+      surface: One-sentence function description per chapter.
+      standard: Function, key moves, and transitions per chapter.
+      deep: Full chapter analysis including internal structure and analytical productivity assessment.
+    requires_dimensions: []
+    produces_dimensions:
+      - chapter_argument_map
+
+  - key: catalog_conceptual_moves
+    description: Identifies and catalogs the significant conceptual operations the text performs.
+    extended_description: Maps definitions, redefinitions, distinctions, syntheses, inversions, and analogies — the intellectual operations that constitute the argument's method.
+    intellectual_grounding:
+      thinker: Koselleck
+      concept: Conceptual operations in intellectual discourse
+      method: Track how concepts are introduced, transformed, and deployed as argumentative instruments.
+    indicators:
+      - Explicit definitions and redefinitions
+      - Distinctions drawn between related concepts
+      - Moments of synthesis or inversion
+      - Analogies deployed as argumentative tools
+    depth_scaling:
+      surface: Identify the 3-5 most significant conceptual moves.
+      standard: Full catalog of significant moves with strategic functions.
+      deep: Comprehensive catalog with inter-move relationships and assessment of how moves serve the thesis architecture.
+    requires_dimensions:
+      - thesis_architecture
+    produces_dimensions:
+      - conceptual_moves
+
+  - key: audit_evidence_patterns
+    description: Audits what types of evidence the text deploys, where evidence is strong or weak, and where systematic gaps exist.
+    extended_description: Maps the evidence landscape — not just what evidence is presented but how it's deployed, where quality varies, and what the pattern of evidential support reveals about the argument's commitments.
+    intellectual_grounding:
+      thinker: Peirce
+      concept: Evidence as sign system
+      method: Analyze evidence patterns as indicators of epistemic commitments and argumentative strategies.
+    indicators:
+      - Types of evidence deployed (statistical, case study, theoretical, historical)
+      - Variation in evidence quality across the argument
+      - Systematic gaps or asymmetries
+    depth_scaling:
+      surface: Identify dominant evidence type and obvious gaps.
+      standard: Map evidence types, frequencies, and gaps.
+      deep: Full evidence audit including quality variation, asymmetries, and claim-evidence alignment.
+    requires_dimensions:
+      - thesis_architecture
+    produces_dimensions:
+      - evidence_patterns
+
+  - key: analyze_rhetorical_strategies
+    description: Identifies the rhetorical strategies deployed beyond pure logical argumentation.
+    extended_description: Maps how the text persuades — through appeals, concessions, preemptive objections, narrative techniques, and other rhetorical instruments.
+    intellectual_grounding:
+      thinker: Perelman
+      concept: Rhetoric as practical persuasion
+      method: Identify the persuasive instruments deployed and assess their strategic function.
+    indicators:
+      - Appeals to authority, evidence, or consequences
+      - Concessive moves and preemptive objections
+      - Narrative techniques deployed for persuasive purposes
+    depth_scaling:
+      surface: Identify 2-3 dominant strategies.
+      standard: Catalog strategies with targets and effectiveness.
+      deep: Full rhetorical analysis including where rhetoric compensates for argumentative gaps.
+    requires_dimensions:
+      - thesis_architecture
+    produces_dimensions:
+      - rhetorical_strategies
+
+  - key: detect_foregrounding_suppression
+    description: Reveals what the text emphasizes and what it minimizes or omits.
+    extended_description: Following Foucault, maps the pattern of discursive inclusion and exclusion — what's foregrounded (through repetition, structural prominence, extended treatment) and what's suppressed (through omission, brief mention, relegation to footnotes).
+    intellectual_grounding:
+      thinker: Foucault
+      concept: Discursive formation and exclusion
+      method: Map what the discourse includes and excludes, foregrounds and suppresses, to reveal its unacknowledged commitments.
+    indicators:
+      - Repeated themes and concepts
+      - Topics given extended vs. minimal treatment
+      - Perspectives centered vs. marginalized
+      - Footnote relegation patterns
+    depth_scaling:
+      surface: Identify the most obvious foregrounded and suppressed elements.
+      standard: Map the full pattern with analytical implications.
+      deep: Multi-level analysis of foregrounding/suppression patterns and their significance for the argument's blind spots.
+    requires_dimensions:
+      - chapter_argument_map
+    produces_dimensions:
+      - foregrounding_suppression
+
+  - key: map_conceptual_vocabulary
+    description: Builds the vocabulary map — key terms, definitions, semantic fields, borrowed terminology, and gaps.
+    extended_description: Maps the conceptual vocabulary that structures the text's intellectual framework — not just a glossary but an analysis of how terminology functions, where it's borrowed from, and what the vocabulary's structure reveals about the argument's intellectual debts and innovations.
+    intellectual_grounding:
+      thinker: Koselleck
+      concept: Begriffsgeschichte (conceptual history)
+      method: Analyze how key terms function within the text, tracing their origins, modifications, and the intellectual work they perform.
+    indicators:
+      - Explicitly defined terms
+      - Terms used without definition
+      - Borrowed terminology (from other authors or traditions)
+      - Terminological innovations
+      - Vocabulary gaps (concepts needed but unnamed)
+    depth_scaling:
+      surface: List 10-15 most important terms with brief characterizations.
+      standard: Map terms with definitions, operational meanings, and sources.
+      deep: Full vocabulary map including semantic fields, borrowing patterns, innovations, gaps, and assessment of how vocabulary structures the argument.
+    requires_dimensions:
+      - thesis_architecture
+    produces_dimensions:
+      - conceptual_vocabulary
+
+  - key: assess_downstream_utility
+    description: Evaluates what this analysis enables for subsequent analytical engines.
+    extended_description: Assesses the analytical value of the summarization for downstream engines — what productive entry points it creates, what complexities it flags, and what specific analytical questions it raises.
+    intellectual_grounding:
+      thinker: Peirce
+      concept: Pragmatic maxim — meaning is constituted by practical consequences
+      method: Evaluate the summarization by what it enables for subsequent inquiry.
+    indicators:
+      - Productive entry points for deeper analysis
+      - Flagged complexities requiring special treatment
+      - Questions raised for downstream investigation
+    depth_scaling:
+      surface: Identify 2-3 key entry points.
+      standard: Map entry points, complexities, and recommended focus areas.
+      deep: Comprehensive utility assessment with engine-specific recommendations.
+    requires_dimensions:
+      - thesis_architecture
+      - conceptual_vocabulary
+    produces_dimensions:
+      - downstream_utility
+
+composability:
+  shares_with:
+    thesis_architecture: Provides thesis structure consumable by argument_architecture, inferential_commitment_mapper, and dialectical_structure_analyzer.
+    conceptual_vocabulary: Feeds concept_semantic_constellation, concept_evolution, and conceptual_framework_extraction with pre-mapped vocabulary.
+    chapter_argument_map: Provides structural context for chapter_role_analyzer and any chapter-targeted analysis.
+    evidence_patterns: Informs evidence_quality_evaluator and anomaly_detector with evidence baseline.
+    foregrounding_suppression: Reveals discursive patterns useful for rhetorical_strategy_analyzer and critical_apparatus_analyzer.
+  consumes_from: {}
+  synergy_engines:
+    - chapter_role_analyzer
+    - narrative_structure_analyzer
+    - conceptual_framework_extraction
+    - concept_semantic_constellation
+
+depth_levels:
+  - key: surface
+    description: Quick analytical overview — thesis, chapter functions, and key vocabulary.
+    typical_passes: 1
+    suitable_for: Initial assessment, triage, short documents.
+    passes:
+      - pass_number: 1
+        label: Integrated Overview
+        stance: integration
+        focus_dimensions:
+          - thesis_architecture
+          - chapter_argument_map
+          - conceptual_vocabulary
+        focus_capabilities:
+          - extract_thesis_architecture
+          - map_chapter_functions
+          - map_conceptual_vocabulary
+        consumes_from: []
+        description: Produce an integrated analytical overview covering thesis architecture, chapter functions, and conceptual vocabulary in a single pass.
+
+  - key: standard
+    description: Balanced deep summarization — architecture discovery followed by full integration.
+    typical_passes: 2
+    suitable_for: Standard analysis, most academic texts, pre-genealogy profiling.
+    passes:
+      - pass_number: 1
+        label: Architectural Discovery
+        stance: discovery
+        focus_dimensions:
+          - thesis_architecture
+          - chapter_argument_map
+          - conceptual_moves
+          - conceptual_vocabulary
+        focus_capabilities:
+          - extract_thesis_architecture
+          - map_chapter_functions
+          - catalog_conceptual_moves
+          - map_conceptual_vocabulary
+        consumes_from: []
+        description: Discover the thesis architecture, map chapter functions, catalog conceptual moves, and build the vocabulary map.
+      - pass_number: 2
+        label: Analytical Architecture
+        stance: architecture
+        focus_dimensions:
+          - evidence_patterns
+          - rhetorical_strategies
+          - foregrounding_suppression
+          - downstream_utility
+        focus_capabilities:
+          - audit_evidence_patterns
+          - analyze_rhetorical_strategies
+          - detect_foregrounding_suppression
+          - assess_downstream_utility
+        consumes_from:
+          - 1
+        description: With the argument structure mapped, audit evidence patterns, analyze rhetorical strategies, detect foregrounding/suppression, and assess downstream utility.
+
+  - key: deep
+    description: Exhaustive deep summarization — four-pass process covering all dimensions with confrontational assessment.
+    typical_passes: 4
+    suitable_for: Complex monographs, book-length works, texts requiring maximum analytical foundation.
+    passes:
+      - pass_number: 1
+        label: Comprehensive Discovery
+        stance: discovery
+        focus_dimensions:
+          - thesis_architecture
+          - chapter_argument_map
+          - conceptual_moves
+          - conceptual_vocabulary
+        focus_capabilities:
+          - extract_thesis_architecture
+          - map_chapter_functions
+          - catalog_conceptual_moves
+          - map_conceptual_vocabulary
+        consumes_from: []
+        description: Exhaustive discovery pass — map the full thesis architecture, every chapter function, all conceptual moves, and the complete vocabulary landscape.
+      - pass_number: 2
+        label: Structural Architecture
+        stance: architecture
+        focus_dimensions:
+          - evidence_patterns
+          - rhetorical_strategies
+          - foregrounding_suppression
+        focus_capabilities:
+          - audit_evidence_patterns
+          - analyze_rhetorical_strategies
+          - detect_foregrounding_suppression
+        consumes_from:
+          - 1
+        description: Build the analytical architecture — evidence audit, rhetorical analysis, and foregrounding/suppression mapping, all informed by the discovery pass.
+      - pass_number: 3
+        label: Critical Confrontation
+        stance: confrontation
+        focus_dimensions:
+          - thesis_architecture
+          - evidence_patterns
+          - foregrounding_suppression
+        focus_capabilities:
+          - extract_thesis_architecture
+          - audit_evidence_patterns
+          - detect_foregrounding_suppression
+        consumes_from:
+          - 1
+          - 2
+        description: Confrontational pass — stress-test the thesis architecture, probe evidence gaps, challenge the foregrounding/suppression pattern. Where are the load-bearing walls weakest?
+      - pass_number: 4
+        label: Integrative Synthesis
+        stance: integration
+        focus_dimensions:
+          - thesis_architecture
+          - chapter_argument_map
+          - conceptual_moves
+          - evidence_patterns
+          - rhetorical_strategies
+          - foregrounding_suppression
+          - conceptual_vocabulary
+          - downstream_utility
+        focus_capabilities:
+          - extract_thesis_architecture
+          - map_chapter_functions
+          - catalog_conceptual_moves
+          - audit_evidence_patterns
+          - analyze_rhetorical_strategies
+          - detect_foregrounding_suppression
+          - map_conceptual_vocabulary
+          - assess_downstream_utility
+        consumes_from:
+          - 1
+          - 2
+          - 3
+        description: Integrate all findings into the comprehensive deep summarization — thesis architecture refined by confrontation, evidence patterns assessed, vocabulary mapped, downstream utility assessed.
+
+apps:
+  - critic
+function: logic

@@ -1,0 +1,131 @@
+engine_key: narrative_structure_analyzer
+engine_name: Narrative Structure Analyzer
+stance_operationalizations:
+- stance_key: discovery
+  label: Narrative Element Discovery
+  description: |-
+    Discover all significant narrative elements: the overall emplotment
+    mode (romance, tragedy, comedy, satire), the registers deployed
+    (analytical, polemical, confessional, prophetic, ironic), the
+    focalization patterns (whose perspective is centered, whose is
+    marginalized), the narrative devices in use (anecdotes, vignettes,
+    hypotheticals, counterfactuals), and the temporal construction
+    (linear, cyclical, genealogical, dialectical). Be exhaustive —
+    subsequent passes analyze what this pass discovers.
+  focus_dimensions:
+  - narrative_arc
+  - narrative_voice_register
+  - perspective_focalization
+  - narrative_devices
+  - temporal_construction
+  focus_capabilities:
+  - trace_narrative_arc
+  - track_voice_register
+  - analyze_focalization
+  - catalog_narrative_devices
+  - map_temporal_construction
+- stance_key: architecture
+  label: Narrative Architecture
+  description: |-
+    Build the narrative architecture from the discovered elements. How do
+    the narrative arc, voice patterns, and device repertoire interact
+    structurally? Track how the narrative evolves across chapters — are
+    register shifts deliberate or unconscious? Does the emplotment mode
+    shift as the argument develops? Where does the narrative mode change
+    in ways that reveal underlying tensions? This pass transforms the
+    discovery inventory into a structural analysis of how the text's
+    storytelling works.
+  focus_dimensions:
+  - narrative_arc
+  - narrative_voice_register
+  - narrative_evolution_across_chapters
+  focus_capabilities:
+  - trace_narrative_arc
+  - track_voice_register
+  - track_narrative_evolution
+- stance_key: dialectical
+  label: Dialectical Narrative Assessment
+  description: |-
+    With the narrative architecture mapped, dialectically assess the
+    tensions that animate it. Where does the text's narrative pull in
+    competing directions — between story and argument, between different
+    registers, between the demands of narrative coherence and analytical
+    precision? Do not resolve these tensions prematurely; inhabit them.
+    A text that shifts from analytical to prophetic register is not
+    making an error — the shift reveals something about the stakes the
+    author perceives. A narrative arc that conflicts with the logical
+    structure of the argument is not a failure — it reveals a tension
+    between what the author wants to argue and what the author wants
+    to SHOW. The most analytically productive findings live in these
+    gaps between narrative and argument.
+  focus_dimensions:
+  - narrative_tensions
+  - perspective_focalization
+  focus_capabilities:
+  - detect_narrative_tensions
+  - analyze_focalization
+- stance_key: integration
+  label: Narrative Integration
+  description: |-
+    Integrate all findings into a comprehensive narrative analysis.
+    The discovery pass mapped the elements, the architecture pass
+    showed how they interact structurally, and the dialectical pass
+    revealed the productive tensions. Now produce the integrated
+    narrative analysis: what story does this text tell, how does it
+    tell it, where does the storytelling support and where does it
+    undermine the argument, and what does the narrative structure
+    reveal about the author's commitments that the explicit argument
+    conceals? This integrated analysis should be usable by downstream
+    engines — especially those analyzing rhetorical strategy,
+    intellectual genealogy, and critical apparatus.
+  focus_dimensions:
+  - narrative_arc
+  - narrative_voice_register
+  - perspective_focalization
+  - narrative_tensions
+  - narrative_devices
+  - temporal_construction
+  - narrative_evolution_across_chapters
+  focus_capabilities:
+  - trace_narrative_arc
+  - track_voice_register
+  - analyze_focalization
+  - detect_narrative_tensions
+  - catalog_narrative_devices
+  - map_temporal_construction
+  - track_narrative_evolution
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: dialectical
+    consumes_from:
+    - 1
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: dialectical
+    consumes_from:
+    - 1
+    - 2
+  - pass_number: 4
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2
+    - 3

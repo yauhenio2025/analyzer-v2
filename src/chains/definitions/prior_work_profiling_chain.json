@@ -1,0 +1,24 @@
+{
+  "chain_key": "prior_work_profiling",
+  "chain_name": "Prior Work Profiling",
+  "description": "Deep profiling of complex prior/background works before genealogical scanning. Runs deep summarization (thesis architecture, evidence patterns, conceptual vocabulary) followed by narrative structure analysis (emplotment, voice, temporality). A lighter version of deep_text_profiling — no chapter_role_analyzer since chapter structure of prior works matters less than content. Used when a prior work is complex enough to warrant deep summarization before genealogical scanning can be productive.",
+  "base_description": "Deep profiling of complex background works: summarization + narrative analysis",
+  "version": 1,
+  "engine_keys": [
+    "deep_summarization",
+    "narrative_structure_analyzer"
+  ],
+  "blend_mode": "sequential",
+  "selection_criteria": null,
+  "max_engines": 2,
+  "merge_strategy": null,
+  "pass_context": true,
+  "category": "text_analysis",
+  "context_parameter_schema": null,
+  "recommended_for": [
+    "pre-scanning background work profiling",
+    "complex prior work analysis",
+    "book-length prior work preparation",
+    "monograph-level background text profiling"
+  ]
+}

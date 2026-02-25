@@ -1,0 +1,175 @@
+{
+  "engine_key": "chapter_role_analyzer",
+  "engine_name": "Chapter Role Analyzer",
+  "description": "Analyzes the functional roles of chapters within an extended work — what each chapter contributes to the overall argumentative edifice, how chapters depend on and enable each other, where key concepts are introduced, how tightly chapters are coupled, and where structural vulnerabilities lie. Essential for understanding works where chapters carry disproportionate analytical weight.",
+  "version": 1,
+  "category": "argument",
+  "kind": "extraction",
+  "reasoning_domain": "structural_analysis",
+  "researcher_question": "What role does each chapter play in the overall argument, and how do chapters depend on and enable each other?",
+  "canonical_schema": {
+    "chapter_functional_role": [
+      {
+        "chapter_id": "string (format: 'CH{N}')",
+        "chapter_title": "string",
+        "primary_role": "foundation | development | evidence | objection_handling | synthesis | methodology | context_setting | conclusion | excursus",
+        "secondary_roles": [
+          "string — additional functions this chapter serves"
+        ],
+        "role_description": "string — detailed description of what this chapter does",
+        "argumentative_weight": "load_bearing | supporting | peripheral | transitional",
+        "page_or_section_range": "string — approximate location"
+      }
+    ],
+    "chapter_dependencies": [
+      {
+        "from_chapter": "chapter_id",
+        "to_chapter": "chapter_id",
+        "dependency_type": "conceptual_prerequisite | empirical_foundation | methodological_setup | argumentative_bridge | rhetorical_preparation",
+        "strength": "necessary | strong | moderate | weak",
+        "what_flows": "string — what the downstream chapter requires from the upstream"
+      }
+    ],
+    "key_concepts_introduced": [
+      {
+        "concept": "string",
+        "introduced_in": "chapter_id",
+        "first_significant_use_in": "chapter_id",
+        "used_extensively_in": [
+          "chapter_id"
+        ],
+        "concept_trajectory": "string — how the concept's role evolves across chapters"
+      }
+    ],
+    "chapter_coupling": {
+      "tight_couplings": [
+        {
+          "chapters": ["chapter_id", "chapter_id"],
+          "coupling_type": "shared_framework | continued_argument | paired_analysis | dialectical_pair",
+          "description": "string — why these chapters are tightly coupled"
+        }
+      ],
+      "loose_couplings": [
+        {
+          "chapters": ["chapter_id", "chapter_id"],
+          "description": "string — chapters that could be reordered without loss"
+        }
+      ],
+      "isolation_assessment": "string — which chapters could stand alone and which are deeply embedded"
+    },
+    "structural_vulnerabilities": [
+      {
+        "vulnerability_id": "string (format: 'SV{N}')",
+        "type": "load_bearing_weakness | missing_bridge | circular_dependency | unsupported_leap | redundancy | orphaned_thread",
+        "location": "string — which chapters are involved",
+        "description": "string — what the vulnerability is",
+        "severity": "critical | significant | minor",
+        "implications": "string — what would happen if this vulnerability were exploited"
+      }
+    ],
+    "inter_part_dynamics": {
+      "parts_or_sections": [
+        {
+          "part_id": "string",
+          "part_title": "string",
+          "chapters_included": ["chapter_id"],
+          "function": "string — what this part as a whole accomplishes"
+        }
+      ],
+      "part_transitions": [
+        {
+          "from_part": "string",
+          "to_part": "string",
+          "transition_quality": "smooth | abrupt | missing | forced",
+          "what_changes": "string — what shifts between parts"
+        }
+      ]
+    }
+  },
+  "extraction_focus": [
+    "chapter_functional_role",
+    "chapter_dependencies",
+    "key_concepts_introduced",
+    "chapter_coupling",
+    "structural_vulnerabilities",
+    "inter_part_dynamics"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "dependency_graph"
+  ],
+  "paradigm_keys": [],
+  "stage_context": {
+    "framework_key": "structural_analysis",
+    "additional_frameworks": [
+      "toulmin",
+      "pragma_dialectics"
+    ],
+    "extraction": {
+      "analysis_type": "chapter role analysis",
+      "analysis_type_plural": "chapter role analyses",
+      "core_question": "What role does each chapter play, and how do chapters depend on each other?",
+      "extraction_steps": [
+        "CLASSIFY CHAPTER ROLES: For each chapter, determine its primary function — does it establish foundations, advance claims, handle objections, provide evidence, or synthesize threads?",
+        "ASSESS ARGUMENTATIVE WEIGHT: Which chapters are load-bearing (the argument collapses without them) vs. supporting (they enrich but aren't essential)?",
+        "MAP DEPENDENCIES: Trace what each chapter requires from upstream chapters and what it provides to downstream ones — conceptual prerequisites, empirical foundations, methodological setups",
+        "TRACK CONCEPT FLOW: Where are key concepts introduced, where are they first used significantly, and where do they do their heaviest analytical work?",
+        "ANALYZE COUPLING: Which chapters are tightly coupled (can't be understood in isolation) vs. loosely coupled (could be reordered)? Are there dialectical pairs?",
+        "IDENTIFY VULNERABILITIES: Where are the structural weak points — load-bearing arguments that are underdeveloped, missing bridges between chapters, unsupported leaps, orphaned threads?",
+        "MAP INTER-PART DYNAMICS: If the work has parts or sections, analyze what each part accomplishes and how transitions between parts work"
+      ],
+      "key_fields": {
+        "primary_role": "The chapter's main function",
+        "argumentative_weight": "How essential the chapter is",
+        "dependency_type": "What kind of dependency exists"
+      },
+      "id_field": "chapter_id",
+      "key_relationships": [
+        "depends_on",
+        "enables",
+        "pairs_with",
+        "bridges_to"
+      ],
+      "special_instructions": "Think of each chapter as a functional unit in an argumentative BUILDING. Some are load-bearing walls (remove them and the argument collapses), some are decorative (they enrich but the argument survives without them), some are bridges between sections. Your job is to reveal the structural architecture — not the content of each chapter, but its FUNCTION in the overall edifice."
+    },
+    "curation": {
+      "item_type": "chapter role analysis",
+      "item_type_plural": "chapter role analyses",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [],
+      "synthesis_outputs": [],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {"from": "CH1", "to": "The Historical Foundation Chapter"},
+        {"from": "SV1", "to": "The Unsupported Leap from Critique to Proposal"}
+      ],
+      "naming_guidance": "Name chapters by their structural function, not their topic",
+      "recommended_table_types": [
+        "chapter_role_matrix",
+        "dependency_table"
+      ],
+      "recommended_visual_patterns": [
+        "dependency_graph",
+        "chapter_coupling_heatmap"
+      ]
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "chapter_coupling": "structural interdependence",
+        "load_bearing": "argumentatively essential",
+        "structural_vulnerability": "argumentative weak point"
+      },
+      "analyst": {
+        "chapter_coupling": "how connected chapters are",
+        "load_bearing": "critical chapter",
+        "structural_vulnerability": "weak spot"
+      }
+    },
+    "skip_concretization": false
+  },
+  "apps": [
+    "critic"
+  ]
+}

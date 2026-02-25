@@ -222,28 +222,43 @@ def sample_all_books(
     max_workers: int = 5,
 ) -> list[BookSample]:
     """Sample all books in a corpus in parallel.
-    
+
+    Also runs chapter detection on each work so the planner has
+    chapter structure available for chapter-targeting decisions.
+
     Args:
         target_work_text: Full text of the target work
         target_work_title: Title of the target work
         prior_works: List of dicts with 'title' and 'text' keys
         max_workers: Max parallel sampling calls
-    
+
     Returns:
         List of BookSamples (target first, then prior works)
     """
     category_descriptions = _get_category_descriptions()
     samples: list[BookSample] = []
-    
+
     def _sample_one(title: str, text: str, role: str) -> BookSample:
         excerpt = extract_book_excerpt(text)
-        return sample_book(
+        sample = sample_book(
             excerpt=excerpt,
             title=title,
             role=role,
             full_text_length=len(text),
             category_descriptions=category_descriptions,
         )
+        # Run chapter detection and attach to sample
+        try:
+            from src.executor.chapter_splitter import detect_chapters, get_chapter_summary_for_sample
+            structure = detect_chapters(text, doc_id=title)
+            sample.chapter_structure = get_chapter_summary_for_sample(structure)
+            if sample.chapter_structure:
+                logger.info(
+                    f"Detected {len(sample.chapter_structure)} chapters in '{title}'"
+                )
+        except Exception as e:
+            logger.warning(f"Chapter detection failed for '{title}': {e}")
+        return sample
     
     # Build work list
     work_items = [

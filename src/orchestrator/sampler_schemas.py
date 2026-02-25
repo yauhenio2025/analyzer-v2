@@ -62,3 +62,9 @@ class BookSample(BaseModel):
         default="",
         description="LLM's reasoning for these classifications"
     )
+    chapter_structure: list[dict] = Field(
+        default_factory=list,
+        description="Detected chapter structure from heading analysis. "
+        "Each entry: {chapter_id, title, char_count}. "
+        "Available to the planner for chapter-targeting decisions.",
+    )

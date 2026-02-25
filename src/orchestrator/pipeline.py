@@ -203,6 +203,20 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
             f"{len(plan.phases)} phases, {plan.estimated_llm_calls} estimated calls"
         )
 
+        # ── Stage 2.5: Pre-execution plan revision ──
+        # If adaptive mode with objective, run Opus-based plan self-critique
+        if request.objective_key and not request.skip_plan_revision:
+            update_job_progress(
+                job_id,
+                current_phase=0,
+                phase_name="Reviewing Plan",
+                detail="Opus reviewing plan for gaps before execution...",
+            )
+            try:
+                plan = _run_pre_execution_revision(plan, request)
+            except Exception as e:
+                logger.warning(f"[Pipeline {job_id}] Pre-execution revision failed (continuing): {e}")
+
         # Update job with plan_id and full plan_data (overwrites snapshot)
         update_job_plan_id(job_id, plan.plan_id)
         _store_plan_and_docs(job_id, plan, document_ids)
@@ -384,3 +398,48 @@ def _build_plan_request(request: AnalyzeRequest) -> OrchestratorPlanRequest:
         depth_preference=request.depth_preference,
         focus_hint=request.focus_hint,
     )
+
+
+def _run_pre_execution_revision(
+    plan: WorkflowExecutionPlan,
+    request: AnalyzeRequest,
+) -> WorkflowExecutionPlan:
+    """Run pre-execution plan revision and apply changes if needed.
+
+    Returns the (possibly revised) plan.
+    """
+    from src.orchestrator.plan_revision import (
+        apply_revision_to_plan,
+        revise_plan_pre_execution,
+    )
+
+    # Get objective text for the revision prompt
+    objective_text = ""
+    if request.objective_key:
+        objective = get_objective(request.objective_key)
+        if objective:
+            objective_text = objective.get("planner_strategy", "")
+
+    plan_dict = plan.model_dump()
+    result = revise_plan_pre_execution(
+        plan_dict=plan_dict,
+        book_samples=plan_dict.get("book_samples", []),
+        objective_text=objective_text,
+    )
+
+    if result is None:
+        return plan  # No revision needed
+
+    # Apply revision
+    revised_dict = apply_revision_to_plan(
+        plan_dict=plan_dict,
+        revision_result=result,
+        completed_phases=set(),
+    )
+
+    # Rebuild the plan object from the revised dict
+    revised_plan = WorkflowExecutionPlan(**revised_dict)
+    logger.info(
+        f"Pre-execution revision applied: {result['revision']['changes_summary']}"
+    )
+    return revised_plan

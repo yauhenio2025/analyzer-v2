@@ -1,0 +1,230 @@
+{
+  "engine_key": "deep_summarization",
+  "engine_name": "Deep Summarization Engine",
+  "description": "Deep analytical summarization that captures not just what a text says but what it DOES — the architectural logic of its argument, rhetorical strategies, conceptual moves, what's foregrounded and suppressed, and the conceptual vocabulary that structures the discourse. Produces analysis far beyond surface summaries: thesis architecture, chapter-by-chapter argument maps, evidence audit, and downstream utility assessment.",
+  "version": 1,
+  "category": "outline",
+  "kind": "extraction",
+  "reasoning_domain": "analytical_summarization",
+  "researcher_question": "What does this text actually argue, how does it construct its argument, and what does it foreground or suppress?",
+  "canonical_schema": {
+    "thesis_architecture": {
+      "central_thesis": "string — the work's primary claim or argument",
+      "thesis_type": "empirical | normative | interpretive | methodological | hybrid",
+      "supporting_theses": [
+        {
+          "thesis_id": "string (format: 'ST{N}')",
+          "claim": "string",
+          "relationship_to_central": "grounds | contextualizes | extends | qualifies | operationalizes",
+          "chapter_location": "string — where this thesis is developed"
+        }
+      ],
+      "thesis_dependencies": [
+        {
+          "from_thesis": "thesis_id",
+          "to_thesis": "thesis_id",
+          "dependency_type": "logical_prerequisite | empirical_foundation | normative_framework | definitional_basis"
+        }
+      ],
+      "unstated_premises": [
+        "string — premises the argument requires but does not explicitly state"
+      ],
+      "scope_and_limitations": "string — what the thesis claims to cover and what it explicitly excludes"
+    },
+    "chapter_argument_map": [
+      {
+        "chapter_id": "string (format: 'CH{N}')",
+        "chapter_title": "string",
+        "chapter_function": "establishes_premises | advances_claims | handles_objections | provides_evidence | synthesizes_threads | introduces_framework | historical_context | methodological_setup",
+        "local_argument": "string — the chapter's own argument",
+        "contribution_to_thesis": "string — how this chapter advances the central thesis",
+        "key_moves": [
+          "string — significant argumentative or rhetorical moves in this chapter"
+        ],
+        "transitions": {
+          "receives_from_previous": "string — what this chapter inherits from the prior chapter",
+          "hands_to_next": "string — what this chapter sets up for the next chapter"
+        }
+      }
+    ],
+    "conceptual_moves": [
+      {
+        "move_id": "string (format: 'CM{N}')",
+        "move_type": "definition | redefinition | distinction | synthesis | inversion | analogy | generalization | particularization | historicization | denaturalization",
+        "description": "string — what the move does",
+        "location": "string — where in the text",
+        "strategic_function": "string — why the author makes this move at this point"
+      }
+    ],
+    "evidence_patterns": {
+      "evidence_types_used": [
+        {
+          "type": "statistical | case_study | historical_narrative | theoretical_derivation | thought_experiment | comparative | ethnographic | archival | textual_interpretation",
+          "frequency": "dominant | frequent | occasional | rare",
+          "typical_deployment": "string — how this evidence type is typically used"
+        }
+      ],
+      "evidence_gaps": [
+        "string — claims that lack adequate evidential support"
+      ],
+      "evidence_asymmetries": [
+        "string — where evidence quality varies across different parts of the argument"
+      ]
+    },
+    "rhetorical_strategies": [
+      {
+        "strategy_id": "string (format: 'RS{N}')",
+        "strategy_type": "appeal_to_authority | appeal_to_evidence | appeal_to_consequences | narrative_persuasion | definitional_fiat | straw_man_construction | concessive_move | preemptive_objection",
+        "description": "string — how this strategy operates",
+        "targets": "string — what audience or objection this addresses",
+        "effectiveness_assessment": "string — how well the strategy works"
+      }
+    ],
+    "foregrounding_suppression": {
+      "foregrounded": [
+        {
+          "element": "string — what is emphasized",
+          "foregrounding_method": "repetition | structural_prominence | extended_treatment | framing_as_central",
+          "analytical_significance": "string — why foregrounding this matters"
+        }
+      ],
+      "suppressed": [
+        {
+          "element": "string — what is minimized or absent",
+          "suppression_method": "omission | brief_mention | relegation_to_footnotes | definitional_exclusion | framing_as_peripheral",
+          "analytical_significance": "string — why the suppression matters"
+        }
+      ],
+      "tension_between_foregrounded_and_suppressed": "string — what the pattern of foregrounding/suppression reveals"
+    },
+    "conceptual_vocabulary": {
+      "key_terms": [
+        {
+          "term": "string",
+          "definition_given": "string | null — author's explicit definition if any",
+          "operational_meaning": "string — how the term actually functions in the text",
+          "semantic_field": "string — related terms and concepts",
+          "borrowed_from": "string | null — intellectual tradition or author this term comes from",
+          "modified_how": "string | null — how the author modifies the borrowed term"
+        }
+      ],
+      "terminological_innovations": [
+        "string — new terms or distinctive uses of existing terms"
+      ],
+      "vocabulary_gaps": [
+        "string — concepts the argument needs but lacks terminology for"
+      ]
+    },
+    "downstream_utility": {
+      "what_this_enables": [
+        "string — what analytical operations this summary enables for downstream engines"
+      ],
+      "key_entry_points": [
+        "string — the most productive starting points for deeper analysis"
+      ],
+      "known_complexities": [
+        "string — aspects of the text that will require special analytical attention"
+      ],
+      "recommended_analytical_focus": [
+        "string — where deeper engines should concentrate their analysis"
+      ]
+    }
+  },
+  "extraction_focus": [
+    "thesis_architecture",
+    "chapter_argument_map",
+    "conceptual_moves",
+    "evidence_patterns",
+    "rhetorical_strategies",
+    "foregrounding_suppression",
+    "conceptual_vocabulary",
+    "downstream_utility"
+  ],
+  "primary_output_modes": [
+    "structured_text_report",
+    "analytical_summary"
+  ],
+  "paradigm_keys": [],
+  "stage_context": {
+    "framework_key": "analytical_summarization",
+    "additional_frameworks": [
+      "toulmin",
+      "koselleck",
+      "foucault_discourse"
+    ],
+    "extraction": {
+      "analysis_type": "deep analytical summary",
+      "analysis_type_plural": "deep analytical summaries",
+      "core_question": "What does this text actually argue, and how does it construct its argument?",
+      "extraction_steps": [
+        "IDENTIFY THESIS ARCHITECTURE: Extract the central thesis and map its supporting structure — what claims support it, what dependencies exist between them, what premises are left unstated",
+        "MAP CHAPTER FUNCTIONS: For each chapter or major section, determine its functional role in the overall argument — does it establish premises, advance claims, handle objections, or synthesize threads?",
+        "CATALOG CONCEPTUAL MOVES: Identify the significant conceptual operations — definitions, redefinitions, distinctions, syntheses, inversions, analogies — and assess their strategic function",
+        "AUDIT EVIDENCE PATTERNS: What types of evidence does the author deploy? Where is evidence strong vs. weak? Are there systematic gaps or asymmetries?",
+        "ANALYZE RHETORICAL STRATEGIES: How does the author persuade beyond pure logic? What appeals, concessions, preemptive objections, or narrative techniques are deployed?",
+        "DETECT FOREGROUNDING AND SUPPRESSION: What does the text emphasize and what does it minimize? The pattern of inclusion/exclusion often reveals more than the explicit argument",
+        "MAP CONCEPTUAL VOCABULARY: Build the vocabulary map — key terms, their definitions (given vs. operational), semantic fields, borrowed terminology, and gaps",
+        "ASSESS DOWNSTREAM UTILITY: What does this analysis enable for subsequent engines? What are the productive entry points and known complexities?",
+        "TRACE CHAPTER TRANSITIONS: How does argument flow between chapters? What does each chapter receive from and hand to its neighbors?",
+        "IDENTIFY UNSTATED PREMISES: What does the argument assume without stating? These are often the most analytically productive targets",
+        "EVALUATE SCOPE AND LIMITATIONS: What does the thesis claim to cover and what does it exclude? Are the exclusions principled or strategic?"
+      ],
+      "key_fields": {
+        "central_thesis": "The work's primary argument",
+        "chapter_function": "What role each chapter plays",
+        "conceptual_moves": "Key intellectual operations",
+        "foregrounding_suppression": "What's emphasized vs. minimized"
+      },
+      "id_field": "chapter_id",
+      "key_relationships": [
+        "supports",
+        "qualifies",
+        "contradicts",
+        "enables",
+        "presupposes"
+      ],
+      "special_instructions": "This is NOT a surface summary. Do not produce a paragraph-by-paragraph recapitulation. Instead, reconstruct the ARCHITECTURAL LOGIC of the text — how the argument is built, what holds it together, where the load-bearing walls are, and where the facade conceals structural weaknesses. Every claim in this analysis should be supported by specific textual evidence."
+    },
+    "curation": {
+      "item_type": "deep analytical summary",
+      "item_type_plural": "deep analytical summaries",
+      "consolidation_rules": [],
+      "cross_doc_patterns": [],
+      "synthesis_outputs": [],
+      "special_instructions": null
+    },
+    "concretization": {
+      "id_examples": [
+        {"from": "CH1", "to": "The Historical Stage-Setting Chapter"},
+        {"from": "CM1", "to": "The Market-to-State Inversion Move"},
+        {"from": "RS1", "to": "The Preemptive Concession to Neoclassical Critics"}
+      ],
+      "naming_guidance": "Use descriptive names that capture what each element DOES rather than just what it contains",
+      "recommended_table_types": [
+        "thesis_dependency_map",
+        "chapter_function_overview",
+        "evidence_audit"
+      ],
+      "recommended_visual_patterns": [
+        "argument_flow_diagram",
+        "thesis_dependency_graph"
+      ]
+    },
+    "audience_vocabulary": {
+      "researcher": {
+        "thesis_architecture": "argumentative scaffold",
+        "foregrounding_suppression": "discursive emphasis patterns",
+        "conceptual_moves": "intellectual operations"
+      },
+      "analyst": {
+        "thesis_architecture": "claim structure",
+        "foregrounding_suppression": "what's highlighted vs. hidden",
+        "conceptual_moves": "key analytical steps"
+      }
+    },
+    "skip_concretization": false
+  },
+  "apps": [
+    "critic"
+  ]
+}

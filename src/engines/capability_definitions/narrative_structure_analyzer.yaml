@@ -1,0 +1,436 @@
+engine_key: narrative_structure_analyzer
+engine_name: Narrative Structure Analyzer
+version: 1
+category: rhetoric
+kind: extraction
+problematique: |
+  Every academic text tells a story, even when it claims to merely present
+  arguments. The narrative dimension — how authors construct temporal sequences,
+  deploy voice, shift between registers, use storytelling as persuasive
+  instrument — is analytically distinct from both logical structure and
+  rhetorical strategy. A text may be logically impeccable and rhetorically
+  effective while telling a story that undermines its own conclusions, or
+  deploy a narrative mode that reveals commitments the explicit argument
+  denies.
+
+  Hayden White demonstrated that historical writing is always emplotted —
+  organized according to narrative patterns (romance, tragedy, comedy, satire)
+  that shape what can be said and how it's received. Genette showed that
+  narrative is structured through focalization (whose perspective), temporal
+  ordering (what comes when and why), and voice (who speaks and from where).
+  Bakhtin revealed that texts are never monological but contain multiple
+  competing voices (heteroglossia) even when they appear to speak with one.
+
+  For academic texts, the narrative dimension is especially revealing because
+  it's the layer authors are least conscious of controlling. An author who
+  carefully constructs their logical argument may unconsciously adopt a
+  prophetic voice that reveals messianic assumptions, or shift between
+  analytical and confessional registers in ways that expose the personal
+  stakes behind the scholarly claims. The gap between a text's explicit
+  argumentative structure and its implicit narrative structure is often
+  where the most analytically productive tensions reside.
+
+researcher_question: How does this text construct its narrative, and what does the narrative structure reveal about the argument?
+
+intellectual_lineage:
+  primary:
+    name: white
+    description: Hayden White (1928-2018), American historian and literary critic whose Metahistory demonstrated that all historical writing is structured by narrative patterns (emplotment) — romance, tragedy, comedy, satire — that shape what can be said and how it's received. His work revealed that the choice of narrative mode is itself an interpretive act, not a neutral container for content, fundamentally reshaping how we understand the relationship between narrative and argument in scholarly writing.
+  secondary:
+    - name: genette
+      description: Gérard Genette (1930-2018), French literary theorist whose Narrative Discourse provided the foundational vocabulary for analyzing narrative structure — focalization (who sees), voice (who speaks), temporal ordering (what comes when), and mood (at what distance). His technical apparatus enables precise analysis of narrative choices that would otherwise remain invisible.
+    - name: bakhtin
+      description: Mikhail Bakhtin (1895-1975), Russian literary theorist whose concepts of heteroglossia (multiple voices within a text), dialogism (every utterance responds to prior utterances), and chronotope (the inseparability of time and space in narrative) provide tools for analyzing the polyphonic dimension of academic texts — the competing voices that inhabit even apparently monological scholarly prose.
+    - name: ricoeur
+      description: Paul Ricoeur (1913-2005), French philosopher whose Time and Narrative demonstrated the deep connection between temporal experience and narrative structure, arguing that narrative is the primary means by which humans make sense of time — essential for understanding how academic texts construct their relationship to past, present, and future.
+    - name: booth
+      description: Wayne C. Booth (1921-2005), American literary critic whose The Rhetoric of Fiction analyzed how narrative techniques serve persuasive purposes — the implied author, the unreliable narrator, and the relationship between narrator and audience — providing tools for understanding the persuasive dimension of narrative choices in academic texts.
+  traditions:
+    - name: narratology
+      description: The formal study of narrative structure and its effects, drawing on structuralist and post-structuralist traditions to analyze how stories are constructed, what choices are made in their telling, and what those choices reveal about the narrator's commitments, assumptions, and rhetorical strategies.
+    - name: metahistory
+      description: White's approach to historical writing as structured by literary forms, revealing that the choice of emplotment (romance, tragedy, comedy, satire) is itself an interpretive act that shapes what can be said and how it's received — applicable to any extended scholarly argument that deploys historical narrative.
+    - name: reception_theory
+      description: The tradition from Iser and Jauss analyzing how texts construct their implied reader, create gaps and indeterminacies that the reader must fill, and manage the reader's expectations — essential for understanding how academic texts manage their audience's interpretive trajectory.
+    - name: discourse_analysis
+      description: The analysis of how language use in context constructs social realities, positioning speakers and hearers in particular relationships — applicable to understanding how academic texts construct their narrative authority and manage register shifts.
+  key_concepts:
+    - name: emplotment
+      definition: White's concept for the narrative structuring of events into a story — the selection of a narrative mode (romance, tragedy, comedy, satire) that determines how events are organized, what counts as a beginning/middle/end, and what kind of meaning the sequence produces.
+    - name: focalization
+      definition: Genette's concept for the relationship between the narrator and the characters or events narrated — who sees (perceptual focalization) and who knows (cognitive focalization). In academic texts, this translates to whose perspective is centered, what the narrator claims to know, and whose viewpoint is marginalized.
+    - name: heteroglossia
+      definition: Bakhtin's concept for the multiplicity of voices within any text — even apparently monological scholarly prose contains competing discourses, registers, and speech genres that create internal dialogism.
+    - name: narrative_tension
+      definition: The productive conflict between competing narrative impulses within a text — between story and argument, between different registers, between the demands of narrative coherence and analytical precision.
+    - name: temporal_construction
+      definition: How a text constructs its relationship to time — whether it presents events as linear progression, cyclical return, genealogical descent, dialectical movement, or catastrophic rupture, and what this temporal frame reveals about the text's implicit philosophy of history.
+
+analytical_dimensions:
+  - key: narrative_arc
+    description: The overall narrative structure — emplotment mode, turning points, opening and closure strategies.
+    probing_questions:
+      - What type of story does this text tell (romance, tragedy, comedy, satire)?
+      - Where are the narrative turning points — crises, reversals, revelations?
+      - How does the text establish its narrative contract with the reader?
+      - How does it achieve or refuse closure?
+    depth_guidance:
+      surface: Identify the dominant emplotment mode and 2-3 key turning points.
+      standard: Map the full narrative arc with turning points, opening gambit, and closure strategy.
+      deep: Detailed analysis of the arc including competing emplotments and moments where the narrative and argumentative structures diverge.
+
+  - key: narrative_voice_register
+    description: The registers and voices the text deploys — analytical, polemical, confessional, prophetic, ironic — and where each dominates.
+    probing_questions:
+      - What registers does the author deploy and where?
+      - Are register shifts strategic or unconscious?
+      - Do different registers serve different argumentative functions?
+    depth_guidance:
+      surface: Identify the dominant register and any major shifts.
+      standard: Map all significant registers with their locations and functions.
+      deep: Full register analysis including shifts within chapters, the relationship between register and argument quality, and what unconscious register shifts reveal.
+
+  - key: perspective_focalization
+    description: Whose perspective is centered, when focalization shifts, and whose viewpoint is marginalized or excluded.
+    probing_questions:
+      - Whose perspective does the narrator primarily adopt?
+      - When and why does focalization shift?
+      - Whose viewpoint is systematically excluded?
+    depth_guidance:
+      surface: Identify the primary narrator stance and any major perspective shifts.
+      standard: Map focalization patterns including shifts and excluded perspectives.
+      deep: Detailed focalization analysis including the relationship between perspective choices and the argument's blind spots.
+
+  - key: narrative_tensions
+    description: Where the text's narrative pulls in competing directions — between story and argument, between registers, between coherence and honesty.
+    probing_questions:
+      - Where do the demands of narrative conflict with the demands of argument?
+      - Are there unresolved narrative tensions that the text tries to paper over?
+      - Where do competing narrative impulses create productive or destructive ambiguity?
+    depth_guidance:
+      surface: Identify the most prominent narrative tension.
+      standard: Map major tensions with their management strategies.
+      deep: Comprehensive analysis of how narrative tensions relate to the argument's strengths and weaknesses.
+
+  - key: narrative_devices
+    description: The specific narrative devices deployed — anecdotes, case studies as stories, historical vignettes, hypothetical scenarios, counterfactuals.
+    probing_questions:
+      - What narrative devices does the text deploy?
+      - How effectively do they serve the argument?
+      - Where do narrative devices substitute for argumentative rigor?
+    depth_guidance:
+      surface: List the most prominent narrative devices.
+      standard: Catalog devices with their functions and effectiveness.
+      deep: Full analysis of the device repertoire including how devices relate to the text's overall narrative strategy.
+
+  - key: temporal_construction
+    description: How the text constructs its relationship to time — linear, cyclical, genealogical, dialectical — and what the temporal frame reveals.
+    probing_questions:
+      - What is the text's dominant temporality?
+      - What time scales are deployed and for what purposes?
+      - When is "now" in this text — what present does it write from?
+      - How does it construct the relationship between past, present, and future?
+    depth_guidance:
+      surface: Identify the dominant temporality and the text's relationship to its present.
+      standard: Map temporal construction including scales, deixis, and past-present-future relationships.
+      deep: Full temporal analysis including competing temporalities and what the temporal frame reveals about the text's implicit philosophy of history.
+
+  - key: narrative_evolution_across_chapters
+    description: How the narrative mode, register, and devices evolve across the text's chapters.
+    probing_questions:
+      - Does the narrative mode shift as the text progresses?
+      - Are register shifts between chapters deliberate or accidental?
+      - Is there a narrative progression (e.g., from descriptive to prescriptive)?
+    depth_guidance:
+      surface: Note any major shifts in narrative mode between sections.
+      standard: Map the narrative evolution chapter by chapter.
+      deep: Detailed tracking of how narrative, register, and device use evolve, with analysis of what the evolution reveals.
+
+capabilities:
+  - key: trace_narrative_arc
+    description: Identifies the overall emplotment mode and maps the text's narrative arc — turning points, opening, closure.
+    extended_description: Following White's metahistorical approach, determines what kind of story the text tells and how its narrative structure shapes what can be argued.
+    intellectual_grounding:
+      thinker: White
+      concept: Emplotment
+      method: Classify the text's narrative mode (romance, tragedy, comedy, satire) and trace the arc of its unfolding.
+    indicators:
+      - Opening gambit establishing the narrative contract
+      - Turning points where the narrative shifts direction
+      - Moments of crisis, reversal, or revelation
+      - Closure or refusal of closure
+    depth_scaling:
+      surface: Identify emplotment mode and key turning points.
+      standard: Full arc mapping with opening, turning points, and closure.
+      deep: Detailed arc analysis including competing emplotments and arc-argument divergences.
+    requires_dimensions: []
+    produces_dimensions:
+      - narrative_arc
+
+  - key: track_voice_register
+    description: Maps the registers and voices deployed throughout the text.
+    extended_description: Identifies analytical, polemical, confessional, prophetic, ironic, and other registers, tracking where they appear and what functions they serve.
+    intellectual_grounding:
+      thinker: Bakhtin
+      concept: Heteroglossia and speech genres
+      method: Identify the competing voices and registers within the text and analyze their interactions.
+    indicators:
+      - Shifts in diction and tone
+      - Changes in sentence structure and rhythm
+      - Deployment of specialized vs. everyday language
+      - Moments of heightened emotional intensity
+    depth_scaling:
+      surface: Identify dominant register and major shifts.
+      standard: Map all registers with locations and functions.
+      deep: Full analysis including unconscious register shifts and register-argument relationships.
+    requires_dimensions: []
+    produces_dimensions:
+      - narrative_voice_register
+
+  - key: analyze_focalization
+    description: Analyzes whose perspective is centered, how focalization shifts, and whose viewpoint is excluded.
+    extended_description: Following Genette, maps the text's focalization patterns — who sees, who knows, whose perspective is privileged or marginalized.
+    intellectual_grounding:
+      thinker: Genette
+      concept: Focalization
+      method: Trace the narrator's perceptual and cognitive relationship to the narrated events/arguments.
+    indicators:
+      - First/third person perspective usage
+      - Shifts between insider and outsider perspective
+      - Claims to privileged knowledge or objectivity
+      - Systematic exclusion of particular viewpoints
+    depth_scaling:
+      surface: Identify primary narrator stance and obvious perspective limitations.
+      standard: Map focalization patterns and excluded perspectives.
+      deep: Detailed analysis linking focalization choices to the argument's blind spots.
+    requires_dimensions: []
+    produces_dimensions:
+      - perspective_focalization
+
+  - key: detect_narrative_tensions
+    description: Identifies where the text's narrative pulls in competing directions.
+    extended_description: Maps the productive and destructive tensions between competing narrative impulses — story vs. argument, different registers, coherence vs. honesty.
+    intellectual_grounding:
+      thinker: Ricoeur
+      concept: Narrative identity and temporal aporia
+      method: Identify where the demands of narrative form conflict with the demands of argumentative rigor.
+    indicators:
+      - Moments where the story seems to pull away from the argument
+      - Register shifts that don't serve clear argumentative purposes
+      - Unresolved tensions that the text tries to paper over
+    depth_scaling:
+      surface: Identify the most prominent tension.
+      standard: Map major tensions with management strategies.
+      deep: Comprehensive tension analysis relating narrative tensions to argumentative strengths/weaknesses.
+    requires_dimensions:
+      - narrative_arc
+      - narrative_voice_register
+    produces_dimensions:
+      - narrative_tensions
+
+  - key: catalog_narrative_devices
+    description: Catalogs the specific narrative devices deployed and assesses their effectiveness.
+    extended_description: Identifies anecdotes, case studies as stories, historical vignettes, hypothetical scenarios, counterfactuals, and other narrative devices, analyzing their function and effectiveness.
+    intellectual_grounding:
+      thinker: Booth
+      concept: Rhetoric of fiction
+      method: Analyze narrative devices as rhetorical instruments serving persuasive purposes.
+    indicators:
+      - Anecdotes and extended examples
+      - Case studies presented as narratives
+      - Historical vignettes and origin stories
+      - Hypothetical scenarios and counterfactuals
+    depth_scaling:
+      surface: List prominent devices.
+      standard: Catalog with functions and effectiveness.
+      deep: Full analysis of the device repertoire and its relationship to overall narrative strategy.
+    requires_dimensions: []
+    produces_dimensions:
+      - narrative_devices
+
+  - key: map_temporal_construction
+    description: Maps how the text constructs its relationship to time.
+    extended_description: Analyzes the text's temporal framework — linear, cyclical, genealogical, dialectical — and what it reveals about the argument's implicit philosophy of history.
+    intellectual_grounding:
+      thinker: Ricoeur
+      concept: Narrative time
+      method: Analyze how the text configures temporal experience through its narrative structure.
+    indicators:
+      - Dominant temporal frameworks
+      - Time scales deployed
+      - Temporal deixis (when is "now")
+      - Past-present-future relationships
+    depth_scaling:
+      surface: Identify dominant temporality and temporal stance.
+      standard: Map temporal construction with scales and relationships.
+      deep: Full temporal analysis including competing temporalities and implicit philosophy of history.
+    requires_dimensions: []
+    produces_dimensions:
+      - temporal_construction
+
+  - key: track_narrative_evolution
+    description: Tracks how narrative mode, register, and devices evolve across the text's chapters.
+    extended_description: Maps the narrative trajectory of the text — how its storytelling evolves from beginning to end, revealing the text's developmental logic.
+    intellectual_grounding:
+      thinker: Genette
+      concept: Narrative levels and metalepsis
+      method: Track shifts in narrative mode across the text's structure.
+    indicators:
+      - Chapter-to-chapter changes in narrative mode
+      - Register evolution across the text
+      - Shifting device repertoire
+    depth_scaling:
+      surface: Note major cross-chapter shifts.
+      standard: Map evolution chapter by chapter.
+      deep: Detailed tracking with analysis of what evolution reveals about the text's developmental logic.
+    requires_dimensions:
+      - narrative_arc
+      - narrative_voice_register
+    produces_dimensions:
+      - narrative_evolution_across_chapters
+
+composability:
+  shares_with:
+    narrative_arc: Provides narrative structure for rhetorical_strategy_analyzer and critical_apparatus_analyzer.
+    temporal_construction: Informs concept_evolution and historical_temporal engines with temporal framework.
+    narrative_voice_register: Reveals register patterns useful for audience_positioning_analyzer and rhetorical_strategy_analyzer.
+  consumes_from:
+    thesis_architecture: From deep_summarization — narrative analysis benefits from knowing the argument structure.
+    chapter_argument_map: From deep_summarization — chapter functions inform narrative evolution tracking.
+  synergy_engines:
+    - deep_summarization
+    - chapter_role_analyzer
+    - rhetorical_strategy_analyzer
+
+depth_levels:
+  - key: surface
+    description: Quick narrative read — emplotment, dominant register, and temporal stance.
+    typical_passes: 1
+    suitable_for: Initial narrative assessment, short texts.
+    passes:
+      - pass_number: 1
+        label: Narrative Discovery
+        stance: discovery
+        focus_dimensions:
+          - narrative_arc
+          - narrative_voice_register
+          - temporal_construction
+        focus_capabilities:
+          - trace_narrative_arc
+          - track_voice_register
+          - map_temporal_construction
+        consumes_from: []
+        description: Discover the dominant narrative mode, register patterns, and temporal construction.
+
+  - key: standard
+    description: Balanced narrative analysis — discovery followed by dialectical assessment of tensions.
+    typical_passes: 2
+    suitable_for: Standard analysis, pre-genealogy narrative profiling.
+    passes:
+      - pass_number: 1
+        label: Narrative Discovery
+        stance: discovery
+        focus_dimensions:
+          - narrative_arc
+          - narrative_voice_register
+          - perspective_focalization
+          - narrative_devices
+          - temporal_construction
+        focus_capabilities:
+          - trace_narrative_arc
+          - track_voice_register
+          - analyze_focalization
+          - catalog_narrative_devices
+          - map_temporal_construction
+        consumes_from: []
+        description: Comprehensive discovery of narrative elements — arc, voice, focalization, devices, temporal construction.
+      - pass_number: 2
+        label: Dialectical Narrative Assessment
+        stance: dialectical
+        focus_dimensions:
+          - narrative_tensions
+          - narrative_evolution_across_chapters
+        focus_capabilities:
+          - detect_narrative_tensions
+          - track_narrative_evolution
+        consumes_from:
+          - 1
+        description: With narrative elements mapped, assess tensions and track how the narrative evolves across chapters.
+
+  - key: deep
+    description: Exhaustive narrative analysis — four passes covering discovery, architecture, dialectical assessment, and integration.
+    typical_passes: 4
+    suitable_for: Complex monographs, texts with rich narrative structures, scholarly works that deploy narrative strategically.
+    passes:
+      - pass_number: 1
+        label: Narrative Discovery
+        stance: discovery
+        focus_dimensions:
+          - narrative_arc
+          - narrative_voice_register
+          - perspective_focalization
+          - narrative_devices
+          - temporal_construction
+        focus_capabilities:
+          - trace_narrative_arc
+          - track_voice_register
+          - analyze_focalization
+          - catalog_narrative_devices
+          - map_temporal_construction
+        consumes_from: []
+        description: Exhaustive discovery of all narrative elements.
+      - pass_number: 2
+        label: Narrative Architecture
+        stance: architecture
+        focus_dimensions:
+          - narrative_arc
+          - narrative_voice_register
+          - narrative_evolution_across_chapters
+        focus_capabilities:
+          - trace_narrative_arc
+          - track_voice_register
+          - track_narrative_evolution
+        consumes_from:
+          - 1
+        description: Build the narrative architecture — how arc, voice, and evolution interact structurally.
+      - pass_number: 3
+        label: Dialectical Narrative Assessment
+        stance: dialectical
+        focus_dimensions:
+          - narrative_tensions
+          - perspective_focalization
+        focus_capabilities:
+          - detect_narrative_tensions
+          - analyze_focalization
+        consumes_from:
+          - 1
+          - 2
+        description: Dialectically assess narrative tensions and focalization patterns — where does narrative conflict with argument?
+      - pass_number: 4
+        label: Narrative Integration
+        stance: integration
+        focus_dimensions:
+          - narrative_arc
+          - narrative_voice_register
+          - perspective_focalization
+          - narrative_tensions
+          - narrative_devices
+          - temporal_construction
+          - narrative_evolution_across_chapters
+        focus_capabilities:
+          - trace_narrative_arc
+          - track_voice_register
+          - analyze_focalization
+          - detect_narrative_tensions
+          - catalog_narrative_devices
+          - map_temporal_construction
+          - track_narrative_evolution
+        consumes_from:
+          - 1
+          - 2
+          - 3
+        description: Integrate all findings into a comprehensive narrative analysis that reveals how the text's storytelling relates to its argumentation.
+
+apps:
+  - critic
+function: logic

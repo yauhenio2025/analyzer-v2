@@ -1,0 +1,95 @@
+engine_key: chapter_role_analyzer
+engine_name: Chapter Role Analyzer
+stance_operationalizations:
+- stance_key: discovery
+  label: Structural Discovery
+  description: |-
+    Discover the structural landscape: classify every chapter's functional
+    role (foundation, development, evidence, objection handling, synthesis,
+    methodology, context, conclusion), track where key concepts are
+    introduced and how they flow across chapters, and map the inter-part
+    dynamics if the work has parts or major sections. Be exhaustive —
+    don't just classify the obvious chapters; even transitional or
+    seemingly peripheral chapters serve functions that the architecture
+    pass will need to understand.
+  focus_dimensions:
+  - chapter_functional_role
+  - key_concepts_introduced
+  - inter_part_dynamics
+  focus_capabilities:
+  - classify_chapter_roles
+  - track_concept_flow
+  - analyze_inter_part_dynamics
+- stance_key: architecture
+  label: Dependency and Coupling Architecture
+  description: |-
+    With chapter roles classified, build the dependency and coupling
+    architecture. Map what each chapter requires from upstream chapters
+    (conceptual prerequisites, empirical foundations, methodological
+    setups) and what it provides downstream. Assess coupling: which
+    chapters are tightly bound (can't be understood in isolation) and
+    which are loosely coupled (could be reordered)? Identify dialectical
+    pairs, complementary groups, and standalone excursus chapters.
+    This architecture is the structural skeleton of the argument —
+    it reveals the critical path through the text.
+  focus_dimensions:
+  - chapter_dependencies
+  - chapter_coupling
+  focus_capabilities:
+  - map_chapter_dependencies
+  - assess_chapter_coupling
+- stance_key: confrontation
+  label: Vulnerability Confrontation
+  description: |-
+    Confront the structural architecture with critical scrutiny. Where
+    are the vulnerabilities? Load-bearing chapters that are underdeveloped
+    — chapters that the entire argument depends on but that provide thin
+    argumentation. Missing bridges — places where the text leaps from
+    one section to another without adequate connection. Circular
+    dependencies — arguments that depend on conclusions they're supposed
+    to establish. Orphaned threads — ideas introduced but never resolved
+    or integrated. Redundancies — chapters that duplicate work done
+    elsewhere without adding value.
+
+    The confrontation pass is not about finding fault for its own sake
+    but about identifying where a sophisticated critic would most
+    effectively intervene, and where the text's structural choices
+    reveal tensions between what the author wants to argue and what
+    the argumentative architecture can actually support.
+  focus_dimensions:
+  - structural_vulnerabilities
+  - chapter_dependencies
+  - chapter_coupling
+  focus_capabilities:
+  - identify_structural_vulnerabilities
+  - map_chapter_dependencies
+  - assess_chapter_coupling
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: architecture
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: confrontation
+    consumes_from:
+    - 1
+    - 2

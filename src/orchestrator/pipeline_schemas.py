@@ -69,6 +69,13 @@ class AnalyzeRequest(BaseModel):
         "Valid keys: 'genealogical', 'logical', etc.",
     )
 
+    # Plan revision control
+    skip_plan_revision: bool = Field(
+        default=False,
+        description="If True, skip both pre-execution and mid-course plan revision. "
+        "Useful for quick runs or when the plan has been manually reviewed.",
+    )
+
     # Model selection
     planning_model: Optional[str] = Field(
         default=None,

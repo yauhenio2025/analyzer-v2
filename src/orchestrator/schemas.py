@@ -41,6 +41,39 @@ class PriorWork(BaseModel):
     )
 
 
+class ChapterTarget(BaseModel):
+    """A chapter to target for chapter-level analysis."""
+
+    chapter_id: str = Field(
+        ...,
+        description="Chapter identifier (e.g., 'ch7', 'appendix_a')",
+    )
+    chapter_title: str = Field(
+        default="",
+        description="Human-readable chapter title",
+    )
+    start_marker: Optional[str] = Field(
+        default=None,
+        description="Text or regex marker for chapter start",
+    )
+    end_marker: Optional[str] = Field(
+        default=None,
+        description="Text or regex marker for chapter end",
+    )
+    start_char: Optional[int] = Field(
+        default=None,
+        description="Character offset for chapter start",
+    )
+    end_char: Optional[int] = Field(
+        default=None,
+        description="Character offset for chapter end",
+    )
+    rationale: str = Field(
+        default="",
+        description="Why this chapter was selected for targeted analysis",
+    )
+
+
 class EngineExecutionSpec(BaseModel):
     """How a specific engine should run in this plan.
 
@@ -159,6 +192,18 @@ class PhaseExecutionSpec(BaseModel):
     estimated_cost_usd: float = Field(
         default=0.0,
         description="Estimated cost in USD for this phase.",
+    )
+
+    # Chapter-level targeting
+    chapter_targets: Optional[list[ChapterTarget]] = Field(
+        default=None,
+        description="Chapters to analyze individually in this phase. "
+        "When set with document_scope='chapter', the phase runs once per chapter.",
+    )
+    document_scope: str = Field(
+        default="whole",
+        description="'whole' = analyze entire document, 'chapter' = per-chapter analysis. "
+        "Requires chapter_targets to be set.",
     )
 
 
@@ -384,4 +429,15 @@ class WorkflowExecutionPlan(BaseModel):
     decision_trace: Optional['PlannerDecisionTrace'] = Field(
         default=None,
         description="Complete decision trace from adaptive planner. None for legacy plans.",
+    )
+
+    # Plan revision tracking
+    revision_history: list[dict] = Field(
+        default_factory=list,
+        description="History of plan revisions (pre-execution, mid-course). "
+        "Each entry is a serialized PlanRevisionEntry.",
+    )
+    current_revision: int = Field(
+        default=0,
+        description="Current revision number. 0 = original plan, 1+ = revised.",
     )

@@ -99,6 +99,19 @@ def run_phase(
         # Determine if this is a per-work phase
         is_per_work = _is_per_work_phase(phase_number, prior_work_titles, plan_phase)
 
+        # Chapter-targeted execution
+        if plan_phase.chapter_targets and plan_phase.document_scope == "chapter":
+            return _run_chapter_targeted_phase(
+                workflow_phase=workflow_phase,
+                plan_phase=plan_phase,
+                job_id=job_id,
+                document_ids=document_ids or {},
+                upstream_context=upstream_context,
+                cancellation_check=cancellation_check,
+                progress_callback=progress_callback,
+                start_time=start_time,
+            )
+
         if is_per_work and prior_work_titles:
             # Per-work execution (Phase 1.5, 2.0)
             return _run_per_work_phase(
@@ -508,6 +521,162 @@ def _run_per_work_phase(
         phase_name=phase_name,
         status=status,
         work_results=work_results,
+        final_output=final_output,
+        duration_ms=duration_ms,
+        total_tokens=total_tokens,
+        error="; ".join(errors) if errors else None,
+    )
+
+
+def _run_chapter_targeted_phase(
+    workflow_phase: WorkflowPhase,
+    plan_phase: PhaseExecutionSpec,
+    job_id: str,
+    document_ids: dict[str, str],
+    upstream_context: str,
+    cancellation_check: Optional[Callable[[], bool]],
+    progress_callback: Optional[Callable[[str], None]],
+    start_time: float,
+) -> PhaseResult:
+    """Run a phase that targets specific chapters for individual analysis.
+
+    When a phase has chapter_targets and document_scope="chapter":
+    1. Load whole-document text
+    2. For each chapter target, extract chapter text
+    3. Build input: whole-book summary (from upstream) + chapter text
+    4. Run the chain/engine on this combined input
+    5. Store results keyed by chapter_id
+    """
+    from src.executor.chapter_splitter import ChapterInfo, extract_chapter_text
+
+    phase_number = plan_phase.phase_number
+    phase_name = plan_phase.phase_name
+    chapter_targets = plan_phase.chapter_targets or []
+
+    logger.info(
+        f"Phase {phase_number}: chapter-targeted execution with "
+        f"{len(chapter_targets)} chapters"
+    )
+
+    # Get full document text
+    document_text = _get_target_document_text(document_ids)
+
+    chapter_results: dict[str, dict[str, list[EngineCallResult]]] = {}
+    total_tokens = 0
+    errors: list[str] = []
+
+    for ch_idx, ch_target in enumerate(chapter_targets):
+        if cancellation_check and cancellation_check():
+            raise InterruptedError(
+                f"Cancelled before chapter {ch_target.chapter_id}"
+            )
+
+        if progress_callback:
+            progress_callback(
+                f"Analyzing chapter {ch_idx + 1} of {len(chapter_targets)}: "
+                f"{ch_target.chapter_title or ch_target.chapter_id}"
+            )
+
+        try:
+            # Extract chapter text
+            if ch_target.start_char is not None and ch_target.end_char is not None:
+                chapter_info = ChapterInfo(
+                    chapter_id=ch_target.chapter_id,
+                    chapter_title=ch_target.chapter_title,
+                    start_char=ch_target.start_char,
+                    end_char=ch_target.end_char,
+                    char_count=ch_target.end_char - ch_target.start_char,
+                )
+                chapter_text = extract_chapter_text(document_text, chapter_info)
+            else:
+                # Fallback: use the full document if no offsets
+                logger.warning(
+                    f"Chapter {ch_target.chapter_id} has no char offsets, "
+                    f"using full document text"
+                )
+                chapter_text = document_text
+
+            # Build combined input: summary context + chapter text
+            combined_text = (
+                f"# Whole-Book Summary (from upstream profiling)\n\n"
+                f"{upstream_context}\n\n"
+                f"---\n\n"
+                f"# Chapter: {ch_target.chapter_title or ch_target.chapter_id}\n\n"
+                f"{chapter_text}"
+            )
+
+            work_key = _sanitize_work_key(ch_target.chapter_id)
+
+            # Resolve chain/engine
+            effective_chain_key = plan_phase.chain_key or workflow_phase.chain_key
+            effective_engine_key = plan_phase.engine_key or workflow_phase.engine_key
+
+            if effective_chain_key:
+                result = run_chain(
+                    chain_key=effective_chain_key,
+                    document_text=combined_text,
+                    job_id=job_id,
+                    phase_number=phase_number,
+                    work_key=work_key,
+                    depth=plan_phase.depth,
+                    upstream_context="",  # Already embedded in combined_text
+                    context_emphasis=plan_phase.context_emphasis,
+                    model_hint=plan_phase.model_hint,
+                    requires_full_documents=False,
+                    cancellation_check=cancellation_check,
+                    progress_callback=progress_callback,
+                )
+            elif effective_engine_key:
+                result = run_single_engine(
+                    engine_key=effective_engine_key,
+                    document_text=combined_text,
+                    job_id=job_id,
+                    phase_number=phase_number,
+                    work_key=work_key,
+                    depth=plan_phase.depth,
+                    upstream_context="",
+                    context_emphasis=plan_phase.context_emphasis,
+                    model_hint=plan_phase.model_hint,
+                    requires_full_documents=False,
+                    cancellation_check=cancellation_check,
+                    progress_callback=progress_callback,
+                )
+            else:
+                raise ValueError(
+                    f"Phase {phase_number} has no chain_key or engine_key"
+                )
+
+            chapter_results[work_key] = result["engine_results"]
+            total_tokens += result["total_tokens"]
+
+        except InterruptedError:
+            raise
+        except Exception as e:
+            logger.error(
+                f"Chapter-targeted execution failed for "
+                f"'{ch_target.chapter_id}': {e}"
+            )
+            errors.append(f"{ch_target.chapter_id}: {e}")
+
+    duration_ms = int((time.time() - start_time) * 1000)
+
+    # Combine final outputs from all chapters
+    final_parts = []
+    for work_key, eng_results in chapter_results.items():
+        for eng_key, pass_results in eng_results.items():
+            if pass_results:
+                final_parts.append(
+                    f"## {work_key} ({eng_key})\n\n{pass_results[-1].content}"
+                )
+    final_output = "\n\n---\n\n".join(final_parts)
+
+    status = PhaseStatus.COMPLETED if not errors else PhaseStatus.FAILED
+
+    return PhaseResult(
+        phase_number=phase_number,
+        phase_name=phase_name,
+        status=status,
+        work_results=chapter_results,
         final_output=final_output,
         duration_ms=duration_ms,
         total_tokens=total_tokens,

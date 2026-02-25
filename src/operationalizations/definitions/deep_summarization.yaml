@@ -1,0 +1,129 @@
+engine_key: deep_summarization
+engine_name: Deep Summarization Engine
+stance_operationalizations:
+- stance_key: discovery
+  label: Architectural Discovery
+  description: |-
+    Discover the thesis architecture, chapter functions, conceptual moves,
+    and vocabulary landscape. This is the foundational pass — map everything
+    that subsequent passes will analyze, evaluate, and integrate. Be
+    exhaustive: every significant thesis, every chapter function, every
+    conceptual move, every distinctive term. Downstream passes depend on
+    the completeness of this discovery.
+  focus_dimensions:
+  - thesis_architecture
+  - chapter_argument_map
+  - conceptual_moves
+  - conceptual_vocabulary
+  focus_capabilities:
+  - extract_thesis_architecture
+  - map_chapter_functions
+  - catalog_conceptual_moves
+  - map_conceptual_vocabulary
+- stance_key: architecture
+  label: Analytical Architecture
+  description: |-
+    With the argument structure mapped, build the analytical architecture:
+    audit evidence patterns across the argument, analyze how rhetorical
+    strategies operate beyond the logical level, detect the pattern of
+    foregrounding and suppression, and assess what this analysis enables
+    for downstream engines. This pass transforms the discovery inventory
+    into a structured analytical framework.
+  focus_dimensions:
+  - evidence_patterns
+  - rhetorical_strategies
+  - foregrounding_suppression
+  - downstream_utility
+  focus_capabilities:
+  - audit_evidence_patterns
+  - analyze_rhetorical_strategies
+  - detect_foregrounding_suppression
+  - assess_downstream_utility
+- stance_key: confrontation
+  label: Critical Confrontation
+  description: |-
+    Stress-test the thesis architecture discovered in pass 1 and analyzed
+    in pass 2. Where are the load-bearing walls weakest? Which evidence
+    gaps are most consequential? Where does foregrounding/suppression
+    conceal genuine argumentative problems rather than merely reflecting
+    legitimate scope choices? Challenge the text's own self-presentation:
+    does the argument actually accomplish what it claims? Are the unstated
+    premises defensible? Where would a sophisticated critic most effectively
+    strike? This confrontational stance produces the most analytically
+    productive findings — the points where the text's surface coherence
+    conceals real structural tensions.
+  focus_dimensions:
+  - thesis_architecture
+  - evidence_patterns
+  - foregrounding_suppression
+  focus_capabilities:
+  - extract_thesis_architecture
+  - audit_evidence_patterns
+  - detect_foregrounding_suppression
+- stance_key: integration
+  label: Integrative Synthesis
+  description: |-
+    Integrate all findings from discovery, architecture, and confrontation
+    into the comprehensive deep summarization. The thesis architecture is
+    now refined by confrontation — we know where it's strong and where it's
+    vulnerable. Evidence patterns have been audited and stress-tested.
+    Vocabulary has been mapped and its intellectual debts identified.
+    Foregrounding/suppression patterns have been exposed and their
+    significance assessed. Now produce the integrated output: a deep
+    summarization that captures not just what the text says but what it
+    DOES — its architectural logic, its rhetorical deployment, its
+    conceptual operations, its blind spots, and what all of this enables
+    for downstream analytical engines.
+  focus_dimensions:
+  - thesis_architecture
+  - chapter_argument_map
+  - conceptual_moves
+  - evidence_patterns
+  - rhetorical_strategies
+  - foregrounding_suppression
+  - conceptual_vocabulary
+  - downstream_utility
+  focus_capabilities:
+  - extract_thesis_architecture
+  - map_chapter_functions
+  - catalog_conceptual_moves
+  - audit_evidence_patterns
+  - analyze_rhetorical_strategies
+  - detect_foregrounding_suppression
+  - map_conceptual_vocabulary
+  - assess_downstream_utility
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: integration
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: architecture
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: confrontation
+    consumes_from:
+    - 1
+    - 2
+  - pass_number: 4
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2
+    - 3

@@ -1,0 +1,26 @@
+{
+  "chain_key": "deep_text_profiling",
+  "chain_name": "Deep Text Profiling",
+  "description": "Comprehensive foundational profiling of a target work: deep analytical summarization (thesis architecture, evidence patterns, conceptual vocabulary), chapter role analysis (structural dependencies, vulnerabilities), and narrative structure analysis (emplotment, voice, temporality). Each engine builds on the previous engine's output, creating a rich foundation for downstream analytical engines.",
+  "base_description": "Comprehensive foundational profiling: deep summarization, chapter roles, narrative structure",
+  "version": 1,
+  "engine_keys": [
+    "deep_summarization",
+    "chapter_role_analyzer",
+    "narrative_structure_analyzer"
+  ],
+  "blend_mode": "sequential",
+  "selection_criteria": null,
+  "max_engines": 3,
+  "merge_strategy": null,
+  "pass_context": true,
+  "category": "text_analysis",
+  "context_parameter_schema": null,
+  "recommended_for": [
+    "academic text analysis",
+    "pre-genealogy text profiling",
+    "book-length argument analysis",
+    "complex monograph analysis",
+    "foundational profiling before deep structural analysis"
+  ]
+}

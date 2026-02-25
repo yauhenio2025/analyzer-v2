@@ -202,11 +202,56 @@ def execute_plan(
                 f"RESUME: {len(already_completed)} phases already completed: {already_completed}"
             )
 
+        # Track whether mid-course revision has been attempted
+        # (loaded from plan if resuming)
+        mid_course_attempted = plan.current_revision >= 1
+        skip_revision = getattr(plan, '_skip_plan_revision', False)
+
         # Execute phase groups
         for group_idx, group in enumerate(phase_groups):
             if is_cancelled(job_id):
                 logger.info(f"Job {job_id} cancelled before group {group_idx}")
                 break
+
+            # ── Mid-course plan revision checkpoint ──
+            # After phases {1.0, 1.5} complete and before any phase >= 2.0,
+            # run an Opus-based plan revision to adjust remaining phases
+            # based on what was actually learned from profiling.
+            if (
+                not mid_course_attempted
+                and not skip_revision
+                and not is_cancelled(job_id)
+            ):
+                completed_phase_numbers = {
+                    float(pn_str)
+                    for pn_str, status in phase_statuses.items()
+                    if status == "completed"
+                } | already_completed
+                upcoming_min = min(
+                    (p.phase_number for p in group), default=0
+                )
+
+                if (
+                    1.0 in completed_phase_numbers
+                    and 1.5 in completed_phase_numbers
+                    and upcoming_min >= 2.0
+                ):
+                    mid_course_attempted = True
+                    try:
+                        plan, phase_groups, group_idx = _try_mid_course_revision(
+                            plan=plan,
+                            all_results=all_results,
+                            workflow_phases=workflow_phases,
+                            completed_phase_numbers=completed_phase_numbers,
+                            job_id=job_id,
+                            phase_groups=phase_groups,
+                            current_group_idx=group_idx,
+                        )
+                        plan_phases = {p.phase_number: p for p in plan.phases}
+                    except Exception as e:
+                        logger.warning(
+                            f"Mid-course revision failed (continuing): {e}"
+                        )
 
             logger.info(
                 f"Executing phase group {group_idx + 1}/{len(phase_groups)}: "
@@ -544,6 +589,88 @@ def _build_execution_order(
         f"Execution order: {[[p.phase_number for p in g] for g in groups]}"
     )
     return groups
+
+
+def _try_mid_course_revision(
+    plan: WorkflowExecutionPlan,
+    all_results: dict,
+    workflow_phases: dict,
+    completed_phase_numbers: set[float],
+    job_id: str,
+    phase_groups: list[list[PhaseExecutionSpec]],
+    current_group_idx: int,
+) -> tuple[WorkflowExecutionPlan, list[list[PhaseExecutionSpec]], int]:
+    """Attempt mid-course plan revision after profiling phases complete.
+
+    Returns (possibly revised plan, rebuilt phase_groups, adjusted group_idx).
+    If revision is not needed, returns the inputs unchanged.
+    """
+    from src.orchestrator.plan_revision import (
+        apply_revision_to_plan,
+        revise_plan_mid_course,
+        should_trigger_mid_course_revision,
+    )
+
+    if not should_trigger_mid_course_revision(
+        completed_phases=completed_phase_numbers,
+        current_revision=plan.current_revision,
+    ):
+        return plan, phase_groups, current_group_idx
+
+    logger.info(f"[Job {job_id}] Triggering mid-course plan revision...")
+
+    from src.executor.job_manager import update_job_progress
+    update_job_progress(
+        job_id,
+        current_phase=1.5,
+        phase_name="Mid-Course Plan Revision",
+        detail="Opus reviewing profiling results and adjusting remaining phases...",
+    )
+
+    # Collect phase outputs for the revision prompt
+    phase_outputs: dict[float, str] = {}
+    for pn, result in all_results.items():
+        if hasattr(result, 'final_output') and result.final_output:
+            phase_outputs[pn] = result.final_output
+
+    plan_dict = plan.model_dump()
+    result = revise_plan_mid_course(
+        plan_dict=plan_dict,
+        phase_outputs=phase_outputs,
+        book_samples=plan_dict.get("book_samples", []),
+        completed_phases=completed_phase_numbers,
+    )
+
+    if result is None:
+        logger.info(f"[Job {job_id}] Mid-course revision: no changes needed")
+        return plan, phase_groups, current_group_idx
+
+    # Apply revision
+    revised_dict = apply_revision_to_plan(
+        plan_dict=plan_dict,
+        revision_result=result,
+        completed_phases=completed_phase_numbers,
+    )
+
+    revised_plan = WorkflowExecutionPlan(**revised_dict)
+
+    # Rebuild execution order with the revised phases
+    revised_groups = _build_execution_order(revised_plan.phases, workflow_phases)
+
+    # Find the group index that contains the first unexecuted phase
+    new_group_idx = 0
+    for g_idx, group in enumerate(revised_groups):
+        if any(p.phase_number not in completed_phase_numbers for p in group):
+            new_group_idx = g_idx
+            break
+
+    logger.info(
+        f"[Job {job_id}] Mid-course revision applied: "
+        f"{result['revision']['changes_summary']}\n"
+        f"  Resuming from group {new_group_idx + 1}/{len(revised_groups)}"
+    )
+
+    return revised_plan, revised_groups, new_group_idx
 
 
 def _run_auto_presentation(job_id: str, plan_id: str) -> None:
