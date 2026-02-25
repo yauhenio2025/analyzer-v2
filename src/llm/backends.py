@@ -800,9 +800,6 @@ class OpenRouterBackend:
                 {"role": "user", "content": user_message},
             ],
             max_tokens=effective_max_tokens,
-            extra_body={
-                "reasoning": {"effort": "none"},  # Disable reasoning tokens
-            },
         )
 
         duration_ms = int((time.time() - start_time) * 1000)
@@ -896,9 +893,6 @@ class OpenRouterBackend:
                 max_tokens=effective_max_tokens,
                 stream=True,
                 stream_options={"include_usage": True},
-                extra_body={
-                    "reasoning": {"effort": "none"},  # Disable reasoning tokens
-                },
             )
 
             for chunk in stream:
