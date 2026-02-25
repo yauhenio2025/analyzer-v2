@@ -397,6 +397,12 @@ def _run_per_work_phase(
         # Get document text for this work
         doc_text = _get_work_document_text(work_title, document_ids)
 
+        # Determine if this phase needs the target work text at all.
+        # Phases with NO dependencies (like 1.8 Prior Work Profiling) are
+        # profiling ONLY the prior works — injecting the target text would
+        # cause the LLM to analyze the wrong document.
+        is_independent_profiling = not plan_phase.depends_on
+
         # Milestone 5: Use distilled analysis path when available
         if use_distilled:
             # Replace raw target text with distilled multi-engine analysis
@@ -409,8 +415,19 @@ def _run_per_work_phase(
             # Don't pass upstream_context again to the chain/engine — it's
             # already embedded in the combined_text
             effective_upstream = ""
+        elif is_independent_profiling:
+            # Independent per-work profiling: ONLY the prior work text.
+            # Do NOT include the target — this phase profiles each prior work
+            # on its own terms, without reference to the target.
+            combined_text = f"# {work_title}\n\n{doc_text}"
+            effective_upstream = ""
+            logger.info(
+                f"Phase {phase_number}: independent profiling of '{work_title}' "
+                f"({len(doc_text):,} chars, no target text injected)"
+            )
         else:
-            # Legacy path: concatenate both full texts
+            # Legacy path: concatenate both full texts (for phases that need
+            # both target and prior work, like classification or scanning)
             target_text = _get_target_document_text(document_ids)
             combined_text = _combine_document_texts(
                 target_text=target_text,

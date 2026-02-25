@@ -5,6 +5,7 @@ Endpoints:
     GET  /v1/executor/jobs                           List jobs
     GET  /v1/executor/jobs/{job_id}                  Poll status + progress
     POST /v1/executor/jobs/{job_id}/cancel           Cancel running job
+    POST /v1/executor/jobs/{job_id}/resume            Resume failed/cancelled job
     GET  /v1/executor/jobs/{job_id}/results          All phase outputs (summaries)
     GET  /v1/executor/jobs/{job_id}/phases/{phase}   Specific phase outputs (full prose)
     DELETE /v1/executor/jobs/{job_id}                Delete a completed job
@@ -225,6 +226,95 @@ async def force_cancel_job(job_id: str):
             raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
         raise HTTPException(status_code=400, detail=message)
     return {"job_id": job_id, "status": "cancelled", "message": "Force-cancellation requested (token bypassed)"}
+
+
+@router.post("/jobs/{job_id}/resume")
+async def resume_job(job_id: str):
+    """Resume a failed or cancelled job from where it left off.
+
+    Uses the plan_data stored on the job record and the existing phase_outputs
+    to skip already-completed phases/engines/passes. Creates a new execution
+    thread that picks up from the first incomplete phase.
+
+    Only works if:
+    - Job status is 'failed' or 'cancelled'
+    - Job has plan_data stored (always the case for v2 pipeline jobs)
+    """
+    from src.executor.output_store import get_completed_passes, get_completed_phases
+    from src.executor.workflow_runner import start_resume_thread
+    from src.orchestrator.schemas import WorkflowExecutionPlan
+
+    job = get_job(job_id)
+    if job is None:
+        raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+
+    if job["status"] not in ("failed", "cancelled"):
+        raise HTTPException(
+            status_code=400,
+            detail=f"Cannot resume job in status '{job['status']}'. Only failed or cancelled jobs can be resumed.",
+        )
+
+    plan_data = job.get("plan_data")
+    if not plan_data:
+        raise HTTPException(
+            status_code=400,
+            detail="Job has no plan_data stored — cannot resume. Please re-run the analysis.",
+        )
+
+    # Validate plan_data can be deserialized
+    try:
+        plan = WorkflowExecutionPlan(**plan_data)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to deserialize plan_data: {e}",
+        )
+
+    # Gather checkpoint info for the response
+    completed_phases = get_completed_phases(job_id)
+    completed_passes = get_completed_passes(job_id)
+    total_phases = len(plan.phases)
+    skippable = len(completed_phases)
+
+    # Reset job status to pending for re-execution
+    from src.executor.db import execute as db_execute
+    from src.executor.job_manager import clear_cancellation
+    db_execute(
+        """UPDATE executor_jobs
+           SET status = 'pending',
+               error = NULL,
+               completed_at = NULL
+           WHERE job_id = %s""",
+        (job_id,),
+    )
+    clear_cancellation(job_id)
+
+    # Spawn resume thread
+    document_ids = job.get("document_ids") or {}
+    start_resume_thread(
+        job_id=job_id,
+        plan_data=plan_data,
+        document_ids=document_ids,
+    )
+
+    logger.info(
+        f"RESUME: Job {job_id} resumed — {skippable}/{total_phases} phases already complete, "
+        f"{len(completed_passes)} engine passes cached"
+    )
+
+    return {
+        "job_id": job_id,
+        "plan_id": plan.plan_id,
+        "status": "resuming",
+        "completed_phases": sorted(completed_phases),
+        "total_phases": total_phases,
+        "cached_passes": len(completed_passes),
+        "message": (
+            f"Resuming from checkpoint: {skippable} of {total_phases} phases "
+            f"already complete ({len(completed_passes)} engine passes cached). "
+            f"Poll GET /v1/executor/jobs/{job_id} for progress."
+        ),
+    }
 
 
 @router.get("/jobs/{job_id}/results")

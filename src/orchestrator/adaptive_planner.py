@@ -121,6 +121,8 @@ IMPORTANT:
 - Do NOT concatenate chain/engine keys with '+' or any separator. Each field takes exactly ONE key.
 - per_work_chain_map values must be valid CHAIN keys from the catalog (not engines, not compound expressions)
 - Set depends_on for ALL phases (empty list if no dependencies)
+- **Data flow clarity**: In each phase's rationale, explicitly state what upstream outputs it consumes and WHY. For example: "Receives Phase 1.8 prior work summaries so that genealogical scanning can compare prior concepts against the target profile from Phase 1.0." The rationale must make the data flow legible to a human reader.
+- In the decision_trace.phase_decisions, always include a "dependency_rationale" that explains the data flow: what each dependency provides and how this phase uses it.
 - Use phase numbers that allow future insertion (1.0, 1.5, 2.0, 2.5, 3.0, etc.)
 - iteration_mode defaults to "single" if not specified
 """
