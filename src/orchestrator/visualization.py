@@ -270,7 +270,15 @@ def _build_passes_viz(
     op_reg: Any,
     stance_reg: Any,
 ) -> list[dict[str, Any]]:
-    """Build pass sequence visualization for an engine at a depth level."""
+    """Build pass sequence visualization for an engine at a depth level.
+
+    Each pass represents exactly ONE LLM API call. The visualization shows:
+    - What cognitive stance drives this call
+    - What data flows in from prior passes (consumes_from)
+    - What dimensions/capabilities this call focuses on
+    - The full stance prose (cognitive instructions sent to the LLM)
+    - The operationalization description (engine-specific guidance)
+    """
     op = op_reg.get(engine_key)
     if op is None:
         # No operationalization — single-pass engine
@@ -281,7 +289,12 @@ def _build_passes_viz(
             "cognitive_mode": "divergent",
             "label": f"Single-pass {depth}",
             "focus_dimensions": [],
+            "focus_capabilities": [],
             "consumes_from": [],
+            "stance_prose": "",
+            "description": "",
+            "input_summary": "Target work text + phase context",
+            "output_summary": "Analytical prose",
         }]
 
     depth_seq = op.get_depth_sequence(depth)
@@ -294,17 +307,39 @@ def _build_passes_viz(
         if depth_seq is None:
             return []
 
+    total_passes = len(depth_seq.passes)
     passes_viz = []
     for entry in depth_seq.passes:
         # Get stance details
         stance = stance_reg.get(entry.stance_key)
         stance_name = stance.name if stance else entry.stance_key
         cognitive_mode = stance.cognitive_mode if stance else "unknown"
+        stance_prose = stance.stance if stance else ""
 
         # Get engine-specific stance label from operationalization
         stance_op = op.get_stance_op(entry.stance_key)
         label = stance_op.label if stance_op else stance_name
         focus_dims = stance_op.focus_dimensions if stance_op else []
+        focus_caps = stance_op.focus_capabilities if stance_op else []
+        description = stance_op.description if stance_op else ""
+
+        # Build human-readable input summary
+        input_parts = ["Target work text"]
+        if entry.consumes_from:
+            refs = ", ".join(f"#{p}" for p in entry.consumes_from)
+            input_parts.append(f"prose output from pass {refs}")
+        input_parts.append("engine framing + stance instructions")
+        if focus_dims:
+            input_parts.append(f"{len(focus_dims)} focused dimension(s)")
+        input_summary = " + ".join(input_parts)
+
+        # Build human-readable output summary
+        if entry.pass_number == total_passes:
+            output_summary = "Final analytical prose (synthesized from all passes)"
+        elif entry.pass_number == 1:
+            output_summary = "Foundational analytical prose (feeds into subsequent passes)"
+        else:
+            output_summary = "Intermediate analytical prose (feeds forward)"
 
         passes_viz.append({
             "pass_number": entry.pass_number,
@@ -313,7 +348,12 @@ def _build_passes_viz(
             "cognitive_mode": cognitive_mode,
             "label": label,
             "focus_dimensions": focus_dims,
+            "focus_capabilities": focus_caps,
             "consumes_from": entry.consumes_from,
+            "stance_prose": stance_prose,
+            "description": description,
+            "input_summary": input_summary,
+            "output_summary": output_summary,
         })
 
     return passes_viz
