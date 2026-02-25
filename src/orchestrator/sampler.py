@@ -313,7 +313,7 @@ def sample_all_books(
                 )
     
     # Return in order: target first, then prior works
-    for title, text, role in work_items:
+    for title, text, role, _chapters in work_items:
         if title in results:
             samples.append(results[title])
     
