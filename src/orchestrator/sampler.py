@@ -230,7 +230,9 @@ def sample_all_books(
     Args:
         target_work_text: Full text of the target work
         target_work_title: Title of the target work
-        prior_works: List of dicts with 'title' and 'text' keys
+        prior_works: List of dicts with 'title', 'text', and optional
+            'chapters' keys. When 'chapters' is present, it's a list
+            of {chapter_id, title, char_count} dicts.
         max_workers: Max parallel sampling calls
         target_chapters: Pre-uploaded chapter metadata for the target work.
             When provided, skips regex detection for the target and uses
@@ -284,7 +286,8 @@ def sample_all_books(
         (target_work_title, target_work_text, "target", target_chapters),
     ]
     for pw in prior_works:
-        work_items.append((pw["title"], pw["text"], "prior_work", None))
+        pw_chapters = pw.get("chapters")  # None if not provided
+        work_items.append((pw["title"], pw["text"], "prior_work", pw_chapters))
 
     logger.info(f"Sampling {len(work_items)} books in parallel (max_workers={max_workers})")
 

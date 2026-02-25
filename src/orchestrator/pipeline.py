@@ -250,13 +250,17 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
 
 
 def _upload_documents(request: AnalyzeRequest) -> dict[str, str]:
-    """Upload target work + chapters + prior work texts to the document store.
+    """Upload all works + their chapters to the document store.
 
     Returns a dict mapping role/title -> doc_id.
     Keys:
       - "target" for the target work (whole document)
-      - "chapter:{chapter_id}" for each pre-uploaded chapter
-      - prior work titles for prior works
+      - "chapter:target:{chapter_id}" for target work chapters
+      - prior work title for each prior work (whole document)
+      - "chapter:{prior_work_title}:{chapter_id}" for prior work chapters
+
+    Chapters are optional — uploading them makes them available for
+    chapter-targeted execution but doesn't force their use.
     """
     document_ids: dict[str, str] = {}
 
@@ -273,28 +277,16 @@ def _upload_documents(request: AnalyzeRequest) -> dict[str, str]:
         f"({len(request.target_work_text):,} chars)"
     )
 
-    # Upload pre-split chapters (if provided)
-    for ch in request.target_work_chapters:
-        ch_title = f"{request.target_work.title} — {ch.title or ch.chapter_id}"
-        ch_doc_id = store_document(
-            title=ch_title,
-            text=ch.text,
-            author=request.target_work.author,
-            role="chapter",
-        )
-        document_ids[f"chapter:{ch.chapter_id}"] = ch_doc_id
-        logger.info(
-            f"Uploaded chapter: '{ch.chapter_id}' ({ch.title}) -> {ch_doc_id} "
-            f"({len(ch.text):,} chars)"
-        )
+    # Upload target work chapters (if provided)
+    _upload_chapters(
+        chapters=request.target_work_chapters,
+        work_title=request.target_work.title,
+        work_key="target",
+        author=request.target_work.author,
+        document_ids=document_ids,
+    )
 
-    if request.target_work_chapters:
-        logger.info(
-            f"Uploaded {len(request.target_work_chapters)} pre-split chapters "
-            f"for '{request.target_work.title}'"
-        )
-
-    # Upload prior works
+    # Upload prior works + their chapters
     for pw in request.prior_works:
         pw_doc_id = store_document(
             title=pw.title,
@@ -308,7 +300,51 @@ def _upload_documents(request: AnalyzeRequest) -> dict[str, str]:
             f"({len(pw.text):,} chars)"
         )
 
+        # Upload prior work chapters (if provided)
+        _upload_chapters(
+            chapters=pw.chapters,
+            work_title=pw.title,
+            work_key=pw.title,
+            author=pw.author,
+            document_ids=document_ids,
+        )
+
     return document_ids
+
+
+def _upload_chapters(
+    chapters: list,
+    work_title: str,
+    work_key: str,
+    author: str | None,
+    document_ids: dict[str, str],
+) -> None:
+    """Upload pre-split chapters for a work.
+
+    Stores each chapter as a separate document with role="chapter".
+    Keys in document_ids: "chapter:{work_key}:{chapter_id}".
+    """
+    if not chapters:
+        return
+
+    for ch in chapters:
+        ch_display_title = f"{work_title} — {ch.title or ch.chapter_id}"
+        ch_doc_id = store_document(
+            title=ch_display_title,
+            text=ch.text,
+            author=author,
+            role="chapter",
+        )
+        doc_key = f"chapter:{work_key}:{ch.chapter_id}"
+        document_ids[doc_key] = ch_doc_id
+        logger.info(
+            f"Uploaded chapter: '{ch.chapter_id}' ({ch.title}) -> {ch_doc_id} "
+            f"({len(ch.text):,} chars)"
+        )
+
+    logger.info(
+        f"Uploaded {len(chapters)} chapters for '{work_title}'"
+    )
 
 
 def _store_request_snapshot(
@@ -380,14 +416,19 @@ def _generate_adaptive(
         f"for objective '{request.objective_key}'"
     )
 
-    # Sample books
-    prior_works_for_sampling = [
-        {"title": pw.title, "text": pw.text}
-        for pw in request.prior_works
-    ]
+    # Sample books — include chapter metadata when available
+    prior_works_for_sampling = []
+    for pw in request.prior_works:
+        pw_entry: dict = {"title": pw.title, "text": pw.text}
+        if pw.chapters:
+            pw_entry["chapters"] = [
+                {"chapter_id": ch.chapter_id, "title": ch.title, "char_count": len(ch.text)}
+                for ch in pw.chapters
+            ]
+        prior_works_for_sampling.append(pw_entry)
 
     # Pass pre-uploaded chapter metadata so the sampler uses it
-    # instead of running regex detection on the target work
+    # instead of running regex detection
     target_chapters = None
     if request.target_work_chapters:
         target_chapters = [

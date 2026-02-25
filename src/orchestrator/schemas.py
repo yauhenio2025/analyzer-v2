@@ -52,6 +52,12 @@ class ChapterTarget(BaseModel):
         default="",
         description="Human-readable chapter title",
     )
+    work_key: str = Field(
+        default="target",
+        description="Which work this chapter belongs to. 'target' for the "
+        "target work, or the prior work's title for prior works. "
+        "Used to look up pre-uploaded chapter documents.",
+    )
     start_marker: Optional[str] = Field(
         default=None,
         description="Text or regex marker for chapter start",

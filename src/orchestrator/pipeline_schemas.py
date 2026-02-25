@@ -12,16 +12,21 @@ from src.orchestrator.schemas import TargetWork, PriorWork
 
 
 class ChapterUpload(BaseModel):
-    """A pre-split chapter of the target work.
+    """A pre-split chapter of any work (target or prior).
 
     When the user already has individual chapters as separate files,
     they can upload them alongside the full document. Each chapter is
     stored as its own document in the store and made available for
     chapter-targeted execution without char-offset extraction.
+
+    Uploading chapters does NOT force their use — they're simply
+    available if the planner or mid-course revision decides to target
+    specific chapters.
     """
 
     chapter_id: str = Field(
-        description="Unique chapter identifier, e.g. 'ch1', 'ch7', 'appendix_a'",
+        description="Chapter identifier, unique within this work. "
+        "e.g. 'ch1', 'ch7', 'appendix_a'",
     )
     title: str = Field(
         default="",
@@ -48,6 +53,12 @@ class PriorWorkWithText(BaseModel):
     )
     text: str = Field(
         description="Full text of the prior work",
+    )
+    chapters: list[ChapterUpload] = Field(
+        default_factory=list,
+        description="Pre-split chapters of this prior work. Optional — when provided, "
+        "each chapter is stored as its own document and available for "
+        "chapter-targeted execution if the planner decides to use them.",
     )
 
 
@@ -131,8 +142,9 @@ class AnalyzeResponse(BaseModel):
     document_ids: dict[str, str] = Field(
         default_factory=dict,
         description="Mapping of role/title -> document ID. "
-        "Keys: 'target' for target work, 'chapter:{chapter_id}' for "
-        "pre-uploaded chapters, prior work titles for prior works.",
+        "Keys: 'target' for target work, prior work titles for prior works, "
+        "'chapter:target:{chapter_id}' for target chapters, "
+        "'chapter:{prior_work_title}:{chapter_id}' for prior work chapters.",
     )
     cancel_token: Optional[str] = Field(
         default=None,

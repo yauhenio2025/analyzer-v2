@@ -558,8 +558,16 @@ def _run_chapter_targeted_phase(
         f"{len(chapter_targets)} chapters"
     )
 
-    # Get full document text
-    document_text = _get_target_document_text(document_ids)
+    # Cache full document texts by work_key (loaded on demand)
+    _work_text_cache: dict[str, str] = {}
+
+    def _get_work_text(wk: str) -> str:
+        if wk not in _work_text_cache:
+            if wk == "target":
+                _work_text_cache[wk] = _get_target_document_text(document_ids)
+            else:
+                _work_text_cache[wk] = _get_work_document_text(wk, document_ids)
+        return _work_text_cache[wk]
 
     chapter_results: dict[str, dict[str, list[EngineCallResult]]] = {}
     total_tokens = 0
@@ -579,7 +587,9 @@ def _run_chapter_targeted_phase(
 
         try:
             # Strategy 1: Load from pre-uploaded chapter document
-            chapter_doc_key = f"chapter:{ch_target.chapter_id}"
+            # Key format: "chapter:{work_key}:{chapter_id}"
+            work_key = getattr(ch_target, "work_key", "target")
+            chapter_doc_key = f"chapter:{work_key}:{ch_target.chapter_id}"
             chapter_doc_id = document_ids.get(chapter_doc_key)
             if chapter_doc_id:
                 chapter_text = get_document_text(chapter_doc_id)
@@ -599,6 +609,7 @@ def _run_chapter_targeted_phase(
 
             # Strategy 2: Extract from full document using char offsets
             if chapter_text is None:
+                full_text = _get_work_text(work_key)
                 if ch_target.start_char is not None and ch_target.end_char is not None:
                     chapter_info = ChapterInfo(
                         chapter_id=ch_target.chapter_id,
@@ -607,14 +618,14 @@ def _run_chapter_targeted_phase(
                         end_char=ch_target.end_char,
                         char_count=ch_target.end_char - ch_target.start_char,
                     )
-                    chapter_text = extract_chapter_text(document_text, chapter_info)
+                    chapter_text = extract_chapter_text(full_text, chapter_info)
                 else:
                     # Fallback: use the full document if no offsets and no pre-upload
                     logger.warning(
                         f"Chapter {ch_target.chapter_id} has no pre-uploaded document "
                         f"and no char offsets, using full document text"
                     )
-                    chapter_text = document_text
+                    chapter_text = full_text
 
             # Build combined input: summary context + chapter text
             combined_text = (
