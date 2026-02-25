@@ -126,6 +126,7 @@ def revise_plan_pre_execution(
     book_samples: list[dict],
     objective_text: str,
     catalog_summary: str = "",
+    model: str = "claude-opus-4-6",
 ) -> Optional[dict]:
     """Review and optionally revise a plan before execution begins.
 
@@ -134,14 +135,12 @@ def revise_plan_pre_execution(
         book_samples: Serialized BookSamples
         objective_text: The objective's planner_strategy text
         catalog_summary: Optional abbreviated catalog text
+        model: Model to use for revision (defaults to Opus, respects user's planning model)
 
     Returns:
         A PlanRevisionEntry dict + revised phases if revision was needed, else None.
     """
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        logger.warning("No ANTHROPIC_API_KEY — skipping pre-execution plan revision")
-        return None
+    # Auth is handled by the backend factory
 
     # Build prompt
     plan_json = json.dumps(
@@ -159,15 +158,11 @@ def revise_plan_pre_execution(
     )
 
     try:
-        import httpx
-        from anthropic import Anthropic
+        from src.llm.factory import get_backend
 
-        client = Anthropic(
-            timeout=httpx.Timeout(connect=30.0, read=300.0, write=30.0, pool=30.0),
-        )
+        logger.info(f"Running pre-execution plan revision (model={model})...")
 
-        logger.info("Running pre-execution plan revision (Opus, adaptive thinking)...")
-
+        backend = get_backend(model)
         last_error = None
 
         for attempt in range(REVISION_MAX_RETRIES):
@@ -179,15 +174,12 @@ def revise_plan_pre_execution(
                 )
                 time.sleep(delay)
             try:
-                response = client.messages.create(
-                    model="claude-opus-4-6",
+                result = backend.execute_sync(
+                    system_prompt=_PRE_EXECUTION_SYSTEM,
+                    user_message=prompt,
                     max_tokens=16000,
-                    thinking={
-                        "type": "enabled",
-                        "budget_tokens": 10000,
-                    },
-                    system=_PRE_EXECUTION_SYSTEM,
-                    messages=[{"role": "user", "content": prompt}],
+                    thinking_effort="high",
+                    label="pre-execution revision",
                 )
                 break  # Success
             except Exception as retry_err:
@@ -202,12 +194,7 @@ def revise_plan_pre_execution(
                 f"Last error: {last_error}"
             )
 
-        # Extract text response
-        raw_text = ""
-        for block in response.content:
-            if hasattr(block, "text"):
-                raw_text = block.text
-                break
+        raw_text = result.content
 
         # Parse JSON
         content = raw_text.strip()
@@ -229,7 +216,7 @@ def revise_plan_pre_execution(
             phases_added=result.get("phases_added", []),
             phases_modified=result.get("phases_modified", []),
             revision_rationale=result.get("revision_rationale", ""),
-            model_used="claude-opus-4-6",
+            model_used=model,
         )
 
         logger.info(
@@ -323,6 +310,7 @@ def revise_plan_mid_course(
     phase_outputs: dict[float, str],
     book_samples: list[dict],
     completed_phases: set[float],
+    model: str = "claude-opus-4-6",
 ) -> Optional[dict]:
     """Review and optionally revise a plan mid-course after profiling completes.
 
@@ -337,10 +325,7 @@ def revise_plan_mid_course(
     Returns:
         A PlanRevisionEntry dict + revised remaining phases if revision was needed, else None.
     """
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        logger.warning("No ANTHROPIC_API_KEY — skipping mid-course plan revision")
-        return None
+    # Auth is handled by the backend factory
 
     # Separate completed from remaining phases
     all_phases = plan_dict.get("phases", [])
@@ -367,15 +352,11 @@ def revise_plan_mid_course(
     )
 
     try:
-        import httpx
-        from anthropic import Anthropic
+        from src.llm.factory import get_backend
 
-        client = Anthropic(
-            timeout=httpx.Timeout(connect=30.0, read=300.0, write=30.0, pool=30.0),
-        )
+        logger.info(f"Running mid-course plan revision (model={model})...")
 
-        logger.info("Running mid-course plan revision (Opus, adaptive thinking)...")
-
+        backend = get_backend(model)
         last_error = None
         for attempt in range(REVISION_MAX_RETRIES):
             if attempt > 0:
@@ -386,15 +367,12 @@ def revise_plan_mid_course(
                 )
                 time.sleep(delay)
             try:
-                response = client.messages.create(
-                    model="claude-opus-4-6",
+                result = backend.execute_sync(
+                    system_prompt=_MID_COURSE_SYSTEM,
+                    user_message=prompt,
                     max_tokens=16000,
-                    thinking={
-                        "type": "enabled",
-                        "budget_tokens": 10000,
-                    },
-                    system=_MID_COURSE_SYSTEM,
-                    messages=[{"role": "user", "content": prompt}],
+                    thinking_effort="high",
+                    label="mid-course revision",
                 )
                 break  # Success
             except Exception as retry_err:
@@ -409,11 +387,7 @@ def revise_plan_mid_course(
                 f"Last error: {last_error}"
             )
 
-        raw_text = ""
-        for block in response.content:
-            if hasattr(block, "text"):
-                raw_text = block.text
-                break
+        raw_text = result.content
 
         content = raw_text.strip()
         if content.startswith("```"):
@@ -438,7 +412,7 @@ def revise_plan_mid_course(
             phases_added=result.get("phases_added", []),
             phases_modified=result.get("phases_modified", []),
             revision_rationale=result.get("revision_rationale", ""),
-            model_used="claude-opus-4-6",
+            model_used=model,
         )
 
         logger.info(

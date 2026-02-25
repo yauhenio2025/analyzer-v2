@@ -633,12 +633,14 @@ def _try_mid_course_revision(
         if hasattr(result, 'final_output') and result.final_output:
             phase_outputs[pn] = result.final_output
 
+    revision_model = plan.planning_model or plan.execution_model or "claude-opus-4-6"
     plan_dict = plan.model_dump()
     result = revise_plan_mid_course(
         plan_dict=plan_dict,
         phase_outputs=phase_outputs,
         book_samples=plan_dict.get("book_samples", []),
         completed_phases=completed_phase_numbers,
+        model=revision_model,
     )
 
     if result is None:

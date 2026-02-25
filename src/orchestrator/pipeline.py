@@ -207,13 +207,14 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
         )
 
         # ── Stage 2.5: Pre-execution plan revision ──
-        # If adaptive mode with objective, run Opus-based plan self-critique
+        # If adaptive mode with objective, run plan self-critique using the planning model
         if request.objective_key and not request.skip_plan_revision:
+            revision_model = request.planning_model or "claude-opus-4-6"
             update_job_progress(
                 job_id,
                 current_phase=0,
                 phase_name="Reviewing Plan",
-                detail="Opus reviewing plan for gaps before execution...",
+                detail=f"{revision_model} reviewing plan for gaps before execution...",
             )
             try:
                 plan = _run_pre_execution_revision(plan, request)
@@ -503,11 +504,13 @@ def _run_pre_execution_revision(
         if objective:
             objective_text = getattr(objective, "planner_strategy", "") or ""
 
+    revision_model = request.planning_model or "claude-opus-4-6"
     plan_dict = plan.model_dump()
     result = revise_plan_pre_execution(
         plan_dict=plan_dict,
         book_samples=plan_dict.get("book_samples", []),
         objective_text=objective_text,
+        model=revision_model,
     )
 
     if result is None:
