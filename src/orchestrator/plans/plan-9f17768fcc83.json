@@ -1,0 +1,298 @@
+{
+  "plan_id": "plan-9f17768fcc83",
+  "created_at": "2026-02-19T03:11:45.457689",
+  "workflow_key": "intellectual_genealogy",
+  "thinker_name": "Yanis Varoufakis",
+  "target_work": {
+    "title": "Techno-Feudalism: What Killed Capitalism",
+    "author": "Yanis Varoufakis",
+    "year": 2023,
+    "description": "Argues that capitalism has mutated into techno-feudalism through the rise of cloud capital — platform-based algorithmic systems that have replaced market dynamics with feudal rent extraction. Central to the argument is that Big Tech platforms like Amazon and Meta are not traditional capitalist enterprises but cloud fiefs that extract rent rather than profit."
+  },
+  "prior_works": [
+    {
+      "title": "The Global Minotaur",
+      "author": "Yanis Varoufakis",
+      "year": 2011,
+      "description": "Analyzes the global economic system through the metaphor of the Minotaur — America as the beast that consumed the world surplus to maintain global equilibrium",
+      "relationship_hint": "Established the metamorphosis framework and the idea that capitalism periodically transforms itself"
+    },
+    {
+      "title": "Talking to My Daughter About the Economy",
+      "author": "Yanis Varoufakis",
+      "year": 2017,
+      "description": "Popular economics book that introduces key Varoufakis concepts in accessible form",
+      "relationship_hint": "First mention of the weird hypothesis that capitalism may have been replaced by something worse"
+    },
+    {
+      "title": "Adults in the Room",
+      "author": "Yanis Varoufakis",
+      "year": 2017,
+      "description": "Memoir of the Greek debt crisis negotiations as finance minister",
+      "relationship_hint": "Provides biographical context and lived experience with institutional power dynamics"
+    }
+  ],
+  "research_question": "How did Varoufakis's Marxist intellectual formation shape the conceptual vocabulary and argumentative architecture of Techno-Feudalism?",
+  "strategy_summary": "Varoufakis presents a distinctive analytical challenge: he is a Marxist economist who writes across registers (academic, popular, memoir) and who has developed a signature intellectual move—the metamorphosis thesis—that he applies to capitalism itself. The research question specifically asks how his Marxist formation shaped Techno-Feudalism's vocabulary and argumentative architecture. This demands deep profiling of his conceptual apparatus: the Marxist categories (rent, profit, capital, exploitation), his coinages (cloud capital, techno-feudalism, cloud fiefs), and the metaphor-driven methodology he inherited from Marx and deploys throughout his work.\n\nThe corpus structure is revealing: The Global Minotaur (2011) established his metamorphosis framework and should be treated as both direct precursor and methodological ancestor—it requires the deepest scanning. Talking to My Daughter (2017) is the bridge text where the 'weird hypothesis' first appears. Adults in the Room (2017) is an indirect contextualizer providing experiential grounding but limited conceptual genealogy value. This asymmetry should be reflected in scanning depth.\n\nThe analysis should prioritize vocabulary evolution (how Marxist categories mutate into his neo-feudal vocabulary), framing evolution (how 'capitalism transforms' becomes 'capitalism died'), and tactics detection (Varoufakis is rhetorically bold—how does he handle the shift from critic of capitalism to declarer of its death?). The Foucauldian conditions of possibility analysis is essential for answering what made the techno-feudalism argument thinkable given his intellectual formation.",
+  "phases": [
+    {
+      "phase_number": 1.0,
+      "phase_name": "Deep Target Work Profiling",
+      "skip": false,
+      "skip_reason": null,
+      "depth": "deep",
+      "engine_overrides": {
+        "conceptual_framework_extraction": {
+          "engine_key": "conceptual_framework_extraction",
+          "depth": "deep",
+          "focus_dimensions": [
+            "vocabulary_map",
+            "methodological_signature",
+            "metaphor_tracking",
+            "domain_crossings"
+          ],
+          "focus_capabilities": null,
+          "rationale": "Varoufakis coins extensive new vocabulary (cloud capital, cloud fiefs, techno-feudalism) while repurposing Marxist categories (rent vs profit, exploitation). His methodology imports economic analysis into feudal-political categories—a major domain crossing that needs full archaeology."
+        },
+        "concept_semantic_constellation": {
+          "engine_key": "concept_semantic_constellation",
+          "depth": "deep",
+          "focus_dimensions": [
+            "semantic_field",
+            "concept_clusters",
+            "boundary_terms"
+          ],
+          "focus_capabilities": null,
+          "rationale": "The semantic field around 'feudalism,' 'rent,' 'capital,' and 'profit' is where the argument lives or dies. Boundary terms are crucial: where exactly does 'profit' end and 'rent' begin in his usage? How does 'capital' bifurcate into traditional vs cloud?"
+        },
+        "inferential_commitment_mapper": {
+          "engine_key": "inferential_commitment_mapper",
+          "depth": "deep",
+          "focus_dimensions": [
+            "explicit_commitments",
+            "implicit_commitments",
+            "hidden_implications"
+          ],
+          "focus_capabilities": null,
+          "rationale": "Marxist commitments cascade: accepting his labor theory premises commits you to specific conclusions about exploitation under techno-feudalism. Need to map the full commitment structure to answer the research question."
+        },
+        "concept_evolution": {
+          "engine_key": "concept_evolution",
+          "depth": "standard",
+          "focus_dimensions": [
+            "vocabulary_evolution",
+            "framing_evolution"
+          ],
+          "focus_capabilities": null,
+          "rationale": "Preliminary evolution tracking in target work—detailed cross-work evolution comes in Phase 2. Standard depth sufficient here."
+        }
+      },
+      "context_emphasis": "Prioritize extraction of Marxist conceptual vocabulary and its mutations. Flag every term that has Marxist ancestry. Track the rent/profit distinction as a central axis. Note how economic methodology meets political-feudal vocabulary.",
+      "rationale": "Deep profiling is essential because Varoufakis's argument depends on a complex conceptual apparatus that blends Marxist political economy with feudal-political categories. The research question specifically asks about vocabulary and argumentative architecture—this phase builds the target profile that all subsequent phases compare against."
+    },
+    {
+      "phase_number": 1.5,
+      "phase_name": "Relationship Classification",
+      "skip": false,
+      "skip_reason": null,
+      "depth": "standard",
+      "engine_overrides": {
+        "genealogy_relationship_classification": {
+          "engine_key": "genealogy_relationship_classification",
+          "depth": "standard",
+          "focus_dimensions": [
+            "relationship_type",
+            "influence_channels",
+            "strategic_relevance"
+          ],
+          "focus_capabilities": null,
+          "rationale": "Only 3 prior works with relatively clear relationships. Standard depth will correctly classify Global Minotaur as direct_precursor + methodological_ancestor, Talking to My Daughter as direct_precursor, and Adults in the Room as indirect_contextualizer."
+        }
+      },
+      "context_emphasis": "Distinguish methodological influence (how the author argues) from conceptual influence (what terms/ideas transfer). Global Minotaur likely provides both; Adults in the Room provides experiential grounding but limited conceptual genealogy.",
+      "rationale": "Standard depth is appropriate given the small corpus size and relatively clear relationship types. The key output is scanning strategy differentiation: Global Minotaur needs exhaustive treatment, the others need targeted scanning."
+    },
+    {
+      "phase_number": 2.0,
+      "phase_name": "Prior Work Scanning",
+      "skip": false,
+      "skip_reason": null,
+      "depth": "deep",
+      "engine_overrides": {
+        "concept_evolution": {
+          "engine_key": "concept_evolution",
+          "depth": "deep",
+          "focus_dimensions": [
+            "vocabulary_evolution",
+            "methodology_evolution",
+            "framing_evolution",
+            "concept_trajectory"
+          ],
+          "focus_capabilities": null,
+          "rationale": "This is where we trace how Marxist vocabulary mutates across works. The vocabulary_evolution dimension tracks term birth/death/mutation; framing_evolution tracks the crucial shift from 'capitalism transforms' to 'capitalism died.' Deep treatment essential for the research question."
+        },
+        "concept_appropriation_tracker": {
+          "engine_key": "concept_appropriation_tracker",
+          "depth": "deep",
+          "focus_dimensions": [
+            "migration_paths",
+            "semantic_mutations",
+            "appropriation_patterns",
+            "acknowledgment_status"
+          ],
+          "focus_capabilities": null,
+          "rationale": "How does Varoufakis appropriate his own prior frameworks? The Minotaur metaphor, the metamorphosis thesis, the rent-extraction analysis—all migrate and mutate. Need to track what he acknowledges vs. silently assumes readers remember."
+        }
+      },
+      "context_emphasis": "Apply differential depth: Global Minotaur gets exhaustive treatment (it contains the metamorphosis DNA). Talking to My Daughter gets focused scanning for the 'weird hypothesis' first appearance. Adults in the Room gets targeted scanning for experiential grounding of power/institution concepts only.",
+      "rationale": "Deep scanning is warranted because the research question centers on conceptual vocabulary evolution. The prior works are where the Marxist formation is most visible—before it gets filtered through the techno-feudalism lens. Differential treatment by work reflects the relationship classification."
+    },
+    {
+      "phase_number": 3.0,
+      "phase_name": "Analysis & Synthesis",
+      "skip": false,
+      "skip_reason": null,
+      "depth": "deep",
+      "engine_overrides": {
+        "concept_synthesis": {
+          "engine_key": "concept_synthesis",
+          "depth": "deep",
+          "focus_dimensions": [
+            "evolution_timelines",
+            "convergence_divergence",
+            "semantic_core",
+            "critical_verdict"
+          ],
+          "focus_capabilities": null,
+          "rationale": "This is the heart of answering the research question. Evolution timelines show how each Marxist concept morphed into its techno-feudal form. Semantic core analysis reveals what stable Marxist nucleus persists beneath surface vocabulary changes."
+        },
+        "concept_taxonomy_argumentative_function": {
+          "engine_key": "concept_taxonomy_argumentative_function",
+          "depth": "deep",
+          "focus_dimensions": [
+            "functional_classification",
+            "argumentative_architecture",
+            "load_bearing_analysis"
+          ],
+          "focus_capabilities": null,
+          "rationale": "The research question asks about argumentative architecture. This engine reveals which Marxist concepts are foundational (load-bearing) vs. elaborative in the techno-feudalism argument. Is the rent/profit distinction foundational or could the argument survive without it?"
+        },
+        "evolution_tactics_detector": {
+          "engine_key": "evolution_tactics_detector",
+          "depth": "deep",
+          "focus_dimensions": [
+            "tactic_detection",
+            "tactic_patterns",
+            "tactic_effectiveness"
+          ],
+          "focus_capabilities": null,
+          "rationale": "Varoufakis makes bold claims (capitalism is DEAD). This engine detects how he handles the intellectual self-management of moving from capitalism-critic to capitalism-undertaker. Look for terminological rebranding, stealth revision, and authority leveraging tactics."
+        },
+        "conditions_of_possibility_analyzer": {
+          "engine_key": "conditions_of_possibility_analyzer",
+          "depth": "deep",
+          "focus_dimensions": [
+            "enabling_conditions",
+            "constraining_conditions",
+            "path_dependencies",
+            "cross_domain_transfers"
+          ],
+          "focus_capabilities": null,
+          "rationale": "Directly addresses the research question: what had to be true for a Marxist economist to develop the techno-feudalism thesis? The Marxist formation is both enabling (provides analytical categories) and constraining (commits him to certain conclusions). Path dependencies show how Global Minotaur's metamorphosis framework made techno-feudalism thinkable."
+        }
+      },
+      "context_emphasis": "Thread the Marxist formation question throughout. Every synthesis finding should be assessed for what it reveals about how Marxist training enabled/constrained the techno-feudalism argument. Pay special attention to category migration: rent, profit, exploitation, surplus—how do these Marxist categories get repurposed?",
+      "rationale": "Deep synthesis is essential because this phase directly answers the research question. The combination of concept_synthesis (what evolved), taxonomy (how it functions argumentatively), tactics (how he managed the evolution), and conditions (what made it possible) provides comprehensive coverage of the Marxist formation question."
+    },
+    {
+      "phase_number": 4.0,
+      "phase_name": "Final Synthesis",
+      "skip": false,
+      "skip_reason": null,
+      "depth": "deep",
+      "engine_overrides": {
+        "genealogy_final_synthesis": {
+          "engine_key": "genealogy_final_synthesis",
+          "depth": "deep",
+          "focus_dimensions": [
+            "genealogical_portrait",
+            "idea_genealogies",
+            "author_intellectual_profile",
+            "key_findings"
+          ],
+          "focus_capabilities": null,
+          "rationale": "The genealogical portrait should narrate how Marxist formation shaped the techno-feudalism thesis—this is the primary deliverable. Idea genealogies should trace each major concept (cloud capital, rent extraction, etc.) back through the corpus to its Marxist roots. The author profile should characterize Varoufakis's intellectual habits as a Marxist economist who writes across registers."
+        }
+      },
+      "context_emphasis": "The genealogical portrait must directly address the research question: structure the narrative around how Marxist formation provided (1) the vocabulary (rent, exploitation, surplus), (2) the methodology (systemic analysis, class analysis), and (3) the framing (capitalism as a system that transforms/dies). Make the Marxist ancestry visible throughout.",
+      "rationale": "Deep final synthesis ensures the comprehensive portrait the research question demands. The analysis has gathered extensive material on vocabulary evolution, argumentative architecture, and Marxist formation—now it must be woven into a coherent genealogical narrative."
+    }
+  ],
+  "recommended_views": [
+    {
+      "view_key": "genealogy_portrait",
+      "priority": "primary",
+      "presentation_stance_override": null,
+      "rationale": "The genealogical portrait is the primary deliverable—a sustained narrative answering how Marxist formation shaped Techno-Feudalism. This is what readers seeking to understand Varoufakis's intellectual trajectory will want first."
+    },
+    {
+      "view_key": "genealogy_idea_evolution",
+      "priority": "primary",
+      "presentation_stance_override": null,
+      "rationale": "Essential for visualizing the conceptual trajectories. Shows how 'rent,' 'capital,' 'exploitation' and other Marxist categories evolved across the corpus into their techno-feudal forms. Direct answer to the vocabulary evolution component of the research question."
+    },
+    {
+      "view_key": "genealogy_tactics",
+      "priority": "primary",
+      "presentation_stance_override": null,
+      "rationale": "Varoufakis is rhetorically bold and the shift from capitalism-critic to capitalism-declarer-of-death is a major intellectual move. The tactics view reveals how he managed this transition—crucial for understanding his argumentative strategies."
+    },
+    {
+      "view_key": "genealogy_conditions",
+      "priority": "primary",
+      "presentation_stance_override": null,
+      "rationale": "Directly addresses the research question's Foucauldian dimension: what made the techno-feudalism thesis thinkable given Marxist formation? Shows enabling conditions (Marxist analytical toolkit) and constraining conditions (Marxist commitments that bind the argument)."
+    },
+    {
+      "view_key": "genealogy_target_profile",
+      "priority": "secondary",
+      "presentation_stance_override": null,
+      "rationale": "Shows the complete vocabulary map, methodological signature, and metaphor inventory of the target work. Useful reference for readers who want to see the conceptual apparatus before tracing its genealogy."
+    },
+    {
+      "view_key": "genealogy_author_profile",
+      "priority": "secondary",
+      "presentation_stance_override": null,
+      "rationale": "Characterizes Varoufakis's intellectual habits as revealed by genealogical analysis. Useful summary for readers seeking a quick characterization of his intellectual temperament."
+    },
+    {
+      "view_key": "genealogy_relationship_landscape",
+      "priority": "secondary",
+      "presentation_stance_override": null,
+      "rationale": "With only 3 prior works, this view is less essential than for larger corpora, but still useful for showing the differential relationships and scanning strategy."
+    },
+    {
+      "view_key": "genealogy_per_work_scan",
+      "priority": "secondary",
+      "presentation_stance_override": null,
+      "rationale": "Detailed per-work scan results. Most useful for readers who want to drill into specific prior work comparisons, especially The Global Minotaur."
+    },
+    {
+      "view_key": "genealogy_raw_output",
+      "priority": "optional",
+      "presentation_stance_override": null,
+      "rationale": "Debug view for examining raw engine output. Useful for methodological transparency but not primary analytical content."
+    },
+    {
+      "view_key": "genealogy_chain_log",
+      "priority": "optional",
+      "presentation_stance_override": null,
+      "rationale": "Debug view for examining chain execution. Useful for understanding how the analysis was conducted but not primary analytical content."
+    }
+  ],
+  "estimated_llm_calls": 42,
+  "estimated_depth_profile": "deep profiling (4 engines × 3 passes), standard classification (1 engine × 2 passes), deep scanning (2 engines × 3 passes × 3 works with differential depth), deep synthesis (4 engines × 3 passes), deep final (1 engine × 3 passes)",
+  "status": "draft",
+  "model_used": "claude-opus-4-5-20251101",
+  "generation_tokens": 19440
+}
