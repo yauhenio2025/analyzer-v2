@@ -18,6 +18,7 @@ The engine_runner handles model-agnostic concerns:
 - Document chunking
 """
 
+import json
 import logging
 import os
 import time
@@ -799,15 +800,27 @@ class OpenRouterBackend:
                 {"role": "user", "content": user_message},
             ],
             max_tokens=effective_max_tokens,
+            extra_body={
+                "reasoning": {"effort": "none"},  # Disable reasoning tokens
+            },
         )
 
         duration_ms = int((time.time() - start_time) * 1000)
 
-        # Guard against OpenRouter returning null/empty choices
+        # Guard against OpenRouter returning null/empty choices.
+        # OpenRouter returns 200 OK with errors in the body, not via HTTP status.
         if not response.choices:
+            # Try to extract error from response
+            raw = response.model_dump() if hasattr(response, "model_dump") else {}
+            error_detail = raw.get("error", {})
+            if isinstance(error_detail, dict) and error_detail.get("message"):
+                raise RuntimeError(
+                    f"[{label}] OpenRouter error: {error_detail['message']} "
+                    f"(code={error_detail.get('code', 'unknown')})"
+                )
             raise RuntimeError(
                 f"[{label}] OpenRouter returned no choices for {self._model_id} "
-                f"(response: {response.model_dump_json(indent=None)[:500]})"
+                f"(response: {json.dumps(raw, default=str)[:500]})"
             )
 
         raw_text = response.choices[0].message.content or ""
@@ -883,6 +896,9 @@ class OpenRouterBackend:
                 max_tokens=effective_max_tokens,
                 stream=True,
                 stream_options={"include_usage": True},
+                extra_body={
+                    "reasoning": {"effort": "none"},  # Disable reasoning tokens
+                },
             )
 
             for chunk in stream:

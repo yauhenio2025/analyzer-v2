@@ -193,7 +193,9 @@ def run_engine_call(
     # For Gemini, sync is also fine (thinking works in sync mode).
     is_gemini = config["model"].startswith("gemini-")
     is_openrouter = config["model"].startswith("openrouter/")
-    use_sync = PREFER_SYNC or force_no_thinking or is_openrouter  # Always sync for OpenRouter
+    # OpenRouter: use STREAMING (their sync endpoint returns null choices for reasoning models).
+    # Anthropic/Gemini: use sync on Render for speed.
+    use_sync = (PREFER_SYNC or force_no_thinking) and not is_openrouter
 
     # For Anthropic sync, disable thinking (it works but we historically avoid it
     # to match production behavior). For Gemini sync, thinking works fine.
