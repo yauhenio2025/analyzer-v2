@@ -118,8 +118,8 @@ def resolve_model_config(
         if model_hint.startswith("openrouter/"):
             config = {
                 "model": model_hint,
-                "max_tokens": 32768,
-                "effort": None,  # OpenRouter: no thinking support
+                "max_tokens": 65536,
+                "effort": None,  # OpenRouter: reasoning handled via extra_body in backend
             }
         elif model_hint.startswith("gemini-"):
             config = {

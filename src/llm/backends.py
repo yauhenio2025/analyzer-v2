@@ -733,7 +733,7 @@ class OpenRouterBackend:
 
     @property
     def max_output_tokens(self) -> int:
-        return 32_768  # Safe default; most models support at least this
+        return 65_536  # Most OpenRouter models support 64K+; MiniMax M2.5 supports 65536
 
     @property
     def supports_thinking(self) -> bool:
@@ -800,6 +800,7 @@ class OpenRouterBackend:
                 {"role": "user", "content": user_message},
             ],
             max_tokens=effective_max_tokens,
+            extra_body={"reasoning": {"effort": "low"}},
         )
 
         duration_ms = int((time.time() - start_time) * 1000)
@@ -893,6 +894,7 @@ class OpenRouterBackend:
                 max_tokens=effective_max_tokens,
                 stream=True,
                 stream_options={"include_usage": True},
+                extra_body={"reasoning": {"effort": "low"}},
             )
 
             for chunk in stream:
