@@ -12,12 +12,17 @@ Both revisions use Opus with high thinking effort for meta-reasoning about plan 
 import json
 import logging
 import os
+import time
 from datetime import datetime, timezone
 from typing import Optional
 
 from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
+
+# Retry settings for LLM calls
+REVISION_MAX_RETRIES = 5
+REVISION_RETRY_DELAYS = [30, 60, 90, 120, 180]  # seconds
 
 
 class PlanRevisionEntry(BaseModel):
@@ -163,16 +168,39 @@ def revise_plan_pre_execution(
 
         logger.info("Running pre-execution plan revision (Opus, adaptive thinking)...")
 
-        response = client.messages.create(
-            model="claude-opus-4-6",
-            max_tokens=16000,
-            thinking={
-                "type": "enabled",
-                "budget_tokens": 10000,
-            },
-            system=_PRE_EXECUTION_SYSTEM,
-            messages=[{"role": "user", "content": prompt}],
-        )
+        last_error = None
+
+        for attempt in range(REVISION_MAX_RETRIES):
+            if attempt > 0:
+                delay = REVISION_RETRY_DELAYS[min(attempt - 1, len(REVISION_RETRY_DELAYS) - 1)]
+                logger.warning(
+                    f"[pre-execution revision] Retry {attempt}/{REVISION_MAX_RETRIES} "
+                    f"after {delay}s (previous error: {last_error})"
+                )
+                time.sleep(delay)
+            try:
+                response = client.messages.create(
+                    model="claude-opus-4-6",
+                    max_tokens=16000,
+                    thinking={
+                        "type": "enabled",
+                        "budget_tokens": 10000,
+                    },
+                    system=_PRE_EXECUTION_SYSTEM,
+                    messages=[{"role": "user", "content": prompt}],
+                )
+                break  # Success
+            except Exception as retry_err:
+                last_error = str(retry_err)
+                logger.error(f"[pre-execution revision] Attempt {attempt + 1} failed: {last_error}")
+                error_str = str(retry_err).lower()
+                if "invalid_api_key" in error_str or "authentication" in error_str:
+                    raise
+        else:
+            raise RuntimeError(
+                f"Pre-execution revision failed after {REVISION_MAX_RETRIES} attempts. "
+                f"Last error: {last_error}"
+            )
 
         # Extract text response
         raw_text = ""
@@ -348,16 +376,38 @@ def revise_plan_mid_course(
 
         logger.info("Running mid-course plan revision (Opus, adaptive thinking)...")
 
-        response = client.messages.create(
-            model="claude-opus-4-6",
-            max_tokens=16000,
-            thinking={
-                "type": "enabled",
-                "budget_tokens": 10000,
-            },
-            system=_MID_COURSE_SYSTEM,
-            messages=[{"role": "user", "content": prompt}],
-        )
+        last_error = None
+        for attempt in range(REVISION_MAX_RETRIES):
+            if attempt > 0:
+                delay = REVISION_RETRY_DELAYS[min(attempt - 1, len(REVISION_RETRY_DELAYS) - 1)]
+                logger.warning(
+                    f"[mid-course revision] Retry {attempt}/{REVISION_MAX_RETRIES} "
+                    f"after {delay}s (previous error: {last_error})"
+                )
+                time.sleep(delay)
+            try:
+                response = client.messages.create(
+                    model="claude-opus-4-6",
+                    max_tokens=16000,
+                    thinking={
+                        "type": "enabled",
+                        "budget_tokens": 10000,
+                    },
+                    system=_MID_COURSE_SYSTEM,
+                    messages=[{"role": "user", "content": prompt}],
+                )
+                break  # Success
+            except Exception as retry_err:
+                last_error = str(retry_err)
+                logger.error(f"[mid-course revision] Attempt {attempt + 1} failed: {last_error}")
+                error_str = str(retry_err).lower()
+                if "invalid_api_key" in error_str or "authentication" in error_str:
+                    raise
+        else:
+            raise RuntimeError(
+                f"Mid-course revision failed after {REVISION_MAX_RETRIES} attempts. "
+                f"Last error: {last_error}"
+            )
 
         raw_text = ""
         for block in response.content:

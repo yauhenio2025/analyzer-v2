@@ -16,6 +16,7 @@ the LLM reads the book samples and catalog and makes curatorial decisions.
 import json
 import logging
 import os
+import time
 from typing import Optional
 
 from .catalog import assemble_full_catalog, catalog_to_text
@@ -451,22 +452,48 @@ def generate_adaptive_plan(
         f"{len(book_samples)} book samples"
     )
 
-    # Call planning model (needs deep reasoning)
+    # Call planning model (needs deep reasoning) — with retry for transient errors
+    PLANNER_MAX_RETRIES = 5
+    PLANNER_RETRY_DELAYS = [30, 60, 90, 120, 180]  # seconds
     backend = get_backend(model)
-    try:
-        result = backend.execute_sync(
-            system_prompt=system_prompt,
-            user_message=user_prompt,
-            max_tokens=48000,
-            thinking_effort="high",
-            label="adaptive_planner",
+    last_error = None
+
+    for attempt in range(PLANNER_MAX_RETRIES):
+        if attempt > 0:
+            delay = PLANNER_RETRY_DELAYS[min(attempt - 1, len(PLANNER_RETRY_DELAYS) - 1)]
+            logger.warning(
+                f"[adaptive_planner] Retry {attempt}/{PLANNER_MAX_RETRIES} after {delay}s "
+                f"(previous error: {last_error})"
+            )
+            time.sleep(delay)
+
+        try:
+            result = backend.execute_sync(
+                system_prompt=system_prompt,
+                user_message=user_prompt,
+                max_tokens=48000,
+                thinking_effort="high",
+                label="adaptive_planner",
+            )
+            raw_text = result.content
+            total_input = result.input_tokens
+            total_output = result.output_tokens
+            break  # Success
+        except Exception as e:
+            last_error = str(e)
+            logger.error(f"[adaptive_planner] Attempt {attempt + 1} failed: {last_error}")
+
+            # Don't retry on non-transient errors
+            error_str = str(e).lower()
+            if "invalid_api_key" in error_str or "authentication" in error_str:
+                raise RuntimeError(f"Adaptive plan generation failed (auth error): {e}") from e
+            if "context_length_exceeded" in error_str or "too many tokens" in error_str:
+                raise RuntimeError(f"Adaptive plan generation failed (context too long): {e}") from e
+    else:
+        raise RuntimeError(
+            f"Adaptive plan generation failed after {PLANNER_MAX_RETRIES} attempts. "
+            f"Last error: {last_error}"
         )
-        raw_text = result.content
-        total_input = result.input_tokens
-        total_output = result.output_tokens
-    except Exception as e:
-        logger.error(f"Adaptive plan generation failed: {e}")
-        raise RuntimeError(f"Adaptive plan generation failed: {e}") from e
 
     logger.info(
         f"Adaptive plan generation complete — "
