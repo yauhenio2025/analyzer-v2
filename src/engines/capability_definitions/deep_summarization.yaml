@@ -33,15 +33,15 @@ researcher_question: What does this text actually argue, how does it construct i
 
 intellectual_lineage:
   primary:
-    name: toulmin
-    description: Stephen Toulmin (1922-2009), British philosopher whose model of practical argument — claims, grounds, warrants, backing, qualifiers, rebuttals — provides the foundation for analyzing how arguments are actually constructed rather than how formal logic says they should be. His insight that arguments are practical instruments, not logical derivations, grounds this engine's attention to the functional architecture of texts rather than their formal structure.
+    name: foucault
+    description: Michel Foucault (1926-1984), whose analysis of discursive formations provides the foundational frame for this engine's core concern — understanding what a text DOES rather than merely what it says. His archaeology of knowledge reveals how discourse systematically includes and excludes, foregrounds and suppresses, constructing the objects it claims merely to describe. The engine's attention to foregrounding/suppression patterns, conceptual vocabulary as constitutive (not merely descriptive), and the gap between a text's explicit claims and its operative commitments all derive from Foucault's insight that discursive structures are analytically prior to propositional content.
   secondary:
-    - name: perelman
-      description: Chaïm Perelman (1912-1984), Belgian philosopher of law whose New Rhetoric revived the study of practical argumentation and audience-directed persuasion, emphasizing that argument structure adapts to its audience and purpose — essential for understanding why academic texts organize their arguments the way they do.
-    - name: foucault
-      description: Michel Foucault (1926-1984), whose analysis of discursive formations reveals how texts systematically include and exclude, foreground and suppress — the pattern of what's said and unsaid being as analytically significant as the explicit argument.
     - name: koselleck
-      description: Reinhart Koselleck (1923-2006), German historian whose Begriffsgeschichte (conceptual history) methodology provides tools for mapping how conceptual vocabulary functions within texts — not just what terms mean but what intellectual work they perform.
+      description: Reinhart Koselleck (1923-2006), German historian whose Begriffsgeschichte (conceptual history) methodology provides tools for mapping how conceptual vocabulary functions within texts — not just what terms mean but what intellectual work they perform. His approach grounds this engine's vocabulary mapping dimension.
+    - name: perelman
+      description: Chaïm Perelman (1912-1984), Belgian philosopher of law whose New Rhetoric revived the study of practical argumentation and audience-directed persuasion, emphasizing that argument structure adapts to its audience and purpose — informing the engine's analysis of rhetorical strategies and chapter arrangement.
+    - name: toulmin
+      description: Stephen Toulmin (1922-2009), British philosopher whose model of practical argument — claims, grounds, warrants, backing, qualifiers, rebuttals — provides specific tools for decomposing thesis architecture into its functional components.
     - name: peirce
       description: Charles Sanders Peirce (1839-1914), American pragmatist whose semiotics and theory of abductive inference inform this engine's attention to how evidence patterns function as sign systems within arguments — what counts as evidence, how it's deployed, and what it signifies about the argument's commitments.
   traditions:

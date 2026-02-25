@@ -36,15 +36,15 @@ researcher_question: What role does each chapter play in the overall argument, a
 
 intellectual_lineage:
   primary:
-    name: toulmin
-    description: Stephen Toulmin (1922-2009), whose model of practical argument provides the foundation for analyzing the functional structure of extended arguments — understanding chapters as units that provide claims, grounds, warrants, backing, or rebuttals within the larger argumentative architecture.
+    name: van_eemeren
+    description: Frans van Eemeren (1946-), Dutch argumentation theorist whose pragma-dialectical approach provides the foundational framework for this engine. His theory of critical discussion identifies how extended argumentative discourse is organized into functional stages — confrontation, opening, argumentation, concluding — each serving a distinct role in resolving differences of opinion. This maps directly to the engine's core task of classifying chapter functions within an argumentative edifice. His concept of strategic manoeuvring (the interplay between dialectical obligations and rhetorical effectiveness) illuminates why chapters are arranged as they are, and his normative model reveals when chapter structure serves or undermines the argument's goals.
   secondary:
-    - name: van_eemeren
-      description: Frans van Eemeren (1946-), Dutch argumentation theorist whose pragma-dialectical approach provides tools for analyzing how argumentative units function within extended discourse, including how stages of discussion (opening, argumentation, concluding) map onto the structure of academic texts.
     - name: perelman
-      description: Chaïm Perelman (1912-1984), whose analysis of the strategic arrangement of arguments in extended discourse — where to place strong vs. weak arguments, how to sequence for maximum persuasive effect — directly informs understanding chapter ordering as a strategic choice.
+      description: Chaïm Perelman (1912-1984), whose analysis of the strategic arrangement of arguments in extended discourse — where to place strong vs. weak arguments, how to sequence for maximum persuasive effect — directly informs understanding chapter ordering as a strategic choice and concept flow as a persuasive technique.
     - name: walton
       description: Douglas Walton (1942-2020), Canadian logician whose work on argumentation schemes and dialogue types provides tools for classifying the type of argumentative work each chapter performs — whether it advances a position, responds to objections, shifts the burden of proof, or establishes common ground.
+    - name: toulmin
+      description: Stephen Toulmin (1922-2009), whose model of practical argument — claims, grounds, warrants, backing, rebuttals — provides the micro-level vocabulary for describing what individual chapters contain, complementing this engine's macro-structural focus on how chapters function as units within the larger architecture.
   traditions:
     - name: argumentation_theory
       description: The interdisciplinary study of how arguments are constructed, evaluated, and deployed in extended discourse, providing tools for analyzing both the internal structure of individual arguments and the macro-structure of argumentative texts.

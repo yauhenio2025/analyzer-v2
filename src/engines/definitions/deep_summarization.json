@@ -148,9 +148,10 @@
   "stage_context": {
     "framework_key": "analytical_summarization",
     "additional_frameworks": [
-      "toulmin",
+      "foucault_discourse",
       "koselleck",
-      "foucault_discourse"
+      "perelman",
+      "toulmin"
     ],
     "extraction": {
       "analysis_type": "deep analytical summary",

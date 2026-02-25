@@ -102,8 +102,9 @@
   "stage_context": {
     "framework_key": "structural_analysis",
     "additional_frameworks": [
-      "toulmin",
-      "pragma_dialectics"
+      "pragma_dialectics",
+      "perelman",
+      "toulmin"
     ],
     "extraction": {
       "analysis_type": "chapter role analysis",
