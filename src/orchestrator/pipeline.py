@@ -163,13 +163,13 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
     try:
         # ── Stage 1: Upload documents ──
         chapter_count = len(request.target_work_chapters)
-        doc_count = 1 + len(request.prior_works) + chapter_count
+        base_doc_count = 1 + len(request.prior_works)
         chapter_note = f" + {chapter_count} chapters" if chapter_count else ""
         update_job_progress(
             job_id,
             current_phase=0,
             phase_name="Uploading Documents",
-            detail=f"Uploading {doc_count} documents{chapter_note}...",
+            detail=f"Uploading {base_doc_count} documents{chapter_note}...",
         )
 
         document_ids = _upload_documents(request)
@@ -501,7 +501,7 @@ def _run_pre_execution_revision(
     if request.objective_key:
         objective = get_objective(request.objective_key)
         if objective:
-            objective_text = objective.get("planner_strategy", "")
+            objective_text = getattr(objective, "planner_strategy", "") or ""
 
     plan_dict = plan.model_dump()
     result = revise_plan_pre_execution(
