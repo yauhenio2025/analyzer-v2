@@ -1,6 +1,6 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-02-24
+> Auto-maintained by Claude Code. Last updated: 2026-02-25
 
 ## Adaptive Analysis Orchestrator
 
@@ -22,8 +22,8 @@
 - **Status**: Active
 - **Description**: Lightweight LLM-based profiling (~$0.01/book) that extracts genre, domain, argumentative style, reasoning modes, and engine category affinities from each work. Feeds into the adaptive planner's decisions.
 - **Entry Points**:
-  - `src/orchestrator/sampler_schemas.py:1-65` - BookSample Pydantic model
-  - `src/orchestrator/sampler.py:1-285` - Sampling logic with parallel execution
+  - `src/orchestrator/sampler_schemas.py:1-70` - BookSample Pydantic model (incl. chapter_structure field)
+  - `src/orchestrator/sampler.py:1-299` - Sampling logic with parallel execution, chapter detection during profiling
 - **API Endpoints**:
   - `POST /v1/orchestrator/sample` - Sample all books in a request
 - **Added**: 2026-02-24
@@ -45,7 +45,7 @@
 - **Description**: Context-driven orchestrator that takes a thinker + corpus + research question and uses Claude Opus to generate a WorkflowExecutionPlan — a concrete, contextualized plan for executing the 5-phase genealogy workflow. Assembles a capability catalog from all registries (engines, chains, stances, operationalizations, views, workflows) and presents it to the LLM as a structured "menu". Plans are inspectable, editable, and refinable.
 - **Entry Points**:
   - `src/orchestrator/__init__.py:1-11` - Module docstring
-  - `src/orchestrator/schemas.py:1-246` - Pydantic models: TargetWork, PriorWork, EngineExecutionSpec, PhaseExecutionSpec (incl. supplementary_chains, max_context_chars_override), ViewRecommendation, OrchestratorPlanRequest, PlanRefinementRequest, WorkflowExecutionPlan
+  - `src/orchestrator/schemas.py:1-443` - Pydantic models: TargetWork, PriorWork, EngineExecutionSpec, PhaseExecutionSpec (incl. supplementary_chains, max_context_chars_override, ChapterTarget, chapter_targets, document_scope), ViewRecommendation, OrchestratorPlanRequest, PlanRefinementRequest, WorkflowExecutionPlan (incl. revision_history, current_revision)
   - `src/orchestrator/catalog.py:1-540` - Parameterized catalog assembly from all registries (app/page/workflow_key filters), includes sub-renderers and view patterns, dynamic catalog_to_text()
   - `src/orchestrator/planner.py:1-560` - LLM-powered plan generation with templated system prompt (generic rules + workflow planner_strategy), plan refinement, file-based plan storage
   - `src/api/routes/orchestrator.py:1-155` - REST API: plan generation, CRUD, refinement, catalog
@@ -56,7 +56,7 @@
   - `PhaseExecutionSpec` — phase_number, depth, skip, engine_overrides (dict of EngineExecutionSpec), context_emphasis, rationale, model_hint, requires_full_documents, per_work_overrides, supplementary_chains, max_context_chars_override
   - `EngineExecutionSpec` — engine_key, depth, focus_dimensions, focus_capabilities, rationale
   - `ViewRecommendation` — view_key, priority (primary/secondary/optional), rationale
-- **Capability Catalog**: Assembled from 11 capability engines, 23 chains, 13 stances, 7 workflows, 21 views, 11 sub-renderers, 6 view patterns, 16+ transformation templates, 11 operationalizations. Parameterized by app/page/workflow_key. System prompt composed from generic planning rules + workflow-specific planner_strategy field. Views section enriched with planner_hint, planner_eligible, has_transformation_template tags. Transformation templates section shows template_key, applicable_engines, applicable_renderers, domain, generation_mode. Planner prompt notes dynamic generation capability.
+- **Capability Catalog**: Assembled from 14 capability engines, 26 chains, 13 stances, 7 workflows, 21 views, 11 sub-renderers, 6 view patterns, 16+ transformation templates, 14 operationalizations. Parameterized by app/page/workflow_key. System prompt composed from generic planning rules + workflow-specific planner_strategy field. Views section enriched with planner_hint, planner_eligible, has_transformation_template tags. Transformation templates section shows template_key, applicable_engines, applicable_renderers, domain, generation_mode. Planner prompt notes dynamic generation capability.
 - **API Endpoints**:
   - `GET /v1/orchestrator/capability-catalog` - Full capability catalog (?format=text for markdown)
   - `POST /v1/orchestrator/plan` - Generate new plan (Claude Opus, ~20s)
@@ -92,8 +92,9 @@
   - `src/executor/engine_runner.py:1-887` - Atomic LLM call: MODEL_CONFIGS (opus/sonnet/haiku), PHASE_MODEL_DEFAULTS, sync API by default (PREFER_SYNC=true, 100x faster on Render), streaming with adaptive thinking when ENABLE_STREAMING=true, smart 1M context avoidance (prefer standard 200K by reducing max_tokens), auto-fallback to 1M beta for both sync and streaming, dynamic effort scaling for large inputs, partial output salvage on connection drop, heartbeat monitoring with [std]/[1M] tags, exponential backoff retry (5 attempts), document chunking (CHUNK_THRESHOLD=200K chars, re-enabled — O(n²) attention is model-side)
   - `src/executor/context_broker.py:1-200` - Cross-phase context assembly with emphasis injection, inner-pass context threading, chain context forwarding, phase_max_chars_override (M5)
   - `src/executor/chain_runner.py:1-494` - Sequential chain execution using capability_composer, multi-pass operationalization support, run_chain() + run_single_engine()
-  - `src/executor/phase_runner.py:1-610` - Phase resolution (chain_key/engine_key), per-work iteration with ThreadPoolExecutor, plan override application, supplementary chain execution (M5), _combine_with_distilled_analysis (M5)
-  - `src/executor/workflow_runner.py:1-481` - Top-level DAG execution, dependency-aware parallel phases, progress tracking, context_char_overrides threading (M5), execute_plan() + start_execution_thread()
+  - `src/executor/phase_runner.py:1-803` - Phase resolution (chain_key/engine_key), per-work iteration with ThreadPoolExecutor, plan override application, supplementary chain execution (M5), _combine_with_distilled_analysis (M5), _run_chapter_targeted_phase() for per-chapter analysis
+  - `src/executor/workflow_runner.py:1-771` - Top-level DAG execution, dependency-aware parallel phases, progress tracking, context_char_overrides threading (M5), execute_plan() + start_execution_thread(), mid-course revision checkpoint between phase groups
+  - `src/executor/chapter_splitter.py:1-186` - Regex-based chapter detection and extraction, configurable patterns, chapter metadata
   - `src/executor/job_manager.py:1-420` - Job lifecycle (create/update/cancel/delete), progress updates, in-memory cancellation flags, DB persistence, recover_orphaned_jobs() for startup cleanup, check_stale_job() for on-read detection (>3h running → failed)
   - `src/executor/output_store.py:1-256` - Incremental prose output persistence with lineage, presentation cache with source_hash freshness
   - `src/executor/document_store.py:1-97` - Store/retrieve uploaded document texts
@@ -117,7 +118,7 @@
   - `GET /v1/executor/documents` - List documents
   - `GET /v1/executor/documents/{doc_id}` - Retrieve document
   - `DELETE /v1/executor/documents/{doc_id}` - Delete document
-- **PhaseExecutionSpec additions**: model_hint (opus/sonnet/None), requires_full_documents (1M context), per_work_overrides (differential depth per prior work), supplementary_chains (additional chains after primary, Milestone 5), max_context_chars_override (per-phase context cap override, Milestone 5)
+- **PhaseExecutionSpec additions**: model_hint (opus/sonnet/None), requires_full_documents (1M context), per_work_overrides (differential depth per prior work), supplementary_chains (additional chains after primary, Milestone 5), max_context_chars_override (per-phase context cap override, Milestone 5), chapter_targets (list of ChapterTarget for per-chapter analysis), document_scope (whole/chapters/sections)
 - **Milestone 5 Enhancements**: Supplementary chain execution in `_run_standard_phase()`, distilled analysis path in `_combine_with_distilled_analysis()` for per-work phases, `phase_max_chars_override` in context broker, `context_char_overrides` threaded from workflow_runner. Phase 1.5 now depends on Phase 1.0 (sequential, not parallel).
 - **Added**: 2026-02-19
 
@@ -184,8 +185,8 @@
 - **Status**: Active (Milestone 4A complete)
 - **Description**: All-in-one orchestration endpoint that chains documents -> plan generation -> execution -> presentation into a single async job. Accepts inline document texts + thinker context, uploads documents, generates a WorkflowExecutionPlan, starts execution, and returns immediately with job_id for polling. Auto-presentation trigger in workflow_runner runs view refinement + transformation bridge when execution completes. Supports autonomous mode (default) and checkpoint mode (skip_plan_review=false returns plan_id for review).
 - **Entry Points**:
-  - `src/orchestrator/pipeline_schemas.py:1-80` - AnalyzeRequest, PriorWorkWithText, AnalyzeResponse
-  - `src/orchestrator/pipeline.py:1-275` - run_analysis_pipeline(), _run_checkpoint_mode(), _run_autonomous_mode(), _pipeline_thread(), _upload_documents(), _store_plan_and_docs(), _build_plan_request()
+  - `src/orchestrator/pipeline_schemas.py:1-115` - AnalyzeRequest (incl. skip_plan_revision), PriorWorkWithText, AnalyzeResponse
+  - `src/orchestrator/pipeline.py:1-445` - run_analysis_pipeline(), _run_checkpoint_mode(), _run_autonomous_mode(), _pipeline_thread() (with pre-execution revision step), _upload_documents(), _store_plan_and_docs(), _build_plan_request()
   - `src/executor/workflow_runner.py:404-449` - _run_auto_presentation() — non-fatal auto view refinement + transformation bridge on completion
   - `src/api/routes/orchestrator.py:204-296` - POST /analyze, GET /analyze/{job_id}
 - **API Endpoints**:
@@ -405,14 +406,14 @@
   - `src/engines/history_tracker.py:1-320` - Core logic: compute_definition_hash, diff_definitions, generate_summary, check_and_record_changes, file I/O
   - `src/engines/registry.py:261-271` - Integration into _load_capability_definitions() (try/except wrapped)
   - `src/api/routes/engines.py:509-537` - GET /{key}/capability-definition/history endpoint
-  - `src/engines/capability_history/` - 11 JSON history files + 11 snapshot files (auto-populated)
+  - `src/engines/capability_history/` - 24 JSON history files + 24 snapshot files (auto-populated)
 - **API Endpoints**: `GET /v1/engines/{key}/capability-definition/history?limit=50`
 - **Added**: 2026-02-17
 
 ## Capability Engine Definitions (v2 Format)
 
 ### Capability-Driven Engine Definitions
-- **Status**: Active (11 engines with capability definitions, 61 enriched capabilities, all 11 with operationalizations; 4 engines use dialectical stance in deep mode; all lineage enriched with bios/descriptions/definitions)
+- **Status**: Active (14 engines with capability definitions, all 14 with operationalizations; 4 engines use dialectical stance in deep mode; all lineage enriched with bios/descriptions/definitions)
 - **Description**: New engine definition format describing WHAT an engine investigates (problematique, analytical dimensions, capabilities, composability) rather than HOW it formats output (fixed schemas, extraction steps). Part of the schema-on-read architecture. Now includes PassDefinition for explicit multi-pass structure with analytical stances. All 11 engines have enriched intellectual lineage with ThinkerReference (name + bio), TraditionEntry (name + description), KeyConceptEntry (name + definition) — union types for backwards compatibility. Four engines use the dialectical stance in their deep analysis mode. All 11 engines have 0 orphaned dimensions and genuine multi-pass at deep depth. All 61 capabilities enriched with extended_description, intellectual_grounding (thinker/concept/method), indicators, and depth_scaling.
 - **Entry Points**:
   - `src/engines/schemas_v2.py:1-350` - Pydantic models (CapabilityEngineDefinition, AnalyticalDimension, EngineCapability, CapabilityGrounding, ComposabilitySpec, DepthLevel, PassDefinition, IntellectualLineage, ThinkerReference, TraditionEntry, KeyConceptEntry, CapabilityEngineSummary)
@@ -427,6 +428,48 @@
 - **API Endpoints**: `GET /v1/engines/capability-definitions`, `GET /v1/engines/{key}/capability-definition`
 - **Architecture Docs**: `docs/refactoring_engines.md`, `docs/plain_text_architecture.md`
 - **Added**: 2026-02-16
+
+### Deep Text Profiling Engines (3 new)
+- **Status**: Active
+- **Description**: Three new engines for deep document profiling used in the target and prior work profiling chains. `deep_summarization` provides analytical summarization with 8 dimensions (thematic structure, argument architecture, epistemic framework, methodological approach, conceptual vocabulary, rhetorical strategy, intellectual lineage, critical tensions) and 8 capabilities. `narrative_structure_analyzer` analyzes narrative arc and rhetorical structure with 7 dimensions and 7 capabilities. `chapter_role_analyzer` performs chapter-level role and function analysis with 6 dimensions and 6 capabilities. All three have full capability definitions, operationalizations with multiple stances and 3 depth levels.
+- **Entry Points**:
+  - `src/engines/definitions/deep_summarization.json` - Engine definition (JSON)
+  - `src/engines/capability_definitions/deep_summarization.yaml` - Capability definition (8 dims, 8 caps)
+  - `src/operationalizations/definitions/deep_summarization.yaml` - Stance operationalizations (4 stances, 3 depth levels)
+  - `src/engines/definitions/narrative_structure_analyzer.json` - Engine definition (JSON)
+  - `src/engines/capability_definitions/narrative_structure_analyzer.yaml` - Capability definition (7 dims, 7 caps)
+  - `src/operationalizations/definitions/narrative_structure_analyzer.yaml` - Stance operationalizations (4 stances, 3 depth levels)
+  - `src/engines/definitions/chapter_role_analyzer.json` - Engine definition (JSON)
+  - `src/engines/capability_definitions/chapter_role_analyzer.yaml` - Capability definition (6 dims, 6 caps)
+  - `src/operationalizations/definitions/chapter_role_analyzer.yaml` - Stance operationalizations (3 stances, 3 depth levels)
+- **Added**: 2026-02-25
+
+### Deep Text Profiling Chains (2 new)
+- **Status**: Active
+- **Description**: Sequential chains for deep document profiling. `deep_text_profiling_chain` runs deep_summarization -> chapter_role_analyzer -> narrative_structure_analyzer for comprehensive target work profiling. `prior_work_profiling_chain` runs deep_summarization -> narrative_structure_analyzer (skips chapter_role_analyzer since prior works are typically shorter/less structured).
+- **Entry Points**:
+  - `src/chains/definitions/deep_text_profiling_chain.json` - Target work profiling chain (3 engines)
+  - `src/chains/definitions/prior_work_profiling_chain.json` - Prior work profiling chain (2 engines)
+- **Added**: 2026-02-25
+
+### Plan Revision System
+- **Status**: Active
+- **Description**: Pre-execution and mid-course plan revision using Opus. Two revision checkpoints: (1) pre-execution revision after book sampling enriches the plan with chapter_targets, document_scope, and revised phase strategies before any LLM calls begin; (2) mid-course revision between phase groups where the planner can adjust remaining phases based on actual outputs from completed phases. Tracks revision history and current revision count on WorkflowExecutionPlan. Bypass via `skip_plan_revision` on AnalyzeRequest.
+- **Entry Points**:
+  - `src/orchestrator/plan_revision.py:1-469` - Pre-execution revision, mid-course revision, revision history tracking
+  - `src/orchestrator/schemas.py:1-443` - ChapterTarget model, chapter_targets/document_scope on PhaseExecutionSpec, revision_history/current_revision on WorkflowExecutionPlan
+  - `src/orchestrator/pipeline_schemas.py:1-115` - skip_plan_revision field on AnalyzeRequest
+  - `src/orchestrator/pipeline.py:1-445` - Pre-execution revision step in _pipeline_thread()
+  - `src/executor/workflow_runner.py:1-771` - Mid-course revision checkpoint between phase groups
+- **Added**: 2026-02-25
+
+### Chapter Splitter
+- **Status**: Active
+- **Description**: Regex-based chapter detection and extraction module. Detects chapter boundaries using configurable patterns (numbered chapters, titled sections, Roman numerals), extracts chapter metadata (title, start/end positions, word count), and provides chapter-targeted text slicing for per-chapter analysis. Integrates with phase_runner's new `_run_chapter_targeted_phase()` method.
+- **Entry Points**:
+  - `src/executor/chapter_splitter.py:1-186` - Chapter detection, extraction, metadata, text slicing
+  - `src/executor/phase_runner.py:1-803` - _run_chapter_targeted_phase() for per-chapter analysis
+- **Added**: 2026-02-25
 
 ### Capability-Based Prompt Composer
 - **Status**: Active
@@ -445,11 +488,11 @@
 
 ### Operationalization Registry
 - **Status**: Active
-- **Description**: Third layer bridging abstract stances (HOW to think) and concrete engines (WHAT to think about). Each engine gets an operationalization YAML specifying how each stance applies (label, description, focus dimensions/capabilities) and what depth sequences are available. Pre-generated artifacts that are inspectable, editable, version-controlled, and LLM-(re)generatable. All 11 engines now have operationalizations with 0 orphaned dimensions and genuine multi-pass depth escalation.
+- **Description**: Third layer bridging abstract stances (HOW to think) and concrete engines (WHAT to think about). Each engine gets an operationalization YAML specifying how each stance applies (label, description, focus dimensions/capabilities) and what depth sequences are available. Pre-generated artifacts that are inspectable, editable, version-controlled, and LLM-(re)generatable. All 14 engines now have operationalizations with 0 orphaned dimensions and genuine multi-pass depth escalation.
 - **Entry Points**:
   - `src/operationalizations/schemas.py:1-140` - StanceOperationalization, DepthPassEntry, DepthSequence, EngineOperationalization, summary/coverage models
   - `src/operationalizations/registry.py:1-170` - OperationalizationRegistry with CRUD, coverage_matrix(), get_stance_for_engine(), get_depth_sequence()
-  - `src/operationalizations/definitions/*.yaml` - 11 engine operationalization files (all capability engines covered)
+  - `src/operationalizations/definitions/*.yaml` - 14 engine operationalization files (all capability engines covered)
   - `src/api/routes/operationalizations.py:1-200` - Full CRUD API with compose-preview endpoint
   - `src/api/routes/llm.py:410-840` - LLM generation endpoints for single, bulk, and sequence generation
   - `src/stages/capability_composer.py:196-290` - compose_all_pass_prompts() with operationalization-first fallback pattern
@@ -470,7 +513,7 @@
   - `frontend/src/types/index.ts` - TypeScript types for operationalization entities
   - `frontend/src/lib/api.ts` - API client methods incl. full PUT update (direct fetch to ANALYZER_V2_URL)
   - `frontend/src/components/Layout.tsx` - Navigation item
-- **Operationalization Files** (11 total):
+- **Operationalization Files** (14 total):
   - `conditions_of_possibility_analyzer.yaml` - 4 stances (discovery/architecture/confrontation/integration), deep=4 passes
   - `inferential_commitment_mapper.yaml` - 4 stances, deep=4 passes
   - `concept_semantic_constellation.yaml` - 4 stances, deep=4 passes
@@ -482,6 +525,9 @@
   - `evolution_tactics_detector.yaml` - 3 stances, deep=3 passes
   - `genealogy_relationship_classification.yaml` - 4 stances (discovery/inference/architecture/confrontation), deep=3 passes (discovery→architecture→confrontation)
   - `genealogy_final_synthesis.yaml` - 3 stances (discovery/architecture/integration), deep=3 passes (discovery→architecture→integration)
+  - `deep_summarization.yaml` - 4 stances, 3 depth levels
+  - `narrative_structure_analyzer.yaml` - 4 stances, 3 depth levels
+  - `chapter_role_analyzer.yaml` - 3 stances, 3 depth levels
 - **Added**: 2026-02-17 | **Modified**: 2026-02-18
 
 ## Transformation Templates (LLM Transformation Service)
@@ -656,11 +702,11 @@
 
 ### Engine Registry
 - **Status**: Active
-- **Description**: Loads and serves 178+ engine definitions from JSON files
+- **Description**: Loads and serves 203 engine definitions from JSON files
 - **Entry Points**:
   - `src/engines/registry.py:1-100` - EngineRegistry class
   - `src/engines/schemas.py:1-150` - EngineDefinition Pydantic model
-  - `src/engines/definitions/*.json` - 178 engine definition files
+  - `src/engines/definitions/*.json` - 203 engine definition files
 - **Categories**: 14 categories (ARGUMENT, EPISTEMOLOGY, METHODOLOGY, SYSTEMS, CONCEPTS, EVIDENCE, TEMPORAL, POWER, INSTITUTIONAL, MARKET, RHETORIC, SCHOLARLY, VULNERABILITY, OUTLINE)
 - **Dependencies**: Pydantic v2
 - **Added**: 2026-01-26 | **Modified**: 2026-02-06
@@ -821,11 +867,11 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
 
 ### Chain Registry
 - **Status**: Active
-- **Description**: Loads and serves engine chain specifications
+- **Description**: Loads and serves engine chain specifications (26 chains)
 - **Entry Points**:
   - `src/chains/registry.py:1-100` - ChainRegistry class
   - `src/chains/schemas.py:1-100` - EngineChainSpec model
-  - `src/chains/definitions/*.json` - Chain definition files
+  - `src/chains/definitions/*.json` - 26 chain definition files
 - **Dependencies**: Pydantic v2
 - **Added**: 2026-01-26
 

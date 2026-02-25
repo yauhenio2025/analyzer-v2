@@ -220,6 +220,7 @@ def sample_all_books(
     target_work_title: str,
     prior_works: list[dict],
     max_workers: int = 5,
+    target_chapters: Optional[list[dict]] = None,
 ) -> list[BookSample]:
     """Sample all books in a corpus in parallel.
 
@@ -231,6 +232,9 @@ def sample_all_books(
         target_work_title: Title of the target work
         prior_works: List of dicts with 'title' and 'text' keys
         max_workers: Max parallel sampling calls
+        target_chapters: Pre-uploaded chapter metadata for the target work.
+            When provided, skips regex detection for the target and uses
+            these instead. Each entry: {chapter_id, title, char_count}.
 
     Returns:
         List of BookSamples (target first, then prior works)
@@ -238,7 +242,12 @@ def sample_all_books(
     category_descriptions = _get_category_descriptions()
     samples: list[BookSample] = []
 
-    def _sample_one(title: str, text: str, role: str) -> BookSample:
+    def _sample_one(
+        title: str,
+        text: str,
+        role: str,
+        pre_uploaded_chapters: Optional[list[dict]] = None,
+    ) -> BookSample:
         excerpt = extract_book_excerpt(text)
         sample = sample_book(
             excerpt=excerpt,
@@ -247,7 +256,17 @@ def sample_all_books(
             full_text_length=len(text),
             category_descriptions=category_descriptions,
         )
-        # Run chapter detection and attach to sample
+
+        # Use pre-uploaded chapter metadata if provided (skips regex detection)
+        if pre_uploaded_chapters:
+            sample.chapter_structure = pre_uploaded_chapters
+            logger.info(
+                f"Using {len(pre_uploaded_chapters)} pre-uploaded chapters "
+                f"for '{title}' (skipping regex detection)"
+            )
+            return sample
+
+        # Fall back to regex-based chapter detection
         try:
             from src.executor.chapter_splitter import detect_chapters, get_chapter_summary_for_sample
             structure = detect_chapters(text, doc_id=title)
@@ -260,19 +279,19 @@ def sample_all_books(
             logger.warning(f"Chapter detection failed for '{title}': {e}")
         return sample
     
-    # Build work list
+    # Build work list: (title, text, role, pre_uploaded_chapters)
     work_items = [
-        (target_work_title, target_work_text, "target"),
+        (target_work_title, target_work_text, "target", target_chapters),
     ]
     for pw in prior_works:
-        work_items.append((pw["title"], pw["text"], "prior_work"))
-    
+        work_items.append((pw["title"], pw["text"], "prior_work", None))
+
     logger.info(f"Sampling {len(work_items)} books in parallel (max_workers={max_workers})")
-    
+
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {
-            executor.submit(_sample_one, title, text, role): title
-            for title, text, role in work_items
+            executor.submit(_sample_one, title, text, role, chapters): title
+            for title, text, role, chapters in work_items
         }
         
         results = {}

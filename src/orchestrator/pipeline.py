@@ -162,11 +162,14 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
     """
     try:
         # ── Stage 1: Upload documents ──
+        chapter_count = len(request.target_work_chapters)
+        doc_count = 1 + len(request.prior_works) + chapter_count
+        chapter_note = f" + {chapter_count} chapters" if chapter_count else ""
         update_job_progress(
             job_id,
             current_phase=0,
             phase_name="Uploading Documents",
-            detail=f"Uploading {1 + len(request.prior_works)} documents...",
+            detail=f"Uploading {doc_count} documents{chapter_note}...",
         )
 
         document_ids = _upload_documents(request)
@@ -247,14 +250,17 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
 
 
 def _upload_documents(request: AnalyzeRequest) -> dict[str, str]:
-    """Upload target work + prior work texts to the document store.
+    """Upload target work + chapters + prior work texts to the document store.
 
     Returns a dict mapping role/title -> doc_id.
-    Keys: "target" for the target work, prior work titles for prior works.
+    Keys:
+      - "target" for the target work (whole document)
+      - "chapter:{chapter_id}" for each pre-uploaded chapter
+      - prior work titles for prior works
     """
     document_ids: dict[str, str] = {}
 
-    # Upload target work
+    # Upload target work (whole document)
     target_doc_id = store_document(
         title=request.target_work.title,
         text=request.target_work_text,
@@ -266,6 +272,27 @@ def _upload_documents(request: AnalyzeRequest) -> dict[str, str]:
         f"Uploaded target: '{request.target_work.title}' -> {target_doc_id} "
         f"({len(request.target_work_text):,} chars)"
     )
+
+    # Upload pre-split chapters (if provided)
+    for ch in request.target_work_chapters:
+        ch_title = f"{request.target_work.title} — {ch.title or ch.chapter_id}"
+        ch_doc_id = store_document(
+            title=ch_title,
+            text=ch.text,
+            author=request.target_work.author,
+            role="chapter",
+        )
+        document_ids[f"chapter:{ch.chapter_id}"] = ch_doc_id
+        logger.info(
+            f"Uploaded chapter: '{ch.chapter_id}' ({ch.title}) -> {ch_doc_id} "
+            f"({len(ch.text):,} chars)"
+        )
+
+    if request.target_work_chapters:
+        logger.info(
+            f"Uploaded {len(request.target_work_chapters)} pre-split chapters "
+            f"for '{request.target_work.title}'"
+        )
 
     # Upload prior works
     for pw in request.prior_works:
@@ -358,10 +385,25 @@ def _generate_adaptive(
         {"title": pw.title, "text": pw.text}
         for pw in request.prior_works
     ]
+
+    # Pass pre-uploaded chapter metadata so the sampler uses it
+    # instead of running regex detection on the target work
+    target_chapters = None
+    if request.target_work_chapters:
+        target_chapters = [
+            {
+                "chapter_id": ch.chapter_id,
+                "title": ch.title,
+                "char_count": len(ch.text),
+            }
+            for ch in request.target_work_chapters
+        ]
+
     book_samples = sample_all_books(
         target_work_text=request.target_work_text,
         target_work_title=request.target_work.title,
         prior_works=prior_works_for_sampling,
+        target_chapters=target_chapters,
     )
 
     logger.info(f"Sampled {len(book_samples)} books, generating adaptive plan...")

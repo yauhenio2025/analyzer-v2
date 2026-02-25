@@ -11,6 +11,27 @@ from pydantic import BaseModel, Field
 from src.orchestrator.schemas import TargetWork, PriorWork
 
 
+class ChapterUpload(BaseModel):
+    """A pre-split chapter of the target work.
+
+    When the user already has individual chapters as separate files,
+    they can upload them alongside the full document. Each chapter is
+    stored as its own document in the store and made available for
+    chapter-targeted execution without char-offset extraction.
+    """
+
+    chapter_id: str = Field(
+        description="Unique chapter identifier, e.g. 'ch1', 'ch7', 'appendix_a'",
+    )
+    title: str = Field(
+        default="",
+        description="Chapter title",
+    )
+    text: str = Field(
+        description="Full text of this chapter",
+    )
+
+
 class PriorWorkWithText(BaseModel):
     """Prior work metadata + full text for inline upload."""
 
@@ -41,6 +62,13 @@ class AnalyzeRequest(BaseModel):
     target_work: TargetWork
     target_work_text: str = Field(
         description="Full text of the target work",
+    )
+    target_work_chapters: list[ChapterUpload] = Field(
+        default_factory=list,
+        description="Pre-split chapters of the target work. Optional — when provided, "
+        "each chapter is stored as its own document and made available for "
+        "chapter-targeted execution. The full target_work_text should still be "
+        "provided alongside chapters for whole-document phases.",
     )
     prior_works: list[PriorWorkWithText] = Field(
         default_factory=list,
@@ -103,7 +131,8 @@ class AnalyzeResponse(BaseModel):
     document_ids: dict[str, str] = Field(
         default_factory=dict,
         description="Mapping of role/title -> document ID. "
-        "Keys: 'target' for target work, prior work titles for prior works.",
+        "Keys: 'target' for target work, 'chapter:{chapter_id}' for "
+        "pre-uploaded chapters, prior work titles for prior works.",
     )
     cancel_token: Optional[str] = Field(
         default=None,

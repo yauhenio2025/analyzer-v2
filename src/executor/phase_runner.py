@@ -578,23 +578,43 @@ def _run_chapter_targeted_phase(
             )
 
         try:
-            # Extract chapter text
-            if ch_target.start_char is not None and ch_target.end_char is not None:
-                chapter_info = ChapterInfo(
-                    chapter_id=ch_target.chapter_id,
-                    chapter_title=ch_target.chapter_title,
-                    start_char=ch_target.start_char,
-                    end_char=ch_target.end_char,
-                    char_count=ch_target.end_char - ch_target.start_char,
-                )
-                chapter_text = extract_chapter_text(document_text, chapter_info)
+            # Strategy 1: Load from pre-uploaded chapter document
+            chapter_doc_key = f"chapter:{ch_target.chapter_id}"
+            chapter_doc_id = document_ids.get(chapter_doc_key)
+            if chapter_doc_id:
+                chapter_text = get_document_text(chapter_doc_id)
+                if chapter_text:
+                    logger.info(
+                        f"Loaded pre-uploaded chapter '{ch_target.chapter_id}' "
+                        f"from document store ({len(chapter_text):,} chars)"
+                    )
+                else:
+                    logger.warning(
+                        f"Chapter doc {chapter_doc_id} exists but has no text, "
+                        f"falling back to extraction"
+                    )
+                    chapter_text = None
             else:
-                # Fallback: use the full document if no offsets
-                logger.warning(
-                    f"Chapter {ch_target.chapter_id} has no char offsets, "
-                    f"using full document text"
-                )
-                chapter_text = document_text
+                chapter_text = None
+
+            # Strategy 2: Extract from full document using char offsets
+            if chapter_text is None:
+                if ch_target.start_char is not None and ch_target.end_char is not None:
+                    chapter_info = ChapterInfo(
+                        chapter_id=ch_target.chapter_id,
+                        chapter_title=ch_target.chapter_title,
+                        start_char=ch_target.start_char,
+                        end_char=ch_target.end_char,
+                        char_count=ch_target.end_char - ch_target.start_char,
+                    )
+                    chapter_text = extract_chapter_text(document_text, chapter_info)
+                else:
+                    # Fallback: use the full document if no offsets and no pre-upload
+                    logger.warning(
+                        f"Chapter {ch_target.chapter_id} has no pre-uploaded document "
+                        f"and no char offsets, using full document text"
+                    )
+                    chapter_text = document_text
 
             # Build combined input: summary context + chapter text
             combined_text = (
