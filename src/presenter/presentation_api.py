@@ -90,6 +90,10 @@ def assemble_page(job_id: str) -> PagePresentation:
             )
             payloads[payload.view_key] = payload
 
+    # Auto-generate views for chapter-targeted phases that have no view definitions
+    if plan:
+        _inject_chapter_views(plan, payloads, job_id)
+
     # Build parent-child tree
     top_level = _build_view_tree(payloads, view_registry)
 
@@ -525,6 +529,92 @@ def _load_per_item_data(
         })
 
     return items
+
+
+def _inject_chapter_views(
+    plan,
+    payloads: dict[str, ViewPayload],
+    job_id: str,
+) -> None:
+    """Auto-generate ViewPayloads for chapter-targeted phases.
+
+    The planner can dynamically create phases with document_scope="chapter".
+    Since no static view definitions exist for these dynamic phases, we
+    auto-generate per-item views so chapter outputs appear in the frontend.
+    """
+    for phase in plan.phases:
+        if phase.skip:
+            continue
+        doc_scope = getattr(phase, "document_scope", "whole") or "whole"
+        if doc_scope != "chapter":
+            continue
+
+        # Check if any existing view already covers this phase
+        phase_covered = any(
+            p.phase_number == phase.phase_number
+            for p in payloads.values()
+        )
+        if phase_covered:
+            continue
+
+        # Build a synthetic per-item view for this chapter-targeted phase
+        view_key = f"auto_chapter_{phase.phase_number}"
+
+        # Load chapter items using the same per_item loader
+        chain_key = phase.chain_key
+        engine_key = phase.engine_key
+        items = _load_per_item_data(
+            job_id, phase.phase_number, engine_key, chain_key=chain_key,
+        )
+
+        # Add chapter metadata to each item
+        chapter_targets = getattr(phase, "chapter_targets", None) or []
+        chapter_lookup = {ct.chapter_id: ct for ct in chapter_targets}
+        for item in items:
+            wk = item.get("work_key", "")
+            ct = chapter_lookup.get(wk)
+            if ct:
+                item["_is_chapter"] = True
+                item["_chapter_title"] = ct.chapter_title
+                item["_chapter_rationale"] = ct.rationale
+            else:
+                item["_is_chapter"] = True
+                item["_chapter_title"] = wk
+
+        if not items:
+            continue
+
+        chapter_count = len(items)
+        engine_label = chain_key or engine_key or "analysis"
+
+        payload = ViewPayload(
+            view_key=view_key,
+            view_name=f"Chapter Analysis — Phase {phase.phase_number}",
+            description=(
+                f"Per-chapter analysis from {phase.phase_name} "
+                f"({chapter_count} chapters, engine: {engine_label})"
+            ),
+            renderer_type="per_item_cards",
+            renderer_config={"card_style": "chapter"},
+            presentation_stance=None,
+            priority="primary",
+            rationale=phase.rationale or "Chapter-level targeting by adaptive planner",
+            data_quality="standard" if items else "empty",
+            phase_number=phase.phase_number,
+            engine_key=engine_key,
+            chain_key=chain_key,
+            scope="per_item",
+            has_structured_data=any(i.get("has_structured_data") for i in items),
+            items=items,
+            tab_count=chapter_count,
+            visibility="if_data_exists",
+            position=phase.phase_number * 10,  # Sort after corresponding phase
+        )
+        payloads[view_key] = payload
+        logger.info(
+            f"Auto-generated chapter view '{view_key}' for phase {phase.phase_number}: "
+            f"{chapter_count} chapter items"
+        )
 
 
 def _build_view_tree(
