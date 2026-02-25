@@ -324,14 +324,18 @@ def _build_passes_viz(
         description = stance_op.description if stance_op else ""
 
         # Build human-readable input summary
-        input_parts = ["Target work text"]
+        # The full source document is ALWAYS included in every pass
+        input_parts = ["Full source document (always included)"]
         if entry.consumes_from:
             refs = ", ".join(f"#{p}" for p in entry.consumes_from)
-            input_parts.append(f"prose output from pass {refs}")
-        input_parts.append("engine framing + stance instructions")
+            input_parts.append(f"analytical output from pass {refs}")
+        input_parts.append("engine intellectual framing")
+        input_parts.append("stance cognitive instructions")
         if focus_dims:
-            input_parts.append(f"{len(focus_dims)} focused dimension(s)")
-        input_summary = " + ".join(input_parts)
+            dim_names = ", ".join(d.replace("_", " ") for d in focus_dims[:3])
+            suffix = f" + {len(focus_dims) - 3} more" if len(focus_dims) > 3 else ""
+            input_parts.append(f"focused dimensions: {dim_names}{suffix}")
+        input_summary = " | ".join(input_parts)
 
         # Build human-readable output summary
         if entry.pass_number == total_passes:
