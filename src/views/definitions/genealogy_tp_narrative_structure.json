@@ -1,0 +1,74 @@
+{
+  "view_key": "genealogy_tp_narrative_structure",
+  "view_name": "Narrative Structure",
+  "description": "7-dimension narrative analysis: arc, voice/register, focalization, tensions, devices, temporal construction, cross-chapter evolution.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "genealogy",
+  "target_section": "results",
+  "renderer_type": "accordion",
+  "renderer_config": {
+    "sections": [
+      {"key": "narrative_arc", "title": "Narrative Arc"},
+      {"key": "narrative_voice_register", "title": "Voice & Register"},
+      {"key": "perspective_focalization", "title": "Perspective & Focalization"},
+      {"key": "narrative_tensions", "title": "Narrative Tensions"},
+      {"key": "narrative_devices", "title": "Narrative Devices"},
+      {"key": "temporal_construction", "title": "Temporal Construction"},
+      {"key": "narrative_evolution_across_chapters", "title": "Cross-Chapter Evolution"}
+    ],
+    "expand_first": true,
+    "section_renderers": {
+      "narrative_arc": {
+        "renderer_type": "prose_block",
+        "config": {"section_description": "Overall emplotment mode and narrative arc"}
+      },
+      "narrative_voice_register": {
+        "renderer_type": "chip_grid",
+        "config": {"section_description": "Registers deployed — analytical, polemical, prophetic, ironic, etc."}
+      },
+      "perspective_focalization": {
+        "renderer_type": "prose_block",
+        "config": {"section_description": "Whose perspective is centered, whose is marginalized"}
+      },
+      "narrative_tensions": {
+        "renderer_type": "mini_card_list",
+        "config": {"title_field": "tension", "subtitle_field": "type", "description_field": "significance"}
+      },
+      "narrative_devices": {
+        "renderer_type": "chip_grid",
+        "config": {"section_description": "Narrative devices — anecdotes, vignettes, hypotheticals, counterfactuals"}
+      },
+      "temporal_construction": {
+        "renderer_type": "timeline_strip",
+        "config": {"label_field": "description", "stages_field": "phases", "section_description": "Temporal construction — linear, cyclical, genealogical, dialectical"}
+      },
+      "narrative_evolution_across_chapters": {
+        "renderer_type": "comparison_panel",
+        "config": {"section_description": "How the narrative mode evolves across chapters"}
+      }
+    }
+  },
+  "data_source": {
+    "workflow_key": "intellectual_genealogy",
+    "phase_number": 0.5,
+    "engine_key": "narrative_structure_analyzer",
+    "result_path": "",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "narrative",
+  "position": 0.53,
+  "parent_view_key": "genealogy_text_profiling",
+  "tab_count_field": null,
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "planner_hint": "Narrative structure — arc, voice, focalization, tensions, devices, temporal construction.",
+  "planner_eligible": true,
+  "status": "active",
+  "tags": ["genealogy", "profiling", "narrative", "narratology", "nested"],
+  "source_project": "critic"
+}

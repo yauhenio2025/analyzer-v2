@@ -1,0 +1,79 @@
+{
+  "view_key": "genealogy_tp_deep_summary",
+  "view_name": "Deep Summarization",
+  "description": "8-dimension deep summarization: thesis architecture, chapter functions, conceptual moves, evidence patterns, rhetorical strategies, foregrounding/suppression, vocabulary, downstream utility.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "genealogy",
+  "target_section": "results",
+  "renderer_type": "accordion",
+  "renderer_config": {
+    "sections": [
+      {"key": "thesis_architecture", "title": "Thesis Architecture"},
+      {"key": "chapter_argument_map", "title": "Chapter Argument Map"},
+      {"key": "conceptual_moves", "title": "Conceptual Moves"},
+      {"key": "evidence_patterns", "title": "Evidence Patterns"},
+      {"key": "rhetorical_strategies", "title": "Rhetorical Strategies"},
+      {"key": "foregrounding_suppression", "title": "Foregrounding & Suppression"},
+      {"key": "conceptual_vocabulary", "title": "Conceptual Vocabulary"},
+      {"key": "downstream_utility", "title": "Downstream Utility"}
+    ],
+    "expand_first": true,
+    "section_renderers": {
+      "thesis_architecture": {
+        "renderer_type": "prose_block",
+        "config": {"section_description": "The thesis architecture — load-bearing argumentative structure"}
+      },
+      "chapter_argument_map": {
+        "renderer_type": "mini_card_list",
+        "config": {"title_field": "chapter", "subtitle_field": "function", "description_field": "argument"}
+      },
+      "conceptual_moves": {
+        "renderer_type": "mini_card_list",
+        "config": {"title_field": "move", "subtitle_field": "type", "description_field": "how_deployed"}
+      },
+      "evidence_patterns": {
+        "renderer_type": "evidence_trail",
+        "config": {"section_description": "How evidence is marshalled across the argument"}
+      },
+      "rhetorical_strategies": {
+        "renderer_type": "mini_card_list",
+        "config": {"title_field": "strategy", "subtitle_field": "frequency", "description_field": "effect"}
+      },
+      "foregrounding_suppression": {
+        "renderer_type": "comparison_panel",
+        "config": {"section_description": "What the text foregrounds vs. what it suppresses or marginalizes"}
+      },
+      "conceptual_vocabulary": {
+        "renderer_type": "chip_grid",
+        "config": {"section_description": "Distinctive conceptual vocabulary and terminology"}
+      },
+      "downstream_utility": {
+        "renderer_type": "key_value_table",
+        "config": {"section_description": "What this summarization enables for downstream engines"}
+      }
+    }
+  },
+  "data_source": {
+    "workflow_key": "intellectual_genealogy",
+    "phase_number": 0.5,
+    "engine_key": "deep_summarization",
+    "result_path": "",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "interactive",
+  "position": 0.51,
+  "parent_view_key": "genealogy_text_profiling",
+  "tab_count_field": null,
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "planner_hint": "Deep summarization — 8-dimensional analytical summary of the target work.",
+  "planner_eligible": true,
+  "status": "active",
+  "tags": ["genealogy", "profiling", "summarization", "nested"],
+  "source_project": "critic"
+}

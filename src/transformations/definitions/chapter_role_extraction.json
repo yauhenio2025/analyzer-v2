@@ -1,0 +1,71 @@
+{
+  "template_key": "chapter_role_extraction",
+  "template_name": "Chapter Role Extraction",
+  "description": "Extracts structured data from chapter_role_analyzer engine output: functional roles, dependencies, key concepts, coupling, structural vulnerabilities, and inter-part dynamics.",
+  "version": 1,
+  "transformation_type": "llm_extract",
+  "llm_extraction_schema": {
+    "chapter_functional_role": [
+      {
+        "chapter": "string (chapter name/number)",
+        "role": "enum: foundation|development|evidence|objection_handling|synthesis|methodology|context|conclusion|transitional",
+        "importance": "enum: critical|important|supporting|peripheral",
+        "summary": "string (1-2 sentence summary of how this chapter fulfills its role)"
+      }
+    ],
+    "chapter_dependencies": [
+      {
+        "chapter": "string (the dependent chapter)",
+        "depends_on": "string (the chapter depended upon)",
+        "dependency_type": "enum: conceptual|evidential|methodological|structural"
+      }
+    ],
+    "key_concepts_introduced": ["string (concept name — optionally with chapter attribution)"],
+    "chapter_coupling": [
+      {
+        "pair": "string (e.g. 'Ch1 ↔ Ch3')",
+        "coupling_strength": "enum: tight|moderate|loose",
+        "nature": "string (description of what binds or separates them)"
+      }
+    ],
+    "structural_vulnerabilities": [
+      {
+        "vulnerability": "string (description of the structural weakness)",
+        "severity": "enum: critical|significant|minor",
+        "location": "string (where in the text this vulnerability manifests)",
+        "evidence": "string (evidence for this vulnerability)"
+      }
+    ],
+    "inter_part_dynamics": "string (2-3 paragraphs on how major parts/sections interact)"
+  },
+  "llm_prompt_template": "You are a precise data extraction assistant. Extract structured JSON from analytical prose produced by a chapter role analyzer engine. The prose contains structural analysis of a text's chapter-level organization.\n\nExtract ALL of the following fields. Be thorough — capture ALL chapters, dependencies, and vulnerabilities mentioned across all analytical passes.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"chapter_functional_role\": [\n    {\n      \"chapter\": \"<chapter name or number>\",\n      \"role\": \"<one of: foundation, development, evidence, objection_handling, synthesis, methodology, context, conclusion, transitional>\",\n      \"importance\": \"<one of: critical, important, supporting, peripheral>\",\n      \"summary\": \"<1-2 sentence summary of how this chapter fulfills its role>\"\n    }\n  ],\n  \"chapter_dependencies\": [\n    {\n      \"chapter\": \"<the dependent chapter>\",\n      \"depends_on\": \"<the chapter depended upon>\",\n      \"dependency_type\": \"<one of: conceptual, evidential, methodological, structural>\"\n    }\n  ],\n  \"key_concepts_introduced\": [\"<concept (Chapter N)>\", \"<concept (Chapter M)>\"],\n  \"chapter_coupling\": [\n    {\n      \"pair\": \"<e.g. 'Ch1 ↔ Ch3'>\",\n      \"coupling_strength\": \"<one of: tight, moderate, loose>\",\n      \"nature\": \"<what binds or separates them>\"\n    }\n  ],\n  \"structural_vulnerabilities\": [\n    {\n      \"vulnerability\": \"<description of the structural weakness>\",\n      \"severity\": \"<one of: critical, significant, minor>\",\n      \"location\": \"<where in the text>\",\n      \"evidence\": \"<evidence for this vulnerability>\"\n    }\n  ],\n  \"inter_part_dynamics\": \"<2-3 paragraphs on how major parts or sections of the work interact, what changes at part boundaries, and how transitions work>\"\n}\n\nRULES:\n1. Return ONLY the JSON object — no markdown code fences, no commentary\n2. Include ALL chapters in chapter_functional_role — aim for completeness\n3. Role must be one of the 9 listed enums (use closest match)\n4. Importance must be one of: critical, important, supporting, peripheral\n5. Dependencies should capture all significant cross-chapter relationships\n6. Dependency type must be one of: conceptual, evidential, methodological, structural\n7. Key concepts should include chapter attribution where possible\n8. Coupling pairs should use the format 'ChX ↔ ChY'\n9. Vulnerability severity must be one of: critical, significant, minor\n10. Inter-part dynamics should be rich prose, not bullet points\n11. Preserve the analytical depth of the original prose — don't oversimplify",
+  "applicable_renderer_types": [
+    "accordion"
+  ],
+  "applicable_engines": [
+    "chapter_role_analyzer"
+  ],
+  "tags": [
+    "genealogy",
+    "profiling",
+    "chapters",
+    "structure",
+    "extraction",
+    "prose-to-structured"
+  ],
+  "status": "active",
+  "model": "claude-haiku-4-5-20251001",
+  "model_fallback": "claude-sonnet-4-5-20250929",
+  "max_tokens": 12000,
+  "source": "Created for genealogy_tp_chapter_roles view — Phase 0.5 chapter structural analysis",
+  "domain": "genealogy",
+  "pattern_type": "section_extraction",
+  "data_shape_out": "nested_sections",
+  "compatible_sub_renderers": [
+    "mini_card_list",
+    "chip_grid",
+    "key_value_table",
+    "evidence_trail",
+    "prose_block"
+  ]
+}

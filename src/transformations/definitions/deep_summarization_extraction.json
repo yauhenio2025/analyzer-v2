@@ -1,0 +1,90 @@
+{
+  "template_key": "deep_summarization_extraction",
+  "template_name": "Deep Summarization Extraction",
+  "description": "Extracts structured data from deep_summarization engine output: thesis architecture, chapter argument map, conceptual moves, evidence patterns, rhetorical strategies, foregrounding/suppression, conceptual vocabulary, and downstream utility.",
+  "version": 1,
+  "transformation_type": "llm_extract",
+  "llm_extraction_schema": {
+    "thesis_architecture": "string (2-4 paragraphs describing the load-bearing argumentative structure)",
+    "chapter_argument_map": [
+      {
+        "chapter": "string (chapter name/number)",
+        "function": "string (primary function in the argument)",
+        "argument": "string (the argument advanced or work done)",
+        "page_range": "string (approximate page range, if available)"
+      }
+    ],
+    "conceptual_moves": [
+      {
+        "move": "string (name/description of the conceptual move)",
+        "type": "enum: reframing|appropriation|extension|inversion|synthesis|elision",
+        "how_deployed": "string (how and where this move is deployed in the text)"
+      }
+    ],
+    "evidence_patterns": [
+      {
+        "pattern": "string (description of the evidence pattern)",
+        "evidence_type": "enum: empirical|historical|logical|analogical|authoritative",
+        "frequency": "string (how often this pattern appears)",
+        "strength": "string (assessment of evidential strength)"
+      }
+    ],
+    "rhetorical_strategies": [
+      {
+        "strategy": "string (name/description of the rhetorical strategy)",
+        "frequency": "enum: pervasive|frequent|occasional",
+        "effect": "string (what effect this strategy achieves)"
+      }
+    ],
+    "foregrounding_suppression": {
+      "foregrounded": [
+        {
+          "topic": "string (what is foregrounded)",
+          "how_foregrounded": "string (techniques used to foreground)",
+          "purpose": "string (why this is foregrounded)"
+        }
+      ],
+      "suppressed": [
+        {
+          "topic": "string (what is suppressed or marginalized)",
+          "how_suppressed": "string (techniques of suppression — silence, brief mention, dismissal)",
+          "what_this_conceals": "string (what the suppression conceals or enables)"
+        }
+      ]
+    },
+    "conceptual_vocabulary": ["string (distinctive terms and their significance)"],
+    "downstream_utility": {
+      "key_value_pairs": "object — keys are downstream engine names or analysis types, values describe what this summarization enables for them"
+    }
+  },
+  "llm_prompt_template": "You are a precise data extraction assistant. Extract structured JSON from analytical prose produced by a deep summarization engine. The prose contains an 8-dimensional analysis of a text.\n\nExtract ALL of the following fields. Be thorough — capture ALL items mentioned across all analytical passes.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"thesis_architecture\": \"<2-4 paragraphs describing the load-bearing argumentative structure — the central thesis, how it is constructed, what supports it>\",\n  \"chapter_argument_map\": [\n    {\n      \"chapter\": \"<chapter name or number>\",\n      \"function\": \"<primary function: foundation, development, evidence, synthesis, etc.>\",\n      \"argument\": \"<the specific argument or analytical work this chapter performs>\",\n      \"page_range\": \"<approximate page range if mentioned, otherwise omit>\"\n    }\n  ],\n  \"conceptual_moves\": [\n    {\n      \"move\": \"<name or description of the conceptual move>\",\n      \"type\": \"<one of: reframing, appropriation, extension, inversion, synthesis, elision>\",\n      \"how_deployed\": \"<where and how this move operates in the text>\"\n    }\n  ],\n  \"evidence_patterns\": [\n    {\n      \"pattern\": \"<description of the evidence pattern>\",\n      \"evidence_type\": \"<one of: empirical, historical, logical, analogical, authoritative>\",\n      \"frequency\": \"<how often this pattern appears>\",\n      \"strength\": \"<assessment of evidential strength>\"\n    }\n  ],\n  \"rhetorical_strategies\": [\n    {\n      \"strategy\": \"<name or description>\",\n      \"frequency\": \"<one of: pervasive, frequent, occasional>\",\n      \"effect\": \"<what effect this strategy achieves>\"\n    }\n  ],\n  \"foregrounding_suppression\": {\n    \"foregrounded\": [\n      {\n        \"topic\": \"<what is foregrounded>\",\n        \"how_foregrounded\": \"<techniques used>\",\n        \"purpose\": \"<why this is foregrounded>\"\n      }\n    ],\n    \"suppressed\": [\n      {\n        \"topic\": \"<what is suppressed or marginalized>\",\n        \"how_suppressed\": \"<techniques of suppression>\",\n        \"what_this_conceals\": \"<what the suppression conceals or enables>\"\n      }\n    ]\n  },\n  \"conceptual_vocabulary\": [\"<term1: significance>\", \"<term2: significance>\"],\n  \"downstream_utility\": {\n    \"<engine_or_analysis_type>\": \"<what this summarization enables>\"\n  }\n}\n\nRULES:\n1. Return ONLY the JSON object — no markdown code fences, no commentary\n2. The thesis_architecture should be rich, multi-paragraph prose — not bullet points\n3. Capture ALL chapters in the chapter_argument_map (aim for completeness)\n4. Conceptual moves should use one of the 6 enum types (use closest match)\n5. Evidence types must be one of the 5 listed enums\n6. Rhetorical strategy frequency must be one of: pervasive, frequent, occasional\n7. Foregrounding/suppression should have 3-6 items on each side\n8. Conceptual vocabulary should list 10-20 distinctive terms with brief significance notes\n9. Downstream utility keys should reference specific engine types or analysis phases\n10. Preserve the analytical depth of the original prose — don't oversimplify",
+  "applicable_renderer_types": [
+    "accordion"
+  ],
+  "applicable_engines": [
+    "deep_summarization"
+  ],
+  "tags": [
+    "genealogy",
+    "profiling",
+    "summarization",
+    "extraction",
+    "prose-to-structured"
+  ],
+  "status": "active",
+  "model": "claude-haiku-4-5-20251001",
+  "model_fallback": "claude-sonnet-4-5-20250929",
+  "max_tokens": 16000,
+  "source": "Created for genealogy_tp_deep_summary view — Phase 0.5 deep text profiling",
+  "domain": "genealogy",
+  "pattern_type": "section_extraction",
+  "data_shape_out": "nested_sections",
+  "compatible_sub_renderers": [
+    "prose_block",
+    "mini_card_list",
+    "evidence_trail",
+    "comparison_panel",
+    "chip_grid",
+    "key_value_table"
+  ]
+}

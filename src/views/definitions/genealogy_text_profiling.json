@@ -1,0 +1,41 @@
+{
+  "view_key": "genealogy_text_profiling",
+  "view_name": "Text Profiling",
+  "description": "Deep text profiling from Phase 0.5's 3-engine chain: deep summarization, chapter role analysis, and narrative structure analysis. Foundational profile that feeds into all subsequent analytical phases.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "genealogy",
+  "target_section": "results",
+  "renderer_type": "accordion",
+  "renderer_config": {
+    "sections": [
+      {"key": "deep_summary", "title": "Deep Summarization"},
+      {"key": "chapter_roles", "title": "Chapter Roles"},
+      {"key": "narrative_structure", "title": "Narrative Structure"}
+    ],
+    "expand_first": true
+  },
+  "data_source": {
+    "workflow_key": "intellectual_genealogy",
+    "phase_number": 0.5,
+    "engine_key": null,
+    "chain_key": "deep_text_profiling",
+    "result_path": "",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "diagnostic",
+  "position": 0.5,
+  "parent_view_key": null,
+  "tab_count_field": null,
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "planner_hint": "Foundational. Phase 0.5 text profiling — deep summarization, chapter roles, narrative structure. Required for works >20K words.",
+  "planner_eligible": true,
+  "status": "active",
+  "tags": ["genealogy", "profiling", "text", "foundational"],
+  "source_project": "critic"
+}

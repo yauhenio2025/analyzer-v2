@@ -1,0 +1,66 @@
+{
+  "template_key": "narrative_structure_extraction",
+  "template_name": "Narrative Structure Extraction",
+  "description": "Extracts structured data from narrative_structure_analyzer engine output: narrative arc, voice/register, focalization, tensions, devices, temporal construction, and cross-chapter evolution.",
+  "version": 1,
+  "transformation_type": "llm_extract",
+  "llm_extraction_schema": {
+    "narrative_arc": "string (2-3 paragraphs — emplotment mode and narrative arc description)",
+    "narrative_voice_register": ["string (registers: analytical, polemical, prophetic, ironic, etc.)"],
+    "perspective_focalization": "string (1-2 paragraphs — whose perspective is centered, whose is marginalized)",
+    "narrative_tensions": [
+      {
+        "tension": "string (name/description of the tension)",
+        "type": "enum: story_vs_argument|register_clash|perspective_conflict|temporal_tension",
+        "significance": "string (why this tension matters for the text's effectiveness)"
+      }
+    ],
+    "narrative_devices": ["string (devices: anecdotes, vignettes, hypotheticals, counterfactuals, etc.)"],
+    "temporal_construction": {
+      "mode": "enum: linear|cyclical|genealogical|dialectical|mixed",
+      "phases": [
+        {
+          "label": "string (phase name)",
+          "description": "string (what happens in this temporal phase)"
+        }
+      ]
+    },
+    "narrative_evolution_across_chapters": [
+      {
+        "chapter_range": "string (e.g. 'Chapters 1-3' or 'Part I')",
+        "register_shift": "string (how the narrative register changes)",
+        "significance": "string (why this shift matters)"
+      }
+    ]
+  },
+  "llm_prompt_template": "You are a precise data extraction assistant. Extract structured JSON from analytical prose produced by a narrative structure analyzer engine. The prose contains narratological analysis of a text.\n\nExtract ALL of the following fields. Be thorough — capture ALL tensions, devices, and evolution patterns mentioned across all analytical passes.\n\nReturn a JSON object with this EXACT structure:\n\n{\n  \"narrative_arc\": \"<2-3 paragraphs describing the overall emplotment mode — is this a romance, tragedy, comedy, satire, genealogy? How does the narrative arc progress from beginning through middle to end?>\",\n  \"narrative_voice_register\": [\"<register1>\", \"<register2>\"],\n  \"perspective_focalization\": \"<1-2 paragraphs — whose perspective is centered and whose is marginalized? How does focalization shape what the reader can see and understand?>\",\n  \"narrative_tensions\": [\n    {\n      \"tension\": \"<description of the narrative tension>\",\n      \"type\": \"<one of: story_vs_argument, register_clash, perspective_conflict, temporal_tension>\",\n      \"significance\": \"<why this tension matters>\"\n    }\n  ],\n  \"narrative_devices\": [\"<device1>\", \"<device2>\"],\n  \"temporal_construction\": {\n    \"mode\": \"<one of: linear, cyclical, genealogical, dialectical, mixed>\",\n    \"phases\": [\n      {\n        \"label\": \"<phase name>\",\n        \"description\": \"<what happens in this temporal phase>\"\n      }\n    ]\n  },\n  \"narrative_evolution_across_chapters\": [\n    {\n      \"chapter_range\": \"<e.g. 'Chapters 1-3' or 'Part I'>\",\n      \"register_shift\": \"<how the narrative register or mode changes>\",\n      \"significance\": \"<why this shift matters for the argument>\"\n    }\n  ]\n}\n\nRULES:\n1. Return ONLY the JSON object — no markdown code fences, no commentary\n2. The narrative_arc should be rich, multi-paragraph prose — identify the emplotment mode\n3. Voice/register should list all registers identified (aim for 3-6)\n4. Perspective/focalization should be analytical prose, not bullet points\n5. Tension types must be one of: story_vs_argument, register_clash, perspective_conflict, temporal_tension\n6. Narrative devices should list specific devices with enough context to understand them\n7. Temporal construction mode must be one of: linear, cyclical, genealogical, dialectical, mixed\n8. Temporal phases should be in chronological order as they appear in the text\n9. Evolution entries should cover the full span of the text\n10. Preserve the analytical depth of the original prose — don't oversimplify\n11. If the text uses multiple temporal modes, use 'mixed' and describe each in the phases",
+  "applicable_renderer_types": [
+    "accordion"
+  ],
+  "applicable_engines": [
+    "narrative_structure_analyzer"
+  ],
+  "tags": [
+    "genealogy",
+    "profiling",
+    "narrative",
+    "narratology",
+    "extraction",
+    "prose-to-structured"
+  ],
+  "status": "active",
+  "model": "claude-haiku-4-5-20251001",
+  "model_fallback": "claude-sonnet-4-5-20250929",
+  "max_tokens": 14000,
+  "source": "Created for genealogy_tp_narrative_structure view — Phase 0.5 narrative analysis",
+  "domain": "genealogy",
+  "pattern_type": "section_extraction",
+  "data_shape_out": "nested_sections",
+  "compatible_sub_renderers": [
+    "prose_block",
+    "chip_grid",
+    "mini_card_list",
+    "timeline_strip",
+    "comparison_panel"
+  ]
+}

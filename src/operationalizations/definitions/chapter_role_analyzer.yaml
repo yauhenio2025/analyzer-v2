@@ -64,6 +64,35 @@ stance_operationalizations:
   - identify_structural_vulnerabilities
   - map_chapter_dependencies
   - assess_chapter_coupling
+- stance_key: integration
+  label: Structural Integration
+  description: |-
+    Integrate all findings from discovery, architecture, and confrontation
+    into a comprehensive structural assessment. The discovery pass mapped
+    chapter roles and concept flows. The architecture pass built the
+    dependency graph and coupling matrix. The confrontation pass exposed
+    vulnerabilities, missing bridges, and circular dependencies. Now
+    synthesize: what is the overall structural logic of this work? How
+    do the chapter roles, dependencies, and vulnerabilities combine into
+    a coherent picture of the argument's organizational strategy? Where
+    does the structure serve the argument well, and where does it
+    undermine it? What does the structural analysis reveal about the
+    author's priorities — what did they invest structural effort in,
+    and what did they leave architecturally thin?
+  focus_dimensions:
+  - chapter_functional_role
+  - chapter_dependencies
+  - key_concepts_introduced
+  - chapter_coupling
+  - structural_vulnerabilities
+  - inter_part_dynamics
+  focus_capabilities:
+  - classify_chapter_roles
+  - map_chapter_dependencies
+  - track_concept_flow
+  - assess_chapter_coupling
+  - identify_structural_vulnerabilities
+  - analyze_inter_part_dynamics
 depth_sequences:
 - depth_key: surface
   passes:
@@ -93,3 +122,9 @@ depth_sequences:
     consumes_from:
     - 1
     - 2
+  - pass_number: 4
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2
+    - 3
