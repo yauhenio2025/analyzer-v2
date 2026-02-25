@@ -50,7 +50,7 @@ Your job: compose a WorkflowExecutionPlan that achieves the objective's goals us
 4. **Phases are flexible**: You can add, remove, reorder, or modify phases. Phase numbers can use decimals (1.0, 1.5, 2.0, 2.5, 3.0, etc.). Specify depends_on for dependency ordering.
 5. **Per-work iteration**: Set iteration_mode="per_work" for phases that need to run once per prior work. Use per_work_chain_map if different works need different chains.
 6. **Chain vs engine**: Prefer chains for multi-faceted analysis (they compose multiple engines). Use single engines for focused tasks.
-7. **Chapter-level analysis**: For book-length works, you can target specific chapters by setting document_scope="chapter" and providing chapter_targets. Use this when specific chapters are disproportionately important or when chapter-level granularity would improve analysis. The book samples include chapter_structure showing detected chapters.
+7. **Chapter-level analysis**: When book samples include chapter_structure data, you MUST consider whether chapter-level targeting would improve any phase. Set document_scope="chapter" and provide chapter_targets with chapter_id values from the book samples. Use chapter targeting when: (a) specific chapters are disproportionately relevant to the analysis goals, (b) a full-book pass would dilute attention on key arguments, or (c) different chapters warrant different analytical depth. In your decision_trace, always include a "chapter_targeting_rationale" entry explaining why you did or did not use chapter-level analysis.
 8. **Decision traceability**: Include a complete decision_trace. Every decision must cite evidence from book samples or objectives. For every engine considered, state whether selected or rejected and why. This is mandatory.
 
 ## Output Format
@@ -106,6 +106,7 @@ Return ONLY valid JSON (no markdown fences) matching this structure:
     "catalog_coverage": [
       {"engine_key": "...", "status": "selected|rejected|available_unused", "reason": "...", "used_in_phases": [1.0]}
     ],
+    "chapter_targeting_rationale": "Explain whether chapter-level targeting was used, and for which works/phases. If not used, explain why whole-document analysis is preferred for this corpus.",
     "overall_strategy_rationale": "High-level narrative connecting corpus characteristics to pipeline design"
   },
   "estimated_llm_calls": 30,
@@ -306,6 +307,13 @@ def _build_adaptive_user_prompt(
             lines.append(f"- Engine affinities: {affinities}")
         if sample.structural_notes:
             lines.append(f"- Structure: {sample.structural_notes}")
+        if sample.chapter_structure:
+            lines.append(f"- **Chapters detected**: {len(sample.chapter_structure)}")
+            for ch in sample.chapter_structure:
+                ch_title = ch.get("title", ch.get("chapter_id", "?"))
+                ch_chars = ch.get("char_count", 0)
+                ch_id = ch.get("chapter_id", "?")
+                lines.append(f"  - `{ch_id}`: {ch_title} ({ch_chars:,} chars)")
         lines.append("")
 
     # 3. Baseline workflow (if any)

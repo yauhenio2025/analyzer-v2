@@ -135,6 +135,20 @@ def _build_phase_viz(
     else:
         execution = {"type": "unknown", "engines": []}
 
+    # Chapter targeting info
+    document_scope = getattr(plan_phase, "document_scope", "whole") or "whole"
+    chapter_targets_viz = None
+    if hasattr(plan_phase, "chapter_targets") and plan_phase.chapter_targets:
+        chapter_targets_viz = [
+            {
+                "chapter_id": ct.chapter_id,
+                "chapter_title": ct.chapter_title,
+                "work_key": ct.work_key,
+                "rationale": ct.rationale,
+            }
+            for ct in plan_phase.chapter_targets
+        ]
+
     return {
         "phase_number": plan_phase.phase_number,
         "phase_name": plan_phase.phase_name,
@@ -144,6 +158,8 @@ def _build_phase_viz(
         "per_work": per_work,
         "depends_on": depends_on,
         "skip": plan_phase.skip,
+        "document_scope": document_scope,
+        "chapter_targets": chapter_targets_viz,
         "execution": execution,
     }
 
