@@ -99,12 +99,20 @@ def _build_phase_viz(
                 wf_phase = wp
                 break
 
-    # Determine if chain-backed or engine-backed
-    chain_key = wf_phase.chain_key if wf_phase else None
-    engine_key = wf_phase.engine_key if wf_phase else None
+    # Determine if chain-backed or engine-backed.
+    # Adaptive planner fields on plan_phase take precedence over workflow template.
+    chain_key = plan_phase.chain_key or (wf_phase.chain_key if wf_phase else None)
+    engine_key = plan_phase.engine_key or (wf_phase.engine_key if wf_phase else None)
 
-    # Resolve per_work flag
-    per_work = wf_phase.requires_external_docs if wf_phase else False
+    # Resolve per_work flag — check adaptive iteration_mode first, then workflow
+    per_work = (
+        (plan_phase.iteration_mode in ("per_work", "per_work_filtered"))
+        if plan_phase.iteration_mode
+        else (wf_phase.requires_external_docs if wf_phase else False)
+    )
+
+    # Resolve depends_on — plan phase overrides workflow template
+    depends_on = plan_phase.depends_on or (wf_phase.depends_on_phases if wf_phase else [])
 
     execution: dict[str, Any]
     if chain_key:
@@ -134,7 +142,7 @@ def _build_phase_viz(
         "rationale": plan_phase.rationale,
         "model_hint": plan_phase.model_hint,
         "per_work": per_work,
-        "depends_on": wf_phase.depends_on_phases if wf_phase else [],
+        "depends_on": depends_on,
         "skip": plan_phase.skip,
         "execution": execution,
     }

@@ -85,6 +85,27 @@ def run_chain(
 
     chain = chain_reg.get(chain_key)
     if chain is None:
+        # Safety net: if chain_key is actually an engine key, run as single engine
+        engine_def = engine_reg.get(chain_key) or engine_reg.get_capability_definition(chain_key)
+        if engine_def:
+            logger.warning(
+                f"Chain '{chain_key}' not found, but it's a valid engine — "
+                f"falling back to run_single_engine()"
+            )
+            return run_single_engine(
+                engine_key=chain_key,
+                document_text=document_text,
+                job_id=job_id,
+                phase_number=phase_number,
+                work_key=work_key,
+                depth=depth,
+                upstream_context=upstream_context,
+                context_emphasis=context_emphasis,
+                model_hint=model_hint,
+                requires_full_documents=requires_full_documents,
+                cancellation_check=cancellation_check,
+                progress_callback=progress_callback,
+            )
         raise ValueError(f"Chain not found: {chain_key}")
 
     logger.info(

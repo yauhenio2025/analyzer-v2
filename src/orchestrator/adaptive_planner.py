@@ -115,10 +115,139 @@ Return ONLY valid JSON (no markdown fences) matching this structure:
 
 IMPORTANT:
 - Each phase MUST have either chain_key OR engine_key (not both, not neither)
+- chain_key MUST reference a CHAIN from the catalog (chains compose multiple engines). engine_key MUST reference an ENGINE.
+- Do NOT put engine keys in the chain_key field or vice versa. If the catalog lists something under "Chains:", use it as chain_key. If listed under engine categories, use it as engine_key.
+- Do NOT concatenate chain/engine keys with '+' or any separator. Each field takes exactly ONE key.
+- per_work_chain_map values must be valid CHAIN keys from the catalog (not engines, not compound expressions)
 - Set depends_on for ALL phases (empty list if no dependencies)
 - Use phase numbers that allow future insertion (1.0, 1.5, 2.0, 2.5, 3.0, etc.)
 - iteration_mode defaults to "single" if not specified
 """
+
+
+def _validate_and_fix_plan_keys(plan: WorkflowExecutionPlan) -> None:
+    """Validate and auto-correct chain_key / engine_key confusion in LLM-generated plans.
+
+    The adaptive planner LLM sometimes:
+    1. Puts an engine_key into the chain_key field
+    2. Fabricates compound chain keys using '+' notation (e.g. "chain_a+chain_b")
+    3. Puts a chain_key into per_work_chain_map that's actually an engine
+
+    This function detects and fixes these issues post-generation.
+    """
+    from src.chains.registry import get_chain_registry
+    from src.engines.registry import get_engine_registry
+
+    chain_reg = get_chain_registry()
+    engine_reg = get_engine_registry()
+
+    # Build lookup sets for fast membership testing
+    all_chain_keys = set(chain_reg.list_keys())
+    # Merge standard engine keys + capability definition keys
+    all_engine_keys = set(engine_reg.list_keys())
+    try:
+        all_engine_keys.update(engine_reg.list_capability_keys())
+    except Exception:
+        pass
+
+    fixes_applied = 0
+
+    for phase in plan.phases:
+        # Fix 1: chain_key is actually an engine key
+        if phase.chain_key and phase.chain_key not in all_chain_keys:
+            if phase.chain_key in all_engine_keys:
+                logger.warning(
+                    f"Phase {phase.phase_number} ({phase.phase_name}): "
+                    f"chain_key '{phase.chain_key}' is actually an engine — "
+                    f"moving to engine_key"
+                )
+                phase.engine_key = phase.chain_key
+                phase.chain_key = None
+                fixes_applied += 1
+            elif "+" in phase.chain_key:
+                # Fix 2: compound chain key — split and use first valid chain
+                parts = [p.strip() for p in phase.chain_key.split("+")]
+                valid_chain = next((p for p in parts if p in all_chain_keys), None)
+                if valid_chain:
+                    logger.warning(
+                        f"Phase {phase.phase_number} ({phase.phase_name}): "
+                        f"compound chain_key '{phase.chain_key}' — "
+                        f"using first valid chain '{valid_chain}'"
+                    )
+                    phase.chain_key = valid_chain
+                    fixes_applied += 1
+                else:
+                    # Try if any part is an engine
+                    valid_engine = next((p for p in parts if p in all_engine_keys), None)
+                    if valid_engine:
+                        logger.warning(
+                            f"Phase {phase.phase_number} ({phase.phase_name}): "
+                            f"compound chain_key '{phase.chain_key}' — "
+                            f"no valid chains, using engine '{valid_engine}'"
+                        )
+                        phase.engine_key = valid_engine
+                        phase.chain_key = None
+                        fixes_applied += 1
+                    else:
+                        logger.error(
+                            f"Phase {phase.phase_number} ({phase.phase_name}): "
+                            f"chain_key '{phase.chain_key}' not found and cannot be resolved"
+                        )
+
+        # Fix 3: per_work_chain_map values that are engines or compound keys
+        if phase.per_work_chain_map:
+            fixed_map = {}
+            all_engines_in_map = True
+            for work_title, chain_val in phase.per_work_chain_map.items():
+                if chain_val in all_chain_keys:
+                    fixed_map[work_title] = chain_val
+                    all_engines_in_map = False
+                elif "+" in chain_val:
+                    # Compound key — pick first valid chain
+                    parts = [p.strip() for p in chain_val.split("+")]
+                    valid_chain = next((p for p in parts if p in all_chain_keys), None)
+                    if valid_chain:
+                        logger.warning(
+                            f"Phase {phase.phase_number} per_work_chain_map[{work_title}]: "
+                            f"compound '{chain_val}' — using '{valid_chain}'"
+                        )
+                        fixed_map[work_title] = valid_chain
+                        all_engines_in_map = False
+                        fixes_applied += 1
+                    else:
+                        logger.warning(
+                            f"Phase {phase.phase_number} per_work_chain_map[{work_title}]: "
+                            f"compound '{chain_val}' has no valid chains — dropping entry"
+                        )
+                        fixes_applied += 1
+                elif chain_val in all_engine_keys:
+                    logger.warning(
+                        f"Phase {phase.phase_number} per_work_chain_map[{work_title}]: "
+                        f"'{chain_val}' is an engine, not a chain — dropping entry"
+                    )
+                    all_engines_in_map = False  # mixed case
+                    fixes_applied += 1
+                else:
+                    logger.warning(
+                        f"Phase {phase.phase_number} per_work_chain_map[{work_title}]: "
+                        f"'{chain_val}' not found in chains or engines — dropping entry"
+                    )
+                    fixes_applied += 1
+
+            if fixed_map:
+                phase.per_work_chain_map = fixed_map
+            else:
+                # All entries were invalid — clear the map
+                phase.per_work_chain_map = None
+                logger.warning(
+                    f"Phase {phase.phase_number}: per_work_chain_map fully cleared "
+                    f"(all entries were invalid)"
+                )
+
+    if fixes_applied:
+        logger.info(f"Plan validation: applied {fixes_applied} auto-corrections")
+    else:
+        logger.info("Plan validation: all chain_key/engine_key references are valid")
 
 
 def _build_adaptive_user_prompt(
@@ -444,6 +573,9 @@ def generate_adaptive_plan(
                         f"{len(plan.decision_trace.catalog_coverage)} catalog entries")
         except Exception as e:
             logger.warning(f"Failed to parse decision_trace: {e}")
+
+    # Validate and auto-correct chain_key / engine_key confusion
+    _validate_and_fix_plan_keys(plan)
 
     # Save using the same mechanism as legacy planner
     from .planner import _save_plan
