@@ -803,6 +803,13 @@ class OpenRouterBackend:
 
         duration_ms = int((time.time() - start_time) * 1000)
 
+        # Guard against OpenRouter returning null/empty choices
+        if not response.choices:
+            raise RuntimeError(
+                f"[{label}] OpenRouter returned no choices for {self._model_id} "
+                f"(response: {response.model_dump_json(indent=None)[:500]})"
+            )
+
         raw_text = response.choices[0].message.content or ""
 
         if not raw_text.strip():
