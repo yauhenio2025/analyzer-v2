@@ -33,15 +33,39 @@
         "config": {"title_field": "move", "subtitle_field": "type", "description_field": "how_deployed"}
       },
       "evidence_patterns": {
-        "renderer_type": "evidence_trail",
-        "config": {"section_description": "How evidence is marshalled across the argument"}
+        "renderer_type": "mini_card_list",
+        "config": {
+          "title_field": "pattern",
+          "subtitle_field": "evidence_type",
+          "badge_field": "frequency",
+          "description_field": "strength",
+          "section_description": "How evidence is marshalled across the argument"
+        }
       },
       "rhetorical_strategies": {
         "renderer_type": "mini_card_list",
         "config": {"title_field": "strategy", "subtitle_field": "frequency", "description_field": "effect"}
       },
       "foregrounding_suppression": {
-        "renderer_type": "comparison_panel",
+        "renderer_type": "nested_sections",
+        "sub_renderers": {
+          "foregrounded": {
+            "renderer_type": "mini_card_list",
+            "config": {
+              "title_field": "topic",
+              "subtitle_field": "purpose",
+              "description_field": "how_foregrounded"
+            }
+          },
+          "suppressed": {
+            "renderer_type": "mini_card_list",
+            "config": {
+              "title_field": "topic",
+              "subtitle_field": "what_this_conceals",
+              "description_field": "how_suppressed"
+            }
+          }
+        },
         "config": {"section_description": "What the text foregrounds vs. what it suppresses or marginalizes"}
       },
       "conceptual_vocabulary": {
