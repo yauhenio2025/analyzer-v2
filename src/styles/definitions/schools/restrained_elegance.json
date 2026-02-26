@@ -53,6 +53,14 @@
     "Part-of-whole compositions",
     "Emotional or narrative-driven content"
   ],
+  "renderer_guidance": {
+    "accordion": "Section headers restrained — warm salmon tint (#fff1e5) for subtle distinction. Left accent bars thin (2px) in deep blue (#0f5499) or burgundy (#990f3d). Section descriptions as brief, authoritative annotations.",
+    "chip_grid": "Chips in muted tones — deep blue and burgundy from palette. Size variation subtle, not dramatic. Expanded panels clean and compact. Professional gravitas in all typography choices.",
+    "prose": "Lede paragraph in serif (Georgia), slightly larger, weight 600. Body text compact with tight line-height (1.35). Blockquotes with thin left border in deep blue, minimal indentation. No background tints on quotes.",
+    "timeline": "Connection lines thin (2px), gradient from blue to burgundy. Nodes compact and uniform — progression through subtle color shifts, not size. Temporal markers precise and small. Print-ready aesthetic.",
+    "card_grid": "Hero card with warm salmon background (#fff1e5). Standard cards with minimal borders, relying on spacing for separation. No dramatic shadows. Category indicators as small colored dots in palette colors.",
+    "stats": "Numbers in sans-serif (Metric style), weight 600, deep blue. Labels small and precise. Stats arranged compactly — works at small column width. Financial-journal aesthetic."
+  },
   "influences": {
     "tradition_note": "This approach represents the mature tradition of financial journalism graphics, refined over decades to serve readers who need rapid, accurate comprehension of economic data. The style balances information density with visual clarity, optimized for both print and digital contexts.",
     "exemplars": [

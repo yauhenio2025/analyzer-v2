@@ -330,9 +330,10 @@ def _gather_polish_context(
             "color_palette": style.color_palette.model_dump(exclude_none=True),
             "typography": style.typography.model_dump(),
             "layout_principles": style.layout_principles[:6],
+            "renderer_guidance": style.renderer_guidance or {},
         }
     else:
-        context["style_school"] = {"name": style_school_key, "philosophy": ""}
+        context["style_school"] = {"name": style_school_key, "philosophy": "", "renderer_guidance": {}}
 
     # Renderer definition
     renderer_registry = get_renderer_registry()
@@ -438,6 +439,13 @@ def _compose_system_prompt(context: dict[str, Any]) -> str:
         if hidden:
             parts.append(f"Hidden fields (never display): {', '.join(hidden[:8])}")
 
+    # Renderer guidance from the style school
+    renderer_guidance = school.get("renderer_guidance", {})
+    if renderer_guidance:
+        parts.extend(["", "## Style School Renderer Guidance"])
+        for renderer_type, guidance in renderer_guidance.items():
+            parts.append(f"- **{renderer_type}**: {guidance}")
+
     parts.extend([
         "",
         "## Your Output",
@@ -453,7 +461,9 @@ def _compose_system_prompt(context: dict[str, Any]) -> str:
         "2. `style_overrides` — CSS-like style objects for injection points.",
         "   These overrides are applied as inline styles on React elements across ALL",
         "   sub-renderers (timeline_strip, mini_card_list, chip_grid, etc.), not just",
-        "   the accordion shell. The injection points are:",
+        "   the accordion shell.",
+        "",
+        "   INJECTION POINTS (existing — coarse-grained):",
         "   - `section_header`: accordion/tab section headers (h3 elements)",
         "   - `section_content`: section content wrappers",
         "   - `card`: condition cards, mini-cards, entity cards, stat cards",
@@ -466,14 +476,53 @@ def _compose_system_prompt(context: dict[str, Any]) -> str:
         "   - `items_container`: the container wrapping lists of items (cards, timeline",
         "     paths, chips). Use this to control LAYOUT: CSS grid for 2-column layouts,",
         "     reduced gap for compact views, etc.",
+        "",
+        "   INJECTION POINTS (new — finer-grained control):",
+        "   - `section_title`: text styling for section header titles only (not the clickable bar)",
+        "   - `section_description`: subtitle text below section headers",
+        "   - `card_header`: card title/header area",
+        "   - `card_body`: card description/body text",
+        "   - `chip_label`: chip text content styling",
+        "   - `chip_expanded`: expanded detail panel below chips",
+        "   - `prose_lede`: first paragraph (rendered larger/bolder by default)",
+        "   - `prose_body`: subsequent prose paragraphs",
+        "   - `prose_quote`: blockquote/pull-quote styling",
+        "   - `timeline_connector`: line/arrow between timeline nodes",
+        "   - `stat_number`: statistic number display",
+        "   - `stat_label`: statistic label text",
+        "   - `hero_card`: featured/first card (larger, full-width)",
+        "   - `view_header`: introduction area at top of view",
+        "",
         "   Use camelCase CSS property names (React style). Example:",
         '   {"card": {"borderLeft": "3px solid #c41e3a", "backgroundColor": "#faf7f2"},',
+        '    "card_header": {"fontWeight": "600", "letterSpacing": "0.01em"},',
+        '    "prose_lede": {"fontSize": "1.05rem", "fontWeight": "500"},',
+        '    "stat_number": {"color": "#c41e3a", "fontWeight": "700"},',
+        '    "hero_card": {"backgroundColor": "#faf7f2", "padding": "1.25rem"},',
         '    "items_container": {"display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "0.5rem"}}',
         "",
         "3. `section_descriptions` — object mapping section keys to enhanced descriptions.",
         "   Make descriptions inviting and informative (1-2 sentences).",
         "",
         "4. `changes_summary` — brief human-readable summary of what you changed and why.",
+        "",
+        "## Typography & Visual Design",
+        "The renderers use a CSS custom property type scale. Your style overrides",
+        "work WITH this scale. You can adjust:",
+        "- fontSize (overrides the scale for emphasis — use sparingly)",
+        "- fontWeight (300-700, to create visual hierarchy)",
+        "- letterSpacing (for labels and headings)",
+        "- color (text color within the element)",
+        "- background/backgroundColor (subtle tints)",
+        "- borderLeft, borderBottom (accent bars and separators)",
+        "- padding, margin (spatial adjustments)",
+        "",
+        "DO NOT set font-family (the type scale handles this).",
+        "DO leverage the style school's personality through color choices,",
+        "spacing decisions, and visual weight distribution.",
+        "USE the new finer-grained injection points to create rich typographic",
+        "hierarchy — differentiate hero cards from standard cards, lede from body,",
+        "stat numbers from labels, section titles from descriptions.",
         "",
         "## Constraints",
         "- Use ONLY colors from the style school palette",
@@ -491,13 +540,14 @@ def _compose_system_prompt(context: dict[str, Any]) -> str:
         "    e.g. {\"display\": \"grid\", \"gridTemplateColumns\": \"1fr 1fr\", \"gap\": \"0.5rem\"}",
         "  * Reduce vertical padding: cards should be tight (8-10px), not spacious (16-24px)",
         "  * Timeline nodes should be compact with smaller text (0.7rem) and less padding",
-        "  * Use smaller font sizes throughout (0.75-0.82rem for body, 0.68rem for labels)",
+        "  * Use smaller font sizes for body/labels (0.75-0.85rem body, 0.68-0.72rem labels)",
         "- For sections with few items (1-3): single column is fine, keep spacious",
         "- Chips and badges should be small and tight (padding: 2px 6px)",
         "- The goal is a DENSE, INFORMATION-RICH layout like a newspaper or academic journal",
-        "- CRITICAL: Do NOT increase padding, margins, or font sizes beyond the defaults.",
-        "  Your style_overrides should REDUCE vertical space, not add to it.",
-        "  Keep card padding <= 8px, prose line-height <= 1.5, section_content padding <= 16px.",
+        "- CRITICAL: Do NOT increase padding, margins, or font sizes beyond the defaults",
+        "  EXCEPT via the finer-grained injection points (prose_lede, stat_number, hero_card)",
+        "  where controlled emphasis is intentional.",
+        "  Keep card padding <= 10px, prose line-height <= 1.6, section_content padding <= 16px.",
         "  The total scroll height must not increase after polishing.",
         "- For items_container grid, use 'minmax(0, 1fr)' instead of plain '1fr'",
         "  to prevent content overflow in grid children. Example:",
@@ -626,15 +676,30 @@ def _compose_section_system_prompt(
             display_rules.get("label_formatting", ""),
         ])
 
+    # Renderer guidance from the style school
+    renderer_guidance = school.get("renderer_guidance", {})
+    if renderer_guidance:
+        parts.extend(["", "## Style School Renderer Guidance (for this section's type)"])
+        for renderer_type, guidance in renderer_guidance.items():
+            parts.append(f"- **{renderer_type}**: {guidance}")
+
     parts.extend([
         "",
         "## Your Output",
         "Return a single JSON object with these keys:",
         "",
         "1. `style_overrides` — CSS-like style objects for injection points,",
-        "   applied ONLY to this section. Same injection points as view-level polish:",
+        "   applied ONLY to this section.",
+        "",
+        "   Available injection points (coarse-grained):",
         "   section_header, section_content, card, chip, badge, timeline_node,",
         "   prose, accent_color, view_wrapper, items_container.",
+        "",
+        "   Available injection points (finer-grained):",
+        "   section_title, section_description, card_header, card_body,",
+        "   chip_label, chip_expanded, prose_lede, prose_body, prose_quote,",
+        "   timeline_connector, stat_number, stat_label, hero_card, view_header.",
+        "",
         "   Use camelCase CSS property names (React style).",
         "",
         "2. `renderer_config_patch` — partial config to merge into this section's",
@@ -649,13 +714,17 @@ def _compose_section_system_prompt(
         "Your styling must be SUBTLE and CONSERVATIVE. Think academic journal, not billboard.",
         "",
         "### ABSOLUTELY FORBIDDEN (violating these ruins the UI):",
-        "- NO dark/saturated backgrounds on cards (no backgroundColor darker than #f5f5f5)",
+        "- NO dark/saturated backgrounds on cards (no backgroundColor darker than #f0f0f0)",
         "- NO text-transform: uppercase or ALL CAPS on any element",
-        "- NO font-weight above 600 on body text",
-        "- NO font-size above 0.85rem on any body text",
         "- NO colors that reduce contrast (dark bg + dark text)",
         "- NO dramatic color blocks — this is a reading interface, not a dashboard",
-        "- NO increasing padding, margins, or font sizes beyond the defaults",
+        "",
+        "### ALLOWED for typography hierarchy (via finer-grained injection points):",
+        "- fontWeight up to 700 on stat_number, hero_card headers, and section_title",
+        "- fontWeight up to 600 on card_header, prose_lede, and section_description",
+        "- fontSize adjustments on prose_lede (up to 1.05rem), stat_number (up to 1.25rem),",
+        "  hero_card text (up to 1.1rem). Body text (card_body, prose_body) stays <= 0.85rem",
+        "- letterSpacing on stat_label, section_title, chip_label for typographic refinement",
         "",
         "### ENCOURAGED:",
         "- Subtle left borders on cards (2-3px solid, muted palette color)",
@@ -663,7 +732,9 @@ def _compose_section_system_prompt(
         "- Compact multi-column layouts via items_container CSS grid",
         "- Reduced spacing (card padding 6-8px, gap 0.4-0.5rem)",
         "- Small accent colors on labels/badges only (keep body text dark #1e293b)",
-        "- Clean typographic hierarchy: 0.82rem body, 0.72rem labels, 0.68rem metadata",
+        "- Clean typographic hierarchy using the finer-grained injection points",
+        "- Differentiated hero cards vs standard cards via hero_card override",
+        "- Distinctive prose_lede treatment to establish the key argument",
         "",
         "### Layout Guidelines:",
         "- For 4+ items: use items_container with CSS grid",

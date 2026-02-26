@@ -238,6 +238,7 @@ class PolishRequest(BaseModel):
 class StyleOverrides(BaseModel):
     """CSS-like style overrides applied at defined injection points in renderers."""
 
+    # === Existing injection points ===
     section_header: Optional[dict[str, str]] = None
     section_content: Optional[dict[str, str]] = None
     card: Optional[dict[str, str]] = None
@@ -248,6 +249,22 @@ class StyleOverrides(BaseModel):
     accent_color: Optional[str] = None
     view_wrapper: Optional[dict[str, str]] = None
     items_container: Optional[dict[str, str]] = None
+
+    # === New finer-grained injection points ===
+    section_title: Optional[dict[str, str]] = None
+    section_description: Optional[dict[str, str]] = None
+    card_header: Optional[dict[str, str]] = None
+    card_body: Optional[dict[str, str]] = None
+    chip_label: Optional[dict[str, str]] = None
+    chip_expanded: Optional[dict[str, str]] = None
+    prose_lede: Optional[dict[str, str]] = None
+    prose_body: Optional[dict[str, str]] = None
+    prose_quote: Optional[dict[str, str]] = None
+    timeline_connector: Optional[dict[str, str]] = None
+    stat_number: Optional[dict[str, str]] = None
+    stat_label: Optional[dict[str, str]] = None
+    hero_card: Optional[dict[str, str]] = None
+    view_header: Optional[dict[str, str]] = None
 
 
 class PolishedViewPayload(BaseModel):

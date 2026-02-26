@@ -55,6 +55,14 @@
     "Abstract conceptual relationships",
     "Speed-reading contexts (too much annotation)"
   ],
+  "renderer_guidance": {
+    "accordion": "Section headers that state a finding, not just a label. Callout-style left borders (#d63232 for emphasis). Section descriptions as teaching moments — tell the reader what they'll learn in this section.",
+    "chip_grid": "Chips clearly labeled with explanatory text. Size variation to emphasize key findings. Use red (#d63232) accent for critical items, blue (#1e90ff) for supporting evidence. Expanded panels should explain significance, not just list details.",
+    "prose": "Lede paragraph as the key takeaway — bold, clear, answering 'what does this mean?'. Body text with generous spacing for readability. Blockquotes with warm background tint (#f7f7f5) and subtle left border. Pull quotes for key phrases.",
+    "timeline": "Each stage labeled with clear narrative — what happened and why it matters. Connection lines with directional arrows showing cause-and-effect. Annotations at inflection points. Nodes sized by significance of the event.",
+    "card_grid": "Hero card as the headline finding — large, clear, with callout styling. Standard cards as supporting evidence. Category badges that explain, not just label. Hover states should reveal additional context.",
+    "stats": "Numbers as headline findings — large, prominent, with context below. Labels as questions the number answers. Use red/blue accent for positive/negative values."
+  },
   "influences": {
     "tradition_note": "This approach emerged from the tradition of news graphics and explanatory journalism, where visualizations must quickly communicate findings to diverse audiences. It synthesizes principles from educational design, journalism ethics, and interactive media into a coherent approach to static graphics.",
     "exemplars": [

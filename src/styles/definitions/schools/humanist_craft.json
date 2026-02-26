@@ -55,6 +55,14 @@
     "Expert audiences wanting efficiency",
     "Large-scale statistical comparisons"
   ],
+  "renderer_guidance": {
+    "accordion": "Use warm background tints (#faf7f2) for section headers, generous padding. Left accent bars in warm palette colors (sienna, deep red). Section descriptions should feel like editorial annotations — contemplative, inviting deeper reading.",
+    "chip_grid": "Chips should have organic shapes (higher border-radius). Warm colors from palette with prominent size variation — featured chips 2x larger than minor ones. Expanded detail panels with cream background and subtle shadow.",
+    "prose": "Lede paragraph in serif with slightly larger size and medium weight. Body text with generous line-height (1.65+). Blockquotes with thick warm-colored left border (#c41e3a or #8b4513) and light cream background.",
+    "timeline": "Connection lines should feel substantial (3px, warm sienna). Nodes grow significantly in size from first to last. Stage cards with warm tints and hand-crafted feel via varied border widths.",
+    "card_grid": "Hero cards with warm cream background tint (#faf7f2). Standard cards with subtle paper-like texture via layered box-shadow. Category badges in warm palette accents. Generous spacing between card groups.",
+    "stats": "Numbers in serif font with warm accent color. Labels in small caps with generous letter-spacing. Each stat in a subtle card with cream background."
+  },
   "influences": {
     "tradition_note": "This approach draws from the Data Humanism movement, which advocates for visualization that honors the human stories within data. It connects to broader traditions in information design, data art, and participatory data practices that emphasize craft, intimacy, and emotional resonance.",
     "exemplars": [

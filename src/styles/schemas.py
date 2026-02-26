@@ -87,6 +87,12 @@ class StyleGuide(BaseModel):
         None,
         description="Tradition, exemplars, and key works that inform this style approach"
     )
+    # Renderer-specific guidance for the polish system
+    renderer_guidance: Optional[dict[str, str]] = Field(
+        None,
+        description="Per-renderer-type guidance for how this school should style "
+        "accordion, chip_grid, prose, timeline, card_grid components"
+    )
 
 
 class StyleGuideSummary(BaseModel):

@@ -52,6 +52,14 @@
     "Brand-heavy corporate communications",
     "Content requiring visual impact over precision"
   ],
+  "renderer_guidance": {
+    "accordion": "Section headers minimal — no background color, just text weight differentiation. Remove unnecessary borders. Section descriptions brief and precise, no editorial flourish.",
+    "chip_grid": "Chips in neutral tones (#1a1a1a text, #f5f5f5 background). No color variation — use size alone to indicate weight. Expanded panels with clean typography, no decorative elements. Maximum data-ink ratio.",
+    "prose": "No decorative lede treatment — uniform body text in serif (Georgia). Generous but not excessive line-height (1.5). Blockquotes as simple indented text with thin gray left border. No background tints.",
+    "timeline": "Connection lines thin (2px), neutral gray. Nodes uniform in size — progression shown through label content, not visual weight. No decorative arrows. Clean, minimal stage cards.",
+    "card_grid": "No hero card pattern — all cards equal visual weight. Remove shadows, use white space for separation. Thin borders only if needed. Direct labeling, no badges or decorative indicators.",
+    "stats": "Numbers in Georgia serif, normal weight, dark color. Labels small, precise, directly beside numbers. No card containers for stats — let them float in white space."
+  },
   "influences": {
     "tradition_note": "This approach draws from decades of statistical graphics theory and practice, emphasizing quantitative rigor and visual honesty. The principles emerged from critiques of misleading charts in media and business, advocating for graphics that respect both data and audience intelligence.",
     "exemplars": [

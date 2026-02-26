@@ -54,6 +54,14 @@
     "Readers uncomfortable with technical aesthetics",
     "Quick-read news contexts"
   ],
+  "renderer_guidance": {
+    "accordion": "Section headers with subtle gradient backgrounds (light gray to white). Precise geometric left accent bars. Section descriptions as technical annotations — explain what pattern the section reveals.",
+    "chip_grid": "Chips sized by computational weight/significance. Use the series_palette for color variation. Layout should feel algorithmically arranged — larger chips clustered, smaller ones filling gaps. Expanded detail panels with monospace metadata.",
+    "prose": "Lede paragraph in sans-serif, slightly larger, light weight (300). Body text clean and technical. Blockquotes with thin precise left border (#3498db). Include 'how to read this' framing where possible.",
+    "timeline": "Connection lines as precise gradients from light to saturated along the series palette. Nodes increase in both size and color saturation. Temporal markers in monospace font above the line. Stage cards with geometric precision.",
+    "card_grid": "Hero cards with subtle #ecf0f1 background. Standard cards with precise thin borders. Network-style connections implied through color coding. Category indicators as small colored dots (geometric, precise).",
+    "stats": "Numbers in monospace (Source Code Pro style) with bold weight. Labels in uppercase sans-serif with wide letter-spacing. Stats arranged in a precise grid with subtle borders."
+  },
   "influences": {
     "tradition_note": "This approach draws from network science, complexity theory, and the tradition of scientific visualization. It applies computational methods to reveal hidden structures in data, treating visualization as a form of scientific inquiry rather than mere presentation.",
     "exemplars": [

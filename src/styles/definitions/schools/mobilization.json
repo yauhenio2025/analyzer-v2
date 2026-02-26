@@ -55,6 +55,14 @@
     "Balanced journalism",
     "Audiences expecting neutrality"
   ],
+  "renderer_guidance": {
+    "accordion": "Section headers as bold statements — high contrast, strong accent bars (red #CC0000 or gold #FFD700). Section descriptions as urgent framings — what's at stake, why this matters now.",
+    "chip_grid": "Chips in high contrast — red/black/gold palette. Size variation dramatic — key items dominate visually. Expanded panels frame information as calls to action. Bold typography throughout.",
+    "prose": "Lede paragraph as a provocation — bold, larger, high contrast. Body text direct and punchy. Blockquotes as stark callouts with heavy left border in red. Key phrases in bold with accent underline.",
+    "timeline": "Connection lines thick (4px), gradient from red to gold showing escalation. Nodes dramatically sized — crisis points large, background events small. Stage cards with high-contrast borders.",
+    "card_grid": "Hero card as a call-to-action — bold accent background, large typography. Standard cards with strong left borders. Category badges in red/gold. Stark visual hierarchy — what matters most is unmistakable.",
+    "stats": "Numbers LARGE and bold — the shocking statistic treatment. Gold (#FFD700) accent for key numbers. Labels as imperative statements. High visual impact per stat."
+  },
   "influences": {
     "tradition_note": "This approach draws from a century of political graphic design—Soviet constructivism, labor movement posters, civil rights graphics, and contemporary digital activism. The tradition prioritizes emotional impact and call-to-action over balanced presentation, treating design as a tool for social change.",
     "exemplars": [
