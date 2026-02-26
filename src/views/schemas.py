@@ -296,6 +296,12 @@ class ComposedPageResponse(BaseModel):
     view_count: int
     views: list[ComposedView]
 
+    # Page-level metadata derived from workflow definition
+    page_title: Optional[str] = None
+    page_subtitle: Optional[str] = None
+    workflow_key: Optional[str] = None
+    workflow_category: Optional[str] = None
+
 
 # Resolve forward reference
 ComposedView.model_rebuild()

@@ -277,6 +277,10 @@ class ViewRegistry:
         Returns top-level views sorted by position, with children
         nested under their parent_view_key. This is the primary
         consumer endpoint — fetch once, render the whole page.
+
+        Also populates page-level metadata (title, subtitle, workflow_key,
+        workflow_category) by looking up the workflow definition referenced
+        by the views on this page.
         """
         self.load()
 
@@ -325,12 +329,67 @@ class ViewRegistry:
         for cv in composed.values():
             cv.children.sort(key=lambda x: x.position)
 
+        # Resolve page metadata from workflow definition
+        page_title, page_subtitle, workflow_key, workflow_category = (
+            self._resolve_page_metadata(page_views)
+        )
+
         return ComposedPageResponse(
             app=app,
             page=page,
             view_count=len(page_views),
             views=top_level,
+            page_title=page_title,
+            page_subtitle=page_subtitle,
+            workflow_key=workflow_key,
+            workflow_category=workflow_category,
         )
+
+    @staticmethod
+    def _resolve_page_metadata(
+        page_views: list[ViewDefinition],
+    ) -> tuple[Optional[str], Optional[str], Optional[str], Optional[str]]:
+        """Extract page metadata from the workflow referenced by views.
+
+        Looks at views' data_source.workflow_key to find the common workflow,
+        then looks up the WorkflowRegistry for display name and description.
+
+        Returns (page_title, page_subtitle, workflow_key, workflow_category).
+        All values are None if no workflow can be determined.
+        """
+        # Extract workflow_key from views (all views on a page typically share the same one)
+        workflow_keys = {
+            v.data_source.workflow_key
+            for v in page_views
+            if v.data_source.workflow_key
+        }
+
+        if not workflow_keys:
+            return None, None, None, None
+
+        # Use the most common workflow_key (in practice there's usually just one)
+        workflow_key = max(workflow_keys, key=lambda k: sum(
+            1 for v in page_views if v.data_source.workflow_key == k
+        ))
+
+        # Look up workflow definition for display metadata
+        try:
+            from src.workflows.registry import get_workflow_registry
+
+            wf_registry = get_workflow_registry()
+            wf_def = wf_registry.get(workflow_key)
+            if wf_def:
+                return (
+                    wf_def.workflow_name,
+                    wf_def.description,
+                    wf_def.workflow_key,
+                    wf_def.category.value if wf_def.category else None,
+                )
+        except Exception as e:
+            logger.warning(f"Could not resolve workflow metadata for '{workflow_key}': {e}")
+
+        # Graceful degradation: return workflow_key but no display metadata
+        return None, None, workflow_key, None
 
     def save(self, view_key: str, view: ViewDefinition) -> bool:
         """Save a view definition to JSON file."""
