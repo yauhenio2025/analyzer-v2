@@ -362,3 +362,34 @@ def load_presentation_cache(
     if isinstance(data, str):
         data = _json_loads(data)
     return data
+
+
+def load_presentation_cache_batch(
+    output_ids: list[str],
+) -> dict[tuple[str, str], dict]:
+    """Load ALL cached extractions for a list of output_ids in one query.
+
+    Returns a dict keyed by (output_id, section) → structured_data.
+    Skips freshness checking (caller should verify if needed).
+    """
+    if not output_ids:
+        return {}
+
+    placeholders = ", ".join(["%s"] * len(output_ids))
+    rows = execute(
+        f"""SELECT output_id, section, structured_data, source_hash
+            FROM presentation_cache
+            WHERE output_id IN ({placeholders})""",
+        tuple(output_ids),
+        fetch="all",
+    )
+
+    result: dict[tuple[str, str], dict] = {}
+    for row in rows:
+        data = row["structured_data"]
+        if isinstance(data, str):
+            data = _json_loads(data)
+        result[(row["output_id"], row["section"])] = data
+
+    logger.info(f"Batch cache load: {len(output_ids)} output_ids → {len(result)} cached entries")
+    return result

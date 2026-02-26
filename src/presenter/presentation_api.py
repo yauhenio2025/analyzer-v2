@@ -14,6 +14,7 @@ from src.executor.output_store import (
     load_all_job_outputs,
     load_phase_outputs,
     load_presentation_cache,
+    load_presentation_cache_batch,
     get_latest_output_for_phase,
 )
 from src.orchestrator.planner import load_plan
@@ -69,6 +70,11 @@ def assemble_page(job_id: str, slim: bool = False) -> PagePresentation:
     all_outputs = load_all_job_outputs(job_id, include_content=not slim)
     outputs_cache = _build_outputs_cache(all_outputs)
 
+    # Prefetch ALL presentation_cache entries for this job's outputs in one query.
+    # Eliminates ~50-70 individual cache lookups (each costing ~200ms cross-region).
+    output_ids = [o["id"] for o in all_outputs]
+    cache_batch = load_presentation_cache_batch(output_ids)
+
     # Get recommended views (refined or plan defaults)
     recommended = _get_recommendations(job_id, plan_id, workflow_key=workflow_key)
 
@@ -95,6 +101,7 @@ def assemble_page(job_id: str, slim: bool = False) -> PagePresentation:
             rec=rec,
             job_id=job_id,
             outputs_cache=outputs_cache,
+            cache_batch=cache_batch,
             slim=slim,
         )
         payloads[payload.view_key] = payload
@@ -113,13 +120,14 @@ def assemble_page(job_id: str, slim: bool = False) -> PagePresentation:
                 rec={"view_key": view_def.view_key, "priority": "optional", "rationale": ""},
                 job_id=job_id,
                 outputs_cache=outputs_cache,
+                cache_batch=cache_batch,
                 slim=slim,
             )
             payloads[payload.view_key] = payload
 
     # Auto-generate views for chapter-targeted phases that have no view definitions
     if plan:
-        _inject_chapter_views(plan, payloads, job_id, outputs_cache=outputs_cache, slim=slim)
+        _inject_chapter_views(plan, payloads, job_id, outputs_cache=outputs_cache, cache_batch=cache_batch, slim=slim)
 
     # Build parent-child tree
     top_level = _build_view_tree(payloads, view_registry)
@@ -319,6 +327,7 @@ def _build_view_payload(
     rec: dict,
     job_id: str,
     outputs_cache: Optional[dict] = None,
+    cache_batch: Optional[dict] = None,
     slim: bool = False,
 ) -> ViewPayload:
     """Build a ViewPayload for a single view definition."""
@@ -346,12 +355,13 @@ def _build_view_payload(
     if scope == "per_item":
         items = _load_per_item_data(
             job_id, phase_number, engine_key,
-            chain_key=chain_key, outputs_cache=outputs_cache, slim=slim,
+            chain_key=chain_key, outputs_cache=outputs_cache,
+            cache_batch=cache_batch, slim=slim,
         )
     else:
         structured_data, raw_prose = _load_aggregated_data(
             job_id, phase_number, engine_key, chain_key,
-            outputs_cache=outputs_cache, slim=slim,
+            outputs_cache=outputs_cache, cache_batch=cache_batch, slim=slim,
         )
         has_structured = structured_data is not None
 
@@ -397,6 +407,7 @@ def _load_aggregated_data(
     engine_key: Optional[str],
     chain_key: Optional[str],
     outputs_cache: Optional[dict] = None,
+    cache_batch: Optional[dict] = None,
     slim: bool = False,
 ) -> tuple[Optional[dict], Optional[str]]:
     """Load structured data and/or raw prose for an aggregated view.
@@ -481,15 +492,17 @@ def _load_aggregated_data(
     for ek in search_engine_keys:
         templates = transform_registry.for_engine(ek)
         for t in templates:
-            # Skip freshness check for chain-backed views and multi-pass
-            # single-engine views: the bridge caches using content_override
-            # with no source hash, so raw_prose hash will never match.
-            skip_freshness = (chain_key and not engine_key) or is_multi_pass_single_engine
-            cached = load_presentation_cache(
-                output_id=latest["id"],
-                section=t.template_key,
-                source_content=None if skip_freshness else raw_prose,
-            )
+            # Use batch cache if available (zero DB queries)
+            if cache_batch is not None:
+                cached = cache_batch.get((latest["id"], t.template_key))
+            else:
+                # Fallback to individual query
+                skip_freshness = (chain_key and not engine_key) or is_multi_pass_single_engine
+                cached = load_presentation_cache(
+                    output_id=latest["id"],
+                    section=t.template_key,
+                    source_content=None if skip_freshness else raw_prose,
+                )
             if cached is not None:
                 structured_data = cached
                 break
@@ -505,6 +518,7 @@ def _load_per_item_data(
     engine_key: Optional[str],
     chain_key: Optional[str] = None,
     outputs_cache: Optional[dict] = None,
+    cache_batch: Optional[dict] = None,
     slim: bool = False,
 ) -> list[dict]:
     """Load per-item data (one entry per prior work).
@@ -592,14 +606,16 @@ def _load_per_item_data(
             templates = transform_registry.for_engine(ek)
             for t in templates:
                 section = f"{t.template_key}:{work_key}"
-                # Skip freshness check for chain-backed per-item views:
-                # bridge caches with single engine output hash, but content
-                # here is combined from all chain engines — hash won't match.
-                cached = load_presentation_cache(
-                    output_id=output["id"],
-                    section=section,
-                    source_content=None if (chain_key and not engine_key) else content,
-                )
+                # Use batch cache if available (zero DB queries)
+                if cache_batch is not None:
+                    cached = cache_batch.get((output["id"], section))
+                else:
+                    # Fallback to individual query
+                    cached = load_presentation_cache(
+                        output_id=output["id"],
+                        section=section,
+                        source_content=None if (chain_key and not engine_key) else content,
+                    )
                 if cached is not None:
                     structured = cached
                     break
@@ -621,6 +637,7 @@ def _inject_chapter_views(
     payloads: dict[str, ViewPayload],
     job_id: str,
     outputs_cache: Optional[dict] = None,
+    cache_batch: Optional[dict] = None,
     slim: bool = False,
 ) -> None:
     """Auto-generate ViewPayloads for chapter-targeted phases.
@@ -652,7 +669,7 @@ def _inject_chapter_views(
         engine_key = phase.engine_key
         items = _load_per_item_data(
             job_id, phase.phase_number, engine_key, chain_key=chain_key,
-            outputs_cache=outputs_cache, slim=slim,
+            outputs_cache=outputs_cache, cache_batch=cache_batch, slim=slim,
         )
 
         # Add chapter metadata to each item
