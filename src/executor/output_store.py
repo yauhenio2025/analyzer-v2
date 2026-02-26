@@ -101,6 +101,38 @@ def load_phase_outputs(
     return rows
 
 
+def load_all_job_outputs(
+    job_id: str,
+    include_content: bool = True,
+) -> list[dict]:
+    """Load ALL outputs for a job in a single query.
+
+    When include_content=False, skips the content column to avoid
+    transferring large prose blobs over the network.
+    """
+    if include_content:
+        cols = "*"
+    else:
+        cols = ("id, job_id, phase_number, engine_key, pass_number, "
+                "work_key, stance_key, role, model_used, input_tokens, "
+                "output_tokens, parent_id, metadata, created_at")
+
+    rows = execute(
+        f"SELECT {cols} FROM phase_outputs WHERE job_id = %s "
+        "ORDER BY phase_number, pass_number",
+        (job_id,),
+        fetch="all",
+    )
+
+    for row in rows:
+        if isinstance(row.get("metadata"), str):
+            row["metadata"] = _json_loads(row["metadata"])
+        if not include_content and "content" not in row:
+            row["content"] = ""
+
+    return rows
+
+
 def load_outputs_for_context(
     job_id: str,
     phase_numbers: Optional[list[float]] = None,

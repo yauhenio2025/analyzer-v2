@@ -73,17 +73,22 @@ async def prepare_presentation(request: PrepareRequest):
 
 
 @router.get("/page/{job_id}")
-async def get_page_presentation(job_id: str):
+async def get_page_presentation(job_id: str, slim: bool = False):
     """Get complete page presentation for a job.
 
     Returns a render-ready PagePresentation with nested view tree,
     structured data, and raw prose. The consumer (The Critic) can
     render this directly without additional API calls.
+
+    Query params:
+        slim: If true, omits raw_prose from each view to reduce response
+              size from ~1MB to ~10KB. Use /view/{job_id}/{view_key}
+              to lazy-load prose for individual views.
     """
     from src.presenter.presentation_api import assemble_page
 
     try:
-        result = assemble_page(job_id)
+        result = assemble_page(job_id, slim=slim)
         return result.model_dump()
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))

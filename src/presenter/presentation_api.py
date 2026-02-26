@@ -11,6 +11,7 @@ from typing import Any, Optional
 
 from src.executor.job_manager import get_job
 from src.executor.output_store import (
+    load_all_job_outputs,
     load_phase_outputs,
     load_presentation_cache,
     get_latest_output_for_phase,
@@ -33,15 +34,20 @@ def _resolve_workflow_key(job: dict, plan=None) -> str:
     return "intellectual_genealogy"
 
 
-def assemble_page(job_id: str) -> PagePresentation:
+def assemble_page(job_id: str, slim: bool = False) -> PagePresentation:
     """Assemble a complete page presentation for a job.
 
     This is the primary consumer endpoint. It:
     1. Loads the plan + job metadata
-    2. Gets refined view recommendations (or plan defaults)
-    3. For each view, loads structured data or raw prose
-    4. Builds the parent-child view tree
-    5. Returns a complete PagePresentation
+    2. Prefetches ALL outputs in a single query (avoids N+1)
+    3. Gets refined view recommendations (or plan defaults)
+    4. For each view, loads structured data or raw prose
+    5. Builds the parent-child view tree
+    6. Returns a complete PagePresentation
+
+    When slim=True, skips raw prose content to reduce response size
+    from ~1MB to ~10KB. Use the /view/{job_id}/{view_key} endpoint
+    to lazy-load prose for individual views.
     """
     # Load job
     job = get_job(job_id)
@@ -57,6 +63,11 @@ def assemble_page(job_id: str) -> PagePresentation:
 
     # Resolve workflow_key dynamically from job record
     workflow_key = _resolve_workflow_key(job, plan)
+
+    # Prefetch ALL outputs in a single query to avoid N+1 per-view queries.
+    # In slim mode, skip the content column entirely (saves ~1MB of data transfer).
+    all_outputs = load_all_job_outputs(job_id, include_content=not slim)
+    outputs_cache = _build_outputs_cache(all_outputs)
 
     # Get recommended views (refined or plan defaults)
     recommended = _get_recommendations(job_id, plan_id, workflow_key=workflow_key)
@@ -83,6 +94,8 @@ def assemble_page(job_id: str) -> PagePresentation:
             view_def=view_def,
             rec=rec,
             job_id=job_id,
+            outputs_cache=outputs_cache,
+            slim=slim,
         )
         payloads[payload.view_key] = payload
 
@@ -99,12 +112,14 @@ def assemble_page(job_id: str) -> PagePresentation:
                 view_def=view_def,
                 rec={"view_key": view_def.view_key, "priority": "optional", "rationale": ""},
                 job_id=job_id,
+                outputs_cache=outputs_cache,
+                slim=slim,
             )
             payloads[payload.view_key] = payload
 
     # Auto-generate views for chapter-targeted phases that have no view definitions
     if plan:
-        _inject_chapter_views(plan, payloads, job_id)
+        _inject_chapter_views(plan, payloads, job_id, outputs_cache=outputs_cache, slim=slim)
 
     # Build parent-child tree
     top_level = _build_view_tree(payloads, view_registry)
@@ -250,6 +265,36 @@ def get_presentation_status(job_id: str) -> dict:
 # --- Internal helpers ---
 
 
+def _build_outputs_cache(all_outputs: list[dict]) -> dict:
+    """Index prefetched outputs for fast lookup by (phase_number, engine_key).
+
+    Returns a dict with keys:
+      - ("all",)  → all outputs
+      - (phase_number,) → outputs for that phase
+      - (phase_number, engine_key) → outputs for that phase+engine
+    """
+    cache: dict[tuple, list[dict]] = {("all",): all_outputs}
+    for o in all_outputs:
+        pn = o.get("phase_number")
+        ek = o.get("engine_key")
+        cache.setdefault((pn,), []).append(o)
+        cache.setdefault((pn, ek), []).append(o)
+    return cache
+
+
+def _get_cached_outputs(
+    outputs_cache: dict,
+    phase_number: Optional[float],
+    engine_key: Optional[str],
+) -> list[dict]:
+    """Retrieve outputs from the prefetched cache."""
+    if phase_number is None:
+        return []
+    if engine_key is not None:
+        return outputs_cache.get((phase_number, engine_key), [])
+    return outputs_cache.get((phase_number,), [])
+
+
 def _get_recommendations(job_id: str, plan_id: str, workflow_key: str = "intellectual_genealogy") -> list[dict]:
     """Get view recommendations — refined if available, else plan defaults."""
     refinement = load_view_refinement(job_id)
@@ -273,6 +318,8 @@ def _build_view_payload(
     view_def,
     rec: dict,
     job_id: str,
+    outputs_cache: Optional[dict] = None,
+    slim: bool = False,
 ) -> ViewPayload:
     """Build a ViewPayload for a single view definition."""
     ds = view_def.data_source
@@ -297,10 +344,14 @@ def _build_view_payload(
     has_structured = False
 
     if scope == "per_item":
-        items = _load_per_item_data(job_id, phase_number, engine_key, chain_key=chain_key)
+        items = _load_per_item_data(
+            job_id, phase_number, engine_key,
+            chain_key=chain_key, outputs_cache=outputs_cache, slim=slim,
+        )
     else:
         structured_data, raw_prose = _load_aggregated_data(
-            job_id, phase_number, engine_key, chain_key
+            job_id, phase_number, engine_key, chain_key,
+            outputs_cache=outputs_cache, slim=slim,
         )
         has_structured = structured_data is not None
 
@@ -345,6 +396,8 @@ def _load_aggregated_data(
     phase_number: Optional[float],
     engine_key: Optional[str],
     chain_key: Optional[str],
+    outputs_cache: Optional[dict] = None,
+    slim: bool = False,
 ) -> tuple[Optional[dict], Optional[str]]:
     """Load structured data and/or raw prose for an aggregated view.
 
@@ -352,47 +405,54 @@ def _load_aggregated_data(
     chain's engine keys and searches templates for ALL engines in the chain.
     Also concatenates ALL engine outputs for the phase into raw_prose.
 
+    When slim=True, skips building raw_prose (returns None for prose).
+    When outputs_cache is provided, uses prefetched data instead of querying DB.
+
     Returns (structured_data, raw_prose).
     """
     if phase_number is None:
         return None, None
 
-    # Load outputs
-    outputs = load_phase_outputs(
-        job_id=job_id,
-        phase_number=phase_number,
-        engine_key=engine_key,
-    )
-    if not outputs and chain_key:
-        # For chain-backed views, get all outputs for the phase
-        outputs = load_phase_outputs(job_id=job_id, phase_number=phase_number)
+    # Load outputs — from cache if available, else query DB
+    if outputs_cache is not None:
+        outputs = _get_cached_outputs(outputs_cache, phase_number, engine_key)
+        if not outputs and chain_key:
+            outputs = _get_cached_outputs(outputs_cache, phase_number, None)
+    else:
+        outputs = load_phase_outputs(
+            job_id=job_id,
+            phase_number=phase_number,
+            engine_key=engine_key,
+        )
+        if not outputs and chain_key:
+            outputs = load_phase_outputs(job_id=job_id, phase_number=phase_number)
 
     if not outputs:
         return None, None
 
-    # Build raw_prose: for chain-backed views, concatenate ALL engine outputs
-    if chain_key and not engine_key:
-        # Sort by pass_number to get chronological order within the chain
-        sorted_outputs = sorted(outputs, key=lambda o: o.get("pass_number", 0))
-        prose_parts = []
-        for o in sorted_outputs:
-            content = o.get("content", "")
-            if content:
-                eng = o.get("engine_key", "unknown")
-                prose_parts.append(f"## [{eng}]\n\n{content}")
-        raw_prose = "\n\n---\n\n".join(prose_parts) if prose_parts else ""
-    else:
-        # Single engine: concatenate ALL passes if multiple exist
-        sorted_outputs = sorted(outputs, key=lambda o: o.get("pass_number", 0))
-        if len(sorted_outputs) > 1:
+    # Build raw_prose (skip in slim mode)
+    raw_prose = None
+    if not slim:
+        if chain_key and not engine_key:
+            sorted_outputs = sorted(outputs, key=lambda o: o.get("pass_number", 0))
             prose_parts = []
             for o in sorted_outputs:
                 content = o.get("content", "")
                 if content:
-                    prose_parts.append(f"## [Pass {o.get('pass_number', 0)}]\n\n{content}")
+                    eng = o.get("engine_key", "unknown")
+                    prose_parts.append(f"## [{eng}]\n\n{content}")
             raw_prose = "\n\n---\n\n".join(prose_parts) if prose_parts else ""
         else:
-            raw_prose = sorted_outputs[0].get("content", "") if sorted_outputs else ""
+            sorted_outputs = sorted(outputs, key=lambda o: o.get("pass_number", 0))
+            if len(sorted_outputs) > 1:
+                prose_parts = []
+                for o in sorted_outputs:
+                    content = o.get("content", "")
+                    if content:
+                        prose_parts.append(f"## [Pass {o.get('pass_number', 0)}]\n\n{content}")
+                raw_prose = "\n\n---\n\n".join(prose_parts) if prose_parts else ""
+            else:
+                raw_prose = sorted_outputs[0].get("content", "") if sorted_outputs else ""
 
     # Get latest output for structured data lookup
     latest = max(outputs, key=lambda o: o.get("pass_number", 0))
@@ -444,6 +504,8 @@ def _load_per_item_data(
     phase_number: Optional[float],
     engine_key: Optional[str],
     chain_key: Optional[str] = None,
+    outputs_cache: Optional[dict] = None,
+    slim: bool = False,
 ) -> list[dict]:
     """Load per-item data (one entry per prior work).
 
@@ -451,20 +513,28 @@ def _load_per_item_data(
     work_key, concatenates all engine outputs per work_key, and searches
     templates using chain engine keys.
 
+    When outputs_cache is provided, uses prefetched data instead of querying DB.
+    When slim=True, skips raw_prose in each item.
+
     Returns a list of {work_key, structured_data, raw_prose} dicts.
     """
     if phase_number is None:
         return []
 
-    outputs = load_phase_outputs(
-        job_id=job_id,
-        phase_number=phase_number,
-        engine_key=engine_key,
-    )
-
-    # For chain-backed views with no engine_key, get all outputs for the phase
-    if not outputs and chain_key and not engine_key:
-        outputs = load_phase_outputs(job_id=job_id, phase_number=phase_number)
+    # Load outputs — from cache if available, else query DB
+    if outputs_cache is not None:
+        outputs = _get_cached_outputs(outputs_cache, phase_number, engine_key)
+        if not outputs and chain_key and not engine_key:
+            outputs = _get_cached_outputs(outputs_cache, phase_number, None)
+    else:
+        outputs = load_phase_outputs(
+            job_id=job_id,
+            phase_number=phase_number,
+            engine_key=engine_key,
+        )
+        # For chain-backed views with no engine_key, get all outputs for the phase
+        if not outputs and chain_key and not engine_key:
+            outputs = load_phase_outputs(job_id=job_id, phase_number=phase_number)
 
     # Group by work_key
     if chain_key and not engine_key:
@@ -514,7 +584,7 @@ def _load_per_item_data(
         search_engine_keys = _resolve_chain_engine_keys(chain_key)
 
     for work_key, output in sorted(by_work.items()):
-        content = output.get("_combined_content", output.get("content", ""))
+        content = "" if slim else output.get("_combined_content", output.get("content", ""))
 
         # Check for structured data
         structured = None
@@ -540,7 +610,7 @@ def _load_per_item_data(
             "work_key": work_key,
             "has_structured_data": structured is not None,
             "structured_data": structured,
-            "raw_prose": content,
+            "raw_prose": content if not slim else None,
         })
 
     return items
@@ -550,6 +620,8 @@ def _inject_chapter_views(
     plan,
     payloads: dict[str, ViewPayload],
     job_id: str,
+    outputs_cache: Optional[dict] = None,
+    slim: bool = False,
 ) -> None:
     """Auto-generate ViewPayloads for chapter-targeted phases.
 
@@ -580,6 +652,7 @@ def _inject_chapter_views(
         engine_key = phase.engine_key
         items = _load_per_item_data(
             job_id, phase.phase_number, engine_key, chain_key=chain_key,
+            outputs_cache=outputs_cache, slim=slim,
         )
 
         # Add chapter metadata to each item
