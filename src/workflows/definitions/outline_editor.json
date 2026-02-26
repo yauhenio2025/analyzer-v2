@@ -4,6 +4,7 @@
   "description": "AI-assisted essay construction workflow from annotations and findings to polished outline with synthesis.",
   "category": "outline",
   "version": 1,
+  "target_page": "outline-editor",
   "phases": [
     {
       "phase_number": 1,

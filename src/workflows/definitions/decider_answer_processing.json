@@ -4,6 +4,7 @@
   "description": "Post-answer processing pipeline. After a user submits an answer, this workflow updates synthesis state, draws implications, checks for handoff conditions, and triggers the next question generation wave.",
   "category": "decision_support",
   "version": 1,
+  "target_page": "decider-answers",
   "phases": [
     {
       "phase_number": 1,

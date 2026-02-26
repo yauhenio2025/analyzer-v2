@@ -4,6 +4,7 @@
   "description": "The core question-answer loop in decider-v2. Coordinates question selection, generation, delivery, and answer processing across dual tracks (IDEAS + PROCESS).",
   "category": "decision_support",
   "version": 1,
+  "target_page": "decider-questions",
   "phases": [
     {
       "phase_number": 1,

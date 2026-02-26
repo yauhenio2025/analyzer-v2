@@ -239,6 +239,19 @@ async def generate_view(
     if client is None:
         raise RuntimeError("LLM service unavailable. Set ANTHROPIC_API_KEY.")
 
+    # Auto-populate target_page from workflow definition if not explicitly set
+    if not request.target_page and request.workflow_key:
+        from src.workflows.registry import get_workflow_registry
+
+        wf_registry = get_workflow_registry()
+        wf = wf_registry.get(request.workflow_key)
+        if wf and wf.target_page:
+            request.target_page = wf.target_page
+            logger.info(
+                f"Auto-set target_page='{wf.target_page}' from "
+                f"workflow '{request.workflow_key}'"
+            )
+
     # Load entities
     pattern_registry = get_pattern_registry()
     pattern = pattern_registry.get(request.pattern_key)

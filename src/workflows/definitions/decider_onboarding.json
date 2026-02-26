@@ -4,6 +4,7 @@
   "description": "Session initialization workflow. Takes user's project description, generates initial items across both tracks, deduplicates them, and builds the starting synthesis state.",
   "category": "decision_support",
   "version": 1,
+  "target_page": "decider-onboarding",
   "phases": [
     {
       "phase_number": 1,

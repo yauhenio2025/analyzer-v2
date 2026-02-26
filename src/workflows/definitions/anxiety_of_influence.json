@@ -4,6 +4,7 @@
   "description": "5-pass workflow analyzing how faithfully an author uses cited thinkers. Identifies intellectual debts, misappropriations, and strategic invocations.",
   "category": "influence",
   "version": 2,
+  "target_page": "anxiety-of-influence",
   "phases": [
     {
       "phase_number": 1,

@@ -4,6 +4,7 @@
   "description": "Multi-pass workflow to extract targeted critiques from external thinker texts. Identifies lines of attack that can be deployed against an author's framework.",
   "category": "synthesis",
   "version": 1,
+  "target_page": "lines-of-attack",
   "phases": [
     {
       "phase_number": 1,

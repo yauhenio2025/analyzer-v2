@@ -4,6 +4,7 @@
   "description": "Traces how an author's own prior works serve as conditions of possibility for their current arguments. Uses composed chains of capability engines to profile the target work, scan prior works with relationship-aware strategies, and synthesize findings through multi-stage analysis (cross-work synthesis, functional analysis, evolution tactics, conditions of possibility). Classifies each prior work's relationship type and adapts analysis accordingly. Each engine operates through analytical stances (discovery, inference, confrontation, architecture, integration, reflection, dialectical) at configurable depth levels (surface/standard/deep).",
   "category": "genealogy",
   "version": 3,
+  "target_page": "genealogy",
   "phases": [
     {
       "phase_number": 1.0,

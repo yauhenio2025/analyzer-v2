@@ -179,6 +179,15 @@ class WorkflowDefinition(BaseModel):
         "and view recommendation logic specific to this workflow's domain.",
     )
 
+    # Target page convention
+    target_page: str = Field(
+        default="",
+        description="Kebab-case page slug linking this workflow to its view definitions. "
+        "View definitions with matching target_page will be used for this workflow's UI. "
+        "Convention: intellectual_genealogy → 'genealogy', lines_of_attack → 'lines-of-attack'. "
+        "If empty, frontend derives from workflow_key (replace _ with -, strip common prefixes).",
+    )
+
     # Metadata
     estimated_phases: Optional[int] = Field(
         default=None,
@@ -210,3 +219,4 @@ class WorkflowSummary(BaseModel):
     category: WorkflowCategory
     phase_count: int
     version: int
+    target_page: str = ""

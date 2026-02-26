@@ -59,6 +59,7 @@ class WorkflowRegistry:
                 category=w.category,
                 phase_count=len(w.phases),
                 version=w.version,
+                target_page=w.target_page,
             )
             for w in self._workflows.values()
         ]
@@ -74,6 +75,7 @@ class WorkflowRegistry:
                 category=w.category,
                 phase_count=len(w.phases),
                 version=w.version,
+                target_page=w.target_page,
             )
             for w in self._workflows.values()
             if w.category == category
