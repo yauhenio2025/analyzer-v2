@@ -123,6 +123,7 @@ class JobStatusResponse(BaseModel):
     status: JobStatus
     progress: JobProgress
     error: Optional[str] = None
+    workflow_key: str = "intellectual_genealogy"
     created_at: str
     started_at: Optional[str] = None
     completed_at: Optional[str] = None

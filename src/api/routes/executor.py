@@ -182,6 +182,7 @@ async def get_job_status(job_id: str):
         status=job["status"],
         progress=job.get("progress", {}),
         error=job.get("error"),
+        workflow_key=job.get("workflow_key", "intellectual_genealogy"),
         created_at=job.get("created_at", ""),
         started_at=job.get("started_at"),
         completed_at=job.get("completed_at"),

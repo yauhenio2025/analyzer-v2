@@ -92,6 +92,12 @@ class AnalyzeRequest(BaseModel):
     )
     focus_hint: Optional[str] = None
 
+    # Workflow selection
+    workflow_key: Optional[str] = Field(
+        default=None,
+        description="Workflow key for this analysis. Default: 'intellectual_genealogy'.",
+    )
+
     # Pipeline control
     skip_plan_review: bool = Field(
         default=True,

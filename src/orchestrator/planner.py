@@ -250,7 +250,7 @@ def generate_plan(request: OrchestratorPlanRequest) -> WorkflowExecutionPlan:
         )
 
     # Assemble catalog (parameterized for domain independence)
-    workflow_key = "intellectual_genealogy"  # default; future: from request
+    workflow_key = request.workflow_key or "intellectual_genealogy"
     catalog = assemble_full_catalog(workflow_key=workflow_key)
     catalog_text = catalog_to_text(catalog, workflow_name=catalog["workflow"][0]["workflow_name"] if catalog.get("workflow") else None)
 
@@ -323,7 +323,7 @@ def generate_plan(request: OrchestratorPlanRequest) -> WorkflowExecutionPlan:
 
     # Build full plan from LLM output + request context
     plan = WorkflowExecutionPlan(
-        workflow_key="intellectual_genealogy",
+        workflow_key=workflow_key,
         thinker_name=request.thinker_name,
         target_work=request.target_work,
         prior_works=request.prior_works,

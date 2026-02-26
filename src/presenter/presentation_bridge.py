@@ -112,7 +112,8 @@ def _build_transformation_tasks(
     if job is None:
         raise ValueError(f"Job not found: {job_id}")
 
-    recommended = _get_recommended_views(job_id, job["plan_id"])
+    workflow_key = job.get("workflow_key") or "intellectual_genealogy"
+    recommended = _get_recommended_views(job_id, job["plan_id"], workflow_key=workflow_key)
 
     if view_keys:
         recommended = [v for v in recommended if v["view_key"] in view_keys]
@@ -635,7 +636,7 @@ def _execute_tasks_sync(
     return results, cached_count, completed_count, failed_count
 
 
-def _get_recommended_views(job_id: str, plan_id: str) -> list[dict]:
+def _get_recommended_views(job_id: str, plan_id: str, workflow_key: str = "intellectual_genealogy") -> list[dict]:
     """Get recommended views — refined if available, else from plan."""
     # Check for refinement first
     refinement = load_view_refinement(job_id)
@@ -649,7 +650,7 @@ def _get_recommended_views(job_id: str, plan_id: str) -> list[dict]:
 
     # Last resort — use all active views for the workflow
     view_registry = get_view_registry()
-    all_views = view_registry.for_workflow("intellectual_genealogy")
+    all_views = view_registry.for_workflow(workflow_key)
     return [
         {"view_key": v.view_key, "priority": "secondary"}
         for v in all_views

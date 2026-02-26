@@ -153,6 +153,7 @@ def _migrate_postgres():
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS plan_data JSONB",
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS document_ids JSONB DEFAULT '{}'",
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS cancel_token VARCHAR(64)",
+        "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS workflow_key VARCHAR(100) DEFAULT 'intellectual_genealogy'",
         "ALTER TABLE presentation_cache ALTER COLUMN section TYPE VARCHAR(200)",
     ]
     with get_connection() as conn:
@@ -181,6 +182,7 @@ def _init_postgres():
         plan_data JSONB,
         document_ids JSONB DEFAULT '{}',
         cancel_token VARCHAR(64),
+        workflow_key VARCHAR(100) DEFAULT 'intellectual_genealogy',
         created_at TIMESTAMP DEFAULT NOW(),
         started_at TIMESTAMP,
         completed_at TIMESTAMP
@@ -276,6 +278,7 @@ def _init_sqlite():
         plan_data TEXT,
         document_ids TEXT DEFAULT '{}',
         cancel_token TEXT,
+        workflow_key TEXT DEFAULT 'intellectual_genealogy',
         created_at TEXT,
         started_at TEXT,
         completed_at TEXT

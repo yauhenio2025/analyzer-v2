@@ -322,6 +322,12 @@ class OrchestratorPlanRequest(BaseModel):
         description="Optional hint about what to focus on (e.g., 'vocabulary evolution', 'Marxist origins')",
     )
 
+    # Workflow selection
+    workflow_key: Optional[str] = Field(
+        default=None,
+        description="Workflow key to use for planning. Default: 'intellectual_genealogy'.",
+    )
+
     # Model selection
     planning_model: Optional[str] = Field(
         default=None,

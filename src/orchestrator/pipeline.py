@@ -115,7 +115,8 @@ def _run_autonomous_mode(request: AnalyzeRequest) -> AnalyzeResponse:
     job_id = f"job-{uuid.uuid4().hex[:12]}"
 
     # Create job entry immediately so the client can start polling
-    job_record = create_job(job_id, plan_id="(generating)")
+    workflow_key = request.workflow_key or "intellectual_genealogy"
+    job_record = create_job(job_id, plan_id="(generating)", workflow_key=workflow_key)
 
     # Set initial progress: pipeline is starting
     update_job_progress(
@@ -481,6 +482,7 @@ def _build_plan_request(request: AnalyzeRequest) -> OrchestratorPlanRequest:
         research_question=request.research_question,
         depth_preference=request.depth_preference,
         focus_hint=request.focus_hint,
+        workflow_key=request.workflow_key,
     )
 
 

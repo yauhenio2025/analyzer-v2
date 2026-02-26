@@ -24,6 +24,15 @@ from .store import load_view_refinement
 logger = logging.getLogger(__name__)
 
 
+def _resolve_workflow_key(job: dict, plan=None) -> str:
+    """Resolve workflow_key from job record, falling back to plan, then default."""
+    if job and job.get("workflow_key"):
+        return job["workflow_key"]
+    if plan and hasattr(plan, "workflow_key") and plan.workflow_key:
+        return plan.workflow_key
+    return "intellectual_genealogy"
+
+
 def assemble_page(job_id: str) -> PagePresentation:
     """Assemble a complete page presentation for a job.
 
@@ -46,8 +55,11 @@ def assemble_page(job_id: str) -> PagePresentation:
     thinker_name = plan.thinker_name if plan else ""
     strategy_summary = plan.strategy_summary if plan else ""
 
+    # Resolve workflow_key dynamically from job record
+    workflow_key = _resolve_workflow_key(job, plan)
+
     # Get recommended views (refined or plan defaults)
-    recommended = _get_recommendations(job_id, plan_id)
+    recommended = _get_recommendations(job_id, plan_id, workflow_key=workflow_key)
 
     # Build recommendation lookup
     rec_by_key = {r["view_key"]: r for r in recommended}
@@ -75,7 +87,7 @@ def assemble_page(job_id: str) -> PagePresentation:
         payloads[payload.view_key] = payload
 
     # Also include views that aren't in recommendations but are active for the workflow
-    all_workflow_views = view_registry.for_workflow("intellectual_genealogy")
+    all_workflow_views = view_registry.for_workflow(workflow_key)
     for view_def in all_workflow_views:
         if view_def.view_key in payloads:
             continue
@@ -124,13 +136,16 @@ def assemble_single_view(job_id: str, view_key: str) -> Optional[ViewPayload]:
     if job is None:
         raise ValueError(f"Job not found: {job_id}")
 
+    # Resolve workflow_key dynamically from job record
+    workflow_key = _resolve_workflow_key(job)
+
     view_registry = get_view_registry()
     view_def = view_registry.get(view_key)
     if view_def is None:
         return None
 
     # Check recommendations for this view
-    recommended = _get_recommendations(job_id, job["plan_id"])
+    recommended = _get_recommendations(job_id, job["plan_id"], workflow_key=workflow_key)
     rec = next(
         (r for r in recommended if r["view_key"] == view_key),
         {"view_key": view_key, "priority": "optional", "rationale": ""},
@@ -143,7 +158,7 @@ def assemble_single_view(job_id: str, view_key: str) -> Optional[ViewPayload]:
     )
 
     # Include children
-    all_views = view_registry.for_workflow("intellectual_genealogy")
+    all_views = view_registry.for_workflow(workflow_key)
     children_defs = [
         v for v in all_views
         if v.parent_view_key == view_key and v.status == "active"
@@ -235,7 +250,7 @@ def get_presentation_status(job_id: str) -> dict:
 # --- Internal helpers ---
 
 
-def _get_recommendations(job_id: str, plan_id: str) -> list[dict]:
+def _get_recommendations(job_id: str, plan_id: str, workflow_key: str = "intellectual_genealogy") -> list[dict]:
     """Get view recommendations — refined if available, else plan defaults."""
     refinement = load_view_refinement(job_id)
     if refinement and refinement.get("refined_views"):
@@ -245,11 +260,11 @@ def _get_recommendations(job_id: str, plan_id: str) -> list[dict]:
     if plan and plan.recommended_views:
         return [v.model_dump() for v in plan.recommended_views]
 
-    # Fallback: all active views
+    # Fallback: all active views for this workflow
     view_registry = get_view_registry()
     return [
         {"view_key": v.view_key, "priority": "secondary", "rationale": ""}
-        for v in view_registry.for_workflow("intellectual_genealogy")
+        for v in view_registry.for_workflow(workflow_key)
         if v.status == "active"
     ]
 

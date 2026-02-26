@@ -341,12 +341,15 @@ async def get_analysis(job_id: str):
 
     status = job.get("status", "unknown")
 
+    workflow_key = job.get("workflow_key", "intellectual_genealogy")
+
     # Running or pending: return progress
     if status in ("pending", "running"):
         return {
             "job_id": job_id,
             "plan_id": job.get("plan_id", ""),
             "status": status,
+            "workflow_key": workflow_key,
             "progress": job.get("progress", {}),
             "total_llm_calls": job.get("total_llm_calls", 0),
             "total_input_tokens": job.get("total_input_tokens", 0),
@@ -362,6 +365,7 @@ async def get_analysis(job_id: str):
                 "job_id": job_id,
                 "plan_id": job.get("plan_id", ""),
                 "status": "completed",
+                "workflow_key": workflow_key,
                 "presentation": page.model_dump(),
             }
         except Exception as e:
@@ -370,6 +374,7 @@ async def get_analysis(job_id: str):
                 "job_id": job_id,
                 "plan_id": job.get("plan_id", ""),
                 "status": "completed",
+                "workflow_key": workflow_key,
                 "presentation": None,
                 "presentation_error": str(e),
             }
@@ -379,6 +384,7 @@ async def get_analysis(job_id: str):
         "job_id": job_id,
         "plan_id": job.get("plan_id", ""),
         "status": status,
+        "workflow_key": workflow_key,
         "error": job.get("error"),
         "total_llm_calls": job.get("total_llm_calls", 0),
         "total_input_tokens": job.get("total_input_tokens", 0),

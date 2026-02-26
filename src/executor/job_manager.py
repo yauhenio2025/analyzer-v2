@@ -34,12 +34,14 @@ def create_job(
     plan_id: str,
     plan_data: Optional[dict] = None,
     document_ids: Optional[dict[str, str]] = None,
+    workflow_key: str = "intellectual_genealogy",
 ) -> dict:
     """Create a new executor job in the database.
 
     Args:
         plan_data: Full serialized plan (for resume after instance recycle).
         document_ids: Mapping of work titles to document IDs.
+        workflow_key: Workflow key for this job (default: intellectual_genealogy).
 
     Returns the job record as a dict (includes cancel_token).
     """
@@ -58,19 +60,20 @@ def create_job(
         """INSERT INTO executor_jobs
            (job_id, plan_id, status, progress, phase_results, error,
             total_llm_calls, total_input_tokens, total_output_tokens,
-            plan_data, document_ids, cancel_token, created_at)
-           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+            plan_data, document_ids, cancel_token, workflow_key, created_at)
+           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
         (job_id, plan_id, "pending", progress, "{}", None, 0, 0, 0,
          _json_dumps(plan_data) if plan_data else None,
-         _json_dumps(document_ids or {}), cancel_token, now),
+         _json_dumps(document_ids or {}), cancel_token, workflow_key, now),
     )
 
-    logger.info(f"Created job {job_id} for plan {plan_id}")
+    logger.info(f"Created job {job_id} for plan {plan_id} (workflow: {workflow_key})")
 
     return {
         "job_id": job_id,
         "plan_id": plan_id,
         "status": "pending",
+        "workflow_key": workflow_key,
         "cancel_token": cancel_token,
         "created_at": now,
     }
@@ -235,7 +238,7 @@ def list_jobs(
         rows = execute(
             """SELECT job_id, plan_id, status, progress, error,
                       total_llm_calls, total_input_tokens, total_output_tokens,
-                      created_at, started_at, completed_at
+                      workflow_key, created_at, started_at, completed_at
                FROM executor_jobs WHERE status = %s
                ORDER BY created_at DESC LIMIT %s""",
             (status, limit),
@@ -245,7 +248,7 @@ def list_jobs(
         rows = execute(
             """SELECT job_id, plan_id, status, progress, error,
                       total_llm_calls, total_input_tokens, total_output_tokens,
-                      created_at, started_at, completed_at
+                      workflow_key, created_at, started_at, completed_at
                FROM executor_jobs
                ORDER BY created_at DESC LIMIT %s""",
             (limit,),
