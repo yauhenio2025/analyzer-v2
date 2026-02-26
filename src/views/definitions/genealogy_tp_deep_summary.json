@@ -69,7 +69,7 @@
         "config": {"section_description": "What the text foregrounds vs. what it suppresses or marginalizes"}
       },
       "conceptual_vocabulary": {
-        "renderer_type": "chip_grid",
+        "renderer_type": "definition_list",
         "config": {"section_description": "Distinctive conceptual vocabulary and terminology"}
       },
       "downstream_utility": {
