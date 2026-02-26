@@ -88,6 +88,33 @@ def save_polish_cache(
         return False
 
 
+def delete_polish_cache(job_id: str) -> int:
+    """Delete all polish cache entries for a job.
+
+    Returns:
+        Number of rows deleted (approximate — some backends don't report this).
+    """
+    _ensure_section_key_column()
+    try:
+        # Count first (for reporting)
+        row = execute(
+            "SELECT COUNT(*) AS cnt FROM polish_cache WHERE job_id = %s",
+            (job_id,),
+            fetch="one",
+        )
+        count = row["cnt"] if row else 0
+
+        execute(
+            "DELETE FROM polish_cache WHERE job_id = %s",
+            (job_id,),
+        )
+        logger.info(f"[polish-cache] Deleted {count} entries for job={job_id}")
+        return count
+    except Exception as e:
+        logger.error(f"[polish-cache] Failed to delete for {job_id}: {e}")
+        return 0
+
+
 def load_polish_cache(
     job_id: str,
     view_key: str,

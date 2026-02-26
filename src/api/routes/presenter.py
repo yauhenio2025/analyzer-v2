@@ -439,3 +439,15 @@ async def polish_section_endpoint(request: SectionPolishRequest):
     except Exception as e:
         logger.error(f"Section polish failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.delete("/polish-cache/{job_id}")
+async def clear_polish_cache(job_id: str):
+    """Delete all cached polish results for a job.
+
+    Use this to force re-polishing with updated prompts/injection points.
+    """
+    from src.presenter.polish_store import delete_polish_cache
+
+    count = delete_polish_cache(job_id)
+    return {"job_id": job_id, "deleted": count}
