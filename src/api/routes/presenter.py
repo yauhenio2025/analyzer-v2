@@ -230,6 +230,7 @@ async def compose_presentation(request: ComposeRequest):
                     result = polish_view(
                         payload=payload,
                         engine_key=payload.engine_key,
+                        style_school=request.style_school,
                     )
                     config_hash = compute_config_hash(payload.renderer_config)
                     save_polish_cache(

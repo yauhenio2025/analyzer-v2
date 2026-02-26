@@ -372,6 +372,14 @@ class ComposeRequest(BaseModel):
         description="Automatically polish all views after assembly. "
         "Results are cached — subsequent loads are instant.",
     )
+    style_school: Optional[str] = Field(
+        default=None,
+        description="Force a single style school for ALL views in this presentation. "
+        "When set, every auto-polished view uses this school instead of "
+        "per-engine auto-resolution, ensuring visual coherence across tabs. "
+        "Valid values: minimalist_precision, explanatory_narrative, "
+        "restrained_elegance, humanist_craft, emergent_systems, mobilization.",
+    )
 
 
 # Resolve forward reference
