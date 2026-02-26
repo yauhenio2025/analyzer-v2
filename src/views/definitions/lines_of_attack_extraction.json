@@ -1,0 +1,38 @@
+{
+  "view_key": "lines_of_attack_extraction",
+  "view_name": "Attack Vectors",
+  "description": "Individual lines of attack extracted from external thinker texts, organized by attack vector type.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "lines-of-attack",
+  "target_section": "results",
+  "renderer_type": "card_grid",
+  "renderer_config": {
+    "cell_renderer": "default_card",
+    "group_by": "attack_vector",
+    "columns": 2,
+    "expandable": true,
+    "items_path": "lines"
+  },
+  "data_source": {
+    "workflow_key": "lines_of_attack",
+    "phase_number": 1.0,
+    "engine_key": null,
+    "result_path": "lines",
+    "scope": "per_item"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "evidence",
+  "position": 1.0,
+  "parent_view_key": null,
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "planner_hint": "Shows individual lines of attack extracted per external thinker text.",
+  "planner_eligible": true,
+  "status": "active",
+  "tags": ["lines_of_attack", "extraction", "evidence"],
+  "source_project": "critic"
+}
