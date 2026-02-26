@@ -336,6 +336,11 @@ class ComposeRequest(BaseModel):
         default=False,
         description="Skip LLM view refinement (use plan recommendations as-is)",
     )
+    clear_refinement: bool = Field(
+        default=False,
+        description="Delete any existing cached refinement before running. "
+        "Use this to recover from a bad refinement that hid all views.",
+    )
     force: bool = Field(
         default=False,
         description="Force re-extraction, ignoring presentation_cache.",

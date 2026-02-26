@@ -154,6 +154,12 @@ async def compose_presentation(request: ComposeRequest):
     from src.presenter.view_refiner import refine_views
 
     try:
+        # Step 0: Clear bad refinement if requested
+        if request.clear_refinement:
+            from src.presenter.store import delete_view_refinement
+            delete_view_refinement(request.job_id)
+            logger.info(f"Cleared refinement for job {request.job_id}")
+
         # Step 1: Refine views
         if not request.skip_refinement:
             try:

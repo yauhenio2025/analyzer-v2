@@ -44,6 +44,17 @@ def save_view_refinement(
         return False
 
 
+def delete_view_refinement(job_id: str) -> bool:
+    """Delete view refinement for a job (used to clear bad refinements)."""
+    try:
+        execute("DELETE FROM view_refinements WHERE job_id = %s", (job_id,))
+        logger.info(f"Deleted view refinement for job {job_id}")
+        return True
+    except Exception as e:
+        logger.error(f"Failed to delete view refinement for {job_id}: {e}")
+        return False
+
+
 def load_view_refinement(job_id: str) -> Optional[dict]:
     """Load view refinement for a job.
 
