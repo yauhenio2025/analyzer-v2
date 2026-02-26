@@ -189,6 +189,73 @@ async def compose_presentation(request: ComposeRequest):
 
         # Step 3: Assemble page
         page = assemble_page(request.job_id)
+
+        # Step 4: Auto-polish views (if requested)
+        if request.auto_polish:
+            from src.presenter.polish_store import load_polish_cache, save_polish_cache
+            from src.presenter.polisher import compute_config_hash, polish_view
+            from src.presenter.presentation_api import assemble_single_view
+
+            def _collect_view_keys(views):
+                """Collect all view_keys from the view tree (parents + children)."""
+                keys = []
+                for v in views:
+                    keys.append(v.view_key)
+                    if v.children:
+                        keys.extend(_collect_view_keys(v.children))
+                return keys
+
+            all_view_keys = _collect_view_keys(page.views)
+            polish_ok = 0
+            polish_cached = 0
+            polish_failed = 0
+
+            for view_key in all_view_keys:
+                # Skip if already cached
+                cached = load_polish_cache(
+                    job_id=request.job_id,
+                    view_key=view_key,
+                )
+                if cached is not None:
+                    polish_cached += 1
+                    continue
+
+                # Load full view payload for polish context
+                payload = assemble_single_view(request.job_id, view_key)
+                if payload is None:
+                    polish_failed += 1
+                    continue
+
+                try:
+                    result = polish_view(
+                        payload=payload,
+                        engine_key=payload.engine_key,
+                    )
+                    config_hash = compute_config_hash(payload.renderer_config)
+                    save_polish_cache(
+                        job_id=request.job_id,
+                        view_key=view_key,
+                        style_school=result.style_school,
+                        polished_data=result.polished_payload.model_dump(),
+                        config_hash=config_hash,
+                        model_used=result.model_used,
+                        tokens_used=result.tokens_used,
+                    )
+                    polish_ok += 1
+                    logger.info(
+                        f"[auto-polish] {view_key}: {result.style_school} "
+                        f"({result.tokens_used} tokens, {result.execution_time_ms}ms)"
+                    )
+                except Exception as e:
+                    polish_failed += 1
+                    logger.warning(f"[auto-polish] Failed for {view_key}: {e}")
+
+            logger.info(
+                f"[auto-polish] Complete: {polish_ok} polished, "
+                f"{polish_cached} cached, {polish_failed} failed "
+                f"(of {len(all_view_keys)} views)"
+            )
+
         return page.model_dump()
 
     except ValueError as e:
@@ -241,6 +308,11 @@ async def polish_view_endpoint(request: PolishRequest):
                     "execution_time_ms": 0,
                     "cached": True,
                 }
+
+        # cache_only mode: return 204 if no cache hit (avoids LLM call)
+        if request.cache_only:
+            from starlette.responses import Response
+            return Response(status_code=204)
 
         # Run polish
         result = polish_view(

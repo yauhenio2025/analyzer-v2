@@ -228,6 +228,11 @@ class PolishRequest(BaseModel):
         default=False,
         description="Force re-generation, ignoring polish_cache.",
     )
+    cache_only: bool = Field(
+        default=False,
+        description="Only return cached polish. Returns 204 if not cached "
+        "(avoids triggering an LLM call).",
+    )
 
 
 class StyleOverrides(BaseModel):
@@ -344,6 +349,11 @@ class ComposeRequest(BaseModel):
     force: bool = Field(
         default=False,
         description="Force re-extraction, ignoring presentation_cache.",
+    )
+    auto_polish: bool = Field(
+        default=False,
+        description="Automatically polish all views after assembly. "
+        "Results are cached — subsequent loads are instant.",
     )
 
 
