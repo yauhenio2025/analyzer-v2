@@ -7,9 +7,8 @@ Supports two backends:
 Uses raw SQL via psycopg2 (Postgres) or sqlite3 (SQLite) for simplicity.
 No ORM — keeps the dependency footprint minimal.
 
-Thread-safety: Each function opens its own connection/cursor.
-For Postgres, uses psycopg2's thread-safe connection pattern.
-For SQLite, uses check_same_thread=False with per-call connections.
+Thread-safety: Postgres uses a ThreadedConnectionPool for efficient
+connection reuse. SQLite uses per-call connections with check_same_thread=False.
 """
 
 import json
@@ -29,6 +28,7 @@ DATABASE_URL = os.environ.get("EXECUTOR_DATABASE_URL", "")
 SQLITE_PATH = Path(__file__).parent / "executor.db"
 
 _initialized = False
+_pg_pool = None
 
 
 def _is_postgres() -> bool:
@@ -36,9 +36,26 @@ def _is_postgres() -> bool:
     return DATABASE_URL.startswith("postgres")
 
 
+def _get_pg_pool():
+    """Get or create the Postgres connection pool (lazy singleton)."""
+    global _pg_pool
+    if _pg_pool is None:
+        import psycopg2.pool
+        _pg_pool = psycopg2.pool.ThreadedConnectionPool(
+            minconn=1,
+            maxconn=5,
+            dsn=DATABASE_URL,
+        )
+        logger.info("PostgreSQL connection pool initialized (1-5 connections)")
+    return _pg_pool
+
+
 @contextmanager
 def get_connection():
     """Get a database connection (Postgres or SQLite).
+
+    For Postgres, uses a connection pool to avoid the overhead of
+    TCP + SSL + auth on every query (~700ms per connection cross-region).
 
     Usage:
         with get_connection() as conn:
@@ -47,14 +64,12 @@ def get_connection():
             conn.commit()
     """
     if _is_postgres():
-        import psycopg2
-        import psycopg2.extras
-
-        conn = psycopg2.connect(DATABASE_URL)
+        pool = _get_pg_pool()
+        conn = pool.getconn()
         try:
             yield conn
         finally:
-            conn.close()
+            pool.putconn(conn)
     else:
         conn = sqlite3.connect(str(SQLITE_PATH), check_same_thread=False)
         conn.row_factory = sqlite3.Row
