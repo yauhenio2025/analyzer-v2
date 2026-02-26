@@ -498,3 +498,94 @@ async def remove_document(doc_id: str):
     if not success:
         raise HTTPException(status_code=404, detail=f"Document not found: {doc_id}")
     return {"doc_id": doc_id, "deleted": True}
+
+
+# --- Import endpoints ---
+
+
+class OutputItem(BaseModel):
+    """A single pre-computed output to import."""
+    phase_number: float
+    engine_key: str
+    pass_number: int = 1
+    work_key: str = "target"
+    content: str
+    model_used: str = ""
+
+
+class ImportOutputsRequest(BaseModel):
+    """Import pre-computed outputs into the executor DB."""
+    plan_id: str
+    plan_data: Optional[dict] = None
+    workflow_key: str = "intellectual_genealogy"
+    outputs: list[OutputItem]
+
+
+@router.post("/import-outputs")
+async def import_outputs(request: ImportOutputsRequest):
+    """Import pre-computed markdown outputs as a completed job.
+
+    Creates an executor_jobs record, inserts all outputs into phase_outputs,
+    and marks the job as completed. Also saves the plan JSON if plan_data
+    is provided.
+    """
+    import uuid
+    from src.executor.job_manager import update_job_status
+    from src.executor.output_store import save_output
+
+    if not request.outputs:
+        raise HTTPException(status_code=400, detail="No outputs to import")
+
+    # Save plan if provided
+    if request.plan_data:
+        from src.orchestrator.planner import _save_plan
+        from src.orchestrator.schemas import WorkflowExecutionPlan
+        try:
+            plan = WorkflowExecutionPlan(**request.plan_data)
+            _save_plan(plan)
+            logger.info(f"Saved plan {request.plan_id} from import request")
+        except Exception as e:
+            logger.warning(f"Could not save plan from import: {e}")
+
+    # Create job
+    job_id = f"job-import-{uuid.uuid4().hex[:8]}"
+    try:
+        create_job(
+            job_id=job_id,
+            plan_id=request.plan_id,
+            plan_data=request.plan_data,
+            workflow_key=request.workflow_key,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to create job: {e}")
+
+    # Insert outputs
+    total_chars = 0
+    output_ids = []
+    for item in request.outputs:
+        try:
+            oid = save_output(
+                job_id=job_id,
+                phase_number=item.phase_number,
+                engine_key=item.engine_key,
+                pass_number=item.pass_number,
+                content=item.content,
+                work_key=item.work_key,
+                model_used=item.model_used,
+                output_tokens=len(item.content) // 4,
+            )
+            output_ids.append(oid)
+            total_chars += len(item.content)
+        except Exception as e:
+            logger.error(f"Failed to save output: {e}")
+
+    # Mark completed
+    update_job_status(job_id, "completed")
+
+    return {
+        "job_id": job_id,
+        "plan_id": request.plan_id,
+        "workflow_key": request.workflow_key,
+        "outputs_imported": len(output_ids),
+        "total_characters": total_chars,
+    }
