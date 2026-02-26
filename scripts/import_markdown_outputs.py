@@ -348,25 +348,62 @@ def import_via_api(plan_dir: Path, api_url: str, template_plan_id: str | None = 
         "outputs": outputs,
     }
 
-    print(f"\nSending to {api_url}/v1/executor/import-outputs ...")
+    # Send in batches to avoid timeouts
+    BATCH_SIZE = 20
+    batches = [outputs[i:i + BATCH_SIZE] for i in range(0, len(outputs), BATCH_SIZE)]
+
+    # First batch: create job
+    print(f"\nSending batch 1/{len(batches)} to {api_url}/v1/executor/import-outputs ...")
+    first_payload = {
+        "plan_id": plan.plan_id,
+        "plan_data": plan.model_dump(),
+        "workflow_key": plan.workflow_key,
+        "outputs": batches[0],
+    }
     resp = requests.post(
         f"{api_url}/v1/executor/import-outputs",
-        json=payload,
-        timeout=120,
+        json=first_payload,
+        timeout=300,
     )
-
-    if resp.status_code == 200:
-        result = resp.json()
-        print(f"\n{'='*60}")
-        print(f"Import complete!")
-        print(f"  Job ID:    {result['job_id']}")
-        print(f"  Plan ID:   {result['plan_id']}")
-        print(f"  Outputs:   {result['outputs_imported']}")
-        print(f"  Total:     {result['total_characters']:,} characters")
-        print(f"\nPresenter URL: {api_url}/v1/presenter/page/{result['job_id']}")
-    else:
+    if resp.status_code != 200:
         print(f"Error {resp.status_code}: {resp.text}")
         sys.exit(1)
+
+    result = resp.json()
+    job_id = result["job_id"]
+    total_imported = result["outputs_imported"]
+    print(f"  Created job {job_id}, imported {total_imported} outputs")
+
+    # Remaining batches: append
+    for i, batch in enumerate(batches[1:], 2):
+        print(f"  Sending batch {i}/{len(batches)} ({len(batch)} outputs)...")
+        resp = requests.post(
+            f"{api_url}/v1/executor/jobs/{job_id}/append-outputs",
+            json={"outputs": batch},
+            timeout=300,
+        )
+        if resp.status_code == 200:
+            r = resp.json()
+            total_imported += r["outputs_appended"]
+            print(f"    Appended {r['outputs_appended']} outputs")
+        else:
+            print(f"    Error {resp.status_code}: {resp.text}")
+
+    # Finalize
+    print(f"  Finalizing job...")
+    resp = requests.post(f"{api_url}/v1/executor/jobs/{job_id}/finalize", timeout=30)
+    if resp.status_code == 200:
+        print(f"  Job marked as completed")
+    else:
+        print(f"  Warning: finalize failed: {resp.text}")
+
+    print(f"\n{'='*60}")
+    print(f"Import complete!")
+    print(f"  Job ID:    {job_id}")
+    print(f"  Plan ID:   {plan.plan_id}")
+    print(f"  Outputs:   {total_imported}")
+    print(f"  Total:     {sum(len(o['content']) for o in outputs):,} characters")
+    print(f"\nPresenter URL: {api_url}/v1/presenter/page/{job_id}")
 
 
 if __name__ == "__main__":

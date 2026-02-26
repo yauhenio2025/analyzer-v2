@@ -589,3 +589,56 @@ async def import_outputs(request: ImportOutputsRequest):
         "outputs_imported": len(output_ids),
         "total_characters": total_chars,
     }
+
+
+class AppendOutputsRequest(BaseModel):
+    """Append outputs to an existing job."""
+    outputs: list[OutputItem]
+
+
+@router.post("/jobs/{job_id}/append-outputs")
+async def append_outputs(job_id: str, request: AppendOutputsRequest):
+    """Append pre-computed outputs to an existing job."""
+    from src.executor.output_store import save_output
+
+    job = get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+
+    output_ids = []
+    total_chars = 0
+    for item in request.outputs:
+        try:
+            oid = save_output(
+                job_id=job_id,
+                phase_number=item.phase_number,
+                engine_key=item.engine_key,
+                pass_number=item.pass_number,
+                content=item.content,
+                work_key=item.work_key,
+                model_used=item.model_used,
+                output_tokens=len(item.content) // 4,
+            )
+            output_ids.append(oid)
+            total_chars += len(item.content)
+        except Exception as e:
+            logger.error(f"Failed to save output: {e}")
+
+    return {
+        "job_id": job_id,
+        "outputs_appended": len(output_ids),
+        "total_characters": total_chars,
+    }
+
+
+@router.post("/jobs/{job_id}/finalize")
+async def finalize_job(job_id: str):
+    """Mark a job as completed (for imported jobs)."""
+    from src.executor.job_manager import update_job_status
+
+    job = get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+
+    update_job_status(job_id, "completed")
+    return {"job_id": job_id, "status": "completed"}
