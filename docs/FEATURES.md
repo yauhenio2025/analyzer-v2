@@ -1,6 +1,6 @@
 # Feature Inventory
 
-> Auto-maintained by Claude Code. Last updated: 2026-02-25
+> Auto-maintained by Claude Code. Last updated: 2026-03-02
 
 ## Adaptive Analysis Orchestrator
 
@@ -1237,3 +1237,36 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
   - `src/api/routes/llm.py` - LLM-powered profile generation
 - **Dependencies**: FastAPI, Uvicorn, Pydantic v2, Anthropic SDK (optional)
 - **Added**: 2026-01-26 | **Modified**: 2026-02-05
+
+## Design Token System
+
+### Design Token Schema
+- **Status**: Active
+- **Description**: Complete Pydantic v2 schema for the 6-tier design token system. Tiers: PrimitiveTokens (16 fields), SurfaceTokens (15 fields), ScaleTokens (28 fields), SemanticTokens (23 SemanticTriple fields), CategoricalTokens (55 CategoricalItem fields), ComponentTokens (41 fields). Top-level DesignTokenSet container with school metadata.
+- **Entry Points**:
+  - `src/styles/token_schema.py:1-287` - All Pydantic models
+- **Dependencies**: Pydantic v2
+- **Added**: 2026-03-02
+
+### Design Token Prompt Template
+- **Status**: Active
+- **Description**: Prompt template builder for LLM-based token generation. Includes structural invariants (fixed spacing/radius), tool schema extraction, and Anthropic tool definition generation.
+- **Entry Points**:
+  - `src/styles/token_prompt.py:1-131` - Prompt builder, tool schema, structural invariants
+- **Dependencies**: token_schema
+- **Added**: 2026-03-02
+
+### Design Token Generator
+- **Status**: Active
+- **Description**: LLM-powered token generation with 3-layer caching (in-memory dict, DB cache with hash-based invalidation, LLM fallback). Uses Anthropic tool_use with Sonnet 4.5 for structured JSON output. Includes CSS custom properties export.
+- **Entry Points**:
+  - `src/styles/token_generator.py:1-303` - Generator with cache, LLM call, CSS export
+  - `src/executor/db.py:274-281` - Postgres design_token_cache table DDL
+  - `src/executor/db.py:379-386` - SQLite design_token_cache table DDL
+  - `migrations/add_design_token_cache.sql` - Standalone migration
+- **API Endpoints**:
+  - `GET /v1/styles/tokens/{school_key}` - Get/generate token set (cached or LLM)
+  - `POST /v1/styles/tokens/{school_key}/regenerate` - Force-regenerate tokens
+  - `GET /v1/styles/tokens/{school_key}/css` - Get tokens as CSS custom properties
+- **Dependencies**: token_schema, token_prompt, StyleRegistry, executor.db, llm.client, Anthropic SDK
+- **Added**: 2026-03-02

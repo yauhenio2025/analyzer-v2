@@ -1,8 +1,14 @@
 """
 Style API routes for managing visual style definitions and affinities.
+
+Includes:
+- Style school CRUD and listing
+- Affinity mappings (engine, format, audience)
+- Design token generation and caching (LLM-powered)
 """
 
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import Response
 from typing import Optional
 
 from ...styles.schemas import (
@@ -11,6 +17,12 @@ from ...styles.schemas import (
     StyleGuideSummary,
     AffinitySet,
     EngineStyleMapping,
+)
+from ...styles.token_schema import DesignTokenSet
+from ...styles.token_generator import (
+    generate_design_tokens,
+    clear_token_cache,
+    tokens_to_css,
 )
 from ...styles.registry import get_style_registry
 from ...engines.registry import get_engine_registry
@@ -142,3 +154,56 @@ async def reload_styles():
     registry = get_style_registry()
     registry.reload()
     return {"status": "reloaded", "stats": registry.get_stats()}
+
+
+# ---------------------------------------------------------------------------
+# Design Token Endpoints
+# ---------------------------------------------------------------------------
+
+@router.get("/tokens/{school_key}", response_model=DesignTokenSet)
+async def get_design_tokens(school_key: StyleSchool):
+    """Get complete design token set for a style school.
+
+    Returns cached tokens if available (in-memory or DB).
+    Generates via LLM if not cached (~10-20 seconds).
+    Cache is invalidated when the school JSON definition changes.
+    """
+    try:
+        return await generate_design_tokens(school_key.value)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e))
+
+
+@router.post("/tokens/{school_key}/regenerate", response_model=DesignTokenSet)
+async def regenerate_design_tokens(school_key: StyleSchool):
+    """Force-regenerate design tokens (clears cache first).
+
+    Use this when you want a fresh LLM generation, e.g., after
+    updating the prompt template or wanting a different variation.
+    """
+    try:
+        await clear_token_cache(school_key.value)
+        return await generate_design_tokens(school_key.value)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e))
+
+
+@router.get("/tokens/{school_key}/css")
+async def get_design_tokens_css(school_key: StyleSchool):
+    """Get design tokens as CSS custom properties.
+
+    Returns Content-Type: text/css with all tokens as
+    --token-name: value custom properties in a :root selector.
+    """
+    try:
+        tokens = await generate_design_tokens(school_key.value)
+        css = tokens_to_css(tokens)
+        return Response(content=css, media_type="text/css")
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e))

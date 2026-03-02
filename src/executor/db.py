@@ -270,6 +270,15 @@ def _init_postgres():
         created_at TIMESTAMP DEFAULT NOW(),
         UNIQUE(job_id, view_key, style_school)
     );
+
+    CREATE TABLE IF NOT EXISTS design_token_cache (
+        school_key VARCHAR(64) PRIMARY KEY,
+        school_json_hash VARCHAR(64) NOT NULL,
+        token_set JSONB NOT NULL,
+        model_used VARCHAR(64),
+        tokens_used INTEGER,
+        generated_at TIMESTAMPTZ DEFAULT NOW()
+    );
     """
     with get_connection() as conn:
         cursor = conn.cursor()
@@ -365,6 +374,15 @@ def _init_sqlite():
         tokens_used INTEGER DEFAULT 0,
         created_at TEXT,
         UNIQUE(job_id, view_key, style_school)
+    );
+
+    CREATE TABLE IF NOT EXISTS design_token_cache (
+        school_key TEXT PRIMARY KEY,
+        school_json_hash TEXT NOT NULL,
+        token_set TEXT NOT NULL,
+        model_used TEXT,
+        tokens_used INTEGER,
+        generated_at TEXT
     );
     """
     with get_connection() as conn:
