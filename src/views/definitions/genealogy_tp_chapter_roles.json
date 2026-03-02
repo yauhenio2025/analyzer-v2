@@ -35,8 +35,8 @@
         "config": {"section_description": "Chapter coupling assessment — tight vs. loose binding"}
       },
       "structural_vulnerabilities": {
-        "renderer_type": "evidence_trail",
-        "config": {"section_description": "Structural vulnerabilities — load-bearing weaknesses, missing bridges, orphaned threads"}
+        "renderer_type": "mini_card_list",
+        "config": {"title_field": "type", "subtitle_field": "location", "badge_field": "severity", "description_field": "description", "section_description": "Where the architecture strains: load-bearing weaknesses, missing bridges, orphaned threads"}
       },
       "inter_part_dynamics": {
         "renderer_type": "prose_block",
