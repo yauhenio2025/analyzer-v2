@@ -512,6 +512,143 @@ def _load_aggregated_data(
     return structured_data, raw_prose
 
 
+def _infer_work_key_from_content(content: str, prior_work_titles: list[str]) -> str:
+    """Match an output's content to a prior work title by checking for title mentions.
+
+    Returns the sanitized work_key for the best-matching prior work, or empty string
+    if no match found. Checks first ~500 chars for italicized (*Title*) or quoted
+    references to prior work titles.
+    """
+    if not content or not prior_work_titles:
+        return ""
+
+    snippet = content[:800].lower()
+
+    best_match = ""
+    best_score = 0
+
+    for title in prior_work_titles:
+        title_lower = title.lower()
+        # Check for exact title match (case-insensitive) in first 800 chars
+        if title_lower in snippet:
+            # Score by how early the title appears
+            pos = snippet.index(title_lower)
+            score = 1000 - pos  # Earlier = higher score
+            if score > best_score:
+                best_score = score
+                best_match = title
+
+    if best_match:
+        return _sanitize_work_key_for_presenter(best_match)
+    return ""
+
+
+def _sanitize_work_key_for_presenter(title: str) -> str:
+    """Sanitize a work title into a work_key (mirrors phase_runner._sanitize_work_key)."""
+    safe = "".join(
+        c if c.isalnum() or c in " -" else "_"
+        for c in title
+    )
+    return safe.strip().replace("  ", " ")[:100]
+
+
+def _try_split_collapsed_outputs(
+    outputs: list[dict],
+    job_id: str,
+    chain_key: str,
+) -> Optional[dict[str, list[dict]]]:
+    """Detect and split outputs that all share the same work_key but represent
+    multiple prior works (common in imported legacy data).
+
+    Returns None if splitting isn't needed (outputs already have distinct work_keys).
+    Returns dict[work_key -> list[outputs]] if splitting succeeds.
+    """
+    # Check if all outputs share the same work_key
+    unique_work_keys = set(o.get("work_key", "") for o in outputs if o.get("work_key"))
+    if len(unique_work_keys) != 1:
+        return None  # Already properly keyed
+
+    # Count unique engine keys in the chain
+    chain_engine_keys = _resolve_chain_engine_keys(chain_key)
+    if not chain_engine_keys:
+        return None
+
+    # Check if there are more outputs than expected for a single work
+    # (single work = num_engines × num_passes, multiple works = that × num_works)
+    engines_per_pass = len(chain_engine_keys)
+    if len(outputs) <= engines_per_pass * 3:
+        return None  # Could be just 1 work with multi-pass, don't split
+
+    # Load plan to get prior work titles
+    job = get_job(job_id)
+    if not job:
+        return None
+    plan = load_plan(job.get("plan_id", ""))
+    if not plan or not hasattr(plan, "prior_works") or not plan.prior_works:
+        return None
+
+    prior_titles = [pw.title for pw in plan.prior_works if pw.title]
+    if not prior_titles:
+        return None
+
+    logger.info(
+        f"[per-item-split] Detected {len(outputs)} outputs with single work_key, "
+        f"attempting to split across {len(prior_titles)} prior works: {prior_titles}"
+    )
+
+    # Try to match each output to a prior work by content analysis
+    by_work: dict[str, list[dict]] = {}
+    unmatched = []
+
+    for o in outputs:
+        content = o.get("content", "")
+        matched_key = _infer_work_key_from_content(content, prior_titles)
+        if matched_key:
+            by_work.setdefault(matched_key, []).append(o)
+        else:
+            unmatched.append(o)
+
+    # Only accept if we matched a reasonable fraction
+    matched_count = sum(len(v) for v in by_work.values())
+    if matched_count < len(outputs) * 0.5:
+        logger.warning(
+            f"[per-item-split] Only matched {matched_count}/{len(outputs)} outputs, "
+            f"aborting split"
+        )
+        return None
+
+    # Add unmatched outputs to a generic group
+    if unmatched:
+        by_work.setdefault("_unmatched", []).extend(unmatched)
+        logger.info(f"[per-item-split] {len(unmatched)} outputs unmatched")
+
+    # Build a title lookup for display
+    # Store it on each output's metadata for downstream use
+    title_by_key = {}
+    for title in prior_titles:
+        key = _sanitize_work_key_for_presenter(title)
+        title_by_key[key] = title
+
+    for work_key, work_outputs in by_work.items():
+        for o in work_outputs:
+            o["work_key"] = work_key
+            if work_key in title_by_key:
+                meta = o.get("metadata") or {}
+                if isinstance(meta, str):
+                    try:
+                        meta = json.loads(meta)
+                    except Exception:
+                        meta = {}
+                meta["_inferred_work_title"] = title_by_key[work_key]
+                o["metadata"] = meta
+
+    logger.info(
+        f"[per-item-split] Successfully split into {len(by_work)} groups: "
+        f"{', '.join(f'{k}({len(v)})' for k, v in by_work.items())}"
+    )
+    return by_work
+
+
 def _load_per_item_data(
     job_id: str,
     phase_number: Optional[float],
@@ -529,6 +666,9 @@ def _load_per_item_data(
 
     When outputs_cache is provided, uses prefetched data instead of querying DB.
     When slim=True, skips raw_prose in each item.
+
+    Handles legacy imported data where all outputs share work_key='target'
+    by attempting content-based splitting using prior work titles from the plan.
 
     Returns a list of {work_key, structured_data, raw_prose} dicts.
     """
@@ -553,12 +693,20 @@ def _load_per_item_data(
     # Group by work_key
     if chain_key and not engine_key:
         # Chain-backed: collect ALL outputs per work_key, concatenate content
-        by_work_all: dict[str, list[dict]] = {}
-        for o in outputs:
-            work_key = o.get("work_key", "")
-            if not work_key:
-                continue
-            by_work_all.setdefault(work_key, []).append(o)
+
+        # First, try to detect and fix collapsed outputs (legacy import issue
+        # where all outputs share work_key='target' despite being per-work)
+        split_result = _try_split_collapsed_outputs(outputs, job_id, chain_key)
+        if split_result is not None:
+            # Outputs were re-keyed by content-based matching
+            by_work_all = split_result
+        else:
+            by_work_all: dict[str, list[dict]] = {}
+            for o in outputs:
+                work_key = o.get("work_key", "")
+                if not work_key:
+                    continue
+                by_work_all.setdefault(work_key, []).append(o)
 
         by_work: dict[str, dict] = {}
         for work_key, work_outputs in by_work_all.items():
@@ -622,12 +770,24 @@ def _load_per_item_data(
             if structured is not None:
                 break
 
-        items.append({
+        # Extract work_title from metadata if available (set by content-based splitting)
+        meta = output.get("metadata") or {}
+        if isinstance(meta, str):
+            try:
+                meta = json.loads(meta)
+            except Exception:
+                meta = {}
+        work_title = meta.get("_inferred_work_title", "")
+
+        item = {
             "work_key": work_key,
             "has_structured_data": structured is not None,
             "structured_data": structured,
             "raw_prose": content if not slim else None,
-        })
+        }
+        if work_title:
+            item["work_title"] = work_title
+        items.append(item)
 
     return items
 
