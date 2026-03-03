@@ -563,7 +563,23 @@ def _load_per_item_data(
 
         # First, try to detect and fix collapsed outputs (legacy import issue
         # where all outputs share work_key='target' despite being per-work)
-        split_result = _try_split_collapsed_outputs(outputs, job_id, chain_key)
+        #
+        # In slim mode, outputs may lack content (loaded without it for performance).
+        # Content-based splitting needs content, so reload with content if needed.
+        outputs_for_split = outputs
+        if slim and outputs:
+            unique_wks = set(o.get("work_key", "") for o in outputs if o.get("work_key"))
+            if len(unique_wks) == 1:
+                # Likely collapsed — reload WITH content for splitting
+                outputs_for_split = load_phase_outputs(
+                    job_id=job_id, phase_number=phase_number,
+                )
+                logger.info(
+                    f"[per-item-slim] Reloaded {len(outputs_for_split)} outputs "
+                    f"with content for collapsed work_key splitting"
+                )
+
+        split_result = _try_split_collapsed_outputs(outputs_for_split, job_id, chain_key)
         if split_result is not None:
             # Outputs were re-keyed by content-based matching
             by_work_all = split_result
@@ -588,8 +604,16 @@ def _load_per_item_data(
                     eng = wo.get("engine_key", "unknown")
                     prose_parts.append(f"## [{eng}]\n\n{content}")
             combined_content = "\n\n---\n\n".join(prose_parts) if prose_parts else ""
-            # Store combined content in a synthetic entry
-            by_work[work_key] = {**latest, "_combined_content": combined_content}
+            # Store combined content in a synthetic entry.
+            # Also keep ALL output_ids so cache lookup can try each one
+            # (the bridge may have cached against a different output_id
+            # than the one we pick as "latest" here).
+            all_ids = list({wo["id"] for wo in work_outputs})
+            by_work[work_key] = {
+                **latest,
+                "_combined_content": combined_content,
+                "_all_output_ids": all_ids,
+            }
     else:
         # Single engine: keep latest pass per work_key
         by_work = {}
@@ -615,24 +639,29 @@ def _load_per_item_data(
     for work_key, output in sorted(by_work.items()):
         content = "" if slim else output.get("_combined_content", output.get("content", ""))
 
-        # Check for structured data
+        # Check for structured data.
+        # Try ALL output_ids in the work_key group, not just the "latest",
+        # because the bridge may have cached against a different output_id
+        # than the one we picked as representative.
+        candidate_ids = output.get("_all_output_ids", [output["id"]])
         structured = None
         for ek in search_engine_keys:
             templates = transform_registry.for_engine(ek)
             for t in templates:
                 section = f"{t.template_key}:{work_key}"
-                # Use batch cache if available (zero DB queries)
-                if cache_batch is not None:
-                    cached = cache_batch.get((output["id"], section))
-                else:
-                    # Fallback to individual query
-                    cached = load_presentation_cache(
-                        output_id=output["id"],
-                        section=section,
-                        source_content=None if (chain_key and not engine_key) else content,
-                    )
-                if cached is not None:
-                    structured = cached
+                for oid in candidate_ids:
+                    if cache_batch is not None:
+                        cached = cache_batch.get((oid, section))
+                    else:
+                        cached = load_presentation_cache(
+                            output_id=oid,
+                            section=section,
+                            source_content=None if (chain_key and not engine_key) else content,
+                        )
+                    if cached is not None:
+                        structured = cached
+                        break
+                if structured is not None:
                     break
             if structured is not None:
                 break
