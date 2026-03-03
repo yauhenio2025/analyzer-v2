@@ -10,6 +10,44 @@
   "renderer_config": {
     "card_title_field": "work_title",
     "subsections": ["vocabulary", "methodology", "metaphor", "framing"],
+    "section_renderers": {
+      "vocabulary": {
+        "renderer_type": "nested_sections",
+        "sub_renderers": {
+          "shared": { "renderer_type": "comparison_panel", "config": { "left_field": "meaning_in_prior", "right_field": "meaning_in_target" } },
+          "novel_in_target": { "renderer_type": "chip_grid", "config": {} },
+          "abandoned": { "renderer_type": "chip_grid", "config": {} },
+          "summary": { "renderer_type": "prose_block", "config": {} }
+        }
+      },
+      "methodology": {
+        "renderer_type": "nested_sections",
+        "sub_renderers": {
+          "shared": { "renderer_type": "comparison_panel", "config": { "left_field": "meaning_in_prior", "right_field": "meaning_in_target" } },
+          "novel_in_target": { "renderer_type": "chip_grid", "config": {} },
+          "abandoned": { "renderer_type": "chip_grid", "config": {} },
+          "summary": { "renderer_type": "prose_block", "config": {} }
+        }
+      },
+      "metaphor": {
+        "renderer_type": "nested_sections",
+        "sub_renderers": {
+          "shared": { "renderer_type": "comparison_panel", "config": { "left_field": "meaning_in_prior", "right_field": "meaning_in_target" } },
+          "novel_in_target": { "renderer_type": "chip_grid", "config": {} },
+          "abandoned": { "renderer_type": "chip_grid", "config": {} },
+          "summary": { "renderer_type": "prose_block", "config": {} }
+        }
+      },
+      "framing": {
+        "renderer_type": "nested_sections",
+        "sub_renderers": {
+          "shared": { "renderer_type": "comparison_panel", "config": { "left_field": "meaning_in_prior", "right_field": "meaning_in_target" } },
+          "novel_in_target": { "renderer_type": "chip_grid", "config": {} },
+          "abandoned": { "renderer_type": "chip_grid", "config": {} },
+          "summary": { "renderer_type": "prose_block", "config": {} }
+        }
+      }
+    },
     "show_relationship_badge": true,
     "expandable": true
   },
