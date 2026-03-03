@@ -49,6 +49,19 @@ async def refine_views(request: RefineViewsRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.delete("/refine-views/{job_id}")
+async def delete_view_refinement(job_id: str):
+    """Delete view refinement for a job, falling back to registry defaults."""
+    from src.executor.db import execute
+
+    try:
+        execute("DELETE FROM view_refinements WHERE job_id = %s", (job_id,))
+        return {"deleted": True, "job_id": job_id}
+    except Exception as e:
+        logger.error(f"Delete refinement failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.post("/prepare")
 async def prepare_presentation(request: PrepareRequest):
     """Run transformations for recommended views and populate presentation_cache.
