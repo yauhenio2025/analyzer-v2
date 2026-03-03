@@ -5,6 +5,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+- **Per-work scan structured data pipeline** — Fixed three issues preventing per-work scan cards from showing structured data (vocabulary, methodology, metaphor, framing subsections):
+  1. **Bridge splitting**: Extracted shared `work_key_utils.py` and applied content-based output splitting in the bridge's per_item branch, creating 5 transformation tasks (one per prior work) instead of 1 for collapsed `work_key='target'`. ([`src/presenter/work_key_utils.py`](src/presenter/work_key_utils.py), [`src/presenter/presentation_bridge.py`](src/presenter/presentation_bridge.py))
+  2. **Cache lookup mismatch**: Assembly now tries ALL output_ids in a work_key group when looking up cached structured data, not just the "latest" — the bridge may have cached against a different output_id from the same group. ([`src/presenter/presentation_api.py`](src/presenter/presentation_api.py))
+  3. **Slim mode splitting**: When `slim=True`, outputs lack content for content-based splitting. Now reloads outputs with content when collapsed work_keys are detected. ([`src/presenter/presentation_api.py`](src/presenter/presentation_api.py))
+
+- **DELETE endpoint for view refinements** — Added `DELETE /v1/presenter/refine-views/{job_id}` to remove bad refinements and fall back to registry defaults. ([`src/api/routes/presenter.py`](src/api/routes/presenter.py))
+
 ### Added
 - **Design Token System (Phase 1)** — Complete 6-tier design token schema, LLM-powered generation, and API endpoints. New files: `src/styles/token_schema.py` (DesignTokenSet with PrimitiveTokens, SurfaceTokens, ScaleTokens, SemanticTokens, CategoricalTokens, ComponentTokens), `src/styles/token_prompt.py` (prompt builder with structural invariants and Anthropic tool definition), `src/styles/token_generator.py` (3-layer caching: in-memory + DB + LLM fallback, CSS export). Modified: `src/executor/db.py` (design_token_cache table in both Postgres and SQLite DDL), `src/api/routes/styles.py` (3 new endpoints: GET /tokens/{school_key}, POST /tokens/{school_key}/regenerate, GET /tokens/{school_key}/css). Migration: `migrations/add_design_token_cache.sql`.
 
