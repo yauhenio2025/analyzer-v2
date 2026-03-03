@@ -617,10 +617,47 @@ def _try_split_collapsed_outputs(
         )
         return None
 
-    # Add unmatched outputs to a generic group
+    # For unmatched outputs, try to infer titles from content
+    # (handles works not in the plan, e.g., added after planning)
     if unmatched:
-        by_work.setdefault("_unmatched", []).extend(unmatched)
-        logger.info(f"[per-item-split] {len(unmatched)} outputs unmatched")
+        import re
+        sub_groups: dict[str, list[dict]] = {}
+        still_unmatched = []
+        for o in unmatched:
+            content = o.get("content", "")
+            # Extract first italicized title (*Title*) from content
+            match = re.search(r'\*([A-Z][^*]{2,60})\*', content[:500])
+            if match:
+                inferred_title = match.group(1)
+                inferred_key = _sanitize_work_key_for_presenter(inferred_title)
+                # Don't use the target work's title as a group key
+                if inferred_key not in by_work:
+                    sub_groups.setdefault(inferred_key, []).append(o)
+                    # Tag with inferred title
+                    meta = o.get("metadata") or {}
+                    if isinstance(meta, str):
+                        try:
+                            meta = json.loads(meta)
+                        except Exception:
+                            meta = {}
+                    meta["_inferred_work_title"] = inferred_title
+                    o["metadata"] = meta
+                else:
+                    # Title matches an already-matched group — add to it
+                    by_work[inferred_key].append(o)
+            else:
+                still_unmatched.append(o)
+
+        # Add inferred sub-groups
+        for key, outputs_list in sub_groups.items():
+            by_work.setdefault(key, []).extend(outputs_list)
+
+        # Only add truly unmatched outputs if there are any left
+        if still_unmatched:
+            by_work.setdefault("_unmatched", []).extend(still_unmatched)
+            logger.info(f"[per-item-split] {len(still_unmatched)} outputs still unmatched after content inference")
+        else:
+            logger.info(f"[per-item-split] All unmatched outputs resolved via content inference")
 
     # Build a title lookup for display
     # Store it on each output's metadata for downstream use
