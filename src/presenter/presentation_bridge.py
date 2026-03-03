@@ -34,6 +34,7 @@ from src.transformations.registry import get_transformation_registry
 from src.views.registry import get_view_registry
 
 from .dynamic_prompt import compose_dynamic_extraction_prompt
+from .work_key_utils import try_split_collapsed_outputs
 
 from .schemas import (
     PresentationBridgeResult,
@@ -214,7 +215,20 @@ def _build_transformation_tasks(
                     job_id=job_id,
                     phase_number=phase_number,
                 )
-            work_outputs = _group_latest_by_work_key(outputs)
+
+            # Try splitting collapsed work_keys (imported jobs where all
+            # outputs share work_key='target' but represent multiple works)
+            effective_chain_key = chain_key or engine_key or ""
+            split_result = try_split_collapsed_outputs(outputs, job_id, effective_chain_key)
+            if split_result is not None:
+                # Split succeeded: one task per real work_key, using latest output per group
+                work_outputs = {
+                    wk: max(outs, key=lambda o: o.get("pass_number", 0))
+                    for wk, outs in split_result.items()
+                }
+            else:
+                work_outputs = _group_latest_by_work_key(outputs)
+
             for work_key, output in work_outputs.items():
                 section = f"{task_section_base}:{work_key}" if work_key else task_section_base
                 tasks.append(TransformationTask(
