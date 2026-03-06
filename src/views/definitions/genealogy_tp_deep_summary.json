@@ -26,7 +26,7 @@
       },
       "chapter_argument_map": {
         "renderer_type": "mini_card_list",
-        "config": {"title_field": "chapter", "subtitle_field": "function", "description_field": "argument", "no_hero": true}
+        "config": {"title_field": "chapter", "subtitle_field": "function", "description_field": "argument"}
       },
       "conceptual_moves": {
         "renderer_type": "mini_card_list",
