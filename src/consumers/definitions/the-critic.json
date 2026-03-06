@@ -25,7 +25,8 @@
     "evidence_trail",
     "enabling_conditions",
     "constraining_conditions",
-    "nested_sections"
+    "nested_sections",
+    "chapter_flow"
   ],
   "pages": [
     {"page_key": "genealogy", "description": "Intellectual genealogy analysis with multi-phase workflow results"},
