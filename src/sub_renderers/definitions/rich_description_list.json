@@ -1,0 +1,51 @@
+{
+  "sub_renderer_key": "rich_description_list",
+  "sub_renderer_name": "Rich Description List",
+  "description": "Vertically-stacked list where each item gets room to breathe. Handles both string arrays (parses 'Label: description' format) and object arrays (uses config fields). Each item has a colored left border, uppercase label with accent dot, readable prose description, and auto-collapse for long text.",
+  "category": "atomic",
+  "ideal_data_shapes": ["string_array", "object_array"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "title_field": {
+        "type": "string",
+        "description": "For object arrays: field name for the item label. Omit for string arrays."
+      },
+      "description_field": {
+        "type": "string",
+        "description": "For object arrays: field name for the item description. Omit for string arrays."
+      },
+      "separator": {
+        "type": "string",
+        "default": ":",
+        "description": "For string arrays: character(s) to split label from description"
+      },
+      "max_visible_chars": {
+        "type": "integer",
+        "default": 200,
+        "description": "Auto-collapse descriptions longer than this many characters"
+      },
+      "badge_fields": {
+        "type": "array",
+        "items": {"type": "string"},
+        "description": "Optional extra object fields to show as colored badges next to the label"
+      },
+      "section_description": {
+        "type": "string",
+        "description": "Optional description shown above the list"
+      }
+    },
+    "required": []
+  },
+  "stance_affinities": {
+    "evidence": 0.5,
+    "diagnostic": 0.6,
+    "summary": 0.8,
+    "narrative": 0.7,
+    "interactive": 0.6,
+    "comparison": 0.3
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["descriptive", "prose", "readable", "stacked", "expandable"]
+}

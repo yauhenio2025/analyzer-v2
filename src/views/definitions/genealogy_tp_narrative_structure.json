@@ -24,8 +24,8 @@
         "config": {"section_description": "Overall emplotment mode and narrative arc"}
       },
       "narrative_voice_register": {
-        "renderer_type": "chip_grid",
-        "config": {"section_description": "Registers deployed — analytical, polemical, prophetic, ironic, etc."}
+        "renderer_type": "rich_description_list",
+        "config": {"separator": ":", "max_visible_chars": 200, "section_description": "Registers deployed — analytical, polemical, prophetic, ironic, etc."}
       },
       "perspective_focalization": {
         "renderer_type": "prose_block",
@@ -36,16 +36,16 @@
         "config": {"title_field": "tension", "group_field": "type", "description_field": "significance"}
       },
       "narrative_devices": {
-        "renderer_type": "chip_grid",
-        "config": {"section_description": "Narrative devices — anecdotes, vignettes, hypotheticals, counterfactuals"}
+        "renderer_type": "rich_description_list",
+        "config": {"separator": ":", "max_visible_chars": 200, "section_description": "Narrative devices — anecdotes, vignettes, hypotheticals, counterfactuals"}
       },
       "temporal_construction": {
-        "renderer_type": "timeline_strip",
-        "config": {"label_field": "description", "stages_field": "phases", "section_description": "Temporal construction — linear, cyclical, genealogical, dialectical"}
+        "renderer_type": "phase_timeline",
+        "config": {"phases_field": "phases", "label_field": "label", "description_field": "description", "mode_field": "mode", "section_description": "Temporal construction — linear, cyclical, genealogical, dialectical"}
       },
       "narrative_evolution_across_chapters": {
-        "renderer_type": "comparison_panel",
-        "config": {"section_description": "How the narrative mode evolves across chapters"}
+        "renderer_type": "dialectical_pair",
+        "config": {"left_key": "significance", "right_key": "register_shift", "left_label": "Significance", "right_label": "Register Shift", "relationship_label": "evolves to", "section_description": "How the narrative mode evolves across chapters"}
       }
     }
   },

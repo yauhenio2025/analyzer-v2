@@ -31,8 +31,8 @@
         "config": {"section_description": "Key concepts introduced per chapter"}
       },
       "chapter_coupling": {
-        "renderer_type": "key_value_table",
-        "config": {"section_description": "Chapter coupling assessment — tight vs. loose binding"}
+        "renderer_type": "intensity_matrix",
+        "config": {"title_field": "pair", "description_field": "nature", "intensity_field": "coupling_strength", "intensity_scale": ["loose", "moderate", "tight"], "sort_by_intensity": true, "section_description": "Chapter coupling assessment — tight vs. loose binding"}
       },
       "structural_vulnerabilities": {
         "renderer_type": "intensity_matrix",

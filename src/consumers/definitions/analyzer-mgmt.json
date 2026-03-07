@@ -29,7 +29,9 @@
     "ordered_flow",
     "intensity_matrix",
     "move_repertoire",
-    "dialectical_pair"
+    "dialectical_pair",
+    "rich_description_list",
+    "phase_timeline"
   ],
   "pages": [
     {"page_key": "engines", "description": "Engine definition browser"},

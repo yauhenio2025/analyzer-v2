@@ -1,0 +1,48 @@
+{
+  "sub_renderer_key": "phase_timeline",
+  "sub_renderer_name": "Phase Timeline",
+  "description": "Horizontal connected timeline with prominent phase nodes. Designed for temporal/sequential data stored as an object with a phases array and optional mode badge. Each phase is a colored numbered node with a label card and expandable description below.",
+  "category": "atomic",
+  "ideal_data_shapes": ["object"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "phases_field": {
+        "type": "string",
+        "default": "phases",
+        "description": "Key in the data object containing the phases array"
+      },
+      "label_field": {
+        "type": "string",
+        "default": "label",
+        "description": "Field within each phase item for the node label"
+      },
+      "description_field": {
+        "type": "string",
+        "default": "description",
+        "description": "Field within each phase item for the expandable description"
+      },
+      "mode_field": {
+        "type": "string",
+        "default": "mode",
+        "description": "Optional top-level field for a mode badge (e.g., 'mixed', 'linear', 'cyclical')"
+      },
+      "section_description": {
+        "type": "string",
+        "description": "Optional description shown above the timeline"
+      }
+    },
+    "required": ["phases_field"]
+  },
+  "stance_affinities": {
+    "evidence": 0.4,
+    "diagnostic": 0.5,
+    "summary": 0.7,
+    "narrative": 0.9,
+    "interactive": 0.7,
+    "comparison": 0.4
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["temporal", "timeline", "phases", "sequential", "connected"]
+}
