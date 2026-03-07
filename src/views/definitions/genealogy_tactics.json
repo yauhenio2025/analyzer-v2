@@ -41,6 +41,7 @@
         {
           "type": "evidence_trail",
           "label": "Evidence Trail",
+          "collapsed_by_default": true,
           "accent_from": { "category": "tactic", "key_field": "tactic_type" },
           "steps": [
             {
