@@ -1,0 +1,13 @@
+{
+  "engine_key": "dialectical_structure",
+  "entries": [
+    {
+      "timestamp": "2026-02-24T09:44:12.448149+00:00",
+      "version": 1,
+      "definition_hash": "b85ca72857496269f4093e4df01512d3c29bbc3aa5afd538e2a81fd1ce346d22",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

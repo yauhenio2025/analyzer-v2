@@ -1,0 +1,50 @@
+{
+  "engine_key": "chapter_role_analyzer",
+  "entries": [
+    {
+      "timestamp": "2026-02-25T08:37:22.900788+00:00",
+      "version": 2,
+      "definition_hash": "b892ec5927bf6e96c9dd9a853f979097fda3bb3850661e93493c1094bd7adfe0",
+      "changes": [
+        {
+          "section": "intellectual_lineage",
+          "field": "primary",
+          "action": "modified",
+          "old_value": "toulmin",
+          "new_value": "van_eemeren"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "added",
+          "old_value": null,
+          "new_value": "toulmin"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "removed",
+          "old_value": "van_eemeren",
+          "new_value": null
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "perelman",
+          "new_value": "perelman (enriched)"
+        }
+      ],
+      "summary": "Added 'toulmin' to intellectual lineage secondary; Removed 'van_eemeren' from intellectual lineage secondary; Modified intellectual lineage primary; Modified intellectual lineage secondary",
+      "is_baseline": false
+    },
+    {
+      "timestamp": "2026-02-25T08:18:28.821321+00:00",
+      "version": 1,
+      "definition_hash": "445d1b60ae894a4bc8d1782018b01c63e02e82dc448ab820bb89f188c647e22f",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

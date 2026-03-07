@@ -1,0 +1,13 @@
+{
+  "engine_key": "comparative_reasoning_analyzer",
+  "entries": [
+    {
+      "timestamp": "2026-02-24T09:44:12.542961+00:00",
+      "version": 1,
+      "definition_hash": "beb8e2262531e654a60c9bfce0c044f8d45a779b58085a6ac87e327d26333e46",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "sub_renderer_key": "ordered_flow",
+  "sub_renderer_name": "Ordered Flow",
+  "description": "Renders an ordered sequence of content units as a vertical progression with numbered step dots on a connecting line. Each unit shows a title, category badge (color-resolved via design tokens), and expandable description. Generic enough for chapters, argument steps, methodology phases, dialectical moves, policy stages, or any ordered analytical units where progression matters.",
+  "category": "atomic",
+  "ideal_data_shapes": ["object_array"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "title_field": {"type": "string", "description": "Primary label field (auto-strips Chapter/Step/Phase/Stage prefixes)"},
+      "subtitle_field": {"type": "string", "description": "Category or role badge field"},
+      "description_field": {"type": "string", "description": "Expandable detail text field"},
+      "number_field": {"type": "string", "description": "Explicit numbering field (falls back to extracting from title or using index)"},
+      "strip_prefix": {"type": "string", "description": "Custom regex to strip from title (default strips Chapter/Step/Phase/Stage N:)"}
+    }
+  },
+  "stance_affinities": {
+    "narrative": 0.9, "diagnostic": 0.8, "summary": 0.7, "evidence": 0.5, "interactive": 0.6, "comparison": 0.3
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["sequential", "ordered", "flow", "progression", "steps", "phases", "chapters"]
+}

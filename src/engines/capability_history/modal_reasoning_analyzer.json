@@ -1,0 +1,13 @@
+{
+  "engine_key": "modal_reasoning_analyzer",
+  "entries": [
+    {
+      "timestamp": "2026-02-24T09:44:12.495834+00:00",
+      "version": 1,
+      "definition_hash": "189935458c239570da2a77620f7ac551a0f6fe9db27a292137c6836d6ae65335",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

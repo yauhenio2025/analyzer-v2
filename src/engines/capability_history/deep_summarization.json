@@ -1,0 +1,57 @@
+{
+  "engine_key": "deep_summarization",
+  "entries": [
+    {
+      "timestamp": "2026-02-25T08:37:22.886679+00:00",
+      "version": 2,
+      "definition_hash": "a41a3e5d1afc6d271b245fa97e7cb9484ac205c3bcedfc4fda41bbaaad01b154",
+      "changes": [
+        {
+          "section": "intellectual_lineage",
+          "field": "primary",
+          "action": "modified",
+          "old_value": "toulmin",
+          "new_value": "foucault"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "added",
+          "old_value": null,
+          "new_value": "toulmin"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "removed",
+          "old_value": "foucault",
+          "new_value": null
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "koselleck",
+          "new_value": "koselleck (enriched)"
+        },
+        {
+          "section": "intellectual_lineage",
+          "field": "secondary",
+          "action": "modified",
+          "old_value": "perelman",
+          "new_value": "perelman (enriched)"
+        }
+      ],
+      "summary": "Added 'toulmin' to intellectual lineage secondary; Removed 'foucault' from intellectual lineage secondary; Modified intellectual lineage primary; Modified intellectual lineage secondary; Modified intellectual lineage secondary",
+      "is_baseline": false
+    },
+    {
+      "timestamp": "2026-02-25T08:18:28.791360+00:00",
+      "version": 1,
+      "definition_hash": "16f4bc1ca7d9e01ee39d15a817a70666810b6a370e556ab9800017aecd071819",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

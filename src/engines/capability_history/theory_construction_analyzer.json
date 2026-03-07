@@ -1,0 +1,13 @@
+{
+  "engine_key": "theory_construction_analyzer",
+  "entries": [
+    {
+      "timestamp": "2026-02-24T09:44:12.636224+00:00",
+      "version": 1,
+      "definition_hash": "922873a7fd444b0ca0d0abbf18a4e6cfbcaa449a5c88ce9a174d485c9026058b",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

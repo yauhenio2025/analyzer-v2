@@ -1,0 +1,13 @@
+{
+  "engine_key": "concept_centrality_mapper",
+  "entries": [
+    {
+      "timestamp": "2026-02-24T09:44:12.517464+00:00",
+      "version": 1,
+      "definition_hash": "2f77dc1e768de42b427229ecaf85b907e3fad0de5000e06353b32ea97e846eeb",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

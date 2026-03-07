@@ -1,0 +1,552 @@
+{
+  "analytical_dimensions": [
+    {
+      "depth_guidance": {
+        "deep": "Assess inferential validity of transfers, identify hidden mappings, trace how analogies evolve through the text",
+        "standard": "Map specific relational transfers and identify points of breakdown",
+        "surface": "Identify major analogies and their source/target domains"
+      },
+      "description": "The systematic mapping of relations, attributes, and inferential patterns from source domains to target domains. This dimension examines not just what is compared to what, but precisely which structural elements are transferred, which are left behind, and whether the transfer is warranted by genuine structural correspondence or merely surface similarity.",
+      "key": "analogical_transfer_structure",
+      "probing_questions": [
+        "What specific relations are mapped from source to target domain?",
+        "Which attributes of the source domain are transferred versus left behind?",
+        "Where does the analogy break down\u2014which source domain features have no target domain counterpart?",
+        "Is the mapping based on structural similarity or mere surface resemblance?",
+        "What inferential work does the analogy perform\u2014does it generate predictions, explanations, or evaluations?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Trace how dichotomies generate derivative binaries, analyze historical genealogy of the opposition, reconstruct suppressed positions",
+        "standard": "Assess exhaustiveness, identify suppressed alternatives, evaluate analytical versus rhetorical function",
+        "surface": "Identify major dichotomies and their argumentative role"
+      },
+      "description": "The structure and function of binary oppositions in organizing argument. This dimension examines whether dichotomies are genuinely exhaustive or false, whether they do analytical work or merely rhetorical work, and how binary framings constrain the space of possible positions and conclusions.",
+      "key": "dichotomy_architecture",
+      "probing_questions": [
+        "Are the two options presented as genuinely exhaustive of the possibility space?",
+        "What third, fourth, or nth options are suppressed by the dichotomy?",
+        "Does the dichotomy structure genuine analytical distinction or merely organize presentation?",
+        "How does the binary framing constrain what conclusions can be reached?",
+        "Could the dichotomy be reconceived as a continuum, a typology, or a different binary?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Examine whether scales are natural or constructed, trace implications of alternative scalar framings, identify scale interactions",
+        "standard": "Assess endpoint definition and positioning justification",
+        "surface": "Identify scalar claims and the continua they invoke"
+      },
+      "description": "The construction and deployment of continua along which phenomena are positioned. This dimension examines what scales are invoked, how endpoints are defined, whether scalar framing is justified or arbitrary, and how position claims along scales generate evaluative or predictive conclusions.",
+      "key": "scalar_positioning",
+      "probing_questions": [
+        "What scale or continuum is being invoked?",
+        "How are the endpoints of the scale defined and anchored?",
+        "Is the scalar framing justified or does it impose a false continuum on categorical difference?",
+        "What claims about position, movement, or tendency are made along the scale?",
+        "Would different scale construction reverse the argument's conclusions?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Trace typology's intellectual genealogy, analyze what the classification makes visible and invisible, compare with alternative typologies",
+        "standard": "Assess exhaustiveness, exclusivity, and handling of borderline cases",
+        "surface": "Identify major typologies and their constituent types"
+      },
+      "description": "The classification schemes, ideal types, and categorical frameworks through which phenomena are sorted and analyzed. This dimension examines whether types are jointly exhaustive and mutually exclusive, how borderline cases are handled, and whether typologies do genuine analytical work or merely organize exposition.",
+      "key": "typological_structure",
+      "probing_questions": [
+        "What typology or classification scheme structures the analysis?",
+        "Are the types jointly exhaustive\u2014do they cover all relevant cases?",
+        "Are the types mutually exclusive\u2014can cases belong to multiple types?",
+        "How does the typology handle borderline, mixed, or anomalous cases?",
+        "Does the classification enable analytical insight or merely organize description?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Trace genealogy of evaluative standards, analyze how criteria selection shapes conclusions, identify value commitments embedded in criteria",
+        "standard": "Assess criteria justification and consider alternative criteria",
+        "surface": "Identify major evaluative comparisons and stated criteria"
+      },
+      "description": "The standards, metrics, and dimensions along which comparative evaluations are conducted. This dimension examines what criteria underlie comparative rankings, whether criteria are explicit or smuggled in, and whether different criteria would reverse evaluative conclusions.",
+      "key": "evaluative_criteria",
+      "probing_questions": [
+        "On what criteria are the compared items being evaluated?",
+        "Are the evaluative criteria explicit or implicit in the comparison?",
+        "How are the criteria themselves justified?",
+        "Would alternative criteria reverse the ranking or evaluation?",
+        "Are the criteria appropriate to the items being compared?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Analyze how representative selection shapes argument trajectory, identify alternative representatives, trace the politics of case selection",
+        "standard": "Assess selection logic and representativeness of parts for wholes",
+        "surface": "Identify synecdochic moves and their representativeness claims"
+      },
+      "description": "The reasoning that allows parts to stand for wholes, examples to stand for classes, and cases to stand for patterns. This dimension examines synecdochic reasoning, case selection, and the conditions under which particular instances can legitimately ground general claims.",
+      "key": "representativeness_logic",
+      "probing_questions": [
+        "What part, example, or case is made to stand for a larger whole or class?",
+        "Is the part genuinely representative of the whole?",
+        "How was the example or case selected\u2014randomly, strategically, tendentiously?",
+        "What features of the class are highlighted by this representative and which are obscured?",
+        "Could alternative representatives ground different conclusions?"
+      ]
+    }
+  ],
+  "apps": [
+    "critic"
+  ],
+  "capabilities": [
+    {
+      "depth_scaling": {
+        "deep": "Assess inferential validity of mappings, trace analogy evolution through text, identify hidden systematic metaphors",
+        "standard": "Map specific relational transfers and identify where analogies break down",
+        "surface": "Identify major analogies with source and target domains"
+      },
+      "description": "Maps the structure of analogical reasoning by identifying source domains, target domains, transferred relations, and points of breakdown.",
+      "extended_description": "This capability performs systematic analysis of analogical reasoning following Gentner's structure-mapping theory. It identifies the source domain (the familiar realm from which understanding is borrowed), the target domain (the unfamiliar realm being illuminated), and the specific relational mappings that transfer structure from source to target. Crucially, it goes beyond identification to assessment: which mappings are structurally grounded versus superficially motivated, where the analogy holds and where it breaks down, what aspects of the target domain are highlighted by the analogy and what aspects are obscured.\n\nThe intellectual foundation is the recognition that analogies are not merely illustrative but inferential\u2014they license conclusions about the target domain based on known features of the source domain. This inferential function means that analogies can be evaluated for validity: an analogy fails when relations that hold in the source domain do not hold in the target, when the transferred structure generates false predictions, or when the mapping obscures more than it illuminates. The capability traces how individual analogies function within larger argumentative structures, identifying whether they bear explanatory, predictive, or merely rhetorical weight.\n\nParticularly important is the analysis of conceptual metaphors\u2014the systematic, often unconscious mappings that structure understanding of abstract domains. When an author treats the economy as an organism, the nation as a family, or the mind as a computer, they are not making isolated comparisons but activating extensive mapping systems with far-reaching implications. This capability surfaces these mapping systems, making explicit what typically operates below the level of conscious argument.",
+      "indicators": [
+        "Explicit comparison markers: 'like', 'as', 'similar to', 'parallel'",
+        "Domain-crossing vocabulary applying terms from one field to another",
+        "Extended metaphors with multiple mapped elements",
+        "Inferential moves that transfer conclusions across domains",
+        "Negative comparison: 'unlike', 'different from', 'not analogous to'"
+      ],
+      "intellectual_grounding": {
+        "concept": "structure-mapping theory",
+        "method": "Identifies relational correspondences between domains, distinguishing structural similarity (shared relations) from surface similarity (shared attributes), and assessing which higher-order relations are preserved in the mapping",
+        "thinker": "gentner"
+      },
+      "key": "analogical_mapping_analysis",
+      "produces_dimensions": [
+        "analogical_transfer_structure"
+      ],
+      "requires_dimensions": []
+    },
+    {
+      "depth_scaling": {
+        "deep": "Trace dichotomy genealogy, analyze meaning-generation through opposition, reconstruct suppressed third positions",
+        "standard": "Assess exhaustiveness, identify suppressed alternatives",
+        "surface": "Identify explicit dichotomies and their argumentative role"
+      },
+      "description": "Identifies binary oppositions and assesses whether they are genuinely exhaustive or false dichotomies with suppressed alternatives.",
+      "extended_description": "This capability analyzes the binary oppositions that structure argumentative thought, distinguishing genuine dichotomies (where two options are truly exhaustive) from false dichotomies (where the binary framing suppresses viable alternatives). The structuralist insight that concepts are defined through opposition\u2014that 'nature' is constituted in contrast to 'culture', 'freedom' in contrast to 'necessity'\u2014means that dichotomies are not merely organizational devices but meaning-generating structures. The binary you choose determines what you can think.\n\nThe analysis proceeds on multiple levels. At the surface level, it identifies explicit either/or constructions and the positions they oppose. At a deeper level, it examines whether the opposition is genuinely exhaustive: are there suppressed middles, excluded third positions, or alternative framings that the dichotomy occludes? The classic philosophical examples\u2014mind/body, subject/object, fact/value\u2014all reveal suppressed positions upon analysis. The capability also assesses whether binaries do analytical work (genuinely distinguishing phenomena that require different treatment) or merely rhetorical work (creating false urgency of choice or manufacturing disagreement).\n\nParticularly important is the analysis of dissociation, Perelman's concept for the argumentative move that splits a unitary concept into paired opposites, typically with one privileged term (the 'real' or 'genuine') and one deprecated term (the 'apparent' or 'mere'). When an author distinguishes 'true freedom' from 'mere license' or 'genuine democracy' from 'procedural democracy,' they are creating evaluative hierarchies through conceptual division. This capability traces how dissociation shapes argumentative possibilities.",
+      "indicators": [
+        "Either/or constructions: 'either X or Y', 'the choice is between'",
+        "Contrastive pairs: 'X versus Y', 'X rather than Y'",
+        "Dissociative splits: 'true X vs. mere Y', 'real X vs. apparent X'",
+        "Negation-defined concepts: 'non-X', 'un-X'",
+        "Forced choice rhetoric: 'we must choose', 'there is no middle ground'"
+      ],
+      "intellectual_grounding": {
+        "concept": "dissociation and quasi-logical argument",
+        "method": "Examines how binary constructions generate argumentative force through appearance of logical exhaustiveness while often suppressing viable alternatives",
+        "thinker": "perelman"
+      },
+      "key": "dichotomy_evaluation",
+      "produces_dimensions": [
+        "dichotomy_architecture"
+      ],
+      "requires_dimensions": []
+    },
+    {
+      "depth_scaling": {
+        "deep": "Trace typology genealogy, compare with alternative classifications, analyze what the typology makes visible and invisible",
+        "standard": "Assess exhaustiveness, exclusivity, and handling of anomalies",
+        "surface": "Identify major typologies and their constituent types"
+      },
+      "description": "Analyzes classification schemes and ideal types, assessing their exhaustiveness, exclusivity, and analytical value.",
+      "extended_description": "This capability examines how texts construct and deploy typologies\u2014classification schemes that sort phenomena into types for purposes of analysis and argument. Following Weber's methodology of ideal types, it recognizes that typologies are not direct descriptions of reality but heuristic constructs that enable comparison through deliberate abstraction and accentuation. The question is never whether a typology 'captures' reality but whether it illuminates the phenomena under investigation.\n\nThe analysis assesses typologies along multiple dimensions. Are the types jointly exhaustive\u2014do they cover all relevant cases, or do significant phenomena fall outside the classification? Are they mutually exclusive\u2014can cases belong to only one type, or do hybrid and borderline cases challenge neat categorization? Most importantly, does the typology do genuine analytical work\u2014enabling insights that would not be available without the classification\u2014or does it merely organize presentation without adding understanding? Weber's own typology of legitimate authority (traditional, charismatic, rational-legal) exemplifies productive typological reasoning: not because cases neatly fit the types, but because deviation from the types generates analytical questions.\n\nThe capability pays special attention to how typologies handle anomalous cases. The borderline case that fits no type, or that fits multiple types, is not an embarrassment but an opportunity for analytical refinement. How an author responds to the anomaly\u2014by adjusting the typology, adding qualifications, or ignoring the problem\u2014reveals the epistemic status they accord to their classification. Rigid insistence that cases fit types suggests reification; flexible acknowledgment of limits suggests heuristic deployment.",
+      "indicators": [
+        "Classification vocabulary: 'types', 'kinds', 'categories', 'species'",
+        "Enumeration of distinct forms: 'three types of X', 'two kinds of Y'",
+        "Ideal type language: 'pure form', 'paradigm case', 'exemplar'",
+        "Taxonomic organization of content",
+        "Discussion of borderline or hybrid cases"
+      ],
+      "intellectual_grounding": {
+        "concept": "ideal type methodology",
+        "method": "Analyzes typologies as heuristic constructs whose value lies in enabling comparison through deliberate abstraction rather than accurate description of empirical reality",
+        "thinker": "weber"
+      },
+      "key": "typological_assessment",
+      "produces_dimensions": [
+        "typological_structure"
+      ],
+      "requires_dimensions": []
+    },
+    {
+      "depth_scaling": {
+        "deep": "Examine endpoint construction, analyze alternative scalar framings, trace how scale choice shapes conclusions",
+        "standard": "Assess whether scalar framing is justified or imposes false continua",
+        "surface": "Identify scalar claims and the continua they invoke"
+      },
+      "description": "Identifies continuum-based reasoning, assessing whether scalar framings are justified or impose false continua.",
+      "extended_description": "This capability analyzes arguments that position phenomena along scales or continua rather than in discrete categories. Scalar arguments are pervasive\u2014claims about 'more democratic', 'increasingly unstable', 'less efficient', or 'tending toward' all presuppose underlying continua along which phenomena can be arrayed and movement tracked. The capability examines the construction of these scales: what anchors the endpoints, what justifies treating the dimension as continuous rather than categorical, and what metric allows positioning along the scale.\n\nThe critical question is whether scalar framing is appropriate to the phenomena or whether it imposes a false continuum. Some phenomena genuinely vary by degree (temperature, income, probability); others differ in kind rather than degree (alive/dead, pregnant/not pregnant, valid/invalid in formal logic). When authors treat categorical differences as scalar, they typically do so to enable gradualist arguments\u2014claiming that we are 'moving toward' some endpoint, that something is 'almost' something else, or that differences are 'merely matters of degree.' Such arguments smuggle consequential assumptions into apparently neutral description.\n\nThe capability also examines the argumentative force of scalar positioning. Placing something 'closer to' one endpoint than another, or claiming 'movement along' a continuum, generates implicit evaluations and predictions. If democracy is conceived as a scale from authoritarianism to full participation, then positioning a regime as 'more democratic than before but less than the ideal' generates both praise and critique. Different scale constructions\u2014different endpoints, different metrics, different dimensionality\u2014could generate different evaluative conclusions from the same phenomena.",
+      "indicators": [
+        "Comparative adjectives: 'more X', 'less Y', 'increasingly Z'",
+        "Continuum language: 'spectrum', 'range', 'gradient', 'scale'",
+        "Movement vocabulary: 'moving toward', 'sliding into', 'approaching'",
+        "Degree qualifiers: 'somewhat', 'rather', 'almost', 'barely'",
+        "Endpoint references: 'at one extreme', 'at the limit', 'in the ideal case'"
+      ],
+      "intellectual_grounding": {
+        "concept": "scalar metaphors and image schemas",
+        "method": "Analyzes how scalar framings draw on embodied experience of physical continua (hot-cold, up-down, near-far) to structure understanding of abstract dimensions",
+        "thinker": "lakoff_johnson"
+      },
+      "key": "scalar_argument_analysis",
+      "produces_dimensions": [
+        "scalar_positioning"
+      ],
+      "requires_dimensions": []
+    },
+    {
+      "depth_scaling": {
+        "deep": "Analyze how criteria selection shapes conclusions, identify value commitments in criteria choice, trace genealogy of evaluative standards",
+        "standard": "Reconstruct implicit criteria and assess their appropriateness",
+        "surface": "Identify major evaluative comparisons and their conclusions"
+      },
+      "description": "Analyzes comparative rankings, identifying evaluative criteria and assessing whether different criteria would reverse conclusions.",
+      "extended_description": "This capability examines how texts compare and rank entities, approaches, or positions, surfacing the evaluative criteria that underlie comparative judgments. Every ranking presupposes dimensions of evaluation: to say A is 'better than' B requires specifying better WITH RESPECT TO WHAT. Often these criteria remain implicit, presented as if rankings were objective features of the compared items rather than judgments made from particular evaluative standpoints.\n\nThe analysis proceeds by reconstructing the implicit criteria underlying explicit rankings, assessing whether those criteria are justified for the comparison at hand, and considering whether alternative criteria would reverse the ranking. This is not relativism but rigorous evaluation: some criteria are more appropriate than others given the purposes of comparison, and transparent criteria can be debated while hidden criteria cannot. When an author compares political systems and ranks them without making criteria explicit, the capability asks: ranked by what? Stability? Liberty? Equality? Economic growth? Citizen satisfaction? Different criteria generate different rankings.\n\nParticularly important is attention to criteria smuggling\u2014the argumentative move that presents evaluative judgments as descriptive claims by hiding the criteria of evaluation. Calling something 'developed' versus 'underdeveloped', 'rational' versus 'irrational', or 'mature' versus 'immature' embeds evaluative hierarchies in apparently neutral vocabulary. The capability surfaces these hidden evaluations, making explicit the standards that generate rankings so they can be examined rather than assumed.",
+      "indicators": [
+        "Evaluative comparatives: 'better than', 'superior to', 'more effective'",
+        "Ranking language: 'ranks higher', 'comes first', 'is preferred'",
+        "Criterial vocabulary: 'by this measure', 'judged by', 'evaluated in terms of'",
+        "Implicit evaluation in description: 'developed/developing', 'advanced/backward'",
+        "Preference expressions: 'preferable to', 'to be chosen over'"
+      ],
+      "intellectual_grounding": {
+        "concept": "argumentation by comparison and hierarchy",
+        "method": "Examines how comparative arguments establish values through implicit hierarchies and criteria of evaluation that can be surfaced and contested",
+        "thinker": "perelman"
+      },
+      "key": "evaluative_comparison_assessment",
+      "produces_dimensions": [
+        "evaluative_criteria"
+      ],
+      "requires_dimensions": [
+        "typological_structure",
+        "scalar_positioning"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Analyze representational politics, identify alternative representatives, trace how case selection shapes argument trajectory",
+        "standard": "Assess selection logic and whether parts genuinely represent wholes",
+        "surface": "Identify major synecdochic moves and their representativeness claims"
+      },
+      "description": "Identifies part-for-whole reasoning, assessing whether selected examples genuinely represent the classes they stand for.",
+      "extended_description": "This capability analyzes synecdochic reasoning\u2014the argumentative moves where a part stands for a whole, an example stands for a class, or a case stands for a pattern. Such reasoning is pervasive and often unavoidable: we cannot examine every case and must reason from samples to populations, from instances to generalizations. The question is whether the selected part genuinely represents the whole or whether selection has been tendentious, highlighting certain features while obscuring others.\n\nThe analysis examines case selection logic. Why THIS example rather than another? Random selection, theoretical sampling, strategic selection, and tendentious cherry-picking produce very different relationships between part and whole. A single case study can legitimately illuminate a phenomenon if properly situated (as 'crucial case', 'deviant case', 'paradigm case'), but it can also mislead if presented as representative when it is in fact exceptional. The capability traces how authors position their examples and whether the positioning is warranted.\n\nParticularly important is attention to what the selected representative makes visible and invisible. Every part that stands for a whole highlights certain features of that whole while occluding others. Choose a bustling marketplace as representative of capitalism and you highlight dynamism and exchange; choose an exploited worker and you highlight extraction and inequality. Both are 'parts' of the capitalist whole, but they generate very different understandings. The capability surfaces these representational politics, asking not just whether parts represent wholes but what understanding of the whole each representative enables.",
+      "indicators": [
+        "Example introduction: 'consider the case of', 'for instance', 'take the example'",
+        "Representativeness claims: 'typical', 'representative', 'paradigmatic'",
+        "Generalization from instance: 'this shows that', 'which demonstrates'",
+        "Part-whole language: 'embodies', 'instantiates', 'exemplifies'",
+        "Case study methodology: 'this case reveals', 'examining X illuminates'"
+      ],
+      "intellectual_grounding": {
+        "concept": "family resemblance and perspicuous representation",
+        "method": "Examines how particular cases illuminate general concepts through strategic selection and juxtaposition rather than subsumption under universal definitions",
+        "thinker": "wittgenstein"
+      },
+      "key": "synecdoche_and_representation_analysis",
+      "produces_dimensions": [
+        "representativeness_logic"
+      ],
+      "requires_dimensions": [
+        "typological_structure"
+      ]
+    }
+  ],
+  "category": "argument",
+  "composability": {
+    "consumes_from": {
+      "conceptual_vocabulary": "from conceptual_framework_extraction \u2014 provides the technical terms and definitions that become objects of comparative analysis",
+      "dialectical_oppositions": "from dialectical_structure \u2014 identifies sites of opposition that may involve dichotomous, scalar, or typological framing",
+      "inferential_structure": "from argument_architecture \u2014 provides the argumentative skeleton within which comparative reasoning operates as premise or inference",
+      "semantic_relationships": "from concept_semantic_constellation \u2014 reveals which concepts are related through contrast, hierarchy, and association, informing comparison analysis"
+    },
+    "shares_with": {
+      "analogical_transfer_structure": "concept_semantic_constellation uses this to understand how metaphorical mappings structure semantic fields and conceptual relationships",
+      "dichotomy_architecture": "dialectical_structure consumes this to analyze how binary oppositions generate dialectical tensions and potential syntheses",
+      "evaluative_criteria": "inferential_commitment_mapper uses this to trace how evaluative standards generate normative commitments",
+      "scalar_positioning": "modal_reasoning_analyzer uses this to understand how degrees and gradations relate to modal claims about necessity and possibility",
+      "typological_structure": "conceptual_framework_extraction uses this to understand how classification schemes organize conceptual frameworks"
+    },
+    "synergy_engines": [
+      "argument_architecture",
+      "dialectical_structure",
+      "concept_semantic_constellation",
+      "inferential_commitment_mapper",
+      "epistemological_method_detector"
+    ]
+  },
+  "depth_levels": [
+    {
+      "description": "Rapid identification of major comparative moves\u2014analogies, dichotomies, scales, and typologies\u2014with basic assessment of their argumentative function. Suitable for initial orientation to a text's comparative structure.",
+      "key": "surface",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Survey the text for major comparative moves, identifying analogies and their source/target domains, dichotomies and their oppositional structure, scalar arguments and their continua, and typologies and their constituent types. Note where comparison functions as premise versus illustration. Flag comparisons that appear to carry significant argumentative weight for potential deeper analysis.",
+          "focus_capabilities": [
+            "analogical_mapping_analysis",
+            "dichotomy_evaluation",
+            "typological_assessment"
+          ],
+          "focus_dimensions": [
+            "analogical_transfer_structure",
+            "dichotomy_architecture",
+            "typological_structure"
+          ],
+          "label": "Comparative Structure Survey",
+          "pass_number": 1,
+          "stance": "discovery"
+        }
+      ],
+      "suitable_for": "Quick assessment of comparative reasoning patterns, initial triage of lengthy texts, identifying whether deeper comparison analysis is warranted",
+      "typical_passes": 1
+    },
+    {
+      "description": "Comprehensive analysis of comparative reasoning with critical assessment of validity and rigor. Maps analogical structure in detail, evaluates dichotomy exhaustiveness, assesses typological adequacy, and examines evaluative criteria.",
+      "key": "standard",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Systematically inventory all significant comparative moves. For each analogy, map source domain, target domain, and specific transferred relations. For each dichotomy, identify the opposed terms and their claimed relationship. For each typology, enumerate constituent types and their defining features. For each scalar argument, identify the continuum and its endpoints. Create comprehensive comparison inventory.",
+          "focus_capabilities": [
+            "analogical_mapping_analysis",
+            "dichotomy_evaluation",
+            "typological_assessment",
+            "scalar_argument_analysis"
+          ],
+          "focus_dimensions": [
+            "analogical_transfer_structure",
+            "dichotomy_architecture",
+            "typological_structure",
+            "scalar_positioning"
+          ],
+          "label": "Comparative Inventory and Mapping",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "Subject inventoried comparisons to critical assessment. For analogies: where do mappings break down, what is hidden by the comparison? For dichotomies: are they genuinely exhaustive or false, what alternatives are suppressed? For typologies: how are borderline cases handled, is the classification doing analytical work? For scalar arguments: is the continuum justified or artificial? For evaluative comparisons: what criteria are implicit, would different criteria reverse conclusions? Rate comparison quality.",
+          "focus_capabilities": [
+            "dichotomy_evaluation",
+            "evaluative_comparison_assessment",
+            "synecdoche_and_representation_analysis"
+          ],
+          "focus_dimensions": [
+            "dichotomy_architecture",
+            "evaluative_criteria",
+            "representativeness_logic"
+          ],
+          "label": "Critical Assessment",
+          "pass_number": 2,
+          "stance": "confrontation"
+        }
+      ],
+      "suitable_for": "Academic analysis, critical reading, argument evaluation, intellectual engagement with texts making significant comparative claims",
+      "typical_passes": 2
+    },
+    {
+      "description": "Intensive analysis tracing the genealogy and implications of comparative moves, mapping networks of related comparisons, and constructing comprehensive assessment of how comparison shapes the text's argumentative possibilities.",
+      "key": "deep",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Exhaustive mapping of all comparative moves including subtle and implicit comparisons. Identify not only explicit analogies but conceptual metaphors operating beneath conscious argument. Map not only stated dichotomies but oppositional structures implicit in vocabulary choice. Trace scalar assumptions embedded in gradable adjectives and comparative constructions. Create comprehensive inventory with initial relational mapping between comparisons.",
+          "focus_capabilities": [
+            "analogical_mapping_analysis",
+            "dichotomy_evaluation",
+            "typological_assessment",
+            "scalar_argument_analysis"
+          ],
+          "focus_dimensions": [
+            "analogical_transfer_structure",
+            "dichotomy_architecture",
+            "typological_structure",
+            "scalar_positioning"
+          ],
+          "label": "Comprehensive Comparative Mapping",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "Analyze the structural relationships among mapped comparisons. Which analogies share source domains, suggesting systematic conceptual metaphor? How do dichotomies relate\u2014are they independent or do they generate each other? How do typologies interact\u2014do they compete, complement, or nest within each other? Map the network of comparisons as an interconnected system rather than isolated moves. Identify dominant source domains and recurring comparative patterns.",
+          "focus_capabilities": [
+            "analogical_mapping_analysis",
+            "typological_assessment",
+            "evaluative_comparison_assessment"
+          ],
+          "focus_dimensions": [
+            "analogical_transfer_structure",
+            "typological_structure",
+            "evaluative_criteria"
+          ],
+          "label": "Structural Analysis and Interconnection",
+          "pass_number": 2,
+          "stance": "architecture"
+        },
+        {
+          "consumes_from": [
+            1,
+            2
+          ],
+          "description": "Subject the comparative system to intensive critical scrutiny. For each major comparison: trace what it makes visible and invisible, reconstruct suppressed alternatives, identify ideological work performed by the framing. For analogies: where do they break down, what false inferences do they enable? For dichotomies: reconstruct suppressed third positions. For typologies: analyze what the classification excludes. For evaluative comparisons: surface hidden criteria and trace their genealogy. Identify overextended analogies bearing more weight than they can support.",
+          "focus_capabilities": [
+            "dichotomy_evaluation",
+            "synecdoche_and_representation_analysis",
+            "evaluative_comparison_assessment"
+          ],
+          "focus_dimensions": [
+            "dichotomy_architecture",
+            "representativeness_logic",
+            "evaluative_criteria"
+          ],
+          "label": "Critical Deconstruction",
+          "pass_number": 3,
+          "stance": "confrontation"
+        },
+        {
+          "consumes_from": [
+            1,
+            2,
+            3
+          ],
+          "description": "Synthesize findings into comprehensive assessment of the text's comparative architecture. Evaluate overall quality of comparative reasoning: which comparisons illuminate, which obscure? Map how the comparison system as a whole shapes the text's argumentative possibilities\u2014what conclusions are enabled, what are foreclosed? Construct alternative comparison systems that would generate different conclusions. Trace genealogy of key comparisons to their intellectual sources. Produce comparison quality assessment, analogical network map, and dichotomy inventory as synthesis outputs.",
+          "focus_capabilities": [
+            "analogical_mapping_analysis",
+            "dichotomy_evaluation",
+            "typological_assessment",
+            "scalar_argument_analysis",
+            "evaluative_comparison_assessment",
+            "synecdoche_and_representation_analysis"
+          ],
+          "focus_dimensions": [
+            "analogical_transfer_structure",
+            "dichotomy_architecture",
+            "typological_structure",
+            "scalar_positioning",
+            "evaluative_criteria",
+            "representativeness_logic"
+          ],
+          "label": "Synthetic Assessment and Alternative Mapping",
+          "pass_number": 4,
+          "stance": "integration"
+        }
+      ],
+      "suitable_for": "Dissertation-level analysis, intellectual history, ideology critique, comprehensive study of how comparison structures thought in significant texts",
+      "typical_passes": 4
+    }
+  ],
+  "engine_key": "comparative_reasoning_analyzer",
+  "engine_name": "Comparative Reasoning Analyzer",
+  "function": "logic",
+  "intellectual_lineage": {
+    "key_concepts": [
+      {
+        "definition": "The systematic transfer of relational structure from a source domain to a target domain, where relations rather than attributes are the primary content transferred. Gentner's structure-mapping theory formalizes this as alignment of relational predicates, with higher-order relations (relations between relations) being more important than first-order attributes for genuine analogical inference.",
+        "name": "analogical_mapping"
+      },
+      {
+        "definition": "A systematic mapping between a concrete source domain and an abstract target domain that structures understanding of the target in terms of the source. Unlike literary metaphor, conceptual metaphors are largely unconscious, conventional, and constitutive of ordinary reasoning\u2014we cannot think about argument without drawing on mappings from war, journey, or building.",
+        "name": "conceptual_metaphor"
+      },
+      {
+        "definition": "A binary opposition presented as exhaustive when a third (or fourth, or nth) option exists\u2014the 'suppressed middle' or 'excluded alternative.' False dichotomies function argumentatively by constraining the space of possibilities, forcing choice between two options when the most defensible position may lie elsewhere or combine elements of both.",
+        "name": "false_dichotomy"
+      },
+      {
+        "definition": "Weber's methodological concept of a conceptual construct that accentuates certain features of empirical phenomena for purposes of comparison and analysis. Ideal types are explicitly not descriptions of reality but heuristic tools\u2014their value lies not in correspondence to cases but in their capacity to illuminate deviation and variation through comparison.",
+        "name": "ideal_type"
+      },
+      {
+        "definition": "A figure in which a part stands for the whole or the whole for a part\u2014extended in this engine to cover argumentative moves where a single case represents a class, an example stands for a principle, or a particular embodies a universal. The critical question is always whether the part is genuinely representative or whether selection has been tendentious.",
+        "name": "synecdoche"
+      },
+      {
+        "definition": "The inference pattern generated by positioning claims on implicit scales\u2014saying 'some' implicates 'not all,' saying 'warm' implicates 'not hot.' Scalar arguments exploit these implicature patterns, positioning phenomena along continua in ways that generate conclusions about degree, tendency, and relative standing.",
+        "name": "scalar_implicature"
+      },
+      {
+        "definition": "Perelman's concept for the argumentative technique of splitting a unified concept into two distinct concepts, typically a 'mere appearance' and a 'true reality' (apparent freedom vs. real freedom, nominal democracy vs. genuine democracy). Dissociation creates evaluative hierarchies through conceptual division.",
+        "name": "dissociation"
+      },
+      {
+        "definition": "The cognitive bias relevant to comparative reasoning wherein comparisons focus on salient features of compared cases while ignoring background rates and base frequencies. Juxtaposition of cases invites comparison of features while obscuring whether those features are common or rare in the relevant reference class.",
+        "name": "base_rate_neglect"
+      }
+    ],
+    "primary": {
+      "description": "George Lakoff (1941\u2013) and Mark Johnson (1949\u2013), cognitive linguists whose 'Metaphors We Live By' (1980) revolutionized understanding of conceptual metaphor. They demonstrated that metaphor is not merely linguistic ornament but constitutive of abstract thought\u2014we systematically understand abstract domains (time, causation, morality, argument) through mappings from concrete embodied experience (space, force, containment). Their work provides this engine's foundational insight that comparison is not optional rhetorical strategy but the deep structure of reasoning itself, with profound implications for what comparisons reveal and conceal.",
+      "name": "lakoff_johnson"
+    },
+    "secondary": [
+      {
+        "description": "Aristotle (384\u2013322 BCE) established comparison as central to both logic and rhetoric. His analysis of analogy (analogia) as proportional reasoning\u2014perceiving that 'as A is to B, so C is to D'\u2014grounds this engine's treatment of proportional reasoning. His discussion of metaphor in the Poetics as 'giving the thing a name that belongs to something else' anticipates modern theories of conceptual transfer.",
+        "name": "aristotle"
+      },
+      {
+        "description": "Dedre Gentner (1944\u2013), cognitive scientist whose structure-mapping theory provides formal apparatus for analyzing analogical reasoning. Her distinction between surface similarity (shared attributes) and structural similarity (shared relational patterns) enables precise assessment of which analogies are merely illustrative versus genuinely inferential. Her work on analogical transfer grounds this engine's analysis of when mappings hold and when they break down.",
+        "name": "gentner"
+      },
+      {
+        "description": "Cha\u00efm Perelman (1912\u20131984), Belgian philosopher whose 'New Rhetoric' (with Lucie Olbrechts-Tyteca) systematically catalogs argumentative techniques including analogy, comparison, and dissociation. His treatment of quasi-logical arguments\u2014those that derive persuasive force from resemblance to formal logic without possessing its rigor\u2014grounds this engine's critical assessment of comparative arguments' actual inferential validity.",
+        "name": "perelman"
+      },
+      {
+        "description": "Ludwig Wittgenstein (1889\u20131951), whose later philosophy emphasized 'family resemblance' as an alternative to classical definition. His insight that concepts may be unified by overlapping similarities rather than shared essences provides theoretical grounding for analyzing typological reasoning and the limits of classification. His method of 'perspicuous representation' through comparison of cases informs this engine's attention to how juxtaposition functions argumentatively.",
+        "name": "wittgenstein"
+      },
+      {
+        "description": "Max Weber (1864\u20131920), German sociologist whose methodology of ideal types provides a paradigm case of typological reasoning in social science. His explicit acknowledgment that ideal types are heuristic constructs rather than empirical descriptions\u2014and his analysis of how they function in comparative-historical analysis\u2014grounds this engine's assessment of typological reasoning's analytical value and limitations.",
+        "name": "weber"
+      }
+    ],
+    "traditions": [
+      {
+        "description": "The tradition emerging from Lakoff, Johnson, Langacker, and others that treats linguistic structure as revealing cognitive structure. Its central claim\u2014that abstract concepts are systematically understood through embodied metaphor\u2014provides the theoretical foundation for treating comparison not as rhetorical choice but as constitutive of reasoning. This tradition's methods for identifying and mapping conceptual metaphors structure this engine's analysis of analogical transfer.",
+        "name": "cognitive_linguistics"
+      },
+      {
+        "description": "The tradition of argumentation theory revived by Perelman, Olbrechts-Tyteca, and Toulmin that treats rhetoric not as manipulation opposed to logic but as the study of how reasons actually function in persuasion. Its detailed taxonomy of argumentative techniques\u2014including analogy, comparison, dissociation, and the creation of presence\u2014provides this engine's vocabulary for classifying comparative moves and assessing their argumentative functions.",
+        "name": "new_rhetoric"
+      },
+      {
+        "description": "The tradition in social science methodology (Mill, Weber, Ragin, Skocpol) that treats systematic comparison as the foundation of causal inference in non-experimental settings. Its attention to case selection, scope conditions, and the logic of comparative design informs this engine's assessment of whether compared items are genuinely comparable and whether conclusions drawn from comparison are warranted.",
+        "name": "comparative_method"
+      },
+      {
+        "description": "The tradition originating with Saussure and developed by L\u00e9vi-Strauss, Jakobson, and others that treats meaning as constituted by difference and opposition within systems. Its insight that concepts are defined relationally\u2014that 'nature' means what it means only in opposition to 'culture'\u2014grounds this engine's analysis of dichotomies and binary oppositions as meaning-generating structures rather than mere classifications.",
+        "name": "structuralism"
+      },
+      {
+        "description": "The tradition associated with Austin, Ryle, and the later Wittgenstein that attends carefully to how concepts actually function in use. Its method of examining how words work in context\u2014noting subtle distinctions, identifying misleading analogies, resisting premature systematization\u2014informs this engine's attention to how comparative reasoning operates in actual argumentative practice rather than idealized logical form.",
+        "name": "ordinary_language_philosophy"
+      },
+      {
+        "description": "The tradition in discourse analysis and critical theory that examines how metaphors shape understanding of social and political phenomena. Building on Lakoff and Johnson while adding ideological critique, this tradition (Charteris-Black, Musolff, Goatly) analyzes how dominant metaphors naturalize particular understandings while obscuring alternatives. This grounds the engine's attention to what comparisons conceal as well as reveal.",
+        "name": "critical_metaphor_analysis"
+      }
+    ]
+  },
+  "kind": "extraction",
+  "legacy_engine_key": null,
+  "paradigm_keys": [],
+  "problematique": "Comparison is the mind's most fundamental operation for making the unfamiliar intelligible. When we encounter something new, we reach for something known\u2014we say it is LIKE this, UNLIKE that, MORE than one thing, LESS than another. This analogical impulse is not merely pedagogical convenience; it is constitutive of reasoning itself. Every classification, every evaluation, every argument about degree or kind relies on implicit or explicit comparison. Yet precisely because comparison is so ubiquitous, its logical structure often escapes scrutiny. Authors deploy analogies, construct dichotomies, arrange continua, and build typologies as if these were transparent windows onto reality rather than constructed frameworks that shape what can be seen and said. This engine makes the comparative architecture of arguments visible, asking not just WHAT is being compared but HOW the comparison functions argumentatively and WHETHER it can bear the weight placed upon it.\n\nMost readers experience comparisons as illuminating\u2014the unfamiliar becomes graspable through the familiar. But this illumination casts shadows. Every analogy highlights certain features while hiding others; the conceptual metaphor 'argument is war' makes visible the adversarial dimension of disagreement while obscuring its collaborative, truth-seeking dimension. Every dichotomy that structures thought\u2014nature/culture, structure/agency, mind/body\u2014smuggles in assumptions about exhaustiveness and mutual exclusivity that may not survive scrutiny. Every scalar argument that positions something as 'more democratic' or 'less efficient' presupposes a continuum that may be artificial, endpoints that may be arbitrary, and a metric that may be contested. Every typology that sorts phenomena into kinds does violence to the borderline cases that refuse neat classification. This engine reveals what comparisons conceal: the suppressed middles, the disanalogies, the false continua, the unexamined criteria.\n\nThe philosophical foundations run deep. Aristotle's analysis of analogy in the Poetics and Rhetoric established comparison as central to both poetic imagination and logical argument. Contemporary cognitive linguistics, particularly Lakoff and Johnson's work on conceptual metaphor, demonstrates that abstract reasoning is systematically structured by metaphorical mappings from concrete source domains\u2014we understand arguments as journeys, theories as buildings, ideas as objects. Gentner's structure-mapping theory provides formal apparatus for analyzing which relations transfer from source to target domain and which do not. Perelman and Olbrechts-Tyteca's 'New Rhetoric' catalogs the argumentative functions of analogy, dissociation, and other comparative techniques. Together, these traditions reveal comparison not as rhetorical ornament but as the deep structure of reasoning itself\u2014and therefore as a site where arguments succeed or fail, illuminate or obscure.\n\nWithin the logic suite, this engine occupies a distinctive position. Where argument_architecture maps the inferential skeleton of claims and reasons, comparative_reasoning_analyzer examines how comparisons function as premises within that skeleton\u2014asking whether analogies can bear inferential weight, whether dichotomies are genuinely exhaustive, whether scalar arguments rest on justified continua. Where dialectical_structure tracks opposition and synthesis, this engine analyzes the specific comparative moves through which positions are opposed or reconciled. Where concept_centrality_mapper identifies which concepts anchor a work's argumentative network, this engine reveals which concepts are DEFINED through comparison and which serve as source domains for understanding others. The synergy is essential: comparative reasoning is not a separate argumentative mode but a dimension of all argument that requires specialized analytical attention.\n\nCommitment to rigorous comparative analysis matters because sloppy comparison is among the most common sources of intellectual error. False dichotomies foreclose options that should remain open. Overextended analogies transfer conclusions from domains where they are warranted to domains where they are not. Unexamined typologies reify contingent classifications into natural kinds. Scalar arguments smuggle contested value judgments into apparently descriptive claims. The intellectual stakes are not merely logical but ethical and political: when we compare economic systems to organisms, we naturalize certain processes (growth, decay, health) while obscuring others (exploitation, redistribution, collective choice). When we dichotomize tradition and modernity, we obscure hybrid forms and alternative trajectories. Comparative reasoning analysis is not pedantic taxonomy but critical intervention\u2014revealing the choices hidden in every comparison and the roads not taken in every analogy.",
+  "researcher_question": "How does the text use comparison, contrast, and analogy to build arguments, and how rigorous are these comparative moves?",
+  "version": 1
+}

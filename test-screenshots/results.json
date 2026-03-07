@@ -1,0 +1,151 @@
+{
+  "results": [
+    {
+      "testName": "Tab bar shows all 5 capability tabs",
+      "status": "PASS",
+      "details": "Found tab buttons: [About, Depth, Dimensions, Capabilities, Composability], Expected: [About, Depth, Dimensions, Capabilities, Composability]"
+    },
+    {
+      "testName": "Tab bar does NOT show legacy tab names (Schema, History, Stage Context, Prompt Preview)",
+      "status": "PASS",
+      "details": "None found in tab bar"
+    },
+    {
+      "testName": "About tab shows Problematique",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "About tab shows Intellectual Lineage",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "About tab does NOT show old Engine Profile editor",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "About tab does NOT show Generate Profile with AI button",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "Problematique uses serif font",
+      "status": "PASS",
+      "details": "Font: \"Source Serif 4\", Georgia, serif"
+    },
+    {
+      "testName": "Intellectual Lineage has dark sidebar",
+      "status": "PASS",
+      "details": "BG: rgb(41, 37, 36)"
+    },
+    {
+      "testName": "Depth tab clicked successfully",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "Depth tab shows surface level",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "Depth tab shows standard level",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "Depth tab shows deep level",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "Depth tab shows pass structures",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "Dimensions tab clicked successfully",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "Dimensions tab shows dimension content",
+      "status": "PASS",
+      "details": "dimension=true, pipeline=true, matrix=false"
+    },
+    {
+      "testName": "Capabilities tab clicked successfully",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "Capabilities tab shows capability content",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "Capabilities tab shows thinker references/badges",
+      "status": "PASS",
+      "details": "Found thinker references"
+    },
+    {
+      "testName": "Composability tab clicked successfully",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "Composability shows shares_with section",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "Composability shows consumes_from / receives context section",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "Composability shows synergy / combined with section",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "Composability uses grid layout",
+      "status": "PASS",
+      "details": "Columns: 357.328px 357.328px 357.344px"
+    },
+    {
+      "testName": "Legacy engine shows expected legacy tabs (About, Schema, Consumers, History)",
+      "status": "PASS",
+      "details": "Found in tab bar: [About, Schema, History]"
+    },
+    {
+      "testName": "Legacy engine does NOT show capability-only tabs (Depth, Dimensions, Capabilities, Composability)",
+      "status": "PASS",
+      "details": "None found"
+    },
+    {
+      "testName": "Legacy engine About shows profile content OR engine info (not Problematique)",
+      "status": "PASS",
+      "details": "hasProblematique=false, hasProfile=true, hasEngineContent=true"
+    },
+    {
+      "testName": "Legacy engine Schema tab clickable",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "testName": "No significant JavaScript errors",
+      "status": "PASS",
+      "details": "Clean"
+    }
+  ],
+  "consoleErrors": [
+    {
+      "url": "http://localhost:3000/engines/adversarial_robustness_tester",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    }
+  ],
+  "timestamp": "2026-02-17T14:04:35.383Z"
+}

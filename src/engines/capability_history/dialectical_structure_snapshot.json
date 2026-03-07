@@ -1,0 +1,543 @@
+{
+  "analytical_dimensions": [
+    {
+      "depth_guidance": {
+        "deep": "Excavate foundational tensions that structure the entire discourse, including those the discourse cannot acknowledge without dissolving itself.",
+        "standard": "Map tensions at multiple levels, trace their relationships, and assess which are acknowledged versus hidden.",
+        "surface": "Identify the most obvious conflicts and disagreements stated in the text."
+      },
+      "description": "The architecture of contradictions and conflicts within and across texts, mapped according to their depth, acknowledgment, and generative effects. This dimension identifies genuine tensions (where both sides have validity but cannot both be true) as distinguished from mere disagreements or surface conflicts that dissolve under analysis.",
+      "key": "tension_structure",
+      "probing_questions": [
+        "What positions are in genuine conflict, not just different but incompatible?",
+        "Are these tensions acknowledged by the authors or operating beneath awareness?",
+        "Which tensions are surface-level (easily resolved), structural (deep but potentially resolvable), or foundational (constitutive of the discourse itself)?",
+        "How do tensions relate to each other \u2014 do they form hierarchies, networks, or isolated pairs?",
+        "What keeps these tensions in tension rather than resolving?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Trace how binaries deconstruct themselves, how the privileged term depends on its excluded opposite, and where undecidability emerges.",
+        "standard": "Analyze the hierarchical structure of binaries, their interdependencies, and what they exclude.",
+        "surface": "Identify explicit binary oppositions and note which term seems preferred."
+      },
+      "description": "The either/or distinctions that structure thought and discourse, including which term is privileged, what hierarchy governs them, and what third option is excluded. Binaries are not innocent organizational tools but power-laden structures that enable and constrain what can be thought.",
+      "key": "binary_system",
+      "probing_questions": [
+        "What binary oppositions organize this discourse (nature/culture, reason/emotion, etc.)?",
+        "Which term in each binary is privileged, and how is this hierarchy maintained?",
+        "What 'third' positions are excluded by the binary structure \u2014 what literally cannot be thought?",
+        "Are these binaries stable, or do they show signs of strain and instability?",
+        "How do different binaries in the discourse relate to and reinforce each other?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Evaluate whether sublations are genuine (achieving higher integration) or false (suppressing rather than resolving tension), and identify non-identical remainders that resist absorption.",
+        "standard": "Analyze sublation attempts in detail: what is preserved, what is destroyed, what new tensions emerge.",
+        "surface": "Note explicit claims to resolve disagreements or reconcile opposites."
+      },
+      "description": "How contradictions are (or fail to be) resolved through synthesis, tracking what gets preserved, what gets destroyed, and whether the resolution actually works or merely suppresses the tension. Sublation (Aufhebung) is the core dialectical operation, and its analysis reveals whether intellectual progress is genuine or illusory.",
+      "key": "sublation_dynamics",
+      "probing_questions": [
+        "Where does the text attempt to resolve or overcome a tension?",
+        "What elements from each opposing position are preserved in the synthesis?",
+        "What elements are destroyed or abandoned \u2014 and should they have been?",
+        "Does the synthesis actually resolve the tension or merely displace it?",
+        "What new tensions does the synthesis itself generate?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Apply rigorous immanent critique using the text's own stated standards, identify performative contradictions, and assess which contradictions are constitutive of the discourse's possibility.",
+        "standard": "Systematically map internal contradictions, distinguishing accidental from structural ones, and analyze how they are managed.",
+        "surface": "Identify obvious inconsistencies between claims made in different parts of the text."
+      },
+      "description": "Points where positions contradict themselves, where theory conflicts with practice, or where premises undermine conclusions. Internal contradictions are not mere errors but often reveal deeper structural features of a discourse \u2014 what it cannot consistently maintain but also cannot abandon.",
+      "key": "internal_contradiction",
+      "probing_questions": [
+        "Where does the text say one thing and do another?",
+        "Where do stated premises conflict with drawn conclusions?",
+        "Are there performative contradictions \u2014 where the act of stating something contradicts what is stated?",
+        "Which internal contradictions are accidental (fixable) and which are structural (constitutive)?",
+        "How does the text manage or conceal its internal contradictions?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Map the full constitutive outside, trace how excluded elements return to destabilize the discourse, and identify what the discourse's existence depends on excluding.",
+        "standard": "Identify positions that are structurally excluded (not just rejected), and analyze what makes them unthinkable within this framework.",
+        "surface": "Note what the text explicitly rejects or argues against."
+      },
+      "description": "What positions, perspectives, or possibilities literally cannot be thought within the discourse \u2014 the constitutive outside that enables the discourse to function. Exclusions are not merely what the text doesn't mention but what it structurally cannot accommodate without transforming into something else.",
+      "key": "exclusion_mapping",
+      "probing_questions": [
+        "What positions does the discourse structurally preclude, not just ignore?",
+        "What would have to change for these excluded positions to become thinkable?",
+        "Is the exclusion explicit (argued against) or structural (simply unthinkable)?",
+        "How does what is excluded continue to haunt the discourse \u2014 where does it return?",
+        "What does the pattern of exclusions reveal about the discourse's constitutive limits?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Assess the overall dialectical health of the discourse \u2014 whether it is productively working through tensions or trapped in unacknowledged repetition \u2014 and diagnose what conditions would enable genuine progress.",
+        "standard": "Analyze the pattern of dialectical movement, identifying progress, regression, circularity, and spiral development.",
+        "surface": "Track the sequence of positions and note whether later positions seem to advance beyond earlier ones."
+      },
+      "description": "The movement and development of the discourse over time or across sections \u2014 whether it progresses toward resolution, regresses, circles repetitively, or spirals through repeated but deepening engagements with the same tensions. Trajectory analysis reveals whether dialectical work is actually being done.",
+      "key": "dialectical_trajectory",
+      "probing_questions": [
+        "Is there genuine dialectical progress \u2014 are tensions being worked through?",
+        "Does the discourse regress \u2014 returning to positions it had seemingly overcome?",
+        "Is there circular repetition \u2014 the same conflicts recurring without development?",
+        "Is there spiral development \u2014 returning to the same tensions at higher levels of sophistication?",
+        "What blocks or enables dialectical movement in this discourse?"
+      ]
+    }
+  ],
+  "apps": [
+    "critic"
+  ],
+  "capabilities": [
+    {
+      "depth_scaling": {
+        "deep": "Excavate tensions operating beneath the text's awareness; identify constitutive tensions that cannot be resolved without destroying the discourse.",
+        "standard": "Distinguish genuine tensions from apparent ones; sort by depth and resolvability.",
+        "surface": "Identify explicit conflicts and disagreements stated in the text."
+      },
+      "description": "Identifies genuine contradictions where opposing positions each have real validity but cannot both be true, distinguishing these from mere disagreements that can be resolved by clarification.",
+      "extended_description": "The dialectical tradition's fundamental insight is that not all conflicts are equal. Some apparent contradictions dissolve when terms are clarified \u2014 they were never real oppositions, just confusions. Others are genuine but shallow \u2014 one side is simply wrong and the tension resolves when we see this. But the most important contradictions are those where both sides capture something real, where the truth is not 'somewhere in the middle' but requires a new framework that preserves what each side got right while transcending their opposition.\n\nThis capability trains attention on the specific markers of genuine dialectical tension: positions that seem to refute each other yet keep recurring, arguments where defeating one side somehow diminishes the force of your own position, claims that require their opposites to be meaningful. It draws on Hegel's analysis of determinate negation \u2014 genuine opposition produces specific content \u2014 and Adorno's insistence that some tensions must be held open rather than prematurely resolved.\n\nThe practical result is a map of tensions sorted by depth and type: which conflicts are merely apparent, which are real but resolvable, which are constitutive of the discourse and would destroy it if resolved. This sorting is essential for any serious engagement with a text's argumentative structure.",
+      "indicators": [
+        "Positions that recur despite apparently being refuted",
+        "Arguments where refuting the opponent weakens one's own case",
+        "Claims that require their opposites to be meaningful",
+        "Tensions that authors keep returning to without resolution",
+        "Debates where each side can predict and articulate the other's objections"
+      ],
+      "intellectual_grounding": {
+        "concept": "Determinate negation",
+        "method": "Negation of a specific position yields specific positive content rather than emptiness; genuine tensions are productive of new thought.",
+        "thinker": "Hegel"
+      },
+      "key": "tension_identification",
+      "produces_dimensions": [
+        "tension_structure"
+      ],
+      "requires_dimensions": []
+    },
+    {
+      "depth_scaling": {
+        "deep": "Trace how binaries deconstruct themselves, reveal mutual contamination of opposed terms, map systems of interlocking binaries.",
+        "standard": "Analyze hierarchies, trace dependencies between opposed terms, identify excluded thirds.",
+        "surface": "Identify explicit binary oppositions and note which term is preferred."
+      },
+      "description": "Analyzes the binary oppositions structuring discourse, revealing their hierarchies, interdependencies, instabilities, and the third options they exclude.",
+      "extended_description": "Binary oppositions appear throughout human thought: nature/culture, reason/emotion, public/private, mind/body. They seem to be innocent organizational tools, but deconstruction reveals them as power-laden structures with hidden dynamics. One term is always privileged over the other. The hierarchy is maintained through specific rhetorical and conceptual operations. And crucially, the binary excludes a 'third' that doesn't fit \u2014 and this exclusion often destabilizes the binary from within.\n\nThis capability applies Derrida's deconstructive method without requiring the reader to know Derrida. It traces how the privileged term secretly depends on what it excludes \u2014 how 'culture' needs 'nature' to define itself against, how 'reason' is constituted through the exclusion of 'emotion.' It identifies the excluded third \u2014 what cannot be thought within the binary's terms \u2014 and traces how this exclusion creates instabilities that eventually undermine the binary itself.\n\nThe result is not the destruction of binary thinking (which would be another binary: binary/non-binary) but a map of how binaries work, where they break down, and what analytical resources become available when we recognize their contingency rather than treating them as natural.",
+      "indicators": [
+        "Explicit or implicit either/or structures organizing argument",
+        "Terms defined primarily through what they are not",
+        "Hierarchies where one concept is valued and its opposite denigrated",
+        "Positions that seem to fall outside available categories",
+        "Moments where texts struggle to maintain their binary distinctions"
+      ],
+      "intellectual_grounding": {
+        "concept": "Diff\u00e9rance and supplementarity",
+        "method": "Binary oppositions harbor undecidability; the privileged term depends on and is contaminated by what it excludes, creating constitutive instability.",
+        "thinker": "Derrida"
+      },
+      "key": "binary_deconstruction",
+      "produces_dimensions": [
+        "binary_system",
+        "exclusion_mapping"
+      ],
+      "requires_dimensions": [
+        "tension_structure"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Evaluate sublation genuineness vs. mere suppression; identify non-identical remainders; trace new tensions generated by synthesis.",
+        "standard": "Analyze sublation mechanics: what is preserved, destroyed, elevated. Assess whether synthesis holds.",
+        "surface": "Note explicit claims to resolve tensions or reconcile opposites."
+      },
+      "description": "Evaluates attempts to resolve contradictions through synthesis, tracking what is preserved, destroyed, and elevated, and assessing whether resolution is genuine or merely apparent.",
+      "extended_description": "Sublation (Aufhebung) is Hegel's untranslatable term for the dialectical operation that simultaneously negates, preserves, and elevates. When done well, sublation transcends opposition while keeping what was valid in each side. But false sublation \u2014 premature or forced synthesis \u2014 merely suppresses tension without resolving it. The contradiction returns, often in displaced or disguised form.\n\nThis capability provides rigorous analysis of sublation attempts. It tracks three movements: What is negated? The immediate opposition, the either/or that made the contradiction seem irresolvable. What is preserved? The genuine insights from each position that deserve survival. What is elevated? The new synthesis that integrates preserved elements at a higher level. Crucially, it also asks: Does this actually work? Does the synthesis hold, or does it break down under pressure? What new tensions does it generate?\n\nAdorno's negative dialectics informs a critical stance toward sublation: not all contradictions should be resolved. Some must be held open because premature synthesis does violence to the non-identical \u2014 the particular that resists absorption into universal categories. This capability identifies non-identical remainders: what the synthesis claims to integrate but actually excludes or distorts.",
+      "indicators": [
+        "Claims to reconcile, overcome, or transcend oppositions",
+        "Synthesis vocabulary: 'both/and,' 'integration,' 'higher unity'",
+        "Arguments that one side 'contains' or 'includes' the other",
+        "Moments of claimed resolution followed by return of the tension",
+        "Persistent remainders that don't fit the synthesis"
+      ],
+      "intellectual_grounding": {
+        "concept": "Aufhebung and the non-identical",
+        "method": "Genuine sublation preserves valid elements of opposition while elevating to higher integration; false sublation suppresses tension without resolution. The non-identical marks what resists absorption.",
+        "thinker": "Hegel and Adorno"
+      },
+      "key": "sublation_analysis",
+      "produces_dimensions": [
+        "sublation_dynamics"
+      ],
+      "requires_dimensions": [
+        "tension_structure",
+        "binary_system"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Apply comprehensive immanent critique; identify performative contradictions; assess whether violations are accidental or structurally necessary.",
+        "standard": "Systematically identify stated standards and trace where they are met or violated.",
+        "surface": "Note obvious inconsistencies between stated principles and practice."
+      },
+      "description": "Criticizes positions using their own stated standards and principles, revealing where texts fail by their own criteria rather than imposing external judgment.",
+      "extended_description": "Immanent critique is the Frankfurt School's most powerful method, and it remains the most devastating form of criticism. To show that a position fails by external standards is to invite the response that those standards are themselves contestable. But to show that a position fails by its own stated standards \u2014 that it violates the very principles it claims to uphold \u2014 leaves no escape. The position stands self-condemned.\n\nThis capability systematically applies immanent critique. It first identifies a discourse's explicit commitments: what standards does it claim to uphold? what principles does it endorse? what criteria does it apply to others? It then examines whether the discourse itself meets these standards. Does the call for rigor exhibit rigor? Does the demand for inclusivity include all relevant perspectives? Does the critique of ideology reveal its own ideological presuppositions?\n\nImmanent critique is not gotcha hypocrisy-hunting. The goal is not to embarrass but to illuminate. When a position fails by its own standards, this reveals something important about the position's structure \u2014 typically, that it contains internal tensions it has not resolved or acknowledged. The failure opens a path toward more adequate thought.",
+      "indicators": [
+        "Explicit statements of principle, criteria, or standards",
+        "Methodological commitments stated in introductions or manifestos",
+        "Criticisms the text makes of others (which it implicitly commits to meeting)",
+        "Gaps between stated methodology and actual practice",
+        "Moments where the text exempts itself from its own rules"
+      ],
+      "intellectual_grounding": {
+        "concept": "Immanent critique",
+        "method": "Criticize society or discourse by its own stated standards rather than external criteria; this reveals internal contradictions and opens paths to genuine transcendence.",
+        "thinker": "Frankfurt School (Horkheimer, Adorno)"
+      },
+      "key": "immanent_critique",
+      "produces_dimensions": [
+        "internal_contradiction"
+      ],
+      "requires_dimensions": [
+        "internal_contradiction"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Map full structure of mutual dependency; assess conditions for genuine sublation vs. mere reversal; identify what third positions emerge from destabilized hierarchies.",
+        "standard": "Trace dependencies: what does the dominant position need from what it dominates? Identify potential reversals.",
+        "surface": "Identify explicit hierarchies and which positions are privileged."
+      },
+      "description": "Reveals how dominant positions secretly depend on what they subordinate, following Hegel's master-slave dialectic to trace hidden reliance and potential reversal.",
+      "extended_description": "Hegel's master-slave dialectic is one of philosophy's most generative analyses. The master appears to dominate the slave, but examination reveals that the master depends on the slave for recognition (to be a master requires someone to recognize you as such) and for mediated contact with the world (through the slave's labor). Meanwhile, the slave, through labor, develops capacities and self-consciousness the master lacks. The conditions for reversal are built into the structure of domination itself.\n\nThis capability applies the master-slave pattern to any discourse where one position claims dominance over another. The apparently dominant term \u2014 whether 'reason' over 'emotion,' 'culture' over 'nature,' 'theory' over 'practice' \u2014 is analyzed for its secret dependencies. What does it need from what it subordinates? How would it define itself without its inferior? What capacities does the subordinate position develop that the dominant one lacks?\n\nThis analysis often reveals that hierarchies are less stable than they appear. The dominant position's reliance on what it dominates creates structural vulnerabilities. The subordinate position's excluded knowledge or capabilities become resources for critique. The potential for inversion \u2014 not simple reversal but sublation \u2014 becomes visible.",
+      "indicators": [
+        "Explicit hierarchies between concepts, positions, or groups",
+        "Dominant terms defined in opposition to what they subordinate",
+        "Appeals to the subordinate term at crucial moments in argument",
+        "Anxiety about maintaining distinction from the subordinate",
+        "The subordinate position possessing capacities the dominant lacks"
+      ],
+      "intellectual_grounding": {
+        "concept": "Master-slave dialectic (Herrschaft und Knechtschaft)",
+        "method": "The dominant party in any relationship depends on the subordinate for recognition and mediated world-relation; this dependency creates conditions for transformation.",
+        "thinker": "Hegel"
+      },
+      "key": "dependency_inversion_detection",
+      "produces_dimensions": [
+        "sublation_dynamics",
+        "dialectical_trajectory"
+      ],
+      "requires_dimensions": [
+        "binary_system",
+        "tension_structure"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Full diagnostic assessment of dialectical health; identify conditions for productive movement; prescribe what would need to change for genuine progress.",
+        "standard": "Analyze patterns of movement: progress, regression, circularity, spiral. Identify blocking factors.",
+        "surface": "Assess whether the discourse appears to progress or repeat itself."
+      },
+      "description": "Evaluates the overall dialectical condition of a discourse \u2014 whether tensions are being productively worked through or whether the discourse is trapped in stagnation, regression, or false synthesis.",
+      "extended_description": "Not all discourses are dialectically equal. Some genuinely work through their tensions, achieving deeper understanding through sustained engagement with contradiction. Others merely circle, returning to the same conflicts without development. Still others regress, abandoning achieved insights to revisit positions that had been transcended. And some achieve only false synthesis \u2014 apparent resolution that suppresses rather than genuinely overcomes tension.\n\nThis capability provides overall assessment of a discourse's dialectical health. It asks: Is there progress? Are later formulations more adequate than earlier ones? Does engagement with opposition strengthen positions or merely entrench them? Are contradictions being held productively open (Adorno) or avoided through premature closure? Is the discourse moving toward genuine sublation or trapped in repetition compulsion?\n\nDialectical health assessment is not mere evaluation but diagnosis. When a discourse is stuck, this capability identifies what is blocking progress: unacknowledged tensions, false syntheses that need reopening, excluded positions that need inclusion, binary structures that need destabilization. The goal is not to judge but to map conditions for genuine dialectical movement.",
+      "indicators": [
+        "Later positions engaging with earlier objections vs. ignoring them",
+        "Increasing sophistication vs. repetition of the same moves",
+        "Tensions held productively open vs. prematurely closed",
+        "New positions emerging from conflict vs. entrenchment of old ones",
+        "Synthesis that generates new problems vs. synthesis that claims completion"
+      ],
+      "intellectual_grounding": {
+        "concept": "Dialectical progress and regression",
+        "method": "Genuine dialectic works through contradiction toward higher integration; false dialectic circles repetitively, regresses, or achieves only apparent synthesis. Diagnosis identifies conditions for productive movement.",
+        "thinker": "Hegel and Adorno"
+      },
+      "key": "dialectical_health_assessment",
+      "produces_dimensions": [
+        "dialectical_trajectory"
+      ],
+      "requires_dimensions": [
+        "tension_structure",
+        "sublation_dynamics",
+        "internal_contradiction"
+      ]
+    }
+  ],
+  "category": "argument",
+  "composability": {
+    "consumes_from": {
+      "argument_structure": "From argument_architecture \u2014 the logical structure of claims and warrants provides the material in which tensions operate.",
+      "conceptual_frameworks": "From conceptual_framework_extraction \u2014 the vocabulary and categories within which dialectical conflict occurs.",
+      "inferential_chains": "From inferential_commitment_mapper \u2014 commitment structures reveal hidden dependencies that generate tensions.",
+      "semantic_relationships": "From concept_semantic_constellation \u2014 how concepts relate semantically reveals where tensions can arise."
+    },
+    "shares_with": {
+      "binary_system": "Analysis of either/or structures that constrain thought, useful for conceptual and epistemological engines.",
+      "exclusion_mapping": "What cannot be thought within a framework, useful for analyzing conceptual limits and blind spots.",
+      "internal_contradiction": "Identification of self-undermining positions, useful for critique and argument evaluation.",
+      "sublation_dynamics": "How conflicts resolve and what survives resolution, useful for tracing intellectual development.",
+      "tension_structure": "Maps of contradictions and conflicts that reveal argumentative pressure points, useful for any engine analyzing reasoning."
+    },
+    "synergy_engines": [
+      "argument_architecture",
+      "inferential_commitment_mapper",
+      "counterfactual_analyzer",
+      "theory_construction_analyzer",
+      "epistemological_method_detector"
+    ]
+  },
+  "depth_levels": [
+    {
+      "description": "Identifies explicit conflicts, obvious binary structures, and stated attempts at resolution. Suitable for quick assessment of a text's dialectical landscape without deep analysis.",
+      "key": "surface",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Survey the text for explicit conflicts, disagreements, and binary structures. Note which tensions are acknowledged by the author and which seem to operate beneath awareness. Identify the most prominent binary oppositions and their surface-level hierarchies. Flag potential deeper tensions for follow-up at higher depth levels.",
+          "focus_capabilities": [
+            "tension_identification",
+            "binary_deconstruction"
+          ],
+          "focus_dimensions": [
+            "tension_structure",
+            "binary_system"
+          ],
+          "label": "Tension Survey",
+          "pass_number": 1,
+          "stance": "discovery"
+        }
+      ],
+      "suitable_for": "Initial orientation, identifying whether deeper dialectical analysis would be productive, quick mapping of explicit tensions.",
+      "typical_passes": 1
+    },
+    {
+      "description": "Maps the full tension structure, analyzes binary dynamics and their exclusions, evaluates sublation attempts, and applies immanent critique. Suitable for serious engagement with argumentative discourse.",
+      "key": "standard",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Map the full landscape of tensions: genuine contradictions, apparent conflicts, structural binaries. For each binary, identify the privileged term, the hierarchy's mechanism, and the excluded third. Sort tensions by depth (surface/structural/foundational) and acknowledgment status. Begin identifying the constitutive outside \u2014 what the discourse cannot think.",
+          "focus_capabilities": [
+            "tension_identification",
+            "binary_deconstruction"
+          ],
+          "focus_dimensions": [
+            "tension_structure",
+            "binary_system",
+            "exclusion_mapping"
+          ],
+          "label": "Dialectical Mapping",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "Analyze how the mapped tensions are (or fail to be) resolved. For each sublation attempt: what is preserved, destroyed, elevated? Does it work? Apply immanent critique: where does the text violate its own standards? Assess overall dialectical trajectory: progress, regression, or circularity? Identify non-identical remainders that resist synthesis.",
+          "focus_capabilities": [
+            "sublation_analysis",
+            "immanent_critique",
+            "dialectical_health_assessment"
+          ],
+          "focus_dimensions": [
+            "sublation_dynamics",
+            "internal_contradiction",
+            "dialectical_trajectory"
+          ],
+          "label": "Resolution Analysis",
+          "pass_number": 2,
+          "stance": "confrontation"
+        }
+      ],
+      "suitable_for": "Academic analysis, critical reading, understanding how positions develop and conflict, identifying structural vulnerabilities in arguments.",
+      "typical_passes": 2
+    },
+    {
+      "description": "Comprehensive dialectical analysis including all dimensions and capabilities, with recursive self-application and full integration. Suitable for major works or corpora requiring thorough dialectical excavation.",
+      "key": "deep",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Exhaustive mapping of all tensions at all levels. Distinguish surface conflicts from structural ones from foundational tensions constitutive of the discourse itself. Map the full system of binary oppositions, their interlocking relationships, and their mutual reinforcement. Identify which tensions the discourse is aware of and which operate beneath its awareness.",
+          "focus_capabilities": [
+            "tension_identification",
+            "binary_deconstruction"
+          ],
+          "focus_dimensions": [
+            "tension_structure",
+            "binary_system"
+          ],
+          "label": "Comprehensive Tension Excavation",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "Map the full constitutive outside \u2014 everything the discourse structurally cannot think without transforming itself. Trace how excluded elements haunt the discourse, returning at symptomatic points. Apply master-slave analysis to all hierarchies: what does the dominant term need from what it subordinates? Identify potential reversals and conditions for transformation.",
+          "focus_capabilities": [
+            "binary_deconstruction",
+            "dependency_inversion_detection"
+          ],
+          "focus_dimensions": [
+            "exclusion_mapping",
+            "binary_system"
+          ],
+          "label": "Exclusion and Dependency Analysis",
+          "pass_number": 2,
+          "stance": "inference"
+        },
+        {
+          "consumes_from": [
+            1,
+            2
+          ],
+          "description": "Rigorous analysis of all sublation attempts: genuine vs. false synthesis, what is preserved vs. destroyed, what non-identical remainders persist. Apply comprehensive immanent critique using every stated standard the discourse commits to. Identify performative contradictions and assess whether violations are accidental or structurally necessary. Determine which contradictions are constitutive and which could be resolved.",
+          "focus_capabilities": [
+            "sublation_analysis",
+            "immanent_critique"
+          ],
+          "focus_dimensions": [
+            "sublation_dynamics",
+            "internal_contradiction"
+          ],
+          "label": "Sublation and Critique",
+          "pass_number": 3,
+          "stance": "confrontation"
+        },
+        {
+          "consumes_from": [
+            1,
+            2,
+            3
+          ],
+          "description": "Synthesize all findings into comprehensive dialectical assessment. Evaluate overall dialectical health: Is the discourse working through its tensions productively or trapped? What would genuine progress require? What structural changes would enable resolution of constitutive tensions? Provide diagnostic prescription for the discourse's dialectical condition. Ensure all findings are articulated in accessible language without technical philosophical vocabulary.",
+          "focus_capabilities": [
+            "dialectical_health_assessment",
+            "sublation_analysis"
+          ],
+          "focus_dimensions": [
+            "dialectical_trajectory",
+            "tension_structure",
+            "sublation_dynamics"
+          ],
+          "label": "Dialectical Integration",
+          "pass_number": 4,
+          "stance": "integration"
+        }
+      ],
+      "suitable_for": "Major research projects, comprehensive critique, understanding the deepest structures of intellectual traditions, preparing authoritative analysis.",
+      "typical_passes": 4
+    }
+  ],
+  "engine_key": "dialectical_structure",
+  "engine_name": "Dialectical Structure Mapper",
+  "function": "logic",
+  "intellectual_lineage": {
+    "key_concepts": [
+      {
+        "definition": "Hegel's untranslatable term (variously rendered as sublation, supersession, or overcoming) for the dialectical operation that simultaneously negates, preserves, and elevates. When a contradiction is aufgehoben, something is destroyed (the immediate opposition), something is preserved (valid elements of both sides), and something new emerges at a higher level. This engine tracks all three movements in any attempted synthesis.",
+        "name": "aufhebung"
+      },
+      {
+        "definition": "Hegel's insight that negating something specific yields something specific rather than mere emptiness. When we negate 'being' we get not nothing but 'nothing' as a determinate concept that itself generates new content. Determinate negation is the motor of dialectical progress: each negation produces positive content. This engine traces what specific content emerges from each negation in a discourse.",
+        "name": "determinate_negation"
+      },
+      {
+        "definition": "Adorno's term for that which resists absorption into conceptual frameworks \u2014 the particular that exceeds the universal, the remainder that escapes categorization. The non-identical is what identity thinking necessarily does violence to. This engine detects non-identical remainders: aspects of the subject matter that the discourse's concepts cannot adequately capture and that persistently trouble its syntheses.",
+        "name": "non_identical"
+      },
+      {
+        "definition": "The position or element that must be excluded for a discourse to constitute itself, yet which secretly enables that constitution. The constitutive outside is not merely absent but actively produced as absent \u2014 it is what the discourse cannot think without ceasing to be itself. This engine identifies what each discourse must exclude to function and traces how this exclusion haunts the discourse.",
+        "name": "constitutive_outside"
+      },
+      {
+        "definition": "The method of criticizing a position using its own stated standards rather than imposing external criteria. Immanent critique is the most devastating form of criticism because it shows that a position fails by its own lights. This engine systematically applies immanent critique by identifying a discourse's explicit commitments and locating where it violates them.",
+        "name": "immanent_critique"
+      },
+      {
+        "definition": "Hegel's famous analysis of how the dominant party in a relationship comes to depend on the subordinate party for recognition and how this creates the conditions for reversal. The master needs the slave's recognition to be a master; the slave, through labor, develops capacities the master lacks. This engine detects analogous dependencies wherever one position claims dominance over another.",
+        "name": "master_slave_dialectic"
+      },
+      {
+        "definition": "The whole considered as more than the sum of its parts \u2014 a system of interconnected elements that can only be understood through their relations. Dialectical thinking insists on grasping totality while remaining critical of any particular claim to represent the whole. This engine identifies claims to totality, examines what they exclude, and assesses whether they genuinely integrate or merely aggregate their elements.",
+        "name": "totality"
+      },
+      {
+        "definition": "Luk\u00e1cs's development of Marx's commodity fetishism: the process by which social relations come to appear as natural things, dynamic processes as static givens, historical products as eternal facts. Reification is ideology's preferred mode of operation. This engine detects reification by identifying where discourses naturalize what is in fact socially constructed or present contingent arrangements as necessary.",
+        "name": "reification"
+      }
+    ],
+    "primary": {
+      "description": "Georg Wilhelm Friedrich Hegel (1770\u20131831), German idealist philosopher who developed the most systematic account of dialectical logic in Western philosophy. His insight that contradiction is not mere error but the engine of conceptual development \u2014 that thought progresses through thesis, antithesis, and synthesis (Aufhebung) \u2014 provides this engine's foundational architecture. Hegel's concept of 'determinate negation' \u2014 that negating something specific yields something specific rather than nothing \u2014 grounds the engine's tracking of what gets preserved and destroyed in dialectical movement. His analysis of how apparent opposites (being/nothing, master/slave, universal/particular) secretly depend on and generate each other provides the model for mapping tensions in any discourse.",
+      "name": "hegel"
+    },
+    "secondary": [
+      {
+        "description": "Karl Marx (1818\u20131883), who materialized Hegelian dialectics by grounding contradictions in concrete social and economic relations rather than pure thought. His method of revealing how ideological positions serve particular class interests while claiming universality, and how contradictions in the economic base generate contradictions in the ideological superstructure, provides this engine's sensitivity to the material stakes beneath conceptual conflicts. Marx's analysis of commodity fetishism \u2014 how social relations appear as relations between things \u2014 models how this engine detects hidden dependencies and inversions.",
+        "name": "marx"
+      },
+      {
+        "description": "Theodor W. Adorno (1903\u20131969), Frankfurt School philosopher whose 'negative dialectics' resisted the Hegelian drive toward synthesis and reconciliation. Adorno insisted that some contradictions must be held open, that the 'non-identical' \u2014 aspects of reality that resist conceptual absorption \u2014 must be preserved against totalizing thought. This engine's detection of 'non-identical remainders' and its skepticism toward premature synthesis derive directly from Adorno's critical project. His analysis of how identity thinking does violence to particularity informs the engine's tracking of what gets excluded or destroyed in dialectical resolution.",
+        "name": "adorno"
+      },
+      {
+        "description": "Jacques Derrida (1930\u20132004), whose deconstructive practice revealed how binary oppositions harbor undecidability at their core \u2014 how the privileged term secretly depends on the excluded term it claims to dominate. Derrida's concepts of the 'supplement' (what is supposedly added but proves essential), 'diff\u00e9rance' (meaning's endless deferral), and the 'constitutive outside' (what must be excluded for a system to function) provide this engine's tools for analyzing binary structures and their instabilities. His method of reading texts against themselves \u2014 finding where they say more or other than they intend \u2014 informs the engine's approach to immanent critique.",
+        "name": "derrida"
+      },
+      {
+        "description": "Fredric Jameson (1934\u20132024), Marxist literary critic whose method of 'metacommentary' revealed how texts unconsciously work through the social contradictions of their historical moment. Jameson's insistence that interpretation must reconstruct the 'political unconscious' \u2014 the absent cause that structures a text without appearing directly within it \u2014 provides this engine's sensitivity to tensions that discourse cannot acknowledge without dissolving itself. His concept of the 'strategy of containment' \u2014 how texts manage contradictions they cannot resolve \u2014 informs the engine's analysis of attempted syntheses.",
+        "name": "jameson"
+      },
+      {
+        "description": "Judith Butler (1956\u2013), whose work on performativity and subject formation revealed how identities are constituted through repeated exclusions and how the excluded always returns to destabilize the constituted. Butler's analysis of how binary categories (male/female, nature/culture) are not natural givens but performatively produced and inherently unstable provides this engine's approach to mapping binaries and their vulnerabilities. Her concept of 'constitutive exclusion' \u2014 what must be cast out for an identity to cohere \u2014 grounds the engine's detection of what cannot be thought within a discourse.",
+        "name": "butler"
+      }
+    ],
+    "traditions": [
+      {
+        "description": "The philosophical tradition running from Kant through Fichte and Schelling to Hegel, which developed the systematic analysis of how thought relates to itself and generates new content through its own activity. German Idealism's core insight \u2014 that the subject is not a passive receiver but actively constitutes its objects, and that this constitution involves necessary tensions \u2014 provides the philosophical ground for treating contradictions as productive rather than merely erroneous.",
+        "name": "german_idealism"
+      },
+      {
+        "description": "The tradition of Marxist thought from Luk\u00e1cs through Gramsci to the Frankfurt School that emphasized ideology critique and cultural analysis over economistic determinism. Western Marxism's focus on reification (how dynamic social relations come to appear as static things), hegemony (how domination works through consent rather than force), and the dialectic of enlightenment (how progress contains regression) informs this engine's sensitivity to hidden dependencies and inversions in discourse.",
+        "name": "western_marxism"
+      },
+      {
+        "description": "The critical theory tradition associated with the Institute for Social Research, including Horkheimer, Adorno, Marcuse, and later Habermas. The Frankfurt School's method of 'immanent critique' \u2014 criticizing society by its own stated standards \u2014 provides this engine's most powerful analytical tool. Their analysis of how enlightenment rationality dialectically produces new forms of domination, and their insistence on preserving the utopian moment even in critique, shapes the engine's approach to evaluating syntheses.",
+        "name": "frankfurt_school"
+      },
+      {
+        "description": "The philosophical practice associated with Derrida and his followers that reveals how texts undermine their own apparent meanings through the play of language and the instability of binary oppositions. Deconstruction's method of identifying 'aporias' (irresolvable contradictions) and tracing how texts deconstruct themselves provides this engine's tools for detecting deconstructive moments \u2014 points where the text's argument turns against itself or where meaning resists fixation.",
+        "name": "deconstruction"
+      },
+      {
+        "description": "The strand of Marxist thought that emphasizes Hegel's dialectical method rather than scientific materialism, including Luk\u00e1cs, Korsch, and the early Frankfurt School. Hegelian Marxism's insistence that totality must be grasped dialectically \u2014 that parts can only be understood through their relation to the whole, and the whole through its parts \u2014 provides this engine's approach to hermeneutic circles and the critique of partial perspectives claiming to be complete.",
+        "name": "hegelian_marxism"
+      },
+      {
+        "description": "The mystical tradition of defining the divine through what it is not, practiced by Pseudo-Dionysius, Meister Eckhart, and others. While not directly political, negative theology's method of approaching truth through negation rather than positive assertion \u2014 and its recognition that the most important realities exceed conceptual capture \u2014 resonates with Adorno's negative dialectics and informs this engine's attention to what resists synthesis and what cannot be said within a discourse.",
+        "name": "negative_theology"
+      }
+    ]
+  },
+  "kind": "synthesis",
+  "legacy_engine_key": null,
+  "paradigm_keys": [],
+  "problematique": "Ideas do not simply coexist \u2014 they clash, transform, and generate new ideas through their very opposition. Every significant intellectual work contains tensions it cannot fully resolve, contradictions it may not even recognize, and dependencies on the very positions it claims to oppose. The dialectical structure of thought is this hidden engine of intellectual development: the way thesis and antithesis collide, the way each position secretly requires its enemy, the way attempted resolutions preserve some elements while destroying others. To read without grasping dialectical structure is to see only the surface of argument \u2014 the positions stated \u2014 while missing the dynamic forces that generate, sustain, and ultimately transform those positions.\n\nMost readers treat contradictions as failures of logic to be corrected. Most authors try to hide or minimize the tensions in their work. But the dialectical tradition reveals that contradiction is not a bug but a feature \u2014 the motor of thought itself. The interesting question is never 'is there a contradiction?' (there always is) but rather 'what kind of contradiction is it, and what does it generate?' Some contradictions are merely apparent and dissolve under analysis. Others are genuine but resolvable through synthesis. Still others are constitutive \u2014 the very conditions that make the discourse possible, unresolvable without destroying the framework itself. This engine maps these different species of contradiction and traces their effects.\n\nThe philosophical foundation runs from Hegel through Marx to the Frankfurt School and contemporary critical theory. Hegel's insight was that contradiction is not the end of thought but its beginning \u2014 that the negative is productive, that determinate negation yields something new. Marx materialized this insight, showing how contradictions in economic and social structures drive historical transformation. Adorno's negative dialectics warned against premature synthesis, insisting that some contradictions must be held open, that the 'non-identical' resists absorption into any conceptual totality. Derrida's deconstruction revealed how binary oppositions harbor undecidability at their core. This engine operationalizes these traditions without requiring the reader to know them.\n\nWithin the logic suite, the Dialectical Structure Mapper occupies a unique position: where argument_architecture maps the static structure of reasoning and inferential_commitment_mapper traces logical entailments, this engine reveals the dynamic tensions that drive discourse forward or hold it in place. It shows not just what positions exist but why they exist in opposition, how they secretly depend on each other, and what would happen if their contradictions were resolved or intensified. It synthesizes with counterfactual_analyzer (what would change if this tension resolved differently?) and theory_construction_analyzer (how do contradictions constrain theory-building?).\n\nCommitment to dialectical analysis matters because intellectual honesty requires acknowledging that your position depends on what it opposes. Every claim gains its meaning partly through what it excludes. Every synthesis leaves something behind. The thinker who cannot see the tensions driving their own discourse is controlled by those tensions rather than navigating them deliberately. Dialectical mapping is not a technique for winning arguments but a discipline for understanding how arguments actually work \u2014 including, especially, one's own.",
+  "researcher_question": "What contradictions drive this discourse, and how do they work themselves out?",
+  "version": 1
+}

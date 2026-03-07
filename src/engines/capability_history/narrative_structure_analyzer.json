@@ -1,0 +1,21 @@
+{
+  "engine_key": "narrative_structure_analyzer",
+  "entries": [
+    {
+      "timestamp": "2026-02-25T08:37:22.868040+00:00",
+      "version": 2,
+      "definition_hash": "6ffb461ffce49c49e3d959af3ef6e7b771c20ab8c7c5bfdf5d6f19adebf58cdc",
+      "changes": [],
+      "summary": "No changes detected",
+      "is_baseline": false
+    },
+    {
+      "timestamp": "2026-02-25T08:18:28.807963+00:00",
+      "version": 1,
+      "definition_hash": "401c42ccc305b0b5247def562671123ce3dcab72a8b94cc0eb821b1fada77f65",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

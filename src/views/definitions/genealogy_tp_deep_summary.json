@@ -25,7 +25,7 @@
         "config": {"section_description": "The thesis architecture — load-bearing argumentative structure"}
       },
       "chapter_argument_map": {
-        "renderer_type": "chapter_flow",
+        "renderer_type": "ordered_flow",
         "config": {"title_field": "chapter", "subtitle_field": "function", "description_field": "argument"}
       },
       "conceptual_moves": {

@@ -1,0 +1,13 @@
+{
+  "engine_key": "structural_pattern_detector",
+  "entries": [
+    {
+      "timestamp": "2026-02-24T09:44:12.590209+00:00",
+      "version": 1,
+      "definition_hash": "e59423d8165d1ce335800ae4a854e55a589c75d319f8f45a3a35bfc69a150938",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "engine_key": "argument_architecture",
+  "entries": [
+    {
+      "timestamp": "2026-02-24T09:44:12.424345+00:00",
+      "version": 1,
+      "definition_hash": "d415fbfde807583139dec0ec847815af2c273e6aab1b2431f29eb5ac6c91345c",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

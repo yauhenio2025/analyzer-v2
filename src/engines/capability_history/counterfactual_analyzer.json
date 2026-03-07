@@ -1,0 +1,13 @@
+{
+  "engine_key": "counterfactual_analyzer",
+  "entries": [
+    {
+      "timestamp": "2026-02-24T09:44:12.472085+00:00",
+      "version": 1,
+      "definition_hash": "563a108472d42d970fce8c0084e201d756605efa9d06619c50ed3a47a33c57e1",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

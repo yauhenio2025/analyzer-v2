@@ -1,0 +1,13 @@
+{
+  "engine_key": "specialized_reasoning_classifier",
+  "entries": [
+    {
+      "timestamp": "2026-02-24T09:44:12.566948+00:00",
+      "version": 1,
+      "definition_hash": "c1463d72a6379b7a85f0b435741e5f5bfe5fd482b31811d4ec7aac2828073de2",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

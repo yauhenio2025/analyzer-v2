@@ -1,0 +1,13 @@
+{
+  "engine_key": "epistemological_method_detector",
+  "entries": [
+    {
+      "timestamp": "2026-02-24T09:44:12.614172+00:00",
+      "version": 1,
+      "definition_hash": "c49e6674b724c3f2d08e22714f6b6544cc01d546a2ac63dfef1d07b84f1a14b8",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

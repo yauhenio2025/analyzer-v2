@@ -1,0 +1,459 @@
+{
+  "analytical_dimensions": [
+    {
+      "depth_guidance": {
+        "deep": "Detailed role analysis including how roles shift within chapters and assessment of whether each chapter fulfills its function adequately.",
+        "standard": "Map primary and secondary roles with argumentative weight assessment.",
+        "surface": "Classify each chapter's primary role in one sentence."
+      },
+      "description": "The primary and secondary functions each chapter serves in the overall argument.",
+      "key": "chapter_functional_role",
+      "probing_questions": [
+        "What is this chapter's primary function (establishing premises, advancing claims, handling objections)?",
+        "Does it serve secondary functions beyond its primary role?",
+        "How essential is it \u2014 is it load-bearing, supporting, or peripheral?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Full dependency graph including transitive dependencies and critical path analysis.",
+        "standard": "Map all significant dependencies with strength assessments.",
+        "surface": "Identify the most important cross-chapter dependencies."
+      },
+      "description": "What each chapter requires from upstream chapters and provides to downstream ones.",
+      "key": "chapter_dependencies",
+      "probing_questions": [
+        "What does this chapter need from prior chapters to work?",
+        "What does it provide that later chapters require?",
+        "How strong are these dependencies \u2014 necessary or merely helpful?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Full concept flow analysis including trajectory patterns and concept lifecycle mapping.",
+        "standard": "Map concept introduction, first significant use, and extensive use locations.",
+        "surface": "Track where 5-10 key concepts are introduced."
+      },
+      "description": "Where key concepts enter the text, where they are first used significantly, and how their role evolves.",
+      "key": "key_concepts_introduced",
+      "probing_questions": [
+        "Where are the text's key concepts first introduced?",
+        "Where do they first do significant analytical work?",
+        "How does their role evolve across chapters?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Full coupling analysis including isolation assessment and implications for the argument's flexibility.",
+        "standard": "Map tight and loose couplings across the text.",
+        "surface": "Identify the most tightly coupled chapter pairs."
+      },
+      "description": "How tightly chapters are coupled \u2014 which are deeply interdependent and which could stand alone.",
+      "key": "chapter_coupling",
+      "probing_questions": [
+        "Which chapters are tightly coupled (can't be understood in isolation)?",
+        "Which are loosely coupled (could be reordered)?",
+        "Are there dialectical pairs or complementary chapter groups?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Comprehensive vulnerability assessment including implications and potential remedies.",
+        "standard": "Map all significant vulnerabilities with severity assessments.",
+        "surface": "Identify the most critical structural vulnerability."
+      },
+      "description": "Weak points in the argumentative architecture \u2014 underdeveloped load-bearing chapters, missing bridges, circular dependencies.",
+      "key": "structural_vulnerabilities",
+      "probing_questions": [
+        "Where are the structural weak points?",
+        "Are any load-bearing chapters underdeveloped?",
+        "Are there missing bridges, circular dependencies, or orphaned threads?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Detailed analysis of inter-part dynamics including what shifts and what persists across part boundaries.",
+        "standard": "Map part functions and transition qualities.",
+        "surface": "Identify parts/sections and their primary functions."
+      },
+      "description": "How parts or major sections relate to each other \u2014 what each accomplishes and how transitions work.",
+      "key": "inter_part_dynamics",
+      "probing_questions": [
+        "If the work has parts/sections, what does each accomplish as a unit?",
+        "How do transitions between parts work \u2014 smooth, abrupt, or forced?",
+        "What changes between parts (register, method, scope)?"
+      ]
+    }
+  ],
+  "apps": [
+    "critic"
+  ],
+  "capabilities": [
+    {
+      "depth_scaling": {
+        "deep": "Full role analysis with adequacy assessment.",
+        "standard": "Primary/secondary roles with argumentative weight.",
+        "surface": "One-sentence role classification per chapter."
+      },
+      "description": "Determines the functional role of each chapter \u2014 foundation, development, evidence, objection handling, synthesis, methodology, context, conclusion.",
+      "extended_description": "Classifies each chapter by its primary function in the argumentative architecture, assessing its argumentative weight and identifying secondary functions.",
+      "indicators": [
+        "Chapter openings that signal function",
+        "Types of content (definitions, evidence, objections, synthesis)",
+        "Relationship to the central thesis"
+      ],
+      "intellectual_grounding": {
+        "concept": "Functional components of argument",
+        "method": "Analyze each chapter as providing claims, grounds, warrants, backing, or rebuttals within the larger argument.",
+        "thinker": "Toulmin"
+      },
+      "key": "classify_chapter_roles",
+      "produces_dimensions": [
+        "chapter_functional_role"
+      ],
+      "requires_dimensions": []
+    },
+    {
+      "depth_scaling": {
+        "deep": "Complete graph including transitive dependencies and critical path.",
+        "standard": "Full dependency map with strength assessments.",
+        "surface": "Identify the most critical dependencies."
+      },
+      "description": "Traces what each chapter requires from and provides to other chapters.",
+      "extended_description": "Maps the dependency graph between chapters \u2014 conceptual prerequisites, empirical foundations, methodological setups, argumentative bridges, and rhetorical preparations.",
+      "indicators": [
+        "References to prior chapter content",
+        "Concepts that must be established before they can be used",
+        "Argumentative moves that require prior setup"
+      ],
+      "intellectual_grounding": {
+        "concept": "Pragma-dialectical stages",
+        "method": "Analyze how argumentative stages create dependencies between chapters.",
+        "thinker": "van Eemeren"
+      },
+      "key": "map_chapter_dependencies",
+      "produces_dimensions": [
+        "chapter_dependencies"
+      ],
+      "requires_dimensions": [
+        "chapter_functional_role"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Full concept flow with lifecycle analysis and trajectory pattern classification.",
+        "standard": "Map concept trajectories for all significant concepts.",
+        "surface": "Track 5-10 key concepts."
+      },
+      "description": "Tracks where key concepts are introduced, first used significantly, and used extensively.",
+      "extended_description": "Maps the lifecycle of key concepts across chapters \u2014 from introduction through first significant use to extensive deployment, revealing the argument's developmental logic.",
+      "indicators": [
+        "First mention of key terms",
+        "First substantive engagement with concepts",
+        "Chapters where concepts do heavy analytical work"
+      ],
+      "intellectual_grounding": {
+        "concept": "Conceptual presence and strategic ordering",
+        "method": "Track how concepts gain presence through strategic placement and repetition across the text.",
+        "thinker": "Perelman"
+      },
+      "key": "track_concept_flow",
+      "produces_dimensions": [
+        "key_concepts_introduced"
+      ],
+      "requires_dimensions": [
+        "chapter_functional_role"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Full coupling analysis with isolation assessment and structural flexibility evaluation.",
+        "standard": "Map coupling patterns across the text.",
+        "surface": "Identify the most tightly coupled pairs."
+      },
+      "description": "Evaluates how tightly chapters are coupled \u2014 from deeply interdependent to freely reorderable.",
+      "extended_description": "Maps the coupling structure of the text, identifying tightly coupled pairs/groups and loosely coupled chapters, assessing the argument's structural flexibility.",
+      "indicators": [
+        "Shared frameworks across chapters",
+        "Continued arguments spanning chapters",
+        "Dialectical pairs (thesis-antithesis chapters)",
+        "Independent excursus chapters"
+      ],
+      "intellectual_grounding": {
+        "concept": "Dialogue structure and dependencies",
+        "method": "Analyze how different parts of an extended dialogue depend on each other.",
+        "thinker": "Walton"
+      },
+      "key": "assess_chapter_coupling",
+      "produces_dimensions": [
+        "chapter_coupling"
+      ],
+      "requires_dimensions": [
+        "chapter_dependencies"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Comprehensive assessment with implications and inter-vulnerability relationships.",
+        "standard": "Map vulnerabilities with severity assessment.",
+        "surface": "Identify the most critical vulnerability."
+      },
+      "description": "Identifies weak points in the argumentative architecture.",
+      "extended_description": "Maps structural vulnerabilities \u2014 load-bearing chapters that are underdeveloped, missing bridges between sections, circular dependencies, orphaned argumentative threads.",
+      "indicators": [
+        "Load-bearing chapters with thin argumentation",
+        "Missing connections between related chapters",
+        "Arguments that depend on conclusions they're supposed to establish",
+        "Threads introduced but never resolved"
+      ],
+      "intellectual_grounding": {
+        "concept": "Argument strength and defeasibility",
+        "method": "Assess where the argumentative structure is weakest and most susceptible to challenge.",
+        "thinker": "Toulmin"
+      },
+      "key": "identify_structural_vulnerabilities",
+      "produces_dimensions": [
+        "structural_vulnerabilities"
+      ],
+      "requires_dimensions": [
+        "chapter_functional_role",
+        "chapter_dependencies"
+      ]
+    },
+    {
+      "depth_scaling": {
+        "deep": "Full inter-part dynamics analysis.",
+        "standard": "Map part functions and transition qualities.",
+        "surface": "Identify parts and their primary functions."
+      },
+      "description": "Analyzes how parts or major sections relate to each other.",
+      "extended_description": "Maps what each part accomplishes as a unit, how transitions between parts work, and what changes (register, method, scope) at part boundaries.",
+      "indicators": [
+        "Part/section divisions",
+        "Shifts in register, method, or scope at boundaries",
+        "Transition quality (smooth, abrupt, forced)"
+      ],
+      "intellectual_grounding": {
+        "concept": "Macro-structure of extended argumentation",
+        "method": "Analyze how the largest structural units of a text organize and present the overall argument.",
+        "thinker": "Perelman"
+      },
+      "key": "analyze_inter_part_dynamics",
+      "produces_dimensions": [
+        "inter_part_dynamics"
+      ],
+      "requires_dimensions": [
+        "chapter_functional_role"
+      ]
+    }
+  ],
+  "category": "argument",
+  "composability": {
+    "consumes_from": {
+      "chapter_argument_map": "From deep_summarization \u2014 chapter-level argument mapping provides foundation for role classification.",
+      "thesis_architecture": "From deep_summarization \u2014 understanding the thesis helps classify chapter roles."
+    },
+    "shares_with": {
+      "chapter_dependencies": "Informs planning of chapter-level deep dives and dependency-aware analysis sequencing.",
+      "chapter_functional_role": "Provides chapter role context for deep_summarization, narrative_structure_analyzer, and any chapter-targeted analysis.",
+      "structural_vulnerabilities": "Feeds critical_apparatus_analyzer and argument_architecture with vulnerability targets."
+    },
+    "synergy_engines": [
+      "deep_summarization",
+      "narrative_structure_analyzer",
+      "argument_architecture"
+    ]
+  },
+  "depth_levels": [
+    {
+      "description": "Quick structural read \u2014 chapter roles and most critical dependencies.",
+      "key": "surface",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Classify chapter roles and map the most important dependencies.",
+          "focus_capabilities": [
+            "classify_chapter_roles",
+            "map_chapter_dependencies"
+          ],
+          "focus_dimensions": [
+            "chapter_functional_role",
+            "chapter_dependencies"
+          ],
+          "label": "Structural Architecture",
+          "pass_number": 1,
+          "stance": "architecture"
+        }
+      ],
+      "suitable_for": "Initial structural assessment, short texts.",
+      "typical_passes": 1
+    },
+    {
+      "description": "Balanced structural analysis \u2014 discovery followed by architecture.",
+      "key": "standard",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Discover chapter roles, concept flow, and inter-part dynamics.",
+          "focus_capabilities": [
+            "classify_chapter_roles",
+            "track_concept_flow",
+            "analyze_inter_part_dynamics"
+          ],
+          "focus_dimensions": [
+            "chapter_functional_role",
+            "key_concepts_introduced",
+            "inter_part_dynamics"
+          ],
+          "label": "Structural Discovery",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "With roles mapped, build the dependency graph, assess coupling, and identify vulnerabilities.",
+          "focus_capabilities": [
+            "map_chapter_dependencies",
+            "assess_chapter_coupling",
+            "identify_structural_vulnerabilities"
+          ],
+          "focus_dimensions": [
+            "chapter_dependencies",
+            "chapter_coupling",
+            "structural_vulnerabilities"
+          ],
+          "label": "Dependency and Vulnerability Architecture",
+          "pass_number": 2,
+          "stance": "architecture"
+        }
+      ],
+      "suitable_for": "Standard analysis, pre-genealogy structural profiling.",
+      "typical_passes": 2
+    },
+    {
+      "description": "Exhaustive structural analysis \u2014 discovery, architecture, and confrontation.",
+      "key": "deep",
+      "passes": [
+        {
+          "consumes_from": [],
+          "description": "Exhaustive discovery of chapter roles, concept flow, and inter-part dynamics.",
+          "focus_capabilities": [
+            "classify_chapter_roles",
+            "track_concept_flow",
+            "analyze_inter_part_dynamics"
+          ],
+          "focus_dimensions": [
+            "chapter_functional_role",
+            "key_concepts_introduced",
+            "inter_part_dynamics"
+          ],
+          "label": "Structural Discovery",
+          "pass_number": 1,
+          "stance": "discovery"
+        },
+        {
+          "consumes_from": [
+            1
+          ],
+          "description": "Build the full dependency and coupling architecture.",
+          "focus_capabilities": [
+            "map_chapter_dependencies",
+            "assess_chapter_coupling"
+          ],
+          "focus_dimensions": [
+            "chapter_dependencies",
+            "chapter_coupling"
+          ],
+          "label": "Dependency Architecture",
+          "pass_number": 2,
+          "stance": "architecture"
+        },
+        {
+          "consumes_from": [
+            1,
+            2
+          ],
+          "description": "Confrontationally assess structural vulnerabilities \u2014 stress-test the architecture, probe dependencies, challenge coupling assumptions.",
+          "focus_capabilities": [
+            "identify_structural_vulnerabilities",
+            "map_chapter_dependencies",
+            "assess_chapter_coupling"
+          ],
+          "focus_dimensions": [
+            "structural_vulnerabilities",
+            "chapter_dependencies",
+            "chapter_coupling"
+          ],
+          "label": "Vulnerability Confrontation",
+          "pass_number": 3,
+          "stance": "confrontation"
+        }
+      ],
+      "suitable_for": "Complex monographs, texts with intricate chapter interdependencies.",
+      "typical_passes": 3
+    }
+  ],
+  "engine_key": "chapter_role_analyzer",
+  "engine_name": "Chapter Role Analyzer",
+  "function": "genealogy",
+  "intellectual_lineage": {
+    "key_concepts": [
+      {
+        "definition": "The differential importance of different chapters to the overall argument \u2014 some are load-bearing (remove them and the argument collapses), others are supporting (they enrich but the argument survives without them), others are transitional (they bridge but could be restructured).",
+        "name": "argumentative_weight"
+      },
+      {
+        "definition": "The degree of interdependence between chapters \u2014 tightly coupled chapters cannot be understood in isolation, while loosely coupled chapters could be reordered without significant loss. The pattern of coupling reveals the argument's structural architecture.",
+        "name": "chapter_coupling"
+      },
+      {
+        "definition": "A weak point in the argumentative architecture \u2014 a load-bearing chapter that is underdeveloped, a missing bridge between sections, a circular dependency that undermines the logical flow, or an orphaned thread that is introduced but never resolved.",
+        "name": "structural_vulnerability"
+      },
+      {
+        "definition": "The trajectory of key concepts across chapters \u2014 where they are introduced, where they are first used significantly, and where they do their heaviest analytical work. Concept flow reveals the argument's developmental logic.",
+        "name": "concept_flow"
+      }
+    ],
+    "primary": {
+      "description": "Frans van Eemeren (1946-), Dutch argumentation theorist whose pragma-dialectical approach provides the foundational framework for this engine. His theory of critical discussion identifies how extended argumentative discourse is organized into functional stages \u2014 confrontation, opening, argumentation, concluding \u2014 each serving a distinct role in resolving differences of opinion. This maps directly to the engine's core task of classifying chapter functions within an argumentative edifice. His concept of strategic manoeuvring (the interplay between dialectical obligations and rhetorical effectiveness) illuminates why chapters are arranged as they are, and his normative model reveals when chapter structure serves or undermines the argument's goals.",
+      "name": "van_eemeren"
+    },
+    "secondary": [
+      {
+        "description": "Cha\u00efm Perelman (1912-1984), whose analysis of the strategic arrangement of arguments in extended discourse \u2014 where to place strong vs. weak arguments, how to sequence for maximum persuasive effect \u2014 directly informs understanding chapter ordering as a strategic choice and concept flow as a persuasive technique.",
+        "name": "perelman"
+      },
+      {
+        "description": "Douglas Walton (1942-2020), Canadian logician whose work on argumentation schemes and dialogue types provides tools for classifying the type of argumentative work each chapter performs \u2014 whether it advances a position, responds to objections, shifts the burden of proof, or establishes common ground.",
+        "name": "walton"
+      },
+      {
+        "description": "Stephen Toulmin (1922-2009), whose model of practical argument \u2014 claims, grounds, warrants, backing, rebuttals \u2014 provides the micro-level vocabulary for describing what individual chapters contain, complementing this engine's macro-structural focus on how chapters function as units within the larger architecture.",
+        "name": "toulmin"
+      }
+    ],
+    "traditions": [
+      {
+        "description": "The interdisciplinary study of how arguments are constructed, evaluated, and deployed in extended discourse, providing tools for analyzing both the internal structure of individual arguments and the macro-structure of argumentative texts.",
+        "name": "argumentation_theory"
+      },
+      {
+        "description": "The analytical tradition of examining how parts relate to wholes in complex systems \u2014 applicable to understanding how chapters function as structural components of an argumentative edifice.",
+        "name": "structural_analysis"
+      },
+      {
+        "description": "The practice of mapping how components depend on each other in complex systems, revealing critical paths, single points of failure, and structural vulnerabilities \u2014 adapted here for analyzing inter-chapter dependencies in extended arguments.",
+        "name": "dependency_analysis"
+      }
+    ]
+  },
+  "kind": "extraction",
+  "legacy_engine_key": null,
+  "paradigm_keys": [],
+  "problematique": "In any extended work, chapters are functional units in an argumentative\nedifice. Each plays a specific role \u2014 establishing premises, advancing\nclaims, handling objections, synthesizing threads. Understanding these\nroles and dependencies is essential for any serious engagement with\nbook-length arguments.\n\nMost reading treats chapters as containers for content \u2014 \"Chapter 3 is\nabout X.\" But chapters are not containers; they are INSTRUMENTS. Chapter 3\ndoesn't just contain claims about X \u2014 it DOES something with those claims:\nestablishes a foundation for Chapter 4, handles an objection raised\nimplicitly in Chapter 2, provides the evidence needed for the conclusion\nin Chapter 7. The chapter's content matters less than its FUNCTION in the\noverall argumentative architecture.\n\nThis functional perspective reveals structural features invisible to\ncontent-level reading: which chapters are load-bearing (remove them and\nthe argument collapses), which are peripheral (they enrich but aren't\nessential), where tight coupling between chapters creates fragility, where\nloose coupling allows reordering. It also reveals vulnerabilities: missing\nbridges between chapters, circular dependencies, orphaned argumentative\nthreads that are introduced but never resolved.\n\nFor genealogical analysis specifically, chapter-level functional mapping\nis essential because intellectual influence often operates at the chapter\nlevel \u2014 an author might borrow a framework from one source for one chapter\nand a methodology from another source for a different chapter. Without\nunderstanding chapter functions, these differential debts remain invisible.\n",
+  "researcher_question": "What role does each chapter play in the overall argument, and how do chapters depend on and enable each other?",
+  "version": 1
+}
