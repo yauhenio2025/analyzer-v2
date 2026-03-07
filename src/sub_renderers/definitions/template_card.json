@@ -1,0 +1,52 @@
+{
+  "sub_renderer_key": "template_card",
+  "sub_renderer_name": "Template Card",
+  "description": "Schema-driven card renderer that interprets a card_template JSON structure. Supports badge_row, heading, prose, chip_list, evidence_trail, key_value, and separator blocks. New card layouts require only JSON config changes -- no React code needed.",
+  "category": "meta",
+  "ideal_data_shapes": ["object_array", "flat_list"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "card_template": {
+        "type": "object",
+        "description": "Template definition with wrapper styling and ordered content slots",
+        "properties": {
+          "wrapper_class": { "type": "string", "description": "CSS class for card wrapper div" },
+          "border_accent": {
+            "type": "object",
+            "description": "Design token color ref for border-left accent",
+            "properties": {
+              "category": { "type": "string" },
+              "key_field": { "type": "string" }
+            }
+          },
+          "border_weight_field": { "type": "string", "description": "Item field that controls border thickness" },
+          "border_weight_map": { "type": "object", "description": "Field value -> CSS border width" },
+          "slots": {
+            "type": "array",
+            "description": "Ordered list of content blocks",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["badge_row", "heading", "prose", "chip_list", "evidence_trail", "key_value", "separator"]
+                },
+                "field": { "type": "string" },
+                "label": { "type": "string" }
+              },
+              "required": ["type"]
+            }
+          }
+        },
+        "required": ["slots"]
+      }
+    }
+  },
+  "stance_affinities": {
+    "evidence": 0.9, "diagnostic": 0.8, "narrative": 0.7, "summary": 0.6, "comparison": 0.5, "interactive": 0.7
+  },
+  "parent_renderer_types": ["card_grid"],
+  "status": "active",
+  "tags": ["template", "schema-driven", "reusable", "card", "generic"]
+}

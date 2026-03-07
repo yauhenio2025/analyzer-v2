@@ -1,14 +1,72 @@
 {
   "view_key": "genealogy_tactics",
   "view_name": "Tactics & Strategies",
-  "description": "Evolution tactics with evidence chains — how the author self-manages intellectual transformation. Shows the 10+ tactic types detected by the evolution_tactics_detector engine with supporting quotes and patterns.",
-  "version": 1,
+  "description": "Evolution tactics with evidence chains -- how the author self-manages intellectual transformation. Shows the 10+ tactic types detected by the evolution_tactics_detector engine with supporting quotes and patterns.",
+  "version": 2,
   "target_app": "the-critic",
   "target_page": "genealogy",
   "target_section": "results",
   "renderer_type": "card_grid",
   "renderer_config": {
-    "cell_renderer": "tactic_card",
+    "cell_renderer": "template_card",
+    "card_template": {
+      "wrapper_class": "gen-tactic-card",
+      "border_accent": { "category": "tactic", "key_field": "tactic_type" },
+      "border_weight_field": "severity",
+      "border_weight_map": { "major": "5px", "moderate": "4px", "minor": "3px" },
+      "slots": [
+        {
+          "type": "badge_row",
+          "badges": [
+            { "field": "tactic_type", "color_mode": "category", "color_category": "tactic" },
+            { "field": "severity", "color_mode": "semantic", "color_scale": "severity", "value_map": { "major": "high", "moderate": "medium", "minor": "low" }, "default_value": "minor" }
+          ]
+        },
+        {
+          "type": "heading",
+          "field": "tactic_name",
+          "hide_when_matches_label": { "category": "tactic", "key_field": "tactic_type" }
+        },
+        {
+          "type": "prose",
+          "field": "description",
+          "subdued_when": { "field": "severity", "equals": "minor" }
+        },
+        {
+          "type": "chip_list",
+          "field": "idea_ids_involved",
+          "label": "Ideas Involved",
+          "link_title_pattern": "See idea {value} in Idea Evolution Map"
+        },
+        {
+          "type": "evidence_trail",
+          "label": "Evidence Trail",
+          "accent_from": { "category": "tactic", "key_field": "tactic_type" },
+          "steps": [
+            {
+              "label": "Prior Work",
+              "field": "prior_work_references",
+              "variant": "prior",
+              "item_title_field": "work_title",
+              "item_quote_field": "relevant_quote"
+            },
+            {
+              "label": "Current Work",
+              "field": "current_work_evidence",
+              "variant": "current",
+              "item_quote_field": "quote",
+              "item_cite_field": "location"
+            },
+            {
+              "label": "Assessment",
+              "field": "assessment",
+              "variant": "assessment",
+              "is_text": true
+            }
+          ]
+        }
+      ]
+    },
     "group_by": "tactic_type",
     "group_style_map": "tactic_styles",
     "columns": 2,
