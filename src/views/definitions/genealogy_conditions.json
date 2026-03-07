@@ -50,10 +50,10 @@
         }
       },
       "alternative_paths": {
-        "renderer_type": "mini_card_list",
+        "renderer_type": "move_repertoire",
         "config": {
           "title_field": "path_not_taken",
-          "subtitle_field": "branching_point",
+          "group_field": "branching_point",
           "description_field": "implications",
           "section_description": "Roads not taken — where the intellectual path could have diverged"
         }

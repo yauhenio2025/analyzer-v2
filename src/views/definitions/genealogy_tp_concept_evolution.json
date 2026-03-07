@@ -18,9 +18,9 @@
     ],
     "expand_first": true,
     "section_renderers": {
-      "concepts": {"renderer_type": "mini_card_list", "config": {"title_field": "concept_name", "subtitle_field": "domain"}},
+      "concepts": {"renderer_type": "move_repertoire", "config": {"title_field": "concept_name", "group_field": "domain"}},
       "evolution_trajectories": {"renderer_type": "timeline_strip", "config": {"label_field": "concept", "stages_field": "stages"}},
-      "definitional_variations": {"renderer_type": "comparison_panel", "config": {"left_field": "early_definition", "right_field": "late_definition"}},
+      "definitional_variations": {"renderer_type": "dialectical_pair", "config": {"left_key": "early_definition", "right_key": "late_definition", "left_label": "Early Definition", "right_label": "Late Definition", "relationship_label": "evolves to"}},
       "semantic_clusters": {"renderer_type": "chip_grid", "config": {"label_field": "cluster_name"}},
       "foundational_patterns": {"renderer_type": "chip_grid", "config": {"label_field": "pattern_name"}},
       "dimensional_comparisons": {"renderer_type": "key_value_table", "config": {"key_field": "dimension", "value_field": "comparison"}}

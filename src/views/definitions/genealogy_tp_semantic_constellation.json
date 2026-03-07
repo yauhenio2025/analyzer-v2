@@ -18,10 +18,10 @@
     ],
     "expand_first": true,
     "section_renderers": {
-      "core_concepts": {"renderer_type": "mini_card_list", "config": {"title_field": "term", "subtitle_field": "role", "badge_field": "centrality"}},
+      "core_concepts": {"renderer_type": "intensity_matrix", "config": {"title_field": "term", "subtitle_field": "role", "intensity_field": "centrality", "intensity_scale": ["peripheral", "supporting", "core", "central"]}},
       "concept_clusters": {"renderer_type": "chip_grid", "config": {"label_field": "cluster_name", "count_field": "member_count"}},
       "load_bearing_terms": {"renderer_type": "key_value_table", "config": {"key_field": "term", "value_field": "why_load_bearing"}},
-      "boundary_tensions": {"renderer_type": "comparison_panel", "config": {"left_field": "pole_a", "right_field": "pole_b"}},
+      "boundary_tensions": {"renderer_type": "dialectical_pair", "config": {"left_key": "pole_a", "right_key": "pole_b", "left_label": "Pole A", "right_label": "Pole B", "relationship_label": "tension"}},
       "semantic_architecture": {"renderer_type": "prose_block", "config": {}},
       "vocabulary_signature": {"renderer_type": "prose_block", "config": {}}
     }

@@ -1,0 +1,49 @@
+{
+  "sub_renderer_key": "move_repertoire",
+  "sub_renderer_name": "Move Repertoire",
+  "description": "Grouped card list that organizes items by a categorical field. Items are clustered under collapsible category headers with count badges, creating a two-level hierarchy lighter than nested_sections. Ideal for sections with a natural type/category/domain grouping field.",
+  "category": "atomic",
+  "ideal_data_shapes": ["object_array"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "title_field": {
+        "type": "string",
+        "description": "Field name for the item title"
+      },
+      "group_field": {
+        "type": "string",
+        "description": "Field name to group items by"
+      },
+      "description_field": {
+        "type": "string",
+        "description": "Field name for item description"
+      },
+      "badge_field": {
+        "type": "string",
+        "description": "Optional field for an additional badge on each item"
+      },
+      "collapse_groups": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether groups start collapsed"
+      },
+      "section_description": {
+        "type": "string",
+        "description": "Optional description shown above the groups"
+      }
+    },
+    "required": ["title_field", "group_field"]
+  },
+  "stance_affinities": {
+    "evidence": 0.5,
+    "diagnostic": 0.7,
+    "summary": 0.8,
+    "narrative": 0.4,
+    "interactive": 0.8,
+    "comparison": 0.5
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["grouped", "categorical", "repertoire", "moves", "taxonomy"]
+}

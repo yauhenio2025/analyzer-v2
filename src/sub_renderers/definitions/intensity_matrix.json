@@ -1,0 +1,54 @@
+{
+  "sub_renderer_key": "intensity_matrix",
+  "sub_renderer_name": "Intensity Matrix",
+  "description": "Dashboard-style rows with horizontal intensity bars for quantitative dimensions. Each row shows a title, category badge, intensity bar scaled to a configurable ordinal scale, and an expandable description. Optimized for rapid visual scanning of frequency, strength, severity, centrality, and importance distributions.",
+  "category": "atomic",
+  "ideal_data_shapes": ["object_array"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "title_field": {
+        "type": "string",
+        "description": "Field name for the row title"
+      },
+      "subtitle_field": {
+        "type": "string",
+        "description": "Field name for the category badge"
+      },
+      "intensity_field": {
+        "type": "string",
+        "description": "Field name for the intensity value (mapped to bar width)"
+      },
+      "intensity_scale": {
+        "type": "array",
+        "items": {"type": "string"},
+        "description": "Ordered list of intensity levels from lowest to highest, e.g. ['low', 'medium', 'high'] or ['rare', 'occasional', 'frequent']"
+      },
+      "description_field": {
+        "type": "string",
+        "description": "Field name for the expandable description"
+      },
+      "sort_by_intensity": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to sort rows by intensity value (highest first)"
+      },
+      "section_description": {
+        "type": "string",
+        "description": "Optional description shown above the matrix"
+      }
+    },
+    "required": ["title_field", "intensity_field"]
+  },
+  "stance_affinities": {
+    "evidence": 0.7,
+    "diagnostic": 0.9,
+    "summary": 0.6,
+    "narrative": 0.2,
+    "interactive": 0.8,
+    "comparison": 0.7
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["quantitative", "dashboard", "intensity", "bars", "scanning"]
+}

@@ -1,0 +1,65 @@
+{
+  "sub_renderer_key": "dialectical_pair",
+  "sub_renderer_name": "Dialectical Pair",
+  "description": "Two-panel tension visualization for dialectical contrasts. Renders thesis/antithesis, foregrounded/suppressed, or early/late definition pairs with a central tension indicator. Each panel scrolls independently with compact item rows. The central node shows the relationship type, visually communicating the dialectical structure.",
+  "category": "atomic",
+  "ideal_data_shapes": ["object_array", "nested_sections"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "left_key": {
+        "type": "string",
+        "description": "Field name (or sub-section key) for the left/thesis side items"
+      },
+      "right_key": {
+        "type": "string",
+        "description": "Field name (or sub-section key) for the right/antithesis side items"
+      },
+      "left_label": {
+        "type": "string",
+        "description": "Header label for the left panel"
+      },
+      "right_label": {
+        "type": "string",
+        "description": "Header label for the right panel"
+      },
+      "relationship_label": {
+        "type": "string",
+        "default": "vs",
+        "description": "Label for the central tension node"
+      },
+      "left_title_field": {
+        "type": "string",
+        "description": "Title field for items in the left panel"
+      },
+      "right_title_field": {
+        "type": "string",
+        "description": "Title field for items in the right panel"
+      },
+      "left_description_field": {
+        "type": "string",
+        "description": "Description field for items in the left panel"
+      },
+      "right_description_field": {
+        "type": "string",
+        "description": "Description field for items in the right panel"
+      },
+      "section_description": {
+        "type": "string",
+        "description": "Optional description shown above the pair"
+      }
+    },
+    "required": ["left_key", "right_key", "left_label", "right_label"]
+  },
+  "stance_affinities": {
+    "evidence": 0.4,
+    "diagnostic": 0.8,
+    "summary": 0.5,
+    "narrative": 0.6,
+    "interactive": 0.7,
+    "comparison": 0.95
+  },
+  "parent_renderer_types": ["accordion", "tab"],
+  "status": "active",
+  "tags": ["dialectical", "tension", "contrast", "pairs", "thesis-antithesis"]
+}

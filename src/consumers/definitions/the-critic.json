@@ -26,7 +26,10 @@
     "enabling_conditions",
     "constraining_conditions",
     "nested_sections",
-    "ordered_flow"
+    "ordered_flow",
+    "intensity_matrix",
+    "move_repertoire",
+    "dialectical_pair"
   ],
   "pages": [
     {"page_key": "genealogy", "description": "Intellectual genealogy analysis with multi-phase workflow results"},

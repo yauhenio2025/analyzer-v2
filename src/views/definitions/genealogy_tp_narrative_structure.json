@@ -32,8 +32,8 @@
         "config": {"section_description": "Whose perspective is centered, whose is marginalized"}
       },
       "narrative_tensions": {
-        "renderer_type": "mini_card_list",
-        "config": {"title_field": "tension", "subtitle_field": "type", "description_field": "significance"}
+        "renderer_type": "move_repertoire",
+        "config": {"title_field": "tension", "group_field": "type", "description_field": "significance"}
       },
       "narrative_devices": {
         "renderer_type": "chip_grid",

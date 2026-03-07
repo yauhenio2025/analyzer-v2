@@ -19,7 +19,7 @@
     ],
     "expand_first": true,
     "section_renderers": {
-      "frameworks": {"renderer_type": "mini_card_list", "config": {"title_field": "framework_name", "subtitle_field": "type", "badge_field": "component_count"}},
+      "frameworks": {"renderer_type": "move_repertoire", "config": {"title_field": "framework_name", "group_field": "type", "badge_field": "component_count"}},
       "vocabulary_map": {"renderer_type": "key_value_table", "config": {"key_field": "term", "value_field": "meaning"}},
       "methodological_signatures": {"renderer_type": "mini_card_list", "config": {"title_field": "method_name", "subtitle_field": "tradition"}},
       "metaphor_inventory": {"renderer_type": "chip_grid", "config": {"label_field": "metaphor"}},

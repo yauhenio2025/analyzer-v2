@@ -20,11 +20,11 @@
     "expand_first": true,
     "section_renderers": {
       "key_ideas": {"renderer_type": "chip_grid", "config": {"label_field": "idea"}},
-      "commitments": {"renderer_type": "mini_card_list", "config": {"title_field": "commitment", "subtitle_field": "type", "badge_field": "strength"}},
-      "backings": {"renderer_type": "mini_card_list", "config": {"title_field": "backing", "subtitle_field": "warrant_type"}},
-      "either_or_choices": {"renderer_type": "comparison_panel", "config": {"left_field": "option_a", "right_field": "option_b"}},
+      "commitments": {"renderer_type": "intensity_matrix", "config": {"title_field": "commitment", "subtitle_field": "type", "intensity_field": "strength", "intensity_scale": ["weak", "moderate", "strong"]}},
+      "backings": {"renderer_type": "move_repertoire", "config": {"title_field": "backing", "group_field": "warrant_type"}},
+      "either_or_choices": {"renderer_type": "dialectical_pair", "config": {"left_key": "option_a", "right_key": "option_b", "left_label": "Option A", "right_label": "Option B", "relationship_label": "either / or"}},
       "hidden_premises": {"renderer_type": "mini_card_list", "config": {"title_field": "premise", "subtitle_field": "why_hidden"}},
-      "practical_implications": {"renderer_type": "mini_card_list", "config": {"title_field": "implication", "subtitle_field": "domain"}},
+      "practical_implications": {"renderer_type": "move_repertoire", "config": {"title_field": "implication", "group_field": "domain"}},
       "argumentative_structure": {"renderer_type": "prose_block", "config": {}}
     }
   },
