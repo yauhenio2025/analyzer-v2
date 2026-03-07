@@ -73,7 +73,19 @@
     "columns": 2,
     "expandable": true,
     "items_path": "tactics_detected",
-    "prose_endpoint": "tactics"
+    "prose_endpoint": "tactics",
+    "summary": {
+      "data_path": "tactic_patterns",
+      "renderer_config": {
+        "category": "tactic",
+        "dominant_label": "Dominant Pattern",
+        "dominant_field": "most_frequent_tactic",
+        "narrative_field": "pattern_narrative",
+        "distribution_field": "tactic_distribution",
+        "count_noun": "tactics",
+        "type_noun": "types"
+      }
+    }
   },
   "data_source": {
     "workflow_key": "intellectual_genealogy",
