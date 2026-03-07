@@ -25,7 +25,7 @@
       },
       "narrative_voice_register": {
         "renderer_type": "rich_description_list",
-        "config": {"separator": ":", "max_visible_chars": 200, "section_description": "Registers deployed — analytical, polemical, prophetic, ironic, etc."}
+        "config": {"separator": ":", "max_visible_chars": 99999, "section_description": "Registers deployed — analytical, polemical, prophetic, ironic, etc."}
       },
       "perspective_focalization": {
         "renderer_type": "prose_block",
@@ -37,7 +37,7 @@
       },
       "narrative_devices": {
         "renderer_type": "rich_description_list",
-        "config": {"separator": ":", "max_visible_chars": 200, "section_description": "Narrative devices — anecdotes, vignettes, hypotheticals, counterfactuals"}
+        "config": {"separator": ":", "max_visible_chars": 99999, "section_description": "Narrative devices — anecdotes, vignettes, hypotheticals, counterfactuals"}
       },
       "temporal_construction": {
         "renderer_type": "phase_timeline",
