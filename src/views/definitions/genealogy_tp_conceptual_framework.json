@@ -22,7 +22,7 @@
       "frameworks": {"renderer_type": "move_repertoire", "config": {"title_field": "framework_name", "group_field": "type", "badge_field": "component_count"}},
       "vocabulary_map": {"renderer_type": "key_value_table", "config": {"key_field": "term", "value_field": "meaning"}},
       "methodological_signatures": {"renderer_type": "rich_description_list", "config": {"title_field": "method", "description_field": "distinguishing_features", "badge_fields": ["framework"], "max_visible_chars": 99999}},
-      "metaphor_inventory": {"renderer_type": "chip_grid", "config": {"label_field": "metaphor"}},
+      "metaphor_inventory": {"renderer_type": "move_repertoire", "config": {"title_field": "metaphor", "group_field": "frequency", "description_field": "function", "badge_field": "source_domain"}},
       "cross_domain_transfers": {"renderer_type": "mini_card_list", "config": {"title_field": "transfer_name", "subtitle_field": "source_domain"}},
       "framework_relationships": {"renderer_type": "comparison_panel", "config": {"left_field": "framework_a", "right_field": "framework_b"}},
       "architectural_summary": {"renderer_type": "prose_block", "config": {}}
