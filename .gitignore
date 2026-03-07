@@ -54,3 +54,4 @@ pip-delete-this-directory.txt
 
 # macOS
 .DS_Store
+node_modules/
