@@ -1,0 +1,62 @@
+{
+  "sub_renderer_key": "distribution_summary",
+  "sub_renderer_name": "Distribution Summary",
+  "description": "Visual bar chart with dominant-item highlight, counts, and optional collapsible narrative. Shows category distribution as proportional horizontal bars with click-to-filter support when used inside CardGridRenderer. Supports both static data (Record<string, number> or Array<{key, count}>) and live interactive mode with group data from parent renderers.",
+  "category": "atomic",
+  "ideal_data_shapes": ["key_value_pairs", "nested_sections"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "category": {
+        "type": "string",
+        "description": "Design token category for bar colors (e.g. 'tactic', 'relationship')"
+      },
+      "distribution_field": {
+        "type": "string",
+        "default": "distribution",
+        "description": "Field name in data object containing the distribution (Record<string, number> or Array<{key, count}>)"
+      },
+      "dominant_field": {
+        "type": "string",
+        "default": "dominant",
+        "description": "Field name for the dominant/most-frequent item key"
+      },
+      "narrative_field": {
+        "type": "string",
+        "default": "narrative",
+        "description": "Field name for the summary narrative text (collapsible)"
+      },
+      "dominant_label": {
+        "type": "string",
+        "default": "Dominant",
+        "description": "Label shown above the dominant value"
+      },
+      "count_noun": {
+        "type": "string",
+        "default": "items",
+        "description": "Noun for the total count (e.g. 'tactics', 'patterns', 'items')"
+      },
+      "type_noun": {
+        "type": "string",
+        "default": "types",
+        "description": "Noun for the type count (e.g. 'types', 'categories')"
+      },
+      "severity_value": {
+        "type": "string",
+        "default": "major",
+        "description": "Label for severity badges on bars"
+      }
+    }
+  },
+  "stance_affinities": {
+    "evidence": 0.6,
+    "diagnostic": 0.8,
+    "summary": 0.9,
+    "narrative": 0.4,
+    "interactive": 0.9,
+    "comparison": 0.7
+  },
+  "parent_renderer_types": ["accordion", "card_grid", "tab"],
+  "status": "active",
+  "tags": ["distribution", "bar-chart", "summary", "interactive", "filter", "counts"]
+}
