@@ -5,6 +5,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+- **renderers-ui domain leakage cleanup** — Made `@caii/analysis-renderers` package generic by removing genealogy-specific assumptions:
+  - Deleted 4 domain-specific files: SynthesisRenderer, IdeaEvolutionRenderer, TacticCardCell, RelationshipCardCell (~1,487 lines)
+  - Parameterized 11 capture handlers with config-driven `_captureSourceType` (defaults to 'analysis')
+  - Deleted hardcoded `TACTIC_DESCRIPTIONS` and `STYLE_MAP_CATEGORIES` from CardGridRenderer; moved to view def config
+  - Added `apiPathPrefix` option to `useProseExtraction` hook
+  - Renamed CSS classes: `gen-tactic-*` → `ar-card-*`, `gen-rel-*` → `ar-grid-*`, `gen-card-*` → `ar-card-*`
+  - Removed ~300 lines of orphaned CSS
+  - Updated sub-renderer definitions: generic descriptions, removed genealogy tags
+  - Added `grouped_card_list` alias for `move_repertoire` sub-renderer
+  - Updated genealogy_tactics and genealogy_relationship_landscape view defs
+
 ### Fixed
 - **Per-work scan structured data pipeline** — Fixed three issues preventing per-work scan cards from showing structured data (vocabulary, methodology, metaphor, framing subsections):
   1. **Bridge splitting**: Extracted shared `work_key_utils.py` and applied content-based output splitting in the bridge's per_item branch, creating 5 transformation tasks (one per prior work) instead of 1 for collapsed `work_key='target'`. ([`src/presenter/work_key_utils.py`](src/presenter/work_key_utils.py), [`src/presenter/presentation_bridge.py`](src/presenter/presentation_bridge.py))
