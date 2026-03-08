@@ -5,6 +5,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+- **Dynamic Bespoke Apps Vision Document** — Formalized the architectural vision for analyzer-v2 as the central intelligence layer, with consumer apps as ephemeral, LLM-composed presentations. Includes gap analysis (60% aligned, 25% partial, 15% missing) and 3-tier reconciliation plan covering renderer input contracts, view definition generation API, style system unification, page composition endpoint, ephemeral project lifecycle, and thin shell app template. ([`communications/DYNAMIC_BESPOKE_APPS_VISION.md`](communications/DYNAMIC_BESPOKE_APPS_VISION.md))
+
 ### Changed
 - **renderers-ui domain leakage cleanup** — Made `@caii/analysis-renderers` package generic by removing genealogy-specific assumptions:
   - Deleted 4 domain-specific files: SynthesisRenderer, IdeaEvolutionRenderer, TacticCardCell, RelationshipCardCell (~1,487 lines)
