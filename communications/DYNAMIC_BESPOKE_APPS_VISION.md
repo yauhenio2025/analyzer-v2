@@ -607,15 +607,20 @@ Project states: `active` → `archived` → `deleted`. Auto-archive after N days
 - **~~Views persist to disk~~**: `/v1/views/generate` defaults to `save=false` (ephemeral)
 - **~~No renderer schema infrastructure~~**: `input_data_schema` field exists in RendererDefinition; needs population, not creation
 
-### The Critical Path
+### The Critical Path — DECISION PENDING
 
 ```
-Priority 1 (contracts) → Priority 3 (compose-from-intent) → Priority 2 (consolidation)
+Priority 1 (contracts) → [ Priority 2 or 3 — order TBD ] → [ remaining ]
 ```
 
-Contracts first, because compose-from-intent needs to validate its output. Compose-from-intent before consolidation, because it proves the API surface works before migrating consumers to depend on it. Consolidation is the most visible proof but depends on a stable API.
+Both agents agree: **renderer contracts first**. The ordering of priorities 2 and 3 is unresolved:
 
-**Alternative ordering** (Codex preference): Contracts → Consolidation → Compose-from-intent. Codex argues consolidation is higher priority because it removes the anti-pattern and forces the renderer package to be consumed correctly, which surfaces integration issues early. Both orderings are valid; the choice depends on whether you want to prove the API-first (Claude) or the consumption-first (Codex).
+| Order | Rationale | Risk |
+|-------|-----------|------|
+| Contracts → Consolidation → Compose | Consumption-first: forces renderer package to be consumed correctly, surfaces integration issues early (Codex) | compose-from-intent delayed; orchestrator can't be tested until later |
+| Contracts → Compose → Consolidation | API-first: proves the orchestration surface works before migrating consumers to depend on it (Claude) | consolidation delayed; anti-pattern persists longer |
+
+**Owner should pick one before implementation begins.** The wrong choice wastes at most one sprint of sequencing; either path reaches the same end state.
 
 ---
 
