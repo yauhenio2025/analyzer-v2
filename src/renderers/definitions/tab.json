@@ -4,6 +4,18 @@
   "description": "Tabbed container for organizing related views. Each tab shows a different child view or data perspective. Good for grouping multiple related analyses without overwhelming the page.",
   "category": "container",
   "ideal_data_shapes": ["nested_sections", "object_array"],
+  "input_data_schema": {
+    "type": "object",
+    "description": "Object whose keys become tab labels. Each value must be an object (tab content), an array (rendered as list), or a string (rendered as prose).",
+    "minProperties": 1,
+    "additionalProperties": {
+      "oneOf": [
+        {"type": "object"},
+        {"type": "array"},
+        {"type": "string"}
+      ]
+    }
+  },
   "stance_affinities": {
     "interactive": 0.9,
     "summary": 0.6,

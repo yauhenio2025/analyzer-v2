@@ -273,26 +273,41 @@
   - `src/renderers/definitions/*.json` - 8 renderer definition JSON files
   - `src/api/routes/renderers.py:1-170` - Full REST API with stance/app query endpoints
   - `src/api/main.py` - Router registration and lifespan loading
-- **Renderers** (8):
-  - `accordion` (container) — expandable sections, hosts sub-renderers
-  - `card_grid` (list) — responsive grid of cards
-  - `prose` (narrative) — formatted long-form with section anchors
-  - `table` (list) — sortable data table
-  - `stat_summary` (diagnostic) — stat cards with metrics
-  - `timeline` (narrative) — chronological visualization
-  - `tab` (container) — tabbed organization
-  - `raw_json` (diagnostic) — developer JSON inspector
+- **Renderers** (9, all with `input_data_schema`):
+  - `accordion` (container) — expandable sections, hosts sub-renderers. Schema: object with object/array/string values, minProperties: 1
+  - `card_grid` (list) — responsive grid of cards. Schema: array of card objects OR category-keyed object
+  - `prose` (narrative) — formatted long-form with section anchors. Schema: non-empty string OR object with text/content/prose/narrative/summary field
+  - `table` (list) — sortable data table. Schema: multi-table container OR array of row objects OR keyed object
+  - `stat_summary` (diagnostic) — stat cards with metrics. Schema: flat key-value (rejects nested objects)
+  - `evidence_trail` (narrative) — evidence chain with quotes. Schema: object with step-referenced fields
+  - `timeline` (narrative) — chronological visualization. Schema: array of {label, date, ...} objects
+  - `tab` (container) — tabbed organization. Schema: object with object/array/string values, minProperties: 1
+  - `raw_json` (diagnostic) — developer JSON inspector. Schema: empty (accepts anything)
 - **Section Sub-Renderers** (10, for accordion): chip_grid, mini_card_list, key_value_table, prose_block, stat_row, comparison_panel, timeline_strip, evidence_trail, enabling_conditions, constraining_conditions
 - **API Endpoints**:
   - `GET /v1/renderers` - List all (summary)
   - `GET /v1/renderers/{key}` - Full definition with config schema
   - `GET /v1/renderers/for-stance/{stance}` - By stance affinity (sorted)
   - `GET /v1/renderers/for-app/{app}` - By consumer app support
+  - `GET /v1/renderers/schemas/health` - Per-renderer schema validity check
+  - `POST /v1/renderers/{key}/validate` - Validate data/config against schemas (strict=true → 422)
   - `POST /v1/renderers/recommend` - LLM-powered renderer recommendation (Claude Sonnet)
   - `POST /v1/renderers` - Create
   - `PUT /v1/renderers/{key}` - Update
   - `DELETE /v1/renderers/{key}` - Delete
-- **Added**: 2026-02-21 | **Modified**: 2026-02-23
+- **Added**: 2026-02-21 | **Modified**: 2026-03-08
+
+### Renderer Contract Validation
+- **Status**: Active
+- **Description**: Runtime validation of structured data against renderer `input_data_schema` at two pipeline points: bridge (ingestion, after transformation) and assembly (read, before serving ViewPayload). Always WARN mode in pipeline — never blocks. STRICT mode available via `/validate` API for orchestrator pre-flight. Populated schemas also improve dynamic extraction quality via `dynamic_prompt.py`.
+- **Entry Points**:
+  - `src/renderers/validator.py:1-190` - validate_renderer_data(), validate_renderer_config(), validate_all_schemas()
+  - `src/presenter/presentation_bridge.py:348-380` - _validate_transform_output() in bridge
+  - `src/presenter/presentation_api.py:280-305` - _validate_payload_data() in assembly
+  - `src/api/routes/renderers.py:120-175` - POST /{key}/validate and GET /schemas/health endpoints
+  - `src/renderers/schemas.py:193-225` - ValidateDataRequest, ValidateDataResponse, ValidationError models
+  - `scripts/validate_renderer_cache.py` - One-off calibration script for existing cached data
+- **Added**: 2026-03-08
 
 ### Intelligent Renderer Selector
 - **Status**: Active

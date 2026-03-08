@@ -187,3 +187,39 @@ class RendererRecommendResponse(BaseModel):
     best_match: str
     config_migration: Optional[ConfigMigrationHint] = None
     analysis_summary: str
+
+
+# -- Validation Schemas --
+
+
+class ValidateDataRequest(BaseModel):
+    """Request body for POST /renderers/{key}/validate."""
+
+    data: Any = Field(..., description="Structured data to validate against input_data_schema")
+    config: Optional[dict[str, Any]] = Field(
+        default=None,
+        description="Optional renderer config to validate against config_schema",
+    )
+    strict: bool = Field(
+        default=False,
+        description="If true, return 422 on validation failure",
+    )
+
+
+class ValidationError(BaseModel):
+    """A single validation error."""
+
+    message: str
+    path: list[Any] = Field(default_factory=list)
+    schema_path: list[Any] = Field(default_factory=list)
+
+
+class ValidateDataResponse(BaseModel):
+    """Response for POST /renderers/{key}/validate."""
+
+    renderer_key: str
+    data_valid: bool
+    data_errors: list[ValidationError] = Field(default_factory=list)
+    config_valid: Optional[bool] = None
+    config_errors: list[ValidationError] = Field(default_factory=list)
+    schema_available: bool = True

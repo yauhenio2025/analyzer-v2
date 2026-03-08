@@ -4,6 +4,19 @@
   "description": "Compact overview with stat cards showing key metrics, counts, and confidence levels. Best for executive-summary views where numbers and headlines dominate.",
   "category": "diagnostic",
   "ideal_data_shapes": ["key_value_pairs", "flat_list"],
+  "input_data_schema": {
+    "type": "object",
+    "description": "Flat key-value pairs for stat cards. Values must be strings, numbers, arrays, or null — nested objects would render as '[object Object]'.",
+    "minProperties": 1,
+    "additionalProperties": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "number"},
+        {"type": "array"},
+        {"type": "null"}
+      ]
+    }
+  },
   "stance_affinities": {
     "summary": 0.9,
     "diagnostic": 0.8,

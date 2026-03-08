@@ -4,6 +4,18 @@
   "description": "Container renderer with collapsible sections. Ideal for structured analytical output with multiple named sections. Each section can use a different sub-renderer for its content.",
   "category": "container",
   "ideal_data_shapes": ["nested_sections", "object_array", "key_value_pairs"],
+  "input_data_schema": {
+    "type": "object",
+    "description": "Object whose keys become accordion section headings. Each value must be an object (rendered via sub-renderer), an array (rendered as a list), or a string (rendered as prose). Numbers and booleans are rejected because they produce empty sections.",
+    "minProperties": 1,
+    "additionalProperties": {
+      "oneOf": [
+        {"type": "object"},
+        {"type": "array"},
+        {"type": "string"}
+      ]
+    }
+  },
   "stance_affinities": {
     "interactive": 0.9,
     "evidence": 0.7,

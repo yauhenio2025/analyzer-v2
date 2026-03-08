@@ -4,6 +4,29 @@
   "description": "Long-form narrative renderer with section anchors and formatting. Best for connected analytical prose that reads as a continuous argument. Supports markdown-style headings, emphasis, and citations.",
   "category": "narrative",
   "ideal_data_shapes": ["prose_text", "nested_sections"],
+  "input_data_schema": {
+    "description": "Either a plain string of prose text, or an object containing at least one recognized prose field.",
+    "oneOf": [
+      {
+        "type": "string",
+        "minLength": 1,
+        "description": "Plain prose text (may contain markdown)"
+      },
+      {
+        "type": "object",
+        "description": "Object with at least one prose field",
+        "anyOf": [
+          {"required": ["text"]},
+          {"required": ["content"]},
+          {"required": ["prose"]},
+          {"required": ["narrative"]},
+          {"required": ["summary"]},
+          {"required": ["executive_summary"]},
+          {"required": ["description"]}
+        ]
+      }
+    ]
+  },
   "stance_affinities": {
     "narrative": 0.95,
     "evidence": 0.6,

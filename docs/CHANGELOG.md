@@ -6,6 +6,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Renderer contract validation** — Populated `input_data_schema` in all 9 renderer definitions (7 new + 2 existing). Schemas are tight enough to catch real problems: accordion/tab reject non-object/array/string values, stat_summary rejects nested objects (prevents "[object Object]"), card_grid requires non-empty arrays or category-keyed objects, prose requires non-empty strings or objects with recognized text fields, table supports multi-table/array/keyed formats, raw_json accepts anything. ([`src/renderers/definitions/*.json`](src/renderers/definitions/))
+- **Validation utility** (`src/renderers/validator.py`) — `validate_renderer_data()`, `validate_renderer_config()`, `validate_all_schemas()` using jsonschema Draft7Validator. Three modes: WARN (log, default), STRICT (raise, API-only), SILENT (skip). Errors capped at 10, oneOf failures summarized.
+- **Pipeline validation** — Two insertion points:
+  - Bridge (ingestion): validates transform output before `save_presentation_cache()` in `_save_and_report()` ([`src/presenter/presentation_bridge.py`](src/presenter/presentation_bridge.py))
+  - Assembly (read): validates cached structured_data before returning ViewPayload in `_build_view_payload()` ([`src/presenter/presentation_api.py`](src/presenter/presentation_api.py))
+  - Both hardcoded to WARN mode — never block the pipeline.
+- **Validation API endpoints**:
+  - `POST /v1/renderers/{key}/validate` — validate data/config against schemas, `strict=true` returns 422 ([`src/api/routes/renderers.py`](src/api/routes/renderers.py))
+  - `GET /v1/renderers/schemas/health` — per-renderer schema validity check ([`src/api/routes/renderers.py`](src/api/routes/renderers.py))
+- **Cache validation script** (`scripts/validate_renderer_cache.py`) — one-off calibration tool to dry-run schemas against existing presentation_cache data and report per-renderer pass/fail rates.
+
 - **Dynamic Bespoke Apps Vision Document** — Formalized the architectural vision for analyzer-v2 as the central intelligence layer, with consumer apps as ephemeral, LLM-composed presentations. Includes gap analysis (60% aligned, 25% partial, 15% missing) and 3-tier reconciliation plan covering renderer input contracts, view definition generation API, style system unification, page composition endpoint, ephemeral project lifecycle, and thin shell app template. ([`communications/DYNAMIC_BESPOKE_APPS_VISION.md`](communications/DYNAMIC_BESPOKE_APPS_VISION.md))
 
 ### Changed

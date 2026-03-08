@@ -345,6 +345,40 @@ def _run_single_task(
     return None, template  # Signal that we need to run the actual transformation
 
 
+def _validate_transform_output(
+    task: TransformationTask,
+    transform_result,
+    extraction_source: str = "curated",
+) -> None:
+    """Validate transformation output against renderer's input_data_schema.
+
+    Always runs in WARN mode — logs but never blocks the pipeline.
+    Wrapped in try/except so validation errors never crash processing.
+    """
+    try:
+        from src.renderers.validator import ValidationMode, validate_renderer_data
+
+        result = validate_renderer_data(
+            renderer_key=task.renderer_type,
+            data=transform_result.data,
+            mode=ValidationMode.WARN,
+        )
+        if not result.valid:
+            first_error = result.errors[0]["message"] if result.errors else "unknown"
+            logger.warning(
+                f"[renderer-validation] {task.view_key}/{task.section} "
+                f"renderer={task.renderer_type} source={extraction_source}: "
+                f"data invalid — {first_error} "
+                f"({len(result.errors)} error(s) total)"
+            )
+    except Exception:
+        # Validation must never crash the pipeline
+        logger.debug(
+            f"[renderer-validation] Could not validate {task.view_key}/{task.section}",
+            exc_info=True,
+        )
+
+
 def _save_and_report(
     task: TransformationTask,
     transform_result,
@@ -353,6 +387,7 @@ def _save_and_report(
 ) -> tuple[TransformationTaskResult, str]:
     """Save transformation result and return task result."""
     if transform_result.success:
+        _validate_transform_output(task, transform_result, extraction_source)
         save_presentation_cache(
             output_id=task.output_id,
             section=task.section,

@@ -4,6 +4,42 @@
   "description": "Structured table with sortable columns. Ideal for comparison across multiple items with consistent dimensions. Supports column configuration, sorting, and row grouping.",
   "category": "list",
   "ideal_data_shapes": ["object_array", "key_value_pairs", "comparison_pairs"],
+  "input_data_schema": {
+    "description": "Table data in one of three forms: a multi-table container, a flat array of row objects, or a keyed object of row objects.",
+    "oneOf": [
+      {
+        "type": "object",
+        "description": "Multi-table container with explicit table definitions",
+        "required": ["tables"],
+        "properties": {
+          "tables": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["title", "columns", "rows"],
+              "properties": {
+                "title": {"type": "string"},
+                "columns": {"type": "array", "items": {"type": "object"}},
+                "rows": {"type": "array", "items": {"type": "object"}}
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "array",
+        "description": "Flat array of row objects",
+        "items": {"type": "object"},
+        "minItems": 1
+      },
+      {
+        "type": "object",
+        "description": "Keyed object where each value is a row object",
+        "minProperties": 1,
+        "not": {"required": ["tables"]}
+      }
+    ]
+  },
   "stance_affinities": {
     "comparison": 0.9,
     "diagnostic": 0.7,

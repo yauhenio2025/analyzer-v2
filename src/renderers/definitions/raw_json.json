@@ -4,6 +4,7 @@
   "description": "Developer/diagnostic renderer that shows the raw structured data as formatted JSON. Useful for debugging transformation output or inspecting data shapes before designing a proper renderer.",
   "category": "diagnostic",
   "ideal_data_shapes": ["object_array", "nested_sections", "key_value_pairs", "flat_list", "prose_text", "timeline_data", "comparison_pairs"],
+  "input_data_schema": {},
   "stance_affinities": {
     "diagnostic": 0.95,
     "evidence": 0.3,

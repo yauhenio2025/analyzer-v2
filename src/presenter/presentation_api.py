@@ -276,6 +276,36 @@ def get_presentation_status(job_id: str) -> dict:
     }
 
 
+def _validate_payload_data(view_def, structured_data) -> None:
+    """Validate structured_data against renderer's input_data_schema at assembly time.
+
+    Always runs in WARN mode — observational logging only, never modifies
+    or strips data, never blocks assembly. Wrapped in try/except so
+    validation errors never crash the page assembly.
+    """
+    try:
+        from src.renderers.validator import ValidationMode, validate_renderer_data
+
+        result = validate_renderer_data(
+            renderer_key=view_def.renderer_type,
+            data=structured_data,
+            mode=ValidationMode.WARN,
+        )
+        if not result.valid:
+            first_error = result.errors[0]["message"] if result.errors else "unknown"
+            logger.warning(
+                f"[renderer-validation:assembly] {view_def.view_key} "
+                f"renderer={view_def.renderer_type}: "
+                f"cached data invalid — {first_error} "
+                f"({len(result.errors)} error(s) total)"
+            )
+    except Exception:
+        logger.debug(
+            f"[renderer-validation:assembly] Could not validate {view_def.view_key}",
+            exc_info=True,
+        )
+
+
 # --- Internal helpers ---
 
 
@@ -370,6 +400,12 @@ def _build_view_payload(
             outputs_cache=outputs_cache, cache_batch=cache_batch, slim=slim,
         )
         has_structured = structured_data is not None
+
+    # Assembly-time validation: check structured_data against renderer schema.
+    # Catches stale/bad cached data written before schemas existed.
+    # Always WARN mode — never blocks assembly.
+    if structured_data is not None:
+        _validate_payload_data(view_def, structured_data)
 
     return ViewPayload(
         view_key=view_def.view_key,

@@ -4,6 +4,29 @@
   "description": "Responsive grid of cards, each representing an analytical finding or entity. Good for collections of distinct items with title, description, and metadata.",
   "category": "list",
   "ideal_data_shapes": ["object_array", "flat_list"],
+  "input_data_schema": {
+    "description": "Either a flat array of card objects, or a category-keyed object whose values are arrays of card objects.",
+    "oneOf": [
+      {
+        "type": "array",
+        "description": "Flat list of card objects",
+        "items": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "minItems": 1
+      },
+      {
+        "type": "object",
+        "description": "Category-keyed groups of card objects",
+        "minProperties": 1,
+        "additionalProperties": {
+          "type": "array",
+          "items": {"type": "object", "minProperties": 1}
+        }
+      }
+    ]
+  },
   "stance_affinities": {
     "summary": 0.7,
     "interactive": 0.7,

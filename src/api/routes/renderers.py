@@ -17,6 +17,15 @@ from src.renderers.schemas import (
     RendererRecommendRequest,
     RendererRecommendResponse,
     RendererSummary,
+    ValidateDataRequest,
+    ValidateDataResponse,
+    ValidationError as ValidationErrorSchema,
+)
+from src.renderers.validator import (
+    ValidationMode,
+    validate_all_schemas,
+    validate_renderer_config,
+    validate_renderer_data,
 )
 
 logger = logging.getLogger(__name__)
@@ -112,6 +121,19 @@ async def renderers_for_primitive(primitive_key: str):
         )
         for r in renderers
     ]
+
+
+# -- Schema health (must precede /{renderer_key} to avoid path conflict) --
+
+
+@router.get("/schemas/health")
+async def schemas_health():
+    """Health check: verify all renderer schemas are valid JSON Schema.
+
+    Returns per-renderer status including has_input_schema,
+    has_config_schema, and whether each is valid JSON Schema.
+    """
+    return validate_all_schemas()
 
 
 # -- Detail endpoint --
@@ -375,6 +397,51 @@ Return ONLY valid JSON (no markdown fences) matching this schema:
             status_code=500,
             detail=f"Recommendation failed: {e}",
         )
+
+
+# -- Validation --
+
+
+@router.post("/{renderer_key}/validate", response_model=ValidateDataResponse)
+async def validate_renderer(renderer_key: str, req: ValidateDataRequest):
+    """Validate data (and optionally config) against a renderer's schemas.
+
+    Use strict=true for orchestrator pre-flight checks — returns 422 on failure.
+    Default (strict=false) returns 200 with a validation report.
+    """
+    _get_or_404(renderer_key)
+
+    mode = ValidationMode.STRICT if req.strict else ValidationMode.WARN
+
+    # Validate data
+    try:
+        data_result = validate_renderer_data(renderer_key, req.data, mode=mode)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+
+    # Validate config if provided
+    config_valid = None
+    config_errors: list[ValidationErrorSchema] = []
+    if req.config is not None:
+        try:
+            config_result = validate_renderer_config(renderer_key, req.config, mode=mode)
+        except ValueError as e:
+            raise HTTPException(status_code=422, detail=str(e))
+        config_valid = config_result.valid
+        config_errors = [
+            ValidationErrorSchema(**err) for err in config_result.errors
+        ]
+
+    return ValidateDataResponse(
+        renderer_key=renderer_key,
+        data_valid=data_result.valid,
+        data_errors=[
+            ValidationErrorSchema(**err) for err in data_result.errors
+        ],
+        config_valid=config_valid,
+        config_errors=config_errors,
+        schema_available=data_result.schema_available,
+    )
 
 
 # -- Reload --
