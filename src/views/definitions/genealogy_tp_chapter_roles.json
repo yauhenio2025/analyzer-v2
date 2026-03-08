@@ -39,7 +39,7 @@
         "config": {"title_field": "type", "subtitle_field": "location", "intensity_field": "severity", "intensity_scale": ["low", "medium", "high", "critical"], "description_field": "description", "section_description": "Where the architecture strains: load-bearing weaknesses, missing bridges, orphaned threads"}
       },
       "inter_part_dynamics": {
-        "renderer_type": "prose_block",
+        "renderer_type": "annotated_prose",
         "config": {"section_description": "How major parts or sections interact and relate"}
       }
     }

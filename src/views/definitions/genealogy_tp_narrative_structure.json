@@ -20,7 +20,7 @@
     "expand_first": true,
     "section_renderers": {
       "narrative_arc": {
-        "renderer_type": "prose_block",
+        "renderer_type": "annotated_prose",
         "config": {"section_description": "Overall emplotment mode and narrative arc"}
       },
       "narrative_voice_register": {
@@ -28,7 +28,7 @@
         "config": {"separator": ":", "max_visible_chars": 99999, "section_description": "Registers deployed — analytical, polemical, prophetic, ironic, etc."}
       },
       "perspective_focalization": {
-        "renderer_type": "prose_block",
+        "renderer_type": "annotated_prose",
         "config": {"section_description": "Whose perspective is centered, whose is marginalized"}
       },
       "narrative_tensions": {

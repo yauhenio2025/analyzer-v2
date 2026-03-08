@@ -21,6 +21,7 @@
  *   dialectical_pair      — Two-panel tension visualization for thesis/antithesis contrasts
  *   rich_description_list — Stacked items with colored borders for paragraph-length descriptions
  *   phase_timeline        — Connected timeline with prominent phase nodes for temporal data
+ *   annotated_prose       — Enhanced prose with paragraph markers, pull-quotes, and rhetorical highlighting
  *   dependency_matrix     — Adjacency matrix / heatmap for directed chapter dependencies
  *   distribution_summary  — Visual bar chart with dominant highlight, counts, and optional narrative
  */
@@ -59,6 +60,7 @@ const SUB_RENDERER_MAP: Record<string, React.FC<SubRendererProps>> = {
   rich_description_list: RichDescriptionList,
   phase_timeline: PhaseTimeline,
   dependency_matrix: DependencyMatrix,
+  annotated_prose: AnnotatedProse,
   distribution_summary: DistributionSummary,
 };
 
@@ -3335,6 +3337,158 @@ function PhaseTimeline({ data, config }: SubRendererProps) {
  *   _activeFilter?: string | null            -- highlights active bar
  *   _groups?: Group[]                        -- live groups (overrides distribution field)
  */
+
+// ── annotated_prose ───────────────────────────────────────────
+// Enhanced prose rendering with paragraph detection, pull-quote extraction,
+// and subtle numbered markers. Upgrades prose_block for longer analytical text.
+//
+// Config:
+//   pull_quote_min_length — minimum sentence length to be considered a pull-quote (default 80)
+//   show_paragraph_numbers — show subtle paragraph numbers (default true)
+//   highlight_markers — rhetorical markers to highlight (default: common analytical terms)
+
+const DEFAULT_MARKERS = [
+  'crucial', 'fundamentally', 'the key claim', 'central to', 'decisive',
+  'turning point', 'paradox', 'contradiction', 'however', 'nevertheless',
+  'most importantly', 'significantly', 'critically', 'the core',
+];
+
+function AnnotatedProse({ data, config }: SubRendererProps) {
+  const { tokens } = useDesignTokens();
+
+  const text = typeof data === 'string'
+    ? data
+    : typeof data === 'object' && data !== null
+      ? (data as Record<string, unknown>)._prose_output as string
+        || (data as Record<string, unknown>).text as string
+        || (data as Record<string, unknown>).content as string
+        || (data as Record<string, unknown>).prose as string
+        || ''
+      : '';
+
+  if (!text) return null;
+
+  const pullQuoteMinLen = (config.pull_quote_min_length as number) || 80;
+  const showParaNums = config.show_paragraph_numbers !== false;
+  const markers = (config.highlight_markers as string[]) || DEFAULT_MARKERS;
+
+  // Split into paragraphs
+  const paragraphs = text.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
+
+  // Find the best pull-quote: longest sentence across all paragraphs that contains a marker
+  let bestQuote = '';
+  let bestQuoteParaIdx = -1;
+  for (let pi = 0; pi < paragraphs.length; pi++) {
+    const sentences = paragraphs[pi].split(/(?<=[.!?])\s+/);
+    for (const sent of sentences) {
+      if (sent.length >= pullQuoteMinLen && sent.length > bestQuote.length) {
+        const lower = sent.toLowerCase();
+        if (markers.some(m => lower.includes(m))) {
+          bestQuote = sent;
+          bestQuoteParaIdx = pi;
+        }
+      }
+    }
+  }
+  // Fallback: just pick longest sentence if no marker match
+  if (!bestQuote) {
+    for (let pi = 0; pi < paragraphs.length; pi++) {
+      const sentences = paragraphs[pi].split(/(?<=[.!?])\s+/);
+      for (const sent of sentences) {
+        if (sent.length >= pullQuoteMinLen && sent.length > bestQuote.length) {
+          bestQuote = sent;
+          bestQuoteParaIdx = pi;
+        }
+      }
+    }
+  }
+
+  const accentColor = tokens.primitives.series_palette[0] || '#6366f1';
+
+  // Highlight markers in text
+  const highlightText = (text: string): React.ReactNode[] => {
+    if (markers.length === 0) return [text];
+    const pattern = new RegExp(`(${markers.map(m => m.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi');
+    const parts = text.split(pattern);
+    return parts.map((part, i) => {
+      if (pattern.test(part)) {
+        return React.createElement('span', {
+          key: i,
+          style: {
+            fontWeight: 600,
+            color: accentColor,
+          },
+        }, part);
+      }
+      return part;
+    });
+  };
+
+  return (
+    <div style={{
+      fontFamily: 'var(--font-serif, Georgia, serif)',
+      lineHeight: 1.75,
+      color: 'var(--dt-ink-primary, #1a1a2e)',
+    }}>
+      {paragraphs.map((para, idx) => {
+        const isQuotePara = idx === bestQuoteParaIdx;
+
+        return React.createElement(React.Fragment, { key: idx },
+          // Pull-quote callout (inserted after the paragraph it was extracted from)
+          showParaNums ? React.createElement('div', {
+            style: {
+              display: 'flex',
+              gap: '12px',
+              marginBottom: idx === paragraphs.length - 1 ? 0 : '1.1em',
+            },
+          },
+            // Paragraph number
+            React.createElement('span', {
+              style: {
+                fontSize: '0.7rem',
+                fontFamily: 'var(--font-mono, monospace)',
+                color: 'var(--dt-ink-tertiary, #9ca3af)',
+                minWidth: '18px',
+                textAlign: 'right',
+                paddingTop: '3px',
+                userSelect: 'none',
+              },
+            }, `${idx + 1}`),
+            // Paragraph text
+            React.createElement('p', {
+              style: {
+                margin: 0,
+                fontSize: '0.92rem',
+              },
+            }, ...highlightText(para)),
+          ) : React.createElement('p', {
+            style: {
+              margin: 0,
+              marginBottom: idx === paragraphs.length - 1 ? 0 : '1.1em',
+              fontSize: '0.92rem',
+            },
+          }, ...highlightText(para)),
+
+          // Pull-quote callout after the source paragraph
+          isQuotePara && bestQuote ? React.createElement('blockquote', {
+            key: `quote-${idx}`,
+            style: {
+              margin: '1em 0 1.2em 0',
+              padding: '12px 16px',
+              borderLeft: `3px solid ${accentColor}`,
+              background: 'var(--dt-surface-card, #f8f6f3)',
+              borderRadius: '0 var(--radius-sm, 4px) var(--radius-sm, 4px) 0',
+              fontStyle: 'italic',
+              fontSize: '0.88rem',
+              lineHeight: 1.65,
+              color: 'var(--dt-ink-secondary, #374151)',
+            },
+          }, `"${bestQuote}"`) : null,
+        );
+      })}
+    </div>
+  );
+}
 
 // ── dependency_matrix ─────────────────────────────────────────
 // Adjacency matrix / heatmap for directed relationships.
