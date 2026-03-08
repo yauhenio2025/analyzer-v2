@@ -14,6 +14,10 @@ from .schemas import (
     StyleAffinity,
     AffinitySet,
     EngineStyleMapping,
+    StyleRecommendation,
+    RecommendationReasoning,
+    StyleRecommendContextSummary,
+    StyleRecommendResponse,
 )
 
 logger = logging.getLogger(__name__)
@@ -165,6 +169,154 @@ class StyleRegistry:
             style_affinities=self.get_styles_for_engine(engine_key),
             has_semantic_intent=has_semantic_intent,
             recommended_visual_patterns=recommended_visual_patterns or [],
+        )
+
+    # Style Recommendation
+    RENDERER_FORMAT_MAP: dict[str, list[str]] = {
+        "table":        ["matrix_heatmap", "ach_matrix"],
+        "stat_summary": ["indicator_dashboard", "bar_chart"],
+    }
+
+    def recommend_styles(
+        self,
+        engine_keys: list[str] | None = None,
+        renderer_types: list[str] | None = None,
+        audience: str | None = None,
+        limit: int = 3,
+    ) -> StyleRecommendResponse:
+        """Rank style schools by combined affinity signals."""
+        # Deduplicate inputs preserving order
+        engines = list(dict.fromkeys(engine_keys or []))
+        renderers = list(dict.fromkeys(renderer_types or []))
+
+        all_schools = list(StyleSchool)
+
+        # Track context summary
+        engines_with_explicit = sum(1 for k in engines if k in self._engine_affinities)
+        engines_using_default = len(engines) - engines_with_explicit
+
+        # Map renderer types to format keys
+        mapped_formats: list[str] = []
+        renderer_types_mapped = 0
+        for rt in renderers:
+            fmt_keys = self.RENDERER_FORMAT_MAP.get(rt)
+            if fmt_keys:
+                renderer_types_mapped += 1
+                mapped_formats.extend(fmt_keys)
+        mapped_formats = list(dict.fromkeys(mapped_formats))  # deduplicate
+
+        formats_with_explicit = sum(1 for f in mapped_formats if f in self._format_affinities)
+        formats_using_default = len(mapped_formats) - formats_with_explicit
+
+        audience_used_default = False
+        if audience is not None and audience not in self._audience_affinities:
+            audience_used_default = True
+
+        # Count effective signals
+        total_signals = len(engines) + len(mapped_formats) + (1 if audience is not None else 0)
+        max_possible = 2.0 * total_signals if total_signals > 0 else 1.0
+
+        # Score each school
+        school_data: dict[StyleSchool, dict] = {}
+        for school in all_schools:
+            raw_score = 0.0
+            primary_count = 0
+            engine_matches: dict[str, int] = {}
+            format_matches: dict[str, int] = {}
+            audience_match_pos = -1
+            matched_signals = 0
+
+            # Engine signals
+            for ek in engines:
+                styles = self.get_styles_for_engine(ek)
+                if school in styles:
+                    pos = styles.index(school)
+                    engine_matches[ek] = pos
+                    points = 2.0 if pos == 0 else 1.0
+                    raw_score += points
+                    matched_signals += 1
+                    if pos == 0:
+                        primary_count += 1
+                else:
+                    engine_matches[ek] = -1
+
+            # Format signals (from mapped renderer types)
+            for fk in mapped_formats:
+                styles = self.get_styles_for_format(fk)
+                if school in styles:
+                    pos = styles.index(school)
+                    format_matches[fk] = pos
+                    points = 2.0 if pos == 0 else 1.0
+                    raw_score += points
+                    matched_signals += 1
+                    if pos == 0:
+                        primary_count += 1
+                else:
+                    format_matches[fk] = -1
+
+            # Audience signal
+            if audience is not None:
+                styles = self.get_styles_for_audience(audience)
+                if school in styles:
+                    pos = styles.index(school)
+                    audience_match_pos = pos
+                    points = 2.0 if pos == 0 else 1.0
+                    raw_score += points
+                    matched_signals += 1
+                    if pos == 0:
+                        primary_count += 1
+                else:
+                    audience_match_pos = -1
+
+            score = raw_score / max_possible if total_signals > 0 else 0.0
+
+            school_data[school] = {
+                "raw_score": raw_score,
+                "score": score,
+                "primary_count": primary_count,
+                "matched_signals": matched_signals,
+                "reasoning": RecommendationReasoning(
+                    engine_matches=engine_matches,
+                    format_matches=format_matches,
+                    audience_match=audience_match_pos,
+                    total_signals=total_signals,
+                    matched_signals=matched_signals,
+                ),
+            }
+
+        # Sort: score desc, primary_count desc, alphabetical asc
+        sorted_schools = sorted(
+            all_schools,
+            key=lambda s: (-school_data[s]["score"], -school_data[s]["primary_count"], s.value),
+        )
+
+        recommendations = []
+        for rank, school in enumerate(sorted_schools[:limit], start=1):
+            d = school_data[school]
+            recommendations.append(StyleRecommendation(
+                school=school,
+                score=round(d["score"], 4),
+                raw_score=d["raw_score"],
+                rank=rank,
+                reasoning=d["reasoning"],
+            ))
+
+        context_summary = StyleRecommendContextSummary(
+            engines_provided=len(engines),
+            engines_with_explicit_mapping=engines_with_explicit,
+            engines_using_default=engines_using_default,
+            renderer_types_provided=len(renderers),
+            renderer_types_mapped=renderer_types_mapped,
+            formats_with_explicit_mapping=formats_with_explicit,
+            formats_using_default=formats_using_default,
+            audience_provided=audience,
+            audience_used_default=audience_used_default,
+            effective_signals=total_signals,
+        )
+
+        return StyleRecommendResponse(
+            recommendations=recommendations,
+            context_summary=context_summary,
         )
 
     # Stats

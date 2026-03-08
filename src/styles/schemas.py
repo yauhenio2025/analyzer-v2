@@ -3,8 +3,8 @@ Pydantic schemas for visual style definitions.
 """
 
 from enum import Enum
-from typing import Optional
-from pydantic import BaseModel, Field
+from typing import Any, Optional
+from pydantic import BaseModel, Field, model_validator
 
 
 class StyleSchool(str, Enum):
@@ -138,3 +138,63 @@ class EngineStyleMapping(BaseModel):
         default_factory=list,
         description="Visual patterns from engine definition"
     )
+
+
+# ---------------------------------------------------------------------------
+# Style Recommendation Models
+# ---------------------------------------------------------------------------
+
+class StyleRecommendRequest(BaseModel):
+    engine_keys: list[str] = Field(default_factory=list)
+    renderer_types: list[str] = Field(default_factory=list)
+    audience: Optional[str] = None
+    limit: int = Field(default=3, ge=1, le=6)
+
+    @model_validator(mode='after')
+    def at_least_one_signal(self):
+        if not self.engine_keys and not self.renderer_types and not self.audience:
+            raise ValueError("At least one of engine_keys, renderer_types, or audience required")
+        return self
+
+
+class RecommendationReasoning(BaseModel):
+    engine_matches: dict[str, int] = Field(
+        default_factory=dict,
+        description="engine_key -> position in affinity list (0=primary, 1=secondary, -1=not listed)"
+    )
+    format_matches: dict[str, int] = Field(
+        default_factory=dict,
+        description="format_key -> position (-1=not listed)"
+    )
+    audience_match: int = Field(
+        -1,
+        description="Position in audience affinity list (-1=not listed or no audience)"
+    )
+    total_signals: int = Field(0, description="Number of signals that contributed to scoring")
+    matched_signals: int = Field(0, description="How many signals this school was listed in")
+
+
+class StyleRecommendation(BaseModel):
+    school: StyleSchool
+    score: float = Field(..., description="Normalized 0.0-1.0")
+    raw_score: float = Field(..., description="Unnormalized sum of position points")
+    rank: int
+    reasoning: RecommendationReasoning
+
+
+class StyleRecommendContextSummary(BaseModel):
+    engines_provided: int = 0
+    engines_with_explicit_mapping: int = 0
+    engines_using_default: int = 0
+    renderer_types_provided: int = 0
+    renderer_types_mapped: int = 0
+    formats_with_explicit_mapping: int = 0
+    formats_using_default: int = 0
+    audience_provided: Optional[str] = None
+    audience_used_default: bool = False
+    effective_signals: int = 0
+
+
+class StyleRecommendResponse(BaseModel):
+    recommendations: list[StyleRecommendation]
+    context_summary: StyleRecommendContextSummary

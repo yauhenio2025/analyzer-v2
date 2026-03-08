@@ -17,6 +17,8 @@ from ...styles.schemas import (
     StyleGuideSummary,
     AffinitySet,
     EngineStyleMapping,
+    StyleRecommendRequest,
+    StyleRecommendResponse,
 )
 from ...styles.token_schema import DesignTokenSet
 from ...styles.token_generator import (
@@ -145,6 +147,22 @@ async def get_engine_style_mapping(engine_key: str):
         engine_name=engine.name,
         has_semantic_intent=has_semantic,
         recommended_visual_patterns=visual_patterns,
+    )
+
+
+@router.post("/recommend", response_model=StyleRecommendResponse)
+async def recommend_styles(request: StyleRecommendRequest):
+    """Recommend style schools based on combined context signals.
+
+    Accepts engine keys, renderer types, and/or audience, and returns
+    a ranked list of style schools with scores and reasoning.
+    """
+    registry = get_style_registry()
+    return registry.recommend_styles(
+        engine_keys=request.engine_keys,
+        renderer_types=request.renderer_types,
+        audience=request.audience,
+        limit=request.limit,
     )
 
 
