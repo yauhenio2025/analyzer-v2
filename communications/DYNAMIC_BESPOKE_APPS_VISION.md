@@ -187,10 +187,10 @@ This is the **human-in-the-loop** layer: LLMs propose, humans review and approve
 
 | Capability | What's Missing |
 |-----------|----------------|
-| **Dynamic view generation** | No mechanism for LLM to create entirely new view definitions at runtime — only selects from pre-authored catalog |
+| **Dynamic view generation** | `POST /v1/views/generate` exists with `save=false` default (ephemeral), but no orchestrator-level "compose page from intent" endpoint |
 | **Ephemeral project lifecycle** | Projects persist indefinitely; no "use and discard" pattern with auto-archival |
-| **Full UI composition by LLM** | View defs are human-authored JSON; LLM selects and refines but doesn't compose from primitives |
-| **Renderer input contracts** | No typed schema per renderer; `structured_data` is `unknown` — silent failures on shape mismatch |
+| **Full UI composition by LLM** | `/v1/views/generate` can create views from patterns (ephemeral by default), but no end-to-end "prose + intent → rendered page" pipeline |
+| **Renderer input contracts** | `input_data_schema` field exists in `RendererDefinition` but is unpopulated in all renderer JSONs; no runtime validation endpoint |
 | **Cross-app renderer sharing** | `renderers-ui` is an npm package but the-critic maintains local renderer copies and view-key-specific overrides |
 | **Dynamic app generation** | No mechanism for an LLM to compose an entire single-use app from scratch |
 
@@ -367,21 +367,23 @@ This is what it means for analyzer-v2 to be the central intelligence layer: **no
 
 This section assesses, layer by layer, how ready the UI pipeline is for an external LLM orchestrator that says: *"Here's prose output from engines. Here are the available renderers, sub-renderers, style schools. Compose a full page."*
 
-### 9.1 Transformation Layer — 90% Ready
+### 9.1 Transformation Layer — 95% Ready
 
 **What works**: The dynamic extraction system (`dynamic_prompt.py`, 314 lines) can transform arbitrary prose into structured data for ANY renderer WITHOUT curated templates. It composes prompts from engine metadata (`canonical_schema`, `extraction_focus`) + renderer metadata (`ideal_data_shapes`, `config_schema`) + presentation stance. Haiku does the extraction; Sonnet is the fallback.
 
 **Existing APIs**:
 ```
-POST /v1/transformations/execute     — execute curated template or inline spec
+POST /v1/transformations/execute     — ALREADY STATELESS: accepts raw `data: Any` directly
 GET  /v1/transformations/for-engine/{key}   — find templates for an engine
 GET  /v1/transformations/for-renderer/{key} — find templates for a renderer
 POST /v1/transformations/generate    — LLM-powered template generation
 ```
 
-**The gap**: All transformation endpoints require a `job_id` and `output_id` — they assume prose lives in the database as a phase output. An external orchestrator holding prose in memory cannot currently say "transform this prose for this renderer" without first persisting it as a job output.
+**Correction** (verified 2026-03-08): The `/v1/transformations/execute` endpoint does NOT require `job_id` or `output_id`. It accepts raw data directly via the `data` field and can use either a `template_key` reference or inline transformation spec (`transformation_type`, `field_mapping`, `llm_prompt_template`, etc.). An external orchestrator can already transform arbitrary prose.
 
-**What's needed**: A stateless transformation endpoint:
+**Remaining gap**: The dynamic prompt composition system (`compose_dynamic_extraction_prompt`) is used internally by `presentation_bridge.py` but not directly exposed as an API convenience. An orchestrator wanting to leverage it would need to construct the inline spec manually rather than just saying "transform this prose for this renderer type". This is a **thin wrapper opportunity**, not a fundamental capability gap.
+
+**What could improve it**: A convenience alias that combines dynamic prompt composition + execution:
 ```
 POST /v1/transformations/extract
 {
@@ -389,14 +391,14 @@ POST /v1/transformations/extract
   "renderer_type": "accordion",
   "engine_key": "genealogy_portrait",     // for prompt composition
   "stance_key": "interactive",            // optional
-  "renderer_config": { ... }              // optional, for sub-renderer guidance
 }
 → { "structured_data": { ... } }
 ```
+This would internally call `compose_dynamic_extraction_prompt()` → `execute()` — no new logic, just routing convenience.
 
-### 9.2 View Composition — 60% Ready
+### 9.2 View Composition — 70% Ready
 
-**What works**: View definitions can be CRUD'd via API. `POST /v1/views` creates a view definition; `GET /v1/views/compose/{app}/{page}` returns a full parent-child tree. The registry supports filtering by workflow, chain, and app. `POST /v1/views/generate` provides LLM-powered view generation from patterns.
+**What works**: View definitions can be CRUD'd via API. `POST /v1/views` creates a view definition; `GET /v1/views/compose/{app}/{page}` returns a full parent-child tree. The registry supports filtering by workflow, chain, and app. `POST /v1/views/generate` provides LLM-powered view generation from patterns **with `save=false` by default** (ephemeral views that are returned but not persisted to disk).
 
 **Existing APIs**:
 ```
@@ -406,10 +408,12 @@ GET    /v1/views/compose/{app}/{page}    — get complete page view tree
 GET    /v1/views/for-workflow/{key}      — views for a workflow
 POST   /v1/views                         — create view definition
 PUT    /v1/views/{view_key}              — update view definition
-POST   /v1/views/generate               — LLM-powered view generation
+POST   /v1/views/generate               — LLM-powered view generation (save=false default!)
 ```
 
-**The gap**: Creating a view definition requires specifying all fields including `data_source` (phase_number, engine_key, scope) — the orchestrator must already know the job structure. There is no "compose a view from prose + intent" endpoint that handles transformation + view creation + assembly in one shot. Generated views persist to disk; no ephemeral/session-scoped views.
+**Correction** (verified 2026-03-08): `/v1/views/generate` defaults to `save=false`. Generated views are ephemeral — returned in the response but NOT persisted to disk unless explicitly requested with `save=true`. This means the building block for ephemeral view composition already exists.
+
+**The real gap**: There is no end-to-end "compose a page from prose + intent" endpoint that handles renderer selection + view generation + transformation + assembly + polish in one shot. The pieces exist (view generation, transformation execution, page assembly, polish) but aren't wired together in an orchestrator-facing flow.
 
 **What's needed**: A one-shot composition endpoint:
 ```
@@ -446,12 +450,13 @@ POST   /v1/renderers/recommend            — LLM-powered recommendation
 - `DesignTokenProvider`, `useDesignTokens`, `tokenFlattener`
 - `TemplateCardCell`, `ConditionCards`, `EvidenceTrail`
 
-**The gap**: All renderers accept `data: unknown` and `config: Record<string, unknown>`. No runtime validation of data shape against what the renderer actually needs. When the transformation produces the wrong shape, renderers silently fail or render empty. An LLM orchestrator has no formal contract to compose against — only documentation in `ideal_data_shapes` strings and `config_schema` JSON.
+**The gap**: All renderers accept `data: unknown` and `config: Record<string, unknown>` at render time. The `RendererDefinition` schema already declares an `input_data_schema: Optional[dict]` field (verified in `src/renderers/schemas.py`), but **no renderer JSON file populates it yet**. The infrastructure for contracts exists; the actual contracts haven't been authored. Additionally, there is no runtime validation in the presenter path — bad data passes through silently.
 
 **What's needed**:
-1. JSON Schema per renderer type (e.g., `accordion.input.schema.json`) that the orchestrator can read and the presenter can validate against
-2. A validation endpoint: `POST /v1/renderers/{key}/validate` that checks structured_data against the schema before rendering
-3. TypeScript types generated from schemas for compile-time safety in renderers-ui
+1. **Populate** `input_data_schema` in each renderer's JSON definition with actual JSON Schemas (the field already exists, just needs content)
+2. **Validate in presenter path** — `presentation_api.py` should validate `structured_data` against the renderer's `input_data_schema` before including it in PagePresentation, not as an optional API call
+3. A validation endpoint: `POST /v1/renderers/{key}/validate` for orchestrators to pre-check data shape
+4. TypeScript types generated from schemas for compile-time safety in renderers-ui
 
 ### 9.4 Style Pipeline — 80% Ready
 
@@ -521,44 +526,96 @@ AnalysisWorkspacePage
 
 ---
 
-## 10. The Three Missing Endpoints
+## 10. Implementation Priorities (Claude + Codex Consensus)
 
-The entire gap between "current state" and "LLM orchestrator can compose full UI" reduces to **three missing API capabilities**:
+After cross-review between Claude and Codex (2026-03-08), the priorities have been refined. The original "three missing endpoints" framing overstated some gaps. Here is the corrected assessment:
 
-### Endpoint 1: Stateless Prose Transformation
-```
-POST /v1/transformations/extract
-```
-Accepts raw prose + renderer type. Returns structured_data. No job context required. Uses the existing dynamic extraction system (`dynamic_prompt.py`) but without database dependencies.
+### Priority 1: Renderer Contract Validation (HIGH — prerequisite for safe composition)
 
-**Effort**: Small. The extraction logic exists; this is a new route that wraps `compose_dynamic_extraction_prompt()` + `TransformationExecutor.execute()` without requiring an `output_id`.
+The `input_data_schema` field exists in `RendererDefinition` but is empty across all renderer JSONs. Before building more composition surface, enforce data contracts so bad compositions fail loudly rather than silently rendering garbage.
 
-### Endpoint 2: Intent-Driven Page Composition
+**Work items**:
+1. Populate `input_data_schema` in each of the 7 renderer definition JSONs
+2. Add validation in the presenter path (`presentation_api.py`) — reject malformed structured_data before it reaches the frontend
+3. Add `POST /v1/renderers/{key}/validate` endpoint for orchestrators to pre-check
+
+**Effort**: Medium. Schema authoring per renderer + validation plumbing.
+
+**Codex's reasoning**: *"Renderer contract validation before more composition surface"* — without contracts, every new composition endpoint is building on sand.
+
+### Priority 2: Consumer Consolidation (HIGH — proves the thesis)
+
+Move the-critic to import `@caii/analysis-renderers` from analyzer-v2's renderers-ui package. Remove local renderer copies and view-key-specific overrides. This is the single most visible step toward proving the "thin shell" thesis.
+
+**Work items**:
+1. Publish `@caii/analysis-renderers` as installable package
+2. Replace all local renderer files in the-critic with imports
+3. Remove `IdeaEvolutionRenderer`, `SynthesisRenderer` view-key overrides — express their logic through `renderer_config`
+4. Redirect GenealogyPage route to AnalysisWorkspacePage
+
+**Effort**: Medium-Large. Renderer API surface alignment + migration.
+
+### Priority 3: `POST /v1/presenter/compose-from-intent` (HIGH — the orchestration entrypoint)
+
+The single endpoint an external orchestrator needs. Internally wires together existing pieces:
+- `/v1/renderers/recommend` for renderer selection
+- `/v1/views/generate` (save=false) for ephemeral view creation
+- `/v1/transformations/execute` (already stateless) for prose → structured data
+- Page assembly logic from `presentation_api.py`
+- Optional auto-polish
+
 ```
 POST /v1/presenter/compose-from-intent
+{
+  "prose_sections": [
+    { "engine_key": "genealogy_portrait", "prose": "..." },
+    { "engine_key": "genealogy_tactics", "prose": "..." }
+  ],
+  "user_intent": "Show me how this author's ideas evolved",
+  "style_school": "humanist_craft",     // optional
+  "audience": "academic",               // optional
+  "auto_polish": true                   // optional
+}
+→ { "page_presentation": { ... } }
 ```
-Accepts multiple prose sections + user intent + style preference. Returns a complete PagePresentation. Internally: selects renderers, generates ephemeral view definitions, runs transformations, assembles page, optionally polishes.
 
-**Effort**: Medium. Requires orchestrating existing components (renderer recommendation, dynamic extraction, page assembly, polish) in a new flow that doesn't assume pre-existing view definitions or job outputs.
+**Effort**: Medium. Orchestration glue over existing capabilities, not new logic.
 
-### Endpoint 3: Style Recommendation
+**Codex's key insight**: *"Keep /views/generate as the primitive and build compose-from-intent as orchestrator glue over existing pieces."* Don't duplicate — compose.
+
+### Priority 4: Style-Token Unification (MEDIUM — coherence)
+
+Polisher should emit token references, not raw CSS values. This prevents polished views from conflicting with the design token system.
+
+**Effort**: Small-Medium. Polisher prompt changes + optional reconciliation layer.
+
+### Priority 5: `POST /v1/styles/recommend` (LOW — useful but non-blocking)
+
+Heuristic-first style recommendation from existing affinity mappings. LLM reasoning optional.
+
+**Effort**: Small. Thin wrapper over `get_styles_for_engine()` + `get_styles_for_format()` + `get_styles_for_audience()`.
+
+### Priority 6: Ephemeral Project Lifecycle (LOW — only if "disposable apps" is core)
+
+Project states: `active` → `archived` → `deleted`. Auto-archive after N days. Scoped artifact cleanup.
+
+**Effort**: Medium. Data model + cleanup jobs + lifecycle API.
+
+### What's NOT a Gap (Previously Misstated)
+
+- **~~Stateless transformation~~**: `/v1/transformations/execute` already accepts raw `data` without job context
+- **~~Views persist to disk~~**: `/v1/views/generate` defaults to `save=false` (ephemeral)
+- **~~No renderer schema infrastructure~~**: `input_data_schema` field exists in RendererDefinition; needs population, not creation
+
+### The Critical Path
+
 ```
-POST /v1/styles/recommend
+Priority 1 (contracts) → Priority 3 (compose-from-intent) → Priority 2 (consolidation)
 ```
-Accepts engine keys + renderer types + audience. Returns ranked style school recommendations with reasoning. Leverages existing affinity mappings but adds LLM reasoning for novel combinations.
 
-**Effort**: Small. Affinity data exists; this is a thin LLM wrapper over `get_styles_for_engine()` + `get_styles_for_format()` + `get_styles_for_audience()`.
+Contracts first, because compose-from-intent needs to validate its output. Compose-from-intent before consolidation, because it proves the API surface works before migrating consumers to depend on it. Consolidation is the most visible proof but depends on a stable API.
 
-### What These Three Endpoints Enable
-
-With these three additions, an external orchestrator (the "commissioning app") can:
-
-1. **Receive analytical prose** from the engine pipeline
-2. **Ask analyzer-v2 which style to use** → Endpoint 3
-3. **Ask analyzer-v2 to compose a full page** → Endpoint 2 (which internally uses Endpoint 1)
-4. **Hand the PagePresentation to any thin shell** → renders immediately via V2TabContent
-
-The orchestrator never needs to understand renderers, sub-renderers, view definitions, or design tokens. It says "here's prose, here's intent" and gets back a render-ready page.
+**Alternative ordering** (Codex preference): Contracts → Consolidation → Compose-from-intent. Codex argues consolidation is higher priority because it removes the anti-pattern and forces the renderer package to be consumed correctly, which surfaces integration issues early. Both orderings are valid; the choice depends on whether you want to prove the API-first (Claude) or the consumption-first (Codex).
 
 ---
 
@@ -583,7 +640,33 @@ If every consumer app maintains its own renderer copies, the "single source of t
 
 ---
 
-## 12. Collaboration Protocol
+## 12. Cross-Review Log
+
+This section records assessments from different LLM agents to maintain a shared record of agreements and disagreements.
+
+### Codex 5.3 Review (2026-03-08)
+
+**Verified as accurate**: Engine/style counts, presenter/polisher maturity, bespoke anti-patterns in the-critic, generic workspace route.
+
+**Corrections applied**:
+1. `/v1/transformations/execute` is already stateless — accepts raw `data: Any`, no job_id required → Section 9.1 updated from 90% to 95%
+2. `/v1/views/generate` supports `save=false` (default) — ephemeral views already possible → Section 9.2 updated from 60% to 70%
+3. `input_data_schema` field exists in `RendererDefinition` schema — unpopulated but infrastructure is there → Section 9.3 updated
+
+**Priority ordering** (Codex):
+1. Renderer contract validation (before more composition surface)
+2. Consumer consolidation (move the-critic to `@caii/analysis-renderers`)
+3. `compose-from-intent` endpoint
+4. Style-token unification
+5. Project lifecycle states
+
+**Key architectural opinion**: *"Don't add a brand-new extract endpoint first; factor existing extraction internals into a reusable service and expose minimal route aliases only if needed."* — Prefers composition over new primitives.
+
+**Disagreement with Claude**: Order of priorities 2 vs 3. Codex prefers consolidation before compose-from-intent (consumption-first). Claude prefers compose-from-intent before consolidation (API-first). Both orderings documented in Section 10.
+
+---
+
+## 13. Collaboration Protocol
 
 This document is designed to be read by multiple LLM agents (Claude, Codex, Gemini) working on this codebase. Each agent should:
 
