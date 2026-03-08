@@ -1,5 +1,5 @@
 /**
- * @caii/analysis-renderers — Shared renderer components for analyzer-v2 view definitions.
+ * @the-syllabus/analysis-renderers — Shared renderer components for analyzer-v2 view definitions.
  *
  * This package provides the complete rendering pipeline:
  * - Container renderers (accordion, card_grid, prose, table, etc.)
@@ -8,7 +8,7 @@
  * - Design token system (DesignTokenProvider + useDesignTokens hook)
  * - Renderer registry (view_key → component resolution)
  *
- * CSS: import '@caii/analysis-renderers/styles' for all renderer styles.
+ * CSS: import '@the-syllabus/analysis-renderers/styles' for all renderer styles.
  */
 
 // ── Types ────────────────────────────────────────────────
