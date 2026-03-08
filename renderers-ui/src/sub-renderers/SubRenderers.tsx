@@ -21,6 +21,7 @@
  *   dialectical_pair      — Two-panel tension visualization for thesis/antithesis contrasts
  *   rich_description_list — Stacked items with colored borders for paragraph-length descriptions
  *   phase_timeline        — Connected timeline with prominent phase nodes for temporal data
+ *   dependency_matrix     — Adjacency matrix / heatmap for directed chapter dependencies
  *   distribution_summary  — Visual bar chart with dominant highlight, counts, and optional narrative
  */
 
@@ -57,6 +58,7 @@ const SUB_RENDERER_MAP: Record<string, React.FC<SubRendererProps>> = {
   dialectical_pair: DialecticalPair,
   rich_description_list: RichDescriptionList,
   phase_timeline: PhaseTimeline,
+  dependency_matrix: DependencyMatrix,
   distribution_summary: DistributionSummary,
 };
 
@@ -3333,6 +3335,209 @@ function PhaseTimeline({ data, config }: SubRendererProps) {
  *   _activeFilter?: string | null            -- highlights active bar
  *   _groups?: Group[]                        -- live groups (overrides distribution field)
  */
+
+// ── dependency_matrix ─────────────────────────────────────────
+// Adjacency matrix / heatmap for directed relationships.
+// Data: array of {source, target, type} objects.
+// Config:
+//   source_field — field name for row source (default "chapter")
+//   target_field — field name for column target (default "depends_on")
+//   type_field   — field name for relationship type (default "dependency_type")
+//   abbreviate_labels — shorten labels (default true)
+
+function DependencyMatrix({ data, config }: SubRendererProps) {
+  const [hoveredCell, setHoveredCell] = React.useState<{ row: number; col: number } | null>(null);
+  const { tokens } = useDesignTokens();
+
+  if (!data || !Array.isArray(data) || data.length === 0) return null;
+
+  const sourceField = (config.source_field as string) || 'chapter';
+  const targetField = (config.target_field as string) || 'depends_on';
+  const typeField = (config.type_field as string) || 'dependency_type';
+  const abbreviate = config.abbreviate_labels !== false;
+
+  const palette = tokens.primitives.series_palette;
+
+  // Extract unique labels (preserving order of first appearance)
+  const labelSet = new Set<string>();
+  for (const item of data) {
+    const obj = item as Record<string, unknown>;
+    const src = String(obj[sourceField] || '');
+    const tgt = String(obj[targetField] || '');
+    if (src) labelSet.add(src);
+    if (tgt) labelSet.add(tgt);
+  }
+  const labels = Array.from(labelSet);
+
+  // Extract unique types for legend
+  const typeSet = new Set<string>();
+  for (const item of data) {
+    const obj = item as Record<string, unknown>;
+    const t = String(obj[typeField] || '');
+    if (t) typeSet.add(t);
+  }
+  const types = Array.from(typeSet);
+  const typeColorMap: Record<string, string> = {};
+  types.forEach((t, i) => { typeColorMap[t] = palette[i % palette.length]; });
+
+  // Build adjacency map: [rowIdx][colIdx] = type
+  const adjacency: Record<string, Record<string, string>> = {};
+  for (const item of data) {
+    const obj = item as Record<string, unknown>;
+    const src = String(obj[sourceField] || '');
+    const tgt = String(obj[targetField] || '');
+    const typ = String(obj[typeField] || '');
+    if (src && tgt) {
+      if (!adjacency[src]) adjacency[src] = {};
+      adjacency[src][tgt] = typ;
+    }
+  }
+
+  // Abbreviation helper
+  const abbrev = (label: string): string => {
+    if (!abbreviate) return label;
+    // "Chapter 1" → "Ch1", "Appendix 1" → "App1", or first 4 chars
+    return label
+      .replace(/^Chapter\s*/i, 'Ch')
+      .replace(/^Appendix\s*/i, 'App')
+      .replace(/^Part\s*/i, 'P')
+      .slice(0, 6);
+  };
+
+  const cellSize = 32;
+  const labelWidth = 80;
+  const hovered = hoveredCell ? {
+    src: labels[hoveredCell.row],
+    tgt: labels[hoveredCell.col],
+    type: adjacency[labels[hoveredCell.row]]?.[labels[hoveredCell.col]],
+  } : null;
+
+  return (
+    <div style={{ overflowX: 'auto' }}>
+      {/* Tooltip */}
+      {hovered?.type && (
+        <div style={{
+          padding: '6px 10px',
+          marginBottom: '8px',
+          fontSize: '0.82rem',
+          background: 'var(--dt-surface-card, #f8f6f3)',
+          border: '1px solid var(--color-border, #e2e5e9)',
+          borderRadius: 'var(--radius-sm, 4px)',
+          color: 'var(--dt-ink-primary, #1a1a2e)',
+        }}>
+          <strong>{hovered.src}</strong> → <strong>{hovered.tgt}</strong>: {hovered.type.replace(/_/g, ' ')}
+        </div>
+      )}
+
+      <table style={{
+        borderCollapse: 'collapse',
+        fontSize: '0.75rem',
+        fontFamily: 'var(--font-mono, monospace)',
+      }}>
+        {/* Column headers */}
+        <thead>
+          <tr>
+            <th style={{ width: labelWidth, minWidth: labelWidth }} />
+            {labels.map((label, ci) => (
+              <th key={ci} style={{
+                width: cellSize,
+                minWidth: cellSize,
+                textAlign: 'center',
+                padding: '2px',
+                fontWeight: 500,
+                color: 'var(--dt-ink-secondary, #6b7280)',
+                writingMode: labels.length > 6 ? 'vertical-rl' : undefined,
+                transform: labels.length > 6 ? 'rotate(180deg)' : undefined,
+                height: labels.length > 6 ? 60 : undefined,
+              }}>
+                {abbrev(label)}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {labels.map((rowLabel, ri) => (
+            <tr key={ri}>
+              <td style={{
+                padding: '2px 6px',
+                textAlign: 'right',
+                fontWeight: 500,
+                color: 'var(--dt-ink-secondary, #6b7280)',
+                whiteSpace: 'nowrap',
+              }}>
+                {abbrev(rowLabel)}
+              </td>
+              {labels.map((colLabel, ci) => {
+                const cellType = adjacency[rowLabel]?.[colLabel];
+                const isDiagonal = ri === ci;
+                const isHovered = hoveredCell?.row === ri && hoveredCell?.col === ci;
+
+                return (
+                  <td
+                    key={ci}
+                    onMouseEnter={() => setHoveredCell({ row: ri, col: ci })}
+                    onMouseLeave={() => setHoveredCell(null)}
+                    style={{
+                      width: cellSize,
+                      height: cellSize,
+                      textAlign: 'center',
+                      border: '1px solid var(--color-border-light, #eef0f2)',
+                      background: isDiagonal
+                        ? 'var(--dt-surface-bg, #f0ede6)'
+                        : cellType
+                          ? typeColorMap[cellType]
+                          : 'transparent',
+                      opacity: cellType ? (isHovered ? 1 : 0.75) : 1,
+                      cursor: cellType ? 'pointer' : 'default',
+                      transition: 'opacity 0.15s',
+                      borderRadius: isHovered ? '2px' : undefined,
+                      boxShadow: isHovered && cellType ? '0 0 0 2px var(--dt-ink-primary, #1a1a2e)' : undefined,
+                    }}
+                  >
+                    {cellType && (
+                      <span style={{
+                        display: 'inline-block',
+                        width: 10,
+                        height: 10,
+                        borderRadius: 2,
+                        background: '#fff',
+                        opacity: 0.6,
+                      }} />
+                    )}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* Legend */}
+      <div style={{
+        display: 'flex',
+        gap: '12px',
+        marginTop: '10px',
+        flexWrap: 'wrap',
+        fontSize: '0.78rem',
+        color: 'var(--dt-ink-secondary, #6b7280)',
+      }}>
+        {types.map((type, i) => (
+          <span key={type} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{
+              display: 'inline-block',
+              width: 12,
+              height: 12,
+              borderRadius: 2,
+              background: typeColorMap[type],
+            }} />
+            {type.replace(/_/g, ' ')}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function DistributionSummary({ data, config }: SubRendererProps) {
   const { getCategoryColor, getLabel } = useDesignTokens();
   const [narrativeExpanded, setNarrativeExpanded] = useState(false);

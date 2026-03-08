@@ -23,8 +23,8 @@
         "config": {"title_field": "chapter", "subtitle_field": "role", "intensity_field": "importance", "intensity_scale": ["supporting", "important", "critical"], "description_field": "summary"}
       },
       "chapter_dependencies": {
-        "renderer_type": "mini_card_list",
-        "config": {"title_field": "chapter", "subtitle_field": "depends_on", "description_field": "dependency_type"}
+        "renderer_type": "dependency_matrix",
+        "config": {"source_field": "chapter", "target_field": "depends_on", "type_field": "dependency_type", "abbreviate_labels": true, "section_description": "Directed dependency graph between chapters"}
       },
       "key_concepts_introduced": {
         "renderer_type": "chip_grid",
