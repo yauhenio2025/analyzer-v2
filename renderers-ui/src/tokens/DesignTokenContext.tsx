@@ -234,6 +234,43 @@ const FALLBACK_TOKENS: DesignTokenSet = {
     pattern_theoretical_framework: { bg: '#ecfeff', text: '#155e75', border: '#a5f3fc', label: 'Theoretical Framework' },
     pattern_argumentative_structure: { bg: '#fef2f2', text: '#991b1b', border: '#fecaca', label: 'Argumentative Structure' },
     pattern_epistemic_commitment: { bg: '#eef2ff', text: '#3730a3', border: '#c7d2fe', label: 'Epistemic Commitment' },
+
+    // ── Attack types (from ConceptsPanel.tsx getAttackTypeColor) ──
+    attack_type_empirical: { bg: 'rgba(231, 76, 60, 0.12)', text: '#e74c3c', border: '#f5a5a0', label: 'Empirical' },
+    attack_type_conceptual: { bg: 'rgba(155, 89, 182, 0.12)', text: '#9b59b6', border: '#c9a0dc', label: 'Conceptual' },
+    attack_type_logical: { bg: 'rgba(52, 152, 219, 0.12)', text: '#3498db', border: '#93c5fd', label: 'Logical' },
+    attack_type_historical: { bg: 'rgba(230, 126, 34, 0.12)', text: '#e67e22', border: '#f5b876', label: 'Historical' },
+    attack_type_rhetorical: { bg: 'rgba(26, 188, 156, 0.12)', text: '#1abc9c', border: '#76d7c4', label: 'Rhetorical' },
+    attack_type_scope: { bg: 'rgba(243, 156, 18, 0.12)', text: '#f39c12', border: '#f9d67a', label: 'Scope' },
+    attack_type_definitional: { bg: 'rgba(149, 165, 166, 0.12)', text: '#95a5a6', border: '#bdc3c7', label: 'Definitional' },
+    attack_type_comparative: { bg: 'rgba(46, 204, 113, 0.12)', text: '#2ecc71', border: '#82e0aa', label: 'Comparative' },
+    attack_type_structural: { bg: 'rgba(142, 68, 173, 0.12)', text: '#8e44ad', border: '#bb8fce', label: 'Structural' },
+    attack_type_cascade: { bg: 'rgba(192, 57, 43, 0.12)', text: '#c0392b', border: '#e6877e', label: 'Cascade' },
+
+    // ── Sin types (from AttributionBadge.tsx SIN_TYPE_COLORS) ──
+    sin_type_misreading: { bg: 'rgba(138, 90, 90, 0.12)', text: '#8a5a5a', border: '#c4a3a3', label: 'Misreading' },
+    sin_type_unacknowledged_debt: { bg: 'rgba(138, 121, 104, 0.12)', text: '#8a7968', border: '#c4b8a8', label: 'Unacknowledged Debt' },
+    sin_type_misappropriation: { bg: 'rgba(122, 107, 138, 0.12)', text: '#7a6b8a', border: '#b4a7c4', label: 'Misappropriation' },
+    sin_type_decontextualization: { bg: 'rgba(90, 122, 138, 0.12)', text: '#5a7a8a', border: '#a3b8c4', label: 'Decontextualization' },
+    sin_type_selective_citation: { bg: 'rgba(154, 96, 96, 0.12)', text: '#9a6060', border: '#c8a3a3', label: 'Selective Citation' },
+    sin_type_flattening: { bg: 'rgba(90, 122, 96, 0.12)', text: '#5a7a60', border: '#a3b8a6', label: 'Flattening' },
+    sin_type_ventriloquism: { bg: 'rgba(122, 107, 138, 0.12)', text: '#7a6b8a', border: '#b4a7c4', label: 'Ventriloquism' },
+    sin_type_strategic_silence: { bg: 'rgba(106, 122, 128, 0.12)', text: '#6a7a80', border: '#a8b4b8', label: 'Strategic Silence' },
+    sin_type_premature_synthesis: { bg: 'rgba(138, 122, 80, 0.12)', text: '#8a7a50', border: '#c4b898', label: 'Premature Synthesis' },
+    sin_type_legitimation_borrowing: { bg: 'rgba(106, 90, 74, 0.12)', text: '#6a5a4a', border: '#a89888', label: 'Legitimation Borrowing' },
+
+    // ── Provenance categories (from researchConstants.ts) ──
+    provenance_target_analysis: { bg: 'rgba(194, 99, 90, 0.12)', text: '#c2635a', border: '#dba9a3', label: 'Target Analysis' },
+    provenance_relationships: { bg: 'rgba(180, 148, 106, 0.12)', text: '#b4946a', border: '#d4c4a8', label: 'Relationships' },
+    provenance_prior_works: { bg: 'rgba(139, 126, 106, 0.12)', text: '#8b7e6a', border: '#bfb8a8', label: 'Prior Works' },
+    provenance_idea_evolution: { bg: 'rgba(122, 155, 118, 0.12)', text: '#7a9b76', border: '#b0c8ad', label: 'Idea Evolution' },
+    provenance_tactics: { bg: 'rgba(107, 138, 158, 0.12)', text: '#6b8a9e', border: '#a6bfce', label: 'Tactics' },
+    provenance_conditions: { bg: 'rgba(155, 122, 158, 0.12)', text: '#9b7a9e', border: '#c4afc6', label: 'Conditions' },
+    provenance_synthesis: { bg: 'rgba(176, 137, 104, 0.12)', text: '#b08968', border: '#d2bea8', label: 'Synthesis' },
+    provenance_research_answers: { bg: 'rgba(129, 140, 248, 0.12)', text: '#818cf8', border: '#b4bcfb', label: 'Research Answers' },
+    provenance_research_contextualizers: { bg: 'rgba(99, 102, 241, 0.12)', text: '#6366f1', border: '#a5a7f7', label: 'Research Contextualizers' },
+    provenance_manual: { bg: 'rgba(168, 160, 148, 0.12)', text: '#a8a094', border: '#ccc8c0', label: 'Manual' },
+    provenance_other: { bg: 'rgba(142, 134, 124, 0.12)', text: '#8e867c', border: '#bfbab4', label: 'Other' },
   },
 
   components: {

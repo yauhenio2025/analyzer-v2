@@ -255,6 +255,43 @@ class CategoricalTokens(BaseModel):
     pattern_argumentative_structure: CategoricalItem
     pattern_epistemic_commitment: CategoricalItem
 
+    # Attack types (10) — lines of attack / critique categories
+    attack_type_empirical: CategoricalItem
+    attack_type_conceptual: CategoricalItem
+    attack_type_logical: CategoricalItem
+    attack_type_historical: CategoricalItem
+    attack_type_rhetorical: CategoricalItem
+    attack_type_scope: CategoricalItem
+    attack_type_definitional: CategoricalItem
+    attack_type_comparative: CategoricalItem
+    attack_type_structural: CategoricalItem
+    attack_type_cascade: CategoricalItem
+
+    # Sin types (10) — influence/attribution failure modes
+    sin_type_misreading: CategoricalItem
+    sin_type_unacknowledged_debt: CategoricalItem
+    sin_type_misappropriation: CategoricalItem
+    sin_type_decontextualization: CategoricalItem
+    sin_type_selective_citation: CategoricalItem
+    sin_type_flattening: CategoricalItem
+    sin_type_ventriloquism: CategoricalItem
+    sin_type_strategic_silence: CategoricalItem
+    sin_type_premature_synthesis: CategoricalItem
+    sin_type_legitimation_borrowing: CategoricalItem
+
+    # Provenance categories (11) — workflow source categories
+    provenance_target_analysis: CategoricalItem
+    provenance_relationships: CategoricalItem
+    provenance_prior_works: CategoricalItem
+    provenance_idea_evolution: CategoricalItem
+    provenance_tactics: CategoricalItem
+    provenance_conditions: CategoricalItem
+    provenance_synthesis: CategoricalItem
+    provenance_research_answers: CategoricalItem
+    provenance_research_contextualizers: CategoricalItem
+    provenance_manual: CategoricalItem
+    provenance_other: CategoricalItem
+
 
 # ---------------------------------------------------------------------------
 # Tier 6: Components

@@ -108,6 +108,9 @@ Each CategoricalItem has a `label` field. Use clear, concise human-readable labe
 - Strength: "Strong", "Moderate", "Weak"
 - Awareness: "Explicit", "Implicit", "Unconscious"
 - Pattern types: "Analytical Method", "Cognitive Habit", etc.
+- Attack types: "Empirical", "Conceptual", "Logical", "Historical", "Rhetorical", "Scope", "Definitional", "Comparative", "Structural", "Cascade"
+- Sin types: "Misreading", "Unacknowledged Debt", "Misappropriation", "Decontextualization", "Selective Citation", "Flattening", "Ventriloquism", "Strategic Silence", "Premature Synthesis", "Legitimation Borrowing"
+- Provenance categories: "Target Analysis", "Relationships", "Prior Works", "Idea Evolution", "Tactics", "Conditions", "Synthesis", "Research Answers", "Research Contextualizers", "Manual", "Other"
 
 ## Output Format
 
