@@ -1235,8 +1235,9 @@ Ten advanced engines with deep theoretical foundations, cross-referencing ID sys
   - `GET /v1/styles/affinities/audience` - Audience affinity mappings
   - `GET /v1/styles/engine-mappings` - All engines with their style affinities
   - `GET /v1/styles/for-engine/{key}` - Preferred styles for an engine
+  - `POST /v1/styles/recommend` - Multi-signal style school recommendation (engine keys + renderer types + audience → ranked schools with scores and reasoning)
 - **Dependencies**: Pydantic v2
-- **Added**: 2026-02-05 | **Modified**: 2026-02-06
+- **Added**: 2026-02-05 | **Modified**: 2026-03-09
 
 ## API
 
