@@ -52,7 +52,8 @@ function isProseMarker(value: unknown): value is ProseMarker {
 export function useProseExtraction<T>(
   rawData: T | ProseMarker | undefined,
   jobId: string | undefined,
-  presentEndpoint: string // e.g. 'tactics', 'conditions', 'synthesis', 'functional'
+  presentEndpoint: string, // e.g. 'tactics', 'conditions', 'synthesis', 'functional'
+  options?: { apiPathPrefix?: string }
 ): ProseExtractionResult<T> {
   const [extracted, setExtracted] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
@@ -72,8 +73,9 @@ export function useProseExtraction<T>(
       setLoading(true);
       setError(null);
       try {
+        const prefix = options?.apiPathPrefix || 'analysis/default';
         const response = await fetch(
-          `${API_BASE}/genealogy/${jobId}/present/${presentEndpoint}`,
+          `${API_BASE}/${prefix}/${jobId}/present/${presentEndpoint}`,
           { method: 'POST' }
         );
         if (cancelled) return;

@@ -276,7 +276,8 @@ export function TableRenderer({ data, config }: RendererProps) {
   const { data: extractedData, loading, error, isProseMode } = useProseExtraction<unknown>(
     data as unknown,
     config._jobId as string | undefined,
-    tableEndpoint
+    tableEndpoint,
+    { apiPathPrefix: config._apiPathPrefix as string | undefined }
   );
 
   const workingData = isProseMode ? extractedData : data;

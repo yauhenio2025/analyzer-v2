@@ -10,7 +10,7 @@
   "renderer_config": {
     "cell_renderer": "template_card",
     "card_template": {
-      "wrapper_class": "gen-tactic-card",
+      "wrapper_class": "ar-card-item",
       "border_accent": { "category": "tactic", "key_field": "tactic_type" },
       "border_weight_field": "severity",
       "border_weight_map": { "major": "5px", "moderate": "4px", "minor": "3px" },
@@ -69,7 +69,22 @@
       ]
     },
     "group_by": "tactic_type",
-    "group_style_map": "tactic_styles",
+    "group_style_map": "tactic",
+    "group_descriptions": {
+      "conceptual_recycling": "Repurposing earlier concepts under new theoretical guises",
+      "silent_revision": "Revising positions without acknowledging the change",
+      "selective_continuity": "Maintaining some threads while quietly dropping others",
+      "retroactive_framing": "Reinterpreting past work through a later lens",
+      "escalation": "Progressively intensifying a claim or position over time",
+      "narrative_bootstrapping": "Building authority by narrating one's own trajectory",
+      "framework_migration": "Moving core ideas into a different theoretical home",
+      "condition_shift": "Redefining what counts as a precondition for one's argument",
+      "biographical_teleology": "Treating an intellectual career as if it always aimed at the present",
+      "strategic_amnesia": "Selectively forgetting earlier commitments that conflict with current ones",
+      "vocabulary_migration": "Shifting key terms to new semantic fields",
+      "position_reversal": "Adopting a stance previously argued against",
+      "strategic_ambiguity": "Deliberately maintaining interpretive flexibility"
+    },
     "columns": 2,
     "expandable": true,
     "items_path": "tactics_detected",

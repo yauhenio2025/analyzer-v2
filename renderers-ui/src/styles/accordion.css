@@ -1,0 +1,376 @@
+/* =============================================
+ * AccordionRenderer.css
+ * Collapsible section styling for the Humanist
+ * Data Craft design system.
+ *
+ * Uses --dt-* design tokens from DesignTokenContext
+ * and --type, --space, --weight vars from GenealogyPage.css
+ * ============================================= */
+
+/* === Section Wrapper === */
+.gen-accordion-section {
+  margin-bottom: var(--space-sm, 0.5rem);
+}
+
+/* === Deep-link highlight pulse === */
+.gen-accordion-section--highlighted {
+  animation: deeplink-pulse 2s ease-out;
+}
+
+@keyframes deeplink-pulse {
+  0% { box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); }
+  100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+
+/* === Clickable Header === */
+.gen-accordion-header {
+  background: var(--dt-surface-elevated, var(--color-surface-alt, #f9f7f4));
+  border-left: 3px solid var(--dt-border-default, var(--color-border, #e2e5e9));
+  border-radius: var(--radius-md, 8px);
+  padding: var(--space-sm, 0.75rem) var(--space-md, 1rem);
+  cursor: pointer;
+  user-select: none;
+  transition: background 150ms ease-out,
+              border-color 150ms ease-out,
+              box-shadow 150ms ease-out;
+}
+
+.gen-accordion-header:hover {
+  background: var(--dt-surface-alt, #f4f1ec);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.gen-accordion-section--expanded > .gen-accordion-header {
+  border-radius: var(--radius-md, 8px) var(--radius-md, 8px) 0 0;
+  border-left-color: var(--dt-page-accent, #b5343a);
+}
+
+/* === Header Row (chevron + title + badge + controls) === */
+.gen-accordion-header-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 0.5rem);
+  min-height: 2.25rem;
+}
+
+/* === Chevron with rotation === */
+.gen-accordion-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--dt-text-faint, var(--color-text-muted, #6b7280));
+  transition: transform 150ms ease-out,
+              color 150ms ease-out;
+  flex-shrink: 0;
+  width: 1.25rem;
+}
+
+.gen-accordion-chevron--open {
+  transform: rotate(90deg);
+  color: var(--dt-page-accent, #b5343a);
+}
+
+/* === Title === */
+.gen-accordion-title {
+  font-size: var(--type-subheading, 1.0625rem);
+  font-weight: var(--weight-medium, 500);
+  font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+  color: var(--dt-text-default, var(--color-text, #1a1d23));
+  line-height: var(--leading-snug, 1.35);
+  flex: 1;
+  min-width: 0;
+}
+
+/* === Count Badge (pill) === */
+.gen-accordion-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.375rem;
+  height: 1.375rem;
+  padding: 0 var(--space-xs, 0.375rem);
+  border-radius: var(--radius-pill, 9999px);
+  font-size: 0.6875rem;
+  font-weight: var(--weight-bold, 700);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  background: var(--dt-text-faint, #94a3b8);
+  color: var(--dt-surface-default, #fff);
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.gen-accordion-section--expanded .gen-accordion-count {
+  background: var(--dt-page-accent, #b5343a);
+}
+
+/* === Section Description (italic subtitle below title) === */
+.gen-accordion-description {
+  font-size: var(--type-caption, 0.8125rem);
+  color: var(--dt-text-muted, var(--color-text-muted, #6b7280));
+  font-style: italic;
+  line-height: var(--leading-normal, 1.5);
+  margin-top: var(--space-2xs, 0.25rem);
+  padding-left: 1.75rem; /* align with title (chevron width + gap) */
+  max-width: 72ch;
+}
+
+/* === Preview Text (collapsed only) === */
+.gen-accordion-preview {
+  font-size: var(--type-caption, 0.8125rem);
+  color: var(--dt-text-faint, var(--color-text-faint, #9ca3af));
+  line-height: var(--leading-normal, 1.5);
+  margin-top: var(--space-2xs, 0.125rem);
+  padding-left: 1.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* === Collapse Animation (CSS Grid trick) === */
+.gen-section-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gen-section-collapse.gen-section-expanded {
+  grid-template-rows: 1fr;
+}
+
+.gen-section-collapse-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.gen-section-collapse .gen-section-content {
+  padding: var(--space-md, 1rem) var(--space-lg, 1.5rem);
+  border: 1px solid var(--dt-border-light, var(--color-border-light, #eef0f2));
+  border-top: none;
+  border-radius: 0 0 var(--radius-md, 8px) var(--radius-md, 8px);
+  background: var(--dt-surface-default, #ffffff);
+}
+
+/* === Capture status dots (always visible) === */
+.capture-status-dots {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  margin-left: 6px;
+}
+
+.capture-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.capture-status-dot--arsenal { background: #f59e0b; }    /* amber */
+.capture-status-dot--research { background: #6366f1; }    /* indigo */
+.capture-status-dot--answered { background: #22c55e; }    /* green */
+
+/* === Polish pencil hover === */
+.gen-accordion-section:hover .section-polish-pencil {
+  opacity: 1;
+  color: var(--dt-page-accent, #b5343a);
+}
+
+/* =============================================
+ * GenericMiniCard — Used by SubRenderers for
+ * individual items in mini_card_list, etc.
+ * ============================================= */
+
+.gen-mini-card {
+  padding: var(--space-md, 1rem);
+  border-radius: var(--radius-md, 8px);
+  background: var(--dt-surface-default, #ffffff);
+  border: 1px solid var(--dt-border-light, var(--color-border-light, #eef0f2));
+  transition: box-shadow 150ms ease-out,
+              transform 150ms ease-out;
+}
+
+.gen-mini-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.gen-mini-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 0.5rem);
+  margin-bottom: var(--space-xs, 0.375rem);
+}
+
+.gen-mini-card-name {
+  font-size: var(--type-body, 0.9375rem);
+  font-weight: var(--weight-semibold, 600);
+  font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+  color: var(--dt-text-default, var(--color-text, #1a1d23));
+  line-height: var(--leading-snug, 1.35);
+}
+
+.gen-mini-card-field {
+  margin-bottom: var(--space-xs, 0.25rem);
+}
+
+.gen-mini-card-label {
+  font-size: 0.6875rem;
+  font-weight: var(--weight-medium, 500);
+  color: var(--dt-text-faint, var(--color-text-faint, #9ca3af));
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.gen-mini-card-value {
+  font-size: var(--type-caption, 0.8125rem);
+  color: var(--dt-text-muted, var(--color-text-muted, #6b7280));
+  line-height: var(--leading-normal, 1.5);
+}
+
+/* =============================================
+ * GenericSectionRenderer — Fallback renderer
+ * for arbitrary structured data in accordion sections
+ * ============================================= */
+
+.gen-field-label {
+  font-size: 0.6875rem;
+  font-weight: var(--weight-medium, 500);
+  color: var(--dt-text-muted, var(--color-text-muted, #6b7280));
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.gen-field-text p {
+  margin: var(--space-xs, 0.25rem) 0;
+  font-size: var(--type-body, 0.9375rem);
+  line-height: var(--leading-relaxed, 1.65);
+  color: var(--dt-text-default, var(--color-text, #1a1d23));
+  max-width: 72ch;
+}
+
+.gen-enum-badge {
+  display: inline-block;
+  padding: 2px var(--space-sm, 0.5rem);
+  border-radius: var(--radius-sm, 4px);
+  font-size: 0.6875rem;
+  font-weight: var(--weight-semibold, 600);
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.gen-chip-grid {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: var(--space-xs, 0.25rem) 0;
+}
+
+.gen-chip-inline {
+  display: inline-block;
+  padding: 3px var(--space-sm, 0.5rem);
+  border-radius: var(--radius-sm, 4px);
+  font-size: 0.6875rem;
+  background: var(--dt-surface-elevated, #f1f5f9);
+  color: var(--dt-text-muted, #475569);
+  border: 1px solid var(--dt-border-light, #e2e8f0);
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.gen-nested-content {
+  padding-left: var(--space-md, 1rem);
+  border-left: 2px solid var(--dt-border-light, #e2e8f0);
+  margin-top: var(--space-xs, 0.25rem);
+}
+
+.gen-field-row {
+  margin-bottom: var(--space-sm, 0.5rem);
+}
+
+.gen-field-value-inline {
+  margin-left: var(--space-sm, 0.5rem);
+  font-size: var(--type-body, 0.9375rem);
+}
+
+.gen-field-value-block {
+  margin-top: var(--space-2xs, 0.125rem);
+}
+
+.gen-empty-list {
+  font-size: var(--type-caption, 0.8125rem);
+  color: var(--dt-text-faint, var(--color-text-faint, #9ca3af));
+  font-style: italic;
+}
+
+.gen-number-value {
+  font-size: var(--type-body, 0.9375rem);
+  font-weight: var(--weight-medium, 500);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--dt-text-default, #1a1d23);
+}
+
+/* === "show more" / "show less" link styling === */
+.gen-show-more-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: var(--type-label, 0.6875rem);
+  font-weight: var(--weight-medium, 500);
+  color: var(--dt-page-accent, var(--color-accent, #b5343a));
+  letter-spacing: 0.02em;
+  transition: color 150ms ease;
+}
+
+.gen-show-more-link:hover {
+  color: var(--dt-page-accent-hover, var(--color-accent-hover, #9a2c32));
+  text-decoration: underline;
+}
+
+/* === Subsection heading inside card/accordion (softer) === */
+.gen-subsection-heading {
+  font-size: 0.75rem;
+  font-weight: var(--weight-medium, 500);
+  color: var(--dt-text-muted, var(--color-text-muted, #6b7280));
+  letter-spacing: 0.02em;
+  margin: 0 0 6px 0;
+  text-transform: capitalize;
+}
+
+/* === Keyword tag badge (softer pill) === */
+.gen-keyword-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill, 9999px);
+  font-size: var(--type-label, 0.6875rem);
+  font-weight: var(--weight-medium, 500);
+  background: var(--dt-surface-alt, #f8f9fa);
+  color: var(--dt-text-muted, #6b7280);
+  border: 1px solid var(--dt-border-light, #eef0f2);
+  font-family: 'Inter', -apple-system, sans-serif;
+  letter-spacing: 0.01em;
+}
+
+/* === Inline field label (for METHODOLOGICAL SIGNATURE etc.) === */
+.gen-inline-label {
+  font-size: var(--type-label, 0.6875rem);
+  font-weight: var(--weight-medium, 500);
+  color: var(--dt-text-faint, var(--color-text-faint, #9ca3af));
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+}
+
+/* === Card grid equal heights === */
+.gen-card-grid-equal {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md, 1rem);
+  align-items: stretch;
+}
+
+.gen-card-grid-equal > * {
+  display: flex;
+  flex-direction: column;
+}

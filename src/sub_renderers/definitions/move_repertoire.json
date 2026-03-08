@@ -1,6 +1,6 @@
 {
   "sub_renderer_key": "move_repertoire",
-  "sub_renderer_name": "Move Repertoire",
+  "sub_renderer_name": "Grouped Card List",
   "description": "Grouped card list that organizes items by a categorical field. Items are clustered under collapsible category headers with count badges, creating a two-level hierarchy lighter than nested_sections. Ideal for sections with a natural type/category/domain grouping field.",
   "category": "atomic",
   "ideal_data_shapes": ["object_array"],
@@ -45,5 +45,5 @@
   },
   "parent_renderer_types": ["accordion", "tab"],
   "status": "active",
-  "tags": ["grouped", "categorical", "repertoire", "moves", "taxonomy"]
+  "tags": ["grouped", "categorical", "grouped-cards", "card-list", "taxonomy"]
 }

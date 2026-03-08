@@ -13,7 +13,8 @@
  * renderer_config keys:
  *   cell_renderer: string       — key into cellRenderers registry
  *   group_by: string            — field to group items by (optional)
- *   group_style_map: string     — key into STYLE_MAPS for group colors
+ *   group_style_map: string     — category name for getCategoryColor lookups
+ *   group_descriptions: Record  — optional per-group description text
  *   columns: number             — grid columns (default: 2)
  *   expandable: boolean         — cards expand on click (default: false)
  *   summary_fields: string[]    — fields for summary bar above grid
@@ -27,23 +28,6 @@ import { useProseExtraction } from '../hooks/useProseExtraction';
 import { StyleOverrides, getSO } from '../types/styles';
 type CaptureSelection = Record<string, unknown>;
 import { DistributionSummary } from '../sub-renderers/SubRenderers';
-
-/** Tactic descriptions — domain metadata, not theming */
-const TACTIC_DESCRIPTIONS: Record<string, string> = {
-  conceptual_recycling: 'Repurposing earlier concepts under new theoretical guises',
-  silent_revision: 'Revising positions without acknowledging the change',
-  selective_continuity: 'Maintaining some threads while quietly dropping others',
-  retroactive_framing: 'Reinterpreting past work through a later lens',
-  escalation: 'Progressively intensifying a claim or position over time',
-  narrative_bootstrapping: 'Building authority by narrating one\'s own trajectory',
-  framework_migration: 'Moving core ideas into a different theoretical home',
-  condition_shift: 'Redefining what counts as a precondition for one\'s argument',
-  biographical_teleology: 'Treating an intellectual career as if it always aimed at the present',
-  strategic_amnesia: 'Selectively forgetting earlier commitments that conflict with current ones',
-  vocabulary_migration: 'Shifting key terms to new semantic fields',
-  position_reversal: 'Adopting a stance previously argued against',
-  strategic_ambiguity: 'Deliberately maintaining interpretive flexibility',
-};
 
 // ── Content length estimation ─────────────────────────────
 
@@ -121,12 +105,6 @@ interface Group {
   items: Array<Record<string, unknown>>;
 }
 
-/** Style map key → category mapping for getCategoryColor lookups */
-const STYLE_MAP_CATEGORIES: Record<string, string> = {
-  tactic_styles: 'tactic',
-  relationship_styles: 'relationship',
-};
-
 function groupItems(
   items: Array<Record<string, unknown>>,
   groupBy: string | undefined,
@@ -142,7 +120,7 @@ function groupItems(
     }];
   }
 
-  const category = styleMapKey ? STYLE_MAP_CATEGORIES[styleMapKey] : undefined;
+  const category = styleMapKey || undefined;
   const defaultStyle = { bg: 'var(--dt-surface-alt)', text: 'var(--dt-text-muted)', border: 'var(--dt-border-light)', label: undefined as string | undefined };
 
   const grouped: Record<string, Array<Record<string, unknown>>> = {};
@@ -206,6 +184,8 @@ export function CardGridRenderer({ data, config }: RendererProps) {
     | undefined;
   const captureJobId = config._captureJobId as string | undefined;
   const captureViewKey = config._captureViewKey as string | undefined;
+  const captureSourceType = config._captureSourceType as string | undefined;
+  const captureEntityId = config._captureEntityId as string | undefined;
 
   const so = getSO(config);
 
@@ -215,7 +195,8 @@ export function CardGridRenderer({ data, config }: RendererProps) {
   const { data: extractedData, loading, error, isProseMode } = useProseExtraction<unknown>(
     data as unknown,
     config._jobId as string | undefined,
-    proseEndpoint || 'data'
+    proseEndpoint || 'data',
+    { apiPathPrefix: config._apiPathPrefix as string | undefined }
   );
 
   const workingData = isProseMode ? extractedData : data;
@@ -267,7 +248,7 @@ export function CardGridRenderer({ data, config }: RendererProps) {
     data_path?: string;
     renderer_config?: Record<string, unknown>;
   } | undefined;
-  const summaryDataPath = summaryConfig?.data_path || 'tactic_patterns';
+  const summaryDataPath = summaryConfig?.data_path || 'distribution';
   const summaryData = workingObj?.[summaryDataPath] as Record<string, unknown> | undefined;
   const hasSummary = Boolean(summaryData);
 
@@ -277,7 +258,7 @@ export function CardGridRenderer({ data, config }: RendererProps) {
   };
 
   return (
-    <div className="gen-card-grid-renderer" style={so?.view_wrapper || undefined}>
+    <div className="ar-card-grid" style={so?.view_wrapper || undefined}>
       {/* Prose mode badge */}
       {isProseMode && (
         <div className="gen-prose-badge">
@@ -300,16 +281,16 @@ export function CardGridRenderer({ data, config }: RendererProps) {
 
       {/* Flat filter chips — only when no distribution summary (non-tactic views) */}
       {hasGroups && !hasSummary && (
-        <div className="gen-rel-summary">
-          <span className="gen-rel-total">
+        <div className="ar-grid-summary">
+          <span className="ar-grid-total">
             {rawItems.length} item{rawItems.length !== 1 ? 's' : ''}
           </span>
-          <div className="gen-rel-dist">
+          <div className="ar-grid-dist">
             {groups.map(group => (
               <button
                 key={group.key}
                 type="button"
-                className={`gen-rel-dist-tag ${activeFilter === group.key ? 'gen-rel-dist-tag--active' : ''}`}
+                className={`ar-grid-dist-tag ${activeFilter === group.key ? 'ar-grid-dist-tag--active' : ''}`}
                 style={{
                   background: activeFilter === group.key ? group.style.text : group.style.bg,
                   color: activeFilter === group.key ? 'var(--dt-text-inverse)' : group.style.text,
@@ -323,7 +304,7 @@ export function CardGridRenderer({ data, config }: RendererProps) {
             {activeFilter && (
               <button
                 type="button"
-                className="gen-rel-dist-clear"
+                className="ar-grid-dist-clear"
                 onClick={() => setActiveFilter(null)}
               >
                 Show all
@@ -343,7 +324,7 @@ export function CardGridRenderer({ data, config }: RendererProps) {
           return wb - wa;
         });
         const majorCount = sortedItems.filter(i => String(i.severity || '').toLowerCase() === 'major').length;
-        const description = TACTIC_DESCRIPTIONS[group.key];
+        const description = (config.group_descriptions as Record<string, string> | undefined)?.[group.key];
 
         return (
           <GroupSection
@@ -432,35 +413,35 @@ function GroupSection({
     <div
       ref={groupRef}
       id={`group-${group.key}`}
-      className={hasGroups ? 'gen-rel-group gen-rel-group--enhanced' : ''}
+      className={hasGroups ? 'ar-grid-group ar-grid-group--enhanced' : ''}
       style={groupStyle}
     >
       {hasGroups && (
         <div
-          className="gen-rel-group-header gen-rel-group-header--enhanced"
+          className="ar-grid-group-header ar-grid-group-header--enhanced"
           style={{ '--group-accent': group.style.text, '--group-border': group.style.border } as React.CSSProperties}
         >
-          <div className="gen-rel-group-rule" style={{ background: `linear-gradient(to right, ${group.style.text}, ${group.style.border}40)` }} />
+          <div className="ar-grid-group-rule" style={{ background: `linear-gradient(to right, ${group.style.text}, ${group.style.border}40)` }} />
           <h3 style={so?.section_title || undefined}>
             <span
-              className="gen-rel-group-badge"
+              className="ar-grid-group-badge"
               style={{ background: group.style.bg, color: group.style.text, borderColor: group.style.border }}
             >
               {group.label}
             </span>
-            <span className="gen-rel-group-count">
+            <span className="ar-grid-group-count">
               {group.items.length} item{group.items.length !== 1 ? 's' : ''}
             </span>
             {majorCount > 0 && (
-              <span className="gen-rel-major-pill">{majorCount} major</span>
+              <span className="ar-grid-major-pill">{majorCount} major</span>
             )}
           </h3>
           {description && (
-            <p className="gen-rel-group-desc" style={so?.section_description || undefined}>{description}</p>
+            <p className="ar-grid-group-desc" style={so?.section_description || undefined}>{description}</p>
           )}
         </div>
       )}
-      <div className="gen-rel-cards gen-rel-cards--variable" style={so?.items_container || undefined}>
+      <div className="ar-grid-cards ar-grid-cards--variable" style={so?.items_container || undefined}>
         {sortedItems.map((item, idx) => {
           const isHero = idx === 0 && sortedItems.length > 1;
           const isLongContent = estimateContentLength(item) > 200;
@@ -469,7 +450,7 @@ function GroupSection({
 
           return (
             <CardWrapper
-              key={String(item.tactic_id || item.docKey || idx)}
+              key={String(item.id || item.docKey || idx)}
               item={item}
               config={config}
               expandable={expandable}
@@ -518,16 +499,16 @@ function CardWrapper({
   const severityKey = String(item.severity || '').toLowerCase();
   const severityStyle = getSemanticColor('severity', severityKey);
 
-  // Card type from _category or tactic_type
-  const cardType = String(item._category || item.tactic_type || '');
+  // Card type from _category or type
+  const cardType = String(item._category || item.type || '');
 
   // Build card class names
   const cardClasses = [
-    'gen-rel-card',
-    'gen-rel-card--enhanced',
+    'ar-grid-card',
+    'ar-grid-card--enhanced',
     expanded ? 'expanded' : '',
-    isHero ? 'gen-rel-card--hero' : '',
-    isSingleCard ? 'gen-rel-card--single' : '',
+    isHero ? 'ar-grid-card--hero' : '',
+    isSingleCard ? 'ar-grid-card--single' : '',
   ].filter(Boolean).join(' ');
 
   // Build inline styles: merge base with style overrides
@@ -547,7 +528,7 @@ function CardWrapper({
       onClick={e => {
         e.stopPropagation();
         const onCap = config._onCapture as (sel: CaptureSelection) => void;
-        const title = String(item.title || item.name || item.tactic_id || '');
+        const title = String(item.title || item.name || item.id || '');
         const parentSectionKey = config._parentSectionKey as string | undefined;
         const parentSectionTitle = config._parentSectionTitle as string | undefined;
         onCap({
@@ -558,10 +539,10 @@ function CardWrapper({
           selected_text: (item.summary || item.analysis || item.description || JSON.stringify(item)).toString().slice(0, 500),
           structured_data: item,
           context_title: parentSectionKey
-            ? `${config._captureViewKey || 'Genealogy'} > ${parentSectionTitle || ''} > ${title}`
-            : `${config._captureViewKey || 'Genealogy'} > ${title}`,
-          source_type: 'genealogy' as const,
-          genealogy_job_id: String(config._captureJobId || ''),
+            ? `${config._captureViewKey || 'Analysis'} > ${parentSectionTitle || ''} > ${title}`
+            : `${config._captureViewKey || 'Analysis'} > ${title}`,
+          source_type: ((config._captureSourceType as string) || 'analysis') as string,
+          entity_id: String(config._captureEntityId || config._captureJobId || ''),
           depth_level: parentSectionKey ? 'L2_element' : 'L1_section',
           parent_context: parentSectionKey ? {
             section_key: parentSectionKey,
@@ -596,16 +577,16 @@ function CardWrapper({
       {captureBtn}
       {/* Type indicator dot */}
       {(severityStyle || cardType) && (
-        <div className="gen-card-type-indicator">
+        <div className="ar-card-type-indicator">
           {severityStyle && (
             <span
-              className="gen-card-type-dot"
+              className="ar-card-type-dot"
               style={{ background: severityStyle.text }}
               title={`Severity: ${severityKey}`}
             />
           )}
           {cardType && (
-            <span className="gen-card-type-label" style={so?.badge || undefined}>
+            <span className="ar-card-type-label" style={so?.badge || undefined}>
               {getLabel('tactic', cardType) || cardType.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
             </span>
           )}
@@ -613,7 +594,7 @@ function CardWrapper({
       )}
 
       {/* Card content from cell renderer */}
-      <div className="gen-card-content" style={so?.card_body || undefined}>
+      <div className="ar-card-content" style={so?.card_body || undefined}>
         <CellRenderer item={item} config={config} />
       </div>
 

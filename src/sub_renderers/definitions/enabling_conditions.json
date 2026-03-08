@@ -1,7 +1,7 @@
 {
   "sub_renderer_key": "enabling_conditions",
   "sub_renderer_name": "Enabling Conditions",
-  "description": "Specialized renderer for conditions-of-possibility analysis. Displays factors that enabled an intellectual development with contextual detail and interconnections.",
+  "description": "Specialized renderer for conditions-of-possibility analysis. Displays factors that enabled a development or outcome with contextual detail and interconnections.",
   "category": "specialized",
   "ideal_data_shapes": ["object_array", "nested_sections"],
   "config_schema": {
@@ -15,5 +15,5 @@
   },
   "parent_renderer_types": ["accordion", "tab"],
   "status": "active",
-  "tags": ["conditions", "enabling", "context", "genealogy"]
+  "tags": ["conditions", "enabling", "context", "analysis"]
 }

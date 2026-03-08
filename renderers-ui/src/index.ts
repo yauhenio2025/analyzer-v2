@@ -49,8 +49,6 @@ export { CardRenderer } from './renderers/CardRenderer';
 export { ProseRenderer } from './renderers/ProseRenderer';
 export { TableRenderer } from './renderers/TableRenderer';
 export { StatSummaryRenderer } from './renderers/StatSummaryRenderer';
-export { SynthesisRenderer } from './renderers/SynthesisRenderer';
-export { IdeaEvolutionRenderer } from './renderers/IdeaEvolutionRenderer';
 export { RawJsonRenderer } from './renderers/RawJsonRenderer';
 
 // ── Sub-Renderers ────────────────────────────────────────
@@ -74,8 +72,6 @@ export {
 // ── Cell Renderers ───────────────────────────────────────
 export { cellRenderers, DefaultCardCell } from './cells';
 export { TemplateCardCell } from './cells/TemplateCardCell';
-export { TacticCardCell } from './cells/TacticCardCell';
-export { RelationshipCardCell } from './cells/RelationshipCardCell';
 
 // ── Shared Components ────────────────────────────────────
 export { EvidenceTrail, EvidenceTrailSubRenderer } from './components/EvidenceTrail';

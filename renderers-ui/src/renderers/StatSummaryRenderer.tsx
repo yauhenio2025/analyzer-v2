@@ -67,7 +67,8 @@ export function StatSummaryRenderer({ data, config }: RendererProps) {
   const { data: extractedData, loading, error, isProseMode } = useProseExtraction<unknown>(
     data as unknown,
     config._jobId as string | undefined,
-    proseEndpoint || 'data'
+    proseEndpoint || 'data',
+    { apiPathPrefix: config._apiPathPrefix as string | undefined }
   );
 
   const workingData = (isProseMode ? extractedData : data) as Record<string, unknown> | null;

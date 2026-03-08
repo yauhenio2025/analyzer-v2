@@ -17,5 +17,5 @@
   },
   "parent_renderer_types": ["accordion", "tab"],
   "status": "active",
-  "tags": ["evidence", "chain", "reasoning", "genealogy"]
+  "tags": ["evidence", "chain", "reasoning", "audit-trail"]
 }

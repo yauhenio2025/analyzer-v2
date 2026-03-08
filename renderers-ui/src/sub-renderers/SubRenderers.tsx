@@ -53,6 +53,7 @@ const SUB_RENDERER_MAP: Record<string, React.FC<SubRendererProps>> = {
   ordered_flow: OrderedFlow,
   intensity_matrix: IntensityMatrix,
   move_repertoire: MoveRepertoire,
+  grouped_card_list: MoveRepertoire,  // alias for generic usage
   dialectical_pair: DialecticalPair,
   rich_description_list: RichDescriptionList,
   phase_timeline: PhaseTimeline,
@@ -533,6 +534,8 @@ function DefinitionList({ data, config }: SubRendererProps) {
   const onCapture = config._onCapture as ((sel: CaptureSelection) => void) | undefined;
   const captureJobId = config._captureJobId as string | undefined;
   const captureViewKey = config._captureViewKey as string | undefined;
+  const captureSourceType = config._captureSourceType as string | undefined;
+  const captureEntityId = config._captureEntityId as string | undefined;
   const parentSectionKey = config._parentSectionKey as string | undefined;
   const parentSectionTitle = config._parentSectionTitle as string | undefined;
 
@@ -674,10 +677,10 @@ function DefinitionList({ data, config }: SubRendererProps) {
                       selected_text: `${item.term}: ${item.definition}`.slice(0, 500),
                       structured_data: data[i],
                       context_title: parentSectionKey
-                        ? `${captureViewKey || 'Genealogy'} > ${parentSectionTitle || ''} > ${item.term}`
-                        : `${captureViewKey || 'Genealogy'} > ${item.term}`,
-                      source_type: 'genealogy' as const,
-                      genealogy_job_id: captureJobId || '',
+                        ? `${captureViewKey || 'Analysis'} > ${parentSectionTitle || ''} > ${item.term}`
+                        : `${captureViewKey || 'Analysis'} > ${item.term}`,
+                      source_type: (captureSourceType || 'analysis') as string,
+                      entity_id: captureEntityId || captureJobId || '',
                       depth_level: parentSectionKey ? 'L2_element' : 'L1_section',
                       parent_context: parentSectionKey ? {
                         section_key: parentSectionKey,
@@ -721,6 +724,8 @@ function MiniCardList({ data, config }: SubRendererProps) {
   const onCapture = config._onCapture as ((sel: CaptureSelection) => void) | undefined;
   const captureJobId = config._captureJobId as string | undefined;
   const captureViewKey = config._captureViewKey as string | undefined;
+  const captureSourceType = config._captureSourceType as string | undefined;
+  const captureEntityId = config._captureEntityId as string | undefined;
   const parentSectionKey = config._parentSectionKey as string | undefined;
   const parentSectionTitle = config._parentSectionTitle as string | undefined;
 
@@ -874,10 +879,10 @@ function MiniCardList({ data, config }: SubRendererProps) {
                   selected_text: `${title}: ${description}`.slice(0, 500),
                   structured_data: obj,
                   context_title: parentSectionKey
-                    ? `${captureViewKey || 'Genealogy'} > ${parentSectionTitle || ''} > ${title || `Card ${idx + 1}`}`
-                    : `${captureViewKey || 'Genealogy'} > ${title || `Card ${idx + 1}`}`,
-                  source_type: 'genealogy' as const,
-                  genealogy_job_id: captureJobId || '',
+                    ? `${captureViewKey || 'Analysis'} > ${parentSectionTitle || ''} > ${title || `Card ${idx + 1}`}`
+                    : `${captureViewKey || 'Analysis'} > ${title || `Card ${idx + 1}`}`,
+                  source_type: (captureSourceType || 'analysis') as string,
+                  entity_id: captureEntityId || captureJobId || '',
                   depth_level: parentSectionKey ? 'L2_element' : 'L1_section',
                   parent_context: parentSectionKey ? {
                     section_key: parentSectionKey,
@@ -1371,6 +1376,8 @@ function ComparisonPanel({ data, config }: SubRendererProps) {
   const onCapture = config._onCapture as ((sel: CaptureSelection) => void) | undefined;
   const captureJobId = config._captureJobId as string | undefined;
   const captureViewKey = config._captureViewKey as string | undefined;
+  const captureSourceType = config._captureSourceType as string | undefined;
+  const captureEntityId = config._captureEntityId as string | undefined;
   const parentSectionKey = config._parentSectionKey as string | undefined;
   const parentSectionTitle = config._parentSectionTitle as string | undefined;
 
@@ -1473,10 +1480,10 @@ function ComparisonPanel({ data, config }: SubRendererProps) {
                         selected_text: `${leftLabel}: ${left || '—'} vs ${rightLabel}: ${right || '—'}`.slice(0, 500),
                         structured_data: obj,
                         context_title: parentSectionKey
-                          ? `${captureViewKey || 'Genealogy'} > ${parentSectionTitle || ''} > ${rowLabel}`
-                          : `${captureViewKey || 'Genealogy'} > ${rowLabel}`,
-                        source_type: 'genealogy' as const,
-                      genealogy_job_id: captureJobId || '',
+                          ? `${captureViewKey || 'Analysis'} > ${parentSectionTitle || ''} > ${rowLabel}`
+                          : `${captureViewKey || 'Analysis'} > ${rowLabel}`,
+                        source_type: (captureSourceType || 'analysis') as string,
+                      entity_id: captureEntityId || captureJobId || '',
                         depth_level: parentSectionKey ? 'L2_element' : 'L1_section',
                         parent_context: parentSectionKey ? {
                           section_key: parentSectionKey,
@@ -1857,6 +1864,8 @@ function IntensityMatrix({ data, config }: SubRendererProps) {
   const onCapture = config._onCapture as ((sel: CaptureSelection) => void) | undefined;
   const captureJobId = config._captureJobId as string | undefined;
   const captureViewKey = config._captureViewKey as string | undefined;
+  const captureSourceType = config._captureSourceType as string | undefined;
+  const captureEntityId = config._captureEntityId as string | undefined;
   const parentSectionKey = config._parentSectionKey as string | undefined;
   const parentSectionTitle = config._parentSectionTitle as string | undefined;
 
@@ -2024,10 +2033,10 @@ function IntensityMatrix({ data, config }: SubRendererProps) {
                         selected_text: `${title} [${intensityVal}]: ${desc}`.slice(0, 500),
                         structured_data: obj,
                         context_title: parentSectionKey
-                          ? `${captureViewKey || 'Genealogy'} > ${parentSectionTitle || ''} > ${title}`
-                          : `${captureViewKey || 'Genealogy'} > ${title}`,
-                        source_type: 'genealogy' as const,
-                        genealogy_job_id: captureJobId || '',
+                          ? `${captureViewKey || 'Analysis'} > ${parentSectionTitle || ''} > ${title}`
+                          : `${captureViewKey || 'Analysis'} > ${title}`,
+                        source_type: (captureSourceType || 'analysis') as string,
+                        entity_id: captureEntityId || captureJobId || '',
                         depth_level: parentSectionKey ? 'L2_element' : 'L1_section',
                         parent_context: parentSectionKey ? {
                           section_key: parentSectionKey,
@@ -2132,6 +2141,8 @@ function MoveRepertoire({ data, config }: SubRendererProps) {
   const onCapture = config._onCapture as ((sel: CaptureSelection) => void) | undefined;
   const captureJobId = config._captureJobId as string | undefined;
   const captureViewKey = config._captureViewKey as string | undefined;
+  const captureSourceType = config._captureSourceType as string | undefined;
+  const captureEntityId = config._captureEntityId as string | undefined;
   const parentSectionKey = config._parentSectionKey as string | undefined;
   const parentSectionTitle = config._parentSectionTitle as string | undefined;
 
@@ -2289,10 +2300,10 @@ function MoveRepertoire({ data, config }: SubRendererProps) {
                                 selected_text: `[${groupName}] ${title}: ${desc}`.slice(0, 500),
                                 structured_data: obj,
                                 context_title: parentSectionKey
-                                  ? `${captureViewKey || 'Genealogy'} > ${parentSectionTitle || ''} > ${groupName} > ${title}`
-                                  : `${captureViewKey || 'Genealogy'} > ${groupName} > ${title}`,
-                                source_type: 'genealogy' as const,
-                                genealogy_job_id: captureJobId || '',
+                                  ? `${captureViewKey || 'Analysis'} > ${parentSectionTitle || ''} > ${groupName} > ${title}`
+                                  : `${captureViewKey || 'Analysis'} > ${groupName} > ${title}`,
+                                source_type: (captureSourceType || 'analysis') as string,
+                                entity_id: captureEntityId || captureJobId || '',
                                 depth_level: 'L2_element',
                                 parent_context: parentSectionKey ? {
                                   section_key: parentSectionKey,
@@ -2365,6 +2376,8 @@ function DialecticalPair({ data, config }: SubRendererProps) {
   const onCapture = config._onCapture as ((sel: CaptureSelection) => void) | undefined;
   const captureJobId = config._captureJobId as string | undefined;
   const captureViewKey = config._captureViewKey as string | undefined;
+  const captureSourceType = config._captureSourceType as string | undefined;
+  const captureEntityId = config._captureEntityId as string | undefined;
   const parentSectionKey = config._parentSectionKey as string | undefined;
   const parentSectionTitle = config._parentSectionTitle as string | undefined;
 
@@ -2504,10 +2517,10 @@ function DialecticalPair({ data, config }: SubRendererProps) {
                       selected_text: `[${side === 'left' ? leftLabel : rightLabel}] ${title}: ${desc}`.slice(0, 500),
                       structured_data: obj,
                       context_title: parentSectionKey
-                        ? `${captureViewKey || 'Genealogy'} > ${parentSectionTitle || ''} > ${side === 'left' ? leftLabel : rightLabel} > ${title}`
-                        : `${captureViewKey || 'Genealogy'} > ${side === 'left' ? leftLabel : rightLabel} > ${title}`,
-                      source_type: 'genealogy' as const,
-                      genealogy_job_id: captureJobId || '',
+                        ? `${captureViewKey || 'Analysis'} > ${parentSectionTitle || ''} > ${side === 'left' ? leftLabel : rightLabel} > ${title}`
+                        : `${captureViewKey || 'Analysis'} > ${side === 'left' ? leftLabel : rightLabel} > ${title}`,
+                      source_type: (captureSourceType || 'analysis') as string,
+                      entity_id: captureEntityId || captureJobId || '',
                       depth_level: 'L2_element',
                       parent_context: parentSectionKey ? {
                         section_key: parentSectionKey,
@@ -2798,6 +2811,8 @@ function RichDescriptionList({ data, config }: SubRendererProps) {
   const onCapture = config._onCapture as ((sel: CaptureSelection) => void) | undefined;
   const captureJobId = config._captureJobId as string | undefined;
   const captureViewKey = config._captureViewKey as string | undefined;
+  const captureSourceType = config._captureSourceType as string | undefined;
+  const captureEntityId = config._captureEntityId as string | undefined;
   const parentSectionKey = config._parentSectionKey as string | undefined;
   const parentSectionTitle = config._parentSectionTitle as string | undefined;
 
@@ -2961,10 +2976,10 @@ function RichDescriptionList({ data, config }: SubRendererProps) {
                         selected_text: `${item.label}: ${item.description}`.slice(0, 500),
                         structured_data: item.raw,
                         context_title: parentSectionKey
-                          ? `${captureViewKey || 'Genealogy'} > ${parentSectionTitle || ''} > ${item.label}`
-                          : `${captureViewKey || 'Genealogy'} > ${item.label}`,
-                        source_type: 'genealogy' as const,
-                        genealogy_job_id: captureJobId || '',
+                          ? `${captureViewKey || 'Analysis'} > ${parentSectionTitle || ''} > ${item.label}`
+                          : `${captureViewKey || 'Analysis'} > ${item.label}`,
+                        source_type: (captureSourceType || 'analysis') as string,
+                        entity_id: captureEntityId || captureJobId || '',
                         depth_level: parentSectionKey ? 'L2_element' : 'L1_section',
                         parent_context: parentSectionKey ? {
                           section_key: parentSectionKey,
@@ -3049,6 +3064,8 @@ function PhaseTimeline({ data, config }: SubRendererProps) {
   const onCapture = config._onCapture as ((sel: CaptureSelection) => void) | undefined;
   const captureJobId = config._captureJobId as string | undefined;
   const captureViewKey = config._captureViewKey as string | undefined;
+  const captureSourceType = config._captureSourceType as string | undefined;
+  const captureEntityId = config._captureEntityId as string | undefined;
   const parentSectionKey = config._parentSectionKey as string | undefined;
   const parentSectionTitle = config._parentSectionTitle as string | undefined;
 
@@ -3228,10 +3245,10 @@ function PhaseTimeline({ data, config }: SubRendererProps) {
                         selected_text: `[Phase ${idx + 1}] ${label}: ${desc}`.slice(0, 500),
                         structured_data: phase,
                         context_title: parentSectionKey
-                          ? `${captureViewKey || 'Genealogy'} > ${parentSectionTitle || ''} > Phase: ${label}`
-                          : `${captureViewKey || 'Genealogy'} > Phase: ${label}`,
-                        source_type: 'genealogy' as const,
-                        genealogy_job_id: captureJobId || '',
+                          ? `${captureViewKey || 'Analysis'} > ${parentSectionTitle || ''} > Phase: ${label}`
+                          : `${captureViewKey || 'Analysis'} > Phase: ${label}`,
+                        source_type: (captureSourceType || 'analysis') as string,
+                        entity_id: captureEntityId || captureJobId || '',
                         depth_level: parentSectionKey ? 'L2_element' : 'L1_section',
                         parent_context: parentSectionKey ? {
                           section_key: parentSectionKey,
@@ -3394,7 +3411,7 @@ export function DistributionSummary({ data, config }: SubRendererProps) {
   const isInteractive = Boolean(onFilterClick);
 
   return (
-    <div className="gen-tactics-summary">
+    <div className="ar-dist-summary">
       {/* Header: dominant + total count */}
       <div className="gen-summary-header">
         {dominant && (

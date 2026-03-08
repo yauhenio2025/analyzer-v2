@@ -109,6 +109,8 @@ export function AccordionRenderer({ data, config }: RendererProps) {
     | undefined;
   const captureJobId = config._captureJobId as string | undefined;
   const captureViewKey = config._captureViewKey as string | undefined;
+  const captureSourceType = config._captureSourceType as string | undefined;
+  const captureEntityId = config._captureEntityId as string | undefined;
   const captureStatusMap = config._captureStatusMap as Record<string, Array<{
     destination: string | null;
     research_status: string | null;
@@ -124,7 +126,8 @@ export function AccordionRenderer({ data, config }: RendererProps) {
   const { data: extractedData, loading, error, isProseMode } = useProseExtraction<unknown>(
     data as unknown,
     config._jobId as string | undefined,
-    proseEndpoint
+    proseEndpoint,
+    { apiPathPrefix: config._apiPathPrefix as string | undefined }
   );
 
   const workingData = (isProseMode ? extractedData : data) as Record<string, unknown> | null;
@@ -371,9 +374,9 @@ export function AccordionRenderer({ data, config }: RendererProps) {
                         content_type: 'section',
                         selected_text: previewText || extractPreviewText(sectionData) || section.title || section.key,
                         structured_data: sectionData,
-                        context_title: `${captureViewKey || 'Genealogy'} > ${section.title || section.key}`,
-                        source_type: 'genealogy' as const,
-                        genealogy_job_id: captureJobId || '',
+                        context_title: `${captureViewKey || 'Analysis'} > ${section.title || section.key}`,
+                        source_type: (captureSourceType || 'analysis') as string,
+                        entity_id: captureEntityId || captureJobId || '',
                         depth_level: 'L1_section',
                       });
                     }}

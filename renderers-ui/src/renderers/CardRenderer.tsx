@@ -153,6 +153,8 @@ export function CardRenderer({ data, config }: RendererProps) {
     | undefined;
   const captureJobId = config._captureJobId as string | undefined;
   const captureViewKey = config._captureViewKey as string | undefined;
+  const captureSourceType = config._captureSourceType as string | undefined;
+  const captureEntityId = config._captureEntityId as string | undefined;
 
   const subsections: SubsectionDef[] = useMemo(() => {
     if (!rawSubsections) return [];
@@ -164,7 +166,8 @@ export function CardRenderer({ data, config }: RendererProps) {
   const { data: extractedData, loading, error, isProseMode } = useProseExtraction<unknown>(
     data as unknown,
     config._jobId as string | undefined,
-    proseEndpoint || 'data'
+    proseEndpoint || 'data',
+    { apiPathPrefix: config._apiPathPrefix as string | undefined }
   );
 
   const workingData = isProseMode ? extractedData : data;
@@ -211,7 +214,7 @@ export function CardRenderer({ data, config }: RendererProps) {
   }
 
   return (
-    <div className="gen-card-renderer">
+    <div className="ar-card-renderer">
       {isProseMode ? (
         <div className="gen-prose-badge">
           <span className="gen-prose-indicator">Extracted from analytical prose</span>
@@ -285,10 +288,10 @@ export function CardRenderer({ data, config }: RendererProps) {
                           : String(item).slice(0, 500),
                         structured_data: item,
                         context_title: parentSectionKey
-                          ? `${captureViewKey || 'Genealogy'} > ${parentSectionTitle || ''} > ${title}`
-                          : `${captureViewKey || 'Genealogy'} > ${title}`,
-                        source_type: 'genealogy' as const,
-                        genealogy_job_id: captureJobId || '',
+                          ? `${captureViewKey || 'Analysis'} > ${parentSectionTitle || ''} > ${title}`
+                          : `${captureViewKey || 'Analysis'} > ${title}`,
+                        source_type: (captureSourceType || 'analysis') as string,
+                        entity_id: captureEntityId || captureJobId || '',
                         depth_level: parentSectionKey ? 'L2_element' : 'L1_section',
                         parent_context: parentSectionKey ? {
                           section_key: parentSectionKey,

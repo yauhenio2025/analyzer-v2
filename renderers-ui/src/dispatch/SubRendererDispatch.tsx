@@ -23,7 +23,7 @@ import type { SemanticTriple } from '../types/designTokens';
 export const REQUIRES_ARRAY = new Set([
   'chip_grid', 'mini_card_list', 'timeline_strip',
   'comparison_panel', 'definition_list',
-  'intensity_matrix', 'move_repertoire', 'rich_description_list',
+  'intensity_matrix', 'move_repertoire', 'grouped_card_list', 'rich_description_list',
 ]);
 export const REQUIRES_OBJECT = new Set(['stat_row', 'phase_timeline', 'distribution_summary']);
 

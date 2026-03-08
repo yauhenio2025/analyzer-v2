@@ -9,7 +9,7 @@
     "properties": {
       "category": {
         "type": "string",
-        "description": "Design token category for bar colors (e.g. 'tactic', 'relationship')"
+        "description": "Design token category for bar colors (e.g. 'status', 'category', 'priority')"
       },
       "distribution_field": {
         "type": "string",
@@ -34,12 +34,12 @@
       "count_noun": {
         "type": "string",
         "default": "items",
-        "description": "Noun for the total count (e.g. 'tactics', 'patterns', 'items')"
+        "description": "Noun for the total count (e.g. 'items', 'entries', 'records')"
       },
       "type_noun": {
         "type": "string",
         "default": "types",
-        "description": "Noun for the type count (e.g. 'types', 'categories')"
+        "description": "Noun for the type count (e.g. 'categories', 'types', 'groups')"
       },
       "severity_value": {
         "type": "string",

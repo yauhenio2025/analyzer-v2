@@ -99,7 +99,7 @@ function BadgeRowBlock({ badges, item, getCategoryColor, getSemanticColor, getLa
   getLabel: GetLabel;
 }) {
   return (
-    <div className="gen-tactic-header">
+    <div className="ar-card-badge-row">
       {badges.map((badge, idx) => {
         const rawValue = String(item[badge.field] || badge.default_value || '');
         if (!rawValue) return null;
@@ -126,8 +126,8 @@ function BadgeRowBlock({ badges, item, getCategoryColor, getSemanticColor, getLa
 
         const isSemantic = badge.color_mode === 'semantic';
         const className = isSemantic
-          ? `gen-severity-badge gen-severity-badge--${rawValue.toLowerCase()}`
-          : 'gen-tactic-type-badge';
+          ? `ar-severity-badge ar-severity-badge--${rawValue.toLowerCase()}`
+          : 'ar-card-type-badge';
 
         return (
           <span
@@ -160,7 +160,7 @@ function HeadingBlock({ field, item, hideWhenMatchesLabel, getLabel }: {
     if (text === label) return null;
   }
 
-  return <h4 className="gen-tactic-name">{text}</h4>;
+  return <h4 className="ar-card-heading">{text}</h4>;
 }
 
 // ── Block: prose ───────────────────────────────────────
@@ -177,7 +177,7 @@ function ProseBlock({ field, item, subduedWhen }: {
     && String(item[subduedWhen.field] || '').toLowerCase() === subduedWhen.equals;
 
   return (
-    <p className={`gen-tactic-desc${isSubdued ? ' gen-tactic-desc--subdued' : ''}`}>
+    <p className={`ar-card-prose${isSubdued ? ' ar-card-prose--subdued' : ''}`}>
       {text}
     </p>
   );
@@ -195,8 +195,8 @@ function ChipListBlock({ field, item, label, linkTitlePattern }: {
   if (!values || !Array.isArray(values) || values.length === 0) return null;
 
   return (
-    <div className="gen-tactic-ideas">
-      {label && <span className="gen-tactic-section-label">{label}</span>}
+    <div className="ar-card-chip-list">
+      {label && <span className="ar-card-section-label">{label}</span>}
       <div className="gen-idea-tags">
         {values.map(val => (
           <span

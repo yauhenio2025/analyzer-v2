@@ -1,7 +1,7 @@
 {
   "sub_renderer_key": "constraining_conditions",
   "sub_renderer_name": "Constraining Conditions",
-  "description": "Specialized renderer for constraints analysis. Displays factors that limited, blocked, or shaped intellectual development.",
+  "description": "Specialized renderer for constraints analysis. Displays factors that limited, blocked, or shaped development of ideas or processes.",
   "category": "specialized",
   "ideal_data_shapes": ["object_array", "nested_sections"],
   "config_schema": {
@@ -15,5 +15,5 @@
   },
   "parent_renderer_types": ["accordion", "tab"],
   "status": "active",
-  "tags": ["conditions", "constraining", "limits", "genealogy"]
+  "tags": ["conditions", "constraining", "limits", "analysis"]
 }

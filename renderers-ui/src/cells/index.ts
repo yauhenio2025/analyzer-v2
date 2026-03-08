@@ -3,8 +3,6 @@
  */
 
 import React from 'react';
-import { TacticCardCell } from './TacticCardCell';
-import { RelationshipCardCell } from './RelationshipCardCell';
 import { TemplateCardCell } from './TemplateCardCell';
 import type { CellRendererProps, CellRendererComponent } from '../types';
 
@@ -12,16 +10,14 @@ export type { CellRendererProps, CellRendererComponent };
 
 /** Registry of cell renderers keyed by config.cell_renderer string */
 export const cellRenderers: Record<string, CellRendererComponent> = {
-  tactic_card: TacticCardCell,
-  relationship_card: RelationshipCardCell,
   template_card: TemplateCardCell,
 };
 
 // Field classification for intelligent rendering
-const TITLE_FIELDS = ['name', 'title', 'finding', 'tactic_name', 'concept', 'idea', 'theme'];
+const TITLE_FIELDS = ['name', 'title', 'finding', 'concept', 'idea', 'theme'];
 const BODY_FIELDS = ['condition', 'description', 'analysis', 'significance', 'explanation', 'mechanism', 'details', 'summary', 'how_it_enables', 'how_it_constrains', 'effect'];
 const EVIDENCE_FIELDS = ['evidence', 'reasoning', 'supporting_evidence', 'rationale', 'justification'];
-const META_FIELDS = new Set(['_category', 'docKey', 'tactic_id', 'condition_id', 'id', 'index', 'order']);
+const META_FIELDS = new Set(['_category', 'docKey', 'condition_id', 'id', 'index', 'order']);
 
 function classifyField(key: string): 'title' | 'body' | 'evidence' | 'tag' | 'skip' {
   if (META_FIELDS.has(key)) return 'skip';

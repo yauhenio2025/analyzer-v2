@@ -10,11 +10,11 @@
  *   2. Sub-renderer — use EvidenceTrailSubRenderer with config-driven
  *      field mapping (registered in SubRenderers.tsx)
  *
- * CSS classes used (from GenealogyPage.css):
+ * CSS classes used (from renderers.css):
  *   .gen-evidence-trail, .gen-trail-chain, .gen-trail-step,
  *   .gen-trail-marker, .gen-trail-dot, .gen-trail-label,
  *   .gen-trail-content, .gen-trail-connector, .gen-trail-quote,
- *   .gen-quote-mark, .gen-trail-cite, .gen-tactic-assessment
+ *   .gen-quote-mark, .gen-trail-cite, .ar-card-assessment
  */
 
 import React from 'react';
@@ -112,7 +112,7 @@ export function EvidenceTrail({ steps, accentColor, borderColor }: EvidenceTrail
 
                 {/* Single-text step (assessment) */}
                 {step.text && (
-                  <p className="gen-tactic-assessment">{step.text}</p>
+                  <p className="ar-card-assessment">{step.text}</p>
                 )}
               </div>
             </div>
