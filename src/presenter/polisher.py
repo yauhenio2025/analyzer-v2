@@ -114,6 +114,18 @@ def polish_view(
     section_descriptions = parsed.get("section_descriptions", {})
     changes_summary = parsed.get("changes_summary", "")
 
+    # Token compliance validation
+    from src.presenter.token_bridge import validate_style_overrides
+
+    has_token_refs = context.get("token_references") is not None
+    metrics = validate_style_overrides(style_overrides, payload.view_key, resolved_school)
+    if metrics["total_color_props"] > 0:
+        logger.info(
+            f"[polish] Token compliance: {metrics['compliance_pct']:.0f}% "
+            f"({metrics['token_referenced']}/{metrics['total_color_props']} color props) "
+            f"view={payload.view_key} school={resolved_school}"
+        )
+
     elapsed_ms = int(time.time() * 1000) - start_ms
 
     result = PolishResult(
@@ -122,6 +134,7 @@ def polish_view(
             polished_renderer_config=polished_config,
             style_overrides=style_overrides,
             section_descriptions=section_descriptions,
+            token_format_version=2 if has_token_refs else None,
         ),
         model_used=model,
         tokens_used=total_tokens,
@@ -257,6 +270,18 @@ def polish_section(
     section_description = parsed.get("section_description", "")
     changes_summary = parsed.get("changes_summary", "")
 
+    # Token compliance validation
+    from src.presenter.token_bridge import validate_style_overrides
+
+    has_token_refs = context.get("token_references") is not None
+    metrics = validate_style_overrides(style_overrides, payload.view_key, resolved_school)
+    if metrics["total_color_props"] > 0:
+        logger.info(
+            f"[polish-section] Token compliance: {metrics['compliance_pct']:.0f}% "
+            f"({metrics['token_referenced']}/{metrics['total_color_props']} color props) "
+            f"view={payload.view_key} section={section_key} school={resolved_school}"
+        )
+
     elapsed_ms = int(time.time() * 1000) - start_ms
 
     result = SectionPolishResult(
@@ -270,6 +295,7 @@ def polish_section(
         execution_time_ms=elapsed_ms,
         style_school=resolved_school,
         user_feedback_applied=user_feedback,
+        token_format_version=2 if has_token_refs else None,
     )
 
     logger.info(
@@ -377,6 +403,15 @@ def _gather_polish_context(
     except Exception:
         context["display_rules"] = {}
 
+    # Design tokens for token-aware polish
+    from src.presenter.token_bridge import get_tokens_for_polisher, build_token_reference
+
+    tokens = get_tokens_for_polisher(style_school_key)
+    if tokens:
+        context["token_references"] = build_token_reference(tokens)
+    else:
+        context["token_references"] = None
+
     return context
 
 
@@ -400,11 +435,37 @@ def _compose_system_prompt(context: dict[str, Any]) -> str:
         "## Color Palette",
         json.dumps(palette, indent=2) if palette else "(no palette)",
         "",
+    ]
+
+    # Design token references (when available)
+    token_refs = context.get("token_references")
+    if token_refs:
+        parts.extend([
+            "## Design Token References",
+            "When setting COLOR properties (backgroundColor, color, borderColor,",
+            "borderLeftColor, borderTopColor, borderBottomColor, borderRightColor),",
+            "PREFER using these CSS custom property references instead of raw hex values:",
+            "",
+            json.dumps(token_refs, indent=2),
+            "",
+            "Example:",
+            '  INSTEAD OF: {"card": {"backgroundColor": "#faf7f2"}}',
+            '  PREFER:     {"card": {"backgroundColor": "var(--dt-card-bg)"}}',
+            "",
+            "For LAYOUT properties (padding, margin, gap, display, grid*, fontSize,",
+            "fontWeight, letterSpacing, lineHeight, borderWidth, borderRadius),",
+            "continue using raw CSS values as before.",
+            "",
+            "When no design token exists for a specific color you need, use raw hex from the palette.",
+            "",
+        ])
+
+    parts.extend([
         "## Typography",
         json.dumps(typography, indent=2) if typography else "(no typography)",
         "",
         "## Layout Principles",
-    ]
+    ])
     for lp in layout:
         parts.append(f"- {lp}")
 
@@ -651,11 +712,37 @@ def _compose_section_system_prompt(
         "## Color Palette",
         json.dumps(palette, indent=2) if palette else "(no palette)",
         "",
+    ]
+
+    # Design token references (when available)
+    token_refs = context.get("token_references")
+    if token_refs:
+        parts.extend([
+            "## Design Token References",
+            "When setting COLOR properties (backgroundColor, color, borderColor,",
+            "borderLeftColor, borderTopColor, borderBottomColor, borderRightColor),",
+            "PREFER using these CSS custom property references instead of raw hex values:",
+            "",
+            json.dumps(token_refs, indent=2),
+            "",
+            "Example:",
+            '  INSTEAD OF: {"card": {"backgroundColor": "#faf7f2"}}',
+            '  PREFER:     {"card": {"backgroundColor": "var(--dt-card-bg)"}}',
+            "",
+            "For LAYOUT properties (padding, margin, gap, display, grid*, fontSize,",
+            "fontWeight, letterSpacing, lineHeight, borderWidth, borderRadius),",
+            "continue using raw CSS values as before.",
+            "",
+            "When no design token exists for a specific color you need, use raw hex from the palette.",
+            "",
+        ])
+
+    parts.extend([
         "## Typography",
         json.dumps(typography, indent=2) if typography else "(no typography)",
         "",
         "## Layout Principles",
-    ]
+    ])
     for lp in layout:
         parts.append(f"- {lp}")
 

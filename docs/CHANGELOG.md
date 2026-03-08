@@ -20,6 +20,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 - **Dynamic Bespoke Apps Vision Document** — Formalized the architectural vision for analyzer-v2 as the central intelligence layer, with consumer apps as ephemeral, LLM-composed presentations. Includes gap analysis (60% aligned, 25% partial, 15% missing) and 3-tier reconciliation plan covering renderer input contracts, view definition generation API, style system unification, page composition endpoint, ephemeral project lifecycle, and thin shell app template. ([`communications/DYNAMIC_BESPOKE_APPS_VISION.md`](communications/DYNAMIC_BESPOKE_APPS_VISION.md))
 
 ### Changed
+- **Style-Token Unification (Priority 4)** — Polisher now emits design token references
+  (`var(--dt-*)`) for color properties instead of raw hex values, creating a coherent
+  cascade between the design token system and polish output. Token bridge module maps
+  component tokens to polisher injection points. Compliance validator logs token usage
+  metrics per polish call. `token_format_version` field on PolishedViewPayload/SectionPolishResult
+  distinguishes legacy (null) from token-aware (2) output. Backward-compatible: existing
+  cached polish data renders unchanged.
+  ([`src/presenter/token_bridge.py`](src/presenter/token_bridge.py),
+   [`src/presenter/polisher.py`](src/presenter/polisher.py),
+   [`src/presenter/schemas.py`](src/presenter/schemas.py))
 - **renderers-ui domain leakage cleanup** — Made `@caii/analysis-renderers` package generic by removing genealogy-specific assumptions:
   - Deleted 4 domain-specific files: SynthesisRenderer, IdeaEvolutionRenderer, TacticCardCell, RelationshipCardCell (~1,487 lines)
   - Parameterized 11 capture handlers with config-driven `_captureSourceType` (defaults to 'analysis')

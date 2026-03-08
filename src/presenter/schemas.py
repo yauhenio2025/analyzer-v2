@@ -277,6 +277,10 @@ class PolishedViewPayload(BaseModel):
         default_factory=dict,
         description="Enhanced section descriptions keyed by section key.",
     )
+    token_format_version: Optional[int] = Field(
+        default=None,
+        description="2=token-aware (var(--dt-*) for colors), None=legacy raw CSS",
+    )
 
 
 class PolishResult(BaseModel):
@@ -323,6 +327,10 @@ class SectionPolishResult(BaseModel):
     execution_time_ms: int = 0
     style_school: str = ""
     user_feedback_applied: Optional[str] = None
+    token_format_version: Optional[int] = Field(
+        default=None,
+        description="2=token-aware (var(--dt-*) for colors), None=legacy raw CSS",
+    )
 
 
 # --- Request schemas ---
