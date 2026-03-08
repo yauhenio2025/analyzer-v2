@@ -1,18 +1,18 @@
 {
   "name": "@caii/analysis-renderers",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Shared renderer components for analyzer-v2 view definitions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": ["dist", "src"],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp -r src/styles dist/",
     "watch": "tsc --watch",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
@@ -25,7 +25,7 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     },
-    "./styles": "./src/styles/index.css"
+    "./styles": "./dist/styles/index.css"
   },
   "license": "MIT"
 }

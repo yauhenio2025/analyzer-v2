@@ -46,7 +46,7 @@ export { flattenTokens } from './utils/tokenFlattener';
 export { AccordionRenderer } from './renderers/AccordionRenderer';
 export { CardGridRenderer } from './renderers/CardGridRenderer';
 export { CardRenderer } from './renderers/CardRenderer';
-export { ProseRenderer } from './renderers/ProseRenderer';
+export { ProseRenderer, formatProse } from './renderers/ProseRenderer';
 export { TableRenderer } from './renderers/TableRenderer';
 export { StatSummaryRenderer } from './renderers/StatSummaryRenderer';
 export { RawJsonRenderer } from './renderers/RawJsonRenderer';
