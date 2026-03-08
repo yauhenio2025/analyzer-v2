@@ -6,6 +6,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **31 new categorical tokens** — Added attack types (10), sin types (10), and provenance categories (11) to the design token schema. Updated all 4 files: `token_schema.py`, `designTokens.ts`, `DesignTokenContext.tsx` (FALLBACK_TOKENS), `token_prompt.py`. Published as `@the-syllabus/analysis-renderers` v0.5.0. Total categorical items: 91 (was 60).
 - **Renderer contract validation** — Populated `input_data_schema` in all 9 renderer definitions (7 new + 2 existing). Schemas are tight enough to catch real problems: accordion/tab reject non-object/array/string values, stat_summary rejects nested objects (prevents "[object Object]"), card_grid requires non-empty arrays or category-keyed objects, prose requires non-empty strings or objects with recognized text fields, table supports multi-table/array/keyed formats, raw_json accepts anything. ([`src/renderers/definitions/*.json`](src/renderers/definitions/))
 - **Validation utility** (`src/renderers/validator.py`) — `validate_renderer_data()`, `validate_renderer_config()`, `validate_all_schemas()` using jsonschema Draft7Validator. Three modes: WARN (log, default), STRICT (raise, API-only), SILENT (skip). Errors capped at 10, oneOf failures summarized.
 - **Pipeline validation** — Two insertion points:
