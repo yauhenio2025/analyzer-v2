@@ -74,6 +74,18 @@ async def start_job(request: StartJobRequest):
     from src.orchestrator.planner import load_plan
     from src.orchestrator.schemas import WorkflowExecutionPlan
 
+    # Guard: reject job creation for archived projects
+    if request.project_id:
+        from src.executor.project_manager import get_project
+        project = get_project(request.project_id)
+        if project is None:
+            raise HTTPException(status_code=404, detail=f"Project not found: {request.project_id}")
+        if project["status"] == "archived":
+            raise HTTPException(
+                status_code=400,
+                detail=f"Cannot create jobs for archived project {request.project_id}. Revive it first.",
+            )
+
     # Validate plan exists — try file first, then DB plan_data from a previous job
     plan = load_plan(request.plan_id)
     plan_from_db = False
@@ -134,6 +146,7 @@ async def start_job(request: StartJobRequest):
         request.plan_id,
         plan_data=plan.model_dump(),
         document_ids=request.document_ids,
+        project_id=request.project_id,
     )
 
     # Spawn execution thread
@@ -143,21 +156,26 @@ async def start_job(request: StartJobRequest):
         document_ids=request.document_ids,
     )
 
-    logger.info(f"Started job {job.job_id} for plan {request.plan_id}")
+    logger.info(f"Started job {job.job_id} for plan {request.plan_id} (project: {request.project_id or 'none'})")
 
     return {
         "job_id": job.job_id,
         "plan_id": request.plan_id,
         "status": "pending",
+        "project_id": request.project_id,
         "cancel_token": job_record.get("cancel_token"),
         "message": "Execution started. Poll GET /v1/executor/jobs/{job_id} for progress.",
     }
 
 
 @router.get("/jobs")
-async def list_all_jobs(status: Optional[str] = None, limit: int = 20):
-    """List all executor jobs."""
-    jobs = list_jobs(status=status, limit=limit)
+async def list_all_jobs(
+    status: Optional[str] = None,
+    limit: int = 20,
+    project_id: Optional[str] = None,
+):
+    """List all executor jobs, optionally filtered by status and/or project_id."""
+    jobs = list_jobs(status=status, limit=limit, project_id=project_id)
     return {"jobs": jobs, "count": len(jobs)}
 
 
@@ -518,6 +536,7 @@ class ImportOutputsRequest(BaseModel):
     plan_id: str
     plan_data: Optional[dict] = None
     workflow_key: str = "intellectual_genealogy"
+    project_id: Optional[str] = None
     outputs: list[OutputItem]
 
 
@@ -535,6 +554,18 @@ async def import_outputs(request: ImportOutputsRequest):
 
     if not request.outputs:
         raise HTTPException(status_code=400, detail="No outputs to import")
+
+    # Guard: reject import for archived projects
+    if request.project_id:
+        from src.executor.project_manager import get_project as get_proj
+        project = get_proj(request.project_id)
+        if project is None:
+            raise HTTPException(status_code=404, detail=f"Project not found: {request.project_id}")
+        if project["status"] == "archived":
+            raise HTTPException(
+                status_code=400,
+                detail=f"Cannot import outputs for archived project {request.project_id}. Revive it first.",
+            )
 
     # Save plan if provided
     if request.plan_data:
@@ -555,6 +586,7 @@ async def import_outputs(request: ImportOutputsRequest):
             plan_id=request.plan_id,
             plan_data=request.plan_data,
             workflow_key=request.workflow_key,
+            project_id=request.project_id,
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to create job: {e}")
@@ -641,4 +673,9 @@ async def finalize_job(job_id: str):
         raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
 
     update_job_status(job_id, "completed")
+
+    # Touch project activity on finalization
+    from src.executor.project_manager import touch_project_activity_for_job
+    touch_project_activity_for_job(job_id)
+
     return {"job_id": job_id, "status": "completed"}

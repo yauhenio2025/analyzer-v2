@@ -35,6 +35,7 @@ def create_job(
     plan_data: Optional[dict] = None,
     document_ids: Optional[dict[str, str]] = None,
     workflow_key: str = "intellectual_genealogy",
+    project_id: Optional[str] = None,
 ) -> dict:
     """Create a new executor job in the database.
 
@@ -42,6 +43,7 @@ def create_job(
         plan_data: Full serialized plan (for resume after instance recycle).
         document_ids: Mapping of work titles to document IDs.
         workflow_key: Workflow key for this job (default: intellectual_genealogy).
+        project_id: Optional project to scope this job to.
 
     Returns the job record as a dict (includes cancel_token).
     """
@@ -60,20 +62,32 @@ def create_job(
         """INSERT INTO executor_jobs
            (job_id, plan_id, status, progress, phase_results, error,
             total_llm_calls, total_input_tokens, total_output_tokens,
-            plan_data, document_ids, cancel_token, workflow_key, created_at)
-           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+            plan_data, document_ids, cancel_token, workflow_key, project_id, created_at)
+           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
         (job_id, plan_id, "pending", progress, "{}", None, 0, 0, 0,
          _json_dumps(plan_data) if plan_data else None,
-         _json_dumps(document_ids or {}), cancel_token, workflow_key, now),
+         _json_dumps(document_ids or {}), cancel_token, workflow_key, project_id, now),
     )
 
-    logger.info(f"Created job {job_id} for plan {plan_id} (workflow: {workflow_key})")
+    logger.info(
+        f"Created job {job_id} for plan {plan_id} "
+        f"(workflow: {workflow_key}, project: {project_id or 'none'})"
+    )
+
+    # Touch project activity if scoped to a project
+    if project_id:
+        try:
+            from src.executor.project_manager import touch_project_activity
+            touch_project_activity(project_id)
+        except Exception as e:
+            logger.debug(f"Could not touch project activity: {e}")
 
     return {
         "job_id": job_id,
         "plan_id": plan_id,
         "status": "pending",
         "workflow_key": workflow_key,
+        "project_id": project_id,
         "cancel_token": cancel_token,
         "created_at": now,
     }
@@ -232,28 +246,31 @@ def save_phase_result(
 def list_jobs(
     status: Optional[str] = None,
     limit: int = 20,
+    project_id: Optional[str] = None,
 ) -> list[dict]:
-    """List jobs, optionally filtered by status."""
+    """List jobs, optionally filtered by status and/or project_id."""
+    conditions = []
+    params = []
+
     if status:
-        rows = execute(
-            """SELECT job_id, plan_id, status, progress, error,
-                      total_llm_calls, total_input_tokens, total_output_tokens,
-                      workflow_key, created_at, started_at, completed_at
-               FROM executor_jobs WHERE status = %s
-               ORDER BY created_at DESC LIMIT %s""",
-            (status, limit),
-            fetch="all",
-        )
-    else:
-        rows = execute(
-            """SELECT job_id, plan_id, status, progress, error,
-                      total_llm_calls, total_input_tokens, total_output_tokens,
-                      workflow_key, created_at, started_at, completed_at
-               FROM executor_jobs
-               ORDER BY created_at DESC LIMIT %s""",
-            (limit,),
-            fetch="all",
-        )
+        conditions.append("status = %s")
+        params.append(status)
+    if project_id:
+        conditions.append("project_id = %s")
+        params.append(project_id)
+
+    where = f"WHERE {' AND '.join(conditions)}" if conditions else ""
+    params.append(limit)
+
+    rows = execute(
+        f"""SELECT job_id, plan_id, status, progress, error,
+                   total_llm_calls, total_input_tokens, total_output_tokens,
+                   workflow_key, project_id, created_at, started_at, completed_at
+            FROM executor_jobs {where}
+            ORDER BY created_at DESC LIMIT %s""",
+        tuple(params),
+        fetch="all",
+    )
 
     for row in rows:
         if isinstance(row.get("progress"), str):

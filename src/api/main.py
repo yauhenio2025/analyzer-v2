@@ -6,14 +6,17 @@ This API serves analytical definitions without execution logic:
 - Engine chains (multi-engine compositions)
 """
 
+import asyncio
 import logging
 import signal
+import uuid as _uuid
 from contextlib import asynccontextmanager
+from typing import Optional
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import audiences, chains, consumers, engines, executor, functions, llm, meta, objectives, operations, operationalizations, orchestrator, paradigms, presenter, renderers, styles, primitives, display, sub_renderers, transformations, view_patterns, views, workflows
+from src.api.routes import audiences, chains, consumers, engines, executor, functions, llm, meta, objectives, operations, operationalizations, orchestrator, paradigms, presenter, projects, renderers, styles, primitives, display, sub_renderers, transformations, view_patterns, views, workflows
 from src.audiences.registry import get_audience_registry
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
@@ -38,6 +41,25 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
+
+
+_instance_id = _uuid.uuid4().hex[:8]
+
+
+async def _auto_archive_loop():
+    """Background task: periodically archive stale projects."""
+    logger.info(f"[auto-archive] Loop started (instance={_instance_id})")
+    while True:
+        await asyncio.sleep(3600)  # Check every hour
+        try:
+            from src.executor.project_manager import run_auto_archive
+            result = run_auto_archive()
+            if result.get("archived", 0) > 0:
+                logger.info(f"[auto-archive] instance={_instance_id} {result}")
+            else:
+                logger.debug(f"[auto-archive] instance={_instance_id} {result}")
+        except Exception as e:
+            logger.error(f"[auto-archive] instance={_instance_id} Failed: {e}")
 
 
 @asynccontextmanager
@@ -155,8 +177,21 @@ async def lifespan(app: FastAPI):
     objectives = list_objectives()
     logger.info(f"Loaded {len(objectives)} analysis objectives")
 
+    # Start auto-archive background task (Priority 6)
+    archive_task = asyncio.create_task(_auto_archive_loop())
+    logger.info("Auto-archive background task started")
+
     logger.info("Analyzer v2 API ready")
     yield
+
+    # Shutdown: cancel auto-archive task
+    archive_task.cancel()
+    try:
+        await archive_task
+    except asyncio.CancelledError:
+        pass
+    logger.info("Auto-archive task stopped")
+
     # Shutdown — let jobs stay in "running" state for next instance to resume
     logger.info("Shutting down Analyzer v2 API — jobs will resume on next startup")
 
@@ -220,6 +255,7 @@ app.include_router(objectives.router, prefix="/v1")
 app.include_router(orchestrator.router, prefix="/v1")
 app.include_router(executor.router, prefix="/v1")
 app.include_router(presenter.router, prefix="/v1")
+app.include_router(projects.router, prefix="/v1")
 
 
 @app.get("/")
@@ -253,6 +289,7 @@ async def root():
             "analyze": "/v1/orchestrator/analyze",
             "executor": "/v1/executor",
             "presenter": "/v1/presenter",
+            "projects": "/v1/projects",
         },
     }
 

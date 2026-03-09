@@ -113,6 +113,10 @@ class StartJobRequest(BaseModel):
         default=None,
         description="Map of work title -> document_id for uploaded texts",
     )
+    project_id: Optional[str] = Field(
+        default=None,
+        description="Optional project to scope this job to",
+    )
 
 
 class JobStatusResponse(BaseModel):
@@ -168,3 +172,47 @@ class DocumentRecord(BaseModel):
     role: str = "target"
     char_count: int = 0
     created_at: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
+
+
+# --- Project lifecycle schemas (Priority 6) ---
+
+
+class ProjectStatus(str, Enum):
+    """Project lifecycle states."""
+    ACTIVE = "active"
+    ARCHIVED = "archived"
+
+
+class ProjectCreate(BaseModel):
+    """Request to create a new project."""
+    name: str
+    description: str = ""
+    auto_archive_days: Optional[int] = 30  # None = never auto-archive
+
+class ProjectUpdate(BaseModel):
+    """Request to update project metadata."""
+    name: Optional[str] = None
+    description: Optional[str] = None
+    auto_archive_days: Optional[int] = None
+
+
+class ProjectResponse(BaseModel):
+    """Full project info returned by API."""
+    project_id: str
+    name: str
+    description: str
+    status: str
+    auto_archive_days: Optional[int]
+    created_at: str
+    last_activity_at: str
+    archived_at: Optional[str] = None
+    metadata: dict = Field(default_factory=dict)
+    job_count: int = 0
+    active_job_count: int = 0
+
+
+class LifecycleActionResponse(BaseModel):
+    """Returned by archive/delete/revive for observability."""
+    project_id: str
+    action: str  # 'archived' | 'revived' | 'deleted' | 'already_archived' | 'already_active'
+    artifacts_removed: dict = Field(default_factory=dict)

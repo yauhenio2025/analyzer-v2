@@ -162,6 +162,51 @@ def init_db():
     logger.info(f"Executor database initialized: {backend}")
 
 
+def execute_write(sql: str, params: tuple = ()) -> int:
+    """Execute a single write statement. Returns affected row count.
+
+    Uses raw connection path — does NOT call execute() (which auto-commits
+    per call and returns None for writes). Needed for:
+    - Counting deleted rows in cleanup cascades
+    - Optimistic locking checks (affected_rows == 0 means another instance won)
+    """
+    if _is_postgres():
+        adapted_sql = sql
+    else:
+        adapted_sql = sql.replace("%s", "?")
+
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(adapted_sql, params)
+        rowcount = cursor.rowcount
+        conn.commit()
+        return rowcount
+
+
+def execute_transaction(statements: list[tuple[str, tuple]]) -> list[int]:
+    """Execute multiple statements atomically. Returns rowcounts.
+
+    Rolls back ALL on any exception. Used for multi-table cascade
+    deletes (archive/delete project) where partial cleanup is undesirable.
+    """
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        rowcounts = []
+        try:
+            for sql, params in statements:
+                if _is_postgres():
+                    adapted_sql = sql
+                else:
+                    adapted_sql = sql.replace("%s", "?")
+                cursor.execute(adapted_sql, params)
+                rowcounts.append(cursor.rowcount)
+            conn.commit()
+            return rowcounts
+        except Exception:
+            conn.rollback()
+            raise
+
+
 def _migrate_postgres():
     """Add columns that may be missing from existing tables."""
     migrations = [
@@ -170,6 +215,8 @@ def _migrate_postgres():
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS cancel_token VARCHAR(64)",
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS workflow_key VARCHAR(100) DEFAULT 'intellectual_genealogy'",
         "ALTER TABLE presentation_cache ALTER COLUMN section TYPE VARCHAR(200)",
+        # Priority 6: Project lifecycle
+        "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS project_id VARCHAR(100)",
     ]
     with get_connection() as conn:
         cursor = conn.cursor()
@@ -178,6 +225,14 @@ def _migrate_postgres():
                 cursor.execute(sql)
             except Exception as e:
                 logger.debug(f"Migration skipped (already applied?): {e}")
+        # Index for project_id lookups
+        try:
+            cursor.execute(
+                "CREATE INDEX IF NOT EXISTS idx_executor_jobs_project "
+                "ON executor_jobs(project_id)"
+            )
+        except Exception as e:
+            logger.debug(f"Index creation skipped: {e}")
         conn.commit()
 
 
@@ -279,6 +334,21 @@ def _init_postgres():
         tokens_used INTEGER,
         generated_at TIMESTAMPTZ DEFAULT NOW()
     );
+
+    CREATE TABLE IF NOT EXISTS projects (
+        project_id    VARCHAR(100) PRIMARY KEY,
+        name          VARCHAR(500) NOT NULL,
+        description   TEXT DEFAULT '',
+        status        VARCHAR(20) NOT NULL DEFAULT 'active',
+        auto_archive_days INTEGER DEFAULT 30,
+        created_at    TIMESTAMPTZ DEFAULT NOW(),
+        last_activity_at TIMESTAMPTZ DEFAULT NOW(),
+        archived_at   TIMESTAMPTZ,
+        metadata      JSONB DEFAULT '{}'
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_projects_status ON projects(status);
+    CREATE INDEX IF NOT EXISTS idx_projects_activity ON projects(last_activity_at);
     """
     with get_connection() as conn:
         cursor = conn.cursor()
@@ -384,8 +454,30 @@ def _init_sqlite():
         tokens_used INTEGER,
         generated_at TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS projects (
+        project_id    TEXT PRIMARY KEY,
+        name          TEXT NOT NULL,
+        description   TEXT DEFAULT '',
+        status        TEXT NOT NULL DEFAULT 'active',
+        auto_archive_days INTEGER DEFAULT 30,
+        created_at    TEXT,
+        last_activity_at TEXT,
+        archived_at   TEXT,
+        metadata      TEXT DEFAULT '{}'
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_projects_status ON projects(status);
+    CREATE INDEX IF NOT EXISTS idx_projects_activity ON projects(last_activity_at);
     """
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.executescript(ddl)
         conn.commit()
+        # SQLite migration: add project_id column if missing
+        cursor.execute("PRAGMA table_info(executor_jobs)")
+        columns = [row[1] for row in cursor.fetchall()]
+        if "project_id" not in columns:
+            cursor.execute("ALTER TABLE executor_jobs ADD COLUMN project_id TEXT")
+            conn.commit()
+            logger.info("SQLite migration: added project_id column to executor_jobs")

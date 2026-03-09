@@ -367,6 +367,13 @@ def execute_plan(
             else:
                 update_job_status(job_id, "completed")
 
+                # Touch project activity on completion
+                try:
+                    from src.executor.project_manager import touch_project_activity_for_job
+                    touch_project_activity_for_job(job_id)
+                except Exception as e:
+                    logger.debug(f"Could not touch project activity for {job_id}: {e}")
+
                 # Auto-presentation: run view refinement + transformation bridge
                 # so PagePresentation is ready by the time the client polls
                 _run_auto_presentation(job_id, plan_id)

@@ -41,6 +41,10 @@ async def refine_views(request: RefineViewsRequest):
             job_id=request.job_id,
             plan_id=request.plan_id,
         )
+        # Touch project activity (user is actively working with results)
+        from src.executor.project_manager import touch_project_activity_for_job
+        touch_project_activity_for_job(request.job_id)
+
         return result.model_dump()
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
@@ -270,6 +274,10 @@ async def compose_presentation(request: ComposeRequest):
                 f"(of {len(all_view_keys)} views)"
             )
 
+        # Touch project activity (user is actively composing presentations)
+        from src.executor.project_manager import touch_project_activity_for_job
+        touch_project_activity_for_job(request.job_id)
+
         return page.model_dump()
 
     except ValueError as e:
@@ -346,6 +354,10 @@ async def polish_view_endpoint(request: PolishRequest):
             model_used=result.model_used,
             tokens_used=result.tokens_used,
         )
+
+        # Touch project activity (user is actively polishing)
+        from src.executor.project_manager import touch_project_activity_for_job
+        touch_project_activity_for_job(request.job_id)
 
         resp = result.model_dump()
         resp["cached"] = False
@@ -439,6 +451,10 @@ async def polish_section_endpoint(request: SectionPolishRequest):
             tokens_used=result.tokens_used,
             section_key=request.section_key,
         )
+
+        # Touch project activity (user is actively polishing sections)
+        from src.executor.project_manager import touch_project_activity_for_job
+        touch_project_activity_for_job(request.job_id)
 
         resp = result.model_dump()
         resp["cached"] = False
