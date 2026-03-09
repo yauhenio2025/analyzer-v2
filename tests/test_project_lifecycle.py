@@ -8,10 +8,20 @@ handler limitation in lifespan (signal only works in main thread).
 """
 
 import os
+import tempfile
+from pathlib import Path
+
 import pytest
 
-# Force SQLite for tests
+# Force SQLite for tests — use a temp directory to avoid conflicts
+_test_db_dir = tempfile.mkdtemp(prefix="analyzer_v2_test_")
+_test_db_path = Path(_test_db_dir) / "test_executor.db"
 os.environ["EXECUTOR_DATABASE_URL"] = ""
+
+import src.executor.db as db_mod
+
+# Override the SQLite path BEFORE any imports that call init_db()
+db_mod.SQLITE_PATH = _test_db_path
 
 from src.executor.db import init_db, execute, execute_write, execute_transaction, _json_dumps
 from src.executor.job_manager import create_job, update_job_status
@@ -29,19 +39,35 @@ from src.executor.project_manager import (
 )
 
 
+# Tables to truncate between tests (order: children before parents)
+_TABLES = [
+    "presentation_cache",
+    "polish_cache",
+    "view_refinements",
+    "phase_outputs",
+    "executor_jobs",
+    "projects",
+    "design_token_cache",
+]
+
+
 @pytest.fixture(autouse=True)
 def fresh_db():
-    """Reset DB state before each test."""
-    import src.executor.db as db_mod
-    db_mod._initialized = False
-    # Remove SQLite file if it exists
-    if db_mod.SQLITE_PATH.exists():
-        db_mod.SQLITE_PATH.unlink()
-    init_db()
+    """Ensure tables exist, then truncate all data between tests.
+
+    Instead of deleting/recreating the SQLite file (which causes I/O errors
+    if connections are still open), we init once and truncate between tests.
+    """
+    if not db_mod._initialized:
+        init_db()
+    else:
+        # Truncate all tables — fast, no file I/O issues
+        for table in _TABLES:
+            try:
+                execute(f"DELETE FROM {table}")
+            except Exception:
+                pass  # Table might not exist yet in some edge cases
     yield
-    # Cleanup
-    if db_mod.SQLITE_PATH.exists():
-        db_mod.SQLITE_PATH.unlink()
 
 
 # --- CRUD ---
