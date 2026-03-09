@@ -1,6 +1,6 @@
 {
   "name": "@the-syllabus/analysis-renderers",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Shared renderer components for analyzer-v2 view definitions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

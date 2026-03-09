@@ -237,8 +237,8 @@ export function GenericMiniCard({ data, depth }: { data: unknown; depth: number 
   if (entries.length === 0) return null;
 
   // Heuristic: find a "name" or "title" field for the card header
-  const nameKey = entries.find(([k]) => ['name', 'term', 'title', 'commitment', 'cluster_name', 'channel', 'evidence_type'].includes(k));
-  const typeKey = entries.find(([k]) => ['type', 'centrality', 'drift_type', 'explicitness'].includes(k));
+  const nameKey = entries.find(([k, v]) => ['name', 'term', 'title', 'commitment', 'cluster_name', 'channel', 'evidence_type'].includes(k) && typeof v === 'string');
+  const typeKey = entries.find(([k, v]) => ['type', 'centrality', 'drift_type', 'explicitness'].includes(k) && typeof v === 'string');
 
   return (
     <div className="gen-mini-card">
