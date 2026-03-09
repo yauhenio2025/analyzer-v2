@@ -202,74 +202,92 @@ def _has_active_jobs(project_id: str) -> bool:
 
 
 def _cleanup_presentation_artifacts(project_id: str) -> dict:
-    """Archive cleanup: delete presentation artifacts, retain engine outputs.
+    """Archive cleanup: delete presentation artifacts atomically, retain engine outputs.
 
+    Uses execute_transaction() so all three deletes are atomic.
     Returns {table: rows_deleted} for observability.
     """
-    counts = {}
+    table_names = ["polish_cache", "view_refinements", "presentation_cache"]
+    statements = [
+        (
+            "DELETE FROM polish_cache WHERE job_id IN "
+            "(SELECT job_id FROM executor_jobs WHERE project_id = %s)",
+            (project_id,),
+        ),
+        (
+            "DELETE FROM view_refinements WHERE job_id IN "
+            "(SELECT job_id FROM executor_jobs WHERE project_id = %s)",
+            (project_id,),
+        ),
+        (
+            "DELETE FROM presentation_cache WHERE output_id IN "
+            "(SELECT po.id FROM phase_outputs po "
+            "JOIN executor_jobs ej ON po.job_id = ej.job_id "
+            "WHERE ej.project_id = %s)",
+            (project_id,),
+        ),
+    ]
 
-    counts["polish_cache"] = execute_write(
-        "DELETE FROM polish_cache WHERE job_id IN "
-        "(SELECT job_id FROM executor_jobs WHERE project_id = %s)",
-        (project_id,),
-    )
+    rowcounts = execute_transaction(statements)
 
-    counts["view_refinements"] = execute_write(
-        "DELETE FROM view_refinements WHERE job_id IN "
-        "(SELECT job_id FROM executor_jobs WHERE project_id = %s)",
-        (project_id,),
-    )
-
-    counts["presentation_cache"] = execute_write(
-        "DELETE FROM presentation_cache WHERE output_id IN "
-        "(SELECT po.id FROM phase_outputs po "
-        "JOIN executor_jobs ej ON po.job_id = ej.job_id "
-        "WHERE ej.project_id = %s)",
-        (project_id,),
-    )
-
-    return {k: v for k, v in counts.items() if v > 0}
+    return {name: count for name, count in zip(table_names, rowcounts) if count > 0}
 
 
 def _cleanup_all_project_data(project_id: str) -> dict:
-    """Delete cleanup: remove ALL data for a project.
+    """Delete cleanup: remove ALL data for a project atomically.
+
+    Uses execute_transaction() so the entire cascade is atomic —
+    if any step fails, nothing is deleted (no orphaned rows).
 
     Returns {table: rows_deleted} for observability.
     """
-    counts = {}
+    # Order matters: presentation_cache references phase_outputs,
+    # phase_outputs references executor_jobs, so delete leaf tables first.
+    table_names = [
+        "polish_cache",
+        "view_refinements",
+        "presentation_cache",
+        "phase_outputs",
+        "executor_jobs",
+        "projects",
+    ]
+    statements = [
+        (
+            "DELETE FROM polish_cache WHERE job_id IN "
+            "(SELECT job_id FROM executor_jobs WHERE project_id = %s)",
+            (project_id,),
+        ),
+        (
+            "DELETE FROM view_refinements WHERE job_id IN "
+            "(SELECT job_id FROM executor_jobs WHERE project_id = %s)",
+            (project_id,),
+        ),
+        (
+            "DELETE FROM presentation_cache WHERE output_id IN "
+            "(SELECT po.id FROM phase_outputs po "
+            "JOIN executor_jobs ej ON po.job_id = ej.job_id "
+            "WHERE ej.project_id = %s)",
+            (project_id,),
+        ),
+        (
+            "DELETE FROM phase_outputs WHERE job_id IN "
+            "(SELECT job_id FROM executor_jobs WHERE project_id = %s)",
+            (project_id,),
+        ),
+        (
+            "DELETE FROM executor_jobs WHERE project_id = %s",
+            (project_id,),
+        ),
+        (
+            "DELETE FROM projects WHERE project_id = %s",
+            (project_id,),
+        ),
+    ]
 
-    # Presentation artifacts first
-    artifact_counts = _cleanup_presentation_artifacts(project_id)
-    counts.update(artifact_counts)
+    rowcounts = execute_transaction(statements)
 
-    # Engine outputs
-    counts["presentation_cache_from_outputs"] = execute_write(
-        "DELETE FROM presentation_cache WHERE output_id IN "
-        "(SELECT po.id FROM phase_outputs po "
-        "JOIN executor_jobs ej ON po.job_id = ej.job_id "
-        "WHERE ej.project_id = %s)",
-        (project_id,),
-    )
-
-    counts["phase_outputs"] = execute_write(
-        "DELETE FROM phase_outputs WHERE job_id IN "
-        "(SELECT job_id FROM executor_jobs WHERE project_id = %s)",
-        (project_id,),
-    )
-
-    # Jobs
-    counts["executor_jobs"] = execute_write(
-        "DELETE FROM executor_jobs WHERE project_id = %s",
-        (project_id,),
-    )
-
-    # Project row
-    counts["projects"] = execute_write(
-        "DELETE FROM projects WHERE project_id = %s",
-        (project_id,),
-    )
-
-    return {k: v for k, v in counts.items() if v > 0}
+    counts = {name: count for name, count in zip(table_names, rowcounts) if count > 0}
+    return counts
 
 
 def archive_project(project_id: str) -> dict:
