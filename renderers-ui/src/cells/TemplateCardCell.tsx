@@ -69,6 +69,8 @@ interface SlotConfig {
   subdued_when?: { field: string; equals: string };
   // chip_list
   link_title_pattern?: string;
+  item_label_field?: string;
+  item_tooltip_field?: string;
   // evidence_trail
   steps?: EvidenceStepConfig[];
   accent_from?: ColorRef;
@@ -185,26 +187,44 @@ function ProseBlock({ field, item, subduedWhen }: {
 
 // ── Block: chip_list ───────────────────────────────────
 
-function ChipListBlock({ field, item, label, linkTitlePattern }: {
+function ChipListBlock({ field, item, label, linkTitlePattern, itemLabelField, itemTooltipField }: {
   field: string;
   item: Record<string, unknown>;
   label?: string;
   linkTitlePattern?: string;
+  itemLabelField?: string;
+  itemTooltipField?: string;
 }) {
-  const values = item[field] as string[] | undefined;
-  if (!values || !Array.isArray(values) || values.length === 0) return null;
+  const raw = item[field];
+  if (!raw || !Array.isArray(raw) || raw.length === 0) return null;
+
+  // Normalize: support both string[] and {label_field, tooltip_field}[]
+  const chips = raw.map((val, idx) => {
+    if (typeof val === 'string') {
+      return { key: val || String(idx), text: val, tooltip: linkTitlePattern ? linkTitlePattern.replace('{value}', val) : undefined };
+    }
+    if (val && typeof val === 'object') {
+      const obj = val as Record<string, unknown>;
+      const text = itemLabelField ? String(obj[itemLabelField] || '') : JSON.stringify(val);
+      const tooltip = itemTooltipField ? String(obj[itemTooltipField] || '') : undefined;
+      return { key: text || String(idx), text, tooltip };
+    }
+    return { key: String(idx), text: String(val), tooltip: undefined };
+  }).filter(c => c.text);
+
+  if (chips.length === 0) return null;
 
   return (
     <div className="ar-card-chip-list">
       {label && <span className="ar-card-section-label">{label}</span>}
       <div className="gen-idea-tags">
-        {values.map(val => (
+        {chips.map((chip, idx) => (
           <span
-            key={val}
+            key={`${chip.key}-${idx}`}
             className="gen-idea-tag gen-idea-tag--linked"
-            title={linkTitlePattern ? linkTitlePattern.replace('{value}', val) : undefined}
+            title={chip.tooltip}
           >
-            {val}
+            {chip.text}
           </span>
         ))}
       </div>
@@ -362,6 +382,8 @@ function TemplateSlot({ slot, item, getCategoryColor, getSemanticColor, getLabel
           item={item}
           label={slot.label}
           linkTitlePattern={slot.link_title_pattern}
+          itemLabelField={slot.item_label_field}
+          itemTooltipField={slot.item_tooltip_field}
         />
       ) : null;
 
