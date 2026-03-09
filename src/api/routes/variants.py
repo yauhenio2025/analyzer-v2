@@ -87,6 +87,14 @@ async def select_variant(request: VariantSelectRequest):
             detail=f"Variant set not found: {request.variant_set_id}",
         )
 
+    # Enforce job_id matches the variant set's job — prevents cross-job pollution
+    if request.job_id != vs["job_id"]:
+        raise HTTPException(
+            status_code=400,
+            detail=f"job_id mismatch: variant set belongs to job '{vs['job_id']}', "
+            f"not '{request.job_id}'",
+        )
+
     matching_variant = None
     for v in vs["variants"]:
         if v["variant_id"] == request.variant_id:
