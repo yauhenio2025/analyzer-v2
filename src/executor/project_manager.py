@@ -207,8 +207,28 @@ def _cleanup_presentation_artifacts(project_id: str) -> dict:
     Uses execute_transaction() so all three deletes are atomic.
     Returns {table: rows_deleted} for observability.
     """
-    table_names = ["polish_cache", "view_refinements", "presentation_cache"]
+    table_names = [
+        "variant_selections", "variants", "variant_sets",
+        "polish_cache", "view_refinements", "presentation_cache",
+    ]
     statements = [
+        (
+            "DELETE FROM variant_selections WHERE variant_set_id IN "
+            "(SELECT variant_set_id FROM variant_sets WHERE job_id IN "
+            "(SELECT job_id FROM executor_jobs WHERE project_id = %s))",
+            (project_id,),
+        ),
+        (
+            "DELETE FROM variants WHERE variant_set_id IN "
+            "(SELECT variant_set_id FROM variant_sets WHERE job_id IN "
+            "(SELECT job_id FROM executor_jobs WHERE project_id = %s))",
+            (project_id,),
+        ),
+        (
+            "DELETE FROM variant_sets WHERE job_id IN "
+            "(SELECT job_id FROM executor_jobs WHERE project_id = %s)",
+            (project_id,),
+        ),
         (
             "DELETE FROM polish_cache WHERE job_id IN "
             "(SELECT job_id FROM executor_jobs WHERE project_id = %s)",
@@ -244,6 +264,10 @@ def _cleanup_all_project_data(project_id: str) -> dict:
     # Order matters: presentation_cache references phase_outputs,
     # phase_outputs references executor_jobs, so delete leaf tables first.
     table_names = [
+        "variant_selections",
+        "variants",
+        "variant_sets",
+        "feedback_events",
         "polish_cache",
         "view_refinements",
         "presentation_cache",
@@ -252,6 +276,29 @@ def _cleanup_all_project_data(project_id: str) -> dict:
         "projects",
     ]
     statements = [
+        (
+            "DELETE FROM variant_selections WHERE variant_set_id IN "
+            "(SELECT variant_set_id FROM variant_sets WHERE job_id IN "
+            "(SELECT job_id FROM executor_jobs WHERE project_id = %s))",
+            (project_id,),
+        ),
+        (
+            "DELETE FROM variants WHERE variant_set_id IN "
+            "(SELECT variant_set_id FROM variant_sets WHERE job_id IN "
+            "(SELECT job_id FROM executor_jobs WHERE project_id = %s))",
+            (project_id,),
+        ),
+        (
+            "DELETE FROM variant_sets WHERE job_id IN "
+            "(SELECT job_id FROM executor_jobs WHERE project_id = %s)",
+            (project_id,),
+        ),
+        (
+            "DELETE FROM feedback_events "
+            "WHERE job_id IN (SELECT job_id FROM executor_jobs WHERE project_id = %s) "
+            "OR project_id = %s",
+            (project_id, project_id),
+        ),
         (
             "DELETE FROM polish_cache WHERE job_id IN "
             "(SELECT job_id FROM executor_jobs WHERE project_id = %s)",

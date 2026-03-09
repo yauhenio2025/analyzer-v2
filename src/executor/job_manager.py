@@ -651,6 +651,23 @@ def delete_job(job_id: str) -> bool:
         logger.warning(f"Cannot delete running job {job_id}")
         return False
 
+    # Delete variant data linked to the job (Tier 3b).
+    # Must cascade through variant_sets since variants table has no job_id.
+    execute(
+        "DELETE FROM variant_selections WHERE variant_set_id IN "
+        "(SELECT variant_set_id FROM variant_sets WHERE job_id = %s)",
+        (job_id,),
+    )
+    execute(
+        "DELETE FROM variants WHERE variant_set_id IN "
+        "(SELECT variant_set_id FROM variant_sets WHERE job_id = %s)",
+        (job_id,),
+    )
+    execute("DELETE FROM variant_sets WHERE job_id = %s", (job_id,))
+
+    # Delete feedback events linked to the job (Tier 3a).
+    execute("DELETE FROM feedback_events WHERE job_id = %s", (job_id,))
+
     # Delete outputs first (foreign key constraint)
     delete_job_outputs(job_id)
 

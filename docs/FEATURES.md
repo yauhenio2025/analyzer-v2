@@ -141,6 +141,43 @@
 - **Guards**: Cannot create jobs for archived projects (400), cannot archive/delete with active jobs (409), all transitions are idempotent
 - **Added**: 2026-03-09
 
+### Feedback Capture (Tier 3a)
+- **Status**: Active
+- **Description**: Captures user interaction signals for presentation feedback loops with idempotent event ingestion and lightweight aggregation. Events are linked to `job_id`, optional `project_id`, view context, renderer/style context, and arbitrary payload. Built to support Tier 3b composition experiments.
+- **Entry Points**:
+  - `src/feedback/schemas.py` - Feedback event enum + request/response schemas
+  - `src/feedback/store.py` - Event ingest, filtering, summaries, and cleanup helpers
+  - `src/api/routes/feedback.py` - Feedback API routes
+  - `src/executor/db.py` - `feedback_events` DDL + indexes (Postgres/SQLite)
+- **API Endpoints**:
+  - `POST /v1/feedback/events` - Batch ingest (1-50 events), idempotent via `event_id`
+  - `GET /v1/feedback/events` - Filtered listing (`job_id`/`project_id`, `event_type`, `view_key`, time range, pagination)
+  - `GET /v1/feedback/summary` - Grouped counts (`event_type`, `view_key`, `style_school`, `renderer_type`)
+- **Cleanup integration**: Job/project delete cascades remove feedback rows (including project rows where `project_id` is null but `job_id` belongs to the deleted project)
+- **Added**: 2026-03-09
+
+### A/B View Composition (Tier 3b)
+- **Status**: Active
+- **Description**: Generates 2-3 presentation variants per view (same data, different rendering) and records user selections. Variants differ in exactly one dimension: `renderer_type` (different renderer for same data shape) or `sub_renderer_strategy` (different section renderers within a container). Selection emits `variant_selected` feedback events for downstream analytics.
+- **Entry Points**:
+  - `src/presenter/variant_schemas.py` - Pydantic models (VariantGenerateRequest, VariantSetResponse, VariantSelectRequest, etc.)
+  - `src/presenter/variant_store.py` - CRUD for variant_sets, variants, variant_selections tables
+  - `src/presenter/variant_generator.py` - Core generation logic: compatibility scoring, schema validation, deterministic IDs
+  - `src/api/routes/variants.py` - FastAPI router with 6 endpoints
+  - `src/executor/db.py` - DDL for variant_sets, variants, variant_selections (Postgres/SQLite)
+  - `tests/test_variant_generator.py` - 20 unit tests for generation logic
+  - `tests/test_variant_store.py` - 10 unit tests for persistence
+- **API Endpoints**:
+  - `POST /v1/variants/generate` - Generate variant set (cached unless force=true)
+  - `GET /v1/variants/sets` - List variant sets for job+view
+  - `GET /v1/variants/sets/{variant_set_id}` - Get specific variant set
+  - `POST /v1/variants/select` - Select variant (upsert + feedback event emission)
+  - `GET /v1/variants/selection` - Get current selections for job+view
+  - `GET /v1/variants/selections/summary` - Aggregate selection data by project
+- **Cleanup integration**: Job/project delete cascades remove variant_selections → variants → variant_sets
+- **Dependencies**: Tier 3a feedback (variant_selected event type), renderer registry (for_data_shape, for_app), presentation_api (assemble_single_view)
+- **Added**: 2026-03-09
+
 ## Presenter — Adaptive View Selection & Presentation Bridge (Milestone 3)
 
 ### Post-Execution View Refinement (3A)

@@ -349,6 +349,66 @@ def _init_postgres():
 
     CREATE INDEX IF NOT EXISTS idx_projects_status ON projects(status);
     CREATE INDEX IF NOT EXISTS idx_projects_activity ON projects(last_activity_at);
+
+    CREATE TABLE IF NOT EXISTS feedback_events (
+        id               SERIAL PRIMARY KEY,
+        event_id         VARCHAR(64) NOT NULL UNIQUE,
+        event_type       VARCHAR(50) NOT NULL,
+        job_id           VARCHAR(100) NOT NULL,
+        project_id       VARCHAR(100),
+        view_key         VARCHAR(100),
+        section_key      VARCHAR(200),
+        renderer_type    VARCHAR(50),
+        style_school     VARCHAR(100),
+        payload          JSONB DEFAULT '{}',
+        client_timestamp TIMESTAMPTZ,
+        created_at       TIMESTAMPTZ DEFAULT NOW()
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_fb_job ON feedback_events(job_id);
+    CREATE INDEX IF NOT EXISTS idx_fb_project ON feedback_events(project_id);
+    CREATE INDEX IF NOT EXISTS idx_fb_type_created ON feedback_events(event_type, created_at);
+    CREATE INDEX IF NOT EXISTS idx_fb_job_view ON feedback_events(job_id, view_key);
+
+    CREATE TABLE IF NOT EXISTS variant_sets (
+        variant_set_id  VARCHAR(100) PRIMARY KEY,
+        job_id          VARCHAR(100) NOT NULL,
+        view_key        VARCHAR(100) NOT NULL,
+        dimension       VARCHAR(30) NOT NULL,
+        base_renderer   VARCHAR(100) NOT NULL,
+        style_school    VARCHAR(100) DEFAULT '',
+        variant_count   INTEGER NOT NULL DEFAULT 0,
+        created_at      TIMESTAMPTZ DEFAULT NOW(),
+        metadata        JSONB DEFAULT '{}'
+    );
+    CREATE INDEX IF NOT EXISTS idx_vs_job_view ON variant_sets(job_id, view_key);
+
+    CREATE TABLE IF NOT EXISTS variants (
+        variant_id          VARCHAR(120) PRIMARY KEY,
+        variant_set_id      VARCHAR(100) NOT NULL,
+        variant_index       INTEGER NOT NULL,
+        is_control          BOOLEAN NOT NULL DEFAULT FALSE,
+        renderer_type       VARCHAR(100) NOT NULL,
+        renderer_config     JSONB NOT NULL DEFAULT '{}',
+        rationale           TEXT DEFAULT '',
+        compatibility_score FLOAT DEFAULT 0.0,
+        payload_snapshot    JSONB,
+        created_at          TIMESTAMPTZ DEFAULT NOW()
+    );
+    CREATE INDEX IF NOT EXISTS idx_var_set ON variants(variant_set_id);
+
+    CREATE TABLE IF NOT EXISTS variant_selections (
+        id              SERIAL PRIMARY KEY,
+        variant_set_id  VARCHAR(100) NOT NULL,
+        variant_id      VARCHAR(120) NOT NULL,
+        job_id          VARCHAR(100) NOT NULL,
+        project_id      VARCHAR(100),
+        view_key        VARCHAR(100) NOT NULL,
+        selected_at     TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(variant_set_id, job_id)
+    );
+    CREATE INDEX IF NOT EXISTS idx_vsel_job ON variant_selections(job_id);
+    CREATE INDEX IF NOT EXISTS idx_vsel_project ON variant_selections(project_id);
     """
     with get_connection() as conn:
         cursor = conn.cursor()
@@ -469,6 +529,66 @@ def _init_sqlite():
 
     CREATE INDEX IF NOT EXISTS idx_projects_status ON projects(status);
     CREATE INDEX IF NOT EXISTS idx_projects_activity ON projects(last_activity_at);
+
+    CREATE TABLE IF NOT EXISTS feedback_events (
+        id               INTEGER PRIMARY KEY AUTOINCREMENT,
+        event_id         TEXT NOT NULL UNIQUE,
+        event_type       TEXT NOT NULL,
+        job_id           TEXT NOT NULL,
+        project_id       TEXT,
+        view_key         TEXT,
+        section_key      TEXT,
+        renderer_type    TEXT,
+        style_school     TEXT,
+        payload          TEXT DEFAULT '{}',
+        client_timestamp TEXT,
+        created_at       TEXT
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_fb_job ON feedback_events(job_id);
+    CREATE INDEX IF NOT EXISTS idx_fb_project ON feedback_events(project_id);
+    CREATE INDEX IF NOT EXISTS idx_fb_type_created ON feedback_events(event_type, created_at);
+    CREATE INDEX IF NOT EXISTS idx_fb_job_view ON feedback_events(job_id, view_key);
+
+    CREATE TABLE IF NOT EXISTS variant_sets (
+        variant_set_id  TEXT PRIMARY KEY,
+        job_id          TEXT NOT NULL,
+        view_key        TEXT NOT NULL,
+        dimension       TEXT NOT NULL,
+        base_renderer   TEXT NOT NULL,
+        style_school    TEXT DEFAULT '',
+        variant_count   INTEGER NOT NULL DEFAULT 0,
+        created_at      TEXT,
+        metadata        TEXT DEFAULT '{}'
+    );
+    CREATE INDEX IF NOT EXISTS idx_vs_job_view ON variant_sets(job_id, view_key);
+
+    CREATE TABLE IF NOT EXISTS variants (
+        variant_id          TEXT PRIMARY KEY,
+        variant_set_id      TEXT NOT NULL,
+        variant_index       INTEGER NOT NULL,
+        is_control          INTEGER NOT NULL DEFAULT 0,
+        renderer_type       TEXT NOT NULL,
+        renderer_config     TEXT NOT NULL DEFAULT '{}',
+        rationale           TEXT DEFAULT '',
+        compatibility_score REAL DEFAULT 0.0,
+        payload_snapshot    TEXT,
+        created_at          TEXT
+    );
+    CREATE INDEX IF NOT EXISTS idx_var_set ON variants(variant_set_id);
+
+    CREATE TABLE IF NOT EXISTS variant_selections (
+        id              INTEGER PRIMARY KEY AUTOINCREMENT,
+        variant_set_id  TEXT NOT NULL,
+        variant_id      TEXT NOT NULL,
+        job_id          TEXT NOT NULL,
+        project_id      TEXT,
+        view_key        TEXT NOT NULL,
+        selected_at     TEXT,
+        UNIQUE(variant_set_id, job_id)
+    );
+    CREATE INDEX IF NOT EXISTS idx_vsel_job ON variant_selections(job_id);
+    CREATE INDEX IF NOT EXISTS idx_vsel_project ON variant_selections(project_id);
     """
     with get_connection() as conn:
         cursor = conn.cursor()

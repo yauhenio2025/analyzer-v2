@@ -16,7 +16,7 @@ from typing import Optional
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import audiences, chains, consumers, engines, executor, functions, llm, meta, objectives, operations, operationalizations, orchestrator, paradigms, presenter, projects, renderers, styles, primitives, display, sub_renderers, transformations, view_patterns, views, workflows
+from src.api.routes import audiences, chains, consumers, engines, executor, feedback, functions, llm, meta, objectives, operations, operationalizations, orchestrator, paradigms, presenter, projects, renderers, styles, primitives, display, sub_renderers, transformations, variants, view_patterns, views, workflows
 from src.audiences.registry import get_audience_registry
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
@@ -256,6 +256,8 @@ app.include_router(orchestrator.router, prefix="/v1")
 app.include_router(executor.router, prefix="/v1")
 app.include_router(presenter.router, prefix="/v1")
 app.include_router(projects.router, prefix="/v1")
+app.include_router(feedback.router, prefix="/v1")
+app.include_router(variants.router, prefix="/v1")
 
 
 @app.get("/")
