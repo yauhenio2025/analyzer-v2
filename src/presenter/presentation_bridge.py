@@ -464,6 +464,14 @@ async def _execute_tasks_async(
         # otherwise fall back to single output row content
         content = task.content_override if task.content_override else output_row["content"]
 
+        # For per-item tasks (section = "template:work_key"), prepend the
+        # actual work identifier so the LLM knows the correct title.
+        # Without this, Haiku hallucinates plausible-sounding titles from
+        # its training data instead of using the actual document name.
+        if ":" in task.section:
+            work_identifier = task.section.split(":", 1)[1]
+            content = f"[SOURCE DOCUMENT: {work_identifier}]\n\n{content}"
+
         # Check cache (skip when force=True)
         if not force:
             # For cache check: skip freshness check when using content_override
@@ -584,6 +592,12 @@ def _execute_tasks_sync(
 
         # Use content_override (multi-pass concatenation) if available
         content = task.content_override if task.content_override else output_row["content"]
+
+        # For per-item tasks (section = "template:work_key"), prepend the
+        # actual work identifier so the LLM knows the correct title.
+        if ":" in task.section:
+            work_identifier = task.section.split(":", 1)[1]
+            content = f"[SOURCE DOCUMENT: {work_identifier}]\n\n{content}"
 
         # Check cache (skip when force=True)
         if not force:
