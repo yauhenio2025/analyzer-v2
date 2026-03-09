@@ -131,6 +131,31 @@ def assemble_page(job_id: str, slim: bool = False) -> PagePresentation:
             )
             payloads[payload.view_key] = payload
 
+    # Include child views whose parent is already in payloads.
+    # Child views often have workflow_key=None (they inherit from their parent)
+    # so they won't be found by for_workflow(). Scan the full registry.
+    parent_keys = set(payloads.keys())
+    for view_def in view_registry.list_all():
+        if view_def.view_key in payloads:
+            continue
+        if view_def.status != "active":
+            continue
+        if view_def.parent_view_key and view_def.parent_view_key in parent_keys:
+            rec = rec_by_key.get(view_def.view_key, {
+                "view_key": view_def.view_key,
+                "priority": "secondary",
+                "rationale": "child of included parent",
+            })
+            payload = _build_view_payload(
+                view_def=view_def,
+                rec=rec,
+                job_id=job_id,
+                outputs_cache=outputs_cache,
+                cache_batch=cache_batch,
+                slim=slim,
+            )
+            payloads[payload.view_key] = payload
+
     # Auto-generate views for chapter-targeted phases that have no view definitions
     if plan:
         _inject_chapter_views(plan, payloads, job_id, outputs_cache=outputs_cache, cache_batch=cache_batch, slim=slim)
