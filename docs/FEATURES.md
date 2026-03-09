@@ -122,6 +122,25 @@
 - **Milestone 5 Enhancements**: Supplementary chain execution in `_run_standard_phase()`, distilled analysis path in `_combine_with_distilled_analysis()` for per-work phases, `phase_max_chars_override` in context broker, `context_char_overrides` threaded from workflow_runner. Phase 1.5 now depends on Phase 1.0 (sequential, not parallel).
 - **Added**: 2026-02-19
 
+### Ephemeral Project Lifecycle (Priority 6)
+- **Status**: Active
+- **Description**: Projects are ephemeral workspaces that group jobs and follow `active → archived → [deleted]` lifecycle. Archive releases presentation artifacts (polish_cache, view_refinements, presentation_cache) while retaining engine outputs for cheap revive. Auto-archive background task runs hourly with optimistic locking for multi-instance safety. Activity tracking on presenter writes keeps projects alive.
+- **Entry Points**:
+  - `src/executor/project_manager.py:1-290` - CRUD, lifecycle transitions (archive/revive/delete), cleanup cascades, auto-archive logic, activity tracking
+  - `src/api/routes/projects.py:1-115` - 7 API endpoints with validation and error handling
+  - `src/executor/db.py:165-210` - `execute_write()` (returns rowcount), `execute_transaction()` (multi-statement atomic), projects table DDL, project_id migration
+  - `src/executor/schemas.py:174-216` - ProjectStatus, ProjectCreate, ProjectUpdate, ProjectResponse, LifecycleActionResponse
+- **API Endpoints**:
+  - `POST /v1/projects` - Create project
+  - `GET /v1/projects` - List projects (?status=active|archived)
+  - `GET /v1/projects/{project_id}` - Get project + job counts
+  - `PATCH /v1/projects/{project_id}` - Update name, description, auto_archive_days
+  - `POST /v1/projects/{project_id}/archive` - Archive (release presentation resources)
+  - `POST /v1/projects/{project_id}/revive` - Revive archived project
+  - `DELETE /v1/projects/{project_id}?confirm=true` - Hard delete all data
+- **Guards**: Cannot create jobs for archived projects (400), cannot archive/delete with active jobs (409), all transitions are idempotent
+- **Added**: 2026-03-09
+
 ## Presenter — Adaptive View Selection & Presentation Bridge (Milestone 3)
 
 ### Post-Execution View Refinement (3A)
