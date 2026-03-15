@@ -13,11 +13,29 @@
       "_default": {
         "sub_renderers": {
           "overview": {"renderer_type": "annotated_prose"},
-          "key_claims": {"renderer_type": "chip_grid"},
-          "philosophical_commitments": {"renderer_type": "chip_grid"},
-          "argumentative_moves": {"renderer_type": "chip_grid"},
-          "source_documents": {"renderer_type": "chip_grid"},
           "engagement": {"renderer_type": "annotated_prose"},
+          "key_claims": {
+            "renderer_type": "rich_description_list",
+            "config": {
+              "title_field": "title",
+              "description_field": "description"
+            }
+          },
+          "philosophical_commitments": {
+            "renderer_type": "rich_description_list",
+            "config": {
+              "title_field": "title",
+              "description_field": "description"
+            }
+          },
+          "argumentative_moves": {
+            "renderer_type": "rich_description_list",
+            "config": {
+              "title_field": "title",
+              "description_field": "description"
+            }
+          },
+          "source_documents": {"renderer_type": "chip_grid"},
           "findings": {
             "renderer_type": "mini_card_list",
             "config": {

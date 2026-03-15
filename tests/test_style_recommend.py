@@ -188,3 +188,29 @@ def test_context_summary_completeness(registry):
     assert cs.audience_provided == "academic"
     assert cs.audience_used_default is False
     assert cs.effective_signals > 0
+
+
+def test_engine_style_mapping_reports_explicit_affinity_source_for_aoi_engines(registry):
+    mapping = registry.get_engine_style_mapping(
+        engine_key="aoi_thematic_report",
+        engine_name="AOI Thematic Report",
+    )
+
+    assert mapping.affinity_source == "explicit"
+    assert mapping.style_affinities[:2] == [
+        StyleSchool.EXPLANATORY_NARRATIVE,
+        StyleSchool.HUMANIST_CRAFT,
+    ]
+
+
+def test_engine_style_mapping_reports_default_affinity_source_for_unmapped_engine(registry):
+    mapping = registry.get_engine_style_mapping(
+        engine_key="totally_unknown_engine",
+        engine_name="Unknown Engine",
+    )
+
+    assert mapping.affinity_source == "default"
+    assert mapping.style_affinities[:2] == [
+        StyleSchool.EXPLANATORY_NARRATIVE,
+        StyleSchool.MINIMALIST_PRECISION,
+    ]

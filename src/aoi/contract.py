@@ -380,12 +380,9 @@ def _build_by_theme_payload(
         divergence_description = engagement.get("divergence_description") or ""
         severity = engagement.get("severity") or ""
         severity_rationale = engagement.get("severity_rationale") or ""
+        # Preserve fixed insertion order for GenericSectionRenderer field dispatch.
         payload[theme_id] = {
             "overview": theme.get("overview") or "",
-            "key_claims": theme.get("key_claims") or [],
-            "philosophical_commitments": theme.get("philosophical_commitments") or [],
-            "argumentative_moves": theme.get("argumentative_moves") or [],
-            "source_documents": source_documents,
             "engagement": _format_engagement_summary(
                 engagement_level=engagement_level,
                 benanav_position=benanav_position,
@@ -393,6 +390,19 @@ def _build_by_theme_payload(
                 severity=severity,
                 severity_rationale=severity_rationale,
             ),
+            "key_claims": _numbered_description_items(
+                theme.get("key_claims") or [],
+                label_prefix="Claim",
+            ),
+            "philosophical_commitments": _numbered_description_items(
+                theme.get("philosophical_commitments") or [],
+                label_prefix="Commitment",
+            ),
+            "argumentative_moves": _numbered_description_items(
+                theme.get("argumentative_moves") or [],
+                label_prefix="Move",
+            ),
+            "source_documents": source_documents,
             "findings": [
                 _finding_card(finding) for finding in findings_by_theme.get(theme_id, [])
             ],
@@ -441,6 +451,17 @@ def _build_sin_distribution(findings: dict[str, Any]) -> list[dict[str, Any]]:
             }
         )
     return distribution
+
+
+def _numbered_description_items(items: list[Any], *, label_prefix: str) -> list[dict[str, str]]:
+    normalized_items = _ensure_string_list(items)
+    return [
+        {
+            "title": f"{label_prefix} {idx}",
+            "description": item,
+        }
+        for idx, item in enumerate(normalized_items, start=1)
+    ]
 
 
 def _finding_card(finding: dict[str, Any]) -> dict[str, Any]:

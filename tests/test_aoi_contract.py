@@ -258,8 +258,20 @@ def test_aoi_metadata_builds_grouped_payloads_and_stable_finding_ids():
     }
     theme_payload = by_theme_payload["theme_ecological_constraints_growth_and_physical_embeddedness"]
     assert theme_payload["overview"] == ""
+    assert list(theme_payload.keys()) == [
+        "overview",
+        "engagement",
+        "key_claims",
+        "philosophical_commitments",
+        "argumentative_moves",
+        "source_documents",
+        "findings",
+    ]
     assert theme_payload["source_documents"] == []
     assert "Engagement level: partial." in theme_payload["engagement"]
+    assert theme_payload["key_claims"] == []
+    assert theme_payload["philosophical_commitments"] == []
+    assert theme_payload["argumentative_moves"] == []
     assert theme_payload["findings"][0]["sin_type_label"] == "Selective Citation"
 
     by_sin_payload = first["structured_payloads"]["aoi_by_sin_type"]
@@ -277,18 +289,18 @@ def test_build_by_theme_payload_uses_theme_ids_as_stable_keys_even_when_names_co
                 "theme_id": "theme_planning_1",
                 "theme_name": "Planning and Ecology",
                 "overview": "First variant",
-                "key_claims": [],
-                "philosophical_commitments": [],
-                "argumentative_moves": [],
+                "key_claims": ["Planning abolishes the price form"],
+                "philosophical_commitments": ["Use-value is not reducible to price"],
+                "argumentative_moves": ["Benanav recasts a structural claim as feasibility"],
                 "source_documents": [],
             },
             {
                 "theme_id": "theme_planning_2",
                 "theme_name": "Planning and Ecology",
                 "overview": "Second variant",
-                "key_claims": [],
-                "philosophical_commitments": [],
-                "argumentative_moves": [],
+                "key_claims": ["Coordination requires social accounting"],
+                "philosophical_commitments": ["Planning remains politically mediated"],
+                "argumentative_moves": ["A later concession narrows the earlier claim"],
                 "source_documents": [],
             },
         ]
@@ -319,6 +331,15 @@ def test_build_by_theme_payload_uses_theme_ids_as_stable_keys_even_when_names_co
     }
     assert payload["theme_planning_1"]["overview"] == "First variant"
     assert payload["theme_planning_2"]["overview"] == "Second variant"
+    assert payload["theme_planning_1"]["key_claims"] == [
+        {"title": "Claim 1", "description": "Planning abolishes the price form"}
+    ]
+    assert payload["theme_planning_1"]["philosophical_commitments"] == [
+        {"title": "Commitment 1", "description": "Use-value is not reducible to price"}
+    ]
+    assert payload["theme_planning_1"]["argumentative_moves"] == [
+        {"title": "Move 1", "description": "Benanav recasts a structural claim as feasibility"}
+    ]
     assert "theme_name" not in payload["theme_planning_1"]
     assert "theme_id" not in payload["theme_planning_2"]
 

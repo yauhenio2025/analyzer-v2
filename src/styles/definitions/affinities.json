@@ -49,7 +49,12 @@
     "complexity_threshold_detector": ["emergent_systems", "minimalist_precision"],
     "intelligence_requirements_mapper": ["restrained_elegance", "minimalist_precision"],
     "absent_center": ["humanist_craft", "emergent_systems"],
-    "authenticity_forensics": ["minimalist_precision", "restrained_elegance"]
+    "authenticity_forensics": ["minimalist_precision", "restrained_elegance"],
+
+    "aoi_thematic_synthesis": ["explanatory_narrative", "humanist_craft"],
+    "aoi_engagement_mapping": ["explanatory_narrative", "minimalist_precision"],
+    "aoi_sin_findings": ["explanatory_narrative", "minimalist_precision"],
+    "aoi_thematic_report": ["explanatory_narrative", "humanist_craft"]
   },
 
   "format": {

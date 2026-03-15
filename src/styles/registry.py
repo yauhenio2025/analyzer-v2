@@ -35,6 +35,18 @@ class StyleRegistry:
         self._engine_affinities: dict[str, list[StyleSchool]] = {}
         self._format_affinities: dict[str, list[StyleSchool]] = {}
         self._audience_affinities: dict[str, list[StyleSchool]] = {}
+        self._engine_default: list[StyleSchool] = [
+            StyleSchool.EXPLANATORY_NARRATIVE,
+            StyleSchool.MINIMALIST_PRECISION,
+        ]
+        self._format_default: list[StyleSchool] = [
+            StyleSchool.EXPLANATORY_NARRATIVE,
+            StyleSchool.MINIMALIST_PRECISION,
+        ]
+        self._audience_default: list[StyleSchool] = [
+            StyleSchool.EXPLANATORY_NARRATIVE,
+            StyleSchool.MINIMALIST_PRECISION,
+        ]
         self._load_all()
 
     def _load_all(self):
@@ -59,22 +71,33 @@ class StyleRegistry:
                 with open(affinities_file, "r") as f:
                     data = json.load(f)
 
+                engine_data = data.get("engine", {})
+                format_data = data.get("format", {})
+                audience_data = data.get("audience", {})
+
+                if isinstance(engine_data.get("_default"), list):
+                    self._engine_default = [StyleSchool(s) for s in engine_data["_default"]]
+                if isinstance(format_data.get("_default"), list):
+                    self._format_default = [StyleSchool(s) for s in format_data["_default"]]
+                if isinstance(audience_data.get("_default"), list):
+                    self._audience_default = [StyleSchool(s) for s in audience_data["_default"]]
+
                 # Parse engine affinities (skip keys starting with _)
                 self._engine_affinities = {
                     k: [StyleSchool(s) for s in v]
-                    for k, v in data.get("engine", {}).items()
+                    for k, v in engine_data.items()
                     if not k.startswith("_") and isinstance(v, list)
                 }
                 # Parse format affinities
                 self._format_affinities = {
                     k: [StyleSchool(s) for s in v]
-                    for k, v in data.get("format", {}).items()
+                    for k, v in format_data.items()
                     if not k.startswith("_") and isinstance(v, list)
                 }
                 # Parse audience affinities
                 self._audience_affinities = {
                     k: [StyleSchool(s) for s in v]
-                    for k, v in data.get("audience", {}).items()
+                    for k, v in audience_data.items()
                     if not k.startswith("_") and isinstance(v, list)
                 }
                 logger.info(
@@ -90,6 +113,18 @@ class StyleRegistry:
         self._engine_affinities.clear()
         self._format_affinities.clear()
         self._audience_affinities.clear()
+        self._engine_default = [
+            StyleSchool.EXPLANATORY_NARRATIVE,
+            StyleSchool.MINIMALIST_PRECISION,
+        ]
+        self._format_default = [
+            StyleSchool.EXPLANATORY_NARRATIVE,
+            StyleSchool.MINIMALIST_PRECISION,
+        ]
+        self._audience_default = [
+            StyleSchool.EXPLANATORY_NARRATIVE,
+            StyleSchool.MINIMALIST_PRECISION,
+        ]
         self._load_all()
 
     # Style Guide Methods
@@ -120,7 +155,7 @@ class StyleRegistry:
         return AffinitySet(
             category="engine",
             affinities=self._engine_affinities,
-            default=self._engine_affinities.get("_default", [StyleSchool.EXPLANATORY_NARRATIVE, StyleSchool.MINIMALIST_PRECISION]),
+            default=self._engine_default,
         )
 
     def get_format_affinities(self) -> AffinitySet:
@@ -128,7 +163,7 @@ class StyleRegistry:
         return AffinitySet(
             category="format",
             affinities=self._format_affinities,
-            default=self._format_affinities.get("_default", [StyleSchool.EXPLANATORY_NARRATIVE, StyleSchool.MINIMALIST_PRECISION]),
+            default=self._format_default,
         )
 
     def get_audience_affinities(self) -> AffinitySet:
@@ -136,29 +171,32 @@ class StyleRegistry:
         return AffinitySet(
             category="audience",
             affinities=self._audience_affinities,
-            default=self._audience_affinities.get("_default", [StyleSchool.EXPLANATORY_NARRATIVE, StyleSchool.MINIMALIST_PRECISION]),
+            default=self._audience_default,
         )
 
     def get_styles_for_engine(self, engine_key: str) -> list[StyleSchool]:
         """Get preferred styles for an engine."""
         return self._engine_affinities.get(
             engine_key,
-            self._engine_affinities.get("_default", [StyleSchool.EXPLANATORY_NARRATIVE, StyleSchool.MINIMALIST_PRECISION])
+            self._engine_default,
         )
 
     def get_styles_for_format(self, format_key: str) -> list[StyleSchool]:
         """Get preferred styles for a visual format."""
         return self._format_affinities.get(
             format_key,
-            self._format_affinities.get("_default", [StyleSchool.EXPLANATORY_NARRATIVE, StyleSchool.MINIMALIST_PRECISION])
+            self._format_default,
         )
 
     def get_styles_for_audience(self, audience: str) -> list[StyleSchool]:
         """Get preferred styles for an audience type."""
         return self._audience_affinities.get(
             audience,
-            self._audience_affinities.get("_default", [StyleSchool.EXPLANATORY_NARRATIVE, StyleSchool.MINIMALIST_PRECISION])
+            self._audience_default,
         )
+
+    def has_explicit_engine_affinity(self, engine_key: str) -> bool:
+        return engine_key in self._engine_affinities
 
     # Combined Engine Mapping (for UI)
     def get_engine_style_mapping(self, engine_key: str, engine_name: str, has_semantic_intent: bool = False, recommended_visual_patterns: list[str] = None) -> EngineStyleMapping:
@@ -167,6 +205,7 @@ class StyleRegistry:
             engine_key=engine_key,
             engine_name=engine_name,
             style_affinities=self.get_styles_for_engine(engine_key),
+            affinity_source="explicit" if self.has_explicit_engine_affinity(engine_key) else "default",
             has_semantic_intent=has_semantic_intent,
             recommended_visual_patterns=recommended_visual_patterns or [],
         )

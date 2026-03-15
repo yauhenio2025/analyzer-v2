@@ -133,6 +133,10 @@ class EngineStyleMapping(BaseModel):
     engine_key: str
     engine_name: str
     style_affinities: list[StyleSchool] = Field(..., description="Preferred styles for this engine")
+    affinity_source: str = Field(
+        ...,
+        description="Whether style affinities came from an explicit engine mapping or the default fallback",
+    )
     has_semantic_intent: bool = Field(False, description="Whether engine has semantic visual intent")
     recommended_visual_patterns: list[str] = Field(
         default_factory=list,

@@ -27,11 +27,11 @@ EXPECTED_REPORT_SECTION_RENDERERS = {
 
 EXPECTED_THEME_DEFAULT_SUB_RENDERERS = {
     "overview": "annotated_prose",
-    "key_claims": "chip_grid",
-    "philosophical_commitments": "chip_grid",
-    "argumentative_moves": "chip_grid",
-    "source_documents": "chip_grid",
     "engagement": "annotated_prose",
+    "key_claims": "rich_description_list",
+    "philosophical_commitments": "rich_description_list",
+    "argumentative_moves": "rich_description_list",
+    "source_documents": "chip_grid",
     "findings": "mini_card_list",
 }
 
@@ -72,6 +72,11 @@ def test_aoi_canary_supports_pinned_neurath_aoi_surface_without_raw_json_adaptat
             }
             assert actual_sub_renderers == EXPECTED_THEME_DEFAULT_SUB_RENDERERS
             assert set(actual_sub_renderers.values()) <= supported
+
+        if view_key == "aoi_by_sin_type":
+            assert renderer_config.get("group_by") == "_category"
+            assert renderer_config.get("group_style_map") == "sin_type"
+            assert renderer_config.get("columns") == 1
 
         if view_key != "aoi_thematic_report":
             continue
