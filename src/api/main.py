@@ -26,10 +26,15 @@ from src.operations.registry import StanceRegistry
 from src.transformations.registry import get_transformation_registry
 from src.renderers.registry import get_renderer_registry
 from src.views.registry import get_view_registry
+from src.taxonomies.registry import get_taxonomy_registry
+from src.prompt_contexts.registry import get_prompt_context_registry
 from src.paradigms.registry import get_paradigm_registry
 from src.styles.registry import get_style_registry
 from src.primitives.registry import get_primitives_registry
 from src.display.registry import DisplayRegistry
+from src.presenter.scaffold_contracts import validate_registered_scaffold_contracts
+from src.presenter.view_behavior_validator import validate_registered_card_grid_behavior_policies
+from src.presenter.view_contract_validator import validate_registered_view_contracts
 from src.sub_renderers.registry import get_sub_renderer_registry
 from src.consumers.registry import get_consumer_registry
 from src.views.pattern_registry import get_pattern_registry
@@ -132,9 +137,72 @@ async def lifespan(app: FastAPI):
     transformation_registry = get_transformation_registry()
     logger.info(f"Loaded {transformation_registry.count()} transformation templates")
 
+    logger.info("Loading classification taxonomies...")
+    taxonomy_registry = get_taxonomy_registry()
+    logger.info(f"Loaded {taxonomy_registry.count()} taxonomies")
+
+    logger.info("Loading prompt context providers...")
+    prompt_context_registry = get_prompt_context_registry()
+    logger.info(f"Loaded {prompt_context_registry.count()} prompt context providers")
+
     logger.info("Loading sub-renderer definitions...")
     sub_renderer_registry = get_sub_renderer_registry()
     logger.info(f"Loaded {sub_renderer_registry.count()} sub-renderer definitions")
+
+    logger.info("Validating curated view/template contracts...")
+    contract_summary = validate_registered_view_contracts()
+    logger.info(
+        "Validated %s curated view/template contracts (%s valid, %s invalid, %s skipped)",
+        contract_summary["total"],
+        contract_summary["valid"],
+        contract_summary["invalid"],
+        contract_summary["skipped"],
+    )
+    if contract_summary["invalid"]:
+        preview = contract_summary["details"][:5]
+        for item in preview:
+            issue_preview = "; ".join(issue.message for issue in item.issues[:3])
+            logger.warning(
+                "[view-contract] %s via %s -> %s",
+                item.view_key,
+                item.template_key,
+                issue_preview,
+            )
+
+    logger.info("Validating raw registered card_grid behavior policies...")
+    behavior_summary = validate_registered_card_grid_behavior_policies()
+    logger.info(
+        "Validated %s active card_grid views (%s valid, %s invalid); scope=%s",
+        behavior_summary["total"],
+        behavior_summary["valid"],
+        behavior_summary["invalid"],
+        behavior_summary["scope"],
+    )
+    logger.info("[card-grid-policy] residual risk: %s", behavior_summary["residual_risk"])
+    if behavior_summary["invalid"]:
+        for issue in behavior_summary["issues"][:10]:
+            logger.warning(
+                "[card-grid-policy] %s %s -> %s",
+                issue["view_key"],
+                issue["path"],
+                issue["message"],
+            )
+
+    logger.info("Validating declared scaffold contracts...")
+    scaffold_summary = validate_registered_scaffold_contracts()
+    logger.info(
+        "Validated %s declared scaffold contracts (%s valid, %s invalid)",
+        scaffold_summary.total_declared,
+        scaffold_summary.valid,
+        scaffold_summary.invalid,
+    )
+    if scaffold_summary.invalid:
+        preview = scaffold_summary.issues[:10]
+        for item in preview:
+            logger.error("[scaffold-contract] %s -> %s", item.view_key, item.message)
+        raise RuntimeError(
+            f"Invalid scaffold contract configuration detected ({scaffold_summary.invalid} issue(s))"
+        )
 
     logger.info("Loading consumer definitions...")
     consumer_registry = get_consumer_registry()

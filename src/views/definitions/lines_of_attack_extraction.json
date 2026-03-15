@@ -11,7 +11,7 @@
     "cell_renderer": "default_card",
     "group_by": "attack_vector",
     "columns": 2,
-    "expandable": true,
+    "expandable": false,
     "items_path": "lines"
   },
   "data_source": {

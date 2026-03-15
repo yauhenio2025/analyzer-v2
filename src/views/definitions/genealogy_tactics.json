@@ -86,7 +86,7 @@
       "strategic_ambiguity": "Deliberately maintaining interpretive flexibility"
     },
     "columns": 2,
-    "expandable": true,
+    "expandable": false,
     "items_path": "tactics_detected",
     "prose_endpoint": "tactics",
     "summary": {
