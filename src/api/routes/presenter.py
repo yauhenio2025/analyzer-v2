@@ -9,14 +9,18 @@ Endpoints:
     POST /v1/presenter/compose          All-in-one: refine + prepare + assemble
 """
 
+import asyncio
 import logging
 
 from fastapi import APIRouter, HTTPException
 
 from src.presenter.schemas import (
     ComposeRequest,
+    EffectivePresentationManifest,
+    EnsurePresentationRequest,
     PagePresentation,
     PolishRequest,
+    PresentationDecisionTrace,
     PrepareRequest,
     RefineViewsRequest,
     SectionPolishRequest,
@@ -25,6 +29,7 @@ from src.presenter.schemas import (
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/presenter", tags=["presenter"])
+DEFAULT_CONSUMER_KEY = "the-critic"
 
 
 @router.post("/refine-views")
@@ -40,6 +45,7 @@ async def refine_views(request: RefineViewsRequest):
         result = do_refine(
             job_id=request.job_id,
             plan_id=request.plan_id,
+            consumer_key=request.consumer_key,
         )
         # Touch project activity (user is actively working with results)
         from src.executor.project_manager import touch_project_activity_for_job
@@ -68,20 +74,31 @@ async def delete_view_refinement(job_id: str):
 
 @router.post("/prepare")
 async def prepare_presentation(request: PrepareRequest):
-    """Run transformations for recommended views and populate presentation_cache.
+    """Run transformations and reading-scaffold generation for recommended views.
 
     For each recommended view with an applicable transformation template,
-    extracts structured data from the stored prose and caches it.
+    extracts structured data from the stored prose, caches it, then generates
+    any scaffold artifacts needed by v2 reading surfaces.
     """
     from src.presenter.presentation_bridge import async_prepare_presentation
+    from src.presenter.scaffold_generator import generate_reading_scaffolds
 
     try:
         result = await async_prepare_presentation(
             job_id=request.job_id,
+            consumer_key=request.consumer_key,
             view_keys=request.view_keys,
             force=request.force,
         )
-        return result.model_dump()
+        scaffold_result = await asyncio.to_thread(
+            generate_reading_scaffolds,
+            request.job_id,
+            consumer_key=request.consumer_key,
+            force=request.force,
+        )
+        payload = result.model_dump()
+        payload["scaffolds"] = scaffold_result.model_dump()
+        return payload
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
@@ -89,8 +106,34 @@ async def prepare_presentation(request: PrepareRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.post("/ensure")
+async def ensure_presentation(request: EnsurePresentationRequest):
+    """Ensure background presentation preparation is running for a job."""
+    from src.presenter.preparation_coordinator import start_background_preparation
+
+    try:
+        state = start_background_preparation(
+            job_id=request.job_id,
+            plan_id=request.plan_id,
+            consumer_key=request.consumer_key,
+            skip_refinement=request.skip_refinement,
+            clear_refinement=request.clear_refinement,
+            force=request.force,
+        )
+        return state
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.error(f"Ensure presentation failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.get("/page/{job_id}")
-async def get_page_presentation(job_id: str, slim: bool = False):
+async def get_page_presentation(
+    job_id: str,
+    slim: bool = False,
+    consumer_key: str = DEFAULT_CONSUMER_KEY,
+):
     """Get complete page presentation for a job.
 
     Returns a render-ready PagePresentation with nested view tree,
@@ -105,7 +148,7 @@ async def get_page_presentation(job_id: str, slim: bool = False):
     from src.presenter.presentation_api import assemble_page
 
     try:
-        result = assemble_page(job_id, slim=slim)
+        result = assemble_page(job_id, consumer_key=consumer_key, slim=slim)
         return result.model_dump()
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
@@ -115,12 +158,16 @@ async def get_page_presentation(job_id: str, slim: bool = False):
 
 
 @router.get("/view/{job_id}/{view_key}")
-async def get_single_view(job_id: str, view_key: str):
+async def get_single_view(
+    job_id: str,
+    view_key: str,
+    consumer_key: str = DEFAULT_CONSUMER_KEY,
+):
     """Get a single view's data (for lazy loading on-demand views)."""
     from src.presenter.presentation_api import assemble_single_view
 
     try:
-        result = assemble_single_view(job_id, view_key)
+        result = assemble_single_view(job_id, view_key, consumer_key=consumer_key)
         if result is None:
             raise HTTPException(
                 status_code=404,
@@ -137,7 +184,10 @@ async def get_single_view(job_id: str, view_key: str):
 
 
 @router.get("/status/{job_id}")
-async def get_presentation_status(job_id: str):
+async def get_presentation_status(
+    job_id: str,
+    consumer_key: str = DEFAULT_CONSUMER_KEY,
+):
     """Check which views have data ready, need transformation, or are empty.
 
     Useful for the consumer to know what's available before requesting
@@ -146,11 +196,50 @@ async def get_presentation_status(job_id: str):
     from src.presenter.presentation_api import get_presentation_status as do_status
 
     try:
-        return do_status(job_id)
+        return do_status(job_id, consumer_key=consumer_key)
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         logger.error(f"Status check failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/manifest/{job_id}", response_model=EffectivePresentationManifest)
+async def get_presentation_manifest(
+    job_id: str,
+    consumer_key: str = DEFAULT_CONSUMER_KEY,
+    slim: bool = True,
+):
+    """Get the data-light effective presentation manifest for a job + consumer."""
+    from src.presenter.presentation_api import build_presentation_manifest
+
+    try:
+        return build_presentation_manifest(
+            job_id,
+            consumer_key=consumer_key,
+            slim=slim,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.error(f"Manifest assembly failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/trace/{job_id}", response_model=PresentationDecisionTrace)
+async def get_presentation_trace(
+    job_id: str,
+    consumer_key: str = DEFAULT_CONSUMER_KEY,
+):
+    """Get the reconstructed decision trace for a job + consumer."""
+    from src.presenter.decision_trace import build_presentation_trace
+
+    try:
+        return build_presentation_trace(job_id, consumer_key=consumer_key)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.error(f"Decision trace failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 
@@ -166,46 +255,33 @@ async def compose_presentation(request: ComposeRequest):
 
     Returns the complete PagePresentation.
     """
+    from src.presenter.preparation_coordinator import run_presentation_pipeline_sync
     from src.presenter.presentation_api import assemble_page
-    from src.presenter.presentation_bridge import async_prepare_presentation
-    from src.presenter.view_refiner import refine_views
 
     try:
-        # Step 0: Clear bad refinement if requested
-        if request.clear_refinement:
-            from src.presenter.store import delete_view_refinement
-            delete_view_refinement(request.job_id)
-            logger.info(f"Cleared refinement for job {request.job_id}")
-
-        # Step 1: Refine views
-        if not request.skip_refinement:
-            try:
-                refinement = refine_views(
-                    job_id=request.job_id,
-                    plan_id=request.plan_id,
-                )
-                logger.info(
-                    f"View refinement complete: {len(refinement.refined_views)} views, "
-                    f"{refinement.tokens_used} tokens"
-                )
-            except Exception as e:
-                logger.warning(f"View refinement failed (continuing): {e}")
-
-        # Step 2: Prepare transformations (async — safe in FastAPI context)
-        try:
-            bridge_result = await async_prepare_presentation(
-                job_id=request.job_id,
-                force=request.force,
+        state = await asyncio.to_thread(
+            run_presentation_pipeline_sync,
+            request.job_id,
+            request.plan_id,
+            consumer_key=request.consumer_key,
+            skip_refinement=request.skip_refinement,
+            clear_refinement=request.clear_refinement,
+            force=request.force,
+            wait_if_active=True,
+        )
+        if state.get("status") == "failed":
+            raise HTTPException(
+                status_code=500,
+                detail=state.get("error") or "Presentation preparation failed",
             )
-            logger.info(
-                f"Presentation prep complete: {bridge_result.tasks_completed} transformed, "
-                f"{bridge_result.cached_results} cached, {bridge_result.tasks_skipped} skipped"
-            )
-        except Exception as e:
-            logger.warning(f"Presentation preparation failed (continuing): {e}")
+        logger.info(
+            "Presentation prep ready for %s: %s",
+            request.job_id,
+            state.get("stats", {}),
+        )
 
         # Step 3: Assemble page
-        page = assemble_page(request.job_id)
+        page = assemble_page(request.job_id, consumer_key=request.consumer_key)
 
         # Step 4: Auto-polish views (if requested)
         if request.auto_polish:
@@ -238,7 +314,11 @@ async def compose_presentation(request: ComposeRequest):
                     continue
 
                 # Load full view payload for polish context
-                payload = assemble_single_view(request.job_id, view_key)
+                payload = assemble_single_view(
+                    request.job_id,
+                    view_key,
+                    consumer_key=request.consumer_key,
+                )
                 if payload is None:
                     polish_failed += 1
                     continue
@@ -301,7 +381,11 @@ async def polish_view_endpoint(request: PolishRequest):
 
     try:
         # Load the current view payload
-        payload = assemble_single_view(request.job_id, request.view_key)
+        payload = assemble_single_view(
+            request.job_id,
+            request.view_key,
+            consumer_key=request.consumer_key,
+        )
         if payload is None:
             raise HTTPException(
                 status_code=404,
@@ -386,7 +470,11 @@ async def polish_section_endpoint(request: SectionPolishRequest):
 
     try:
         # Load the current view payload
-        payload = assemble_single_view(request.job_id, request.view_key)
+        payload = assemble_single_view(
+            request.job_id,
+            request.view_key,
+            consumer_key=request.consumer_key,
+        )
         if payload is None:
             raise HTTPException(
                 status_code=404,
