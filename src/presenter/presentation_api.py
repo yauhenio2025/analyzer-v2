@@ -203,12 +203,24 @@ def _is_newer_output(candidate: dict, current: dict) -> bool:
     if candidate_pass != current_pass:
         return candidate_pass > current_pass
 
-    candidate_created = candidate.get("created_at") or ""
-    current_created = current.get("created_at") or ""
+    candidate_created = _timestamp_sort_value(candidate.get("created_at"))
+    current_created = _timestamp_sort_value(current.get("created_at"))
     if candidate_created != current_created:
         return candidate_created > current_created
 
     return (candidate.get("id") or "") > (current.get("id") or "")
+
+
+def _timestamp_sort_value(value: Any) -> str:
+    """Normalize mixed DB/API timestamp shapes into a comparable ISO string."""
+    if value is None:
+        return ""
+    if isinstance(value, datetime):
+        dt = value if value.tzinfo is not None else value.replace(tzinfo=UTC)
+        return dt.astimezone(UTC).isoformat()
+    if isinstance(value, str):
+        return value
+    return str(value)
 
 
 def _normalize_renderer_shape(
@@ -1073,12 +1085,12 @@ def get_presentation_status(job_id: str, *, consumer_key: str) -> dict:
                             current = latest_by_work.get(work_key)
                             output_order = (
                                 output.get("pass_number", 0),
-                                output.get("created_at") or "",
+                                _timestamp_sort_value(output.get("created_at")),
                                 output.get("id") or "",
                             )
                             current_order = (
                                 current.get("pass_number", 0),
-                                current.get("created_at") or "",
+                                _timestamp_sort_value(current.get("created_at")),
                                 current.get("id") or "",
                             ) if current else None
                             if current is None or output_order > current_order:
@@ -1098,7 +1110,7 @@ def get_presentation_status(job_id: str, *, consumer_key: str) -> dict:
                             outputs,
                             key=lambda output: (
                                 output.get("pass_number", 0),
-                                output.get("created_at") or "",
+                                _timestamp_sort_value(output.get("created_at")),
                                 output.get("id") or "",
                             ),
                         )
@@ -1325,12 +1337,12 @@ def _is_payload_ready_for_default_page(
 
 def _resolve_prepared_at(job: dict[str, Any], all_outputs: list[dict[str, Any]]) -> str:
     timestamps = [
-        output.get("created_at") or ""
+        _timestamp_sort_value(output.get("created_at"))
         for output in all_outputs
         if output.get("created_at")
     ]
     for field in ("completed_at", "started_at", "created_at"):
-        value = job.get(field) or ""
+        value = _timestamp_sort_value(job.get(field))
         if value:
             timestamps.append(value)
     return max(timestamps) if timestamps else datetime.now(UTC).isoformat()
