@@ -139,9 +139,24 @@ def _rebuild_polish_cache(cursor, columns: set[str]) -> None:
         """
 
     for row in rows:
-        cursor.execute(insert_sql, tuple(row))
+        normalized = list(row)
+        if len(normalized) >= 7:
+            normalized[6] = _normalize_polished_data_for_storage(normalized[6])
+        cursor.execute(insert_sql, tuple(normalized))
 
     cursor.execute(f"DROP TABLE {legacy_table}")
+
+
+def _normalize_polished_data_for_storage(value: Any) -> str:
+    """Normalize legacy polish payloads before reinserting them.
+
+    Postgres returns JSONB rows as native Python objects during table rebuilds,
+    while SQLite returns the original JSON string. Store both back as the JSON
+    string representation expected by the normal insert path.
+    """
+    if isinstance(value, str):
+        return value
+    return _json_dumps(value)
 
 
 def _create_polish_cache(cursor) -> None:

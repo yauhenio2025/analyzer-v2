@@ -3,7 +3,11 @@ from types import SimpleNamespace
 import pytest
 
 from src.presenter.delivery_style import apply_cached_polish_to_views
-from src.presenter.polish_store import load_polish_cache, save_polish_cache
+from src.presenter.polish_store import (
+    _normalize_polished_data_for_storage,
+    load_polish_cache,
+    save_polish_cache,
+)
 from src.presenter.schemas import ViewPayload
 
 
@@ -132,3 +136,13 @@ def test_apply_cached_polish_to_views_merges_delivery_config_only():
     assert styled[0].renderer_config["_section_descriptions"] == {
         "theme_one": "Polished section description"
     }
+
+
+def test_normalize_polished_data_for_storage_handles_postgres_jsonb_objects():
+    payload = {"polished_renderer_config": {"expand_first": False}}
+
+    normalized = _normalize_polished_data_for_storage(payload)
+
+    assert isinstance(normalized, str)
+    assert '"expand_first":false' in normalized.replace(" ", "")
+    assert _normalize_polished_data_for_storage(normalized) == normalized
