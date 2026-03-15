@@ -162,6 +162,8 @@ def build_presentation_trace(
         manifest_schema_version=final_manifest.manifest_schema_version,
         trace_schema_version=TRACE_SCHEMA_VERSION,
         resolver_version=RESOLVER_VERSION,
+        style_school=final_manifest.style_school,
+        polish_state=final_manifest.polish_state,
         entries=entries,
         final_manifest=final_manifest,
     )

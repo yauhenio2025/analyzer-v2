@@ -27,6 +27,7 @@ from src.views.registry import get_view_registry
 
 from .artifact_store import load_presentation_artifact_batch
 from .composition_resolver import find_applicable_template, resolve_effective_render_contract
+from .delivery_style import apply_cached_polish_to_views, resolve_page_style_school
 from .manifest_builder import (
     MANIFEST_SCHEMA_VERSION,
     TRACE_SCHEMA_VERSION,
@@ -186,7 +187,7 @@ def _prepare_structured_payload_for_renderer(
         filtered_section_renderers = {
             key: value
             for key, value in section_renderers.items()
-            if key in resolved_keys
+            if key in resolved_keys or key == "_default"
         }
         if filtered_section_renderers:
             derived_config["section_renderers"] = filtered_section_renderers
@@ -816,8 +817,13 @@ def build_presentation_manifest(
     """Build the single consumer-scoped effective manifest for a page."""
 
     page_inputs = _prepare_page_payloads(job_id, consumer_key=consumer_key, slim=slim)
+    top_level = page_inputs["top_level"]
+    workflow_key = page_inputs.get("workflow_key") or _resolve_workflow_key(
+        page_inputs["job"],
+        page_inputs.get("plan"),
+    )
     _attach_reading_scaffolds(job_id, page_inputs["payloads"])
-    return build_effective_manifest(
+    manifest = build_effective_manifest(
         job_id=job_id,
         plan_id=page_inputs["plan_id"],
         consumer_key=consumer_key,
@@ -827,6 +833,18 @@ def build_presentation_manifest(
         all_outputs=page_inputs["all_outputs"],
         job=page_inputs["job"],
     )
+    style_school = _resolve_page_style_school(
+        workflow_key=workflow_key,
+        top_level=top_level,
+        consumer_key=consumer_key,
+    )
+    _views, polish_state = apply_cached_polish_to_views(
+        job_id=job_id,
+        consumer_key=consumer_key,
+        style_school=style_school,
+        views=top_level,
+    )
+    return manifest.model_copy(update={"style_school": style_school, "polish_state": polish_state})
 
 
 def assemble_page(job_id: str, *, consumer_key: str, slim: bool = False) -> PagePresentation:
@@ -847,6 +865,10 @@ def assemble_page(job_id: str, *, consumer_key: str, slim: bool = False) -> Page
     page_inputs = _prepare_page_payloads(job_id, consumer_key=consumer_key, slim=slim)
     payloads = page_inputs["payloads"]
     top_level = page_inputs["top_level"]
+    workflow_key = page_inputs.get("workflow_key") or _resolve_workflow_key(
+        page_inputs["job"],
+        page_inputs.get("plan"),
+    )
 
     _attach_reading_scaffolds(job_id, payloads)
     manifest = build_effective_manifest(
@@ -859,6 +881,18 @@ def assemble_page(job_id: str, *, consumer_key: str, slim: bool = False) -> Page
         all_outputs=page_inputs["all_outputs"],
         job=page_inputs["job"],
     )
+    style_school = _resolve_page_style_school(
+        workflow_key=workflow_key,
+        top_level=top_level,
+        consumer_key=consumer_key,
+    )
+    styled_views, polish_state = apply_cached_polish_to_views(
+        job_id=job_id,
+        consumer_key=consumer_key,
+        style_school=style_school,
+        views=top_level,
+    )
+    manifest = manifest.model_copy(update={"style_school": style_school, "polish_state": polish_state})
 
     execution_summary = _build_execution_summary(page_inputs["job"])
 
@@ -881,7 +915,9 @@ def assemble_page(job_id: str, *, consumer_key: str, slim: bool = False) -> Page
         resolver_version=manifest.resolver_version,
         thinker_name=page_inputs["thinker_name"],
         strategy_summary=page_inputs["strategy_summary"],
-        views=top_level,
+        style_school=style_school,
+        polish_state=polish_state,
+        views=styled_views,
         view_count=len(payloads),
         execution_summary=execution_summary,
         refinement_applied=refinement_applied,
@@ -1192,6 +1228,8 @@ def get_presentation_status(job_id: str, *, consumer_key: str) -> dict:
         "manifest_schema_version": manifest.manifest_schema_version,
         "trace_schema_version": manifest.trace_schema_version,
         "resolver_version": manifest.resolver_version,
+        "style_school": getattr(manifest, "style_school", ""),
+        "polish_state": getattr(manifest, "polish_state", "raw"),
         "preparation": get_preparation_state(job_id),
         "views": statuses,
         "total": len(statuses),
@@ -1273,6 +1311,20 @@ def _build_presentation_freshness(
         "prepared_at": _resolve_prepared_at(job, all_outputs),
         "artifacts_ready": artifacts_ready,
     }
+
+
+def _resolve_page_style_school(
+    *,
+    workflow_key: str,
+    top_level: list[ViewPayload],
+    consumer_key: str,
+) -> str:
+    root_view_key = top_level[0].view_key if top_level else ""
+    return resolve_page_style_school(
+        workflow_key=workflow_key,
+        root_view_key=root_view_key,
+        consumer_key=consumer_key,
+    )
 
 
 def _stable_fingerprint(value: Any) -> str:

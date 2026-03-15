@@ -11,6 +11,7 @@
   ],
   "supported_sub_renderers": [
     "annotated_prose",
+    "chip_grid",
     "mini_card_list"
   ],
   "pages": [

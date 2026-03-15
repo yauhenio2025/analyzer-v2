@@ -29,6 +29,7 @@
     "mini_card_list",
     "key_value_table",
     "prose_block",
+    "annotated_prose",
     "stat_row",
     "comparison_panel",
     "timeline_strip",
@@ -68,6 +69,7 @@
       }
     }
   },
+  "integrates_scaffold": true,
   "supported_apps": ["the-critic"],
   "status": "active",
   "tags": ["container", "expandable", "sections", "primary"]

@@ -275,6 +275,8 @@ class PagePresentation(BaseModel):
     resolver_version: str = ""
     thinker_name: str = ""
     strategy_summary: str = ""
+    style_school: str = ""
+    polish_state: str = "raw"
 
     # The view tree (render-ready)
     views: list[ViewPayload] = Field(default_factory=list)
@@ -331,6 +333,8 @@ class EffectivePresentationManifest(BaseModel):
     resolver_version: str = ""
     thinker_name: str = ""
     strategy_summary: str = ""
+    style_school: str = ""
+    polish_state: str = "raw"
     views: list[EffectiveManifestView] = Field(default_factory=list)
     view_count: int = 0
 
@@ -373,6 +377,8 @@ class PresentationDecisionTrace(BaseModel):
     manifest_schema_version: int = 1
     trace_schema_version: int = 1
     resolver_version: str = ""
+    style_school: str = ""
+    polish_state: str = "raw"
     entries: list[DecisionTraceEntry] = Field(default_factory=list)
     final_manifest: EffectivePresentationManifest
 

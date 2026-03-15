@@ -8,7 +8,28 @@
   "target_section": "results",
   "renderer_type": "accordion",
   "renderer_config": {
-    "expand_first": true
+    "expand_first": true,
+    "section_renderers": {
+      "_default": {
+        "sub_renderers": {
+          "overview": {"renderer_type": "annotated_prose"},
+          "key_claims": {"renderer_type": "chip_grid"},
+          "philosophical_commitments": {"renderer_type": "chip_grid"},
+          "argumentative_moves": {"renderer_type": "chip_grid"},
+          "source_documents": {"renderer_type": "chip_grid"},
+          "engagement": {"renderer_type": "annotated_prose"},
+          "findings": {
+            "renderer_type": "mini_card_list",
+            "config": {
+              "title_field": "title",
+              "subtitle_field": "subtitle",
+              "description_field": "description",
+              "badge_field": "badge"
+            }
+          }
+        }
+      }
+    }
   },
   "data_source": {
     "workflow_key": "anxiety_of_influence_thematic_single_thinker",

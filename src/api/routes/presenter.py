@@ -285,73 +285,22 @@ async def compose_presentation(request: ComposeRequest):
 
         # Step 4: Auto-polish views (if requested)
         if request.auto_polish:
-            from src.presenter.polish_store import load_polish_cache, save_polish_cache
-            from src.presenter.polisher import compute_config_hash, polish_view
-            from src.presenter.presentation_api import assemble_single_view
+            from src.presenter.delivery_style import collect_view_keys, seed_polish_cache_for_views
 
-            def _collect_view_keys(views):
-                """Collect all view_keys from the view tree (parents + children)."""
-                keys = []
-                for v in views:
-                    keys.append(v.view_key)
-                    if v.children:
-                        keys.extend(_collect_view_keys(v.children))
-                return keys
-
-            all_view_keys = _collect_view_keys(page.views)
-            polish_ok = 0
-            polish_cached = 0
-            polish_failed = 0
-
-            for view_key in all_view_keys:
-                # Skip if already cached
-                cached = load_polish_cache(
-                    job_id=request.job_id,
-                    view_key=view_key,
-                )
-                if cached is not None:
-                    polish_cached += 1
-                    continue
-
-                # Load full view payload for polish context
-                payload = assemble_single_view(
-                    request.job_id,
-                    view_key,
-                    consumer_key=request.consumer_key,
-                )
-                if payload is None:
-                    polish_failed += 1
-                    continue
-
-                try:
-                    result = polish_view(
-                        payload=payload,
-                        engine_key=payload.engine_key,
-                        style_school=request.style_school,
-                    )
-                    config_hash = compute_config_hash(payload.renderer_config)
-                    save_polish_cache(
-                        job_id=request.job_id,
-                        view_key=view_key,
-                        style_school=result.style_school,
-                        polished_data=result.polished_payload.model_dump(),
-                        config_hash=config_hash,
-                        model_used=result.model_used,
-                        tokens_used=result.tokens_used,
-                    )
-                    polish_ok += 1
-                    logger.info(
-                        f"[auto-polish] {view_key}: {result.style_school} "
-                        f"({result.tokens_used} tokens, {result.execution_time_ms}ms)"
-                    )
-                except Exception as e:
-                    polish_failed += 1
-                    logger.warning(f"[auto-polish] Failed for {view_key}: {e}")
-
+            auto_polish = seed_polish_cache_for_views(
+                job_id=request.job_id,
+                consumer_key=request.consumer_key,
+                view_keys=collect_view_keys(page.views),
+                style_school=request.style_school,
+                force=request.force,
+            )
             logger.info(
-                f"[auto-polish] Complete: {polish_ok} polished, "
-                f"{polish_cached} cached, {polish_failed} failed "
-                f"(of {len(all_view_keys)} views)"
+                "[auto-polish] Complete: %s polished, %s cached, %s failed (of %s views, style=%s)",
+                auto_polish.get("polished", 0),
+                auto_polish.get("cached", 0),
+                auto_polish.get("failed", 0),
+                auto_polish.get("total_views", 0),
+                auto_polish.get("style_school", request.style_school or ""),
             )
 
         # Touch project activity (user is actively composing presentations)
@@ -373,7 +322,7 @@ async def polish_view_endpoint(request: PolishRequest):
 
     Calls Sonnet 4.6 to enhance the view's renderer_config and produce
     style_overrides using the resolved style school's palette and typography.
-    Results are cached per (job_id, view_key, style_school).
+    Results are cached per (job_id, view_key, consumer_key, style_school).
     """
     from src.presenter.polish_store import load_polish_cache, save_polish_cache
     from src.presenter.polisher import compute_config_hash, polish_view
@@ -398,7 +347,9 @@ async def polish_view_endpoint(request: PolishRequest):
             cached = load_polish_cache(
                 job_id=request.job_id,
                 view_key=request.view_key,
+                consumer_key=request.consumer_key,
                 style_school=style_school,
+                expected_config_hash=compute_config_hash(payload.renderer_config),
             )
             if cached is not None:
                 logger.info(
@@ -432,6 +383,7 @@ async def polish_view_endpoint(request: PolishRequest):
         save_polish_cache(
             job_id=request.job_id,
             view_key=request.view_key,
+            consumer_key=request.consumer_key,
             style_school=result.style_school,
             polished_data=result.polished_payload.model_dump(),
             config_hash=config_hash,
@@ -462,7 +414,7 @@ async def polish_section_endpoint(request: SectionPolishRequest):
 
     Calls Sonnet 4.6 to enhance just one section's styling, incorporating
     user's natural-language instructions. Results are cached per
-    (job_id, view_key, section_key, style_school).
+    (job_id, view_key, consumer_key, section_key, style_school).
     """
     from src.presenter.polish_store import load_polish_cache, save_polish_cache
     from src.presenter.polisher import compute_config_hash, polish_section
@@ -500,8 +452,10 @@ async def polish_section_endpoint(request: SectionPolishRequest):
             cached = load_polish_cache(
                 job_id=request.job_id,
                 view_key=request.view_key,
+                consumer_key=request.consumer_key,
                 style_school=style_school,
                 section_key=request.section_key,
+                expected_config_hash=compute_config_hash(payload.renderer_config),
             )
             if cached is not None:
                 logger.info(
@@ -532,6 +486,7 @@ async def polish_section_endpoint(request: SectionPolishRequest):
         save_polish_cache(
             job_id=request.job_id,
             view_key=request.view_key,
+            consumer_key=request.consumer_key,
             style_school=result.style_school,
             polished_data=result.model_dump(),
             config_hash=config_hash,

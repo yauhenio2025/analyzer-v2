@@ -109,6 +109,10 @@ class RendererDefinition(BaseModel):
         default_factory=lambda: ["the-critic"],
         description="Which consumer apps implement this renderer",
     )
+    integrates_scaffold: bool = Field(
+        default=False,
+        description="Whether this renderer integrates reading scaffold content inside its own surface family",
+    )
 
     # Metadata
     status: str = Field(

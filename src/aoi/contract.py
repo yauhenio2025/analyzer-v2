@@ -370,23 +370,29 @@ def _build_by_theme_payload(
         engagement = engagements_by_theme.get(theme_id, {})
         payload["_section_order"].append(theme_id)
         payload["_section_titles"][theme_id] = theme_name
+        source_documents = [
+            doc.get("title")
+            for doc in theme.get("source_documents", [])
+            if isinstance(doc, dict) and doc.get("title")
+        ]
+        engagement_level = engagement.get("engagement_level") or "unmapped"
+        benanav_position = engagement.get("benanav_position") or ""
+        divergence_description = engagement.get("divergence_description") or ""
+        severity = engagement.get("severity") or ""
+        severity_rationale = engagement.get("severity_rationale") or ""
         payload[theme_id] = {
-            "theme_id": theme_id,
-            "theme_name": theme_name,
-            "overview": {
-                "summary": theme.get("overview") or "",
-                "key_claims": theme.get("key_claims") or [],
-                "philosophical_commitments": theme.get("philosophical_commitments") or [],
-                "argumentative_moves": theme.get("argumentative_moves") or [],
-                "source_documents": [doc.get("title") for doc in theme.get("source_documents", [])],
-            },
-            "engagement": {
-                "engagement_level": engagement.get("engagement_level") or "unmapped",
-                "benanav_position": engagement.get("benanav_position") or "",
-                "divergence_description": engagement.get("divergence_description") or "",
-                "severity": engagement.get("severity") or "n/a",
-                "severity_rationale": engagement.get("severity_rationale") or "",
-            },
+            "overview": theme.get("overview") or "",
+            "key_claims": theme.get("key_claims") or [],
+            "philosophical_commitments": theme.get("philosophical_commitments") or [],
+            "argumentative_moves": theme.get("argumentative_moves") or [],
+            "source_documents": source_documents,
+            "engagement": _format_engagement_summary(
+                engagement_level=engagement_level,
+                benanav_position=benanav_position,
+                divergence_description=divergence_description,
+                severity=severity,
+                severity_rationale=severity_rationale,
+            ),
             "findings": [
                 _finding_card(finding) for finding in findings_by_theme.get(theme_id, [])
             ],
@@ -452,6 +458,29 @@ def _finding_card(finding: dict[str, Any]) -> dict[str, Any]:
         "source_quote": finding.get("source_quote") or "",
         "implication_for_argument": finding.get("implication_for_argument") or "",
     }
+
+
+def _format_engagement_summary(
+    *,
+    engagement_level: str,
+    benanav_position: str,
+    divergence_description: str,
+    severity: str,
+    severity_rationale: str,
+) -> str:
+    fragments = [f"Engagement level: {engagement_level.replace('_', ' ')}."]
+    if benanav_position:
+        fragments.append(benanav_position.strip())
+    if divergence_description:
+        fragments.append(divergence_description.strip())
+    if severity:
+        severity_fragment = f"Severity: {severity.replace('_', ' ')}."
+        if severity_rationale:
+            severity_fragment = f"{severity_fragment} {severity_rationale.strip()}"
+        fragments.append(severity_fragment)
+    elif severity_rationale:
+        fragments.append(severity_rationale.strip())
+    return " ".join(fragment for fragment in fragments if fragment).strip()
 
 
 def _sin_type_label(sin_type: str) -> str:

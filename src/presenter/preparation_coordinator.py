@@ -104,6 +104,7 @@ def run_presentation_pipeline_sync(
         return wait_for_preparation(job_id) if wait_if_active else get_preparation_state(job_id)
 
     try:
+        from src.presenter.delivery_style import seed_polish_cache_for_page
         from src.presenter.presentation_bridge import prepare_presentation
         from src.presenter.scaffold_generator import generate_reading_scaffolds
         from src.presenter.store import delete_view_refinement
@@ -160,6 +161,12 @@ def run_presentation_pipeline_sync(
             consumer_key=consumer_key,
             force=force,
         )
+        save_presentation_run(job_id, "running", detail="Seeding delivery polish cache", stats={})
+        polish_result = seed_polish_cache_for_page(
+            job_id=job_id,
+            consumer_key=consumer_key,
+            force=force,
+        )
         final_stats = {
             "tasks_planned": bridge_result.tasks_planned,
             "tasks_completed": bridge_result.tasks_completed,
@@ -171,6 +178,11 @@ def run_presentation_pipeline_sync(
             "scaffolds_generated": scaffold_result.artifacts_generated,
             "scaffolds_cached": scaffold_result.artifacts_cached,
             "scaffolds_failed": scaffold_result.artifacts_failed,
+            "polish_activation": polish_result.get("activated", False),
+            "polish_style_school": polish_result.get("style_school", ""),
+            "polish_seeded": polish_result.get("polished", 0),
+            "polish_cached": polish_result.get("cached", 0),
+            "polish_failed": polish_result.get("failed", 0),
         }
         save_presentation_run(
             job_id,
@@ -212,6 +224,7 @@ def start_background_preparation(
 
     def _worker() -> None:
         try:
+            from src.presenter.delivery_style import seed_polish_cache_for_page
             from src.presenter.presentation_bridge import prepare_presentation
             from src.presenter.scaffold_generator import generate_reading_scaffolds
             from src.presenter.store import delete_view_refinement
@@ -268,6 +281,12 @@ def start_background_preparation(
                 consumer_key=consumer_key,
                 force=force,
             )
+            save_presentation_run(job_id, "running", detail="Seeding delivery polish cache", stats={})
+            polish_result = seed_polish_cache_for_page(
+                job_id=job_id,
+                consumer_key=consumer_key,
+                force=force,
+            )
             save_presentation_run(
                 job_id,
                 "completed",
@@ -283,6 +302,11 @@ def start_background_preparation(
                     "scaffolds_generated": scaffold_result.artifacts_generated,
                     "scaffolds_cached": scaffold_result.artifacts_cached,
                     "scaffolds_failed": scaffold_result.artifacts_failed,
+                    "polish_activation": polish_result.get("activated", False),
+                    "polish_style_school": polish_result.get("style_school", ""),
+                    "polish_seeded": polish_result.get("polished", 0),
+                    "polish_cached": polish_result.get("cached", 0),
+                    "polish_failed": polish_result.get("failed", 0),
                 },
             )
         except Exception as e:

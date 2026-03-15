@@ -11,6 +11,7 @@ Thread-safety: Postgres uses a ThreadedConnectionPool for efficient
 connection reuse. SQLite uses per-call connections with check_same_thread=False.
 """
 
+import hashlib
 import json
 import logging
 import os
@@ -156,6 +157,7 @@ def init_db():
         _migrate_postgres()
     else:
         _init_sqlite()
+        _migrate_sqlite()
 
     _initialized = True
     backend = "PostgreSQL" if _is_postgres() else f"SQLite ({SQLITE_PATH})"
@@ -214,6 +216,7 @@ def _migrate_postgres():
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS document_ids JSONB DEFAULT '{}'",
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS cancel_token VARCHAR(64)",
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS workflow_key VARCHAR(100) DEFAULT 'intellectual_genealogy'",
+        "ALTER TABLE phase_outputs ADD COLUMN IF NOT EXISTS content_hash VARCHAR(64) DEFAULT ''",
         "ALTER TABLE presentation_cache ALTER COLUMN section TYPE VARCHAR(200)",
         # Priority 6: Project lifecycle
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS project_id VARCHAR(100)",
@@ -233,6 +236,49 @@ def _migrate_postgres():
             )
         except Exception as e:
             logger.debug(f"Index creation skipped: {e}")
+        try:
+            cursor.execute(
+                "SELECT id, content FROM phase_outputs "
+                "WHERE content_hash IS NULL OR content_hash = ''"
+            )
+            rows = cursor.fetchall()
+            for row in rows:
+                output_id, content = row[0], row[1] or ""
+                cursor.execute(
+                    "UPDATE phase_outputs SET content_hash = %s WHERE id = %s",
+                    (hashlib.sha256(content.encode()).hexdigest(), output_id),
+                )
+        except Exception as e:
+            logger.debug(f"Phase output content_hash backfill skipped: {e}")
+        conn.commit()
+
+
+def _migrate_sqlite():
+    """Add columns that may be missing from existing SQLite tables."""
+    migrations = [
+        "ALTER TABLE executor_jobs ADD COLUMN project_id TEXT",
+        "ALTER TABLE phase_outputs ADD COLUMN content_hash TEXT DEFAULT ''",
+    ]
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        for sql in migrations:
+            try:
+                cursor.execute(sql)
+            except Exception as e:
+                logger.debug(f"SQLite migration skipped (already applied?): {e}")
+        try:
+            cursor.execute(
+                "SELECT id, content FROM phase_outputs "
+                "WHERE content_hash IS NULL OR content_hash = ''"
+            )
+            rows = cursor.fetchall()
+            for output_id, content in rows:
+                cursor.execute(
+                    "UPDATE phase_outputs SET content_hash = ? WHERE id = ?",
+                    (hashlib.sha256((content or "").encode()).hexdigest(), output_id),
+                )
+        except Exception as e:
+            logger.debug(f"SQLite phase output content_hash backfill skipped: {e}")
         conn.commit()
 
 
@@ -268,6 +314,7 @@ def _init_postgres():
         stance_key VARCHAR(50) DEFAULT '',
         role VARCHAR(30) NOT NULL DEFAULT 'extraction',
         content TEXT NOT NULL,
+        content_hash VARCHAR(64) DEFAULT '',
         model_used VARCHAR(100),
         input_tokens INTEGER DEFAULT 0,
         output_tokens INTEGER DEFAULT 0,
@@ -292,6 +339,23 @@ def _init_postgres():
         UNIQUE(output_id, section)
     );
 
+    CREATE TABLE IF NOT EXISTS presentation_artifacts (
+        id SERIAL PRIMARY KEY,
+        job_id VARCHAR(100) NOT NULL,
+        view_key VARCHAR(100) NOT NULL,
+        artifact_kind VARCHAR(100) NOT NULL,
+        artifact_version INTEGER NOT NULL DEFAULT 1,
+        prompt_version VARCHAR(100) DEFAULT '',
+        input_hash VARCHAR(64) NOT NULL,
+        content JSONB NOT NULL,
+        model_used VARCHAR(100),
+        created_at TIMESTAMP DEFAULT NOW(),
+        UNIQUE(job_id, view_key, artifact_kind, artifact_version, prompt_version, input_hash)
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_presentation_artifacts_job_kind
+        ON presentation_artifacts(job_id, artifact_kind);
+
     CREATE TABLE IF NOT EXISTS executor_documents (
         doc_id VARCHAR(100) PRIMARY KEY,
         title VARCHAR(500) NOT NULL,
@@ -313,17 +377,30 @@ def _init_postgres():
         created_at TIMESTAMP DEFAULT NOW()
     );
 
+    CREATE TABLE IF NOT EXISTS presentation_runs (
+        job_id VARCHAR(100) PRIMARY KEY REFERENCES executor_jobs(job_id),
+        status VARCHAR(32) NOT NULL,
+        detail TEXT DEFAULT '',
+        stats JSONB DEFAULT '{}'::jsonb,
+        error TEXT,
+        started_at TIMESTAMP,
+        updated_at TIMESTAMP,
+        completed_at TIMESTAMP
+    );
+
     CREATE TABLE IF NOT EXISTS polish_cache (
         id SERIAL PRIMARY KEY,
         job_id VARCHAR(100) NOT NULL,
         view_key VARCHAR(100) NOT NULL,
+        consumer_key VARCHAR(100) DEFAULT '',
         style_school VARCHAR(100) DEFAULT '',
+        section_key VARCHAR(100) DEFAULT '',
         config_hash VARCHAR(64) DEFAULT '',
         polished_data JSONB NOT NULL,
         model_used VARCHAR(100),
         tokens_used INTEGER DEFAULT 0,
         created_at TIMESTAMP DEFAULT NOW(),
-        UNIQUE(job_id, view_key, style_school)
+        UNIQUE(job_id, view_key, consumer_key, style_school, section_key)
     );
 
     CREATE TABLE IF NOT EXISTS design_token_cache (
@@ -448,6 +525,7 @@ def _init_sqlite():
         stance_key TEXT DEFAULT '',
         role TEXT NOT NULL DEFAULT 'extraction',
         content TEXT NOT NULL,
+        content_hash TEXT DEFAULT '',
         model_used TEXT,
         input_tokens INTEGER DEFAULT 0,
         output_tokens INTEGER DEFAULT 0,
@@ -472,6 +550,23 @@ def _init_sqlite():
         UNIQUE(output_id, section)
     );
 
+    CREATE TABLE IF NOT EXISTS presentation_artifacts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        job_id TEXT NOT NULL,
+        view_key TEXT NOT NULL,
+        artifact_kind TEXT NOT NULL,
+        artifact_version INTEGER NOT NULL DEFAULT 1,
+        prompt_version TEXT DEFAULT '',
+        input_hash TEXT NOT NULL,
+        content TEXT NOT NULL,
+        model_used TEXT,
+        created_at TEXT,
+        UNIQUE(job_id, view_key, artifact_kind, artifact_version, prompt_version, input_hash)
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_presentation_artifacts_job_kind
+        ON presentation_artifacts(job_id, artifact_kind);
+
     CREATE TABLE IF NOT EXISTS executor_documents (
         doc_id TEXT PRIMARY KEY,
         title TEXT NOT NULL,
@@ -493,17 +588,30 @@ def _init_sqlite():
         created_at TEXT
     );
 
+    CREATE TABLE IF NOT EXISTS presentation_runs (
+        job_id TEXT PRIMARY KEY,
+        status TEXT NOT NULL,
+        detail TEXT DEFAULT '',
+        stats TEXT DEFAULT '{}',
+        error TEXT,
+        started_at TEXT,
+        updated_at TEXT,
+        completed_at TEXT
+    );
+
     CREATE TABLE IF NOT EXISTS polish_cache (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         job_id TEXT NOT NULL,
         view_key TEXT NOT NULL,
+        consumer_key TEXT DEFAULT '',
         style_school TEXT DEFAULT '',
+        section_key TEXT DEFAULT '',
         config_hash TEXT DEFAULT '',
         polished_data TEXT NOT NULL,
         model_used TEXT,
         tokens_used INTEGER DEFAULT 0,
         created_at TEXT,
-        UNIQUE(job_id, view_key, style_school)
+        UNIQUE(job_id, view_key, consumer_key, style_school, section_key)
     );
 
     CREATE TABLE IF NOT EXISTS design_token_cache (
