@@ -337,14 +337,26 @@ def _is_payload_ready_for_default_page(
     return bool(output_hashes)
 
 
+def _timestamp_sort_value(value: Any) -> str:
+    """Normalize mixed DB/API timestamp shapes into a comparable ISO string."""
+    if value is None:
+        return ""
+    if isinstance(value, datetime):
+        dt = value if value.tzinfo is not None else value.replace(tzinfo=UTC)
+        return dt.astimezone(UTC).isoformat()
+    if isinstance(value, str):
+        return value
+    return str(value)
+
+
 def _resolve_prepared_at(job: dict[str, Any], all_outputs: list[dict[str, Any]]) -> str:
     timestamps = [
-        output.get("created_at") or ""
+        _timestamp_sort_value(output.get("created_at"))
         for output in all_outputs
         if output.get("created_at")
     ]
     for field in ("completed_at", "started_at", "created_at"):
-        value = job.get(field) or ""
+        value = _timestamp_sort_value(job.get(field))
         if value:
             timestamps.append(value)
     return max(timestamps) if timestamps else datetime.now(UTC).isoformat()
