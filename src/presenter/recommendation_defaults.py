@@ -11,6 +11,17 @@ from __future__ import annotations
 from typing import Any
 
 
+_WORKFLOW_DEFAULT_RECOMMENDATIONS: dict[str, list[dict[str, str]]] = {
+    "anxiety_of_influence_thematic_single_thinker": [
+        {
+            "view_key": "aoi_thematic_analysis",
+            "priority": "primary",
+            "rationale": "Workflow page default",
+        }
+    ],
+}
+
+
 def _fallback_page_for_workflow(workflow_key: str) -> str:
     from src.workflows.registry import get_workflow_registry
 
@@ -40,6 +51,10 @@ def get_default_recommendations_for_workflow(
     *,
     consumer_key: str = "the-critic",
 ) -> list[dict]:
+    direct = _WORKFLOW_DEFAULT_RECOMMENDATIONS.get(workflow_key)
+    if direct:
+        return [dict(row) for row in direct]
+
     from src.views.registry import get_view_registry
 
     page = _fallback_page_for_workflow(workflow_key)
