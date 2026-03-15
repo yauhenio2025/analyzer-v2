@@ -12,7 +12,8 @@
     "subtitle_field": "subtitle",
     "description_field": "description",
     "badge_field": "badge",
-    "columns": 2
+    "columns": 2,
+    "expandable": false
   },
   "data_source": {
     "workflow_key": "anxiety_of_influence_thematic_single_thinker",

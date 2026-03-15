@@ -491,9 +491,9 @@ function CardWrapper({
   const { getSemanticColor, getLabel } = useDesignTokens();
   const [expanded, setExpanded] = useState(false);
 
-  // Default cell renderer always gets expand/collapse (text is clamped by CSS)
+  // Default cell renderer gets expand/collapse unless the view explicitly disables it.
   const isDefaultCell = CellRenderer === DefaultCardCell;
-  const canExpand = expandable || isDefaultCell;
+  const canExpand = expandable ?? isDefaultCell;
 
   // Determine severity for type indicator dot
   const severityKey = String(item.severity || '').toLowerCase();

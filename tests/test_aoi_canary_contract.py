@@ -78,6 +78,9 @@ def test_aoi_canary_supports_pinned_neurath_aoi_surface_without_raw_json_adaptat
             assert renderer_config.get("group_style_map") == "sin_type"
             assert renderer_config.get("columns") == 1
 
+        if view_key == "aoi_source_documents":
+            assert renderer_config.get("expandable") is False
+
         if view_key != "aoi_thematic_report":
             continue
 
