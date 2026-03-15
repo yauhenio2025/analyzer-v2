@@ -1,6 +1,6 @@
 {
   "name": "@the-syllabus/analysis-renderers",
-  "version": "0.6.0",
+  "version": "0.6.3",
   "description": "Shared renderer components for analyzer-v2 view definitions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,8 +9,9 @@
     "src"
   ],
   "scripts": {
-    "build": "tsc && cp -r src/styles dist/",
-    "watch": "tsc --watch",
+    "build": "node scripts/generate-version-module.mjs && tsc && cp -r src/styles dist/",
+    "watch": "node scripts/generate-version-module.mjs && tsc --watch",
+    "release:pack": "node scripts/release-pack.mjs",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {

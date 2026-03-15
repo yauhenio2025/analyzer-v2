@@ -779,21 +779,63 @@
 }
 
 .card-cell-title {
-  font-size: var(--type-body);
-  font-weight: var(--weight-semibold);
-  font-family: var(--font-serif);
-  color: var(--color-text);
-  line-height: 1.45;
-  margin-bottom: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: var(--font-serif, Georgia, serif);
+  color: var(--color-text, #1a1a2e);
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+
+.card-cell-subtitle {
+  font-size: 0.78rem;
+  font-weight: 500;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  color: var(--color-text-muted, #64748b);
+  line-height: 1.35;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-border-light, #e2e8f0);
 }
 
 .card-cell-body {
-  margin: 0 0 10px 0;
-  font-family: var(--font-body);
-  color: var(--color-text);
-  font-size: var(--type-caption);
-  line-height: var(--leading-prose);
+  margin: 0 0 14px 0;
+  font-family: var(--font-body, system-ui, sans-serif);
+  color: var(--color-text, #334155);
+  font-size: 0.84rem;
+  line-height: 1.65;
   max-width: 72ch;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-cell-badge {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 3px 12px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 3px;
+  background: var(--color-surface-alt, #f1f5f9);
+  color: var(--color-text-muted, #475569);
+  border: 1px solid var(--color-border-light, #e2e8f0);
+}
+.card-cell-badge--critical {
+  background: #450a0a; color: #fca5a5; border-color: #7f1d1d;
+}
+.card-cell-badge--high {
+  background: #fef2f2; color: #991b1b; border-color: #fecaca;
+}
+.card-cell-badge--medium, .card-cell-badge--moderate {
+  background: #fffbeb; color: #92400e; border-color: #fde68a;
+}
+.card-cell-badge--low, .card-cell-badge--minor {
+  background: #f0fdf4; color: #166534; border-color: #bbf7d0;
 }
 
 .card-cell-evidence {

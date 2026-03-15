@@ -41,6 +41,7 @@ export {
 
 // ── Utilities ────────────────────────────────────────────
 export { flattenTokens } from './utils/tokenFlattener';
+export { ANALYSIS_RENDERERS_VERSION } from './generated/version';
 
 // ── Container Renderers ──────────────────────────────────
 export { AccordionRenderer } from './renderers/AccordionRenderer';

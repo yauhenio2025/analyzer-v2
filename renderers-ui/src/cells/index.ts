@@ -33,11 +33,51 @@ function formatLabel(key: string): string {
 
 /**
  * Default cell renderer — auto-classifies item fields into visual tiers.
+ *
+ * When renderer_config declares explicit field mappings (title_field,
+ * subtitle_field, description_field, badge_field), only those fields
+ * are rendered. Unmapped fields are suppressed.
  */
 export function DefaultCardCell({ item, config }: CellRendererProps) {
-  const titleFieldOverride = config.card_title_field as string | undefined;
-  const bodyFieldOverride = config.card_body_field as string | undefined;
+  const titleField = (config.title_field ?? config.card_title_field) as string | undefined;
+  const subtitleField = config.subtitle_field as string | undefined;
+  const descriptionField = (config.description_field ?? config.card_body_field) as string | undefined;
+  const badgeField = config.badge_field as string | undefined;
+  const hasExplicitMapping = !!(titleField || subtitleField || descriptionField || badgeField);
 
+  const str = (key: string): string => {
+    const v = item[key];
+    return (v != null && v !== '' && typeof v !== 'object') ? String(v) : '';
+  };
+
+  // ── Explicit-mapping path: render only the declared fields ──
+  if (hasExplicitMapping) {
+    const titleText = titleField ? str(titleField) : '';
+    const subtitleText = subtitleField ? str(subtitleField) : '';
+    const descText = descriptionField ? str(descriptionField) : '';
+    const badgeText = badgeField ? str(badgeField) : '';
+    const badgeNorm = badgeText.toLowerCase().replace(/[^a-z]/g, '');
+    const badgeClass = badgeText ? `card-cell-badge card-cell-badge--${badgeNorm}` : '';
+
+    return React.createElement('div', { className: 'card-cell-default' },
+      titleText
+        ? React.createElement('div', { className: 'card-cell-title' },
+            titleText.length > 200 ? titleText.slice(0, 200) + '\u2026' : titleText
+          )
+        : null,
+      subtitleText
+        ? React.createElement('div', { className: 'card-cell-subtitle' }, subtitleText)
+        : null,
+      descText
+        ? React.createElement('p', { className: 'card-cell-body' }, descText)
+        : null,
+      badgeText
+        ? React.createElement('span', { className: badgeClass }, badgeText.replace(/_/g, ' '))
+        : null,
+    );
+  }
+
+  // ── Auto-classification fallback (no explicit field mapping) ──
   let titleText = '';
   let bodyText = '';
   let evidenceText = '';
@@ -46,18 +86,7 @@ export function DefaultCardCell({ item, config }: CellRendererProps) {
   for (const [key, value] of Object.entries(item)) {
     if (value == null || value === '') continue;
     if (typeof value === 'object') continue;
-
     const strVal = String(value);
-
-    if (titleFieldOverride && key === titleFieldOverride) {
-      titleText = strVal;
-      continue;
-    }
-    if (bodyFieldOverride && key === bodyFieldOverride) {
-      bodyText = strVal;
-      continue;
-    }
-
     const cls = classifyField(key);
     if (cls === 'skip') continue;
     if (cls === 'title' && !titleText) { titleText = strVal; continue; }
