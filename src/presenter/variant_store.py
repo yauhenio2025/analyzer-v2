@@ -216,6 +216,41 @@ def load_selections(job_id: str, view_key: str) -> list[dict]:
     return result
 
 
+def load_selected_variants(job_id: str, view_key: str) -> list[dict]:
+    """Load the fully-resolved selected variants for a job+view.
+
+    Joins selections -> variant_sets -> variants so the compose pipeline can
+    apply the user's chosen renderer or sub-renderer strategy on later loads.
+    """
+    rows = execute(
+        "SELECT vs.dimension, vs.base_renderer, vs.style_school, "
+        "vsel.variant_set_id, vsel.variant_id, vsel.selected_at, "
+        "v.renderer_type, v.renderer_config, v.compatibility_score, v.rationale "
+        "FROM variant_selections vsel "
+        "JOIN variant_sets vs ON vsel.variant_set_id = vs.variant_set_id "
+        "JOIN variants v ON vsel.variant_id = v.variant_id "
+        "WHERE vsel.job_id = %s AND vsel.view_key = %s "
+        "ORDER BY vsel.selected_at DESC",
+        (job_id, view_key),
+        fetch="all",
+    )
+    result = []
+    for row in rows:
+        normalized = dict(row)
+        config = normalized.get("renderer_config")
+        if isinstance(config, str):
+            normalized["renderer_config"] = _json_loads(config)
+        elif config is None:
+            normalized["renderer_config"] = {}
+
+        ts_val = normalized.get("selected_at")
+        if isinstance(ts_val, datetime):
+            normalized["selected_at"] = ts_val.isoformat()
+
+        result.append(normalized)
+    return result
+
+
 def summarize_selections(project_id: str) -> list[dict]:
     """Aggregate selection data grouped by dimension and view_key."""
     rows = execute(

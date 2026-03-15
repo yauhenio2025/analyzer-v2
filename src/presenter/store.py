@@ -62,7 +62,7 @@ def load_view_refinement(job_id: str) -> Optional[dict]:
     or None if no refinement exists.
     """
     row = execute(
-        """SELECT refined_views, changes_summary, model_used, tokens_used, created_at
+        """SELECT plan_id, refined_views, changes_summary, model_used, tokens_used, created_at
            FROM view_refinements WHERE job_id = %s""",
         (job_id,),
         fetch="one",
@@ -75,6 +75,7 @@ def load_view_refinement(job_id: str) -> Optional[dict]:
         views = _json_loads(views)
 
     return {
+        "plan_id": row["plan_id"],
         "refined_views": views,
         "changes_summary": row["changes_summary"],
         "model_used": row["model_used"],

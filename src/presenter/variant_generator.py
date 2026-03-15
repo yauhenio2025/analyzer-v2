@@ -18,8 +18,12 @@ from src.presenter.variant_store import (
 )
 from src.renderers.registry import get_renderer_registry
 from src.renderers.schemas import RendererDefinition
+from src.views.registry import get_view_registry
 
 logger = logging.getLogger(__name__)
+
+PHASE2_PARENT_TARGETS = {"genealogy_target_profile", "genealogy_text_profiling"}
+PHASE2_EXTRA_TARGETS = {"genealogy_per_work_scan", "genealogy_conditions"}
 
 
 def _compute_variant_set_id(
@@ -35,6 +39,21 @@ def _compute_variant_set_id(
     vk_prefix = view_key[:20]
     jid_prefix = job_id[:8]
     return f"vs-{jid_prefix}-{vk_prefix}-{digest}"
+
+
+def get_phase2_variant_target_keys() -> set[str]:
+    """Return the Phase 2 steering target set including direct child closure."""
+    registry = get_view_registry()
+    direct_children = {
+        view.view_key
+        for view in registry.list_all()
+        if getattr(view, "parent_view_key", None) in PHASE2_PARENT_TARGETS
+    }
+    return PHASE2_PARENT_TARGETS | PHASE2_EXTRA_TARGETS | direct_children
+
+
+def is_phase2_variant_target(view_key: str) -> bool:
+    return view_key in get_phase2_variant_target_keys()
 
 
 def _score_candidate(
@@ -173,9 +192,12 @@ def _generate_sub_renderer_variants(
         )
         return []
 
-    # Get current section_renderer_hints from config
-    current_hints = base_renderer_config.get("section_renderer_hints", [])
-    current_types = {h.get("renderer_type") for h in current_hints if isinstance(h, dict)}
+    current_section_renderers = dict(base_renderer_config.get("section_renderers") or {})
+    current_types = {
+        spec.get("renderer_type")
+        for spec in current_section_renderers.values()
+        if isinstance(spec, dict)
+    }
 
     # Find unused section renderers
     unused = [sr for sr in available if sr not in current_types]
@@ -183,48 +205,45 @@ def _generate_sub_renderer_variants(
         # All section renderers already in use — swap some instead
         unused = available
 
+    section_order = [
+        section.get("key")
+        for section in (base_renderer_config.get("sections") or [])
+        if isinstance(section, dict) and section.get("key")
+    ]
+    if not section_order and current_section_renderers:
+        section_order = sorted(current_section_renderers.keys())
+
     alternatives = []
     for i in range(min(max_variants - 1, len(unused))):
-        # Create a variant that swaps one section renderer
         swap_target = unused[i]
-        new_hints = list(current_hints)  # Copy existing
+        target_section = None
+        for section_key in section_order:
+            current_spec = current_section_renderers.get(section_key) or {}
+            if current_spec.get("renderer_type") != swap_target:
+                target_section = section_key
+                break
+        if target_section is None and section_order:
+            target_section = section_order[0]
+        if target_section is None:
+            target_section = "default"
 
-        if new_hints:
-            # Replace the first non-matching section renderer
-            modified = False
-            for j, hint in enumerate(new_hints):
-                if isinstance(hint, dict) and hint.get("renderer_type") != swap_target:
-                    new_hints[j] = {
-                        **hint,
-                        "renderer_type": swap_target,
-                        "rationale": f"Variant using {swap_target} section renderer",
-                    }
-                    modified = True
-                    break
-            if not modified:
-                # All hints already match swap_target; add a new one
-                new_hints.append({
-                    "section_key": f"variant_section_{i}",
-                    "renderer_type": swap_target,
-                    "rationale": f"Added {swap_target} section renderer",
-                })
-        else:
-            # No existing hints — create one with the swap target
-            new_hints = [{
-                "section_key": "default",
-                "renderer_type": swap_target,
-                "rationale": f"Using {swap_target} section renderer",
-            }]
-
-        new_config = dict(base_renderer_config)
-        new_config["section_renderer_hints"] = new_hints
+        existing_spec = dict(current_section_renderers.get(target_section) or {})
+        replacement_spec = {
+            **existing_spec,
+            "renderer_type": swap_target,
+        }
+        new_config = {
+            "section_renderers": {
+                target_section: replacement_spec,
+            }
+        }
 
         alternatives.append({
             "renderer_type": base_renderer.renderer_key,  # Same renderer
             "renderer_config": new_config,
             "rationale": (
                 f"Sub-renderer strategy variant using '{swap_target}' "
-                f"(from available: {available})"
+                f"for section '{target_section}' (from available: {available})"
             ),
             "compatibility_score": 0.8,  # High compatibility — same base renderer
         })
@@ -244,10 +263,15 @@ def generate_variant_set(
 
     Returns a dict matching VariantSetResponse shape.
     """
+    if not is_phase2_variant_target(view_key):
+        raise ValueError(
+            f"View '{view_key}' is outside the Phase 2 steering target set"
+        )
+
     style_school_str = style_school or ""
 
     # Load the base view
-    view_payload = assemble_single_view(job_id, view_key)
+    view_payload = assemble_single_view(job_id, view_key, consumer_key="the-critic")
     if view_payload is None:
         raise ValueError(f"View not found: {view_key} for job {job_id}")
 

@@ -1,4 +1,4 @@
-"""Shared utilities for work_key splitting and inference.
+"""Shared utilities for work_key splitting, display metadata, and inference.
 
 Used by both presentation_bridge.py (task creation) and presentation_api.py (assembly).
 Handles the case where imported/legacy data has all outputs collapsed under a single
@@ -8,7 +8,7 @@ work_key (e.g., 'target') but actually represents multiple prior works.
 import json
 import logging
 import re
-from typing import Optional
+from typing import Any, Optional
 
 from src.executor.job_manager import get_job
 from src.orchestrator.planner import load_plan
@@ -17,14 +17,29 @@ logger = logging.getLogger(__name__)
 
 
 def resolve_chain_engine_keys(chain_key: str) -> list[str]:
-    """Resolve a chain_key to the list of engine keys in that chain."""
+    """Resolve a chain key to engine keys.
+
+    Accepts either:
+    - a real registered chain key -> returns all engines in that chain
+    - a lone engine key (legacy per-item fallback path) -> returns [engine_key]
+    """
     from src.chains.registry import get_chain_registry
+    from src.engines.registry import get_engine_registry
+
     chain_registry = get_chain_registry()
     chain = chain_registry.get(chain_key)
-    if chain is None:
-        logger.warning(f"Chain not found: {chain_key}")
-        return []
-    return list(chain.engine_keys)
+    if chain is not None:
+        return list(chain.engine_keys)
+
+    engine_registry = get_engine_registry()
+    if (
+        engine_registry.get(chain_key) is not None
+        or engine_registry.get_capability_definition(chain_key) is not None
+    ):
+        return [chain_key]
+
+    logger.warning(f"Chain not found: {chain_key}")
+    return []
 
 
 def sanitize_work_key_for_presenter(title: str) -> str:
@@ -34,6 +49,100 @@ def sanitize_work_key_for_presenter(title: str) -> str:
         for c in title
     )
     return safe.strip().replace("  ", " ")[:100]
+
+
+def normalize_work_title_for_display(title: str) -> str:
+    """Convert filenames/slugs into a human-readable work title."""
+    if not title:
+        return ""
+
+    display = re.sub(r"\.(?:md|markdown|txt|pdf|docx?)$", "", title, flags=re.IGNORECASE)
+    display = display.replace("_", " ")
+    display = re.sub(r"\s+", " ", display).strip(" -_")
+    return display or title
+
+
+def infer_year_from_title(title: str) -> Optional[int]:
+    """Infer a publication year from a work title or filename."""
+    if not title:
+        return None
+    match = re.search(r"\b(18|19|20)\d{2}\b", title)
+    return int(match.group(0)) if match else None
+
+
+def humanize_work_key(work_key: str) -> str:
+    """Best-effort display label when all we have is a sanitized work_key."""
+    if not work_key:
+        return ""
+
+    label = re.sub(r"_(?:md|markdown|txt|pdf|docx?)$", "", work_key, flags=re.IGNORECASE)
+    label = label.replace("_", " ")
+    label = re.sub(r"\s+", " ", label).strip(" -_")
+    return label or work_key
+
+
+def looks_like_sanitized_work_title(title: str, work_key: str = "") -> bool:
+    """Heuristic: detect slug/file-key style titles that should be replaced."""
+    if not title:
+        return True
+
+    normalized = title.strip()
+    if not normalized:
+        return True
+    if work_key and normalized == work_key:
+        return True
+    if re.search(r"_(?:md|markdown|txt|pdf|docx?)$", normalized, flags=re.IGNORECASE):
+        return True
+    return "_" in normalized
+
+
+def load_prior_work_metadata(job_id: str) -> dict[str, dict[str, Any]]:
+    """Load normalized prior-work metadata keyed by sanitized work_key."""
+    job = get_job(job_id)
+    if not job:
+        return {}
+
+    plan = load_plan(job.get("plan_id", ""))
+    if not plan or not getattr(plan, "prior_works", None):
+        return {}
+
+    metadata: dict[str, dict[str, Any]] = {}
+    for prior_work in plan.prior_works:
+        source_title = getattr(prior_work, "title", "") or ""
+        if not source_title:
+            continue
+
+        work_key = sanitize_work_key_for_presenter(source_title)
+        year = getattr(prior_work, "year", None) or infer_year_from_title(source_title)
+        metadata[work_key] = {
+            "source_title": source_title,
+            "display_title": normalize_work_title_for_display(source_title),
+            "year": year,
+        }
+
+    return metadata
+
+
+def resolve_work_metadata(
+    job_id: str,
+    work_key: str,
+    fallback_title: str = "",
+) -> dict[str, Any]:
+    """Resolve display-ready metadata for a work_key using plan metadata first."""
+    metadata = load_prior_work_metadata(job_id).get(work_key, {})
+    display_title = (
+        metadata.get("display_title")
+        or normalize_work_title_for_display(fallback_title)
+        or humanize_work_key(work_key)
+    )
+    source_title = metadata.get("source_title") or fallback_title or display_title
+    year = metadata.get("year") or infer_year_from_title(source_title)
+
+    return {
+        "display_title": display_title,
+        "source_title": source_title,
+        "year": year,
+    }
 
 
 def infer_work_key_from_content(content: str, prior_work_titles: list[str]) -> str:

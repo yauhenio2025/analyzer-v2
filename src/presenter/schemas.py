@@ -27,6 +27,10 @@ class RefinedViewRecommendation(BaseModel):
         default=None,
         description="Override the view's default presentation stance",
     )
+    renderer_type_override: Optional[str] = Field(
+        default=None,
+        description="Override the view's default container renderer",
+    )
     rationale: str = Field(
         default="",
         description="Updated rationale based on actual results",
@@ -34,6 +38,26 @@ class RefinedViewRecommendation(BaseModel):
     renderer_config_overrides: Optional[dict[str, Any]] = Field(
         default=None,
         description="Renderer config adjustments based on output characteristics",
+    )
+    display_label_override: Optional[str] = Field(
+        default=None,
+        description="Override the display label used in the consumer tab tree",
+    )
+    top_level_group: Optional[str] = Field(
+        default=None,
+        description="Bounded grouping hint for hybrid-dynamic top-level layouts",
+    )
+    promote_to_top_level: bool = Field(
+        default=False,
+        description="Promote a child view to top-level navigation for this run",
+    )
+    collapse_into_parent: bool = Field(
+        default=False,
+        description="Keep the view available for synthesis but hide it from normal child-tab navigation",
+    )
+    top_level_position_override: Optional[float] = Field(
+        default=None,
+        description="Override the top-level tab order for promoted/relabelled views",
     )
     data_quality_assessment: str = Field(
         default="standard",
@@ -75,14 +99,19 @@ class TransformationTask(BaseModel):
     )
     engine_key: str
     renderer_type: str
+    renderer_config: dict[str, Any] = Field(
+        default_factory=dict,
+        description="Effective renderer config used for validation and dynamic extraction hints.",
+    )
     section: str = Field(
         default="",
         description="Section label for presentation_cache",
     )
-    content_override: Optional[str] = Field(
+    content_override: Optional[Any] = Field(
         default=None,
         description="When set, use this content for transformation instead of loading "
-        "from the single output_id row. Used for multi-pass concatenated content.",
+        "from the single output_id row. Used for multi-pass concatenated content "
+        "or persisted structured payloads.",
     )
     dynamic_config: Optional[dict[str, Any]] = Field(
         default=None,
@@ -132,6 +161,29 @@ class PresentationBridgeResult(BaseModel):
     details: list[TransformationTaskResult] = Field(default_factory=list)
 
 
+class ScaffoldArtifactDetail(BaseModel):
+    """Per-view result for reading scaffold generation."""
+
+    view_key: str
+    scaffold_type: str
+    status: str
+    prompt_version: str = ""
+    input_hash: str = ""
+    model_used: str = ""
+    error: Optional[str] = None
+
+
+class ScaffoldGenerationResult(BaseModel):
+    """Result of reading scaffold generation."""
+
+    job_id: str
+    artifacts_planned: int = 0
+    artifacts_generated: int = 0
+    artifacts_cached: int = 0
+    artifacts_failed: int = 0
+    details: list[ScaffoldArtifactDetail] = Field(default_factory=list)
+
+
 # --- 3C: Presentation API ---
 
 
@@ -149,6 +201,15 @@ class ViewPayload(BaseModel):
     priority: str = "secondary"
     rationale: str = ""
     data_quality: str = "standard"
+    top_level_group: Optional[str] = None
+    source_parent_view_key: Optional[str] = None
+    promoted_to_top_level: bool = False
+    selection_priority: Optional[str] = None
+    navigation_state: Optional[str] = None
+    structuring_policy: Optional[str] = None
+    semantic_scaffold_type: Optional[str] = None
+    scaffold_hosting_mode: Optional[str] = None
+    derivation_kind: Optional[str] = None
 
     # Data source info
     phase_number: Optional[float] = None
@@ -162,9 +223,17 @@ class ViewPayload(BaseModel):
         default=None,
         description="Pre-extracted structured data from presentation_cache",
     )
+    reading_scaffold: Optional[dict[str, Any]] = Field(
+        default=None,
+        description="Optional derived reading scaffold layered on top of canonical structured data",
+    )
     raw_prose: Optional[str] = Field(
         default=None,
         description="Raw prose output from phase_outputs (for prose views or fallback)",
+    )
+    prose_ref_view_key: Optional[str] = Field(
+        default=None,
+        description="When raw_prose is omitted, references another view in the same page payload that owns the shared prose",
     )
 
     # For per_item views
@@ -194,6 +263,16 @@ class PagePresentation(BaseModel):
 
     job_id: str
     plan_id: str
+    consumer_key: str = ""
+    presentation_version: int = 2
+    presentation_contract_version: int = 1
+    presentation_hash: str = ""
+    presentation_content_hash: str = ""
+    prepared_at: str = ""
+    artifacts_ready: bool = False
+    manifest_schema_version: int = 1
+    trace_schema_version: int = 1
+    resolver_version: str = ""
     thinker_name: str = ""
     strategy_summary: str = ""
 
@@ -212,6 +291,92 @@ class PagePresentation(BaseModel):
     refinement_summary: str = ""
 
 
+class EffectiveManifestView(BaseModel):
+    """Data-light semantic contract for a single effective view."""
+
+    view_key: str
+    view_name: str
+    description: str = ""
+    renderer_type: str
+    renderer_config: dict[str, Any] = Field(default_factory=dict)
+    presentation_stance: Optional[str] = None
+    selection_priority: str = "secondary"
+    navigation_state: str = "normal"
+    promoted_to_top_level: bool = False
+    source_parent_view_key: Optional[str] = None
+    display_parent_view_key: Optional[str] = None
+    child_view_keys: list[str] = Field(default_factory=list)
+    top_level_group: Optional[str] = None
+    position: float = 0
+    semantic_scaffold_type: str = "none"
+    scaffold_hosting_mode: str = "none"
+    structuring_policy: Optional[str] = None
+    derivation_kind: Optional[str] = None
+    legacy_visibility: Optional[str] = None
+
+
+class EffectivePresentationManifest(BaseModel):
+    """Effective capability-adapted semantic manifest for a job + consumer."""
+
+    job_id: str
+    plan_id: str
+    consumer_key: str
+    presentation_contract_version: int = 1
+    presentation_hash: str = ""
+    presentation_content_hash: str = ""
+    prepared_at: str = ""
+    artifacts_ready: bool = False
+    manifest_schema_version: int = 1
+    trace_schema_version: int = 1
+    resolver_version: str = ""
+    thinker_name: str = ""
+    strategy_summary: str = ""
+    views: list[EffectiveManifestView] = Field(default_factory=list)
+    view_count: int = 0
+
+
+class DecisionTraceChange(BaseModel):
+    """A single semantic change recorded in the reconstructed decision trace."""
+
+    view_key: str
+    field: str
+    before: Any = None
+    after: Any = None
+    reason: str = ""
+
+
+class IgnoredOverride(BaseModel):
+    """Runtime override dropped during bounded-value validation."""
+
+    view_key: str
+    field: str
+    value: Any = None
+    reason: str = ""
+
+
+class DecisionTraceEntry(BaseModel):
+    """A coarse semantic trace stage reconstructed from presenter inputs."""
+
+    stage: str
+    reason: str = ""
+    applied_changes: list[DecisionTraceChange] = Field(default_factory=list)
+    ignored_changes: list[IgnoredOverride] = Field(default_factory=list)
+    snapshot: list[EffectiveManifestView] = Field(default_factory=list)
+
+
+class PresentationDecisionTrace(BaseModel):
+    """Versioned, on-demand reconstruction of presentation decision making."""
+
+    job_id: str
+    plan_id: str
+    consumer_key: str
+    manifest_schema_version: int = 1
+    trace_schema_version: int = 1
+    resolver_version: str = ""
+    entries: list[DecisionTraceEntry] = Field(default_factory=list)
+    final_manifest: EffectivePresentationManifest
+
+
 # --- 3D: View Polishing ---
 
 
@@ -220,6 +385,7 @@ class PolishRequest(BaseModel):
 
     job_id: str
     view_key: str
+    consumer_key: str = "the-critic"
     style_school: Optional[str] = Field(
         default=None,
         description="Style school to use. Auto-resolved from engine affinities if not set.",
@@ -303,6 +469,7 @@ class SectionPolishRequest(BaseModel):
     job_id: str
     view_key: str
     section_key: str
+    consumer_key: str = "the-critic"
     user_feedback: Optional[str] = Field(
         default=None,
         description="User's natural-language instructions for improving this section.",
@@ -341,15 +508,37 @@ class RefineViewsRequest(BaseModel):
 
     job_id: str
     plan_id: str
+    consumer_key: str = "the-critic"
 
 
 class PrepareRequest(BaseModel):
     """Input for POST /v1/presenter/prepare."""
 
     job_id: str
+    consumer_key: str = "the-critic"
     view_keys: Optional[list[str]] = Field(
         default=None,
         description="Specific views to prepare. None = all recommended views.",
+    )
+    force: bool = Field(
+        default=False,
+        description="Force re-extraction, ignoring presentation_cache.",
+    )
+
+
+class EnsurePresentationRequest(BaseModel):
+    """Input for POST /v1/presenter/ensure."""
+
+    job_id: str
+    plan_id: str
+    consumer_key: str = "the-critic"
+    skip_refinement: bool = Field(
+        default=False,
+        description="Skip LLM view refinement when starting background prep.",
+    )
+    clear_refinement: bool = Field(
+        default=False,
+        description="Delete cached refinement before starting background prep.",
     )
     force: bool = Field(
         default=False,
@@ -362,6 +551,7 @@ class ComposeRequest(BaseModel):
 
     job_id: str
     plan_id: str
+    consumer_key: str = "the-critic"
     skip_refinement: bool = Field(
         default=False,
         description="Skip LLM view refinement (use plan recommendations as-is)",
