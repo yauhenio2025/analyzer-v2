@@ -6,16 +6,26 @@ from typing import Optional
 from src.executor.db import _json_dumps, _json_loads, execute
 
 
+def _is_missing_relation_error(error: Exception, relation: str) -> bool:
+    message = str(error).lower()
+    return relation.lower() in message and "does not exist" in message
+
+
 def load_presentation_run(job_id: str) -> Optional[dict]:
     """Load persisted presentation-preparation status for a job."""
-    row = execute(
-        """SELECT job_id, status, detail, stats, error,
-                  started_at, updated_at, completed_at
-           FROM presentation_runs
-           WHERE job_id = %s""",
-        (job_id,),
-        fetch="one",
-    )
+    try:
+        row = execute(
+            """SELECT job_id, status, detail, stats, error,
+                      started_at, updated_at, completed_at
+               FROM presentation_runs
+               WHERE job_id = %s""",
+            (job_id,),
+            fetch="one",
+        )
+    except Exception as error:
+        if _is_missing_relation_error(error, "presentation_runs"):
+            return None
+        raise
     if row is None:
         return None
     if isinstance(row.get("stats"), str):

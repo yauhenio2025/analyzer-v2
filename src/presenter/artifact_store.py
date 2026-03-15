@@ -8,6 +8,11 @@ from typing import Any, Optional
 from src.executor.db import _json_dumps, _json_loads, execute, init_db
 
 
+def _is_missing_relation_error(error: Exception, relation: str) -> bool:
+    message = str(error).lower()
+    return relation.lower() in message and "does not exist" in message
+
+
 def save_presentation_artifact(
     job_id: str,
     view_key: str,
@@ -52,7 +57,9 @@ def save_presentation_artifact(
             ),
         )
         return True
-    except Exception:
+    except Exception as error:
+        if _is_missing_relation_error(error, "presentation_artifacts"):
+            return False
         return False
 
 
@@ -66,20 +73,25 @@ def load_presentation_artifact(
 ) -> Optional[dict[str, Any]]:
     """Load an exact artifact match."""
     init_db()
-    row = execute(
-        """SELECT content
-           FROM presentation_artifacts
-           WHERE job_id = %s
-             AND view_key = %s
-             AND artifact_kind = %s
-             AND artifact_version = %s
-             AND prompt_version = %s
-             AND input_hash = %s
-           ORDER BY created_at DESC, id DESC
-           LIMIT 1""",
-        (job_id, view_key, artifact_kind, artifact_version, prompt_version, input_hash),
-        fetch="one",
-    )
+    try:
+        row = execute(
+            """SELECT content
+               FROM presentation_artifacts
+               WHERE job_id = %s
+                 AND view_key = %s
+                 AND artifact_kind = %s
+                 AND artifact_version = %s
+                 AND prompt_version = %s
+                 AND input_hash = %s
+               ORDER BY created_at DESC, id DESC
+               LIMIT 1""",
+            (job_id, view_key, artifact_kind, artifact_version, prompt_version, input_hash),
+            fetch="one",
+        )
+    except Exception as error:
+        if _is_missing_relation_error(error, "presentation_artifacts"):
+            return None
+        raise
     if row is None:
         return None
 
@@ -95,14 +107,19 @@ def load_presentation_artifact_batch(
 ) -> dict[tuple[str, int, str, str], dict[str, Any]]:
     """Load all artifacts of a kind for a job keyed by version/prompt/hash."""
     init_db()
-    rows = execute(
-        """SELECT view_key, artifact_version, prompt_version, input_hash, content
-           FROM presentation_artifacts
-           WHERE job_id = %s AND artifact_kind = %s
-           ORDER BY created_at DESC, id DESC""",
-        (job_id, artifact_kind),
-        fetch="all",
-    )
+    try:
+        rows = execute(
+            """SELECT view_key, artifact_version, prompt_version, input_hash, content
+               FROM presentation_artifacts
+               WHERE job_id = %s AND artifact_kind = %s
+               ORDER BY created_at DESC, id DESC""",
+            (job_id, artifact_kind),
+            fetch="all",
+        )
+    except Exception as error:
+        if _is_missing_relation_error(error, "presentation_artifacts"):
+            return {}
+        raise
 
     result: dict[tuple[str, int, str, str], dict[str, Any]] = {}
     for row in rows:
@@ -127,14 +144,19 @@ def load_presentation_artifact_fingerprint_batch(
 ) -> dict[tuple[str, int, str, str], str]:
     """Load artifact fingerprint metadata without hydrating full JSON content."""
     init_db()
-    rows = execute(
-        """SELECT view_key, artifact_version, prompt_version, input_hash
-           FROM presentation_artifacts
-           WHERE job_id = %s AND artifact_kind = %s
-           ORDER BY created_at DESC, id DESC""",
-        (job_id, artifact_kind),
-        fetch="all",
-    )
+    try:
+        rows = execute(
+            """SELECT view_key, artifact_version, prompt_version, input_hash
+               FROM presentation_artifacts
+               WHERE job_id = %s AND artifact_kind = %s
+               ORDER BY created_at DESC, id DESC""",
+            (job_id, artifact_kind),
+            fetch="all",
+        )
+    except Exception as error:
+        if _is_missing_relation_error(error, "presentation_artifacts"):
+            return {}
+        raise
 
     result: dict[tuple[str, int, str, str], str] = {}
     for row in rows:
