@@ -77,6 +77,8 @@ export { TemplateCardCell } from './cells/TemplateCardCell';
 export { EvidenceTrail, EvidenceTrailSubRenderer } from './components/EvidenceTrail';
 export type { EvidenceTrailStep, EvidenceTrailItem } from './components/EvidenceTrail';
 export { EnableConditionsSubRenderer, ConstrainConditionsSubRenderer } from './components/ConditionCards';
+export { ViewShell } from './components/ViewShell';
+export { ScaffoldIntroContent } from './components/ScaffoldIntroContent';
 
 // ── Hooks ────────────────────────────────────────────────
 export { useProseExtraction } from './hooks/useProseExtraction';

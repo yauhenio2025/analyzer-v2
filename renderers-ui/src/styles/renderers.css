@@ -240,18 +240,26 @@
 }
 
 .ar-card-item {
-  background: var(--color-surface);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 6px;
+  background: var(--color-surface, #ffffff);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
   padding: 0;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.02);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 2px 8px rgba(0, 0, 0, 0.03),
+    0 0 0 1px rgba(0, 0, 0, 0.02);
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+  margin-bottom: 14px;
 }
 
 .ar-card-item:hover {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07), 0 0 0 1px rgba(0, 0, 0, 0.04);
-  transform: translateY(-1px);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+  border-color: rgba(0, 0, 0, 0.12);
 }
 
 .ar-card-item--major {
@@ -291,6 +299,11 @@
   display: none;
 }
 
+/* Hide type badge within cards when they're already in a typed group */
+.ar-grid-group .ar-card-type-badge {
+  display: none;
+}
+
 .ar-grid-cards:has(.ar-card-item),
 .ar-grid-cards--variable:has(.ar-card-item) {
   grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
@@ -306,60 +319,94 @@
 .ar-card-badge-row {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 16px 24px 8px;
+  gap: 8px;
+  padding: 18px 24px 12px;
   flex-wrap: wrap;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.01), transparent);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 }
 
+/* Type badge - for non-severity context labels (thinker names, categories) */
 .ar-card-type-badge {
-  padding: 3px 10px;
-  border-radius: 3px;
-  font-size: 0.65rem;
-  font-weight: 650;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.625rem;
+  font-weight: 500;
   font-family: var(--font-sans);
-  border: 1px solid;
-  letter-spacing: 0.03em;
-  text-transform: capitalize;
+  border: none;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.04);
+  color: rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease;
 }
 
+/* Severity badge - for critical/high/medium/low indicators */
 .ar-severity-badge {
-  padding: 2px 8px;
-  border-radius: 3px;
-  font-size: 0.575rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.6rem;
   font-weight: 700;
   font-family: var(--font-sans);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
+  border: 1px solid;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.ar-severity-badge--major {
+.ar-severity-badge--major,
+.ar-severity-badge--critical {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #ffffff;
+  border-color: #991b1b;
   font-weight: 800;
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
+}
+
+.ar-severity-badge--high {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  color: #ffffff;
+  border-color: #9a3412;
+}
+
+.ar-severity-badge--moderate,
+.ar-severity-badge--medium {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #ffffff;
+  border-color: #b45309;
+}
+
+.ar-severity-badge--low,
+.ar-severity-badge--minor {
+  background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%);
+  color: #ffffff;
+  border-color: #4d7c0f;
 }
 
 .ar-card-heading {
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-text, #1a1a1a);
   margin: 0;
-  padding: 4px 24px 8px;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
+  padding: 4px 24px 10px;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
 }
 
 .ar-card-prose {
   font-size: 0.875rem;
   font-family: var(--font-body);
-  color: var(--color-text-secondary, var(--color-text));
+  color: rgba(0, 0, 0, 0.7);
   margin: 0;
-  padding: 0 24px 16px;
-  line-height: 1.6;
-  max-width: 62ch;
+  padding: 0 24px 20px;
+  line-height: 1.65;
+  max-width: 65ch;
 }
 
 .ar-card-prose--subdued {
-  color: var(--color-text-muted);
-  font-size: 0.825rem;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.8125rem;
 }
 
 .ar-card-section-label {
@@ -531,12 +578,16 @@
 }
 
 .ar-grid-group {
-  margin-bottom: var(--space-xl);
+  margin-bottom: 48px;
 }
 
 .ar-grid-group--enhanced {
-  margin-bottom: var(--space-2xl);
+  margin-bottom: 56px;
   transition: background var(--duration-normal) var(--ease-out);
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.01);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .ar-grid-group h3 {
@@ -602,13 +653,13 @@
 .ar-grid-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
-  gap: var(--space-md);
+  gap: 18px;
 }
 
 .ar-grid-cards--variable {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-md);
+  gap: 18px;
   align-items: stretch;
 }
 
