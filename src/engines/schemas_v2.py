@@ -14,7 +14,7 @@ See docs/refactoring_engines.md and docs/plain_text_architecture.md
 for the architectural rationale.
 """
 
-from typing import Any, Optional
+from typing import Any, Literal, Optional
 
 from pydantic import BaseModel, Field
 
@@ -354,6 +354,20 @@ class CapabilityEngineDefinition(BaseModel):
     paradigm_keys: list[str] = Field(
         default_factory=list,
         description="Associated paradigm keys",
+    )
+    output_mode: Literal["prose", "json"] = Field(
+        default="prose",
+        description="Runtime output mode for the engine. Existing engines default to prose; "
+        "bounded structured workflows can opt into JSON.",
+    )
+    output_contract: Optional[dict[str, Any]] = Field(
+        default=None,
+        description="Optional JSON output contract/example shown to the model when output_mode='json'.",
+    )
+    prompt_context_keys: list[str] = Field(
+        default_factory=list,
+        description="Optional prompt-context provider keys to inject into the runtime prompt. "
+        "Useful for taxonomy-backed enums or guidance that should stay registry-owned.",
     )
 
 

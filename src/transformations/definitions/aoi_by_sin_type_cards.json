@@ -1,0 +1,30 @@
+{
+  "template_key": "aoi_by_sin_type_cards",
+  "template_name": "AOI By-Sin-Type Cards",
+  "description": "Pass-through template for the AOI findings regrouped by the sin taxonomy.",
+  "version": 1,
+  "selection_priority": 100,
+  "transformation_type": "none",
+  "applicable_renderer_types": [
+    "card_grid"
+  ],
+  "applicable_engines": [
+    "aoi_sin_findings"
+  ],
+  "renderer_config_presets": {
+    "card_grid": {
+      "title_field": "title",
+      "subtitle_field": "theme_name",
+      "description_field": "description",
+      "badge_field": "badge",
+      "columns": 2
+    }
+  },
+  "tags": ["aoi", "sin-taxonomy", "pass-through"],
+  "status": "active",
+  "domain": "influence",
+  "pattern_type": "card_extraction",
+  "data_shape_out": "object_array",
+  "source": "AOI thematic single-thinker tranche",
+  "generation_mode": "curated"
+}

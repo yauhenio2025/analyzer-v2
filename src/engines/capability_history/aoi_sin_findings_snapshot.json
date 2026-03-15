@@ -1,0 +1,165 @@
+{
+  "analytical_dimensions": [
+    {
+      "depth_guidance": {
+        "deep": "Capture weaker but still meaningful secondary findings as well.",
+        "standard": "Identify the main findings across the theme inventory.",
+        "surface": "Identify only the clearest and best-supported findings."
+      },
+      "description": "Identify the discrete AOI findings that deserve naming.",
+      "key": "finding_identification",
+      "probing_questions": [
+        "What exact problem is visible here?",
+        "Which theme anchors the problem?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Include denser evidence and clearer consequence analysis.",
+        "standard": "Include document labels, locators, and short excerpts.",
+        "surface": "Include the key target/source anchors."
+      },
+      "description": "Preserve concrete target/source provenance for each finding.",
+      "key": "provenance",
+      "probing_questions": [
+        "Which target passage demonstrates the problem?",
+        "Which source passage contradicts or complicates it?"
+      ]
+    }
+  ],
+  "apps": [
+    "critic"
+  ],
+  "capabilities": [
+    {
+      "depth_scaling": {
+        "deep": "Classify primary and secondary findings with richer rationale.",
+        "standard": "Classify all main findings across themes.",
+        "surface": "Classify the clearest cases only."
+      },
+      "description": "Assign exactly one dominant AOI sin type per finding.",
+      "extended_description": null,
+      "indicators": [],
+      "intellectual_grounding": null,
+      "key": "classify_sins",
+      "produces_dimensions": [],
+      "requires_dimensions": []
+    },
+    {
+      "depth_scaling": {
+        "deep": "Fuller quotation and consequence detail.",
+        "standard": "Explicit document labels, locators, and excerpts.",
+        "surface": "Minimal provenance anchors."
+      },
+      "description": "Keep each finding anchored to target-side and source-side evidence.",
+      "extended_description": null,
+      "indicators": [],
+      "intellectual_grounding": null,
+      "key": "preserve_provenance_pairs",
+      "produces_dimensions": [],
+      "requires_dimensions": []
+    }
+  ],
+  "category": "evidence",
+  "composability": {
+    "consumes_from": {
+      "engagements": "Requires the upstream engagement map.",
+      "themes": "Requires the upstream theme inventory."
+    },
+    "shares_with": {
+      "findings": "Flat AOI findings keyed by theme and sin type."
+    },
+    "synergy_engines": [
+      "aoi_thematic_report"
+    ]
+  },
+  "depth_levels": [
+    {
+      "description": "Only the most obvious AOI findings with short evidence anchors.",
+      "key": "surface",
+      "passes": [],
+      "suitable_for": "Fast triage of the strongest AOI failures.",
+      "typical_passes": 1
+    },
+    {
+      "description": "Flat AOI findings with provenance, severity, and implication.",
+      "key": "standard",
+      "passes": [],
+      "suitable_for": "Default AOI finding extraction for the single-thinker tranche.",
+      "typical_passes": 1
+    },
+    {
+      "description": "More exhaustive AOI findings with denser evidence and stronger nuance.",
+      "key": "deep",
+      "passes": [],
+      "suitable_for": "Richer AOI review when the corpus supports more findings.",
+      "typical_passes": 1
+    }
+  ],
+  "engine_key": "aoi_sin_findings",
+  "engine_name": "AOI Sin Findings",
+  "function": "influence",
+  "intellectual_lineage": {
+    "key_concepts": [
+      {
+        "definition": "A bounded category of problematic reuse, omission, distortion, or authority borrowing.",
+        "name": "scholarly_sin"
+      },
+      {
+        "definition": "Pairing target-side evidence with source-side evidence or explicit silence.",
+        "name": "provenance_pairing"
+      }
+    ],
+    "primary": {
+      "description": "Bloom's anxiety-of-influence vocabulary frames the recognizable misuses and agonistic distortions at stake.",
+      "name": "bloom"
+    },
+    "secondary": [
+      {
+        "description": "Citation practice and scholarly apparatus matter because AOI failures often appear as omissions, selective use, or authority laundering.",
+        "name": "grafton"
+      }
+    ],
+    "traditions": [
+      {
+        "description": "AOI findings rely on disciplined source/target provenance rather than impressionistic accusation.",
+        "name": "citation_scholarship"
+      }
+    ]
+  },
+  "kind": "synthesis",
+  "legacy_engine_key": null,
+  "output_contract": {
+    "findings": [
+      {
+        "discrepancy_analysis": "string",
+        "engagement_level": "engaged | partial | ignored | distorted",
+        "implication_for_argument": "string",
+        "severity": "critical | high | medium | low",
+        "severity_rationale": "string",
+        "sin_type": "misreading | unacknowledged_debt | misappropriation | decontextualization | selective_citation | flattening | ventriloquism | strategic_silence | premature_synthesis | legitimation_borrowing",
+        "source_document_id": "string - stable slug for the source work",
+        "source_locator": "string",
+        "source_quote": "string or null for strategic silence",
+        "source_work_title": "string",
+        "summary": "string",
+        "target_chapter_key": "nlr_153 | nlr_154 | response",
+        "target_document_label": "string",
+        "target_locator": "string",
+        "target_quote": "string",
+        "theme_id": "string - must match an upstream theme identifier",
+        "title": "string",
+        "what_benanav_misses": "string"
+      }
+    ]
+  },
+  "output_mode": "json",
+  "paradigm_keys": [],
+  "problematique": "Anxiety of Influence becomes concrete at the level of specific findings: named\nscholarly sins tied to a theme, a target passage, a source passage, and an\naccount of what the subject author misses. This engine identifies those flat,\nevidence-bearing findings without yet turning them into a reading surface.\n\nThe emphasis is discriminating classification, provenance, and argument-level\nconsequence. Each finding must be classifiable into exactly one AOI sin type,\ntied back to the theme inventory, and grounded in target/source textual\nevidence or strategic silence where the absence of engagement is itself the\nscholarly problem.\n",
+  "prompt_context_keys": [
+    "aoi_sin_type_enum",
+    "aoi_sin_type_guidance"
+  ],
+  "researcher_question": "What specific AOI findings emerge when the subject author's engagement with the selected source thinker is tested theme by theme?",
+  "version": 1
+}

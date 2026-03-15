@@ -1,0 +1,30 @@
+{
+  "template_key": "aoi_source_documents_cards",
+  "template_name": "AOI Source Documents Cards",
+  "description": "Pass-through template for the explicit source-document inventory emitted by the AOI thematic synthesis engine.",
+  "version": 1,
+  "selection_priority": 100,
+  "transformation_type": "none",
+  "applicable_renderer_types": [
+    "card_grid"
+  ],
+  "applicable_engines": [
+    "aoi_thematic_synthesis"
+  ],
+  "renderer_config_presets": {
+    "card_grid": {
+      "title_field": "title",
+      "subtitle_field": "subtitle",
+      "description_field": "description",
+      "badge_field": "badge",
+      "columns": 2
+    }
+  },
+  "tags": ["aoi", "source-documents", "pass-through"],
+  "status": "active",
+  "domain": "influence",
+  "pattern_type": "card_extraction",
+  "data_shape_out": "object_array",
+  "source": "AOI thematic single-thinker tranche",
+  "generation_mode": "curated"
+}

@@ -1,0 +1,111 @@
+engine_key: aoi_thematic_synthesis
+engine_name: AOI Thematic Synthesis
+version: 1
+category: concepts
+kind: synthesis
+problematique: |
+  Anxiety of Influence analysis begins by reconstructing the thematic world of the
+  selected source thinker on their own terms. Before we can judge whether the
+  subject author faithfully engages, ignores, or distorts that thinker, we need a
+  stable map of the source corpus: its recurrent themes, the claims that organize
+  each theme, the philosophical commitments that make those claims intelligible,
+  and the argumentative moves that carry them.
+
+  This engine therefore treats the source corpus as a bounded scholarly archive.
+  It does not hunt for every passing idea. It identifies the themes that matter
+  enough to become units of later comparison and criticism, while preserving
+  provenance to the specific source documents that ground those themes.
+researcher_question: What are the major themes in the selected source thinker's corpus, and how should they be identified for downstream AOI analysis?
+intellectual_lineage:
+  primary:
+    name: bloom
+    description: Harold Bloom's anxiety-of-influence problem frame treats influence as an agonistic, interpretive struggle rather than neutral citation.
+  secondary:
+    - name: skinner
+      description: Quentin Skinner's contextualism guards against lifting claims out of their original argumentative situation.
+  traditions:
+    - name: intellectual_history
+      description: The reconstruction of themes as historically situated argumentative formations.
+  key_concepts:
+    - name: thematic_reconstruction
+      definition: Reconstructing the recurrent argumentative themes that organize a source corpus.
+    - name: provenance
+      definition: Keeping track of which source works and passages ground each synthesized theme.
+analytical_dimensions:
+  - key: theme_inventory
+    description: Identify the major themes that recur across the selected source corpus.
+    probing_questions:
+      - Which themes appear repeatedly enough to support later comparison?
+      - Which themes are central rather than merely incidental?
+    depth_guidance:
+      surface: Identify 3-5 high-level themes with concise summaries.
+      standard: Identify 5-8 themes with clear distinctions and supporting source coverage.
+      deep: Identify the full thematic map, including tensions between closely related themes.
+  - key: claim_structure
+    description: Capture the key claims, commitments, and argumentative moves that define each theme.
+    probing_questions:
+      - What does the source thinker actually claim under this theme?
+      - What philosophical commitments structure those claims?
+      - How does the source thinker argue for them?
+    depth_guidance:
+      surface: Summarize the dominant claim for each theme.
+      standard: Capture key claims, commitments, and moves separately.
+      deep: Surface internal tensions and second-order qualifications as well.
+capabilities:
+  - key: synthesize_themes
+    description: Build a stable theme inventory for the source corpus.
+    depth_scaling:
+      surface: Short theme list with brief summaries.
+      standard: Theme list with clear summaries and provenance.
+      deep: Theme list with distinctions, tensions, and stronger provenance coverage.
+  - key: preserve_provenance
+    description: Track which source documents ground each theme.
+    depth_scaling:
+      surface: Cite the main source work per theme.
+      standard: Cite the source documents that materially support each theme.
+      deep: Include representative passages and locators where possible.
+composability:
+  shares_with:
+    themes: Stable theme inventory with theme names and claims.
+    source_documents: Explicit list of source documents used for later source inventory views.
+  consumes_from: {}
+  synergy_engines:
+    - aoi_engagement_mapping
+depth_levels:
+  - key: surface
+    description: A concise thematic map for later AOI comparison.
+    typical_passes: 1
+    suitable_for: Fast triage when only a coarse theme inventory is needed.
+  - key: standard
+    description: A structured thematic synthesis with provenance-ready detail.
+    typical_passes: 1
+    suitable_for: Default AOI thematic pass for the single-thinker tranche.
+  - key: deep
+    description: A more exhaustive thematic synthesis with internal tensions and stronger provenance.
+    typical_passes: 1
+    suitable_for: Richer thematic reconstruction when the source corpus is especially dense.
+apps:
+  - critic
+function: influence
+output_mode: json
+output_contract:
+  selected_source_thinker:
+    thinker_id: "john_oneill"
+    thinker_name: "John O'Neill"
+  source_documents:
+    - source_document_id: "string - stable slug for the source work"
+      title: "string"
+      subtitle: "string - author and/or year"
+      description: "string"
+  themes:
+    - theme_name: "string"
+      overview: "string"
+      key_claims: ["string"]
+      philosophical_commitments: ["string"]
+      argumentative_moves: ["string"]
+      source_documents: ["string or source-document object"]
+      representative_quotes:
+        - source_work_title: "string"
+          source_locator: "string"
+          quote: "string"
+      centrality: "core | major | minor"

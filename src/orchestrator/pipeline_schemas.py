@@ -6,8 +6,9 @@ into a single async job. These schemas define the request/response for that flow
 
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
+from src.aoi import AOI_WORKFLOW_KEY
 from src.orchestrator.schemas import TargetWork, PriorWork
 
 
@@ -51,6 +52,21 @@ class PriorWorkWithText(BaseModel):
         default="",
         description="User's hint about relationship to target",
     )
+    source_thinker_id: Optional[str] = Field(
+        default=None,
+        description="Optional thinker identifier for the source corpus this work belongs to. "
+        "Required for the single-thinker AOI workflow.",
+    )
+    source_thinker_name: Optional[str] = Field(
+        default=None,
+        description="Optional thinker display name for the source corpus this work belongs to. "
+        "Required for the single-thinker AOI workflow.",
+    )
+    source_document_id: Optional[str] = Field(
+        default=None,
+        description="Stable source-document identifier for this work. "
+        "Required for the single-thinker AOI workflow.",
+    )
     text: str = Field(
         description="Full text of the prior work",
     )
@@ -91,11 +107,27 @@ class AnalyzeRequest(BaseModel):
         description="surface, standard, deep, or None (let orchestrator decide)",
     )
     focus_hint: Optional[str] = None
+    selected_source_thinker_id: Optional[str] = Field(
+        default=None,
+        description="Explicit thinker identifier for the AOI source corpus. "
+        "Required for anxiety_of_influence_thematic_single_thinker.",
+    )
+    selected_source_thinker_name: Optional[str] = Field(
+        default=None,
+        description="Human-readable thinker name for the AOI source corpus. "
+        "Required for anxiety_of_influence_thematic_single_thinker.",
+    )
 
     # Workflow selection
     workflow_key: Optional[str] = Field(
         default=None,
         description="Workflow key for this analysis. Default: 'intellectual_genealogy'.",
+    )
+    project_id: Optional[str] = Field(
+        default=None,
+        description="Optional project identifier to associate with the executor job. "
+        "Useful for feedback capture and variant-learning loops even when the "
+        "caller owns the higher-level project workspace.",
     )
 
     # Pipeline control
@@ -132,6 +164,56 @@ class AnalyzeRequest(BaseModel):
         description="Default model for phase execution: 'claude-sonnet-4-6' or 'gemini-3.1-pro-preview'. "
         "Default: per-phase model_hint from plan. Overrides plan defaults.",
     )
+
+    @model_validator(mode="after")
+    def _validate_aoi_single_thinker_contract(self) -> "AnalyzeRequest":
+        """Require explicit thinker identity for the bounded AOI workflow."""
+        if self.workflow_key != AOI_WORKFLOW_KEY:
+            return self
+
+        if not self.selected_source_thinker_id or not self.selected_source_thinker_name:
+            raise ValueError(
+                "AOI single-thinker workflow requires selected_source_thinker_id "
+                "and selected_source_thinker_name."
+            )
+
+        if not self.prior_works:
+            raise ValueError(
+                "AOI single-thinker workflow requires prior_works for the selected source thinker."
+            )
+
+        mismatched_titles: list[str] = []
+        missing_source_document_ids: list[str] = []
+        matching_count = 0
+        for prior_work in self.prior_works:
+            if (
+                prior_work.source_thinker_id == self.selected_source_thinker_id
+                and prior_work.source_thinker_name == self.selected_source_thinker_name
+            ):
+                matching_count += 1
+                if not prior_work.source_document_id:
+                    missing_source_document_ids.append(prior_work.title)
+                continue
+            mismatched_titles.append(prior_work.title)
+
+        if matching_count == 0:
+            raise ValueError(
+                "AOI single-thinker workflow requires at least one prior work whose "
+                "source thinker matches the selected source thinker."
+            )
+
+        if mismatched_titles:
+            raise ValueError(
+                "AOI single-thinker workflow currently expects all prior works to belong "
+                f"to the selected source thinker. Mismatched works: {mismatched_titles}"
+            )
+        if missing_source_document_ids:
+            raise ValueError(
+                "AOI single-thinker workflow requires source_document_id on all selected "
+                f"prior works. Missing on: {missing_source_document_ids}"
+            )
+
+        return self
 
 
 class AnalyzeResponse(BaseModel):

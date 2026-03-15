@@ -1,0 +1,13 @@
+{
+  "engine_key": "aoi_thematic_synthesis",
+  "entries": [
+    {
+      "timestamp": "2026-03-14T16:15:15.589079+00:00",
+      "version": 1,
+      "definition_hash": "695ec9707500b482295b93437be01647d8541e08c970c3fa79477e04815877c6",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

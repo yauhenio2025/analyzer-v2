@@ -10,8 +10,9 @@ import uuid
 from datetime import datetime
 from typing import Any, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
+from src.aoi import AOI_WORKFLOW_KEY
 
 class TargetWork(BaseModel):
     """The primary work being analyzed."""
@@ -38,6 +39,18 @@ class PriorWork(BaseModel):
     relationship_hint: str = Field(
         default="",
         description="User's hint about relationship to target (e.g., 'First mention of core thesis')",
+    )
+    source_thinker_id: Optional[str] = Field(
+        default=None,
+        description="Optional thinker identifier for the source corpus this work belongs to.",
+    )
+    source_thinker_name: Optional[str] = Field(
+        default=None,
+        description="Optional thinker display name for the source corpus this work belongs to.",
+    )
+    source_document_id: Optional[str] = Field(
+        default=None,
+        description="Optional stable source-document identifier. Required for the single-thinker AOI workflow.",
     )
 
 
@@ -321,6 +334,14 @@ class OrchestratorPlanRequest(BaseModel):
         default=None,
         description="Optional hint about what to focus on (e.g., 'vocabulary evolution', 'Marxist origins')",
     )
+    selected_source_thinker_id: Optional[str] = Field(
+        default=None,
+        description="Explicit thinker identifier for the AOI source corpus.",
+    )
+    selected_source_thinker_name: Optional[str] = Field(
+        default=None,
+        description="Human-readable thinker name for the AOI source corpus.",
+    )
 
     # Workflow selection
     workflow_key: Optional[str] = Field(
@@ -339,6 +360,56 @@ class OrchestratorPlanRequest(BaseModel):
         description="Default model for phase execution: 'claude-sonnet-4-6', 'gemini-3.1-pro-preview', etc. "
         "None = use plan's per-phase model_hint. Can be overridden per-phase.",
     )
+
+    @model_validator(mode="after")
+    def _validate_aoi_single_thinker_contract(self) -> "OrchestratorPlanRequest":
+        """Require explicit thinker identity for the bounded AOI workflow."""
+        if self.workflow_key != AOI_WORKFLOW_KEY:
+            return self
+
+        if not self.selected_source_thinker_id or not self.selected_source_thinker_name:
+            raise ValueError(
+                "AOI single-thinker workflow requires selected_source_thinker_id "
+                "and selected_source_thinker_name."
+            )
+
+        if not self.prior_works:
+            raise ValueError(
+                "AOI single-thinker workflow requires prior_works for the selected source thinker."
+            )
+
+        mismatched_titles: list[str] = []
+        missing_source_document_ids: list[str] = []
+        matching_count = 0
+        for prior_work in self.prior_works:
+            if (
+                prior_work.source_thinker_id == self.selected_source_thinker_id
+                and prior_work.source_thinker_name == self.selected_source_thinker_name
+            ):
+                matching_count += 1
+                if not prior_work.source_document_id:
+                    missing_source_document_ids.append(prior_work.title)
+                continue
+            mismatched_titles.append(prior_work.title)
+
+        if matching_count == 0:
+            raise ValueError(
+                "AOI single-thinker workflow requires at least one prior work whose "
+                "source thinker matches the selected source thinker."
+            )
+
+        if mismatched_titles:
+            raise ValueError(
+                "AOI single-thinker workflow currently expects all prior works to belong "
+                f"to the selected source thinker. Mismatched works: {mismatched_titles}"
+            )
+        if missing_source_document_ids:
+            raise ValueError(
+                "AOI single-thinker workflow requires source_document_id on all selected "
+                f"prior works. Missing on: {missing_source_document_ids}"
+            )
+
+        return self
 
 
 class PlanRefinementRequest(BaseModel):
@@ -377,6 +448,8 @@ class WorkflowExecutionPlan(BaseModel):
     target_work: TargetWork
     prior_works: list[PriorWork] = Field(default_factory=list)
     research_question: Optional[str] = None
+    selected_source_thinker_id: Optional[str] = None
+    selected_source_thinker_name: Optional[str] = None
 
     # The strategy
     strategy_summary: str = Field(
@@ -453,3 +526,22 @@ class WorkflowExecutionPlan(BaseModel):
         default=0,
         description="Current revision number. 0 = original plan, 1+ = revised.",
     )
+
+    @model_validator(mode="after")
+    def _validate_aoi_single_thinker_context(self) -> "WorkflowExecutionPlan":
+        if self.workflow_key != AOI_WORKFLOW_KEY:
+            return self
+        if not self.selected_source_thinker_id or not self.selected_source_thinker_name:
+            raise ValueError(
+                "AOI single-thinker plans must preserve selected_source_thinker_id "
+                "and selected_source_thinker_name."
+            )
+        missing_source_document_ids = [
+            prior_work.title for prior_work in self.prior_works if not prior_work.source_document_id
+        ]
+        if missing_source_document_ids:
+            raise ValueError(
+                "AOI single-thinker plans must preserve source_document_id on all selected "
+                f"prior works. Missing on: {missing_source_document_ids}"
+            )
+        return self

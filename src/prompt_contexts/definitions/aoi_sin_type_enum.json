@@ -1,0 +1,8 @@
+{
+  "provider_key": "aoi_sin_type_enum",
+  "provider_name": "AOI Sin Type Enum",
+  "source_type": "taxonomy_enum",
+  "taxonomy_key": "anxiety_of_influence_sin_types",
+  "render_format": "plain_csv",
+  "status": "active"
+}

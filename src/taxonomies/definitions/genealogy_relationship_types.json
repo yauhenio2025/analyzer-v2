@@ -1,0 +1,96 @@
+{
+  "taxonomy_key": "genealogy_relationship_types",
+  "domain": "genealogy",
+  "description": "Relationship-type semantics for intellectual genealogy classification.",
+  "values": [
+    {
+      "key": "direct_precursor",
+      "name": "Direct Precursor",
+      "use_when": "the prior work transmits the target's immediate problem-space, unresolved aporia, or architecturally central precursor problem.",
+      "avoid_when": "the prior work mainly contributes method, reusable vocabulary, or same-program continuity without being the target's forcing problem.",
+      "secondary_when": "the work also contributes methodology or provides a foil."
+    },
+    {
+      "key": "methodological_ancestor",
+      "name": "Methodological Ancestor",
+      "use_when": "the prior work mainly contributes procedure, style of critique, analytical method, or reusable conceptual apparatus rather than the target's central problem.",
+      "avoid_when": "the prose clearly identifies transmitted aporia/problem-space as the main inheritance.",
+      "secondary_when": "the work also acts as a precursor in a narrower argumentative sense."
+    },
+    {
+      "key": "counter_position",
+      "name": "Counter Position",
+      "use_when": "the target develops by turning the prior work into an explicit foil, inversion, or object of immanent self-critique.",
+      "avoid_when": "the prior work is mainly supportive or upstream contextual background.",
+      "secondary_when": "the target still inherits vocabulary or method from the criticized work."
+    },
+    {
+      "key": "indirect_contextualizer",
+      "name": "Indirect Contextualizer",
+      "use_when": "the prior work mainly frames the background conditions or horizon within which the target becomes intelligible.",
+      "avoid_when": "the prior work directly shapes the target's architecture, method, or key concepts."
+    },
+    {
+      "key": "stylistic_influence",
+      "name": "Stylistic Influence",
+      "use_when": "the inheritance is primarily rhetorical, tonal, or compositional rather than conceptual or methodological.",
+      "avoid_when": "the relationship is structurally analytical or problem-transmitting."
+    },
+    {
+      "key": "conceptual_sibling",
+      "name": "Conceptual Sibling",
+      "use_when": "the prior work belongs to the same authorial project, formation, or research program and shares vocabulary/frameworks, but is better understood as an adjacent developmental installment than as the target's immediate forcing problem.",
+      "avoid_when": "the prose identifies a specific transmitted aporia/problem-space as the dominant relation.",
+      "secondary_when": "the work also shares method or limited precursor elements."
+    }
+  ],
+  "guidance": [
+    "Do not default multiple important works to `direct_precursor`.",
+    "Same-author earlier works are not automatically `direct_precursor`.",
+    "Keep the primary label maximally discriminating; use the secondary label for the next-most-important role."
+  ],
+  "normalization_hints": {
+    "problem_transmission_signals": [
+      "starting problem",
+      "problem transmission",
+      "forcing function",
+      "unresolved aporia",
+      "immediate problem-space",
+      "architecturally precise definition",
+      "problem-space",
+      "dead-end diagnosis",
+      "problem it was written to solve"
+    ],
+    "methodological_signals": [
+      "vocabulary",
+      "terminology",
+      "methodological",
+      "procedure",
+      "immanent critique",
+      "interpretive position",
+      "framework preservation",
+      "analytical method",
+      "methodological template",
+      "conceptual architecture"
+    ],
+    "method_only_markers": [
+      "methodological prior work",
+      "primarily methodological prior work",
+      "inherited analytical instrument",
+      "new domain absent from the prior work",
+      "opens the conceptual space"
+    ],
+    "same_program_markers": [
+      "authorial self-development",
+      "same developing body of thought",
+      "single developing body of thought",
+      "not as external influence",
+      "embryonic form",
+      "skeleton already appears",
+      "systematic development and formalization",
+      "within a single developing body of thought",
+      "adjacent installment",
+      "same research program"
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "taxonomy_key": "anxiety_of_influence_sin_types",
+  "domain": "influence",
+  "description": "Taxonomy of scholarly misuse patterns for Anxiety of Influence analysis.",
+  "values": [
+    {
+      "key": "misreading",
+      "name": "Misreading",
+      "use_when": "the source text is represented substantively incorrectly",
+      "avoid_when": "the issue is omission, citation practice, or historical framing rather than substantive representation",
+      "notes": ["Bloomian clinamen-style correction or distortion."]
+    },
+    {
+      "key": "unacknowledged_debt",
+      "name": "Unacknowledged Debt",
+      "use_when": "the target depends on the source thinker’s conceptual or scholarly labor without adequate credit",
+      "avoid_when": "the source is cited directly and the issue is instead selective use or distortion"
+    },
+    {
+      "key": "misappropriation",
+      "name": "Misappropriation",
+      "use_when": "the target deploys a source concept for ends the source explicitly resists or would reject",
+      "avoid_when": "the target merely simplifies or partially omits the source"
+    },
+    {
+      "key": "decontextualization",
+      "name": "Decontextualization",
+      "use_when": "the target strips an idea from the philosophical, historical, or methodological context that makes it intelligible",
+      "avoid_when": "the issue is direct contradiction rather than contextual stripping"
+    },
+    {
+      "key": "selective_citation",
+      "name": "Selective Citation",
+      "use_when": "the target cites only the favorable slice of a position and omits source material that complicates or undercuts it",
+      "avoid_when": "the thinker is not cited at all"
+    },
+    {
+      "key": "flattening",
+      "name": "Flattening",
+      "use_when": "a multidimensional or tension-filled position is reduced to one simplified dimension",
+      "avoid_when": "the target invents a claim the source never made"
+    },
+    {
+      "key": "ventriloquism",
+      "name": "Ventriloquism",
+      "use_when": "the target attributes a position or wording to the source that the source never held",
+      "avoid_when": "the issue is better described as interpretive distortion rather than fabricated attribution"
+    },
+    {
+      "key": "strategic_silence",
+      "name": "Strategic Silence",
+      "use_when": "the source thinker is the necessary interlocutor but is not cited or engaged where they obviously should be",
+      "avoid_when": "the thinker is actually engaged, even if inadequately"
+    },
+    {
+      "key": "premature_synthesis",
+      "name": "Premature Synthesis",
+      "use_when": "the target treats unresolved debates or contested positions as already settled",
+      "avoid_when": "the issue is mainly authority laundering or a direct misreading"
+    },
+    {
+      "key": "legitimation_borrowing",
+      "name": "Legitimation Borrowing",
+      "use_when": "the source thinker is invoked mainly to legitimize a position they would not endorse",
+      "avoid_when": "the target is actually building on the source’s framework, even if selectively"
+    }
+  ],
+  "guidance": [
+    "Assign exactly one dominant sin type per finding.",
+    "Prefer the most discriminating category rather than the most dramatic one.",
+    "Use strategic_silence only when the thinker’s absence is itself the key scholarly failure."
+  ],
+  "normalization_hints": {
+    "misread": ["misreading"],
+    "debt": ["unacknowledged_debt"],
+    "appropriation": ["misappropriation"],
+    "context stripping": ["decontextualization"],
+    "cherry-picking": ["selective_citation"],
+    "oversimplification": ["flattening"],
+    "putting words in mouth": ["ventriloquism"],
+    "silence": ["strategic_silence"],
+    "false consensus": ["premature_synthesis"],
+    "authority laundering": ["legitimation_borrowing"]
+  },
+  "metadata": {
+    "count": 10,
+    "source": "AOI thematic single-thinker tranche"
+  }
+}

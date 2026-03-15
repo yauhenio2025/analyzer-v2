@@ -5,7 +5,9 @@
   "consumer_type": "web_app",
   "supported_renderers": [
     "accordion",
+    "card",
     "card_grid",
+    "nested_sections",
     "prose",
     "table",
     "tab",
@@ -19,6 +21,7 @@
     "mini_card_list",
     "key_value_table",
     "prose_block",
+    "annotated_prose",
     "stat_row",
     "comparison_panel",
     "timeline_strip",

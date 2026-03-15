@@ -1,0 +1,42 @@
+{
+  "view_key": "aoi_thematic_analysis",
+  "view_name": "Thematic Analysis",
+  "description": "Top-level AOI thematic analysis surface for one selected source thinker. Organizes source documents, theme-led findings, sin-type groupings, and the structured report under one parent container.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "anxiety-of-influence",
+  "target_section": "results",
+  "renderer_type": "tab",
+  "renderer_config": {
+    "tab_style": "underline",
+    "default_tab": 1,
+    "show_count_badges": true
+  },
+  "data_source": {
+    "workflow_key": "anxiety_of_influence_thematic_single_thinker",
+    "phase_number": null,
+    "engine_key": null,
+    "chain_key": null,
+    "result_path": "",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "interactive",
+  "position": 1.0,
+  "parent_view_key": null,
+  "surface_archetype": "composite_overview",
+  "surface_role": "parent_surface",
+  "child_display_mode": "deep_dives",
+  "tab_count_field": null,
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "planner_hint": "Primary AOI surface for the single-thinker thematic tranche. Include this parent surface; the child AOI views supply the source document inventory, thematic grouping, sin grouping, and report detail.",
+  "planner_eligible": true,
+  "status": "active",
+  "tags": ["aoi", "influence", "thematic", "single-thinker"],
+  "source_project": "critic",
+  "generation_mode": "curated"
+}

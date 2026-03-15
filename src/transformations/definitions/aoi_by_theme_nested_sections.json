@@ -1,0 +1,26 @@
+{
+  "template_key": "aoi_by_theme_nested_sections",
+  "template_name": "AOI By-Theme Nested Sections",
+  "description": "Pass-through template for the deterministic by-theme AOI payload normalized from the sin findings engine.",
+  "version": 1,
+  "selection_priority": 100,
+  "transformation_type": "none",
+  "applicable_renderer_types": [
+    "accordion"
+  ],
+  "applicable_engines": [
+    "aoi_sin_findings"
+  ],
+  "renderer_config_presets": {
+    "accordion": {
+      "expand_first": true
+    }
+  },
+  "tags": ["aoi", "by-theme", "pass-through"],
+  "status": "active",
+  "domain": "influence",
+  "pattern_type": "section_extraction",
+  "data_shape_out": "nested_sections",
+  "source": "AOI thematic single-thinker tranche",
+  "generation_mode": "curated"
+}

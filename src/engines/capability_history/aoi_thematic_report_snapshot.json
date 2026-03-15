@@ -1,0 +1,130 @@
+{
+  "analytical_dimensions": [
+    {
+      "depth_guidance": {
+        "deep": "More nuanced synthesis across engagement and sin distributions.",
+        "standard": "Clear summary, divergence highlights, and reading implications.",
+        "surface": "Short summary plus the most important implication."
+      },
+      "description": "Summarize the overall AOI result clearly enough to orient a reader.",
+      "key": "summary",
+      "probing_questions": [
+        "What is the engagement pattern overall?",
+        "Which divergences matter most?"
+      ]
+    }
+  ],
+  "apps": [
+    "critic"
+  ],
+  "capabilities": [
+    {
+      "depth_scaling": {
+        "deep": "Fuller structured report with stronger nuance and implication.",
+        "standard": "Full structured report sections for presentation.",
+        "surface": "Summary plus one or two structured support sections."
+      },
+      "description": "Produce a structured AOI report broken into reusable sections.",
+      "extended_description": null,
+      "indicators": [],
+      "intellectual_grounding": null,
+      "key": "synthesize_report_sections",
+      "produces_dimensions": [],
+      "requires_dimensions": []
+    }
+  ],
+  "category": "scholarly",
+  "composability": {
+    "consumes_from": {
+      "engagements": "Requires the engagement map.",
+      "findings": "Requires the flat AOI findings and grouped distributions.",
+      "themes": "Requires the theme inventory."
+    },
+    "shares_with": {
+      "report": "Structured report sections for the final AOI report view."
+    },
+    "synergy_engines": []
+  },
+  "depth_levels": [
+    {
+      "description": "Concise AOI closeout.",
+      "key": "surface",
+      "passes": [],
+      "suitable_for": "Fast summary mode.",
+      "typical_passes": 1
+    },
+    {
+      "description": "Structured AOI closeout with summary, divergences, distribution, and implications.",
+      "key": "standard",
+      "passes": [],
+      "suitable_for": "Default final report for the single-thinker tranche.",
+      "typical_passes": 1
+    },
+    {
+      "description": "More nuanced AOI closeout with fuller interpretive framing.",
+      "key": "deep",
+      "passes": [],
+      "suitable_for": "Richer end-state report when the findings warrant it.",
+      "typical_passes": 1
+    }
+  ],
+  "engine_key": "aoi_thematic_report",
+  "engine_name": "AOI Thematic Report",
+  "function": "influence",
+  "intellectual_lineage": {
+    "key_concepts": [
+      {
+        "definition": "A synthesis that distills the AOI findings without claiming more than the evidence supports.",
+        "name": "bounded_closeout"
+      }
+    ],
+    "primary": {
+      "description": "Intellectual history matters because the stakes of misreading and appropriation lie in what readers are led to think and do.",
+      "name": "berlin"
+    },
+    "secondary": [
+      {
+        "description": "Influence is summarized here as an agonistic pattern rather than a neutral bibliography.",
+        "name": "bloom"
+      }
+    ],
+    "traditions": [
+      {
+        "description": "Report synthesis links textual detail to larger interpretive consequences.",
+        "name": "intellectual_history"
+      }
+    ]
+  },
+  "kind": "synthesis",
+  "legacy_engine_key": null,
+  "output_contract": {
+    "report_sections": {
+      "engagement_pattern": "string",
+      "key_divergences": [
+        {
+          "badge": "critical | high | medium | low",
+          "description": "string",
+          "subtitle": "string",
+          "title": "string"
+        }
+      ],
+      "reading_implications": "string",
+      "sin_distribution": [
+        {
+          "count": 0,
+          "description": "string",
+          "sin_type": "string"
+        }
+      ],
+      "summary": "string"
+    }
+  },
+  "output_mode": "json",
+  "paradigm_keys": [],
+  "problematique": "The final AOI task is not to restate the findings one by one but to draw a\nbounded interpretive conclusion from them. What is the overall engagement\npattern? Which divergences matter most? What does the resulting AOI portrait\nimply about how a reader should interpret the subject author's use of the\nselected source thinker?\n\nThis engine produces a structured thematic report suitable for an inspectable\nreading surface. It must remain faithful to the upstream theme inventory,\nengagement map, and flat finding set while distilling them into a coherent\nreport that remains legible inside analyzer-v2's existing presentation grammar.\n",
+  "prompt_context_keys": [
+    "aoi_sin_type_enum"
+  ],
+  "researcher_question": "What bounded AOI report best summarizes the thematic relationship between the subject corpus and the selected source thinker?",
+  "version": 1
+}

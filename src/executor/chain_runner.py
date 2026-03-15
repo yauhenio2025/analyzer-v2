@@ -20,6 +20,7 @@ import logging
 import time
 from typing import Any, Callable, Optional
 
+from src.aoi.contract import build_aoi_output_metadata
 from src.chains.registry import get_chain_registry
 from src.engines.registry import get_engine_registry
 from src.executor.context_broker import (
@@ -402,6 +403,12 @@ def _run_engine_passes(
         pass_stances[pass_prompt.pass_number] = pass_prompt.stance_key
 
         # Persist incrementally
+        output_metadata = build_aoi_output_metadata(
+            job_id=job_id,
+            phase_number=phase_number,
+            engine_key=cap_def.engine_key,
+            content=result["content"],
+        )
         save_output(
             job_id=job_id,
             phase_number=phase_number,
@@ -415,6 +422,7 @@ def _run_engine_passes(
             input_tokens=result["input_tokens"],
             output_tokens=result["output_tokens"],
             parent_id=None,  # TODO: lineage tracking
+            metadata=output_metadata,
         )
 
         # Update job-level token counters INCREMENTALLY after each LLM call.
@@ -509,6 +517,12 @@ def _run_single_engine_call(
     )
 
     # Persist
+    output_metadata = build_aoi_output_metadata(
+        job_id=job_id,
+        phase_number=phase_number,
+        engine_key=cap_def.engine_key,
+        content=result["content"],
+    )
     save_output(
         job_id=job_id,
         phase_number=phase_number,
@@ -520,6 +534,7 @@ def _run_single_engine_call(
         model_used=result["model_used"],
         input_tokens=result["input_tokens"],
         output_tokens=result["output_tokens"],
+        metadata=output_metadata,
     )
 
     # Incremental token counter update

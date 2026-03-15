@@ -1,0 +1,13 @@
+{
+  "taxonomy_key": "genealogy_idea_trace_relationships",
+  "domain": "genealogy",
+  "description": "How a prior work relates to an idea's trajectory.",
+  "values": [
+    {"key": "origin", "name": "Origin", "use_when": "the prior work is where the idea first clearly appears."},
+    {"key": "elaboration", "name": "Elaboration", "use_when": "the prior work deepens or extends the idea."},
+    {"key": "peak_deployment", "name": "Peak Deployment", "use_when": "the prior work is the strongest or fullest expression of the idea."},
+    {"key": "demotion", "name": "Demotion", "use_when": "the prior work reduces or sidelines the idea."},
+    {"key": "absence", "name": "Absence", "use_when": "the prior work is notable because the idea is missing."},
+    {"key": "retirement", "name": "Retirement", "use_when": "the prior work marks the effective end of the idea's active life."}
+  ]
+}

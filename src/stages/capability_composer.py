@@ -17,6 +17,7 @@ The prompt structure for per-pass:
 5. Pass-specific description (what this pass should accomplish)
 """
 
+import json
 import logging
 from typing import Optional
 
@@ -25,6 +26,7 @@ from pydantic import BaseModel, Field
 from src.engines.schemas_v2 import CapabilityEngineDefinition, PassDefinition
 from src.operations.registry import StanceRegistry
 from src.operationalizations.registry import get_operationalization_registry
+from src.prompt_contexts.registry import get_prompt_context_registry
 
 logger = logging.getLogger(__name__)
 
@@ -104,11 +106,16 @@ def compose_capability_prompt(
     if dimensions:
         sections.append(_compose_dimensions(dimensions, depth))
 
-    # ── 3. Shared context from prior analysis ──────────────────────
+    # ── 3. Prompt context from registry-backed providers ───────────
+    prompt_context = _compose_prompt_contexts(cap_def)
+    if prompt_context:
+        sections.append(prompt_context)
+
+    # ── 4. Shared context from prior analysis ──────────────────────
     if shared_context:
         sections.append(_compose_shared_context(shared_context))
 
-    # ── 4. Output instructions ──────────────────────
+    # ── 5. Output instructions ──────────────────────
     sections.append(_compose_output_instructions(cap_def, depth))
 
     prompt = "\n\n".join(sections)
@@ -170,11 +177,16 @@ def compose_pass_prompt(
         if dimensions:
             sections.append(_compose_dimensions(dimensions, depth))
 
-    # ── 4. Shared context from prior passes ───────────────────
+    # ── 4. Prompt context from registry-backed providers ──────
+    prompt_context = _compose_prompt_contexts(cap_def)
+    if prompt_context:
+        sections.append(prompt_context)
+
+    # ── 5. Shared context from prior passes ───────────────────
     if shared_context:
         sections.append(_compose_shared_context(shared_context))
 
-    # ── 5. Pass-specific instructions ─────────────────────────
+    # ── 6. Pass-specific instructions ─────────────────────────
     sections.append(_compose_pass_instructions(cap_def, pass_def, depth))
 
     prompt = "\n\n".join(sections)
@@ -318,6 +330,26 @@ def _compose_pass_instructions(
     depth: str,
 ) -> str:
     """Compose pass-specific output instructions."""
+    if getattr(cap_def, "output_mode", "prose") == "json":
+        lines = [
+            f"## Pass {pass_def.pass_number}: {pass_def.label}",
+            "",
+            pass_def.description.strip(),
+            "",
+            "Return **valid JSON only**. Do not wrap it in markdown fences. "
+            "Do not add commentary before or after the JSON payload.",
+            "",
+        ]
+        if getattr(cap_def, "output_contract", None):
+            lines.extend([
+                "**JSON contract**:",
+                "```json",
+                json.dumps(cap_def.output_contract, indent=2),
+                "```",
+                "",
+            ])
+        return "\n".join(lines)
+
     lines = [
         f"## Pass {pass_def.pass_number}: {pass_def.label}",
         "",
@@ -409,6 +441,33 @@ def _compose_dimensions(
     return "\n".join(lines)
 
 
+def _compose_prompt_contexts(cap_def: CapabilityEngineDefinition) -> Optional[str]:
+    """Compose registry-backed prompt context blocks for an engine."""
+    if not getattr(cap_def, "prompt_context_keys", None):
+        return None
+
+    registry = get_prompt_context_registry()
+    blocks: list[str] = []
+    for key in cap_def.prompt_context_keys:
+        provider = registry.get(key)
+        if provider is None or provider.status != "active":
+            continue
+        value = registry.render(key)
+        if not value:
+            continue
+        title = provider.provider_name or key.replace("_", " ").title()
+        blocks.extend([
+            f"## {title}",
+            "",
+            value.strip(),
+            "",
+        ])
+
+    if not blocks:
+        return None
+    return "\n".join(blocks).strip()
+
+
 def _compose_shared_context(shared_context: str) -> str:
     """Compose the shared context section."""
     return "\n".join([
@@ -430,13 +489,39 @@ def _compose_output_instructions(
     cap_def: CapabilityEngineDefinition,
     depth: str,
 ) -> str:
-    """Compose the output format instructions — prose, not JSON."""
+    """Compose output format instructions."""
     # Get depth level description
     depth_desc = ""
     for dl in cap_def.depth_levels:
         if dl.key == depth:
             depth_desc = dl.description
             break
+
+    if getattr(cap_def, "output_mode", "prose") == "json":
+        lines = [
+            "## Output Instructions",
+            "",
+            "Return **valid JSON only** — no markdown fences, no prose commentary, "
+            "no prefatory explanation.",
+            "",
+            "Use stable identifiers where requested and preserve exact enum keys. "
+            "If a field is unavailable, return null rather than inventing data.",
+            "",
+        ]
+        if depth_desc:
+            lines.extend([
+                f"**Depth level ({depth})**: {depth_desc}",
+                "",
+            ])
+        if getattr(cap_def, "output_contract", None):
+            lines.extend([
+                "**JSON contract**:",
+                "```json",
+                json.dumps(cap_def.output_contract, indent=2),
+                "```",
+                "",
+            ])
+        return "\n".join(lines)
 
     lines = [
         "## Output Instructions",

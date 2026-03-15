@@ -11,6 +11,12 @@
       "subtitle_field": {"type": "string", "description": "Secondary text below title"},
       "badge_field": {"type": "string", "description": "Status/category badge"},
       "description_field": {"type": "string", "description": "Expandable detail content"}
+      ,
+      "max_visible_chars": {
+        "type": "integer",
+        "default": 260,
+        "description": "Auto-collapse descriptions longer than this many characters"
+      }
     }
   },
   "stance_affinities": {

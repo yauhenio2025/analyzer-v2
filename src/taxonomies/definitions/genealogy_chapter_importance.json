@@ -1,0 +1,11 @@
+{
+  "taxonomy_key": "genealogy_chapter_importance",
+  "domain": "genealogy",
+  "description": "Importance scale for chapter roles.",
+  "values": [
+    {"key": "critical", "name": "Critical", "use_when": "the argument would materially collapse or change without this chapter."},
+    {"key": "important", "name": "Important", "use_when": "the chapter does significant work but is not singularly decisive."},
+    {"key": "supporting", "name": "Supporting", "use_when": "the chapter helps sustain or clarify the argument."},
+    {"key": "peripheral", "name": "Peripheral", "use_when": "the chapter is tangential or locally useful rather than central."}
+  ]
+}

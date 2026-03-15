@@ -18,7 +18,12 @@ from typing import Any, Optional
 
 from pydantic import BaseModel, Field
 
-from src.llm.client import call_extraction_model, parse_llm_json_response
+from src.llm.client import (
+    call_extraction_model,
+    parse_llm_json_response,
+    repair_json_with_llm,
+)
+from src.transformations.prompt_context import render_prompt_template
 from src.transformations.schemas import AggregateConfig
 
 logger = logging.getLogger(__name__)
@@ -248,6 +253,7 @@ class TransformationExecutor:
         The prompt_template is used as the system prompt.
         The data is serialized and sent as the user message.
         """
+        prompt_template = render_prompt_template(prompt_template)
         # Build user message with data
         data_str = self._serialize_data(data)
         stance_text = self._resolve_stance(stance_key) if stance_key else ""
@@ -267,9 +273,29 @@ class TransformationExecutor:
             fallback_model=model_fallback,
             max_tokens=max_tokens,
         )
+        try:
+            result = parse_llm_json_response(raw_text)
+            return result, model_used, token_count
+        except json.JSONDecodeError as parse_error:
+            logger.warning(
+                "LLM extract JSON parse failed with %s; attempting repair via %s",
+                model_used,
+                model_fallback or model_used,
+            )
 
-        result = parse_llm_json_response(raw_text)
-        return result, model_used, token_count
+        repaired_text, repair_model, repair_tokens = repair_json_with_llm(
+            malformed_json=raw_text,
+            model=model_fallback or model_used,
+            fallback_model=model_fallback or model_used,
+            max_tokens=max_tokens,
+        )
+        try:
+            repaired = parse_llm_json_response(repaired_text)
+            return repaired, repair_model, token_count + repair_tokens
+        except json.JSONDecodeError as repair_error:
+            raise RuntimeError(
+                f"LLM extraction returned malformed JSON and repair failed: {repair_error}"
+            ) from repair_error
 
     async def _execute_llm_summarize(
         self,
@@ -285,6 +311,7 @@ class TransformationExecutor:
         Similar to llm_extract but returns the raw text as a summary
         rather than structured JSON.
         """
+        prompt_template = render_prompt_template(prompt_template)
         data_str = self._serialize_data(data)
         stance_text = self._resolve_stance(stance_key) if stance_key else ""
 

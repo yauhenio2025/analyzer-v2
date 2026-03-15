@@ -19,6 +19,30 @@ logger = logging.getLogger(__name__)
 MAX_ERRORS = 10
 
 
+def _extract_by_items_path(data: Any, items_path: str) -> Any:
+    """Resolve a dotted items_path for config-aware validation."""
+    if not items_path:
+        return data
+    current = data
+    for segment in items_path.split("."):
+        if not isinstance(current, dict):
+            return data
+        current = current.get(segment)
+        if current is None:
+            return data
+    return current
+
+
+def _normalize_data_for_validation(data: Any, renderer_config: Optional[dict[str, Any]]) -> Any:
+    """Validate against the slice a renderer will actually consume."""
+    if not renderer_config or not isinstance(data, dict):
+        return data
+    items_path = renderer_config.get("items_path")
+    if isinstance(items_path, str) and items_path:
+        return _extract_by_items_path(data, items_path)
+    return data
+
+
 class ValidationMode(str, Enum):
     """How to handle validation failures."""
 
@@ -59,6 +83,7 @@ def _error_to_dict(error: ValidationError) -> dict[str, Any]:
 def validate_renderer_data(
     renderer_key: str,
     data: Any,
+    renderer_config: Optional[dict[str, Any]] = None,
     mode: ValidationMode = ValidationMode.WARN,
 ) -> ValidationResult:
     """Validate structured data against a renderer's input_data_schema.
@@ -97,8 +122,9 @@ def validate_renderer_data(
         return ValidationResult(renderer_key=renderer_key, valid=True)
 
     validator = Draft7Validator(schema)
+    candidate_data = _normalize_data_for_validation(data, renderer_config)
     errors = []
-    for i, error in enumerate(validator.iter_errors(data)):
+    for i, error in enumerate(validator.iter_errors(candidate_data)):
         if i >= MAX_ERRORS:
             errors.append({
                 "message": f"... and more errors (capped at {MAX_ERRORS})",

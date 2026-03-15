@@ -1,0 +1,86 @@
+{
+  "view_key": "aoi_thematic_report",
+  "view_name": "Report",
+  "description": "Structured AOI closeout over the selected thinker: summary, engagement pattern, key divergences, sin distribution, and reading implications.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "anxiety-of-influence",
+  "target_section": "results",
+  "renderer_type": "accordion",
+  "renderer_config": {
+    "sections": [
+      {"key": "summary", "title": "Summary"},
+      {"key": "engagement_pattern", "title": "Engagement Pattern"},
+      {"key": "key_divergences", "title": "Key Divergences"},
+      {"key": "sin_distribution", "title": "Sin Distribution"},
+      {"key": "reading_implications", "title": "Reading Implications"}
+    ],
+    "expand_first": true,
+    "section_renderers": {
+      "summary": {
+        "renderer_type": "annotated_prose",
+        "config": {
+          "pull_quote_min_length": 90,
+          "section_description": "Bounded AOI closeout summary."
+        }
+      },
+      "engagement_pattern": {
+        "renderer_type": "annotated_prose",
+        "config": {
+          "pull_quote_min_length": 90,
+          "section_description": "Overall pattern of Benanav's engagement with the selected source thinker."
+        }
+      },
+      "key_divergences": {
+        "renderer_type": "mini_card_list",
+        "config": {
+          "title_field": "title",
+          "subtitle_field": "subtitle",
+          "description_field": "description",
+          "badge_field": "badge",
+          "section_description": "Highest-salience AOI divergences."
+        }
+      },
+      "sin_distribution": {
+        "renderer_type": "mini_card_list",
+        "config": {
+          "title_field": "sin_type",
+          "subtitle_field": "count",
+          "description_field": "description",
+          "section_description": "Distribution of findings across the AOI sin taxonomy."
+        }
+      },
+      "reading_implications": {
+        "renderer_type": "annotated_prose",
+        "config": {
+          "pull_quote_min_length": 90,
+          "section_description": "What the bounded AOI result implies for reading Benanav's use of the selected source thinker."
+        }
+      }
+    }
+  },
+  "data_source": {
+    "workflow_key": "anxiety_of_influence_thematic_single_thinker",
+    "phase_number": 4.0,
+    "engine_key": "aoi_thematic_report",
+    "chain_key": null,
+    "result_path": "",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "summary",
+  "position": 1.4,
+  "parent_view_key": "aoi_thematic_analysis",
+  "tab_count_field": null,
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "planner_hint": "Child AOI surface. Structured report closeout over themes, divergences, and implications.",
+  "planner_eligible": false,
+  "status": "active",
+  "tags": ["aoi", "report", "influence", "single-thinker"],
+  "source_project": "critic",
+  "generation_mode": "curated"
+}

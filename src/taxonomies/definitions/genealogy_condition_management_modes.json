@@ -1,0 +1,11 @@
+{
+  "taxonomy_key": "genealogy_condition_management_modes",
+  "domain": "genealogy",
+  "description": "How enabling conditions are handled by the target work.",
+  "values": [
+    {"key": "explicitly_acknowledged", "name": "Explicitly Acknowledged", "use_when": "the author openly names and credits the enabling condition."},
+    {"key": "implicitly_leveraged", "name": "Implicitly Leveraged", "use_when": "the condition is clearly used without full thematic emphasis."},
+    {"key": "strategically_deployed", "name": "Strategically Deployed", "use_when": "the condition is actively managed for argumentative effect."},
+    {"key": "taken_for_granted", "name": "Taken for Granted", "use_when": "the condition operates silently as background infrastructure."}
+  ]
+}

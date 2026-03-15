@@ -1,0 +1,12 @@
+{
+  "taxonomy_key": "genealogy_constraint_types",
+  "domain": "genealogy",
+  "description": "Constraint types for conditions-of-possibility analysis.",
+  "values": [
+    {"key": "conceptual_commitment", "name": "Conceptual Commitment", "use_when": "the author is constrained by inherited concepts or theoretical commitments."},
+    {"key": "audience_expectation", "name": "Audience Expectation", "use_when": "the later work must accommodate a readership or discourse horizon."},
+    {"key": "methodological_lock_in", "name": "Methodological Lock-In", "use_when": "an inherited method constrains available moves."},
+    {"key": "rhetorical_position", "name": "Rhetorical Position", "use_when": "the author is constrained by how they must publicly position the argument."},
+    {"key": "institutional_role", "name": "Institutional Role", "use_when": "the constraint comes from disciplinary, political, or institutional location."}
+  ]
+}

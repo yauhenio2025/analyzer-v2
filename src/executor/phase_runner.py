@@ -17,9 +17,12 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Callable, Optional
 
+from src.aoi.contract import is_aoi_workflow_key
 from src.executor.chain_runner import run_chain, run_single_engine
 from src.executor.context_broker import assemble_phase_context
+from src.executor.document_ids import resolve_target_doc_id
 from src.executor.document_store import get_document_text
+from src.executor.job_manager import get_job
 from src.executor.schemas import (
     EngineCallResult,
     PhaseResult,
@@ -32,6 +35,32 @@ logger = logging.getLogger(__name__)
 
 # Max concurrent per-work executions (to avoid flooding the API)
 MAX_WORK_CONCURRENCY = 3
+
+
+def _resolve_execution_target(
+    workflow_chain_key: Optional[str],
+    workflow_engine_key: Optional[str],
+    plan_chain_key: Optional[str],
+    plan_engine_key: Optional[str],
+) -> tuple[Optional[str], Optional[str]]:
+    """Resolve the effective chain/engine for a phase.
+
+    An explicit plan engine override suppresses the workflow template chain.
+    Otherwise template chain fallback would make single-engine overrides
+    impossible for template-backed phases.
+    """
+    effective_chain_key = workflow_chain_key
+    effective_engine_key = workflow_engine_key
+
+    if plan_chain_key:
+        effective_chain_key = plan_chain_key
+        effective_engine_key = None
+
+    if plan_engine_key:
+        effective_chain_key = None
+        effective_engine_key = plan_engine_key
+
+    return effective_chain_key, effective_engine_key
 
 
 def run_phase(
@@ -185,8 +214,12 @@ def _run_standard_phase(
     phase_number = plan_phase.phase_number
     phase_name = plan_phase.phase_name
 
-    # Get document text for the target work
-    document_text = _get_target_document_text(document_ids)
+    # Get document text for the target work or workflow-specific combined corpus
+    document_text = _get_standard_phase_document_text(
+        document_ids=document_ids,
+        job_id=job_id,
+        phase_number=phase_number,
+    )
 
     # Resolve engine overrides from the plan
     engine_overrides = None
@@ -196,9 +229,15 @@ def _run_standard_phase(
             for k, v in plan_phase.engine_overrides.items()
         }
 
-    # Resolve chain/engine: plan phase overrides take precedence
-    effective_chain_key = plan_phase.chain_key or workflow_phase.chain_key
-    effective_engine_key = plan_phase.engine_key or workflow_phase.engine_key
+    # Resolve chain/engine. An explicit engine override suppresses the template
+    # chain; otherwise template chain fallback would make single-engine adaptive
+    # phases impossible on template-backed workflows.
+    effective_chain_key, effective_engine_key = _resolve_execution_target(
+        workflow_phase.chain_key,
+        workflow_phase.engine_key,
+        plan_phase.chain_key,
+        plan_phase.engine_key,
+    )
 
     # Run chain or single engine
     if effective_chain_key:
@@ -364,6 +403,7 @@ def _run_per_work_phase(
     work_results: dict[str, dict[str, list[EngineCallResult]]] = {}
     total_tokens = 0
     errors: list[str] = []
+    target_title = _get_target_work_title(job_id)
 
     # Milestone 5: Determine if we should use distilled analysis
     # If upstream_context is available AND this is a per-work phase (1.5 or 2.0),
@@ -410,6 +450,7 @@ def _run_per_work_phase(
                 distilled_analysis=upstream_context,
                 work_text=doc_text,
                 work_title=work_title,
+                target_title=target_title,
                 phase_number=phase_number,
             )
             # Don't pass upstream_context again to the chain/engine — it's
@@ -433,6 +474,7 @@ def _run_per_work_phase(
                 target_text=target_text,
                 work_text=doc_text,
                 work_title=work_title,
+                target_title=target_title,
                 phase_number=phase_number,
             )
             effective_upstream = upstream_context
@@ -447,15 +489,12 @@ def _run_per_work_phase(
 
         work_key = _sanitize_work_key(work_title)
 
-        # Adaptive mode: per-work chain/engine differentiation
-        effective_chain_key = workflow_phase.chain_key
-        effective_engine_key = workflow_phase.engine_key
-
-        # Plan-level overrides
-        if plan_phase.chain_key:
-            effective_chain_key = plan_phase.chain_key
-        if plan_phase.engine_key:
-            effective_engine_key = plan_phase.engine_key
+        effective_chain_key, effective_engine_key = _resolve_execution_target(
+            workflow_phase.chain_key,
+            workflow_phase.engine_key,
+            plan_phase.chain_key,
+            plan_phase.engine_key,
+        )
 
         # Per-work chain map (most specific override)
         if plan_phase.per_work_chain_map and work_title in plan_phase.per_work_chain_map:
@@ -581,7 +620,10 @@ def _run_chapter_targeted_phase(
     def _get_work_text(wk: str) -> str:
         if wk not in _work_text_cache:
             if wk == "target":
-                _work_text_cache[wk] = _get_target_document_text(document_ids)
+                _work_text_cache[wk] = _get_target_document_text(
+                    document_ids,
+                    job_id=job_id,
+                )
             else:
                 _work_text_cache[wk] = _get_work_document_text(wk, document_ids)
         return _work_text_cache[wk]
@@ -655,9 +697,12 @@ def _run_chapter_targeted_phase(
 
             work_key = _sanitize_work_key(ch_target.chapter_id)
 
-            # Resolve chain/engine
-            effective_chain_key = plan_phase.chain_key or workflow_phase.chain_key
-            effective_engine_key = plan_phase.engine_key or workflow_phase.engine_key
+            effective_chain_key, effective_engine_key = _resolve_execution_target(
+                workflow_phase.chain_key,
+                workflow_phase.engine_key,
+                plan_phase.chain_key,
+                plan_phase.engine_key,
+            )
 
             if effective_chain_key:
                 result = run_chain(
@@ -732,10 +777,22 @@ def _run_chapter_targeted_phase(
     )
 
 
-def _get_target_document_text(document_ids: dict[str, str]) -> str:
+def _get_target_document_text(
+    document_ids: dict[str, str],
+    job_id: Optional[str] = None,
+) -> str:
     """Get the target work's document text."""
-    # Convention: target work is stored under key "target"
-    target_doc_id = document_ids.get("target")
+    plan_data = None
+    if job_id:
+        try:
+            job = get_job(job_id) or {}
+            plan_data = job.get("plan_data") or {}
+        except Exception as exc:
+            logger.warning(
+                f"Could not load plan_data for target resolution in job {job_id}: {exc}"
+            )
+
+    target_doc_id = resolve_target_doc_id(document_ids, plan_data)
     if target_doc_id:
         text = get_document_text(target_doc_id)
         if text:
@@ -744,6 +801,77 @@ def _get_target_document_text(document_ids: dict[str, str]) -> str:
     # (the plan should have ensured documents are uploaded)
     logger.warning("No target document found — using empty text")
     return "[No target document text provided]"
+
+
+def _get_standard_phase_document_text(
+    *,
+    document_ids: dict[str, str],
+    job_id: str,
+    phase_number: float,
+) -> str:
+    """Resolve document text for standard phases, including AOI source-corpus phases."""
+    plan_data = {}
+    try:
+        job = get_job(job_id) or {}
+        plan_data = job.get("plan_data") or {}
+        if plan_data.get("_type") == "request_snapshot":
+            plan_data = plan_data.get("plan_request") or {}
+    except Exception as exc:
+        logger.warning(f"Could not load plan data for job {job_id}: {exc}")
+
+    workflow_key = plan_data.get("workflow_key")
+    if not is_aoi_workflow_key(workflow_key):
+        return _get_target_document_text(document_ids, job_id=job_id)
+
+    selected_source_thinker_id = plan_data.get("selected_source_thinker_id")
+    selected_source_thinker_name = plan_data.get("selected_source_thinker_name") or "Selected source thinker"
+    prior_works = plan_data.get("prior_works") or []
+    source_blocks: list[str] = []
+    for work in prior_works:
+        if work.get("source_thinker_id") != selected_source_thinker_id:
+            continue
+        title = work.get("title") or "Source work"
+        source_document_id = work.get("source_document_id")
+        text = _get_work_document_text(title, document_ids)
+        heading = f"# Source Work: {title}"
+        if source_document_id:
+            heading += f" [{source_document_id}]"
+        source_blocks.append(f"{heading}\n\n{text}")
+    source_corpus = (
+        "\n\n---\n\n".join(source_blocks)
+        if source_blocks
+        else f"[No source corpus text provided for {selected_source_thinker_name}]"
+    )
+    target_text = _get_target_document_text(document_ids, job_id=job_id)
+    target_title = _get_target_work_title(job_id)
+
+    if phase_number == 1.0:
+        return (
+            f"# Selected Source Thinker: {selected_source_thinker_name}\n\n"
+            f"{source_corpus}"
+        )
+
+    if phase_number == 3.0:
+        return (
+            f"# Subject Corpus: {target_title}\n\n{target_text}\n\n"
+            f"---\n\n"
+            f"# Selected Source Thinker: {selected_source_thinker_name}\n\n"
+            f"{source_corpus}"
+        )
+
+    return target_text
+
+
+def _get_target_work_title(job_id: str) -> str:
+    """Resolve the target work title from the job plan."""
+    try:
+        job = get_job(job_id) or {}
+        plan_data = job.get("plan_data") or {}
+        target_work = plan_data.get("target_work") or {}
+        return target_work.get("title") or "the target work"
+    except Exception:
+        logger.warning(f"Could not resolve target work title for job {job_id}")
+        return "the target work"
 
 
 def _get_work_document_text(
@@ -764,6 +892,7 @@ def _combine_document_texts(
     target_text: str,
     work_text: str,
     work_title: str,
+    target_title: str,
     phase_number: float,
 ) -> str:
     """Combine target and work texts for per-work phases.
@@ -775,24 +904,32 @@ def _combine_document_texts(
     Milestone 5 introduced _combine_with_distilled_analysis() which should be
     preferred when upstream context from Phase 1.0 is available.
     """
+    scope_contract = _build_per_work_scope_contract(
+        target_title=target_title,
+        work_title=work_title,
+        phase_number=phase_number,
+    )
     if phase_number == 1.5:
         # Classification: both texts needed equally
         return (
-            f"# Target Work\n\n{target_text}\n\n"
+            f"{scope_contract}\n\n"
+            f"# Target Work: {target_title}\n\n{target_text}\n\n"
             f"---\n\n"
             f"# Prior Work: {work_title}\n\n{work_text}"
         )
     elif phase_number == 2.0:
         # Scanning: prior work is primary, target is context
         return (
+            f"{scope_contract}\n\n"
             f"# Prior Work: {work_title}\n\n{work_text}\n\n"
             f"---\n\n"
-            f"# Target Work (for reference)\n\n{target_text}"
+            f"# Target Work: {target_title} (for reference)\n\n{target_text}"
         )
     else:
         # Generic: both texts
         return (
-            f"# Target Work\n\n{target_text}\n\n"
+            f"{scope_contract}\n\n"
+            f"# Target Work: {target_title}\n\n{target_text}\n\n"
             f"---\n\n"
             f"# Prior Work: {work_title}\n\n{work_text}"
         )
@@ -802,6 +939,7 @@ def _combine_with_distilled_analysis(
     distilled_analysis: str,
     work_text: str,
     work_title: str,
+    target_title: str,
     phase_number: float,
 ) -> str:
     """Combine distilled target analysis + prior work text for per-work phases.
@@ -815,10 +953,17 @@ def _combine_with_distilled_analysis(
     Phase 1.0 outputs (including supplementary chains if the orchestrator
     selected them).
     """
+    scope_contract = _build_per_work_scope_contract(
+        target_title=target_title,
+        work_title=work_title,
+        phase_number=phase_number,
+    )
     if phase_number == 1.5:
         # Classification: distilled analysis of target + prior work text
         return (
-            f"# Target Work Analysis (distilled from multi-engine profiling)\n\n"
+            f"{scope_contract}\n\n"
+            f"# Target Work Analysis: {target_title}\n"
+            f"(distilled from multi-engine profiling)\n\n"
             f"{distilled_analysis}\n\n"
             f"---\n\n"
             f"# Prior Work: {work_title}\n\n{work_text}"
@@ -826,19 +971,47 @@ def _combine_with_distilled_analysis(
     elif phase_number == 2.0:
         # Scanning: prior work is primary, distilled target analysis is context
         return (
+            f"{scope_contract}\n\n"
             f"# Prior Work: {work_title}\n\n{work_text}\n\n"
             f"---\n\n"
-            f"# Target Work Analysis (distilled from multi-engine profiling)\n\n"
+            f"# Target Work Analysis: {target_title}\n"
+            f"(distilled from multi-engine profiling)\n\n"
             f"{distilled_analysis}"
         )
     else:
         # Generic: distilled analysis + work text
         return (
-            f"# Target Work Analysis (distilled from multi-engine profiling)\n\n"
+            f"{scope_contract}\n\n"
+            f"# Target Work Analysis: {target_title}\n"
+            f"(distilled from multi-engine profiling)\n\n"
             f"{distilled_analysis}\n\n"
             f"---\n\n"
             f"# Prior Work: {work_title}\n\n{work_text}"
         )
+
+
+def _build_per_work_scope_contract(
+    target_title: str,
+    work_title: str,
+    phase_number: float,
+) -> str:
+    """Anchor per-work phases to the intended target/prior pair."""
+    task = (
+        "Classify the relationship between these exact two works."
+        if phase_number == 1.5
+        else "Analyze how this exact prior work bears on this exact target work."
+    )
+    return (
+        "# Pair Scope Contract\n\n"
+        f"- TARGET WORK: {target_title}\n"
+        f"- PRIOR WORK: {work_title}\n"
+        f"- TASK: {task}\n"
+        "- RULE: If the prior work mentions additional earlier works, treat them as "
+        "internal references inside the prior work, not as substitutes for the "
+        "named prior work.\n"
+        "- RULE: Do not silently reframe the pair as some other predecessor-successor "
+        "relationship mentioned inside the documents."
+    )
 
 
 def _sanitize_work_key(title: str) -> str:

@@ -1,0 +1,10 @@
+{
+  "taxonomy_key": "genealogy_chapter_coupling_strength",
+  "domain": "genealogy",
+  "description": "Coupling strength scale for chapter pairs.",
+  "values": [
+    {"key": "tight", "name": "Tight", "use_when": "the chapters are strongly interdependent or mutually load-bearing."},
+    {"key": "moderate", "name": "Moderate", "use_when": "the chapters are connected but partially separable."},
+    {"key": "loose", "name": "Loose", "use_when": "the chapters touch but do not strongly depend on each other."}
+  ]
+}

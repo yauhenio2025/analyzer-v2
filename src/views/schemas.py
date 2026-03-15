@@ -8,7 +8,7 @@ Consumer apps fetch these definitions and dispatch to their own component
 registries. No execution logic lives here — just declarations.
 """
 
-from typing import Any, Optional
+from typing import Any, Literal, Optional
 
 from pydantic import BaseModel, Field
 
@@ -76,6 +76,19 @@ class TransformationSpec(BaseModel):
     stance_key: Optional[str] = Field(
         default=None,
         description="Overrides parent view's presentation_stance for this transform",
+    )
+
+
+class ScaffoldContractSpec(BaseModel):
+    """Declared scaffold intent for views with stable reading-surface semantics.
+
+    Only leaf scaffold types belong here. Composite overview scaffolds remain
+    derived at assembly time from the effective view tree.
+    """
+
+    type: Literal["argument_map", "concept_atlas"] = Field(
+        ...,
+        description="Declared scaffold family for this view.",
     )
 
 
@@ -157,6 +170,22 @@ class ViewDefinition(BaseModel):
         default=None,
         description="Key of parent view for nesting (e.g. subtabs within tabs)",
     )
+    surface_archetype: Optional[str] = Field(
+        default=None,
+        description="Optional reading-surface archetype override (e.g. composite_overview, concept_atlas, argument_map)",
+    )
+    scaffold_contract: Optional[ScaffoldContractSpec] = Field(
+        default=None,
+        description="Optional declared scaffold contract for views with stable scaffold semantics.",
+    )
+    surface_role: Optional[str] = Field(
+        default=None,
+        description="Optional semantic role for navigation and scaffold selection",
+    )
+    child_display_mode: Optional[str] = Field(
+        default=None,
+        description="Optional hint for how child views should be surfaced in parent navigation",
+    )
     tab_count_field: Optional[str] = Field(
         default=None,
         description="JSONPath expression for count badge on tab",
@@ -216,6 +245,10 @@ class ViewSummary(BaseModel):
     presentation_stance: Optional[str] = None
     position: float = 0
     parent_view_key: Optional[str] = None
+    surface_archetype: Optional[str] = None
+    scaffold_contract: Optional[ScaffoldContractSpec] = None
+    surface_role: Optional[str] = None
+    child_display_mode: Optional[str] = None
     visibility: str = "if_data_exists"
     status: str = "active"
     generation_mode: str = "curated"
@@ -241,6 +274,10 @@ class ChainViewInfo(BaseModel):
     presentation_stance: Optional[str] = None
     position: float = 0
     parent_view_key: Optional[str] = None
+    surface_archetype: Optional[str] = None
+    scaffold_contract: Optional[ScaffoldContractSpec] = None
+    surface_role: Optional[str] = None
+    child_display_mode: Optional[str] = None
     sections_count: int = 0
     has_sub_renderers: bool = False
     config_hints: list[str] = Field(default_factory=list)
@@ -283,6 +320,10 @@ class ComposedView(BaseModel):
     presentation_stance: Optional[str] = None
     position: float = 0
     visibility: str = "if_data_exists"
+    surface_archetype: Optional[str] = None
+    scaffold_contract: Optional[ScaffoldContractSpec] = None
+    surface_role: Optional[str] = None
+    child_display_mode: Optional[str] = None
     tab_count_field: Optional[str] = None
     audience_overrides: dict[str, dict[str, Any]] = {}
     children: list["ComposedView"] = Field(default_factory=list)

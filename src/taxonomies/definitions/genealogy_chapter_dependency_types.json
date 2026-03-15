@@ -1,0 +1,11 @@
+{
+  "taxonomy_key": "genealogy_chapter_dependency_types",
+  "domain": "genealogy",
+  "description": "Dependency types between chapters.",
+  "values": [
+    {"key": "conceptual", "name": "Conceptual", "use_when": "the dependent chapter relies on concepts established elsewhere."},
+    {"key": "evidential", "name": "Evidential", "use_when": "the dependent chapter relies on evidence developed elsewhere."},
+    {"key": "methodological", "name": "Methodological", "use_when": "the dependency is via procedural or interpretive method."},
+    {"key": "structural", "name": "Structural", "use_when": "the dependency is due to sequencing or architectural placement."}
+  ]
+}

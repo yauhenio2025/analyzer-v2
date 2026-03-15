@@ -61,7 +61,8 @@ def run_analysis_pipeline(request: AnalyzeRequest) -> AnalyzeResponse:
         f"Starting analysis pipeline for {request.thinker_name} — "
         f"target: {request.target_work.title}, "
         f"{len(request.prior_works)} prior works, "
-        f"autonomous={request.skip_plan_review}"
+        f"autonomous={request.skip_plan_review}, "
+        f"project_id={request.project_id or 'none'}"
     )
 
     # Checkpoint mode: run synchronously (doc upload + plan gen only)
@@ -116,7 +117,12 @@ def _run_autonomous_mode(request: AnalyzeRequest) -> AnalyzeResponse:
 
     # Create job entry immediately so the client can start polling
     workflow_key = request.workflow_key or "intellectual_genealogy"
-    job_record = create_job(job_id, plan_id="(generating)", workflow_key=workflow_key)
+    job_record = create_job(
+        job_id,
+        plan_id="(generating)",
+        workflow_key=workflow_key,
+        project_id=request.project_id,
+    )
 
     # Set initial progress: pipeline is starting
     update_job_progress(
@@ -180,7 +186,7 @@ def _pipeline_thread(job_id: str, request: AnalyzeRequest) -> None:
         # If the instance dies during plan generation (~2 min), the new
         # instance can regenerate the plan from this snapshot.
         plan_request = _build_plan_request(request)
-        _store_request_snapshot(job_id, plan_request, document_ids)
+        _store_request_snapshot(job_id, request, plan_request, document_ids)
 
         # ── Stage 2: Generate plan ──
         planning_model_name = request.planning_model or "claude-opus-4-6"
@@ -351,6 +357,7 @@ def _upload_chapters(
 
 def _store_request_snapshot(
     job_id: str,
+    request: AnalyzeRequest,
     plan_request,
     document_ids: dict[str, str],
 ) -> None:
@@ -363,6 +370,12 @@ def _store_request_snapshot(
     snapshot = {
         "_type": "request_snapshot",
         "plan_request": plan_request.model_dump(),
+        "request_options": {
+            "objective_key": request.objective_key,
+            "planning_model": request.planning_model,
+            "execution_model": request.execution_model,
+            "skip_plan_revision": request.skip_plan_revision,
+        },
     }
     try:
         execute(
@@ -471,6 +484,9 @@ def _build_plan_request(request: AnalyzeRequest) -> OrchestratorPlanRequest:
             year=pw.year,
             description=pw.description,
             relationship_hint=pw.relationship_hint,
+            source_thinker_id=pw.source_thinker_id,
+            source_thinker_name=pw.source_thinker_name,
+            source_document_id=pw.source_document_id,
         )
         for pw in request.prior_works
     ]
@@ -482,6 +498,8 @@ def _build_plan_request(request: AnalyzeRequest) -> OrchestratorPlanRequest:
         research_question=request.research_question,
         depth_preference=request.depth_preference,
         focus_hint=request.focus_hint,
+        selected_source_thinker_id=request.selected_source_thinker_id,
+        selected_source_thinker_name=request.selected_source_thinker_name,
         workflow_key=request.workflow_key,
     )
 

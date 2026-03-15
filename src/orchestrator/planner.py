@@ -169,6 +169,20 @@ def _build_user_prompt(request: OrchestratorPlanRequest, catalog_text: str) -> s
                 lines.append(f"   Description: {pw.description}")
             if pw.relationship_hint:
                 lines.append(f"   Relationship hint: {pw.relationship_hint}")
+            if pw.source_thinker_name:
+                thinker_id = f" [{pw.source_thinker_id}]" if pw.source_thinker_id else ""
+                lines.append(f"   Source thinker: {pw.source_thinker_name}{thinker_id}")
+            if pw.source_document_id:
+                lines.append(f"   Source document id: {pw.source_document_id}")
+        lines.append("")
+
+    if request.selected_source_thinker_name:
+        thinker_id = (
+            f" ({request.selected_source_thinker_id})"
+            if request.selected_source_thinker_id
+            else ""
+        )
+        lines.append(f"## Selected Source Thinker: {request.selected_source_thinker_name}{thinker_id}")
         lines.append("")
 
     if request.research_question:
@@ -328,6 +342,8 @@ def generate_plan(request: OrchestratorPlanRequest) -> WorkflowExecutionPlan:
         target_work=request.target_work,
         prior_works=request.prior_works,
         research_question=request.research_question,
+        selected_source_thinker_id=request.selected_source_thinker_id,
+        selected_source_thinker_name=request.selected_source_thinker_name,
         strategy_summary=plan_data.get("strategy_summary", ""),
         phases=[],
         recommended_views=[],

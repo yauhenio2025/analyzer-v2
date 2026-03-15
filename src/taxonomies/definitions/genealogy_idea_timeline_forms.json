@@ -1,0 +1,13 @@
+{
+  "taxonomy_key": "genealogy_idea_timeline_forms",
+  "domain": "genealogy",
+  "description": "Forms an idea can take at a specific stage in the timeline.",
+  "values": [
+    {"key": "constitutive", "name": "Constitutive", "use_when": "the idea is architecturally central at that stage."},
+    {"key": "diagnostic", "name": "Diagnostic", "use_when": "the idea is used to diagnose a problem or contradiction."},
+    {"key": "historical_precondition", "name": "Historical Precondition", "use_when": "the idea mainly names background historical conditions."},
+    {"key": "background_assumption", "name": "Background Assumption", "use_when": "the idea is presupposed rather than argued."},
+    {"key": "absent", "name": "Absent", "use_when": "the idea is missing or not yet operative."},
+    {"key": "retired", "name": "Retired", "use_when": "the idea was active earlier but is later dropped."}
+  ]
+}

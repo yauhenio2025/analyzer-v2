@@ -1,0 +1,177 @@
+{
+  "analytical_dimensions": [
+    {
+      "depth_guidance": {
+        "deep": "Identify the full thematic map, including tensions between closely related themes.",
+        "standard": "Identify 5-8 themes with clear distinctions and supporting source coverage.",
+        "surface": "Identify 3-5 high-level themes with concise summaries."
+      },
+      "description": "Identify the major themes that recur across the selected source corpus.",
+      "key": "theme_inventory",
+      "probing_questions": [
+        "Which themes appear repeatedly enough to support later comparison?",
+        "Which themes are central rather than merely incidental?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Surface internal tensions and second-order qualifications as well.",
+        "standard": "Capture key claims, commitments, and moves separately.",
+        "surface": "Summarize the dominant claim for each theme."
+      },
+      "description": "Capture the key claims, commitments, and argumentative moves that define each theme.",
+      "key": "claim_structure",
+      "probing_questions": [
+        "What does the source thinker actually claim under this theme?",
+        "What philosophical commitments structure those claims?",
+        "How does the source thinker argue for them?"
+      ]
+    }
+  ],
+  "apps": [
+    "critic"
+  ],
+  "capabilities": [
+    {
+      "depth_scaling": {
+        "deep": "Theme list with distinctions, tensions, and stronger provenance coverage.",
+        "standard": "Theme list with clear summaries and provenance.",
+        "surface": "Short theme list with brief summaries."
+      },
+      "description": "Build a stable theme inventory for the source corpus.",
+      "extended_description": null,
+      "indicators": [],
+      "intellectual_grounding": null,
+      "key": "synthesize_themes",
+      "produces_dimensions": [],
+      "requires_dimensions": []
+    },
+    {
+      "depth_scaling": {
+        "deep": "Include representative passages and locators where possible.",
+        "standard": "Cite the source documents that materially support each theme.",
+        "surface": "Cite the main source work per theme."
+      },
+      "description": "Track which source documents ground each theme.",
+      "extended_description": null,
+      "indicators": [],
+      "intellectual_grounding": null,
+      "key": "preserve_provenance",
+      "produces_dimensions": [],
+      "requires_dimensions": []
+    }
+  ],
+  "category": "concepts",
+  "composability": {
+    "consumes_from": {},
+    "shares_with": {
+      "source_documents": "Explicit list of source documents used for later source inventory views.",
+      "themes": "Stable theme inventory with theme names and claims."
+    },
+    "synergy_engines": [
+      "aoi_engagement_mapping"
+    ]
+  },
+  "depth_levels": [
+    {
+      "description": "A concise thematic map for later AOI comparison.",
+      "key": "surface",
+      "passes": [],
+      "suitable_for": "Fast triage when only a coarse theme inventory is needed.",
+      "typical_passes": 1
+    },
+    {
+      "description": "A structured thematic synthesis with provenance-ready detail.",
+      "key": "standard",
+      "passes": [],
+      "suitable_for": "Default AOI thematic pass for the single-thinker tranche.",
+      "typical_passes": 1
+    },
+    {
+      "description": "A more exhaustive thematic synthesis with internal tensions and stronger provenance.",
+      "key": "deep",
+      "passes": [],
+      "suitable_for": "Richer thematic reconstruction when the source corpus is especially dense.",
+      "typical_passes": 1
+    }
+  ],
+  "engine_key": "aoi_thematic_synthesis",
+  "engine_name": "AOI Thematic Synthesis",
+  "function": "influence",
+  "intellectual_lineage": {
+    "key_concepts": [
+      {
+        "definition": "Reconstructing the recurrent argumentative themes that organize a source corpus.",
+        "name": "thematic_reconstruction"
+      },
+      {
+        "definition": "Keeping track of which source works and passages ground each synthesized theme.",
+        "name": "provenance"
+      }
+    ],
+    "primary": {
+      "description": "Harold Bloom's anxiety-of-influence problem frame treats influence as an agonistic, interpretive struggle rather than neutral citation.",
+      "name": "bloom"
+    },
+    "secondary": [
+      {
+        "description": "Quentin Skinner's contextualism guards against lifting claims out of their original argumentative situation.",
+        "name": "skinner"
+      }
+    ],
+    "traditions": [
+      {
+        "description": "The reconstruction of themes as historically situated argumentative formations.",
+        "name": "intellectual_history"
+      }
+    ]
+  },
+  "kind": "synthesis",
+  "legacy_engine_key": null,
+  "output_contract": {
+    "selected_source_thinker": {
+      "thinker_id": "john_oneill",
+      "thinker_name": "John O'Neill"
+    },
+    "source_documents": [
+      {
+        "description": "string",
+        "source_document_id": "string - stable slug for the source work",
+        "subtitle": "string - author and/or year",
+        "title": "string"
+      }
+    ],
+    "themes": [
+      {
+        "argumentative_moves": [
+          "string"
+        ],
+        "centrality": "core | major | minor",
+        "key_claims": [
+          "string"
+        ],
+        "overview": "string",
+        "philosophical_commitments": [
+          "string"
+        ],
+        "representative_quotes": [
+          {
+            "quote": "string",
+            "source_locator": "string",
+            "source_work_title": "string"
+          }
+        ],
+        "source_documents": [
+          "string or source-document object"
+        ],
+        "theme_name": "string"
+      }
+    ]
+  },
+  "output_mode": "json",
+  "paradigm_keys": [],
+  "problematique": "Anxiety of Influence analysis begins by reconstructing the thematic world of the\nselected source thinker on their own terms. Before we can judge whether the\nsubject author faithfully engages, ignores, or distorts that thinker, we need a\nstable map of the source corpus: its recurrent themes, the claims that organize\neach theme, the philosophical commitments that make those claims intelligible,\nand the argumentative moves that carry them.\n\nThis engine therefore treats the source corpus as a bounded scholarly archive.\nIt does not hunt for every passing idea. It identifies the themes that matter\nenough to become units of later comparison and criticism, while preserving\nprovenance to the specific source documents that ground those themes.\n",
+  "prompt_context_keys": [],
+  "researcher_question": "What are the major themes in the selected source thinker's corpus, and how should they be identified for downstream AOI analysis?",
+  "version": 1
+}

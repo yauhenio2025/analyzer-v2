@@ -1,0 +1,142 @@
+{
+  "analytical_dimensions": [
+    {
+      "depth_guidance": {
+        "deep": "Include more nuance about how the engagement pattern shifts across the subject corpus.",
+        "standard": "Assign a level plus divergence description and evidence anchors.",
+        "surface": "Assign a level and brief rationale for each theme."
+      },
+      "description": "Determine the engagement level for each theme.",
+      "key": "engagement_inventory",
+      "probing_questions": [
+        "Does the subject author address this theme directly?",
+        "Is the engagement partial, ignored, or distorted?"
+      ]
+    },
+    {
+      "depth_guidance": {
+        "deep": "Show the pattern across the subject corpus with more granular evidence.",
+        "standard": "Explain the divergence and severity theme by theme.",
+        "surface": "Name the dominant divergence type."
+      },
+      "description": "Describe how the subject author diverges from the source thinker within each theme.",
+      "key": "divergence_character",
+      "probing_questions": [
+        "Is the divergence substantive, framing-based, emphatic, or omissive?",
+        "How severe is the divergence?"
+      ]
+    }
+  ],
+  "apps": [
+    "critic"
+  ],
+  "capabilities": [
+    {
+      "depth_scaling": {
+        "deep": "Richer patterning across works and stronger evidential justification.",
+        "standard": "Engagement label, divergence description, and severity.",
+        "surface": "Engagement label plus one-line rationale."
+      },
+      "description": "Produce a stable engagement map keyed by the source themes.",
+      "extended_description": null,
+      "indicators": [],
+      "intellectual_grounding": null,
+      "key": "map_theme_engagement",
+      "produces_dimensions": [],
+      "requires_dimensions": []
+    }
+  ],
+  "category": "scholarly",
+  "composability": {
+    "consumes_from": {
+      "themes": "Requires the source thinker's thematic synthesis and theme identifiers."
+    },
+    "shares_with": {
+      "engagements": "Theme-keyed engagement objects that later AOI findings can inherit."
+    },
+    "synergy_engines": [
+      "aoi_sin_findings"
+    ]
+  },
+  "depth_levels": [
+    {
+      "description": "Minimal engagement labeling for each theme.",
+      "key": "surface",
+      "passes": [],
+      "suitable_for": "Fast triage of the subject author's relationship to the source themes.",
+      "typical_passes": 1
+    },
+    {
+      "description": "Structured engagement mapping with divergence and severity.",
+      "key": "standard",
+      "passes": [],
+      "suitable_for": "Default AOI engagement map for the single-thinker tranche.",
+      "typical_passes": 1
+    },
+    {
+      "description": "Expanded engagement mapping with fuller evidential support and cross-text nuance.",
+      "key": "deep",
+      "passes": [],
+      "suitable_for": "Dense subject corpora where theme treatment varies substantially by text.",
+      "typical_passes": 1
+    }
+  ],
+  "engine_key": "aoi_engagement_mapping",
+  "engine_name": "AOI Engagement Mapping",
+  "function": "influence",
+  "intellectual_lineage": {
+    "key_concepts": [
+      {
+        "definition": "A bounded assessment of whether a theme is engaged, partial, ignored, or distorted.",
+        "name": "engagement_level"
+      }
+    ],
+    "primary": {
+      "description": "Skinner's contextual method helps distinguish genuine engagement from projection or omission.",
+      "name": "skinner"
+    },
+    "secondary": [
+      {
+        "description": "Bloom's agonistic account of influence frames engagement as selective, strategic, and often conflictual.",
+        "name": "bloom"
+      }
+    ],
+    "traditions": [
+      {
+        "description": "Engagement is tracked through how a source is cited, appropriated, or omitted.",
+        "name": "citation_analysis"
+      }
+    ]
+  },
+  "kind": "comparison",
+  "legacy_engine_key": null,
+  "output_contract": {
+    "engagement_pattern": "string",
+    "engagements": [
+      {
+        "benanav_position": "string",
+        "benanav_sources": [
+          {
+            "target_chapter_key": "nlr_153 | nlr_154 | response",
+            "target_document_label": "string",
+            "target_locator": "string",
+            "target_quote": "string"
+          }
+        ],
+        "divergence_description": "string",
+        "divergence_type": "substantive | framing | emphasis | omission",
+        "engagement_level": "engaged | partial | ignored | distorted",
+        "severity": "critical | high | medium | low",
+        "severity_rationale": "string",
+        "theme_id": "string - must match an upstream theme identifier",
+        "theme_name": "string"
+      }
+    ]
+  },
+  "output_mode": "json",
+  "paradigm_keys": [],
+  "problematique": "Once the source thinker's thematic map exists, the next question is how the\nsubject author engages those themes. Engagement is not binary. The subject can\ngenuinely grapple with a theme, touch it only partially, ignore it despite its\nrelevance, or engage it in a distorted way that already signals a later AOI\nproblem.\n\nThis engine therefore maps the subject author's engagement theme by theme,\nkeeping the selected source thinker fixed while reading the subject corpus as a\nresponse field. The output is a structured engagement map keyed by theme_id so\nlater AOI findings can inherit stable thematic coordinates.\n",
+  "prompt_context_keys": [],
+  "researcher_question": "How does the subject author engage each theme from the selected source thinker?",
+  "version": 1
+}

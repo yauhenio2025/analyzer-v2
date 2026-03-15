@@ -1,0 +1,16 @@
+{
+  "taxonomy_key": "genealogy_chapter_roles",
+  "domain": "genealogy",
+  "description": "Chapter-level functional roles.",
+  "values": [
+    {"key": "foundation", "name": "Foundation", "use_when": "the chapter establishes premises, architecture, or framing assumptions."},
+    {"key": "development", "name": "Development", "use_when": "the chapter extends and elaborates previously introduced arguments."},
+    {"key": "evidence", "name": "Evidence", "use_when": "the chapter mainly supplies empirical, textual, or historical support."},
+    {"key": "objection_handling", "name": "Objection Handling", "use_when": "the chapter addresses objections or rival positions."},
+    {"key": "synthesis", "name": "Synthesis", "use_when": "the chapter consolidates strands into a larger interpretive whole."},
+    {"key": "methodology", "name": "Methodology", "use_when": "the chapter explains or performs the method itself."},
+    {"key": "context", "name": "Context", "use_when": "the chapter situates the argument historically or conceptually."},
+    {"key": "conclusion", "name": "Conclusion", "use_when": "the chapter closes or ratifies the argument."},
+    {"key": "transitional", "name": "Transitional", "use_when": "the chapter mainly mediates shifts between argumentative zones."}
+  ]
+}

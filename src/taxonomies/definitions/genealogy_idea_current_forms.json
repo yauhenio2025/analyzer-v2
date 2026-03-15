@@ -1,0 +1,13 @@
+{
+  "taxonomy_key": "genealogy_idea_current_forms",
+  "domain": "genealogy",
+  "description": "How an idea appears in the current work.",
+  "values": [
+    {"key": "central_thesis", "name": "Central Thesis", "use_when": "the idea is a main claim or load-bearing thesis."},
+    {"key": "supporting_framework", "name": "Supporting Framework", "use_when": "the idea supports the argument as a framing structure."},
+    {"key": "background_assumption", "name": "Background Assumption", "use_when": "the idea is presupposed more than argued."},
+    {"key": "contested_claim", "name": "Contested Claim", "use_when": "the idea is actively disputed or problematized."},
+    {"key": "rhetorical_device", "name": "Rhetorical Device", "use_when": "the idea mainly organizes persuasion or framing."},
+    {"key": "methodological_tool", "name": "Methodological Tool", "use_when": "the idea is chiefly used as an analytic procedure."}
+  ]
+}

@@ -51,6 +51,10 @@ class TransformationTemplate(BaseModel):
         default="", description="What this transformation does"
     )
     version: int = Field(default=1)
+    selection_priority: int = Field(
+        default=0,
+        description="Deterministic selection priority within an engine bucket. Higher wins.",
+    )
 
     # Core transformation spec (mirrors views.TransformationSpec)
     transformation_type: str = Field(

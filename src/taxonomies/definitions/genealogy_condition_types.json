@@ -1,0 +1,15 @@
+{
+  "taxonomy_key": "genealogy_condition_types",
+  "domain": "genealogy",
+  "description": "Enabling-condition types for conditions-of-possibility analysis.",
+  "values": [
+    {"key": "conceptual_foundation", "name": "Conceptual Foundation", "use_when": "a prior framework or distinction makes the later argument thinkable."},
+    {"key": "audience_preparation", "name": "Audience Preparation", "use_when": "earlier work prepares readers to receive a later move."},
+    {"key": "authority_establishment", "name": "Authority Establishment", "use_when": "prior work authorizes the later intervention or grants legitimacy."},
+    {"key": "framework_provision", "name": "Framework Provision", "use_when": "an upstream work provides the organizing frame or scaffold."},
+    {"key": "problem_definition", "name": "Problem Definition", "use_when": "the earlier work defines the problem that the later work inherits."},
+    {"key": "methodological_precedent", "name": "Methodological Precedent", "use_when": "the inheritance is chiefly a procedure or analytic method."},
+    {"key": "intellectual_toolkit", "name": "Intellectual Toolkit", "use_when": "the later work relies on concepts or distinctions as usable tools."},
+    {"key": "cross_domain_transfer", "name": "Cross-Domain Transfer", "use_when": "an earlier domain furnishes resources redeployed in a different domain."}
+  ]
+}

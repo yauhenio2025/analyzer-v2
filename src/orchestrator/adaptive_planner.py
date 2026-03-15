@@ -364,6 +364,20 @@ def _build_adaptive_user_prompt(
                 lines.append(f"   Description: {pw.description}")
             if pw.relationship_hint:
                 lines.append(f"   Relationship hint: {pw.relationship_hint}")
+            if pw.source_thinker_name:
+                thinker_id = f" [{pw.source_thinker_id}]" if pw.source_thinker_id else ""
+                lines.append(f"   Source thinker: {pw.source_thinker_name}{thinker_id}")
+            if pw.source_document_id:
+                lines.append(f"   Source document id: {pw.source_document_id}")
+        lines.append("")
+
+    if request.selected_source_thinker_name:
+        thinker_id = (
+            f" ({request.selected_source_thinker_id})"
+            if request.selected_source_thinker_id
+            else ""
+        )
+        lines.append(f"## Selected Source Thinker: {request.selected_source_thinker_name}{thinker_id}")
         lines.append("")
 
     if request.research_question:
@@ -385,6 +399,16 @@ def _build_adaptive_user_prompt(
                  "that achieves the analysis objective for this specific corpus.")
 
     return "\n".join(lines)
+
+
+def _planner_reasoning_profile(depth_preference: Optional[str]) -> tuple[str, int]:
+    """Map requested depth to planner reasoning effort and token budget."""
+    depth = (depth_preference or "").strip().lower()
+    if depth == "surface":
+        return "low", 16_000
+    if depth == "standard":
+        return "medium", 24_000
+    return "high", 48_000
 
 
 def generate_adaptive_plan(
@@ -452,6 +476,8 @@ def generate_adaptive_plan(
         f"{len(book_samples)} book samples"
     )
 
+    thinking_effort, max_tokens = _planner_reasoning_profile(request.depth_preference)
+
     # Call planning model (needs deep reasoning) — with retry for transient errors
     PLANNER_MAX_RETRIES = 5
     PLANNER_RETRY_DELAYS = [30, 60, 90, 120, 180]  # seconds
@@ -471,8 +497,8 @@ def generate_adaptive_plan(
             result = backend.execute_sync(
                 system_prompt=system_prompt,
                 user_message=user_prompt,
-                max_tokens=48000,
-                thinking_effort="high",
+                max_tokens=max_tokens,
+                thinking_effort=thinking_effort,
                 label="adaptive_planner",
             )
             raw_text = result.content
@@ -523,6 +549,8 @@ def generate_adaptive_plan(
         target_work=request.target_work,
         prior_works=request.prior_works,
         research_question=request.research_question,
+        selected_source_thinker_id=request.selected_source_thinker_id,
+        selected_source_thinker_name=request.selected_source_thinker_name,
         strategy_summary=plan_data.get("strategy_summary", ""),
         phases=[],
         recommended_views=[],

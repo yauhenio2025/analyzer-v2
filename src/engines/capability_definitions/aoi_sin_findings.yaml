@@ -1,0 +1,112 @@
+engine_key: aoi_sin_findings
+engine_name: AOI Sin Findings
+version: 1
+category: evidence
+kind: synthesis
+problematique: |
+  Anxiety of Influence becomes concrete at the level of specific findings: named
+  scholarly sins tied to a theme, a target passage, a source passage, and an
+  account of what the subject author misses. This engine identifies those flat,
+  evidence-bearing findings without yet turning them into a reading surface.
+
+  The emphasis is discriminating classification, provenance, and argument-level
+  consequence. Each finding must be classifiable into exactly one AOI sin type,
+  tied back to the theme inventory, and grounded in target/source textual
+  evidence or strategic silence where the absence of engagement is itself the
+  scholarly problem.
+researcher_question: What specific AOI findings emerge when the subject author's engagement with the selected source thinker is tested theme by theme?
+intellectual_lineage:
+  primary:
+    name: bloom
+    description: Bloom's anxiety-of-influence vocabulary frames the recognizable misuses and agonistic distortions at stake.
+  secondary:
+    - name: grafton
+      description: Citation practice and scholarly apparatus matter because AOI failures often appear as omissions, selective use, or authority laundering.
+  traditions:
+    - name: citation_scholarship
+      description: AOI findings rely on disciplined source/target provenance rather than impressionistic accusation.
+  key_concepts:
+    - name: scholarly_sin
+      definition: A bounded category of problematic reuse, omission, distortion, or authority borrowing.
+    - name: provenance_pairing
+      definition: Pairing target-side evidence with source-side evidence or explicit silence.
+analytical_dimensions:
+  - key: finding_identification
+    description: Identify the discrete AOI findings that deserve naming.
+    probing_questions:
+      - What exact problem is visible here?
+      - Which theme anchors the problem?
+    depth_guidance:
+      surface: Identify only the clearest and best-supported findings.
+      standard: Identify the main findings across the theme inventory.
+      deep: Capture weaker but still meaningful secondary findings as well.
+  - key: provenance
+    description: Preserve concrete target/source provenance for each finding.
+    probing_questions:
+      - Which target passage demonstrates the problem?
+      - Which source passage contradicts or complicates it?
+    depth_guidance:
+      surface: Include the key target/source anchors.
+      standard: Include document labels, locators, and short excerpts.
+      deep: Include denser evidence and clearer consequence analysis.
+capabilities:
+  - key: classify_sins
+    description: Assign exactly one dominant AOI sin type per finding.
+    depth_scaling:
+      surface: Classify the clearest cases only.
+      standard: Classify all main findings across themes.
+      deep: Classify primary and secondary findings with richer rationale.
+  - key: preserve_provenance_pairs
+    description: Keep each finding anchored to target-side and source-side evidence.
+    depth_scaling:
+      surface: Minimal provenance anchors.
+      standard: Explicit document labels, locators, and excerpts.
+      deep: Fuller quotation and consequence detail.
+composability:
+  shares_with:
+    findings: Flat AOI findings keyed by theme and sin type.
+  consumes_from:
+    themes: Requires the upstream theme inventory.
+    engagements: Requires the upstream engagement map.
+  synergy_engines:
+    - aoi_thematic_report
+depth_levels:
+  - key: surface
+    description: Only the most obvious AOI findings with short evidence anchors.
+    typical_passes: 1
+    suitable_for: Fast triage of the strongest AOI failures.
+  - key: standard
+    description: Flat AOI findings with provenance, severity, and implication.
+    typical_passes: 1
+    suitable_for: Default AOI finding extraction for the single-thinker tranche.
+  - key: deep
+    description: More exhaustive AOI findings with denser evidence and stronger nuance.
+    typical_passes: 1
+    suitable_for: Richer AOI review when the corpus supports more findings.
+apps:
+  - critic
+function: influence
+output_mode: json
+prompt_context_keys:
+  - aoi_sin_type_enum
+  - aoi_sin_type_guidance
+output_contract:
+  findings:
+    - theme_id: "string - must match an upstream theme identifier"
+      sin_type: "misreading | unacknowledged_debt | misappropriation | decontextualization | selective_citation | flattening | ventriloquism | strategic_silence | premature_synthesis | legitimation_borrowing"
+      engagement_level: "engaged | partial | ignored | distorted"
+      severity: "critical | high | medium | low"
+      severity_rationale: "string"
+      title: "string"
+      summary: "string"
+      target_chapter_key: "nlr_153 | nlr_154 | response"
+      target_document_label: "string"
+      target_locator: "string"
+      target_quote: "string"
+      source_document_id: "string - stable slug for the source work"
+      source_work_title: "string"
+      source_locator: "string"
+      source_quote: "string or null for strategic silence"
+      discrepancy_analysis: "string"
+      what_benanav_misses: "string"
+      implication_for_argument: "string"

@@ -1,0 +1,13 @@
+{
+  "taxonomy_key": "genealogy_idea_evolution_patterns",
+  "domain": "genealogy",
+  "description": "Evolution-pattern taxonomy for idea development.",
+  "values": [
+    {"key": "gradual_refinement", "name": "Gradual Refinement", "use_when": "the idea keeps its identity while being clarified or sharpened."},
+    {"key": "radical_transformation", "name": "Radical Transformation", "use_when": "the idea changes substantially in valence, function, or architecture."},
+    {"key": "strategic_repurposing", "name": "Strategic Repurposing", "use_when": "the idea is reused for a different argumentative job."},
+    {"key": "synthesis_of_influences", "name": "Synthesis of Influences", "use_when": "the idea fuses multiple antecedents into a new composite."},
+    {"key": "vocabulary_death_concept_survival", "name": "Vocabulary Death / Concept Survival", "use_when": "the wording changes while the deeper concept survives."},
+    {"key": "temporal_mutation", "name": "Temporal Mutation", "use_when": "the idea mutates because the historical problem-space changes."}
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "sub_renderer_key": "annotated_prose",
+  "sub_renderer_name": "Annotated Prose",
+  "description": "Enhanced long-form prose with paragraph numbering, pull-quote extraction, and rhetorical marker highlighting. Best for dense analytical summaries and synthetic judgments.",
+  "category": "atomic",
+  "ideal_data_shapes": ["prose_text"],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "pull_quote_min_length": {
+        "type": "integer",
+        "minimum": 40
+      },
+      "show_paragraph_numbers": {
+        "type": "boolean"
+      },
+      "max_width_px": {
+        "type": "integer",
+        "minimum": 480
+      },
+      "lede_paragraphs": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 2
+      },
+      "paragraph_spacing_em": {
+        "type": "number",
+        "minimum": 0.5,
+        "maximum": 2.5
+      },
+      "highlight_markers": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "section_description": {
+        "type": "string"
+      }
+    }
+  },
+  "stance_affinities": {
+    "narrative": 0.95,
+    "summary": 0.9,
+    "evidence": 0.55,
+    "diagnostic": 0.55,
+    "comparison": 0.35,
+    "interactive": 0.25
+  },
+  "parent_renderer_types": ["accordion", "tab", "card", "nested_sections"],
+  "status": "active",
+  "tags": ["text", "narrative", "analysis", "prose", "annotated"]
+}

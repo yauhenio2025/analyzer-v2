@@ -1,0 +1,41 @@
+{
+  "view_key": "aoi_by_sin_type",
+  "view_name": "By Sin Type",
+  "description": "AOI findings regrouped by the first-class sin taxonomy so the same bounded finding set can be inspected by misuse pattern rather than by source theme.",
+  "version": 1,
+  "target_app": "the-critic",
+  "target_page": "anxiety-of-influence",
+  "target_section": "results",
+  "renderer_type": "card_grid",
+  "renderer_config": {
+    "title_field": "title",
+    "subtitle_field": "theme_name",
+    "description_field": "description",
+    "badge_field": "badge",
+    "columns": 2
+  },
+  "data_source": {
+    "workflow_key": "anxiety_of_influence_thematic_single_thinker",
+    "phase_number": 3.0,
+    "engine_key": "aoi_sin_findings",
+    "chain_key": null,
+    "result_path": "",
+    "scope": "aggregated"
+  },
+  "secondary_sources": [],
+  "transformation": {
+    "type": "none"
+  },
+  "presentation_stance": "evidence",
+  "position": 1.3,
+  "parent_view_key": "aoi_thematic_analysis",
+  "tab_count_field": null,
+  "visibility": "if_data_exists",
+  "audience_overrides": {},
+  "planner_hint": "Child AOI surface. Same bounded AOI findings regrouped under the sin taxonomy for a second diagnostic axis.",
+  "planner_eligible": false,
+  "status": "active",
+  "tags": ["aoi", "sin-taxonomy", "findings", "single-thinker"],
+  "source_project": "critic",
+  "generation_mode": "curated"
+}

@@ -1,0 +1,8 @@
+{
+  "provider_key": "aoi_sin_type_guidance",
+  "provider_name": "AOI Sin Type Guidance",
+  "source_type": "taxonomy_guidance",
+  "taxonomy_key": "anxiety_of_influence_sin_types",
+  "render_format": "guidance",
+  "status": "active"
+}

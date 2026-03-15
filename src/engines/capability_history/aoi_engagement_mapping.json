@@ -1,0 +1,13 @@
+{
+  "engine_key": "aoi_engagement_mapping",
+  "entries": [
+    {
+      "timestamp": "2026-03-14T16:15:15.592873+00:00",
+      "version": 1,
+      "definition_hash": "547d456c194ae5d20e5a2a9506605d72c1f9c8dd4f3e979d8423c44cdccdc398",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

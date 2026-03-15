@@ -1,0 +1,96 @@
+engine_key: aoi_engagement_mapping
+engine_name: AOI Engagement Mapping
+version: 1
+category: scholarly
+kind: comparison
+problematique: |
+  Once the source thinker's thematic map exists, the next question is how the
+  subject author engages those themes. Engagement is not binary. The subject can
+  genuinely grapple with a theme, touch it only partially, ignore it despite its
+  relevance, or engage it in a distorted way that already signals a later AOI
+  problem.
+
+  This engine therefore maps the subject author's engagement theme by theme,
+  keeping the selected source thinker fixed while reading the subject corpus as a
+  response field. The output is a structured engagement map keyed by theme_id so
+  later AOI findings can inherit stable thematic coordinates.
+researcher_question: How does the subject author engage each theme from the selected source thinker?
+intellectual_lineage:
+  primary:
+    name: skinner
+    description: Skinner's contextual method helps distinguish genuine engagement from projection or omission.
+  secondary:
+    - name: bloom
+      description: Bloom's agonistic account of influence frames engagement as selective, strategic, and often conflictual.
+  traditions:
+    - name: citation_analysis
+      description: Engagement is tracked through how a source is cited, appropriated, or omitted.
+  key_concepts:
+    - name: engagement_level
+      definition: A bounded assessment of whether a theme is engaged, partial, ignored, or distorted.
+analytical_dimensions:
+  - key: engagement_inventory
+    description: Determine the engagement level for each theme.
+    probing_questions:
+      - Does the subject author address this theme directly?
+      - Is the engagement partial, ignored, or distorted?
+    depth_guidance:
+      surface: Assign a level and brief rationale for each theme.
+      standard: Assign a level plus divergence description and evidence anchors.
+      deep: Include more nuance about how the engagement pattern shifts across the subject corpus.
+  - key: divergence_character
+    description: Describe how the subject author diverges from the source thinker within each theme.
+    probing_questions:
+      - Is the divergence substantive, framing-based, emphatic, or omissive?
+      - How severe is the divergence?
+    depth_guidance:
+      surface: Name the dominant divergence type.
+      standard: Explain the divergence and severity theme by theme.
+      deep: Show the pattern across the subject corpus with more granular evidence.
+capabilities:
+  - key: map_theme_engagement
+    description: Produce a stable engagement map keyed by the source themes.
+    depth_scaling:
+      surface: Engagement label plus one-line rationale.
+      standard: Engagement label, divergence description, and severity.
+      deep: Richer patterning across works and stronger evidential justification.
+composability:
+  shares_with:
+    engagements: Theme-keyed engagement objects that later AOI findings can inherit.
+  consumes_from:
+    themes: Requires the source thinker's thematic synthesis and theme identifiers.
+  synergy_engines:
+    - aoi_sin_findings
+depth_levels:
+  - key: surface
+    description: Minimal engagement labeling for each theme.
+    typical_passes: 1
+    suitable_for: Fast triage of the subject author's relationship to the source themes.
+  - key: standard
+    description: Structured engagement mapping with divergence and severity.
+    typical_passes: 1
+    suitable_for: Default AOI engagement map for the single-thinker tranche.
+  - key: deep
+    description: Expanded engagement mapping with fuller evidential support and cross-text nuance.
+    typical_passes: 1
+    suitable_for: Dense subject corpora where theme treatment varies substantially by text.
+apps:
+  - critic
+function: influence
+output_mode: json
+output_contract:
+  engagements:
+    - theme_id: "string - must match an upstream theme identifier"
+      theme_name: "string"
+      engagement_level: "engaged | partial | ignored | distorted"
+      benanav_position: "string"
+      benanav_sources:
+        - target_chapter_key: "nlr_153 | nlr_154 | response"
+          target_document_label: "string"
+          target_locator: "string"
+          target_quote: "string"
+      divergence_description: "string"
+      divergence_type: "substantive | framing | emphasis | omission"
+      severity: "critical | high | medium | low"
+      severity_rationale: "string"
+  engagement_pattern: "string"

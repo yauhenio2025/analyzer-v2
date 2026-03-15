@@ -1,0 +1,10 @@
+{
+  "taxonomy_key": "genealogy_tactic_severity",
+  "domain": "genealogy",
+  "description": "Severity scale for evolution tactics.",
+  "values": [
+    {"key": "major", "name": "Major", "use_when": "the tactic fundamentally shapes the argument or the author's self-revision."},
+    {"key": "moderate", "name": "Moderate", "use_when": "the tactic is a notable recurrent pattern but not the whole story."},
+    {"key": "minor", "name": "Minor", "use_when": "the tactic is occasional, local, or supporting rather than load-bearing."}
+  ]
+}

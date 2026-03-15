@@ -1,0 +1,13 @@
+{
+  "engine_key": "aoi_sin_findings",
+  "entries": [
+    {
+      "timestamp": "2026-03-14T16:15:15.597204+00:00",
+      "version": 1,
+      "definition_hash": "5a4938e224febc56ad01aeb3c288be70304deb94b597a5d1c06cf39b5134cfd5",
+      "changes": [],
+      "summary": "Initial baseline snapshot",
+      "is_baseline": true
+    }
+  ]
+}

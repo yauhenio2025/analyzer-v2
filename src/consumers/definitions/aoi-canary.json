@@ -1,0 +1,29 @@
+{
+  "consumer_key": "aoi-canary",
+  "consumer_name": "AOI Canary",
+  "description": "Thin AOI reading canary that renders analyzer-v2 presenter output without app-specific semantic logic.",
+  "consumer_type": "web_app",
+  "supported_renderers": [
+    "accordion",
+    "card_grid",
+    "tab",
+    "raw_json"
+  ],
+  "supported_sub_renderers": [
+    "annotated_prose",
+    "mini_card_list"
+  ],
+  "pages": [
+    {
+      "page_key": "aoi",
+      "description": "Bounded AOI page canary over presenter artifacts"
+    }
+  ],
+  "api_endpoint": null,
+  "status": "active",
+  "tags": [
+    "canary",
+    "aoi",
+    "thin-consumer"
+  ]
+}

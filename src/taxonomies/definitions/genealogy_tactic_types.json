@@ -1,0 +1,21 @@
+{
+  "taxonomy_key": "genealogy_tactic_types",
+  "domain": "genealogy",
+  "description": "Tactic types for intellectual evolution analysis.",
+  "values": [
+    {"key": "conceptual_recycling", "name": "Conceptual Recycling", "use_when": "an earlier concept is reused with continuity across works."},
+    {"key": "strategic_ambiguity", "name": "Strategic Ambiguity", "use_when": "the author preserves productive vagueness to span positions or audiences."},
+    {"key": "audience_bridging", "name": "Audience Bridging", "use_when": "the same idea is reformulated to address a new audience or discourse."},
+    {"key": "vocabulary_migration", "name": "Vocabulary Migration", "use_when": "terms move across domains while the concept partially persists."},
+    {"key": "methodological_shift", "name": "Methodological Shift", "use_when": "the handling of an inherited idea changes because the analytical method changes."},
+    {"key": "position_reversal", "name": "Position Reversal", "use_when": "the author later turns against or inverts an earlier commitment."},
+    {"key": "scope_expansion", "name": "Scope Expansion", "use_when": "an earlier claim is widened into a broader theoretical or historical argument."},
+    {"key": "narrative_reframing", "name": "Narrative Reframing", "use_when": "the same material is reorganized into a different interpretive story."},
+    {"key": "authority_leveraging", "name": "Authority Leveraging", "use_when": "citations or prior positions are used to stabilize a new move."},
+    {"key": "selective_citation", "name": "Selective Citation", "use_when": "some inheritance is foregrounded while inconvenient antecedents are muted."}
+  ],
+  "guidance": [
+    "Choose the tactic type that best names the operative maneuver, not just the topic under discussion.",
+    "If multiple tactics are present, assign the dominant one to `tactic_type` and explain the rest in `assessment`."
+  ]
+}
