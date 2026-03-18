@@ -14,6 +14,7 @@ from datetime import UTC, datetime
 from typing import Any, Optional
 
 from src.aoi.constants import AOI_WORKFLOW_KEY
+from src.executor.plan_context import load_effective_plan
 from src.executor.job_manager import get_job
 from src.executor.output_store import (
     load_all_job_outputs,
@@ -22,7 +23,6 @@ from src.executor.output_store import (
     load_presentation_cache_batch,
     get_latest_output_for_phase,
 )
-from src.orchestrator.planner import load_plan
 from src.transformations.registry import get_transformation_registry
 from src.views.registry import get_view_registry
 
@@ -666,7 +666,7 @@ def _prepare_page_payloads_for_recommendations(
     plan_id = job["plan_id"]
 
     # Load plan for context
-    plan = load_plan(plan_id)
+    plan = load_effective_plan(job_id, plan_id)
     thinker_name = plan.thinker_name if plan else ""
     strategy_summary = plan.strategy_summary if plan else ""
 
@@ -1482,7 +1482,7 @@ def _get_recommendations(
     if refinement and refinement.get("refined_views"):
         return refinement["refined_views"]
 
-    plan = load_plan(plan_id)
+    plan = load_effective_plan(job_id, plan_id)
     if plan and plan.recommended_views:
         return [v.model_dump() for v in plan.recommended_views]
 

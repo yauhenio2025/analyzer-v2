@@ -23,13 +23,13 @@ import logging
 import threading
 from typing import Awaitable, Callable, Optional, TypeVar
 
+from src.executor.plan_context import load_effective_plan
 from src.executor.job_manager import get_job
 from src.executor.output_store import (
     load_phase_outputs,
     load_presentation_cache,
     save_presentation_cache,
 )
-from src.orchestrator.planner import load_plan
 from src.transformations.executor import get_transformation_executor
 from src.transformations.registry import get_transformation_registry
 from src.views.registry import get_view_registry
@@ -850,7 +850,7 @@ def _get_recommended_views(
         return refinement["refined_views"]
 
     # Fall back to plan
-    plan = load_plan(plan_id)
+    plan = load_effective_plan(job_id, plan_id)
     if plan and plan.recommended_views:
         return [v.model_dump() for v in plan.recommended_views]
 

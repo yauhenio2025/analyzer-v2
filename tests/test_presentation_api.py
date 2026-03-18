@@ -134,7 +134,7 @@ def test_get_recommendations_falls_back_to_workflow_page_defaults_for_legacy_pla
     legacy_plan = SimpleNamespace(recommended_views=[])
 
     with patch("src.presenter.presentation_api.load_view_refinement", return_value=None), patch(
-        "src.presenter.presentation_api.load_plan",
+        "src.presenter.presentation_api.load_effective_plan",
         return_value=legacy_plan,
     ), patch(
         "src.presenter.presentation_api.get_default_recommendations_for_workflow",

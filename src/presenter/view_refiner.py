@@ -13,10 +13,10 @@ import re
 from types import SimpleNamespace
 from typing import Optional
 
+from src.executor.plan_context import load_effective_plan
 from src.executor.job_manager import get_job
 from src.executor.output_store import load_phase_outputs
 from src.llm.client import get_anthropic_client, parse_llm_json_response
-from src.orchestrator.planner import load_plan
 from src.renderers.registry import get_renderer_registry
 from src.sub_renderers.registry import get_sub_renderer_registry
 from src.transformations.registry import get_transformation_registry
@@ -162,7 +162,7 @@ def refine_views(
     Returns ViewRefinementResult (also persisted to DB).
     """
     # Load the plan
-    plan = load_plan(plan_id)
+    plan = load_effective_plan(job_id, plan_id)
     if plan is None:
         raise ValueError(f"Plan not found: {plan_id}")
 
@@ -306,7 +306,7 @@ def deterministic_refine_views(
     hierarchy guardrails and empty-view suppression without making a fresh
     curator-model call.
     """
-    plan = load_plan(plan_id)
+    plan = load_effective_plan(job_id, plan_id)
     if plan is None:
         raise ValueError(f"Plan not found: {plan_id}")
 
