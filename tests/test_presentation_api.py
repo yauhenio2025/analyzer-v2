@@ -1,6 +1,8 @@
+import asyncio
 from types import SimpleNamespace
 from unittest.mock import patch
 
+from src.presenter.presentation_bridge import prepare_presentation
 from src.presenter.schemas import ViewPayload
 from src.presenter.presentation_api import (
     _build_view_tree,
@@ -13,17 +15,119 @@ from src.presenter.presentation_api import (
     _normalize_view_structured_data,
     assemble_page,
     get_presentation_status,
+    materialize_stage1_artifacts,
 )
 from src.presenter.scaffold_generator import (
     READING_SCAFFOLD_ARTIFACT_VERSION,
     SCAFFOLD_PROMPT_VERSIONS,
     compute_scaffold_input_hash,
 )
+from src.presenter.schemas import TransformationTask
+from src.transformations.executor import TransformationResult
 
 
 class _FakeTransformRegistry:
     def for_engine(self, engine_key):
         return [SimpleNamespace(template_key="tp_concept_evolution_extraction")]
+
+
+def test_prepare_presentation_sync_can_run_inside_active_event_loop():
+    task = TransformationTask(
+        view_key="genealogy_tp_deep_summary",
+        output_id="po-1",
+        template_key="tp_deep_summary",
+        engine_key="deep_summarization",
+        renderer_type="accordion",
+        section="deep_summary",
+    )
+    template = SimpleNamespace(
+        transformation_type="llm_extract",
+        field_mapping=None,
+        llm_extraction_schema={"type": "object"},
+        llm_prompt_template="Return JSON.",
+        stance_key=None,
+        model="test-model",
+        model_fallback="test-fallback",
+        max_tokens=2000,
+    )
+
+    class _FakeExecutor:
+        async def execute(self, **kwargs):
+            return TransformationResult(
+                success=True,
+                data={"summary": "ready"},
+                transformation_type=kwargs["transformation_type"],
+                model_used="test-model",
+                execution_time_ms=12,
+            )
+
+    async def _run_under_active_loop():
+        with patch(
+            "src.presenter.presentation_bridge._build_transformation_tasks",
+            return_value=([task], 0, []),
+        ), patch(
+            "src.presenter.presentation_bridge._load_output_by_id",
+            return_value={"id": "po-1", "content": "Source prose"},
+        ), patch(
+            "src.presenter.presentation_bridge._prepare_task_content",
+            return_value=("Source prose", "Source prose"),
+        ), patch(
+            "src.presenter.presentation_bridge.load_presentation_cache",
+            return_value=None,
+        ), patch(
+            "src.presenter.presentation_bridge.get_transformation_executor",
+            return_value=_FakeExecutor(),
+        ), patch(
+            "src.presenter.presentation_bridge.get_transformation_registry",
+            return_value=SimpleNamespace(get=lambda key: template if key == "tp_deep_summary" else None),
+        ), patch(
+            "src.presenter.presentation_bridge.save_presentation_cache",
+        ), patch(
+            "src.presenter.presentation_bridge._validate_transform_output",
+        ):
+            return prepare_presentation("job-1", consumer_key="the-critic", force=True)
+
+    result = asyncio.run(_run_under_active_loop())
+
+    assert result.tasks_planned == 1
+    assert result.tasks_completed == 1
+    assert result.tasks_failed == 0
+    assert result.details[0].success is True
+
+
+def test_materialize_stage1_artifacts_backfills_latest_aoi_outputs():
+    outputs_by_phase = {
+        (1.0, "aoi_thematic_synthesis"): [
+            {"id": "po-theme-old", "pass_number": 1, "created_at": "2026-03-18T12:00:00Z", "metadata": {"normalized": {"themes": ["old"]}}},
+            {"id": "po-theme-new", "pass_number": 2, "created_at": "2026-03-18T12:05:00Z", "metadata": {"normalized": {"themes": ["new"]}}},
+        ],
+        (2.0, "aoi_engagement_mapping"): [
+            {"id": "po-engagement", "pass_number": 1, "created_at": "2026-03-18T12:06:00Z", "metadata": {"normalized": {"map": []}}},
+        ],
+        (3.0, "aoi_sin_findings"): [
+            {"id": "po-findings", "pass_number": 1, "created_at": "2026-03-18T12:07:00Z", "metadata": {"normalized": {"findings": []}}},
+        ],
+    }
+
+    def _load_outputs(*, job_id, phase_number, engine_key):
+        return list(outputs_by_phase.get((phase_number, engine_key), []))
+
+    with patch(
+        "src.presenter.presentation_api.get_job",
+        return_value={"workflow_key": "anxiety_of_influence_thematic_single_thinker"},
+    ), patch(
+        "src.presenter.presentation_api.load_phase_outputs",
+        side_effect=_load_outputs,
+    ), patch(
+        "src.analysis_products.store.record_aoi_artifact_from_metadata",
+    ) as record_artifact:
+        materialize_stage1_artifacts("job-aoi")
+
+    assert record_artifact.call_count == 3
+    assert record_artifact.call_args_list[0].kwargs["source_output_id"] == "po-theme-new"
+    assert record_artifact.call_args_list[0].kwargs["output_metadata"] == {"normalized": {"themes": ["new"]}}
+    assert record_artifact.call_args_list[1].kwargs["source_output_id"] == "po-engagement"
+    assert record_artifact.call_args_list[2].kwargs["source_output_id"] == "po-findings"
 
 
 def test_get_recommendations_falls_back_to_workflow_page_defaults_for_legacy_plan():

@@ -105,6 +105,7 @@ def run_presentation_pipeline_sync(
 
     try:
         from src.presenter.delivery_style import seed_polish_cache_for_page
+        from src.presenter.presentation_api import materialize_stage1_artifacts
         from src.presenter.presentation_bridge import prepare_presentation
         from src.presenter.scaffold_generator import generate_reading_scaffolds
         from src.presenter.store import delete_view_refinement
@@ -155,6 +156,15 @@ def run_presentation_pipeline_sync(
             consumer_key=consumer_key,
             force=force,
         )
+        artifact_materialization_failed = False
+        artifact_materialization_error = ""
+        save_presentation_run(job_id, "running", detail="Materializing stage1 artifacts", stats={})
+        try:
+            materialize_stage1_artifacts(job_id)
+        except Exception as artifact_error:
+            artifact_materialization_failed = True
+            artifact_materialization_error = str(artifact_error)
+            logger.warning("Stage1 artifact materialization failed for %s: %s", job_id, artifact_error)
         save_presentation_run(job_id, "running", detail="Generating reading scaffolds", stats={})
         scaffold_result = generate_reading_scaffolds(
             job_id=job_id,
@@ -183,6 +193,8 @@ def run_presentation_pipeline_sync(
             "polish_seeded": polish_result.get("polished", 0),
             "polish_cached": polish_result.get("cached", 0),
             "polish_failed": polish_result.get("failed", 0),
+            "stage1_artifacts_failed": artifact_materialization_failed,
+            "stage1_artifacts_error": artifact_materialization_error,
         }
         save_presentation_run(
             job_id,
@@ -222,9 +234,17 @@ def start_background_preparation(
     if not _try_claim(job_id):
         return get_preparation_state(job_id)
 
+    save_presentation_run(
+        job_id,
+        "running",
+        detail="Queued presentation preparation",
+        stats={},
+    )
+
     def _worker() -> None:
         try:
             from src.presenter.delivery_style import seed_polish_cache_for_page
+            from src.presenter.presentation_api import materialize_stage1_artifacts
             from src.presenter.presentation_bridge import prepare_presentation
             from src.presenter.scaffold_generator import generate_reading_scaffolds
             from src.presenter.store import delete_view_refinement
@@ -275,6 +295,15 @@ def start_background_preparation(
                 consumer_key=consumer_key,
                 force=force,
             )
+            artifact_materialization_failed = False
+            artifact_materialization_error = ""
+            save_presentation_run(job_id, "running", detail="Materializing stage1 artifacts", stats={})
+            try:
+                materialize_stage1_artifacts(job_id)
+            except Exception as artifact_error:
+                artifact_materialization_failed = True
+                artifact_materialization_error = str(artifact_error)
+                logger.warning("Stage1 artifact materialization failed for %s: %s", job_id, artifact_error)
             save_presentation_run(job_id, "running", detail="Generating reading scaffolds", stats={})
             scaffold_result = generate_reading_scaffolds(
                 job_id=job_id,
@@ -307,6 +336,8 @@ def start_background_preparation(
                     "polish_seeded": polish_result.get("polished", 0),
                     "polish_cached": polish_result.get("cached", 0),
                     "polish_failed": polish_result.get("failed", 0),
+                    "stage1_artifacts_failed": artifact_materialization_failed,
+                    "stage1_artifacts_error": artifact_materialization_error,
                 },
             )
         except Exception as e:

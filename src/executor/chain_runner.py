@@ -409,7 +409,7 @@ def _run_engine_passes(
             engine_key=cap_def.engine_key,
             content=result["content"],
         )
-        save_output(
+        output_id = save_output(
             job_id=job_id,
             phase_number=phase_number,
             engine_key=cap_def.engine_key,
@@ -424,6 +424,24 @@ def _run_engine_passes(
             parent_id=None,  # TODO: lineage tracking
             metadata=output_metadata,
         )
+        try:
+            from src.analysis_products.store import record_aoi_artifact_from_metadata
+
+            record_aoi_artifact_from_metadata(
+                job_id=job_id,
+                phase_number=phase_number,
+                engine_key=cap_def.engine_key,
+                source_output_id=output_id,
+                output_metadata=output_metadata,
+            )
+        except Exception as artifact_error:
+            logger.warning(
+                "AOI artifact dual-write failed for job %s phase %s engine %s: %s",
+                job_id,
+                phase_number,
+                cap_def.engine_key,
+                artifact_error,
+            )
 
         # Update job-level token counters INCREMENTALLY after each LLM call.
         # Previously only updated after full phase completion — counter stayed
@@ -523,7 +541,7 @@ def _run_single_engine_call(
         engine_key=cap_def.engine_key,
         content=result["content"],
     )
-    save_output(
+    output_id = save_output(
         job_id=job_id,
         phase_number=phase_number,
         engine_key=cap_def.engine_key,
@@ -536,6 +554,24 @@ def _run_single_engine_call(
         output_tokens=result["output_tokens"],
         metadata=output_metadata,
     )
+    try:
+        from src.analysis_products.store import record_aoi_artifact_from_metadata
+
+        record_aoi_artifact_from_metadata(
+            job_id=job_id,
+            phase_number=phase_number,
+            engine_key=cap_def.engine_key,
+            source_output_id=output_id,
+            output_metadata=output_metadata,
+        )
+    except Exception as artifact_error:
+        logger.warning(
+            "AOI artifact dual-write failed for job %s phase %s engine %s: %s",
+            job_id,
+            phase_number,
+            cap_def.engine_key,
+            artifact_error,
+        )
 
     # Incremental token counter update
     update_job_tokens(

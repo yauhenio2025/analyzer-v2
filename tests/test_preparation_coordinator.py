@@ -63,6 +63,8 @@ def test_start_background_preparation_dedupes_active_job():
         "src.presenter.presentation_bridge.prepare_presentation",
         side_effect=_prepare,
     ), patch(
+        "src.presenter.presentation_api.materialize_stage1_artifacts",
+    ), patch(
         "src.presenter.scaffold_generator.generate_reading_scaffolds",
         side_effect=_scaffold,
     ), patch(
@@ -124,6 +126,8 @@ def test_run_presentation_pipeline_sync_uses_deterministic_refinement_when_skipp
             dynamic_extractions=0,
         ),
     ), patch(
+        "src.presenter.presentation_api.materialize_stage1_artifacts",
+    ) as materialize_stage1_artifacts, patch(
         "src.presenter.scaffold_generator.generate_reading_scaffolds",
         return_value=SimpleNamespace(
             artifacts_planned=1,
@@ -148,11 +152,13 @@ def test_run_presentation_pipeline_sync_uses_deterministic_refinement_when_skipp
         plan_id="plan-1",
         consumer_key="the-critic",
     )
+    materialize_stage1_artifacts.assert_called_once_with("job-1")
     assert final["status"] == "completed"
     assert final["stats"]["tasks_completed"] == 2
     assert final["stats"]["scaffolds_generated"] == 1
     assert final["stats"]["polish_style_school"] == "explanatory_narrative"
     assert final["stats"]["polish_seeded"] == 2
+    assert final["stats"]["stage1_artifacts_failed"] is False
 
 
 def test_run_presentation_pipeline_sync_does_not_short_circuit_when_clear_refinement_is_requested():
@@ -203,6 +209,8 @@ def test_run_presentation_pipeline_sync_does_not_short_circuit_when_clear_refine
             cached_results=1,
             dynamic_extractions=0,
         ),
+    ), patch(
+        "src.presenter.presentation_api.materialize_stage1_artifacts",
     ), patch(
         "src.presenter.scaffold_generator.generate_reading_scaffolds",
         return_value=SimpleNamespace(

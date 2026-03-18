@@ -13,6 +13,7 @@ from collections import Counter
 from datetime import UTC, datetime
 from typing import Any, Optional
 
+from src.aoi.constants import AOI_WORKFLOW_KEY
 from src.executor.job_manager import get_job
 from src.executor.output_store import (
     load_all_job_outputs,
@@ -1952,6 +1953,45 @@ def _load_per_item_data(
         items.append(item)
 
     return items
+
+
+def materialize_stage1_artifacts(job_id: str) -> None:
+    """Materialize bounded Stage 1 artifacts for workflows that support them."""
+
+    job = get_job(job_id)
+    if job is None:
+        raise ValueError(f"Job not found: {job_id}")
+
+    workflow_key = _resolve_workflow_key(job)
+    if workflow_key != AOI_WORKFLOW_KEY:
+        return
+
+    from src.analysis_products.store import record_aoi_artifact_from_metadata
+
+    for phase_number, engine_key in (
+        (1.0, "aoi_thematic_synthesis"),
+        (2.0, "aoi_engagement_mapping"),
+        (3.0, "aoi_sin_findings"),
+    ):
+        latest_output = None
+        for output in load_phase_outputs(
+            job_id=job_id,
+            phase_number=phase_number,
+            engine_key=engine_key,
+        ):
+            if latest_output is None or _is_newer_output(output, latest_output):
+                latest_output = output
+
+        if latest_output is None or not latest_output.get("id"):
+            continue
+
+        record_aoi_artifact_from_metadata(
+            job_id=job_id,
+            phase_number=phase_number,
+            engine_key=engine_key,
+            source_output_id=latest_output["id"],
+            output_metadata=_load_output_metadata(latest_output),
+        )
 
 
 def _inject_chapter_views(

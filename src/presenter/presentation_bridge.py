@@ -20,7 +20,8 @@ quality overrides that produce better results when available.
 
 import asyncio
 import logging
-from typing import Optional
+import threading
+from typing import Awaitable, Callable, Optional, TypeVar
 
 from src.executor.job_manager import get_job
 from src.executor.output_store import (
@@ -55,6 +56,39 @@ from .schemas import (
 from .store import load_view_refinement
 
 logger = logging.getLogger(__name__)
+
+_AwaitableResultT = TypeVar("_AwaitableResultT")
+
+
+def _run_awaitable_sync(awaitable_factory: Callable[[], Awaitable[_AwaitableResultT]]) -> _AwaitableResultT:
+    """Run an awaitable from sync code, even if the current thread already has a running loop."""
+
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        return asyncio.run(awaitable_factory())
+
+    result: dict[str, _AwaitableResultT] = {}
+    error: dict[str, BaseException] = {}
+
+    def _worker() -> None:
+        try:
+            result["value"] = asyncio.run(awaitable_factory())
+        except BaseException as exc:  # pragma: no cover - re-raised in caller thread
+            error["value"] = exc
+
+    thread = threading.Thread(
+        target=_worker,
+        name="presentation-bridge-awaitable",
+        daemon=True,
+    )
+    thread.start()
+    thread.join()
+
+    if "value" in error:
+        raise error["value"]
+    return result["value"]
+
 
 async def async_prepare_presentation(
     job_id: str,
@@ -744,43 +778,35 @@ def _execute_tasks_sync(
                 continue
 
             # Curated template path
-            loop = asyncio.new_event_loop()
-            try:
-                transform_result = loop.run_until_complete(
-                    transform_executor.execute(
-                        data=llm_content,
-                        transformation_type=template.transformation_type,
-                        field_mapping=template.field_mapping,
-                        llm_extraction_schema=template.llm_extraction_schema,
-                        llm_prompt_template=template.llm_prompt_template,
-                        stance_key=template.stance_key,
-                        model=template.model or "claude-haiku-4-5-20251001",
-                        model_fallback=template.model_fallback or "claude-sonnet-4-6",
-                        max_tokens=template.max_tokens or 8000,
-                    )
+            transform_result = _run_awaitable_sync(
+                lambda: transform_executor.execute(
+                    data=llm_content,
+                    transformation_type=template.transformation_type,
+                    field_mapping=template.field_mapping,
+                    llm_extraction_schema=template.llm_extraction_schema,
+                    llm_prompt_template=template.llm_prompt_template,
+                    stance_key=template.stance_key,
+                    model=template.model or "claude-haiku-4-5-20251001",
+                    model_fallback=template.model_fallback or "claude-sonnet-4-6",
+                    max_tokens=template.max_tokens or 8000,
                 )
-            finally:
-                loop.close()
+            )
             extraction_source = "curated"
 
         elif task.dynamic_config:
             # Dynamic extraction path — no curated template
             dc = task.dynamic_config
-            loop = asyncio.new_event_loop()
-            try:
-                transform_result = loop.run_until_complete(
-                    transform_executor.execute(
-                        data=llm_content,
-                        transformation_type=dc["transformation_type"],
-                        llm_prompt_template=dc["system_prompt"],
-                        stance_key=dc.get("stance_key"),
-                        model=dc.get("model", "claude-haiku-4-5-20251001"),
-                        model_fallback=dc.get("model_fallback", "claude-sonnet-4-6"),
-                        max_tokens=dc.get("max_tokens", 8000),
-                    )
+            transform_result = _run_awaitable_sync(
+                lambda: transform_executor.execute(
+                    data=llm_content,
+                    transformation_type=dc["transformation_type"],
+                    llm_prompt_template=dc["system_prompt"],
+                    stance_key=dc.get("stance_key"),
+                    model=dc.get("model", "claude-haiku-4-5-20251001"),
+                    model_fallback=dc.get("model_fallback", "claude-sonnet-4-6"),
+                    max_tokens=dc.get("max_tokens", 8000),
                 )
-            finally:
-                loop.close()
+            )
             extraction_source = "dynamic"
 
         else:
