@@ -28,7 +28,10 @@ from src.executor.job_manager import (
 )
 from src.executor.workflow_runner import execute_plan
 from src.objectives.registry import get_objective, list_objectives
-from src.orchestrator.adaptive_planner import generate_adaptive_plan
+from src.orchestrator.adaptive_planner import (
+    generate_adaptive_plan,
+    normalize_plan_execution_targets,
+)
 from src.orchestrator.planner import generate_plan
 from src.orchestrator.sampler import sample_all_books
 from src.orchestrator.schemas import (
@@ -572,6 +575,7 @@ def _run_pre_execution_revision(
 
     # Rebuild the plan object from the revised dict
     revised_plan = WorkflowExecutionPlan(**revised_dict)
+    normalize_plan_execution_targets(revised_plan)
     logger.info(
         f"Pre-execution revision applied: {result['revision']['changes_summary']}"
     )

@@ -60,6 +60,27 @@ def _resolve_execution_target(
         effective_chain_key = None
         effective_engine_key = plan_engine_key
 
+    if effective_engine_key:
+        from src.chains.registry import get_chain_registry
+        from src.engines.registry import get_engine_registry
+
+        chain_keys = set(get_chain_registry().list_keys())
+        engine_reg = get_engine_registry()
+        engine_keys = set(engine_reg.list_keys())
+        try:
+            engine_keys.update(engine_reg.list_capability_keys())
+        except Exception:
+            pass
+
+        if effective_engine_key not in engine_keys and effective_engine_key in chain_keys:
+            logger.warning(
+                "Execution target '%s' was stored as engine_key but is a chain; "
+                "treating it as chain_key for backward compatibility",
+                effective_engine_key,
+            )
+            effective_chain_key = effective_engine_key
+            effective_engine_key = None
+
     return effective_chain_key, effective_engine_key
 
 

@@ -129,11 +129,12 @@ IMPORTANT:
 """
 
 
-def _validate_and_fix_plan_keys(plan: WorkflowExecutionPlan) -> None:
-    """Validate and auto-correct chain_key / engine_key confusion in LLM-generated plans.
+def normalize_plan_execution_targets(plan: WorkflowExecutionPlan) -> None:
+    """Validate and auto-correct chain_key / engine_key confusion in adaptive plans.
 
-    The adaptive planner LLM sometimes:
+    The adaptive planner and revision LLMs sometimes:
     1. Puts an engine_key into the chain_key field
+    2. Puts a chain_key into the engine_key field
     2. Fabricates compound chain keys using '+' notation (e.g. "chain_a+chain_b")
     3. Puts a chain_key into per_work_chain_map that's actually an engine
 
@@ -198,6 +199,23 @@ def _validate_and_fix_plan_keys(plan: WorkflowExecutionPlan) -> None:
                             f"chain_key '{phase.chain_key}' not found and cannot be resolved"
                         )
 
+        # Fix 2: engine_key is actually a chain key
+        if phase.engine_key and phase.engine_key not in all_engine_keys:
+            if phase.engine_key in all_chain_keys:
+                logger.warning(
+                    f"Phase {phase.phase_number} ({phase.phase_name}): "
+                    f"engine_key '{phase.engine_key}' is actually a chain — "
+                    f"moving to chain_key"
+                )
+                phase.chain_key = phase.engine_key
+                phase.engine_key = None
+                fixes_applied += 1
+            else:
+                logger.error(
+                    f"Phase {phase.phase_number} ({phase.phase_name}): "
+                    f"engine_key '{phase.engine_key}' not found and cannot be resolved"
+                )
+
         # Fix 3: per_work_chain_map values that are engines or compound keys
         if phase.per_work_chain_map:
             fixed_map = {}
@@ -252,6 +270,11 @@ def _validate_and_fix_plan_keys(plan: WorkflowExecutionPlan) -> None:
         logger.info(f"Plan validation: applied {fixes_applied} auto-corrections")
     else:
         logger.info("Plan validation: all chain_key/engine_key references are valid")
+
+
+def _validate_and_fix_plan_keys(plan: WorkflowExecutionPlan) -> None:
+    """Backward-compatible wrapper for older call sites."""
+    normalize_plan_execution_targets(plan)
 
 
 def _build_adaptive_user_prompt(
@@ -640,7 +663,7 @@ def generate_adaptive_plan(
             logger.warning(f"Failed to parse decision_trace: {e}")
 
     # Validate and auto-correct chain_key / engine_key confusion
-    _validate_and_fix_plan_keys(plan)
+    normalize_plan_execution_targets(plan)
 
     # Save using the same mechanism as legacy planner
     from .planner import _save_plan

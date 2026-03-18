@@ -506,6 +506,21 @@ def _record_phase_result(
 
     if result.status == PhaseStatus.COMPLETED:
         completed_phases.append(f"{pn}: {plan_phase.phase_name}")
+        if pn == 1.5:
+            try:
+                from src.executor.job_manager import get_job
+                from src.presenter.presentation_api import materialize_stage1_artifacts
+
+                job = get_job(job_id) or {}
+                if job.get("workflow_key") == "intellectual_genealogy":
+                    materialize_stage1_artifacts(job_id)
+            except Exception as artifact_error:
+                logger.warning(
+                    "Post-phase artifact materialization failed for %s phase %s: %s",
+                    job_id,
+                    pn,
+                    artifact_error,
+                )
 
     # Save to job record
     save_phase_result(
@@ -612,6 +627,7 @@ def _try_mid_course_revision(
     Returns (possibly revised plan, rebuilt phase_groups, adjusted group_idx).
     If revision is not needed, returns the inputs unchanged.
     """
+    from src.orchestrator.adaptive_planner import normalize_plan_execution_targets
     from src.orchestrator.plan_revision import (
         apply_revision_to_plan,
         revise_plan_mid_course,
@@ -662,6 +678,7 @@ def _try_mid_course_revision(
     )
 
     revised_plan = WorkflowExecutionPlan(**revised_dict)
+    normalize_plan_execution_targets(revised_plan)
 
     # Rebuild execution order with the revised phases
     revised_groups = _build_execution_order(revised_plan.phases, workflow_phases)
@@ -707,7 +724,15 @@ def _run_auto_presentation(job_id: str, plan_id: str) -> None:
         # Step 2: Run transformations for recommended views
         try:
             from src.presenter.presentation_bridge import prepare_presentation
+            from src.presenter.presentation_api import materialize_stage1_artifacts
             bridge_result = prepare_presentation(job_id=job_id)
+            try:
+                materialize_stage1_artifacts(job_id)
+            except Exception as artifact_error:
+                logger.warning(
+                    "Auto-presentation: stage1 artifact materialization failed (continuing): %s",
+                    artifact_error,
+                )
             logger.info(
                 f"Auto-presentation: transformation bridge complete — "
                 f"{bridge_result.tasks_completed} transformed, "
