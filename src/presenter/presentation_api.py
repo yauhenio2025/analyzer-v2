@@ -814,6 +814,7 @@ def build_presentation_manifest(
     *,
     consumer_key: str,
     slim: bool = False,
+    read_only: bool = False,
 ) -> EffectivePresentationManifest:
     """Build the single consumer-scoped effective manifest for a page."""
 
@@ -848,7 +849,13 @@ def build_presentation_manifest(
     return manifest.model_copy(update={"style_school": style_school, "polish_state": polish_state})
 
 
-def assemble_page(job_id: str, *, consumer_key: str, slim: bool = False) -> PagePresentation:
+def assemble_page(
+    job_id: str,
+    *,
+    consumer_key: str,
+    slim: bool = False,
+    read_only: bool = False,
+) -> PagePresentation:
     """Assemble a complete page presentation for a job.
 
     This is the primary consumer endpoint. It:
