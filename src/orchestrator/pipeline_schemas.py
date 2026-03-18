@@ -242,3 +242,95 @@ class AnalyzeResponse(BaseModel):
         description="'executing' if autonomous, 'plan_generated' if checkpoint mode",
     )
     message: str = ""
+
+
+class PriorWorkByRef(BaseModel):
+    """Analysis-specific prior-work metadata when the text is already registered."""
+
+    external_doc_key: str
+    description: str = Field(
+        default="",
+        description="Brief description of the work for planning context.",
+    )
+    relationship_hint: str = Field(
+        default="",
+        description="User's hint about the relationship to the target.",
+    )
+
+
+class TargetChapterByRef(BaseModel):
+    """Reference to a registered target chapter binding plus its semantic chapter id."""
+
+    external_doc_key: str
+    chapter_id: str
+
+
+class AnalyzeByRefRequest(BaseModel):
+    """Launch request against previously registered documents."""
+
+    consumer_key: str
+    external_project_id: str
+    thinker_name: str
+    target_work: TargetWork
+    target_external_doc_key: str
+    target_chapter_external_doc_keys: list[str] = Field(default_factory=list)
+    target_chapters: list[TargetChapterByRef] = Field(default_factory=list)
+    prior_works: list[PriorWorkByRef] = Field(default_factory=list)
+    context_external_doc_keys: list[str] = Field(default_factory=list)
+    research_question: Optional[str] = None
+    depth_preference: Optional[str] = Field(
+        default=None,
+        description="surface, standard, deep, or None (let orchestrator decide)",
+    )
+    focus_hint: Optional[str] = None
+    selected_source_thinker_id: Optional[str] = None
+    selected_source_thinker_name: Optional[str] = None
+    workflow_key: Optional[str] = Field(
+        default="intellectual_genealogy",
+        description="Supports intellectual_genealogy and the bounded AOI single-thinker workflow.",
+    )
+    project_id: Optional[str] = Field(
+        default=None,
+        description="Optional project identifier to associate with the executor job.",
+    )
+    skip_plan_review: bool = Field(
+        default=True,
+        description="True = autonomous launch, False = plan-only checkpoint mode.",
+    )
+    objective_key: Optional[str] = None
+    skip_plan_revision: bool = Field(
+        default=False,
+        description="If True, skip pre-execution plan revision in adaptive mode.",
+    )
+    planning_model: Optional[str] = None
+    execution_model: Optional[str] = None
+
+    @model_validator(mode="after")
+    def _validate_workflow_contract(self) -> "AnalyzeByRefRequest":
+        workflow_key = self.workflow_key or "intellectual_genealogy"
+        if workflow_key not in {"intellectual_genealogy", AOI_WORKFLOW_KEY}:
+            raise ValueError(
+                "analyze-by-ref currently supports intellectual_genealogy and "
+                "anxiety_of_influence_thematic_single_thinker only."
+            )
+        if self.target_chapters and self.target_chapter_external_doc_keys:
+            raise ValueError(
+                "target_chapter_external_doc_keys and target_chapters are mutually exclusive."
+            )
+        if workflow_key == AOI_WORKFLOW_KEY:
+            if not self.selected_source_thinker_id or not self.selected_source_thinker_name:
+                raise ValueError(
+                    "AOI single-thinker by-ref launch requires selected_source_thinker_id "
+                    "and selected_source_thinker_name."
+                )
+            if self.target_chapter_external_doc_keys:
+                raise ValueError(
+                    "AOI single-thinker by-ref launch must use target_chapters, not "
+                    "target_chapter_external_doc_keys."
+                )
+        elif self.target_chapters:
+            raise ValueError(
+                "intellectual_genealogy by-ref launch must use target_chapter_external_doc_keys, "
+                "not target_chapters."
+            )
+        return self

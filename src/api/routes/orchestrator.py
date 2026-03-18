@@ -7,13 +7,15 @@ plan for executing the genealogy workflow.
 
 import logging
 import os
+import time
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Query
 
+from src.orchestrator.by_ref import run_analysis_by_ref
 from src.orchestrator.catalog import assemble_full_catalog, catalog_to_text
 from src.orchestrator.pipeline import run_analysis_pipeline
-from src.orchestrator.pipeline_schemas import AnalyzeRequest, AnalyzeResponse
+from src.orchestrator.pipeline_schemas import AnalyzeByRefRequest, AnalyzeRequest, AnalyzeResponse
 from src.orchestrator.planner import generate_plan, load_plan, list_plans, refine_plan
 from src.orchestrator.schemas import (
     OrchestratorPlanRequest,
@@ -25,6 +27,36 @@ from src.orchestrator.visualization import assemble_pipeline_visualization
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/orchestrator", tags=["orchestrator"])
+
+
+def _validate_selected_models(planning_model: Optional[str], execution_model: Optional[str]) -> None:
+    """Fail fast when the requested model family is not configured."""
+    for model_field, label in [
+        (planning_model, "planning"),
+        (execution_model, "execution"),
+    ]:
+        if model_field and model_field.startswith("gemini"):
+            if not os.environ.get("GEMINI_API_KEY"):
+                raise HTTPException(
+                    status_code=400,
+                    detail=(
+                        f"Gemini model '{model_field}' selected for {label} "
+                        f"but GEMINI_API_KEY is not configured on the server. "
+                        f"Please select a Claude model instead, or ask the admin "
+                        f"to set the GEMINI_API_KEY environment variable."
+                    ),
+                )
+        if model_field and model_field.startswith("openrouter/"):
+            if not os.environ.get("OPENROUTER_API_KEY"):
+                raise HTTPException(
+                    status_code=400,
+                    detail=(
+                        f"OpenRouter model '{model_field}' selected for {label} "
+                        f"but OPENROUTER_API_KEY is not configured on the server. "
+                        f"Please select a Claude or Gemini model instead, or ask the admin "
+                        f"to set the OPENROUTER_API_KEY environment variable."
+                    ),
+                )
 
 
 # ── Capability Catalog ──────────────────────────────────────
@@ -276,33 +308,7 @@ async def analyze(request: AnalyzeRequest):
     Set skip_plan_review=false to stop after step 2 (returns plan_id
     for review; manually start execution later with POST /v1/executor/jobs).
     """
-    # Fail-fast: validate model API keys are available before starting background work
-    for model_field, label in [
-        (request.planning_model, "planning"),
-        (request.execution_model, "execution"),
-    ]:
-        if model_field and model_field.startswith("gemini"):
-            if not os.environ.get("GEMINI_API_KEY"):
-                raise HTTPException(
-                    status_code=400,
-                    detail=(
-                        f"Gemini model '{model_field}' selected for {label} "
-                        f"but GEMINI_API_KEY is not configured on the server. "
-                        f"Please select a Claude model instead, or ask the admin "
-                        f"to set the GEMINI_API_KEY environment variable."
-                    ),
-                )
-        if model_field and model_field.startswith("openrouter/"):
-            if not os.environ.get("OPENROUTER_API_KEY"):
-                raise HTTPException(
-                    status_code=400,
-                    detail=(
-                        f"OpenRouter model '{model_field}' selected for {label} "
-                        f"but OPENROUTER_API_KEY is not configured on the server. "
-                        f"Please select a Claude or Gemini model instead, or ask the admin "
-                        f"to set the OPENROUTER_API_KEY environment variable."
-                    ),
-                )
+    _validate_selected_models(request.planning_model, request.execution_model)
 
     try:
         result = run_analysis_pipeline(request)
@@ -320,6 +326,66 @@ async def analyze(request: AnalyzeRequest):
     logger.info(
         f"Analysis pipeline initiated for {request.thinker_name}: "
         f"plan={result.plan_id}, job={result.job_id}, status={result.status}"
+    )
+    return result
+
+
+@router.post("/analyze-by-ref", response_model=AnalyzeResponse)
+async def analyze_by_ref(request: AnalyzeByRefRequest):
+    """Genealogy launch path that resolves already-registered documents internally."""
+    started = time.perf_counter()
+    _validate_selected_models(request.planning_model, request.execution_model)
+
+    try:
+        result = run_analysis_by_ref(request)
+    except RuntimeError as e:
+        logger.error(
+            "By-ref analysis unavailable consumer=%s project=%s thinker=%s checkpoint=%s elapsed_ms=%s detail=%s",
+            request.consumer_key,
+            request.external_project_id,
+            request.thinker_name,
+            not request.skip_plan_review,
+            int((time.perf_counter() - started) * 1000),
+            e,
+        )
+        raise HTTPException(status_code=503, detail=str(e))
+    except ValueError as e:
+        logger.warning(
+            "By-ref analysis rejected consumer=%s project=%s thinker=%s checkpoint=%s elapsed_ms=%s detail=%s",
+            request.consumer_key,
+            request.external_project_id,
+            request.thinker_name,
+            not request.skip_plan_review,
+            int((time.perf_counter() - started) * 1000),
+            e,
+        )
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.error(
+            "By-ref analysis failed consumer=%s project=%s thinker=%s checkpoint=%s elapsed_ms=%s detail=%s",
+            request.consumer_key,
+            request.external_project_id,
+            request.thinker_name,
+            not request.skip_plan_review,
+            int((time.perf_counter() - started) * 1000),
+            e,
+            exc_info=True,
+        )
+        raise HTTPException(
+            status_code=500,
+            detail=f"By-ref analysis failed: {e}",
+        )
+
+    logger.info(
+        "By-ref analysis consumer=%s project=%s thinker=%s checkpoint=%s plan=%s job=%s status=%s elapsed_ms=%s",
+        request.consumer_key,
+        request.external_project_id,
+        request.thinker_name,
+        not request.skip_plan_review,
+        result.plan_id,
+        result.job_id,
+        result.status,
+        int((time.perf_counter() - started) * 1000),
     )
     return result
 

@@ -216,10 +216,57 @@ def _migrate_postgres():
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS document_ids JSONB DEFAULT '{}'",
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS cancel_token VARCHAR(64)",
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS workflow_key VARCHAR(100) DEFAULT 'intellectual_genealogy'",
+        "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS corpus_ref VARCHAR(100)",
         "ALTER TABLE phase_outputs ADD COLUMN IF NOT EXISTS content_hash VARCHAR(64) DEFAULT ''",
+        "ALTER TABLE executor_documents ADD COLUMN IF NOT EXISTS content_hash VARCHAR(64) DEFAULT ''",
         "ALTER TABLE presentation_cache ALTER COLUMN section TYPE VARCHAR(200)",
         # Priority 6: Project lifecycle
         "ALTER TABLE executor_jobs ADD COLUMN IF NOT EXISTS project_id VARCHAR(100)",
+        """CREATE TABLE IF NOT EXISTS external_document_bindings (
+               consumer_key VARCHAR(100) NOT NULL,
+               external_project_id VARCHAR(120) NOT NULL,
+               external_doc_key VARCHAR(200) NOT NULL,
+               parent_external_doc_key VARCHAR(200),
+               doc_id VARCHAR(100) NOT NULL REFERENCES executor_documents(doc_id),
+               binding_role VARCHAR(20) NOT NULL,
+               title VARCHAR(500) NOT NULL,
+               author VARCHAR(200),
+               source_thinker_id VARCHAR(100),
+               source_thinker_name VARCHAR(200),
+               source_document_id VARCHAR(200),
+               content_hash VARCHAR(64) NOT NULL DEFAULT '',
+               created_at TIMESTAMP DEFAULT NOW(),
+               updated_at TIMESTAMP DEFAULT NOW(),
+               PRIMARY KEY (consumer_key, external_project_id, external_doc_key)
+           )""",
+        """CREATE TABLE IF NOT EXISTS analysis_corpora (
+               corpus_ref VARCHAR(100) PRIMARY KEY,
+               workflow_key VARCHAR(100) NOT NULL,
+               objective_key VARCHAR(100),
+               member_manifest JSONB NOT NULL DEFAULT '[]'::jsonb,
+               qualifiers JSONB NOT NULL DEFAULT '{}'::jsonb,
+               created_at TIMESTAMP DEFAULT NOW(),
+               updated_at TIMESTAMP DEFAULT NOW()
+           )""",
+        """CREATE TABLE IF NOT EXISTS analysis_artifacts (
+               artifact_ref VARCHAR(100) PRIMARY KEY,
+               corpus_ref VARCHAR(100) NOT NULL REFERENCES analysis_corpora(corpus_ref),
+               artifact_family VARCHAR(120) NOT NULL,
+               artifact_slot VARCHAR(200) NOT NULL DEFAULT 'default',
+               format VARCHAR(40) NOT NULL,
+               payload_json JSONB NOT NULL DEFAULT '{}'::jsonb,
+               payload_text TEXT DEFAULT '',
+               depends_on JSONB NOT NULL DEFAULT '[]'::jsonb,
+               job_id VARCHAR(100),
+               engine_key VARCHAR(100) DEFAULT '',
+               phase_number FLOAT,
+               source_output_id VARCHAR(100) DEFAULT '',
+               payload_hash VARCHAR(64) NOT NULL DEFAULT '',
+               producer_fingerprint VARCHAR(120) NOT NULL DEFAULT '',
+               state VARCHAR(20) NOT NULL DEFAULT 'ready',
+               created_at TIMESTAMP DEFAULT NOW(),
+               updated_at TIMESTAMP DEFAULT NOW()
+           )""",
     ]
     with get_connection() as conn:
         cursor = conn.cursor()
@@ -238,6 +285,34 @@ def _migrate_postgres():
             logger.debug(f"Index creation skipped: {e}")
         try:
             cursor.execute(
+                "CREATE INDEX IF NOT EXISTS idx_executor_jobs_corpus "
+                "ON executor_jobs(corpus_ref)"
+            )
+        except Exception as e:
+            logger.debug(f"Corpus index creation skipped: {e}")
+        try:
+            cursor.execute(
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_analysis_artifacts_family_slot "
+                "ON analysis_artifacts(corpus_ref, artifact_family, artifact_slot)"
+            )
+        except Exception as e:
+            logger.debug(f"Artifact unique index creation skipped: {e}")
+        try:
+            cursor.execute(
+                "CREATE INDEX IF NOT EXISTS idx_analysis_artifacts_job "
+                "ON analysis_artifacts(job_id)"
+            )
+        except Exception as e:
+            logger.debug(f"Artifact job index creation skipped: {e}")
+        try:
+            cursor.execute(
+                "CREATE INDEX IF NOT EXISTS idx_external_document_bindings_project "
+                "ON external_document_bindings(consumer_key, external_project_id)"
+            )
+        except Exception as e:
+            logger.debug(f"External binding index creation skipped: {e}")
+        try:
+            cursor.execute(
                 "SELECT id, content FROM phase_outputs "
                 "WHERE content_hash IS NULL OR content_hash = ''"
             )
@@ -250,6 +325,20 @@ def _migrate_postgres():
                 )
         except Exception as e:
             logger.debug(f"Phase output content_hash backfill skipped: {e}")
+        try:
+            cursor.execute(
+                "SELECT doc_id, text FROM executor_documents "
+                "WHERE content_hash IS NULL OR content_hash = ''"
+            )
+            rows = cursor.fetchall()
+            for row in rows:
+                doc_id, text = row[0], row[1] or ""
+                cursor.execute(
+                    "UPDATE executor_documents SET content_hash = %s WHERE doc_id = %s",
+                    (hashlib.sha256(text.encode("utf-8")).hexdigest(), doc_id),
+                )
+        except Exception as e:
+            logger.debug(f"Executor document content_hash backfill skipped: {e}")
         conn.commit()
 
 
@@ -257,7 +346,54 @@ def _migrate_sqlite():
     """Add columns that may be missing from existing SQLite tables."""
     migrations = [
         "ALTER TABLE executor_jobs ADD COLUMN project_id TEXT",
+        "ALTER TABLE executor_jobs ADD COLUMN corpus_ref TEXT",
         "ALTER TABLE phase_outputs ADD COLUMN content_hash TEXT DEFAULT ''",
+        "ALTER TABLE executor_documents ADD COLUMN content_hash TEXT DEFAULT ''",
+        """CREATE TABLE IF NOT EXISTS external_document_bindings (
+               consumer_key TEXT NOT NULL,
+               external_project_id TEXT NOT NULL,
+               external_doc_key TEXT NOT NULL,
+               parent_external_doc_key TEXT,
+               doc_id TEXT NOT NULL REFERENCES executor_documents(doc_id),
+               binding_role TEXT NOT NULL,
+               title TEXT NOT NULL,
+               author TEXT,
+               source_thinker_id TEXT,
+               source_thinker_name TEXT,
+               source_document_id TEXT,
+               content_hash TEXT NOT NULL DEFAULT '',
+               created_at TEXT,
+               updated_at TEXT,
+               PRIMARY KEY (consumer_key, external_project_id, external_doc_key)
+           )""",
+        """CREATE TABLE IF NOT EXISTS analysis_corpora (
+               corpus_ref TEXT PRIMARY KEY,
+               workflow_key TEXT NOT NULL,
+               objective_key TEXT,
+               member_manifest TEXT NOT NULL DEFAULT '[]',
+               qualifiers TEXT NOT NULL DEFAULT '{}',
+               created_at TEXT,
+               updated_at TEXT
+           )""",
+        """CREATE TABLE IF NOT EXISTS analysis_artifacts (
+               artifact_ref TEXT PRIMARY KEY,
+               corpus_ref TEXT NOT NULL REFERENCES analysis_corpora(corpus_ref),
+               artifact_family TEXT NOT NULL,
+               artifact_slot TEXT NOT NULL DEFAULT 'default',
+               format TEXT NOT NULL,
+               payload_json TEXT NOT NULL DEFAULT '{}',
+               payload_text TEXT DEFAULT '',
+               depends_on TEXT NOT NULL DEFAULT '[]',
+               job_id TEXT,
+               engine_key TEXT DEFAULT '',
+               phase_number REAL,
+               source_output_id TEXT DEFAULT '',
+               payload_hash TEXT NOT NULL DEFAULT '',
+               producer_fingerprint TEXT NOT NULL DEFAULT '',
+               state TEXT NOT NULL DEFAULT 'ready',
+               created_at TEXT,
+               updated_at TEXT
+           )""",
     ]
     with get_connection() as conn:
         cursor = conn.cursor()
@@ -279,6 +415,47 @@ def _migrate_sqlite():
                 )
         except Exception as e:
             logger.debug(f"SQLite phase output content_hash backfill skipped: {e}")
+        try:
+            cursor.execute(
+                "CREATE INDEX IF NOT EXISTS idx_executor_jobs_corpus "
+                "ON executor_jobs(corpus_ref)"
+            )
+        except Exception as e:
+            logger.debug(f"SQLite corpus index creation skipped: {e}")
+        try:
+            cursor.execute(
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_analysis_artifacts_family_slot "
+                "ON analysis_artifacts(corpus_ref, artifact_family, artifact_slot)"
+            )
+        except Exception as e:
+            logger.debug(f"SQLite artifact unique index creation skipped: {e}")
+        try:
+            cursor.execute(
+                "CREATE INDEX IF NOT EXISTS idx_analysis_artifacts_job "
+                "ON analysis_artifacts(job_id)"
+            )
+        except Exception as e:
+            logger.debug(f"SQLite artifact job index creation skipped: {e}")
+        try:
+            cursor.execute(
+                "CREATE INDEX IF NOT EXISTS idx_external_document_bindings_project "
+                "ON external_document_bindings(consumer_key, external_project_id)"
+            )
+        except Exception as e:
+            logger.debug(f"SQLite external binding index creation skipped: {e}")
+        try:
+            cursor.execute(
+                "SELECT doc_id, text FROM executor_documents "
+                "WHERE content_hash IS NULL OR content_hash = ''"
+            )
+            rows = cursor.fetchall()
+            for doc_id, text in rows:
+                cursor.execute(
+                    "UPDATE executor_documents SET content_hash = ? WHERE doc_id = ?",
+                    (hashlib.sha256((text or "").encode("utf-8")).hexdigest(), doc_id),
+                )
+        except Exception as e:
+            logger.debug(f"SQLite executor document content_hash backfill skipped: {e}")
         conn.commit()
 
 
@@ -299,6 +476,7 @@ def _init_postgres():
         document_ids JSONB DEFAULT '{}',
         cancel_token VARCHAR(64),
         workflow_key VARCHAR(100) DEFAULT 'intellectual_genealogy',
+        corpus_ref VARCHAR(100),
         created_at TIMESTAMP DEFAULT NOW(),
         started_at TIMESTAMP,
         completed_at TIMESTAMP
@@ -363,8 +541,29 @@ def _init_postgres():
         role VARCHAR(20) NOT NULL DEFAULT 'target',
         text TEXT NOT NULL,
         char_count INTEGER DEFAULT 0,
+        content_hash VARCHAR(64) DEFAULT '',
         created_at TIMESTAMP DEFAULT NOW()
     );
+
+    CREATE TABLE IF NOT EXISTS external_document_bindings (
+        consumer_key VARCHAR(100) NOT NULL,
+        external_project_id VARCHAR(120) NOT NULL,
+        external_doc_key VARCHAR(200) NOT NULL,
+        parent_external_doc_key VARCHAR(200),
+        doc_id VARCHAR(100) NOT NULL REFERENCES executor_documents(doc_id),
+        binding_role VARCHAR(20) NOT NULL,
+        title VARCHAR(500) NOT NULL,
+        author VARCHAR(200),
+        source_thinker_id VARCHAR(100),
+        source_thinker_name VARCHAR(200),
+        source_document_id VARCHAR(200),
+        content_hash VARCHAR(64) NOT NULL DEFAULT '',
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW(),
+        PRIMARY KEY (consumer_key, external_project_id, external_doc_key)
+    );
+    CREATE INDEX IF NOT EXISTS idx_external_document_bindings_project
+        ON external_document_bindings(consumer_key, external_project_id);
 
     CREATE TABLE IF NOT EXISTS view_refinements (
         id SERIAL PRIMARY KEY,
@@ -387,6 +586,41 @@ def _init_postgres():
         updated_at TIMESTAMP,
         completed_at TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS analysis_corpora (
+        corpus_ref VARCHAR(100) PRIMARY KEY,
+        workflow_key VARCHAR(100) NOT NULL,
+        objective_key VARCHAR(100),
+        member_manifest JSONB NOT NULL DEFAULT '[]'::jsonb,
+        qualifiers JSONB NOT NULL DEFAULT '{}'::jsonb,
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW()
+    );
+
+    CREATE TABLE IF NOT EXISTS analysis_artifacts (
+        artifact_ref VARCHAR(100) PRIMARY KEY,
+        corpus_ref VARCHAR(100) NOT NULL REFERENCES analysis_corpora(corpus_ref),
+        artifact_family VARCHAR(120) NOT NULL,
+        artifact_slot VARCHAR(200) NOT NULL DEFAULT 'default',
+        format VARCHAR(40) NOT NULL,
+        payload_json JSONB NOT NULL DEFAULT '{}'::jsonb,
+        payload_text TEXT DEFAULT '',
+        depends_on JSONB NOT NULL DEFAULT '[]'::jsonb,
+        job_id VARCHAR(100),
+        engine_key VARCHAR(100) DEFAULT '',
+        phase_number FLOAT,
+        source_output_id VARCHAR(100) DEFAULT '',
+        payload_hash VARCHAR(64) NOT NULL DEFAULT '',
+        producer_fingerprint VARCHAR(120) NOT NULL DEFAULT '',
+        state VARCHAR(20) NOT NULL DEFAULT 'ready',
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW()
+    );
+
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_analysis_artifacts_family_slot
+        ON analysis_artifacts(corpus_ref, artifact_family, artifact_slot);
+    CREATE INDEX IF NOT EXISTS idx_analysis_artifacts_job
+        ON analysis_artifacts(job_id);
 
     CREATE TABLE IF NOT EXISTS polish_cache (
         id SERIAL PRIMARY KEY,
@@ -510,6 +744,7 @@ def _init_sqlite():
         document_ids TEXT DEFAULT '{}',
         cancel_token TEXT,
         workflow_key TEXT DEFAULT 'intellectual_genealogy',
+        corpus_ref TEXT,
         created_at TEXT,
         started_at TEXT,
         completed_at TEXT
@@ -574,8 +809,29 @@ def _init_sqlite():
         role TEXT NOT NULL DEFAULT 'target',
         text TEXT NOT NULL,
         char_count INTEGER DEFAULT 0,
+        content_hash TEXT DEFAULT '',
         created_at TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS external_document_bindings (
+        consumer_key TEXT NOT NULL,
+        external_project_id TEXT NOT NULL,
+        external_doc_key TEXT NOT NULL,
+        parent_external_doc_key TEXT,
+        doc_id TEXT NOT NULL REFERENCES executor_documents(doc_id),
+        binding_role TEXT NOT NULL,
+        title TEXT NOT NULL,
+        author TEXT,
+        source_thinker_id TEXT,
+        source_thinker_name TEXT,
+        source_document_id TEXT,
+        content_hash TEXT NOT NULL DEFAULT '',
+        created_at TEXT,
+        updated_at TEXT,
+        PRIMARY KEY (consumer_key, external_project_id, external_doc_key)
+    );
+    CREATE INDEX IF NOT EXISTS idx_external_document_bindings_project
+        ON external_document_bindings(consumer_key, external_project_id);
 
     CREATE TABLE IF NOT EXISTS view_refinements (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -598,6 +854,41 @@ def _init_sqlite():
         updated_at TEXT,
         completed_at TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS analysis_corpora (
+        corpus_ref TEXT PRIMARY KEY,
+        workflow_key TEXT NOT NULL,
+        objective_key TEXT,
+        member_manifest TEXT NOT NULL DEFAULT '[]',
+        qualifiers TEXT NOT NULL DEFAULT '{}',
+        created_at TEXT,
+        updated_at TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS analysis_artifacts (
+        artifact_ref TEXT PRIMARY KEY,
+        corpus_ref TEXT NOT NULL REFERENCES analysis_corpora(corpus_ref),
+        artifact_family TEXT NOT NULL,
+        artifact_slot TEXT NOT NULL DEFAULT 'default',
+        format TEXT NOT NULL,
+        payload_json TEXT NOT NULL DEFAULT '{}',
+        payload_text TEXT DEFAULT '',
+        depends_on TEXT NOT NULL DEFAULT '[]',
+        job_id TEXT,
+        engine_key TEXT DEFAULT '',
+        phase_number REAL,
+        source_output_id TEXT DEFAULT '',
+        payload_hash TEXT NOT NULL DEFAULT '',
+        producer_fingerprint TEXT NOT NULL DEFAULT '',
+        state TEXT NOT NULL DEFAULT 'ready',
+        created_at TEXT,
+        updated_at TEXT
+    );
+
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_analysis_artifacts_family_slot
+        ON analysis_artifacts(corpus_ref, artifact_family, artifact_slot);
+    CREATE INDEX IF NOT EXISTS idx_analysis_artifacts_job
+        ON analysis_artifacts(job_id);
 
     CREATE TABLE IF NOT EXISTS polish_cache (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

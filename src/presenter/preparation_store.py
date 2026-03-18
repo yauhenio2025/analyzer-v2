@@ -35,6 +35,36 @@ def load_presentation_run(job_id: str) -> Optional[dict]:
     return row
 
 
+def load_presentation_runs(job_ids: list[str]) -> dict[str, dict]:
+    """Load persisted presentation-preparation state for multiple jobs."""
+    if not job_ids:
+        return {}
+
+    placeholders = ", ".join(["%s"] * len(job_ids))
+    try:
+        rows = execute(
+            f"""SELECT job_id, status, detail, stats, error,
+                       started_at, updated_at, completed_at
+                FROM presentation_runs
+                WHERE job_id IN ({placeholders})""",
+            tuple(job_ids),
+            fetch="all",
+        )
+    except Exception as error:
+        if _is_missing_relation_error(error, "presentation_runs"):
+            return {}
+        raise
+
+    result: dict[str, dict] = {}
+    for row in rows:
+        if isinstance(row.get("stats"), str):
+            row["stats"] = _json_loads(row["stats"])
+        elif row.get("stats") is None:
+            row["stats"] = {}
+        result[row["job_id"]] = row
+    return result
+
+
 def save_presentation_run(
     job_id: str,
     status: str,

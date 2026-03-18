@@ -1,0 +1,35 @@
+{
+  "objective_key": "influence_thematic",
+  "objective_name": "AOI Thematic Analysis",
+  "primary_goals": [
+    "Reconstruct the selected source thinker's major themes, claims, commitments, and source-document inventory as a stable comparison surface",
+    "Map how the subject corpus engages, partially engages, ignores, or distorts each source theme while keeping the selected source thinker fixed",
+    "Identify bounded AOI findings keyed by theme and dominant sin type with explicit target/source provenance",
+    "Produce a structured thematic report that closes the analysis without broadening into thinker discovery or multi-thinker comparison"
+  ],
+  "quality_criteria": [
+    "The selected source thinker must remain fixed across the full plan and execution path",
+    "Every AOI finding must be anchored to a theme and grounded in target-side and source-side evidence or explicit strategic silence",
+    "Source-document inventory must preserve stable source_document_id values so findings and views can trace back to the correct work",
+    "The resulting analysis must stay bounded to the thematic single-thinker tranche rather than expanding into legacy intake or discovery behavior"
+  ],
+  "preferred_engine_functions": [
+    "influence"
+  ],
+  "preferred_categories": [
+    "concepts",
+    "scholarly",
+    "evidence"
+  ],
+  "planner_strategy": "Treat the bounded single-thinker AOI workflow as the canonical baseline. Keep the selected source thinker fixed for the entire plan and require all prior works to belong to that same source thinker. Do not broaden this plan into thinker discovery, hypothesis generation, or multi-thinker comparison. Phase 1 should reconstruct the source thinker's thematic world and preserve a stable source-document inventory with source_document_id values. Phase 2 should map engagement theme by theme against the subject corpus. Phase 3 should produce bounded AOI findings with exactly one dominant sin type per finding and explicit provenance. Phase 4 should produce the structured report closeout. Use standard depth by default; move to deep only when the source corpus is unusually dense or internally conflicted. Recommend the parent `aoi_thematic_analysis` surface first, since its child AOI views are auto-included by the presenter.",
+  "expected_deliverables": [
+    "Source thinker thematic synthesis with source-document inventory",
+    "Theme-keyed engagement map across the subject corpus",
+    "Bounded AOI findings with sin type, severity, and provenance",
+    "Structured thematic AOI report"
+  ],
+  "baseline_workflow_key": "anxiety_of_influence_thematic_single_thinker",
+  "preferred_views": [
+    "aoi_thematic_analysis"
+  ]
+}

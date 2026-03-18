@@ -27,7 +27,7 @@ from src.executor.job_manager import (
     update_job_status,
 )
 from src.executor.workflow_runner import execute_plan
-from src.objectives.registry import get_objective
+from src.objectives.registry import get_objective, list_objectives
 from src.orchestrator.adaptive_planner import generate_adaptive_plan
 from src.orchestrator.planner import generate_plan
 from src.orchestrator.sampler import sample_all_books
@@ -384,6 +384,18 @@ def _store_request_snapshot(
                WHERE job_id = %s""",
             (_json_dumps(snapshot), _json_dumps(document_ids), job_id),
         )
+        try:
+            from src.analysis_products.store import register_job_corpus
+
+            register_job_corpus(
+                job_id,
+                plan_data=snapshot,
+                document_ids=document_ids,
+                workflow_key=request.workflow_key,
+                objective_key=request.objective_key,
+            )
+        except Exception as corpus_error:
+            logger.warning(f"[Pipeline {job_id}] Failed to register corpus_ref from snapshot: {corpus_error}")
         logger.info(
             f"[Pipeline {job_id}] Stored request snapshot + document_ids "
             f"for recovery support"
@@ -406,6 +418,18 @@ def _store_plan_and_docs(job_id: str, plan, document_ids: dict[str, str]) -> Non
                WHERE job_id = %s""",
             (_json_dumps(plan.model_dump()), _json_dumps(document_ids), job_id),
         )
+        try:
+            from src.analysis_products.store import register_job_corpus
+
+            register_job_corpus(
+                job_id,
+                plan_data=plan.model_dump(),
+                document_ids=document_ids,
+                workflow_key=plan.workflow_key,
+                objective_key=getattr(plan, "objective_key", None),
+            )
+        except Exception as corpus_error:
+            logger.warning(f"[Pipeline {job_id}] Failed to register corpus_ref from plan: {corpus_error}")
         logger.info(f"[Pipeline {job_id}] Stored plan_data + document_ids for resume support")
     except Exception as e:
         logger.error(f"[Pipeline {job_id}] Failed to store plan_data: {e}")
@@ -421,9 +445,12 @@ def _generate_adaptive(
     """
     objective = get_objective(request.objective_key)
     if objective is None:
+        valid_keys = ", ".join(
+            sorted(obj.objective_key for obj in list_objectives())
+        ) or "(none loaded)"
         raise ValueError(
             f"Unknown objective_key: '{request.objective_key}'. "
-            f"Valid keys: genealogical, logical"
+            f"Valid keys: {valid_keys}"
         )
 
     logger.info(

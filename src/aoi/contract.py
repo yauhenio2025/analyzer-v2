@@ -130,7 +130,12 @@ def _load_plan_context(job_id: str) -> Optional[dict[str, Any]]:
 
 
 def _load_previous_normalized(job_id: str, engine_key: str) -> Optional[dict[str, Any]]:
+    from src.analysis_products.store import load_aoi_normalized_artifact
     from src.executor.output_store import load_phase_outputs
+
+    artifact_payload = load_aoi_normalized_artifact(job_id, engine_key)
+    if isinstance(artifact_payload, dict):
+        return artifact_payload
 
     outputs = load_phase_outputs(job_id=job_id, engine_key=engine_key)
     if not outputs:

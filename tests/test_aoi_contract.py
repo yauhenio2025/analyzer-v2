@@ -14,6 +14,8 @@ from src.aoi.contract import (
 )
 from src.aoi.fixture_profiles import get_fixture_profile
 from src.engines.registry import EngineRegistry
+from src.objectives.registry import get_objective
+from src.operationalizations.registry import get_operationalization_registry
 from src.orchestrator.pipeline_schemas import AnalyzeRequest
 from src.orchestrator.schemas import TargetWork
 from src.presenter.composition_resolver import resolve_effective_render_contract
@@ -99,6 +101,24 @@ def test_aoi_registries_load_workflow_views_templates_and_analyzer_mgmt_contract
         "aoi_thematic_report_sections",
     ):
         assert transform_registry.get(template_key) is not None
+
+    objective = get_objective("influence_thematic")
+    assert objective is not None
+    assert objective.baseline_workflow_key == AOI_WORKFLOW_KEY
+    assert objective.preferred_engine_functions == ["influence"]
+    assert objective.preferred_views == ["aoi_thematic_analysis"]
+
+    op_registry = get_operationalization_registry()
+    for engine_key in (
+        "aoi_thematic_synthesis",
+        "aoi_engagement_mapping",
+        "aoi_sin_findings",
+        "aoi_thematic_report",
+    ):
+        op = op_registry.get(engine_key)
+        assert op is not None
+        assert set(op.depth_keys) == {"surface", "standard", "deep"}
+        assert "discovery" in op.stance_keys
 
     consumer_path = (
         Path(__file__).resolve().parents[1]

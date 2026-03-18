@@ -178,6 +178,37 @@
 - **Dependencies**: Tier 3a feedback (variant_selected event type), renderer registry (for_data_shape, for_app), presentation_api (assemble_single_view)
 - **Added**: 2026-03-09
 
+## Analysis Product Layer (Stage 1-4)
+
+### Unified Run Contract (Stage 4)
+- **Status**: Active
+- **Description**: Consumer-facing read-only run lifecycle contract that joins executor job state, presenter preparation state, and result-boundary state into one unified surface. Supports active/recent/all run discovery with batch-loaded preparation and result state (no per-job route fanout). Progress payload includes both phase-native fields and pass-compatibility aliases. Control capability flags are server-computed (cancellable, resumable). Discovery does not assemble pages.
+- **Entry Points**:
+  - `src/analysis_products/run_contract.py:1-293` - RunSummary/RunDetail builders, batch discovery, state joining
+  - `src/analysis_products/schemas.py` - RunSummary, RunDetail, RunProgress, RunLinks schemas
+  - `src/api/routes/runs.py:1-56` - REST API: by-job detail, discovery
+  - `tests/test_run_contract.py:1-218` - Progress aliases, discovery filtering, batch derivation validation
+- **API Endpoints**:
+  - `GET /v1/runs/by-job/{job_id}?consumer_key=...` - Joined run detail (executor + preparation + result state)
+  - `GET /v1/runs/discovery?project_id=...&workflow_key=...&scope=active|recent|all&limit=...` - Batch run discovery
+- **Added**: 2026-03-17
+
+### Result Contract & Manifest
+- **Status**: Active
+- **Description**: Server-owned result manifest and read/refresh/discovery boundary. Exposes consumer-facing result state (ready/stale/preparing/failed/legacy_untracked), restore availability, artifact family summaries, staleness diagnostics, and product warnings. Computes deterministic result_id from job_id + consumer_key. Restore computation uses stable enum-like codes (presentation_ready, presentation_stale, legacy_untracked, not_prepared, preparing, failed).
+- **Entry Points**:
+  - `src/analysis_products/result_contract.py:1-510` - Manifest builder, restore computation, discovery summaries, attach-project
+  - `src/analysis_products/schemas.py:1-105` - AnalysisResultManifest, DiscoverySummary, AttachProjectRequest, ArtifactFamilySummary
+  - `src/analysis_products/store.py:1-780` - Corpus registration, artifact CRUD, manifest summarization
+  - `src/api/routes/results.py:1-120` - REST API: manifest, presentation, refresh, discovery, attach-project
+- **API Endpoints**:
+  - `GET /v1/results/by-job/{job_id}` - Consumer-facing result manifest
+  - `GET /v1/results/by-job/{job_id}/presentation` - Manifest + assembled presentation (read-only)
+  - `POST /v1/results/by-job/{job_id}/refresh-presentation` - Refresh without re-executing
+  - `GET /v1/results/discovery` - Discover completed results (project_id, workflow_key, thinker filters)
+  - `POST /v1/results/by-job/{job_id}/attach-project` - Attach project to imported job (idempotent, 409 on conflict)
+- **Added**: 2026-03-16 | **Modified**: 2026-03-17
+
 ## Presenter — Adaptive View Selection & Presentation Bridge (Milestone 3)
 
 ### Post-Execution View Refinement (3A)

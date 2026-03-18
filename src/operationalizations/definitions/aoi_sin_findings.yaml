@@ -1,0 +1,67 @@
+engine_key: aoi_sin_findings
+engine_name: AOI Sin Findings
+stance_operationalizations:
+- stance_key: discovery
+  label: Finding Discovery
+  description: |-
+    Discover the clearest AOI problems theme by theme. Name discrete findings,
+    keep each one tied to a single source theme, and preserve enough target/source
+    provenance to make later classification and synthesis trustworthy.
+  focus_dimensions:
+  - finding_identification
+  focus_capabilities:
+  - classify_sins
+  - preserve_provenance_pairs
+- stance_key: inference
+  label: Sin Classification and Consequence Analysis
+  description: |-
+    Classify each finding into exactly one dominant AOI sin type and explain the
+    argument-level consequence of that divergence. This pass should sharpen severity,
+    rationale, and provenance pairing without drifting into final-report prose.
+  focus_dimensions:
+  - provenance
+  focus_capabilities:
+  - classify_sins
+  - preserve_provenance_pairs
+- stance_key: integration
+  label: Bounded AOI Finding Set
+  description: |-
+    Integrate the discovered findings, classifications, and provenance into the
+    bounded AOI finding set that downstream presentation and report synthesis will
+    consume. Each finding should be stable, theme-keyed, and explicit about why
+    the subject author's handling of the source thinker matters.
+  focus_dimensions:
+  - finding_identification
+  - provenance
+  focus_capabilities:
+  - classify_sins
+  - preserve_provenance_pairs
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: integration
+    consumes_from:
+    - 1
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: inference
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2

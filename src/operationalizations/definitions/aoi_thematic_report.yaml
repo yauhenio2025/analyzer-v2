@@ -1,0 +1,65 @@
+engine_key: aoi_thematic_report
+engine_name: AOI Thematic Report
+stance_operationalizations:
+- stance_key: discovery
+  label: Report Pattern Discovery
+  description: |-
+    Discover the dominant engagement pattern, the highest-salience divergences,
+    and the clearest interpretive implications that emerge from the upstream AOI
+    findings. Stay bounded to what the evidence supports; do not reopen theme
+    discovery or generate new findings in this pass.
+  focus_dimensions:
+  - summary
+  focus_capabilities:
+  - synthesize_report_sections
+- stance_key: inference
+  label: Closeout Framing
+  description: |-
+    Frame the AOI closeout so it explains why the bounded divergences matter for
+    reading the subject corpus. Emphasize the distribution of findings, the overall
+    engagement pattern, and the strongest interpretive consequences without turning
+    the report into a broader polemic.
+  focus_dimensions:
+  - summary
+  focus_capabilities:
+  - synthesize_report_sections
+- stance_key: integration
+  label: Structured AOI Report Assembly
+  description: |-
+    Integrate the upstream theme inventory, engagement map, and finding set into a
+    structured AOI report that fits analyzer-v2's presentation grammar. The output
+    should cleanly assemble summary, engagement pattern, divergences, sin
+    distribution, and reading implications as reusable report sections.
+  focus_dimensions:
+  - summary
+  focus_capabilities:
+  - synthesize_report_sections
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: integration
+    consumes_from:
+    - 1
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: inference
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2

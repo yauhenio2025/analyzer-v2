@@ -280,6 +280,56 @@ def list_jobs(
     return rows
 
 
+def list_completed_jobs(
+    *,
+    project_id: Optional[str] = None,
+    workflow_key: Optional[str] = None,
+    limit: int = 50,
+) -> list[dict]:
+    """List completed jobs for discovery, with plan_data for thinker extraction.
+
+    Returns completed jobs sorted by completed_at DESC, created_at DESC.
+    Includes plan_data (parsed) so callers can extract thinker fields.
+    """
+    conditions = ["status = %s"]
+    params: list = ["completed"]
+
+    if project_id:
+        conditions.append("project_id = %s")
+        params.append(project_id)
+    if workflow_key:
+        conditions.append("workflow_key = %s")
+        params.append(workflow_key)
+
+    where = f"WHERE {' AND '.join(conditions)}"
+    params.append(limit)
+
+    rows = execute(
+        f"""SELECT job_id, plan_id, status, workflow_key, project_id,
+                   plan_data, created_at, started_at, completed_at
+            FROM executor_jobs {where}
+            ORDER BY completed_at DESC, created_at DESC LIMIT %s""",
+        tuple(params),
+        fetch="all",
+    )
+
+    for row in rows:
+        if isinstance(row.get("plan_data"), str):
+            row["plan_data"] = _json_loads(row["plan_data"])
+        _normalize_timestamps(row)
+
+    return rows
+
+
+def set_job_project_id(job_id: str, project_id: str) -> None:
+    """Set project_id on an existing job (for import/attach-project)."""
+    execute(
+        "UPDATE executor_jobs SET project_id = %s WHERE job_id = %s",
+        (project_id, job_id),
+    )
+    logger.info(f"Job {job_id} project_id → {project_id}")
+
+
 # --- Cancellation ---
 
 def request_cancellation(job_id: str, cancel_token: Optional[str] = None, force: bool = False) -> tuple[bool, str]:
@@ -408,7 +458,7 @@ def recover_orphaned_jobs() -> tuple[int, int, int]:
         if isinstance(plan_data, dict) and not plan_data:
             plan_data = None
 
-        if plan_data and plan_data.get("_type") == "request_snapshot":
+        if plan_data and plan_data.get("_type") in {"request_snapshot", "by_ref_request_snapshot"}:
             # Has request snapshot — regenerate plan and resume
             logger.info(
                 f"REGENERATE: Orphaned job {job_id} has request snapshot — "
@@ -539,6 +589,12 @@ def _spawn_regeneration_thread(
     """
     def _regen_and_execute():
         try:
+            if snapshot.get("_type") == "by_ref_request_snapshot":
+                from src.orchestrator.by_ref import resume_by_ref_from_snapshot
+
+                resume_by_ref_from_snapshot(job_id, snapshot, document_ids)
+                return
+
             from src.orchestrator.planner import generate_plan
             from src.orchestrator.schemas import OrchestratorPlanRequest
             from src.executor.workflow_runner import execute_plan

@@ -40,18 +40,19 @@ def save_output(
     """
     output_id = f"po-{uuid.uuid4().hex[:12]}"
     now = datetime.utcnow().isoformat()
+    content_hash = hashlib.sha256((content or "").encode()).hexdigest()
 
     execute(
         """INSERT INTO phase_outputs
            (id, job_id, phase_number, engine_key, pass_number, work_key,
             stance_key, role, content, model_used, input_tokens, output_tokens,
-            parent_id, metadata, created_at)
-           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+            parent_id, metadata, content_hash, created_at)
+           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
         (
             output_id, job_id, phase_number, engine_key, pass_number,
             work_key, stance_key, role, content, model_used,
             input_tokens, output_tokens, parent_id,
-            _json_dumps(metadata or {}), now,
+            _json_dumps(metadata or {}), content_hash, now,
         ),
     )
 
@@ -115,7 +116,7 @@ def load_all_job_outputs(
     else:
         cols = ("id, job_id, phase_number, engine_key, pass_number, "
                 "work_key, stance_key, role, model_used, input_tokens, "
-                "output_tokens, parent_id, metadata, created_at")
+                "output_tokens, parent_id, metadata, content_hash, created_at")
 
     rows = execute(
         f"SELECT {cols} FROM phase_outputs WHERE job_id = %s "

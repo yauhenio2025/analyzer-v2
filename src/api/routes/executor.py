@@ -17,6 +17,7 @@ Endpoints:
 """
 
 import logging
+import time
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException
@@ -27,6 +28,7 @@ from src.executor.document_store import (
     delete_document,
     get_document,
     list_documents,
+    sync_external_documents,
     store_document,
 )
 from src.executor.job_manager import (
@@ -48,6 +50,8 @@ from src.executor.schemas import (
     ExecutorJob,
     JobStatusResponse,
     PhaseOutputSummary,
+    SyncDocumentsRequest,
+    SyncDocumentsResponse,
     StartJobRequest,
 )
 from src.executor.workflow_runner import start_execution_thread
@@ -148,6 +152,18 @@ async def start_job(request: StartJobRequest):
         document_ids=request.document_ids,
         project_id=request.project_id,
     )
+    try:
+        from src.analysis_products.store import register_job_corpus
+
+        register_job_corpus(
+            job.job_id,
+            plan_data=plan.model_dump(),
+            document_ids=request.document_ids,
+            workflow_key=plan.workflow_key,
+            objective_key=getattr(plan, "objective_key", None),
+        )
+    except Exception as e:
+        logger.warning("Could not register corpus_ref for job %s: %s", job.job_id, e)
 
     # Spawn execution thread
     start_execution_thread(
@@ -493,6 +509,53 @@ async def upload_document(doc: DocumentUpload):
     }
 
 
+@router.post("/documents/sync", response_model=SyncDocumentsResponse)
+async def sync_documents(request: SyncDocumentsRequest):
+    """Sync a consumer-owned document inventory into analyzer-v2."""
+    started = time.perf_counter()
+    try:
+        synced = sync_external_documents(
+            consumer_key=request.consumer_key,
+            external_project_id=request.external_project_id,
+            documents=[doc.model_dump() for doc in request.documents],
+        )
+    except ValueError as e:
+        logger.warning(
+            "External document sync rejected consumer=%s project=%s documents=%s elapsed_ms=%s detail=%s",
+            request.consumer_key,
+            request.external_project_id,
+            len(request.documents),
+            int((time.perf_counter() - started) * 1000),
+            e,
+        )
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.error(
+            "External document sync failed consumer=%s project=%s documents=%s elapsed_ms=%s detail=%s",
+            request.consumer_key,
+            request.external_project_id,
+            len(request.documents),
+            int((time.perf_counter() - started) * 1000),
+            e,
+            exc_info=True,
+        )
+        raise HTTPException(status_code=500, detail=f"Document sync failed: {e}")
+
+    logger.info(
+        "External document sync consumer=%s project=%s documents=%s elapsed_ms=%s",
+        request.consumer_key,
+        request.external_project_id,
+        len(request.documents),
+        int((time.perf_counter() - started) * 1000),
+    )
+
+    return SyncDocumentsResponse(
+        consumer_key=request.consumer_key,
+        external_project_id=request.external_project_id,
+        documents=synced,
+    )
+
+
 @router.get("/documents")
 async def list_all_documents(role: Optional[str] = None):
     """List all stored documents (without full text)."""
@@ -588,6 +651,17 @@ async def import_outputs(request: ImportOutputsRequest):
             workflow_key=request.workflow_key,
             project_id=request.project_id,
         )
+        try:
+            from src.analysis_products.store import register_job_corpus
+
+            register_job_corpus(
+                job_id,
+                plan_data=request.plan_data,
+                document_ids={},
+                workflow_key=request.workflow_key,
+            )
+        except Exception as corpus_error:
+            logger.warning("Import corpus registration skipped for %s: %s", job_id, corpus_error)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to create job: {e}")
 

@@ -163,6 +163,48 @@ class DocumentUpload(BaseModel):
     )
 
 
+class SyncedDocumentUpload(BaseModel):
+    """A consumer-owned document to register or refresh in analyzer-v2."""
+
+    external_doc_key: str
+    parent_external_doc_key: Optional[str] = None
+    binding_role: str = Field(
+        description="Consumer-declared role at sync time: target, prior_work, context, or chapter.",
+    )
+    title: str
+    author: Optional[str] = None
+    text: str
+    content_hash: str
+    source_thinker_id: Optional[str] = None
+    source_thinker_name: Optional[str] = None
+    source_document_id: Optional[str] = None
+
+
+class SyncDocumentsRequest(BaseModel):
+    """Batch sync request for externally-identified documents."""
+
+    consumer_key: str
+    external_project_id: str
+    documents: list[SyncedDocumentUpload]
+
+
+class SyncedDocumentResult(BaseModel):
+    """Result of syncing a single external document binding."""
+
+    external_doc_key: str
+    doc_id: str
+    content_hash: str
+    sync_status: str
+
+
+class SyncDocumentsResponse(BaseModel):
+    """Batch sync response for externally-identified documents."""
+
+    consumer_key: str
+    external_project_id: str
+    documents: list[SyncedDocumentResult]
+
+
 class DocumentRecord(BaseModel):
     """Stored document metadata."""
 

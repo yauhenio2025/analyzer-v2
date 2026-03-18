@@ -1,0 +1,66 @@
+engine_key: aoi_engagement_mapping
+engine_name: AOI Engagement Mapping
+stance_operationalizations:
+- stance_key: discovery
+  label: Engagement Inventory Discovery
+  description: |-
+    Discover how the subject corpus addresses each source theme. Classify each
+    theme at a high level as engaged, partial, ignored, or distorted, and note the
+    clearest initial rationale. Keep the mapping bounded to the source themes
+    inherited from the upstream thematic synthesis.
+  focus_dimensions:
+  - engagement_inventory
+  focus_capabilities:
+  - map_theme_engagement
+- stance_key: inference
+  label: Divergence Character Analysis
+  description: |-
+    Analyze how and why the subject corpus diverges from the selected source thinker
+    within each theme. Distinguish substantive, framing, emphasis, and omission
+    patterns, and assess the severity of each divergence without yet turning them
+    into named AOI findings.
+  focus_dimensions:
+  - divergence_character
+  focus_capabilities:
+  - map_theme_engagement
+- stance_key: integration
+  label: Theme-Keyed Engagement Map
+  description: |-
+    Integrate the engagement inventory and divergence analysis into a stable
+    theme-keyed engagement map for downstream AOI finding extraction. The output
+    should preserve the bounded single-thinker comparison surface and make later
+    sin findings inherit a clear engagement context for each theme.
+  focus_dimensions:
+  - engagement_inventory
+  - divergence_character
+  focus_capabilities:
+  - map_theme_engagement
+depth_sequences:
+- depth_key: surface
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+- depth_key: standard
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: integration
+    consumes_from:
+    - 1
+- depth_key: deep
+  passes:
+  - pass_number: 1
+    stance_key: discovery
+    consumes_from: []
+  - pass_number: 2
+    stance_key: inference
+    consumes_from:
+    - 1
+  - pass_number: 3
+    stance_key: integration
+    consumes_from:
+    - 1
+    - 2
